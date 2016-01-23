@@ -1,0 +1,44 @@
+{
+  "name": "prettytype",
+  "version": "0.1.0",
+  "description": "Javascript for core modules including a base prototype and prototypes hierarchy, intended to be reused on the Browser as core for i.e. Angular Controllers and Services, as in the uiwire component.",
+  "keywords": [
+    "core",
+    "uiwire"
+  ],
+  "homepage": "http://github.com/carrascoMDD/prettytype",
+  "bugs": {
+    "url": "http://github.com/carrascoMDD/prettytype/issues"
+  },
+  "license": "EUPL-1.1",
+  "author": {
+    "name": "Antonio Carrasco Valero",
+    "email": "carrascomdd@gmail.com"
+  },
+  "files": [
+    "js"
+  ],
+  "main": null,
+  "bin": null,
+  "man": null,
+  "repository": {
+    "type": "git",
+    "url": "http://github.com/carrascoMDD/prettytype.git"
+  },
+  "scripts": {},
+  "config": {},
+  "dependencies": {
+  },
+  "devDependencies": {
+  },
+  "bin": {
+  },
+  "scripts": {
+  },
+  "maintainers": [
+    {
+      "name": "Antonio Carrasco Valero",
+      "email": "carrascomdd@gmail.com"
+    }
+  ]
+}
