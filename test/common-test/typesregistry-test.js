@@ -123,7 +123,7 @@ describe("TypesRegistry tests", function () {
         expect( aTypesRegistrySvce._v_Title).toBe( "TypesRegistry_DefaultName");
     });
 
-    
+
 });
 
 

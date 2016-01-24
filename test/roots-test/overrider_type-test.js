@@ -33,313 +33,242 @@ permissions and limitations under the Licence.
 
 
 
-function ModuleFactory_OverriderType() {
+/// <reference path="src/common/typesregistry.js"/>
+"use strict";
 
-    'use strict';
 
 
-    return ( function( theSS_typesregistry) {
 
+describe("Overrider tests", function () {
 
-        var ModuleName     = "overrider_type";
-        var ModulePackages = "roots";
-        var ModuleFullName = ModulePackages + "/" + ModuleName;
+    var aModule_TypesRegistrySvceFactory = ModuleFactory_TypesRegistrySvce();
+    console.log( "typeof aModule_TypesRegistrySvceFactory= " + typeof aModule_TypesRegistrySvceFactory);
 
+    var aTypesRegistrySvce = aModule_TypesRegistrySvceFactory();
+    console.log( "typeof aTypesRegistrySvce= " + typeof aTypesRegistrySvce);
+    console.log( "aTypesRegistrySvce keys = " + Object.keys( aTypesRegistrySvce));
 
 
-        var aMod_definer = function() {
+    var aModule_OverriderTypeFactory = ModuleFactory_OverriderType();
+    console.log( "typeof aModule_OverriderTypeFactory= " + typeof aModule_OverriderTypeFactory);
 
 
-            if( !( typeof FG_logModLoads == "undefined") && ( typeof FG_logModLoads == "function") && FG_logModLoads()) { FG_logModLoads(ModuleFullName);}
+    var aModule_OverriderType = aModule_OverriderTypeFactory( aTypesRegistrySvce);
+    console.log( "typeof aModule_OverriderType= " + typeof aModule_OverriderTypeFactory);
 
+    var aOverriderType_title = "Overrider-Title-test"
 
+    var anOverrider = new aModule_OverriderType.Overrider_Constructor( aOverriderType_title);
+    console.log( "typeof anOverrider= " + typeof anOverrider);
+    console.log( "anOverrider keys = " + Object.keys( anOverrider));
 
 
-
-
-
-
-            var pgInitWithModuleConstants = function( theToInit) {
-
-                if( !theToInit) {
-                    return;
-                }
-                theToInit.OVERRIDER_DEFAULTTITLE = "OverriderDefaultName";
-            };
-
-
-
-            var ModuleConstants = {};
-            pgInitWithModuleConstants( ModuleConstants);
-
-
-
-
-            var pgInitFromModuleConstants = function( theToInit) {
-                if( !theToInit) {
-                    return;
-                }
-
-                for( var aGlobalName in ModuleConstants) {
-                    if( ModuleConstants.hasOwnProperty( aGlobalName)) {
-                        theToInit[ aGlobalName] = ModuleConstants[ aGlobalName];
-                    }
-                }
-            };
-
-
-
-
-
-
-            var aOverrider_Prototype = (function() {
-
-
-                var aPrototype = {};
-
-                pgInitFromModuleConstants( aPrototype);
-
-
-
-
-                aPrototype._v_Type = "Overrider";
-
-                aPrototype._v_Prototype_Overrider = aPrototype;
-
-                aPrototype._v_Module = null;
-
-
-
-
-
-                var _pInit = function( theIdentifier, theRecorder, theTitle) {
-
-                    this._pInit_Overrider( theIdentifier, theRecorder, theTitle);
-                };
-                if( _pInit){}/* CQT */
-                aPrototype._pInit = _pInit;
-
-
-
-
-
-
-                var _fTitleDefault = function( ) {
-
-                   return this.BASECMP_DEFAULTTITLE;
-                };
-                if( _fTitleDefault){}/* CQT */
-                aPrototype._fTitleDefault = _fTitleDefault;
-
-
-
-
-
-
-                var _pInit_Overrider = function( theTitle) {
-
-                    this._v_Prototype = aPrototype;
-                    this._v_Type      = this._v_Prototype._v_Type;
-                    this._v_Module    = aPrototype._v_Module;
-
-                    this._v_Title = theTitle;
-                    if( !this._v_Title) {
-                        this._v_Title = this.OVERRIDER_DEFAULTTITLE;
-                    }
-                };
-                if( _pInit_Overrider){}/* CQT */
-                aPrototype._pInit_Overrider = _pInit_Overrider;
-
-
-
-
-
-
-
-
-
-                var fIdentifyingJSON = function() {
-
-                    var aIdentifiyingJSON = {
-                        "type": this._v_Type,
-                        "id": this._v_Id
-                    };
-                    if( aIdentifiyingJSON){}/* CQT */
-                    return aIdentifiyingJSON;
-                };
-                if( fIdentifyingJSON){}/* CQT */
-                aPrototype.fIdentifyingJSON = fIdentifyingJSON;
-
-
-
-
-
-
-                var fIdentifyingString = function() {
-
-                    var aIdentifyingJSON = this.fIdentifyingJSON();
-
-                    var aIdentifyingString = JSON.stringify( aIdentifyingJSON);
-                    if( aIdentifyingString){}/* CQT */
-
-                    return aIdentifyingString;
-                };
-                if( fIdentifyingString){}/* CQT */
-                aPrototype.fIdentifyingString = fIdentifyingString;
-
-
-
-
-
-
-
-                var fIdentifyingWithTitleJSON = function() {
-
-                    var aIdentifyingJSON = this.fIdentifyingJSON();
-
-                    aIdentifyingJSON[ "title"] = this._v_Title;
-
-                    return aIdentifyingJSON;
-                };
-                if( fIdentifyingWithTitleJSON){}/* CQT */
-                aPrototype.fIdentifyingWithTitleJSON = fIdentifyingWithTitleJSON;
-
-
-
-
-
-
-                var fIdentifyingWithTitleString = function() {
-
-                    var aIdentifyingJSON = this.fIdentifyingWithTitleJSON();
-
-                    var aIdentifyingString = JSON.stringify( aIdentifyingJSON);
-                    if( aIdentifyingString){}/* CQT */
-
-                    return aIdentifyingString;
-                };
-                if( fIdentifyingWithTitleString){}/* CQT */
-                aPrototype.fIdentifyingWithTitleString = fIdentifyingWithTitleString;
-
-
-
-
-
-
-
-
-
-
-                var fToResultJSON = function( theCommonObjects, theAlready) {
-                    if( !( theAlready == null)) {
-                        if( theAlready.fAlready( this)){
-                            return this.fIdentifyingJSON();
-                        }
-                    }
-
-                    var aResultJSON = this.fIdentifyingWithTitleJSON();
-                    if( aResultJSON){}/* CQT */
-
-                    return aResultJSON;
-                };
-                if( fToResultJSON){}/* CQT */
-                aPrototype.fToResultJSON = fToResultJSON;
-
-
-
-
-
-
-
-                var pOverrideModuleVariations = function( theModuleFullName, theModuleVariations) {
-                };
-                if( pOverrideModuleVariations){}/* CQT */
-                aPrototype.pOverrideModuleVariations = pOverrideModuleVariations;
-
-
-
-
-
-
-
-                return aPrototype;
-
-            })();
-
-
-
-
-            var Overrider_Constructor = function( theTitle) {
-                this._v_Prototype = null;
-                this._v_Type = null;
-                this._v_Module = null;
-
-                this._v_Title = null;
-
-                this._pInit_Overrider( theTitle);
-            };
-            Overrider_Constructor.prototype = aOverrider_Prototype;
-
-
-
-
-
-            var Overrider_SuperPrototypeConstructor = function() {
-                this._v_Prototype = aOverrider_Prototype;
-                this._v_Type      = null;
-                this._v_Module    = null;
-
-                this._v_Title     = null;
-            };
-            Overrider_SuperPrototypeConstructor.prototype = aOverrider_Prototype;
-
-
-
-            var aModule = {
-                "Overrider_Prototype": aOverrider_Prototype,
-                "Overrider_Constructor": Overrider_Constructor,
-                "Overrider_SuperPrototypeConstructor": Overrider_SuperPrototypeConstructor
-            };
-            pgInitFromModuleConstants( aModule);
-            aModule.ModuleName     = ModuleName;
-            aModule.ModulePackages = ModulePackages;
-            aModule.ModuleFullName = ModuleFullName;
-
-            aOverrider_Prototype._v_Module = aModule;
-
-
-
-
-            return aModule;
-        };
-
-
-
-
-
-
-
-        var anExistingModule = theSS_typesregistry.fRegisteredModule( ModuleFullName);
-        if( !anExistingModule) {
-
-            var aModule = aMod_definer();
-            anExistingModule = aModule;
-
-            theSS_typesregistry.fRegisterModule( ModuleFullName, aModule);
-        }
-
-
-
-
-
-
-        return anExistingModule;
-
+    it("Has module defined", function () {
+        expect( anOverrider._v_Module).not.toBeUndefined();
     });
-}
+
+    it("Has module not null", function () {
+        expect( anOverrider._v_Module).not.toBeNull( null);
+    });
+
+    it("Has module ModuleName typesregistry", function () {
+        expect( anOverrider._v_Module.ModuleName).toBe( "overrider_type");
+    });
+
+    it("Has module ModulePackages typesregistry", function () {
+        expect( anOverrider._v_Module.ModulePackages).toBe( "roots");
+    });
+
+    it("Has module ModuleFullName common.typesregistry", function () {
+        expect( anOverrider._v_Module.ModuleFullName).toBe( "roots/overrider_type");
+    });
+
+    it("Has module Overrider_Prototype defined", function () {
+        expect( anOverrider._v_Module.Overrider_Prototype).not.toBeUndefined();
+    });
+
+    it("Has module Overrider_Prototype not null", function () {
+        expect( anOverrider._v_Module.Overrider_Prototype).not.toBeNull( null);
+    });
+
+    it("Has module Overrider_Constructor defined", function () {
+        expect( anOverrider._v_Module.Overrider_Constructor).not.toBeUndefined();
+    });
+
+    it("Has module Overrider_Constructor not null", function () {
+        expect( anOverrider._v_Module.Overrider_Constructor).not.toBeNull( null);
+    });
+
+    it("Has module Overrider_SuperPrototypeConstructor defined", function () {
+        expect( anOverrider._v_Module.Overrider_SuperPrototypeConstructor).not.toBeUndefined();
+    });
+
+    it("Has module Overrider_SuperPrototypeConstructor not null", function () {
+        expect( anOverrider._v_Module.Overrider_SuperPrototypeConstructor).not.toBeNull( null);
+    });
 
 
 
+    it("Has _v_Prototype defined", function () {
+        expect( anOverrider._v_Prototype).not.toBeUndefined();
+    });
+
+    it("Has _v_Prototype module Overrider_Prototype", function () {
+        expect( anOverrider._v_Prototype).toBe( anOverrider._v_Module.Overrider_Prototype);
+    });
+
+    it("Has _v_Prototype_Overrider defined", function () {
+        expect( anOverrider._v_Prototype_Overrider).not.toBeUndefined();
+    });
+
+    it("Has _v_Prototype_Overrider module Overrider_Prototype", function () {
+        expect( anOverrider._v_Prototype).toBe( anOverrider._v_Module.Overrider_Prototype);
+    });
+
+
+
+    it("Has _v_Type Overrider", function () {
+        expect( anOverrider._v_Type).toBe( "Overrider");
+    });
+
+    it("Has title Overrider_DefaultName", function () {
+        expect( anOverrider._v_Title).toBe( aOverriderType_title);
+    });
+
+
+
+
+    it("Has pOverrideModuleVariations defined", function () {
+        expect( anOverrider.pOverrideModuleVariations).not.toBeUndefined();
+    });
+
+    it("Has pOverrideModuleVariations typeof function", function () {
+        expect( typeof anOverrider.pOverrideModuleVariations).toBe( "function");
+    });
+
+
+
+
+
+    it("Has fIdentifyingJSON defined", function () {
+        expect( anOverrider.fIdentifyingJSON).not.toBeUndefined();
+    });
+
+    it("Has fIdentifyingJSON typeof function", function () {
+        expect( typeof anOverrider.fIdentifyingJSON).toBe( "function");
+    });
+
+    it("Has fIdentifyingJSON() not null", function () {
+        expect( anOverrider.fIdentifyingJSON()).not.toBeNull();
+    });
+
+    it("Has fIdentifyingJSON() type _v_Type", function () {
+        expect( anOverrider.fIdentifyingJSON().type).toBe( anOverrider._v_Type);
+    });
+
+    it("Has fIdentifyingJSON() id _v_Id", function () {
+        expect( anOverrider.fIdentifyingJSON().id).toBe( anOverrider._v_Id);
+    });
+
+
+
+
+    it("Has fIdentifyingString defined", function () {
+        expect( anOverrider.fIdentifyingString).not.toBeUndefined();
+    });
+
+    it("Has fIdentifyingString typeof function", function () {
+        expect( typeof anOverrider.fIdentifyingString).toBe( "function");
+    });
+
+    it("Has fIdentifyingString() not null", function () {
+        expect( anOverrider.fIdentifyingString()).not.toBeNull();
+    });
+
+    it("Has fIdentifyingString() JSON.stringify( fIdentifyingJSON())", function () {
+        expect( anOverrider.fIdentifyingString()).toBe( JSON.stringify( anOverrider.fIdentifyingJSON()));
+    });
+
+
+
+
+
+    it("Has fIdentifyingWithTitleJSON defined", function () {
+        expect( anOverrider.fIdentifyingWithTitleJSON).not.toBeUndefined();
+    });
+
+    it("Has fIdentifyingWithTitleJSON typeof function", function () {
+        expect( typeof anOverrider.fIdentifyingWithTitleJSON).toBe( "function");
+    });
+
+    it("Has fIdentifyingWithTitleJSON() not null", function () {
+        expect( anOverrider.fIdentifyingWithTitleJSON()).not.toBeNull();
+    });
+
+    it("Has fIdentifyingWithTitleJSON() type _v_Type", function () {
+        expect( anOverrider.fIdentifyingWithTitleJSON().type).toBe( anOverrider._v_Type);
+    });
+
+    it("Has fIdentifyingWithTitleJSON() id _v_Id", function () {
+        expect( anOverrider.fIdentifyingWithTitleJSON().id).toBe( anOverrider._v_Id);
+    });
+
+    it("Has fIdentifyingWithTitleJSON() id _v_Title", function () {
+        expect( anOverrider.fIdentifyingWithTitleJSON().title).toBe( anOverrider._v_Title);
+    });
+
+
+
+
+
+
+    it("Has fIdentifyingWithTitleString defined", function () {
+        expect( anOverrider.fIdentifyingWithTitleString).not.toBeUndefined();
+    });
+
+    it("Has fIdentifyingWithTitleString typeof function", function () {
+        expect( typeof anOverrider.fIdentifyingWithTitleString).toBe( "function");
+    });
+
+    it("Has fIdentifyingWithTitleString() not null", function () {
+        expect( anOverrider.fIdentifyingWithTitleString()).not.toBeNull();
+    });
+
+    it("Has fIdentifyingWithTitleString() JSON.stringify( fIdentifyingJSON())", function () {
+        expect( anOverrider.fIdentifyingWithTitleString()).toBe( JSON.stringify( anOverrider.fIdentifyingWithTitleJSON()));
+    });
+
+
+
+
+    it("Has fToResultJSON defined", function () {
+        expect( anOverrider.fToResultJSON).not.toBeUndefined();
+    });
+
+    it("Has fToResultJSON typeof function", function () {
+        expect( typeof anOverrider.fToResultJSON).toBe( "function");
+    });
+
+    it("Has fToResultJSON()not null", function () {
+        expect( anOverrider.fToResultJSON()).not.toBeNull();
+    });
+
+
+    it("Has fToResultJSON() type _v_Type", function () {
+        expect( anOverrider.fToResultJSON().type).toBe( anOverrider._v_Type);
+    });
+
+    it("Has fToResultJSON() id _v_Id", function () {
+        expect( anOverrider.fToResultJSON().id).toBe( anOverrider._v_Id);
+    });
+
+    it("Has fToResultJSON() id _v_Title", function () {
+        expect( anOverrider.fToResultJSON().title).toBe( anOverrider._v_Title);
+    });
+
+
+
+});
 
 
 

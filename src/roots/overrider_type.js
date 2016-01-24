@@ -112,24 +112,13 @@ function ModuleFactory_OverriderType() {
 
 
 
-                var _pInit = function( theIdentifier, theRecorder, theTitle) {
+                var _pInit = function( theTitle) {
 
-                    this._pInit_Overrider( theIdentifier, theRecorder, theTitle);
+                    this._pInit_Overrider( theTitle);
                 };
                 if( _pInit){}/* CQT */
                 aPrototype._pInit = _pInit;
 
-
-
-
-
-
-                var _fTitleDefault = function( ) {
-
-                   return this.BASECMP_DEFAULTTITLE;
-                };
-                if( _fTitleDefault){}/* CQT */
-                aPrototype._fTitleDefault = _fTitleDefault;
 
 
 

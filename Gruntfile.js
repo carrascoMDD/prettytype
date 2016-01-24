@@ -51,7 +51,8 @@ module.exports = function(grunt) {
             options: {
                 files: [
                     'src/**/*.js',
-                    'test/common-test/typesregistry-test.js'
+                    'test/common-test/typesregistry-test.js',
+                    'test/roots-test/overrider_type-test.js'
                 ]
             },
             unit: {
