@@ -208,6 +208,8 @@ function ModuleFactory_CommonCtrlType() {
 
                 aPrototype._v_Type = "CommonCtrl";
 
+                aPrototype._v_Prototype_CommonCtrl = aPrototype;
+
                 aPrototype._v_Module = null;
 
                 aPrototype._v_Scope = null;

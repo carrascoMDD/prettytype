@@ -164,6 +164,8 @@ function ModuleFactory_IdentifierType() {
 
                 aPrototype._v_Type = "Identifier";
 
+                aPrototype._v_Prototype_Identifier = aPrototype;
+
                 aPrototype._v_Module = null;
 
                 aPrototype._v_Id    = null;

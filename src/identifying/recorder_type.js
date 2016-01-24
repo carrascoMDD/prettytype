@@ -149,6 +149,8 @@ function ModuleFactory_RecorderType() {
 
                 aPrototype._v_Module = null;
 
+                aPrototype._v_Prototype_Recorder = aPrototype;
+
                 aPrototype._v_Identifier = null;
 
                 aPrototype._v_Id         = null;

@@ -149,6 +149,8 @@ function ModuleFactory_CommonSvceType() {
 
                 aPrototype._v_Type = "CommonSvce";
 
+                aPrototype._v_Prototype_CommonSvce = aPrototype;
+
                 aPrototype._v_Module = null;
 
 

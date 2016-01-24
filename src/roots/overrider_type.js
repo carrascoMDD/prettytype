@@ -104,6 +104,8 @@ function ModuleFactory_OverriderType() {
 
                 aPrototype._v_Type = "Overrider";
 
+                aPrototype._v_Prototype_Overrider = aPrototype;
+
                 aPrototype._v_Module = null;
 
 

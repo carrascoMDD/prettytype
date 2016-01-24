@@ -173,6 +173,9 @@ function ModuleFactory_RecordType() {
 
                 aPrototype._v_Type = "Record";
 
+                aPrototype._v_Prototype_Record = aPrototype;
+
+
                 aPrototype._v_Timestamp    = null;
                 aPrototype._v_Recorder     = null;
                 aPrototype._v_RecordId     = null;

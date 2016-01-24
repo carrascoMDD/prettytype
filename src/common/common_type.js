@@ -438,6 +438,8 @@ function ModuleFactory_CommonType() {
 
                 aPrototype._v_Type = "Common";
 
+                aPrototype._v_Prototype_Common = aPrototype;
+
                 aPrototype._v_Module = null;
 
                 aPrototype._v_Identifier = null;

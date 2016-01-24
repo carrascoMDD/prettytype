@@ -147,8 +147,10 @@ function ModuleFactory_WithProminstrType() {
                 aPrototype._v_SuperPrototype = theS_CommonType.Common_Prototype;
 
 
-
                 aPrototype._v_Type = "WithProminstr";
+
+                aPrototype._v_Prototype_WithProminstr = aPrototype;
+
 
                 aPrototype._v_Module = null;
 

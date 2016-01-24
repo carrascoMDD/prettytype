@@ -16,7 +16,11 @@
     "email": "carrascomdd@gmail.com"
   },
   "files": [
-    "js"
+    "src",
+    "build",
+    "dist",
+    "bower.json",
+    "Gruntfile.js"
   ],
   "main": null,
   "bin": {},

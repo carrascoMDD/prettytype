@@ -194,6 +194,8 @@ function ModuleFactory_ProminstrType() {
 
                 aPrototype._v_Type = "Prominstr";
 
+                aPrototype._v_Prototype_Prominstr = aPrototype;
+
                 aPrototype._v_Module = null;
 
 

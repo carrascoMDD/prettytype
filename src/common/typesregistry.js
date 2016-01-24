@@ -139,6 +139,8 @@ function ModuleFactory_TypesRegistrySvce() {
 
                 aPrototype._v_Type = "TypesRegistry";
 
+                aPrototype._v_Prototype_TypesRegistry = aPrototype;
+
                 aPrototype._v_Module = null;
 
 
