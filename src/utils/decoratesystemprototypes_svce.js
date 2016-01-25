@@ -1,7 +1,7 @@
 /*
  * decoratesystemprototypes_svce.js
  *
- * Creado @author Antonio Carrasco Valero 201412070820
+ * Created @author Antonio Carrasco Valero 201412070820
  *
  *
  ***************************************************************************

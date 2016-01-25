@@ -1,7 +1,7 @@
 /*
  * record.js
  *
- * Creado @author Antonio Carrasco Valero 201410030300
+ * Created @author Antonio Carrasco Valero 201410030300
  *
  *
  ***************************************************************************
@@ -43,7 +43,7 @@ function ModuleFactory_RecordType() {
               theSS_Overrider) {
 
 
-        var ModuleName     = "record";
+        var ModuleName     = "record_type";
         var ModulePackages = "identifying";
         var ModuleFullName = ModulePackages + "/" + ModuleName;
 
@@ -175,6 +175,8 @@ function ModuleFactory_RecordType() {
 
                 aPrototype._v_Prototype_Record = aPrototype;
 
+                aPrototype._v_Module = null;
+
 
                 aPrototype._v_Timestamp    = null;
                 aPrototype._v_Recorder     = null;
@@ -203,7 +205,9 @@ function ModuleFactory_RecordType() {
 
                 var _pInit_Record = function( theRecorder, theRecordId, theInstance, theStep, theEventKind, theData, theReason, theDetail) {
 
+                    this._v_Prototype = aPrototype;
                     this._v_Type = aPrototype._v_Type;
+                    this._v_Module    = aPrototype._v_Module;
 
                     this._v_Timestamp    = Date.now();
                     this._v_Recorder     = theRecorder;
@@ -217,6 +221,10 @@ function ModuleFactory_RecordType() {
                 };
                 if( _pInit_Record){}/* CQT */
                 aPrototype._pInit_Record = _pInit_Record;
+
+
+
+
 
 
 
@@ -283,6 +291,110 @@ function ModuleFactory_RecordType() {
                 aPrototype.fCopyWithoutException = fCopyWithoutException;
 
 
+
+
+
+
+
+                var fFullTypeNameString = function() {
+
+                    var aFullTypeName = this._v_Module.ModuleFullName + "." + this._v_Type;
+                    if( aFullTypeName){}/* CQT */
+
+                    return aFullTypeName;
+                };
+                if( fFullTypeNameString){}/* CQT */
+                aPrototype.fFullTypeNameString = fFullTypeNameString;
+
+
+
+
+
+
+                var fIdentifyingJSON = function() {
+
+                    var aIdentifiyingJSON = {
+                        "module": this._v_Module.ModuleFullName,
+                        "type": this._v_Type,
+                        "id":   this._v_RecordId
+                    };
+                    if( aIdentifiyingJSON){}/* CQT */
+                    return aIdentifiyingJSON;
+                };
+                if( fIdentifyingJSON){}/* CQT */
+                aPrototype.fIdentifyingJSON = fIdentifyingJSON;
+
+
+
+
+
+
+                var fIdentifyingString = function() {
+
+                    var aIdentifyingJSON = this.fIdentifyingJSON();
+
+                    var aIdentifyingString = JSON.stringify( aIdentifyingJSON);
+                    if( aIdentifyingString){}/* CQT */
+
+                    return aIdentifyingString;
+                };
+                if( fIdentifyingString){}/* CQT */
+                aPrototype.fIdentifyingString = fIdentifyingString;
+
+
+
+
+
+
+
+                var fIdentifyingWithTitleJSON = function() {
+
+                    var aIdentifyingJSON = this.fIdentifyingJSON();
+
+                    aIdentifyingJSON[ "title"] = new Date( this._v_Timestamp).toISOString();
+
+                    return aIdentifyingJSON;
+                };
+                if( fIdentifyingWithTitleJSON){}/* CQT */
+                aPrototype.fIdentifyingWithTitleJSON = fIdentifyingWithTitleJSON;
+
+
+
+
+
+
+                var fIdentifyingWithTitleString = function() {
+
+                    var aIdentifyingJSON = this.fIdentifyingWithTitleJSON();
+
+                    var aIdentifyingString = JSON.stringify( aIdentifyingJSON);
+                    if( aIdentifyingString){}/* CQT */
+
+                    return aIdentifyingString;
+                };
+                if( fIdentifyingWithTitleString){}/* CQT */
+                aPrototype.fIdentifyingWithTitleString = fIdentifyingWithTitleString;
+
+
+
+
+
+
+
+                var fToResultJSON = function( theCommonObjects, theAlready) {
+                    if( !( theAlready == null)) {
+                        if( theAlready.fAlready( this)){
+                            return this.fIdentifyingJSON();
+                        }
+                    }
+
+                    var aResultJSON = this.fIdentifyingWithTitleJSON();
+                    if( aResultJSON){}/* CQT */
+
+                    return aResultJSON;
+                };
+                if( fToResultJSON){}/* CQT */
+                aPrototype.fToResultJSON = fToResultJSON;
 
 
 
@@ -1289,8 +1401,9 @@ function ModuleFactory_RecordType() {
 
 
             var Record_Constructor = function( theRecorder, theRecordId, theInstance, theStep, theEventKind, theData, theReason, theDetail) {
-
+                this._v_Prototype = null;
                 this._v_Type = null;
+                this._v_Module    = null;
 
                 this._v_Recorder   = null;
                 this._v_RecordId   = null;
@@ -1310,8 +1423,9 @@ function ModuleFactory_RecordType() {
 
 
             var Record_SuperPrototypeConstructor = function() {
-
+                this._v_Prototype = aRecord_Prototype;
                 this._v_Type = null;
+                this._v_Module    = null;
 
                 this._v_Recorder   = null;
                 this._v_RecordId   = null;

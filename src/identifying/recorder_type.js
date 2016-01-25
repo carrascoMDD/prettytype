@@ -1,7 +1,7 @@
 /*
  * recorder_type.js
  *
- * Creado @author Antonio Carrasco Valero 201410030300
+ * Created @author Antonio Carrasco Valero 201410030300
  *
  *
  ***************************************************************************
@@ -40,14 +40,14 @@ function ModuleFactory_RecorderType() {
     'use strict';
 
     return ( function( theSS_typesregistry,
-          theSS_Overrider,
-          theSS_IdentifierSvce,
-          theSS_IdentifierType,
-          theSS_RecordType) {
+                       theSS_Overrider,
+                       theSS_IdentifierSvce,
+                       theSS_IdentifierType,
+                       theSS_RecordType) {
 
 
         var ModuleName     = "recorder_type";
-        var ModulePackages = "components";
+        var ModulePackages = "identifying";
         var ModuleFullName = ModulePackages + "/" + ModuleName;
 
 
@@ -217,6 +217,19 @@ function ModuleFactory_RecorderType() {
 
 
 
+
+
+
+
+                var fFullTypeNameString = function() {
+
+                    var aFullTypeName = this._v_Module.ModuleFullName + "." + this._v_Type;
+                    if( aFullTypeName){}/* CQT */
+
+                    return aFullTypeName;
+                };
+                if( fFullTypeNameString){}/* CQT */
+                aPrototype.fFullTypeNameString = fFullTypeNameString;
 
 
 

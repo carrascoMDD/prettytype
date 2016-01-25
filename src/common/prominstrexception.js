@@ -1,7 +1,7 @@
 /*
  * prominstrexception.js
  *
- * Creado @author Antonio Carrasco Valero 201410141126
+ * Created @author Antonio Carrasco Valero 201410141126
  *
  *
  ***************************************************************************

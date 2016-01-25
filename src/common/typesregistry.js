@@ -1,7 +1,7 @@
 /*
  * typesregistry.js
  *
- * Creado @author Antonio Carrasco Valero 201409301309
+ * Created @author Antonio Carrasco Valero 201409301309
  *
  *
  ***************************************************************************
@@ -154,70 +154,12 @@ function ModuleFactory_TypesRegistrySvce() {
 
 
 
-            var _pInit = function( theTitle) {
+                var _pInit = function( theTitle) {
 
-                this._pInit_TypesRegistry( theTitle);
-            };
-            if( _pInit){}/* CQT */
-            aPrototype._pInit = _pInit;
-
-
-
-
-
-
-
-            var _pInit_TypesRegistry = function( theTitle) {
-
-                this._v_Prototype = aPrototype;
-                this._v_Type      = this._v_Prototype._v_Type;
-                this._v_Module    = aPrototype._v_Module;
-
-                this._v_Title = theTitle;
-                if( !this._v_Title) {
-                    this._v_Title = this.TYPESREGISTRYDEFAULTNAME;
-                }
-
-                this._v_ModulesByFullName = { };
-            };
-            if( _pInit_TypesRegistry){}/* CQT */
-            aPrototype._pInit_TypesRegistry = _pInit_TypesRegistry;
-
-
-
-
-
-
-
-
-
-            var fIdentifyingJSON = function() {
-
-                var aIdentifiyingJSON = {
-                    "type": this._v_Type
+                    this._pInit_TypesRegistry( theTitle);
                 };
-                if( aIdentifiyingJSON){}/* CQT */
-                return aIdentifiyingJSON;
-            };
-            if( fIdentifyingJSON){}/* CQT */
-            aPrototype.fIdentifyingJSON = fIdentifyingJSON;
-
-
-
-
-
-
-            var fIdentifyingString = function() {
-
-                var aIdentifyingJSON = this.fIdentifyingJSON();
-
-                var aIdentifyingString = JSON.stringify( aIdentifyingJSON);
-                if( aIdentifyingString){}/* CQT */
-
-                return aIdentifyingString;
-            };
-            if( fIdentifyingString){}/* CQT */
-            aPrototype.fIdentifyingString = fIdentifyingString;
+                if( _pInit){}/* CQT */
+                aPrototype._pInit = _pInit;
 
 
 
@@ -225,114 +167,185 @@ function ModuleFactory_TypesRegistrySvce() {
 
 
 
-            var fIdentifyingWithTitleJSON = function() {
+                var _pInit_TypesRegistry = function( theTitle) {
 
-                var aIdentifyingJSON = this.fIdentifyingJSON();
+                    this._v_Prototype = aPrototype;
+                    this._v_Type      = this._v_Prototype._v_Type;
+                    this._v_Module    = aPrototype._v_Module;
 
-                aIdentifyingJSON[ "title"] = this._v_Title;
-
-                return aIdentifyingJSON;
-            };
-            if( fIdentifyingWithTitleJSON){}/* CQT */
-            aPrototype.fIdentifyingWithTitleJSON = fIdentifyingWithTitleJSON;
-
-
-
-
-
-
-            var fIdentifyingWithTitleString = function() {
-
-                var aIdentifyingJSON = this.fIdentifyingWithTitleJSON();
-
-                var aIdentifyingString = JSON.stringify( aIdentifyingJSON);
-                if( aIdentifyingString){}/* CQT */
-
-                return aIdentifyingString;
-            };
-            if( fIdentifyingWithTitleString){}/* CQT */
-            aPrototype.fIdentifyingWithTitleString = fIdentifyingWithTitleString;
-
-
-
-
-
-
-
-
-
-
-            var fToResultJSON = function( theCommonObjects, theAlready) {
-                if( !( theAlready == null)) {
-                    if( theAlready.fAlready( this)){
-                        return this.fIdentifyingJSON();
+                    this._v_Title = theTitle;
+                    if( !this._v_Title) {
+                        this._v_Title = this.TYPESREGISTRYDEFAULTNAME;
                     }
-                }
 
-                var aResultJSON = this.fIdentifyingWithTitleJSON();
-                if( aResultJSON){}/* CQT */
-
-                return aResultJSON;
-            };
-            if( fToResultJSON){}/* CQT */
-            aPrototype.fToResultJSON = fToResultJSON;
+                    this._v_ModulesByFullName = { };
+                };
+                if( _pInit_TypesRegistry){}/* CQT */
+                aPrototype._pInit_TypesRegistry = _pInit_TypesRegistry;
 
 
 
 
 
 
+                var fFullTypeNameString = function() {
 
+                    var aFullTypeName = this._v_Module.ModuleFullName + "." + this._v_Type;
+                    if( aFullTypeName){}/* CQT */
 
-
-
-
-            var fRegisterModule = function( theModule) {
-                if( !theModule) {
-                    return false;
-                }
-
-                var aModuleFullName = theModule.ModuleFullName;
-                if( !aModuleFullName) {
-                    return false;
-                }
-
-                var anAlreadyRegisteredModule =  this._v_ModulesByFullName[ aModuleFullName];
-                if( !anAlreadyRegisteredModule) {
-                    console.log( "\nAttempt to register another module " + aModuleFullName + "\n");
-                    return false;
-                }
-
-
-                this._v_ModulesByFullName[ aModuleFullName] = theModule;
-
-                return true;
-            };
-            if( fRegisterModule){}/* CQT */
-            aPrototype.fRegisterModule = fRegisterModule;
+                    return aFullTypeName;
+                };
+                if( fFullTypeNameString){}/* CQT */
+                aPrototype.fFullTypeNameString = fFullTypeNameString;
 
 
 
 
 
 
+                var fIdentifyingJSON = function() {
+
+                    var aIdentifiyingJSON = {
+                        "module": this._v_Module.ModuleFullName,
+                        "type": this._v_Type
+                    };
+                    if( aIdentifiyingJSON){}/* CQT */
+                    return aIdentifiyingJSON;
+                };
+                if( fIdentifyingJSON){}/* CQT */
+                aPrototype.fIdentifyingJSON = fIdentifyingJSON;
 
 
-            var fRegisteredModule = function( theModuleFullName) {
-                if( !theModuleFullName) {
-                    return null;
-                }
 
 
-                var aRegisteredModule =  this._v_ModulesByFullName[ theModuleFullName];
-                if( !aRegisteredModule) {
-                    return null;
-                }
 
-                return aRegisteredModule;
-            };
-            if( fRegisteredModule){}/* CQT */
-            aPrototype.fRegisteredModule = fRegisteredModule;
+
+                var fIdentifyingString = function() {
+
+                    var aIdentifyingJSON = this.fIdentifyingJSON();
+
+                    var aIdentifyingString = JSON.stringify( aIdentifyingJSON);
+                    if( aIdentifyingString){}/* CQT */
+
+                    return aIdentifyingString;
+                };
+                if( fIdentifyingString){}/* CQT */
+                aPrototype.fIdentifyingString = fIdentifyingString;
+
+
+
+
+
+
+
+                var fIdentifyingWithTitleJSON = function() {
+
+                    var aIdentifyingJSON = this.fIdentifyingJSON();
+
+                    aIdentifyingJSON[ "title"] = this._v_Title;
+
+                    return aIdentifyingJSON;
+                };
+                if( fIdentifyingWithTitleJSON){}/* CQT */
+                aPrototype.fIdentifyingWithTitleJSON = fIdentifyingWithTitleJSON;
+
+
+
+
+
+
+                var fIdentifyingWithTitleString = function() {
+
+                    var aIdentifyingJSON = this.fIdentifyingWithTitleJSON();
+
+                    var aIdentifyingString = JSON.stringify( aIdentifyingJSON);
+                    if( aIdentifyingString){}/* CQT */
+
+                    return aIdentifyingString;
+                };
+                if( fIdentifyingWithTitleString){}/* CQT */
+                aPrototype.fIdentifyingWithTitleString = fIdentifyingWithTitleString;
+
+
+
+
+
+
+
+
+
+
+                var fToResultJSON = function( theCommonObjects, theAlready) {
+                    if( !( theAlready == null)) {
+                        if( theAlready.fAlready( this)){
+                            return this.fIdentifyingJSON();
+                        }
+                    }
+
+                    var aResultJSON = this.fIdentifyingWithTitleJSON();
+                    if( aResultJSON){}/* CQT */
+
+                    return aResultJSON;
+                };
+                if( fToResultJSON){}/* CQT */
+                aPrototype.fToResultJSON = fToResultJSON;
+
+
+
+
+
+
+
+
+
+
+
+                var fRegisterModule = function( theModule) {
+                    if( !theModule) {
+                        return false;
+                    }
+
+                    var aModuleFullName = theModule.ModuleFullName;
+                    if( !aModuleFullName) {
+                        return false;
+                    }
+
+                    var anAlreadyRegisteredModule =  this._v_ModulesByFullName[ aModuleFullName];
+                    if( !anAlreadyRegisteredModule) {
+                        console.log( "\nAttempt to register another module " + aModuleFullName + "\n");
+                        return false;
+                    }
+
+
+                    this._v_ModulesByFullName[ aModuleFullName] = theModule;
+
+                    return true;
+                };
+                if( fRegisterModule){}/* CQT */
+                aPrototype.fRegisterModule = fRegisterModule;
+
+
+
+
+
+
+
+
+                var fRegisteredModule = function( theModuleFullName) {
+                    if( !theModuleFullName) {
+                        return null;
+                    }
+
+
+                    var aRegisteredModule =  this._v_ModulesByFullName[ theModuleFullName];
+                    if( !aRegisteredModule) {
+                        return null;
+                    }
+
+                    return aRegisteredModule;
+                };
+                if( fRegisteredModule){}/* CQT */
+                aPrototype.fRegisteredModule = fRegisteredModule;
 
 
 

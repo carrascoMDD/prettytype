@@ -1,13 +1,13 @@
 /*
- * common_svce_type.js
+ * common_svce_type-test.js
  *
- * Creado @author Antonio Carrasco Valero 201409301309
+ * Created @author Antonio Carrasco Valero 201601250130
  *
  *
  ***************************************************************************
 
- Copyright 2014 2015 2016 Antonio Carrasco Valero
- Javascript for core modules including a base prototype and prototypes hierarchy, intended to be reused on the Browser as core for i.e. Angular Controllers and Services, as in the uiwire component. Licensed under EUPL  http://www.uiwire.org
+ Copyright 2016 Antonio Carrasco Valero
+ Jasmine tests in Javascript for core modules including a base prototype and prototypes hierarchy, intended to be reused on the Browser as core for i.e. Angular Controllers and Services, as in the uiwire component. Licensed under EUPL  http://www.uiwire.org
 
 Licensed under the EUPL, Version 1.1 only (the "Licence");
 You may not use this work except in compliance with the
@@ -33,125 +33,138 @@ permissions and limitations under the Licence.
 
 
 
-function ModuleFactory_CommonSvceType() {
 
-    'use strict';
 
-    return ( function(
-              theSS_typesregistry,
-              theSS_Overrider,
-              theSS_WithProminstrType,
-              theSS_AppBaseURLSvce,
-              theSS_APIBaseURLSvce) {
 
+/// <reference path="src/common/common_svce_type.js"/>
+"use strict";
 
-        var ModuleName     = "commonsvce_type";
-        var ModulePackages = "common";
-        var ModuleFullName = ModulePackages + "/" + ModuleName;
 
 
 
-        var aMod_definer = function( theS_Overrider,
-                                     theS_WithProminstrType,
-                                     theS_AppBaseURLSvce,
-                                     theS_APIBaseURLSvce) {
+describe("CommonSvce tests", function () {
 
 
-            if( !( typeof FG_logModLoads == "undefined") && ( typeof FG_logModLoads == "function") && FG_logModLoads()) { FG_logModLoads(ModuleFullName);}
+    var aModule_TypesRegistrySvceFactory = ModuleFactory_TypesRegistrySvce();
+    console.log( "typeof aModule_TypesRegistrySvceFactory= " + typeof aModule_TypesRegistrySvceFactory);
 
+    var aTypesRegistrySvce = aModule_TypesRegistrySvceFactory();
+    console.log( "typeof aTypesRegistrySvce= " + typeof aTypesRegistrySvce);
+    console.log( "aTypesRegistrySvce keys = " + Object.keys( aTypesRegistrySvce));
 
 
 
 
+    var aModule_OverriderTypeFactory = ModuleFactory_OverriderType();
+    console.log( "typeof aModule_OverriderTypeFactory= " + typeof aModule_OverriderTypeFactory);
 
+    var aModule_OverriderType = aModule_OverriderTypeFactory( aTypesRegistrySvce);
+    console.log( "typeof aModule_OverriderType= " + typeof aModule_OverriderType);
 
+    var aOverriderType_title = "Overrider-Title-test";
 
-            var pgInitWithModuleVariations = function( theToInit) {
+    var anOverrider = new aModule_OverriderType.Overrider_Constructor( aOverriderType_title);
+    console.log( "typeof anOverrider= " + typeof anOverrider);
+    console.log( "anOverrider keys = " + Object.keys( anOverrider));
 
-                if( !theToInit) {
-                }
-            };
 
 
 
 
+    var aModule_IdentifierTypeFactory = ModuleFactory_IdentifierType();
+    console.log( "typeof aModule_IdentifierTypeFactory= " + typeof aModule_IdentifierTypeFactory);
 
-            var pgInitFromModuleVariations = function( theToInit) {
-                if( !theToInit) {
-                    return;
-                }
+    var aModule_IdentifierType = aModule_IdentifierTypeFactory( aTypesRegistrySvce, anOverrider);
+    console.log( "typeof aModule_IdentifierType= " + typeof aModule_IdentifierType);
 
-                for( var aGlobalName in ModuleVariations) {
-                    if( ModuleVariations.hasOwnProperty( aGlobalName)) {
-                        theToInit[ aGlobalName] = ModuleVariations[ aGlobalName];
-                    }
-                }
-            };
+    var aIdentifierType_title = "Identifier-Title-test";
 
+    var anIdentifier = new aModule_IdentifierType.Identifier_Constructor( aIdentifierType_title);
+    console.log( "typeof anIdentifier= " + typeof anIdentifier);
+    console.log( "anIdentifier keys = " + Object.keys( anIdentifier));
 
-            var ModuleVariations = { };
-            pgInitWithModuleVariations( ModuleVariations);
-            theS_Overrider.pOverrideModuleVariations( ModuleFullName, ModuleVariations);
 
 
 
+    var aModule_RecordTypeFactory = ModuleFactory_RecordType();
+    console.log( "typeof aModule_RecordTypeFactory= " + typeof aModule_RecordTypeFactory);
 
+    var aModule_RecordType = aModule_RecordTypeFactory( aTypesRegistrySvce, anOverrider);
+    console.log( "typeof aModule_RecordType= " + typeof aModule_RecordType);
 
 
 
 
-            var pgInitWithModuleConstants = function( theToInit) {
+    var aModule_RecorderTypeFactory = ModuleFactory_RecorderType();
+    console.log( "typeof aModule_RecorderTypeFactory= " + typeof aModule_RecorderTypeFactory);
 
-                if( !theToInit) {
-                    return;
-                }
-                theToInit.COMMONSVCE_DEFAULTTITLE = "SvceDefaultName";
-            };
+    var aModule_RecorderType = aModule_RecorderTypeFactory(
+        aTypesRegistrySvce,
+        anOverrider,
+        anIdentifier,
+        aModule_IdentifierType,
+        aModule_RecordType
+    );
+    console.log( "typeof aModule_RecorderType= " + typeof aModule_RecorderType);
 
+    var aRecorderType_title = "Recorder-Title-test";
 
+    var aRecorder = new aModule_RecorderType.Recorder_Constructor( aRecorderType_title);
+    console.log( "typeof aRecorder= " + typeof aRecorder);
+    console.log( "aRecorder keys = " + Object.keys( aRecorder));
 
-            var ModuleConstants = {};
-            pgInitFromModuleVariations( ModuleConstants);
-            pgInitWithModuleConstants( ModuleConstants);
 
 
 
 
-            var pgInitFromModuleConstants = function( theToInit) {
-                if( !theToInit) {
-                    return;
-                }
+    var aModule_CommonTypeFactory = ModuleFactory_CommonType();
+    console.log( "typeof aModule_CommonTypeFactory= " + typeof aModule_CommonTypeFactory);
 
-                for( var aGlobalName in ModuleConstants) {
-                    if( ModuleConstants.hasOwnProperty( aGlobalName)) {
-                        theToInit[ aGlobalName] = ModuleConstants[ aGlobalName];
-                    }
-                }
-            };
+    var aModule_CommonType = aModule_CommonTypeFactory(
+        aTypesRegistrySvce,
+        anOverrider,
+        anIdentifier,
+        aRecorder
+    );
+    console.log( "typeof aModule_CommonType= " + typeof aModule_CommonType);
 
 
 
 
 
+    var aModule_QngMockFactory = ModuleFactory_QngMock();
+    console.log( "typeof aModule_QngMockFactory= " + typeof aModule_QngMockFactory);
 
-            var aCommonSvce_Prototype = (function() {
+    var aModule_QngMock = aModule_QngMockFactory();
+    console.log( "typeof aModule_QngMock= " + typeof aModule_QngMock);
 
+    var aQngMock = new aModule_QngMock.QngMock_Constructor();
+    console.log( "typeof aQngMock= " + typeof aQngMock);
+    console.log( "aQngMock keys = " + Object.keys( aQngMock));
 
 
-                var aPrototype = new theS_WithProminstrType.WithProminstr_SuperPrototypeConstructor();
 
-                pgInitFromModuleConstants( aPrototype);
 
 
-                aPrototype._v_SuperPrototype = theS_WithProminstrType.WithProminstr_Prototype;
+    var aModule_ProminstrTypeFactory = ModuleFactory_ProminstrType();
+    console.log( "typeof aModule_ProminstrTypeFactory= " + typeof aModule_ProminstrTypeFactory);
 
 
+    var aModule_ProminstrType = aModule_ProminstrTypeFactory(
+        aTypesRegistrySvce,
+        anOverrider,
+        aModule_CommonType,
+        aModule_IdentifierType,
+        aQngMock
+    );
+    console.log( "typeof aModule_ProminstrType= " + typeof aModule_ProminstrType);
 
-                aPrototype._v_Type = "CommonSvce";
+    var aProminstrType_title = "Prominstr-Title-test";
 
-                aPrototype._v_Prototype_CommonSvce = aPrototype;
+    var aProminstr = new aModule_ProminstrType.Prominstr_Constructor( aProminstrType_title);
+    console.log( "typeof aProminstr= " + typeof aProminstr);
+    console.log( "aProminstr keys = " + Object.keys( aProminstr));
 
-                aPrototype._v_Module = null;
 
 
 
@@ -159,13 +172,17 @@ function ModuleFactory_CommonSvceType() {
 
 
 
+    var aModule_WithProminstrTypeFactory = ModuleFactory_WithProminstrType();
+    console.log( "typeof aModule_WithProminstrTypeFactory= " + typeof aModule_WithProminstrTypeFactory);
 
-                var _pInit = function( theTitle, theIdentifier, theRecorder) {
 
-                    this._pInit_CommonSvce( theTitle, theIdentifier, theRecorder);
-                };
-                if( _pInit){}/* CQT */
-                aPrototype._pInit = _pInit;
+    var aModule_WithProminstrType = aModule_WithProminstrTypeFactory(
+        aTypesRegistrySvce,
+        anOverrider,
+        aModule_CommonType,
+        aProminstr
+    );
+    console.log( "typeof aModule_WithProminstrType= " + typeof aModule_WithProminstrType);
 
 
 
@@ -173,156 +190,338 @@ function ModuleFactory_CommonSvceType() {
 
 
 
-                var _fTitleDefault = function( ) {
 
-                    return this.COMMONSVCE_DEFAULTTITLE;
-                };
-                if( _fTitleDefault){}/* CQT */
-                aPrototype._fTitleDefault = _fTitleDefault;
+    var aModule_AppBaseURLFactory = ModuleFactory_AppBaseURLMock();
+    console.log( "typeof aModule_AppBaseURLFactory= " + typeof aModule_AppBaseURLFactory);
 
 
+    var aModule_AppBaseURL = aModule_AppBaseURLFactory(
+        aTypesRegistrySvce,
+        anOverrider,
+        aModule_CommonType,
+        aModule_IdentifierType,
+        aQngMock
+    );
+    console.log( "typeof aModule_AppBaseURL= " + typeof aModule_AppBaseURL);
 
+    var aAppBaseURL_title = "Prominstr-Title-test";
 
+    var anAppBaseURLSvce = new aModule_AppBaseURL.AppBaseURLMock_Constructor( aAppBaseURL_title);
+    console.log( "typeof anAppBaseURLSvce= " + typeof anAppBaseURLSvce);
+    console.log( "anAppBaseURLSvce keys = " + Object.keys( anAppBaseURLSvce));
 
 
-                var _pInit_CommonSvce = function( theTitle, theIdentifier, theRecorder) {
 
-                    /* Delegate on super prototype initialization */
-                    aPrototype._v_SuperPrototype._pInit_WithProminstr.apply( this, [ theTitle, theIdentifier, theRecorder]);
 
-                    this._v_Prototype = aPrototype;
-                    this._v_Type      = this._v_Prototype._v_Type;
-                    this._v_Module    = aPrototype._v_Module;
-                };
-                if( _pInit_CommonSvce){}/* CQT */
-                aPrototype._pInit_CommonSvce = _pInit_CommonSvce;
 
+    var aModule_APIBaseURLFactory = ModuleFactory_APIBaseURLMock();
+    console.log( "typeof aModule_APIBaseURLFactory= " + typeof aModule_APIBaseURLFactory);
 
 
+    var aModule_APIBaseURL = aModule_APIBaseURLFactory(
+        aTypesRegistrySvce,
+        anOverrider,
+        aModule_CommonType,
+        aModule_IdentifierType,
+        aQngMock
+    );
+    console.log( "typeof aModule_APIBaseURL= " + typeof aModule_APIBaseURL);
 
+    var aAPIBaseURL_title = "Prominstr-Title-test";
 
+    var anAPIBaseURLSvce = new aModule_APIBaseURL.APIBaseURLMock_Constructor( aAPIBaseURL_title);
+    console.log( "typeof anAPIBaseURLSvce= " + typeof anAPIBaseURLSvce);
+    console.log( "anAPIBaseURLSvce keys = " + Object.keys( anAPIBaseURLSvce));
 
 
-                var fAppBaseURL = function() {
 
-                    var anAppBaseURL = theS_AppBaseURLSvce.fAppBaseURL();
-                    if( anAppBaseURL){}/* CQT */
 
-                    return anAppBaseURL;
-                };
-                if( fAppBaseURL){}/* CQT */
-                aPrototype.fAppBaseURL = fAppBaseURL;
 
 
+    var aModule_CommonSvceTypeFactory = ModuleFactory_CommonSvceType();
+    console.log( "typeof aModule_CommonSvceTypeFactory= " + typeof aModule_CommonSvceTypeFactory);
 
 
+    var aModule_CommonSvceType = aModule_CommonSvceTypeFactory(
+        aTypesRegistrySvce,
+        anOverrider,
+        aModule_WithProminstrType,
+        anAppBaseURLSvce,
+        anAPIBaseURLSvce
+    );
+    console.log( "typeof aModule_CommonSvceType= " + typeof aModule_CommonSvceType);
 
-                var fAPIBaseURL = function() {
+    var aCommonSvceType_title = "CommonSvce-Title-test";
 
-                    var anAppBaseURL = theS_APIBaseURLSvce.fAPIBaseURL();
-                    if( anAppBaseURL){}/* CQT */
+    var aCommonSvce = new aModule_CommonSvceType.CommonSvce_Constructor( aCommonSvceType_title);
+    console.log( "typeof aCommonSvce= " + typeof aCommonSvce);
+    console.log( "aCommonSvce keys = " + Object.keys( aCommonSvce));
 
-                    return anAppBaseURL;
-                };
-                if( fAPIBaseURL){}/* CQT */
-                aPrototype.fAPIBaseURL = fAPIBaseURL;
 
 
 
 
-
-
-
-
-
-                return aPrototype;
-
-            })();
-
-
-
-
-            var CommonSvce_Constructor = function( theTitle, theIdentifier, theRecorder) {
-
-                /* Keep handy reference to super-prototype for super method invocation */
-                this._v_SuperPrototype = theS_WithProminstrType.WithProminstr_Prototype;
-
-                this._v_Prototype = null;
-                this._v_Type = null;
-                this._v_Module = null;
-
-                this._pInit_CommonSvce( theTitle, theIdentifier, theRecorder);
-            };
-            CommonSvce_Constructor.prototype = aCommonSvce_Prototype;
-
-
-
-
-
-            var CommonSvce_SuperPrototypeConstructor = function() {
-
-                /* Keep handy reference to super-prototype for super method invocation */
-                this._v_SuperPrototype = theS_WithProminstrType.WithProminstr_Prototype;
-
-                this._v_Prototype = aCommonSvce_Prototype;
-                this._v_Type      = null;
-                this._v_Module    = null;
-            };
-            CommonSvce_SuperPrototypeConstructor.prototype = aCommonSvce_Prototype;
-
-
-
-            var aModule = {
-                "CommonSvce_Prototype": aCommonSvce_Prototype,
-                "CommonSvce_Constructor": CommonSvce_Constructor,
-                "CommonSvce_SuperPrototypeConstructor": CommonSvce_SuperPrototypeConstructor
-            };
-            pgInitFromModuleConstants( aModule);
-            aModule.ModuleName     = ModuleName;
-            aModule.ModulePackages = ModulePackages;
-            aModule.ModuleFullName = ModuleFullName;
-
-            aCommonSvce_Prototype._v_Module = aModule;
-
-
-
-
-
-            return aModule;
-        };
-
-
-
-
-
-
-        var anExistingModule = theSS_typesregistry.fRegisteredModule( ModuleFullName);
-        if( !anExistingModule) {
-
-            var aModule = aMod_definer(
-                theSS_Overrider,
-                theSS_WithProminstrType,
-                theSS_AppBaseURLSvce,
-                theSS_APIBaseURLSvce
-            );
-            anExistingModule = aModule;
-
-            theSS_typesregistry.fRegisterModule( ModuleFullName, aModule);
-        }
-
-
-
-
-
-        return anExistingModule;
-
+    it("Has module defined", function () {
+        expect( aCommonSvce._v_Module).not.toBeUndefined();
     });
-}
+
+    it("Has module not null", function () {
+        expect( aCommonSvce._v_Module).not.toBeNull( null);
+    });
+
+    it("Has module ModuleName common_svce_type", function () {
+        expect( aCommonSvce._v_Module.ModuleName).toBe( "common_svce_type");
+    });
+
+    it("Has module ModulePackages common", function () {
+        expect( aCommonSvce._v_Module.ModulePackages).toBe( "common");
+    });
+
+    it("Has module ModuleFullName common.commonctrl", function () {
+        expect( aCommonSvce._v_Module.ModuleFullName).toBe( "common/common_svce_type");
+    });
+
+    it("Has module CommonSvce_Prototype defined", function () {
+        expect( aCommonSvce._v_Module.CommonSvce_Prototype).not.toBeUndefined();
+    });
+
+    it("Has module CommonSvce_Prototype not null", function () {
+        expect( aCommonSvce._v_Module.CommonSvce_Prototype).not.toBeNull( null);
+    });
+
+    it("Has module CommonSvce_Constructor defined", function () {
+        expect( aCommonSvce._v_Module.CommonSvce_Constructor).not.toBeUndefined();
+    });
+
+    it("Has module CommonSvce_Constructor not null", function () {
+        expect( aCommonSvce._v_Module.CommonSvce_Constructor).not.toBeNull( null);
+    });
+
+    it("Has module CommonSvce_SuperPrototypeConstructor defined", function () {
+        expect( aCommonSvce._v_Module.CommonSvce_SuperPrototypeConstructor).not.toBeUndefined();
+    });
+
+    it("Has module CommonSvce_SuperPrototypeConstructor not null", function () {
+        expect( aCommonSvce._v_Module.CommonSvce_SuperPrototypeConstructor).not.toBeNull( null);
+    });
+
+
+
+    it("Has _v_Prototype defined", function () {
+        expect( aCommonSvce._v_Prototype).not.toBeUndefined();
+    });
+
+    it("Has _v_Prototype module CommonSvce_Prototype", function () {
+        expect( aCommonSvce._v_Prototype).toBe( aCommonSvce._v_Module.CommonSvce_Prototype);
+    });
+
+    it("Has _v_Prototype_CommonSvce defined", function () {
+        expect( aCommonSvce._v_Prototype_CommonSvce).not.toBeUndefined();
+    });
+
+    it("Has _v_Prototype_CommonSvce module CommonSvce_Prototype", function () {
+        expect( aCommonSvce._v_Prototype).toBe( aCommonSvce._v_Module.CommonSvce_Prototype);
+    });
+
+
+
+    it("Has _v_Type CommonSvce", function () {
+        expect( aCommonSvce._v_Type).toBe( "CommonSvce");
+    });
+
+    it("Has title CommonSvce_DefaultName", function () {
+        expect( aCommonSvce._v_Title).toBe( aCommonSvceType_title);
+    });
+
+
+
+    it("Has fFullTypeNameString defined", function () {
+        expect( aCommonSvce.fFullTypeNameString).not.toBeUndefined();
+    });
+
+    it("Has fFullTypeNameString typeof function", function () {
+        expect( typeof aCommonSvce.fFullTypeNameString).toBe( "function");
+    });
+
+
+
+
+
+    it("Has fIdentifyingJSON defined", function () {
+        expect( aCommonSvce.fIdentifyingJSON).not.toBeUndefined();
+    });
+
+    it("Has fIdentifyingJSON typeof function", function () {
+        expect( typeof aCommonSvce.fIdentifyingJSON).toBe( "function");
+    });
+
+    it("Has fIdentifyingJSON() not null", function () {
+        expect( aCommonSvce.fIdentifyingJSON()).not.toBeNull();
+    });
+
+    it("Has fIdentifyingJSON() type _v_Type", function () {
+        expect( aCommonSvce.fIdentifyingJSON().type).toBe( aCommonSvce._v_Type);
+    });
+
+    it("Has fIdentifyingJSON() id _v_Id", function () {
+        expect( aCommonSvce.fIdentifyingJSON().id).toBe( aCommonSvce._v_Id);
+    });
+
+
+
+
+    it("Has fIdentifyingString defined", function () {
+        expect( aCommonSvce.fIdentifyingString).not.toBeUndefined();
+    });
+
+    it("Has fIdentifyingString typeof function", function () {
+        expect( typeof aCommonSvce.fIdentifyingString).toBe( "function");
+    });
+
+    it("Has fIdentifyingString() not null", function () {
+        expect( aCommonSvce.fIdentifyingString()).not.toBeNull();
+    });
+
+    it("Has fIdentifyingString() JSON.stringify( fIdentifyingJSON())", function () {
+        expect( aCommonSvce.fIdentifyingString()).toBe( JSON.stringify( aCommonSvce.fIdentifyingJSON()));
+    });
+
+
+
+
+
+    it("Has fIdentifyingWithTitleJSON defined", function () {
+        expect( aCommonSvce.fIdentifyingWithTitleJSON).not.toBeUndefined();
+    });
+
+    it("Has fIdentifyingWithTitleJSON typeof function", function () {
+        expect( typeof aCommonSvce.fIdentifyingWithTitleJSON).toBe( "function");
+    });
+
+    it("Has fIdentifyingWithTitleJSON() not null", function () {
+        expect( aCommonSvce.fIdentifyingWithTitleJSON()).not.toBeNull();
+    });
+
+    it("Has fIdentifyingWithTitleJSON() type _v_Type", function () {
+        expect( aCommonSvce.fIdentifyingWithTitleJSON().type).toBe( aCommonSvce._v_Type);
+    });
+
+    it("Has fIdentifyingWithTitleJSON() id _v_Id", function () {
+        expect( aCommonSvce.fIdentifyingWithTitleJSON().id).toBe( aCommonSvce._v_Id);
+    });
+
+    it("Has fIdentifyingWithTitleJSON() id _v_Title", function () {
+        expect( aCommonSvce.fIdentifyingWithTitleJSON().title).toBe( aCommonSvce._v_Title);
+    });
 
 
 
 
 
 
+    it("Has fIdentifyingWithTitleString defined", function () {
+        expect( aCommonSvce.fIdentifyingWithTitleString).not.toBeUndefined();
+    });
+
+    it("Has fIdentifyingWithTitleString typeof function", function () {
+        expect( typeof aCommonSvce.fIdentifyingWithTitleString).toBe( "function");
+    });
+
+    it("Has fIdentifyingWithTitleString() not null", function () {
+        expect( aCommonSvce.fIdentifyingWithTitleString()).not.toBeNull();
+    });
+
+    it("Has fIdentifyingWithTitleString() JSON.stringify( fIdentifyingJSON())", function () {
+        expect( aCommonSvce.fIdentifyingWithTitleString()).toBe( JSON.stringify( aCommonSvce.fIdentifyingWithTitleJSON()));
+    });
+
+
+
+
+    it("Has fToResultJSON defined", function () {
+        expect( aCommonSvce.fToResultJSON).not.toBeUndefined();
+    });
+
+    it("Has fToResultJSON typeof function", function () {
+        expect( typeof aCommonSvce.fToResultJSON).toBe( "function");
+    });
+
+    it("Has fToResultJSON() not null", function () {
+        expect( aCommonSvce.fToResultJSON()).not.toBeNull();
+    });
+
+
+    it("Has fToResultJSON() type _v_Type", function () {
+        expect( aCommonSvce.fToResultJSON().type).toBe( aCommonSvce._v_Type);
+    });
+
+    it("Has fToResultJSON() id _v_Id", function () {
+        expect( aCommonSvce.fToResultJSON().id).toBe( aCommonSvce._v_Id);
+    });
+
+    it("Has fToResultJSON() id _v_Title", function () {
+        expect( aCommonSvce.fToResultJSON().title).toBe( aCommonSvce._v_Title);
+    });
+
+
+
+
+
+
+    var someCommonSvceMethodNames = [
+        "fNewDeferred",
+        "fNewDeferredResolvePromise",
+        "pDeferredResolve",
+        "fNewDeferredResolveWithNothingPromise",
+        "pDeferredResolveWithNothing",
+        "fNewDeferredResolveWithSomethingPromise",
+        "pDeferredResolveWithSomething",
+        "fNewDeferredResolveWithNullPromise",
+        "pDeferredResolveWithNull",
+        "fNewDeferredResolveWithResponsePromise",
+        "pDeferredResolveWithResponse",
+        "fNewDeferredResolveWithRowsPromise",
+        "pDeferredResolveWithRows",
+        "fNewDeferredResolveWithFieldsPromise",
+        "pDeferredResolveWithFields",
+        "fNewDeferredResolveWithSelectionIndexPromise",
+        "pDeferredResolveWithSelectionIndex",
+        "fNewDeferredResolveWhenInDoubtPromise",
+        "pDeferredResolveWhenInDoubt",
+        "fNewPromiseAll",
+        "fNewDeferredRejectPromise",
+        "pDeferredReject",
+        "fNewDeferredResolveAjaxResponsePromise",
+        "pDeferredResolveAjaxResponse",
+        "fNewDeferredRejectAjaxErrorPromise",
+        "pDeferredRejectAjaxError",
+        "fNewDeferredRejectActionErrorPromise",
+        "pDeferredRejectActionError"
+    ];
+
+
+    var aNumCommonSvceMethodNames = someCommonSvceMethodNames.length;
+    for( var aCommonSvceMethodNameIdx=0; aCommonSvceMethodNameIdx < aNumCommonSvceMethodNames; aCommonSvceMethodNameIdx++) {
+        var aCommonSvceMethodName = someCommonSvceMethodNames[ aCommonSvceMethodNameIdx];
+        if( aCommonSvceMethodName) {
+
+            (function() {
+
+                var aCommonSvceMethodName_here = aCommonSvceMethodName;
+
+                it("Has " + aCommonSvceMethodName_here + " defined", function () {
+                    expect( aCommonSvce[ aCommonSvceMethodName_here]).not.toBeUndefined();
+                });
+
+                it("Has " + aCommonSvceMethodName_here + " typeof function", function () {
+                    expect( typeof aCommonSvce[ aCommonSvceMethodName_here]).toBe( "function");
+                })
+            })();
+        }
+    }
+
+
+
+});
 
 

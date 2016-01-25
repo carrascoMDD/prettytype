@@ -1,13 +1,13 @@
 /*
  * overrider_type.js
  *
- * Creado @author Antonio Carrasco Valero 201410030300
+ * Created @author Antonio Carrasco Valero 201601241610
  *
  *
  ***************************************************************************
 
- Copyright 2014 2015 2016 Antonio Carrasco Valero
- Javascript for core modules including a base prototype and prototypes hierarchy, intended to be reused on the Browser as core for i.e. Angular Controllers and Services, as in the uiwire component. Licensed under EUPL  http://www.uiwire.org
+ Copyright 2016 Antonio Carrasco Valero
+ Jasmine tests in Javascript for core modules including a base prototype and prototypes hierarchy, intended to be reused on the Browser as core for i.e. Angular Controllers and Services, as in the uiwire component. Licensed under EUPL  http://www.uiwire.org
 
 Licensed under the EUPL, Version 1.1 only (the "Licence");
 You may not use this work except in compliance with the
@@ -33,7 +33,7 @@ permissions and limitations under the Licence.
 
 
 
-/// <reference path="src/common/typesregistry.js"/>
+/// <reference path="src/common/overrider_type.js"/>
 "use strict";
 
 
@@ -54,9 +54,9 @@ describe("Overrider tests", function () {
 
 
     var aModule_OverriderType = aModule_OverriderTypeFactory( aTypesRegistrySvce);
-    console.log( "typeof aModule_OverriderType= " + typeof aModule_OverriderTypeFactory);
+    console.log( "typeof aModule_OverriderType= " + typeof aModule_OverriderType);
 
-    var aOverriderType_title = "Overrider-Title-test"
+    var aOverriderType_title = "Overrider-Title-test";
 
     var anOverrider = new aModule_OverriderType.Overrider_Constructor( aOverriderType_title);
     console.log( "typeof anOverrider= " + typeof anOverrider);
@@ -75,7 +75,7 @@ describe("Overrider tests", function () {
         expect( anOverrider._v_Module.ModuleName).toBe( "overrider_type");
     });
 
-    it("Has module ModulePackages typesregistry", function () {
+    it("Has module ModulePackages roots", function () {
         expect( anOverrider._v_Module.ModulePackages).toBe( "roots");
     });
 
@@ -138,15 +138,13 @@ describe("Overrider tests", function () {
 
 
 
-    it("Has pOverrideModuleVariations defined", function () {
-        expect( anOverrider.pOverrideModuleVariations).not.toBeUndefined();
+    it("Has fFullTypeNameString defined", function () {
+        expect( anOverrider.fFullTypeNameString).not.toBeUndefined();
     });
 
-    it("Has pOverrideModuleVariations typeof function", function () {
-        expect( typeof anOverrider.pOverrideModuleVariations).toBe( "function");
+    it("Has fFullTypeNameString typeof function", function () {
+        expect( typeof anOverrider.fFullTypeNameString).toBe( "function");
     });
-
-
 
 
 
@@ -265,6 +263,20 @@ describe("Overrider tests", function () {
     it("Has fToResultJSON() id _v_Title", function () {
         expect( anOverrider.fToResultJSON().title).toBe( anOverrider._v_Title);
     });
+
+
+
+
+
+
+    it("Has pOverrideModuleVariations defined", function () {
+        expect( anOverrider.pOverrideModuleVariations).not.toBeUndefined();
+    });
+
+    it("Has pOverrideModuleVariations typeof function", function () {
+        expect( typeof anOverrider.pOverrideModuleVariations).toBe( "function");
+    });
+
 
 
 

@@ -1,7 +1,7 @@
 /*
  * identifier_type.js
  *
- * Creado @author Antonio Carrasco Valero 201410030300
+ * Created @author Antonio Carrasco Valero 201410030300
  *
  *
  ***************************************************************************
@@ -229,10 +229,25 @@ function ModuleFactory_IdentifierType() {
 
 
 
+                var fFullTypeNameString = function() {
+
+                    var aFullTypeName = this._v_Module.ModuleFullName + "." + this._v_Type;
+                    if( aFullTypeName){}/* CQT */
+
+                    return aFullTypeName;
+                };
+                if( fFullTypeNameString){}/* CQT */
+                aPrototype.fFullTypeNameString = fFullTypeNameString;
+
+
+
+
+
 
                 var fIdentifyingJSON = function() {
 
                     var aIdentifiyingJSON = {
+                        "module": this._v_Module.ModuleFullName,
                         "type": this._v_Type,
                         "id": this._v_Id
                     };
@@ -354,7 +369,11 @@ function ModuleFactory_IdentifierType() {
                 this._v_Type = null;
                 this._v_Module = null;
 
+
+                this._v_Id    = null;
                 this._v_Title = null;
+
+                this._v_IdsCounter = null;
 
                 this._pInit_Identifier( theTitle);
             };
@@ -369,7 +388,10 @@ function ModuleFactory_IdentifierType() {
                 this._v_Type      = null;
                 this._v_Module    = null;
 
-                this._v_Title     = null;
+                this._v_Id    = null;
+                this._v_Title = null;
+
+                this._v_IdsCounter = null;
             };
             Identifier_SuperPrototypeConstructor.prototype = aIdentifier_Prototype;
 

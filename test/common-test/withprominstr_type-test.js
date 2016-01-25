@@ -1,13 +1,13 @@
 /*
- * withprominstr_type.js
+ * withprominstr_type-test.js
  *
- * Creado @author Antonio Carrasco Valero 201410141300
+ * Created @author Antonio Carrasco Valero 201601242159
  *
  *
  ***************************************************************************
 
- Copyright 2014 2015 2016 Antonio Carrasco Valero
- Javascript for core modules including a base prototype and prototypes hierarchy, intended to be reused on the Browser as core for i.e. Angular Controllers and Services, as in the uiwire component. Licensed under EUPL  http://www.uiwire.org
+ Copyright 2016 Antonio Carrasco Valero
+ Jasmine tests in Javascript for core modules including a base prototype and prototypes hierarchy, intended to be reused on the Browser as core for i.e. Angular Controllers and Services, as in the uiwire component. Licensed under EUPL  http://www.uiwire.org
 
 Licensed under the EUPL, Version 1.1 only (the "Licence");
 You may not use this work except in compliance with the
@@ -34,712 +34,429 @@ permissions and limitations under the Licence.
 
 
 
-function ModuleFactory_WithProminstrType() {
 
-    'use strict';
 
+/// <reference path="src/common/common_type.js"/>
+"use strict";
 
-    return ( function( theSS_typesregistry,
-          theSS_Overrider,
-          theSS_CommonType,
-          theSS_ProminstrSvce) {
 
 
-        var ModuleName     = "withprominstr_type";
-        var ModulePackages = "common";
-        var ModuleFullName = ModulePackages + "/" + ModuleName;
 
+describe("WithProminstr tests", function () {
 
 
-        var aMod_definer = function( theS_Overrider,
-                                     theS_CommonType,
-                                     theS_ProminstrSvce) {
+    var aModule_TypesRegistrySvceFactory = ModuleFactory_TypesRegistrySvce();
+    console.log( "typeof aModule_TypesRegistrySvceFactory= " + typeof aModule_TypesRegistrySvceFactory);
 
+    var aTypesRegistrySvce = aModule_TypesRegistrySvceFactory();
+    console.log( "typeof aTypesRegistrySvce= " + typeof aTypesRegistrySvce);
+    console.log( "aTypesRegistrySvce keys = " + Object.keys( aTypesRegistrySvce));
 
-            if( !( typeof FG_logModLoads == "undefined") && ( typeof FG_logModLoads == "function") && FG_logModLoads()) { FG_logModLoads(ModuleFullName);}
 
 
 
+    var aModule_OverriderTypeFactory = ModuleFactory_OverriderType();
+    console.log( "typeof aModule_OverriderTypeFactory= " + typeof aModule_OverriderTypeFactory);
 
+    var aModule_OverriderType = aModule_OverriderTypeFactory( aTypesRegistrySvce);
+    console.log( "typeof aModule_OverriderType= " + typeof aModule_OverriderType);
 
+    var aOverriderType_title = "Overrider-Title-test";
 
+    var anOverrider = new aModule_OverriderType.Overrider_Constructor( aOverriderType_title);
+    console.log( "typeof anOverrider= " + typeof anOverrider);
+    console.log( "anOverrider keys = " + Object.keys( anOverrider));
 
 
-            var pgInitWithModuleVariations = function( theToInit) {
 
-                if( !theToInit) {
-                }
 
-            };
 
+    var aModule_IdentifierTypeFactory = ModuleFactory_IdentifierType();
+    console.log( "typeof aModule_IdentifierTypeFactory= " + typeof aModule_IdentifierTypeFactory);
 
+    var aModule_IdentifierType = aModule_IdentifierTypeFactory( aTypesRegistrySvce, anOverrider);
+    console.log( "typeof aModule_IdentifierType= " + typeof aModule_IdentifierType);
 
+    var aIdentifierType_title = "Identifier-Title-test";
 
+    var anIdentifier = new aModule_IdentifierType.Identifier_Constructor( aIdentifierType_title);
+    console.log( "typeof anIdentifier= " + typeof anIdentifier);
+    console.log( "anIdentifier keys = " + Object.keys( anIdentifier));
 
-            var pgInitFromModuleVariations = function( theToInit) {
-                if( !theToInit) {
-                    return;
-                }
 
-                for( var aGlobalName in ModuleVariations) {
-                    if( ModuleVariations.hasOwnProperty( aGlobalName)) {
-                        theToInit[ aGlobalName] = ModuleVariations[ aGlobalName];
-                    }
-                }
-            };
 
 
-            var ModuleVariations = { };
-            pgInitWithModuleVariations( ModuleVariations);
-            theS_Overrider.pOverrideModuleVariations( ModuleFullName, ModuleVariations);
+    var aModule_RecordTypeFactory = ModuleFactory_RecordType();
+    console.log( "typeof aModule_RecordTypeFactory= " + typeof aModule_RecordTypeFactory);
 
+    var aModule_RecordType = aModule_RecordTypeFactory( aTypesRegistrySvce, anOverrider);
+    console.log( "typeof aModule_RecordType= " + typeof aModule_RecordType);
 
 
 
 
+    var aModule_RecorderTypeFactory = ModuleFactory_RecorderType();
+    console.log( "typeof aModule_RecorderTypeFactory= " + typeof aModule_RecorderTypeFactory);
 
+    var aModule_RecorderType = aModule_RecorderTypeFactory(
+        aTypesRegistrySvce,
+        anOverrider,
+        anIdentifier,
+        aModule_IdentifierType,
+        aModule_RecordType
+    );
+    console.log( "typeof aModule_RecorderType= " + typeof aModule_RecorderType);
 
+    var aRecorderType_title = "Recorder-Title-test";
 
-            var pgInitWithModuleConstants = function( theToInit) {
+    var aRecorder = new aModule_RecorderType.Recorder_Constructor( aRecorderType_title);
+    console.log( "typeof aRecorder= " + typeof aRecorder);
+    console.log( "aRecorder keys = " + Object.keys( aRecorder));
 
-                if( !theToInit) {
-                    return;
-                }
-                theToInit.WITHPROMINSTR_DEFAULTTITLE = "WithProminstrDefaultName";
 
-            };
 
 
 
-            var ModuleConstants = {};
-            pgInitFromModuleVariations( ModuleConstants);
-            pgInitWithModuleConstants( ModuleConstants);
+    var aModule_CommonTypeFactory = ModuleFactory_CommonType();
+    console.log( "typeof aModule_CommonTypeFactory= " + typeof aModule_CommonTypeFactory);
 
+    var aModule_CommonType = aModule_CommonTypeFactory(
+        aTypesRegistrySvce,
+        anOverrider,
+        anIdentifier,
+        aRecorder
+    );
+    console.log( "typeof aModule_CommonType= " + typeof aModule_CommonType);
 
+    var aCommonType_title = "Common-Title-test";
 
+    var aCommon = new aModule_CommonType.Common_Constructor( aCommonType_title);
+    console.log( "typeof aCommon= " + typeof aCommon);
+    console.log( "aCommon keys = " + Object.keys( aCommon));
 
-            var pgInitFromModuleConstants = function( theToInit) {
-                if( !theToInit) {
-                    return;
-                }
 
-                for( var aGlobalName in ModuleConstants) {
-                    if( ModuleConstants.hasOwnProperty( aGlobalName)) {
-                        theToInit[ aGlobalName] = ModuleConstants[ aGlobalName];
-                    }
-                }
-            };
 
 
 
 
+    var aModule_QngMockFactory = ModuleFactory_QngMock();
+    console.log( "typeof aModule_QngMockFactory= " + typeof aModule_QngMockFactory);
 
+    var aModule_QngMock = aModule_QngMockFactory();
+    console.log( "typeof aModule_QngMock= " + typeof aModule_QngMock);
 
-            var aWithProminstr_Prototype = (function() {
+    var aQngMock = new aModule_QngMock.QngMock_Constructor();
+    console.log( "typeof aQngMock= " + typeof aQngMock);
+    console.log( "aQngMock keys = " + Object.keys( aQngMock));
 
 
 
-                var aPrototype = new theS_CommonType.Common_SuperPrototypeConstructor();
 
-                pgInitFromModuleConstants( aPrototype);
 
+    var aModule_ProminstrTypeFactory = ModuleFactory_ProminstrType();
+    console.log( "typeof aModule_ProminstrTypeFactory= " + typeof aModule_ProminstrTypeFactory);
 
-                aPrototype._v_SuperPrototype = theS_CommonType.Common_Prototype;
 
+    var aModule_ProminstrType = aModule_ProminstrTypeFactory(
+        aTypesRegistrySvce,
+        anOverrider,
+        aModule_CommonType,
+        aModule_IdentifierType,
+        aQngMock
+    );
+    console.log( "typeof aModule_ProminstrType= " + typeof aModule_ProminstrType);
 
-                aPrototype._v_Type = "WithProminstr";
+    var aProminstrType_title = "Prominstr-Title-test";
 
-                aPrototype._v_Prototype_WithProminstr = aPrototype;
+    var aProminstr = new aModule_ProminstrType.Prominstr_Constructor( aProminstrType_title);
+    console.log( "typeof aProminstr= " + typeof aProminstr);
+    console.log( "aProminstr keys = " + Object.keys( aProminstr));
 
 
-                aPrototype._v_Module = null;
 
-                aPrototype._v_ProminstrSvce = null;
 
 
+    var aModule_WithProminstrTypeFactory = ModuleFactory_WithProminstrType();
+    console.log( "typeof aModule_WithProminstrTypeFactory= " + typeof aModule_WithProminstrTypeFactory);
 
 
+    var aModule_WithProminstrType = aModule_WithProminstrTypeFactory(
+        aTypesRegistrySvce,
+        anOverrider,
+        aModule_CommonType,
+        aProminstr
+    );
+    console.log( "typeof aModule_WithProminstrType= " + typeof aModule_WithProminstrType);
 
-                var _pInit = function( theTitle, theIdentifier, theRecorder) {
+    var aWithProminstrType_title = "WithProminstr-Title-test";
 
-                    this._pInit_WithProminstr( theTitle, theIdentifier, theRecorder);
-                };
-                if( _pInit){}/* CQT */
-                aPrototype._pInit = _pInit;
+    var aWithProminstr = new aModule_WithProminstrType.WithProminstr_Constructor( aWithProminstrType_title);
+    console.log( "typeof aWithProminstr= " + typeof aWithProminstr);
+    console.log( "aWithProminstr keys = " + Object.keys( aWithProminstr));
 
 
 
 
-
-
-
-                var _fTitleDefault = function( ) {
-
-                    return this.WITHPROMINSTR_DEFAULTTITLE;
-                };
-                if( _fTitleDefault){}/* CQT */
-                aPrototype._fTitleDefault = _fTitleDefault;
-
-
-
-
-
-
-                var _pInit_WithProminstr = function( theTitle, theIdentifier, theRecorder) {
-
-                    /* Delegate on super prototype initialization */
-                    aPrototype._v_SuperPrototype._pInit_Common.apply( this, [ theTitle, theIdentifier, theRecorder]);
-
-                    this._v_Prototype = aPrototype;
-                    this._v_Type      = this._v_Prototype._v_Type;
-                    this._v_Module    = aPrototype._v_Module;
-
-                    this._v_ProminstrSvce = theS_ProminstrSvce;
-                };
-                if( _pInit_WithProminstr){}/* CQT */
-                aPrototype._pInit_WithProminstr = _pInit_WithProminstr;
-
-
-
-
-
-
-
-
-
-
-                var fNewDeferred = function() {
-                    if( !this._v_ProminstrSvce) {
-                        return null;
-                    }
-
-                    return this._v_ProminstrSvce.fNewDeferred( );
-                };
-                if( fNewDeferred){}/* CQT */
-                aPrototype.fNewDeferred = fNewDeferred;
-
-
-
-
-
-
-
-
-                var fNewDeferredResolvePromise = function( theResolution, theResolutionKind) {
-                    if( !this._v_ProminstrSvce) {
-                        return null;
-                    }
-
-                    return this._v_ProminstrSvce.fNewDeferredResolvePromise( theResolution, theResolutionKind);
-                };
-                if( fNewDeferredResolvePromise){}/* CQT */
-                aPrototype.fNewDeferredResolvePromise = fNewDeferredResolvePromise;
-
-
-
-
-                var pDeferredResolve = function( theDeferred, theResolution, theResolutionKind) {
-
-                    if( !this._v_ProminstrSvce) {
-                        return;
-                    }
-
-                    this._v_ProminstrSvce.pDeferredResolve( theDeferred, theResolution, theResolutionKind);
-                };
-                if( pDeferredResolve){}/* CQT */
-                aPrototype.pDeferredResolve = pDeferredResolve;
-
-
-
-
-
-
-
-
-
-
-
-                var fNewDeferredResolveWithNothingPromise = function() {
-                    if( !this._v_ProminstrSvce) {
-                        return null;
-                    }
-
-                    return this._v_ProminstrSvce.fNewDeferredResolveWithNothingPromise();
-                };
-                if( fNewDeferredResolveWithNothingPromise){}/* CQT */
-                aPrototype.fNewDeferredResolveWithNothingPromise = fNewDeferredResolveWithNothingPromise;
-
-
-
-
-                var pDeferredResolveWithNothing = function( theDeferred) {
-                    if( !this._v_ProminstrSvce) {
-                        return;
-                    }
-
-                    this._v_ProminstrSvce.pDeferredResolveWithNothing( theDeferred);
-                };
-                if( pDeferredResolveWithNothing){}/* CQT */
-                aPrototype.pDeferredResolveWithNothing = pDeferredResolveWithNothing;
-
-
-
-
-
-
-
-
-
-
-
-
-                var fNewDeferredResolveWithNullPromise = function() {
-                    if( !this._v_ProminstrSvce) {
-                        return null;
-                    }
-
-                    return this._v_ProminstrSvce.fNewDeferredResolveWithNullPromise();
-                };
-                if( fNewDeferredResolveWithNullPromise){}/* CQT */
-                aPrototype.fNewDeferredResolveWithNullPromise = fNewDeferredResolveWithNullPromise;
-
-
-
-
-                var pDeferredResolveWithNull = function( theDeferred) {
-                    if( !this._v_ProminstrSvce) {
-                        return;
-                    }
-
-                    this._v_ProminstrSvce.pDeferredResolveWithNull( theDeferred);
-                };
-                if( pDeferredResolveWithNull){}/* CQT */
-                aPrototype.pDeferredResolveWithNull = pDeferredResolveWithNull;
-
-
-
-
-
-
-
-
-
-                var fNewDeferredResolveWithSomethingPromise = function() {
-                    if( !this._v_ProminstrSvce) {
-                        return null;
-                    }
-
-                    return this._v_ProminstrSvce.fNewDeferredResolveWithSomethingPromise();
-                };
-                if( fNewDeferredResolveWithSomethingPromise){}/* CQT */
-                aPrototype.fNewDeferredResolveWithSomethingPromise = fNewDeferredResolveWithSomethingPromise;
-
-
-
-
-                var pDeferredResolveWithSomething = function( theDeferred) {
-                    if( !this._v_ProminstrSvce) {
-                        return;
-                    }
-
-                    this._v_ProminstrSvce.pDeferredResolveWithSomething( theDeferred);
-                };
-                if( pDeferredResolveWithSomething){}/* CQT */
-                aPrototype.pDeferredResolveWithSomething = pDeferredResolveWithSomething;
-
-
-
-
-
-                var fNewDeferredResolveWithResponsePromise = function( theResponse) {
-                    if( !this._v_ProminstrSvce) {
-                        return null;
-                    }
-
-                    return this._v_ProminstrSvce.fNewDeferredResolveWithResponsePromise( theResponse);
-                };
-                if( fNewDeferredResolveWithResponsePromise){}/* CQT */
-                aPrototype.fNewDeferredResolveWithResponsePromise = fNewDeferredResolveWithResponsePromise;
-
-
-
-
-
-                var pDeferredResolveWithResponse = function( theDeferred, theResponse) {
-                    if( !this._v_ProminstrSvce) {
-                        return;
-                    }
-
-                    this._v_ProminstrSvce.pDeferredResolveWithResponse( theDeferred, theResponse);
-                };
-                if( pDeferredResolveWithResponse){}/* CQT */
-                aPrototype.pDeferredResolveWithResponse = pDeferredResolveWithResponse;
-
-
-
-
-
-
-
-
-
-
-                var fNewDeferredResolveWithRowsPromise = function( theRows) {
-                    if( !this._v_ProminstrSvce) {
-                        return null;
-                    }
-
-                    return this._v_ProminstrSvce.fNewDeferredResolveWithRowsPromise( theRows);
-                };
-                if( fNewDeferredResolveWithRowsPromise){}/* CQT */
-                aPrototype.fNewDeferredResolveWithRowsPromise = fNewDeferredResolveWithRowsPromise;
-
-
-
-
-                var pDeferredResolveWithRows = function( theDeferred, theRows) {
-                    if( !this._v_ProminstrSvce) {
-                        return;
-                    }
-
-                    this._v_ProminstrSvce.pDeferredResolveWithRows( theDeferred, theRows);
-                };
-                if( pDeferredResolveWithRows){}/* CQT */
-                aPrototype.pDeferredResolveWithRows = pDeferredResolveWithRows;
-
-
-
-
-
-
-
-
-                var fNewDeferredResolveWithFieldsPromise = function( theFields) {
-                    if( !this._v_ProminstrSvce) {
-                        return null;
-                    }
-
-                    return this._v_ProminstrSvce.fNewDeferredResolveWithFieldsPromise( theFields);
-                };
-                if( fNewDeferredResolveWithFieldsPromise){}/* CQT */
-                aPrototype.fNewDeferredResolveWithFieldsPromise = fNewDeferredResolveWithFieldsPromise;
-
-
-
-
-                var pDeferredResolveWithFields = function( theDeferred, theFields) {
-                    if( !this._v_ProminstrSvce) {
-                        return;
-                    }
-
-                    this._v_ProminstrSvce.pDeferredResolveWithFields( theDeferred, theFields);
-                };
-                if( pDeferredResolveWithFields){}/* CQT */
-                aPrototype.pDeferredResolveWithFields = pDeferredResolveWithFields;
-
-
-
-
-
-
-
-
-                var fNewDeferredResolveWithSelectionIndexPromise = function( theSelectionIndex) {
-                    if( !this._v_ProminstrSvce) {
-                        return null;
-                    }
-
-                    return this._v_ProminstrSvce.fNewDeferredResolveWithSelectionIndexPromise( theSelectionIndex);
-                };
-                if( fNewDeferredResolveWithSelectionIndexPromise){}/* CQT */
-                aPrototype.fNewDeferredResolveWithSelectionIndexPromise = fNewDeferredResolveWithSelectionIndexPromise;
-
-
-
-
-                var pDeferredResolveWithSelectionIndex = function( theDeferred, theSelectionIndex) {
-                    if( !this._v_ProminstrSvce) {
-                        return;
-                    }
-
-                    this._v_ProminstrSvce.pDeferredResolveWithSelectionIndex( theDeferred, theSelectionIndex);
-                };
-                if( pDeferredResolveWithSelectionIndex){}/* CQT */
-                aPrototype.pDeferredResolveWithSelectionIndex = pDeferredResolveWithSelectionIndex;
-
-
-
-
-
-
-
-
-
-
-
-
-                var fNewDeferredResolveWhenInDoubtPromise = function( theSomething) {
-                    if( !this._v_ProminstrSvce) {
-                        return null;
-                    }
-
-                    return this._v_ProminstrSvce.fNewDeferredResolveWhenInDoubtPromise( theSomething);
-                };
-                if( fNewDeferredResolveWhenInDoubtPromise){}/* CQT */
-                aPrototype.fNewDeferredResolveWhenInDoubtPromise = fNewDeferredResolveWhenInDoubtPromise;
-
-
-
-
-
-
-
-                var pDeferredResolveWhenInDoubt = function( theDeferred, theSomething) {
-                    if( !this._v_ProminstrSvce) {
-                        return;
-                    }
-
-                    this._v_ProminstrSvce.pDeferredResolveWhenInDoubt( theDeferred, theSomething);
-                };
-                if( pDeferredResolveWhenInDoubt){}/* CQT */
-                aPrototype.pDeferredResolveWhenInDoubt = pDeferredResolveWhenInDoubt;
-
-
-
-
-
-
-
-
-
-
-
-
-                var fNewDeferredRejectPromise = function( theRejection, theRejectionKind) {
-                    if( !this._v_ProminstrSvce) {
-                        return null;
-                    }
-
-                    return this._v_ProminstrSvce.fNewDeferredRejectPromise( theRejection, theRejectionKind);
-                };
-                if( fNewDeferredRejectPromise){}/* CQT */
-                aPrototype.fNewDeferredRejectPromise = fNewDeferredRejectPromise;
-
-
-
-
-
-                var pDeferredReject = function( theDeferred, theRejection, theRejectionKind) {
-                    if( !this._v_ProminstrSvce) {
-                        return;
-                    }
-
-                    this._v_ProminstrSvce.pDeferredReject( theDeferred, theRejection, theRejectionKind);
-
-                };
-                if( pDeferredReject){}/* CQT */
-                aPrototype.pDeferredReject = pDeferredReject;
-
-
-
-
-
-
-                var fNewDeferredResolveAjaxResponsePromise = function( theResolveion) {
-                    if( !this._v_ProminstrSvce) {
-                        return null;
-                    }
-
-                    return this._v_ProminstrSvce.fNewDeferredResolveAjaxResponsePromise( theResolveion);
-                };
-                if( fNewDeferredResolveAjaxResponsePromise){}/* CQT */
-                aPrototype.fNewDeferredResolveAjaxResponsePromise = fNewDeferredResolveAjaxResponsePromise;
-
-
-
-
-
-                var pDeferredResolveAjaxResponse = function( theDeferred, theResolveion) {
-                    if( !this._v_ProminstrSvce) {
-                        return;
-                    }
-
-                    this._v_ProminstrSvce.pDeferredResolveAjaxResponse( theDeferred, theResolveion);
-
-                };
-                if( pDeferredResolveAjaxResponse){}/* CQT */
-                aPrototype.pDeferredResolveAjaxResponse = pDeferredResolveAjaxResponse;
-
-
-
-
-
-
-
-
-                var fNewDeferredRejectAjaxErrorPromise = function( theRejection) {
-                    if( !this._v_ProminstrSvce) {
-                        return null;
-                    }
-
-                    return this._v_ProminstrSvce.fNewDeferredRejectAjaxErrorPromise( theRejection);
-                };
-                if( fNewDeferredRejectAjaxErrorPromise){}/* CQT */
-                aPrototype.fNewDeferredRejectAjaxErrorPromise = fNewDeferredRejectAjaxErrorPromise;
-
-
-
-
-
-                var pDeferredRejectAjaxError = function( theDeferred, theRejection) {
-                    if( !this._v_ProminstrSvce) {
-                        return;
-                    }
-
-                    this._v_ProminstrSvce.pDeferredRejectAjaxError( theDeferred, theRejection);
-
-                };
-                if( pDeferredRejectAjaxError){}/* CQT */
-                aPrototype.pDeferredRejectAjaxError = pDeferredRejectAjaxError;
-
-
-
-
-
-
-                var fNewDeferredRejectActionErrorPromise = function( theRejection) {
-                    if( !this._v_ProminstrSvce) {
-                        return null;
-                    }
-
-                    return this._v_ProminstrSvce.fNewDeferredRejectActionErrorPromise( theRejection);
-                };
-                if( fNewDeferredRejectActionErrorPromise){}/* CQT */
-                aPrototype.fNewDeferredRejectActionErrorPromise = fNewDeferredRejectActionErrorPromise;
-
-
-
-
-                var pDeferredRejectActionError = function( theDeferred, theRejection) {
-
-                    if( !this._v_ProminstrSvce) {
-                        return;
-                    }
-
-                    this._v_ProminstrSvce.pDeferredRejectActionError( theDeferred, theRejection);
-                };
-                if( pDeferredRejectActionError){}/* CQT */
-                aPrototype.pDeferredRejectActionError = pDeferredRejectActionError;
-
-
-
-
-
-
-
-                var fNewPromiseAll = function( thePromises) {
-                    if( !this._v_ProminstrSvce) {
-                        return null;
-                    }
-
-                    return this._v_ProminstrSvce.fNewPromiseAll( thePromises);
-                };
-                if( fNewPromiseAll){}/* CQT */
-                aPrototype.fNewPromiseAll = fNewPromiseAll;
-
-
-
-
-
-
-                return aPrototype;
-
-            })();
-
-
-
-
-            var WithProminstr_Constructor = function( theTitle, theIdentifier, theRecorder) {
-
-                /* Keep handy reference to super-prototype for super method invocation */
-                this._v_SuperPrototype = theS_CommonType.Common_Prototype;
-
-                this._v_Prototype = null;
-                this._v_Type = null;
-                this._v_Module = null;
-
-                this._pInit_WithProminstr( theTitle, theIdentifier, theRecorder);
-            };
-            WithProminstr_Constructor.prototype = aWithProminstr_Prototype;
-
-
-
-
-
-            var WithProminstr_SuperPrototypeConstructor = function() {
-
-                /* Keep handy reference to super-prototype for super method invocation */
-                this._v_SuperPrototype = theS_CommonType.Common_Prototype;
-
-                this._v_Prototype = aWithProminstr_Prototype;
-                this._v_Type      = null;
-                this._v_Module    = null;
-            };
-            WithProminstr_SuperPrototypeConstructor.prototype = aWithProminstr_Prototype;
-
-
-
-            var aModule = {
-                "WithProminstr_Prototype": aWithProminstr_Prototype,
-                "WithProminstr_Constructor": WithProminstr_Constructor,
-                "WithProminstr_SuperPrototypeConstructor": WithProminstr_SuperPrototypeConstructor
-            };
-            pgInitFromModuleConstants( aModule);
-            aModule.ModuleName     = ModuleName;
-            aModule.ModulePackages = ModulePackages;
-            aModule.ModuleFullName = ModuleFullName;
-
-            aWithProminstr_Prototype._v_Module = aModule;
-
-
-
-
-
-            return aModule;
-        };
-
-
-
-
-
-
-
-        var anExistingModule = theSS_typesregistry.fRegisteredModule( ModuleFullName);
-        if( !anExistingModule) {
-
-            var aModule = aMod_definer(
-                theSS_Overrider,
-                theSS_CommonType,
-                theSS_ProminstrSvce
-            );
-            anExistingModule = aModule;
-
-            theSS_typesregistry.fRegisterModule( ModuleFullName, aModule);
-        }
-
-
-
-
-
-
-        return anExistingModule;
-
+    it("Has module defined", function () {
+        expect( aWithProminstr._v_Module).not.toBeUndefined();
     });
-}
+
+    it("Has module not null", function () {
+        expect( aWithProminstr._v_Module).not.toBeNull( null);
+    });
+
+    it("Has module ModuleName withprominstr_type", function () {
+        expect( aWithProminstr._v_Module.ModuleName).toBe( "withprominstr_type");
+    });
+
+    it("Has module ModulePackages common", function () {
+        expect( aWithProminstr._v_Module.ModulePackages).toBe( "common");
+    });
+
+    it("Has module ModuleFullName common.withprominstr_type", function () {
+        expect( aWithProminstr._v_Module.ModuleFullName).toBe( "common/withprominstr_type");
+    });
+
+    it("Has module WithProminstr_Prototype defined", function () {
+        expect( aWithProminstr._v_Module.WithProminstr_Prototype).not.toBeUndefined();
+    });
+
+    it("Has module WithProminstr_Prototype not null", function () {
+        expect( aWithProminstr._v_Module.WithProminstr_Prototype).not.toBeNull( null);
+    });
+
+    it("Has module WithProminstr_Constructor defined", function () {
+        expect( aWithProminstr._v_Module.WithProminstr_Constructor).not.toBeUndefined();
+    });
+
+    it("Has module WithProminstr_Constructor not null", function () {
+        expect( aWithProminstr._v_Module.WithProminstr_Constructor).not.toBeNull( null);
+    });
+
+    it("Has module WithProminstr_SuperPrototypeConstructor defined", function () {
+        expect( aWithProminstr._v_Module.WithProminstr_SuperPrototypeConstructor).not.toBeUndefined();
+    });
+
+    it("Has module WithProminstr_SuperPrototypeConstructor not null", function () {
+        expect( aWithProminstr._v_Module.WithProminstr_SuperPrototypeConstructor).not.toBeNull( null);
+    });
+
+
+
+    it("Has _v_Prototype defined", function () {
+        expect( aWithProminstr._v_Prototype).not.toBeUndefined();
+    });
+
+    it("Has _v_Prototype module WithProminstr_Prototype", function () {
+        expect( aWithProminstr._v_Prototype).toBe( aWithProminstr._v_Module.WithProminstr_Prototype);
+    });
+
+    it("Has _v_Prototype_WithProminstr defined", function () {
+        expect( aWithProminstr._v_Prototype_WithProminstr).not.toBeUndefined();
+    });
+
+    it("Has _v_Prototype_WithProminstr module WithProminstr_Prototype", function () {
+        expect( aWithProminstr._v_Prototype).toBe( aWithProminstr._v_Module.WithProminstr_Prototype);
+    });
+
+
+
+    it("Has _v_Type WithProminstr", function () {
+        expect( aWithProminstr._v_Type).toBe( "WithProminstr");
+    });
+
+    it("Has title WithProminstr_DefaultName", function () {
+        expect( aWithProminstr._v_Title).toBe( aWithProminstrType_title);
+    });
+
+
+
+    it("Has fFullTypeNameString defined", function () {
+        expect( aWithProminstr.fFullTypeNameString).not.toBeUndefined();
+    });
+
+    it("Has fFullTypeNameString typeof function", function () {
+        expect( typeof aWithProminstr.fFullTypeNameString).toBe( "function");
+    });
+
+
+
+
+
+    it("Has fIdentifyingJSON defined", function () {
+        expect( aWithProminstr.fIdentifyingJSON).not.toBeUndefined();
+    });
+
+    it("Has fIdentifyingJSON typeof function", function () {
+        expect( typeof aWithProminstr.fIdentifyingJSON).toBe( "function");
+    });
+
+    it("Has fIdentifyingJSON() not null", function () {
+        expect( aWithProminstr.fIdentifyingJSON()).not.toBeNull();
+    });
+
+    it("Has fIdentifyingJSON() type _v_Type", function () {
+        expect( aWithProminstr.fIdentifyingJSON().type).toBe( aWithProminstr._v_Type);
+    });
+
+    it("Has fIdentifyingJSON() id _v_Id", function () {
+        expect( aWithProminstr.fIdentifyingJSON().id).toBe( aWithProminstr._v_Id);
+    });
+
+
+
+
+    it("Has fIdentifyingString defined", function () {
+        expect( aWithProminstr.fIdentifyingString).not.toBeUndefined();
+    });
+
+    it("Has fIdentifyingString typeof function", function () {
+        expect( typeof aWithProminstr.fIdentifyingString).toBe( "function");
+    });
+
+    it("Has fIdentifyingString() not null", function () {
+        expect( aWithProminstr.fIdentifyingString()).not.toBeNull();
+    });
+
+    it("Has fIdentifyingString() JSON.stringify( fIdentifyingJSON())", function () {
+        expect( aWithProminstr.fIdentifyingString()).toBe( JSON.stringify( aWithProminstr.fIdentifyingJSON()));
+    });
+
+
+
+
+
+    it("Has fIdentifyingWithTitleJSON defined", function () {
+        expect( aWithProminstr.fIdentifyingWithTitleJSON).not.toBeUndefined();
+    });
+
+    it("Has fIdentifyingWithTitleJSON typeof function", function () {
+        expect( typeof aWithProminstr.fIdentifyingWithTitleJSON).toBe( "function");
+    });
+
+    it("Has fIdentifyingWithTitleJSON() not null", function () {
+        expect( aWithProminstr.fIdentifyingWithTitleJSON()).not.toBeNull();
+    });
+
+    it("Has fIdentifyingWithTitleJSON() type _v_Type", function () {
+        expect( aWithProminstr.fIdentifyingWithTitleJSON().type).toBe( aWithProminstr._v_Type);
+    });
+
+    it("Has fIdentifyingWithTitleJSON() id _v_Id", function () {
+        expect( aWithProminstr.fIdentifyingWithTitleJSON().id).toBe( aWithProminstr._v_Id);
+    });
+
+    it("Has fIdentifyingWithTitleJSON() id _v_Title", function () {
+        expect( aWithProminstr.fIdentifyingWithTitleJSON().title).toBe( aWithProminstr._v_Title);
+    });
 
 
 
 
 
 
+    it("Has fIdentifyingWithTitleString defined", function () {
+        expect( aWithProminstr.fIdentifyingWithTitleString).not.toBeUndefined();
+    });
+
+    it("Has fIdentifyingWithTitleString typeof function", function () {
+        expect( typeof aWithProminstr.fIdentifyingWithTitleString).toBe( "function");
+    });
+
+    it("Has fIdentifyingWithTitleString() not null", function () {
+        expect( aWithProminstr.fIdentifyingWithTitleString()).not.toBeNull();
+    });
+
+    it("Has fIdentifyingWithTitleString() JSON.stringify( fIdentifyingJSON())", function () {
+        expect( aWithProminstr.fIdentifyingWithTitleString()).toBe( JSON.stringify( aWithProminstr.fIdentifyingWithTitleJSON()));
+    });
+
+
+
+
+    it("Has fToResultJSON defined", function () {
+        expect( aWithProminstr.fToResultJSON).not.toBeUndefined();
+    });
+
+    it("Has fToResultJSON typeof function", function () {
+        expect( typeof aWithProminstr.fToResultJSON).toBe( "function");
+    });
+
+    it("Has fToResultJSON() not null", function () {
+        expect( aWithProminstr.fToResultJSON()).not.toBeNull();
+    });
+
+
+    it("Has fToResultJSON() type _v_Type", function () {
+        expect( aWithProminstr.fToResultJSON().type).toBe( aWithProminstr._v_Type);
+    });
+
+    it("Has fToResultJSON() id _v_Id", function () {
+        expect( aWithProminstr.fToResultJSON().id).toBe( aWithProminstr._v_Id);
+    });
+
+    it("Has fToResultJSON() id _v_Title", function () {
+        expect( aWithProminstr.fToResultJSON().title).toBe( aWithProminstr._v_Title);
+    });
+
+
+
+
+
+
+    var someWithProminstrMethodNames = [
+        "fNewDeferred",
+        "fNewDeferredResolvePromise",
+        "pDeferredResolve",
+        "fNewDeferredResolveWithNothingPromise",
+        "pDeferredResolveWithNothing",
+        "fNewDeferredResolveWithSomethingPromise",
+        "pDeferredResolveWithSomething",
+        "fNewDeferredResolveWithNullPromise",
+        "pDeferredResolveWithNull",
+        "fNewDeferredResolveWithResponsePromise",
+        "pDeferredResolveWithResponse",
+        "fNewDeferredResolveWithRowsPromise",
+        "pDeferredResolveWithRows",
+        "fNewDeferredResolveWithFieldsPromise",
+        "pDeferredResolveWithFields",
+        "fNewDeferredResolveWithSelectionIndexPromise",
+        "pDeferredResolveWithSelectionIndex",
+        "fNewDeferredResolveWhenInDoubtPromise",
+        "pDeferredResolveWhenInDoubt",
+        "fNewPromiseAll",
+        "fNewDeferredRejectPromise",
+        "pDeferredReject",
+        "fNewDeferredResolveAjaxResponsePromise",
+        "pDeferredResolveAjaxResponse",
+        "fNewDeferredRejectAjaxErrorPromise",
+        "pDeferredRejectAjaxError",
+        "fNewDeferredRejectActionErrorPromise",
+        "pDeferredRejectActionError"
+    ];
+
+
+    var aNumWithProminstrMethodNames = someWithProminstrMethodNames.length;
+    for( var aWithProminstrMethodNameIdx=0; aWithProminstrMethodNameIdx < aNumWithProminstrMethodNames; aWithProminstrMethodNameIdx++) {
+        var aWithProminstrMethodName = someWithProminstrMethodNames[ aWithProminstrMethodNameIdx];
+        if( aWithProminstrMethodName) {
+
+            (function() {
+
+                var aWithProminstrMethodName_here = aWithProminstrMethodName;
+
+                it("Has " + aWithProminstrMethodName_here + " defined", function () {
+                    expect( aWithProminstr[ aWithProminstrMethodName_here]).not.toBeUndefined();
+                });
+
+                it("Has " + aWithProminstrMethodName_here + " typeof function", function () {
+                    expect( typeof aWithProminstr[ aWithProminstrMethodName_here]).toBe( "function");
+                })
+            })();
+        }
+    }
+
+
+
+});
 

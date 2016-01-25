@@ -48,25 +48,13 @@ module.exports = function(grunt) {
         },
 
         karma: {
-            options: {
-                files: [
-                    'src/**/*.js',
-                    'test/common-test/typesregistry-test.js',
-                    'test/roots-test/overrider_type-test.js'
-                ]
-            },
             unit: {
-                configFile: 'karma.conf.js',
-                UNUSED_port: 9999,
-                UNUSED_background: true,
-                UNUSED_singleRun: true,
-                UNUSED_logLevel: 'ERROR',
-                UNUSED_autoWatch: true
+                configFile: 'karma.conf.js'
             },
             continuous: {
                 configFile: 'karma.conf.js',
                 singleRun: true
-            },
+            }
         }
     });
 

@@ -1,7 +1,7 @@
 /*
  * common_type.js
  *
- * Creado @author Antonio Carrasco Valero 201410030426
+ * Created @author Antonio Carrasco Valero 201410030426
  *
  *
  ***************************************************************************
@@ -39,9 +39,9 @@ function ModuleFactory_CommonType() {
     'use strict';
 
     return ( function( theSS_typesregistry,
-              theSS_Overrider,
-              theSS_IdentifierSvce,
-              theSS_RecorderSvce){
+                       theSS_Overrider,
+                       theSS_IdentifierSvce,
+                       theSS_RecorderSvce){
 
 
         var ModuleName     = "common_type";
@@ -520,12 +520,27 @@ function ModuleFactory_CommonType() {
 
 
 
+                var fFullTypeNameString = function() {
+
+                    var aFullTypeName = this._v_Module.ModuleFullName + "." + this._v_Type;
+                    if( aFullTypeName){}/* CQT */
+
+                    return aFullTypeName;
+                };
+                if( fFullTypeNameString){}/* CQT */
+                aPrototype.fFullTypeNameString = fFullTypeNameString;
+
+
+
+
+
 
 
 
                 var fIdentifyingJSON = function() {
 
                     var aIdentifiyingJSON = {
+                        "module": this._v_Module.ModuleFullName,
                         "type": this._v_Type,
                         "id":   this._v_Id
                     };
@@ -589,18 +604,6 @@ function ModuleFactory_CommonType() {
 
 
 
-                var fFullTypeNameString = function() {
-
-                    var aFullTypeName = this._v_Module.ModuleFullName + "." + this._v_Type;
-                    if( aFullTypeName){}/* CQT */
-
-                    return aFullTypeName;
-                };
-                if( fFullTypeNameString){}/* CQT */
-                aPrototype.fFullTypeNameString = fFullTypeNameString;
-
-
-
 
 
 
@@ -618,6 +621,10 @@ function ModuleFactory_CommonType() {
                 };
                 if( fToResultJSON){}/* CQT */
                 aPrototype.fToResultJSON = fToResultJSON;
+
+
+
+
 
 
 

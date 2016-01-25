@@ -2,7 +2,7 @@
 /*
  * exceptiondetails_svce.js
  *
- * Creado @author Antonio Carrasco Valero 201409301309
+ * Created @author Antonio Carrasco Valero 201409301309
  *
  *
  ***************************************************************************

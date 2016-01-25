@@ -1,7 +1,7 @@
 /*
  * withprominstr_type.js
  *
- * Creado @author Antonio Carrasco Valero 201410141300
+ * Created @author Antonio Carrasco Valero 201410141300
  *
  *
  ***************************************************************************

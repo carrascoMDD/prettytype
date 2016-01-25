@@ -1,13 +1,13 @@
 /*
  * record.js
  *
- * Creado @author Antonio Carrasco Valero 201410030300
+ * Created @author Antonio Carrasco Valero 201601241630
  *
  *
  ***************************************************************************
 
- Copyright 2014 2015 2016 Antonio Carrasco Valero
- Javascript for core modules including a base prototype and prototypes hierarchy, intended to be reused on the Browser as core for i.e. Angular Controllers and Services, as in the uiwire component. Licensed under EUPL  http://www.uiwire.org
+ Copyright 2016 Antonio Carrasco Valero
+ Jasmine tests in Javascript for core modules including a base prototype and prototypes hierarchy, intended to be reused on the Browser as core for i.e. Angular Controllers and Services, as in the uiwire component. Licensed under EUPL  http://www.uiwire.org
 
 Licensed under the EUPL, Version 1.1 only (the "Licence");
 You may not use this work except in compliance with the
@@ -35,1347 +35,275 @@ permissions and limitations under the Licence.
 
 
 
-function ModuleFactory_RecordType() {
+/// <reference path="src/identifying/record_type.js"/>
+"use strict";
 
-    'use strict';
 
-    return ( function( theSS_typesregistry,
-              theSS_Overrider) {
 
 
-        var ModuleName     = "record";
-        var ModulePackages = "identifying";
-        var ModuleFullName = ModulePackages + "/" + ModuleName;
+describe("Record tests", function () {
 
+    var aModule_TypesRegistrySvceFactory = ModuleFactory_TypesRegistrySvce();
+    console.log( "typeof aModule_TypesRegistrySvceFactory= " + typeof aModule_TypesRegistrySvceFactory);
 
+    var aTypesRegistrySvce = aModule_TypesRegistrySvceFactory();
+    console.log( "typeof aTypesRegistrySvce= " + typeof aTypesRegistrySvce);
+    console.log( "aTypesRegistrySvce keys = " + Object.keys( aTypesRegistrySvce));
 
-        var aMod_definer = function( theS_Overrider) {
 
+    var aModule_OverriderTypeFactory = ModuleFactory_OverriderType();
+    console.log( "typeof aModule_OverriderTypeFactory= " + typeof aModule_OverriderTypeFactory);
 
-            if( !( typeof FG_logModLoads == "undefined") && ( typeof FG_logModLoads == "function") && FG_logModLoads()) { FG_logModLoads(ModuleFullName);}
 
+    var aModule_OverriderType = aModule_OverriderTypeFactory( aTypesRegistrySvce);
+    console.log( "typeof aModule_OverriderType= " + typeof aModule_OverriderType);
 
+    var aOverriderType_title = "Overrider-Title-test";
 
+    var anOverrider = new aModule_OverriderType.Overrider_Constructor( aOverriderType_title);
+    console.log( "typeof anOverrider= " + typeof anOverrider);
+    console.log( "anOverrider keys = " + Object.keys( anOverrider));
 
 
 
 
 
-            var pgInitWithModuleVariations = function( theToInit) {
 
-                if( !theToInit) {
-                    return;
-                }
+    var aModule_RecordTypeFactory = ModuleFactory_RecordType();
+    console.log( "typeof aModule_RecordTypeFactory= " + typeof aModule_RecordTypeFactory);
 
-                theToInit.MAXDATASTRINGLEN = 512;
-                theToInit.MAXJSONSTRINGLEN = 2048;
-                theToInit.MAXJSONELEMENTSTRINGLEN = 1024;
 
-                theToInit.MAXDATASTRINGLEN = 1024;
+    var aModule_RecordType = aModule_RecordTypeFactory( aTypesRegistrySvce, anOverrider);
+    console.log( "typeof aModule_RecordType= " + typeof aModule_RecordType);
 
-                theToInit.MAXLOGSTRINGLEN = 4096;
+    var aRecordType_title = "Record-Title-test";
 
-                theToInit.LIMITLOGSTRINGLEN = true;
-            };
+    var aRecord = new aModule_RecordType.Record_Constructor( aRecordType_title);
+    console.log( "typeof aRecord= " + typeof aRecord);
+    console.log( "aRecord keys = " + Object.keys( aRecord));
 
 
 
 
-
-            var pgInitFromModuleVariations = function( theToInit) {
-                if( !theToInit) {
-                    return;
-                }
-
-                for( var aGlobalName in ModuleVariations) {
-                    if( ModuleVariations.hasOwnProperty( aGlobalName)) {
-                        theToInit[ aGlobalName] = ModuleVariations[ aGlobalName];
-                    }
-                }
-            };
-
-
-            var ModuleVariations = { };
-            pgInitWithModuleVariations( ModuleVariations);
-            theS_Overrider.pOverrideModuleVariations( ModuleFullName, ModuleVariations);
-
-
-
-
-
-
-
-
-            var pgInitWithModuleConstants = function( theToInit) {
-
-                if( !theToInit) {
-                }
-            };
-
-
-
-            var ModuleConstants = {};
-            pgInitFromModuleVariations( ModuleConstants);
-            pgInitWithModuleConstants( ModuleConstants);
-
-
-
-
-            var pgInitFromModuleConstants = function( theToInit) {
-                if( !theToInit) {
-                    return;
-                }
-
-                for( var aGlobalName in ModuleConstants) {
-                    if( ModuleConstants.hasOwnProperty( aGlobalName)) {
-                        theToInit[ aGlobalName] = ModuleConstants[ aGlobalName];
-                    }
-                }
-            };
-
-
-
-
-
-
-
-
-
-
-
-            var pgInitModuleGlobalsOn = function( theToInit) {
-
-                if( !theToInit) {
-                }
-            };
-
-
-
-            var ModuleGlobals = { };
-            pgInitModuleGlobalsOn( ModuleGlobals);
-
-
-
-
-
-
-
-
-
-
-            var aRecord_Prototype = (function() {
-
-
-                var aPrototype = {};
-
-                pgInitFromModuleConstants( aPrototype);
-
-
-                aPrototype._v_Type = "Record";
-
-                aPrototype._v_Prototype_Record = aPrototype;
-
-
-                aPrototype._v_Timestamp    = null;
-                aPrototype._v_Recorder     = null;
-                aPrototype._v_RecordId     = null;
-                aPrototype._v_Instance     = null;
-                aPrototype._v_Step         = null;
-                aPrototype._v_EventKind    = null;
-                aPrototype._v_Data         = null;
-                aPrototype._v_Reason       = null;
-                aPrototype._v_Detail       = null;
-
-
-
-
-
-
-                var _pInit = function( theRecorder, theRecordId, theInstance, theStep, theEventKind, theData, theReason, theDetail) {
-
-                    this._pInit_Record( theRecorder, theRecordId, theInstance, theStep, theEventKind, theData, theReason, theDetail);
-                };
-                if( _pInit){}/* CQT */
-                aPrototype._pInit = _pInit;
-
-
-
-
-                var _pInit_Record = function( theRecorder, theRecordId, theInstance, theStep, theEventKind, theData, theReason, theDetail) {
-
-                    this._v_Type = aPrototype._v_Type;
-
-                    this._v_Timestamp    = Date.now();
-                    this._v_Recorder     = theRecorder;
-                    this._v_RecordId     = theRecordId;
-                    this._v_Instance     = theInstance;
-                    this._v_Step         = theStep;
-                    this._v_EventKind    = theEventKind;
-                    this._v_Data         = theData;
-                    this._v_Reason       = theReason;
-                    this._v_Detail       = theDetail;
-                };
-                if( _pInit_Record){}/* CQT */
-                aPrototype._pInit_Record = _pInit_Record;
-
-
-
-
-
-
-                var fCopyWithoutException = function() {
-
-                    var aCopy = new Record_Constructor(
-                        this._v_Recorder,
-                        this._v_RecordId,
-                        this._v_Instance,
-                        this._v_Step,
-                        this._v_EventKind,
-                        this._v_Data,
-                        this._v_Reason,
-                        this._v_Detail
-                    );
-
-                    aCopy._v_Timestamp = this._v_Timestamp;
-
-                    if( aCopy._v_Data) {
-                        if( aCopy._v_Data.name) {
-
-                            if(aCopy._v_Data.name == "Error") {
-                                aCopy._v_Data = null;
-                            }
-
-                            if( aCopy._v_Data.name == "ForcedException") {
-                                aCopy._v_Data = null;
-                            }
-                        }
-                    }
-
-                    if( aCopy._v_Reason) {
-                        if( aCopy._v_Reason.name) {
-
-                            if(aCopy._v_Reason.name == "Error") {
-                                aCopy._v_Reason = null;
-                            }
-
-                            if( aCopy._v_Reason.name == "ForcedException") {
-                                aCopy._v_Reason = null;
-                            }
-                        }
-                    }
-
-                    if( aCopy._v_Detail) {
-                        if( aCopy._v_Detail.name) {
-
-                            if(aCopy._v_Detail.name == "Error") {
-                                aCopy._v_Detail = null;
-                            }
-
-                            if( aCopy._v_Detail.name == "ForcedException") {
-                                aCopy._v_Detail = null;
-                            }
-                        }
-                    }
-
-                    return aCopy;
-                };
-                if( fCopyWithoutException){}/* CQT */
-                aPrototype.fCopyWithoutException = fCopyWithoutException;
-
-
-
-
-
-
-
-
-
-
-
-
-                var toString = function() {
-                    return this.fLogString();
-                };
-                if( toString){}/* CQT */
-                aPrototype.toString = toString;
-
-
-
-
-
-
-
-
-                var fLogString = function() {
-
-                    if( !this.LIMITLOGSTRINGLEN) {
-                        return this.fLogString_unlimited();
-                    }
-
-                    return this.fLogString_limited();
-                };
-                if( fLogString){}/* CQT */
-                aPrototype.fLogString = fLogString;
-
-
-
-
-
-
-
-
-                var fLogString_unlimited = function() {
-
-                    var aLog = this.fAsLogObject();
-                    if( aLog == null) {
-                        return "";
-                    }
-
-                    var aLogString = "";
-                    try {
-                        aLogString = JSON.stringify( aLog);
-                    }
-                    catch( anException) {}
-
-                    return aLogString;
-                };
-                if( fLogString_unlimited){}/* CQT */
-                aPrototype.fLogString_unlimited = fLogString_unlimited;
-
-
-
-
-
-
-
-
-                var fLogString_limited = function() {
-
-                    var aLog = this.fAsLogObject_limited();
-                    if( aLog == null) {
-                        return "";
-                    }
-
-                    var aLogString = "";
-                    try {
-                        aLogString = JSON.stringify( aLog);
-                    }
-                    catch( anException) {}
-
-
-                    if( aLogString.length < this.MAXLOGSTRINGLEN) {
-
-                        return aLogString;
-                    }
-
-                    var aLogStringLimited = aLogString.slice( 0, this.MAXLOGSTRINGLEN);
-                    if( aLogStringLimited){}/* CQT */
-
-                    return aLogStringLimited;
-                };
-                if( fLogString_limited){}/* CQT */
-                aPrototype.fLogString_limited = fLogString_limited;
-
-
-
-
-
-
-
-
-
-                var fString_NeedsToBeLimited = function( theValue) {
-
-                    if( theValue == null) {
-                        return false;
-                    }
-
-                    if( typeof theValue == "number") {
-                        return false;
-                    }
-
-                    if( !( typeof theValue == "string")) {
-                        return false;
-                    }
-
-                    var aNeedsToBeLimited = theValue.length > this.MAXJSONELEMENTSTRINGLEN;
-                    if( aNeedsToBeLimited){}/* CQT */
-
-                    return aNeedsToBeLimited;
-                };
-                if( fString_NeedsToBeLimited){}/* CQT */
-                aPrototype.fString_NeedsToBeLimited = fString_NeedsToBeLimited;
-
-
-
-
-
-
-
-
-
-                var fString_limited = function( theValue) {
-
-                    if( theValue == null) {
-                        return null;
-                    }
-
-                    if( typeof theValue == "number") {
-                        return theValue;
-                    }
-
-                    if( !( typeof theValue == "string")) {
-                        return null;
-                    }
-
-                    if( theValue.length < this.MAXJSONELEMENTSTRINGLEN) {
-
-                        return theValue;
-                    }
-
-                    var aStrLimited = theValue.slice( 0, this.MAXJSONELEMENTSTRINGLEN);
-                    if( aStrLimited){}/* CQT */
-
-                    return aStrLimited;
-                };
-                if( fString_limited){}/* CQT */
-                aPrototype.fString_limited = fString_limited;
-
-
-
-
-
-
-
-
-
-                var fJSONValue_orLimited = function( theValue) {
-
-                    if( theValue == null) {
-                        return null;
-                    }
-
-                    if( typeof theValue == "number") {
-                        return theValue;
-                    }
-
-                    if( typeof theValue == "string") {
-                        return this.fString_limited( theValue);
-                    }
-
-                    if( ( theValue === this)) {
-                        return "this";
-                    }
-
-                    var aJSONstr = null;
-                    try {
-                        aJSONstr = JSON.stringify( theValue);
-                    }
-                    catch( anException) {}
-
-                    if( !( aJSONstr == null)) {
-                        if( this.fString_NeedsToBeLimited( aJSONstr)) {
-                            var aJSONstrLimited = this.fString_limited( aJSONstr);
-                            if( aJSONstrLimited){}/* CQT */
-
-                            return aJSONstrLimited;
-                        }
-
-                        return theValue;
-                    }
-
-
-                    var aStr = theValue.toString();
-                    if( aStr){}/* CQT */
-
-                    var aStrLimited = this.fString_limited( aStr);
-                    if( aStrLimited){}/* CQT */
-
-                    return aStrLimited;
-                };
-                if( fJSONValue_orLimited){}/* CQT */
-                aPrototype.fJSONValue_orLimited = fJSONValue_orLimited;
-
-
-
-
-
-
-
-
-
-
-                var fAsLogObject = function() {
-
-                    var aLog = {};
-                    var aHasLog = false;
-
-
-                    if( this._v_Timestamp) {
-                        aHasLog = true;
-                        aLog.time = new Date( this._v_Timestamp).toISOString();
-                    }
-
-                    if( this._v_RecordId) {
-                        aHasLog = true;
-                        aLog.rec = this._v_RecordId;
-                    }
-
-                    var aEventKind = this.fConvertValueToJSON( this._v_EventKind);
-                    if( !( aEventKind == null)) {
-                        aHasLog = true;
-                        aLog.kind = aEventKind;
-                    }
-
-                    var aStep = this.fConvertValueToJSON( this._v_Step);
-                    if( !( aStep == null)) {
-                        aHasLog = true;
-                        aLog.step = aStep;
-                    }
-
-
-                    var aInstance = this.fConvertValueToJSON( this._v_Instance);
-                    if( !( aInstance == null)) {
-                        aHasLog = true;
-                        aLog.inst = aInstance;
-                    }
-
-
-                    var aData = this.fConvertValueToJSON( this._v_Data);
-                    if( !( aData == null)) {
-                        aHasLog = true;
-                        aLog.data = aData;
-                    }
-
-                    var aReason = this.fConvertReasonToJSON( this._v_Reason);
-                    if( !( aReason == null)) {
-                        aHasLog = true;
-                        aLog.reason = aReason;
-                    }
-
-                    var aDetail = this.fConvertValueToJSON( this._v_Detail);
-                    if( !( aDetail == null)) {
-                        aHasLog = true;
-                        aLog.detail = aDetail;
-                    }
-
-                    if( !aHasLog) {
-                        return null;
-                    }
-
-                    return aLog;
-                };
-                if( fAsLogObject){}/* CQT */
-                aPrototype.fAsLogObject = fAsLogObject;
-
-
-
-
-
-
-
-
-
-
-
-                var fAsLogObject_limited = function() {
-
-                    var aLog = {};
-                    var aHasLog = false;
-
-
-                    if( this._v_Timestamp) {
-                        aHasLog = true;
-                        aLog.time = new Date( this._v_Timestamp).toISOString();
-                    }
-
-                    if( this._v_RecordId) {
-                        aHasLog = true;
-                        aLog.rec = this._v_RecordId;
-                    }
-
-                    var aEventKind = this.fConvertValueToJSON_limited( this._v_EventKind);
-                    if( !( aEventKind == null)) {
-                        aHasLog = true;
-                        aLog.kind = aEventKind;
-                    }
-
-                    var aStep = this.fConvertValueToJSON_limited( this._v_Step);
-                    if( !( aStep == null)) {
-                        aHasLog = true;
-                        aLog.step = aStep;
-                    }
-
-
-                    var aInstance = this.fConvertValueToJSON_limited( this._v_Instance);
-                    if( !( aInstance == null)) {
-                        aHasLog = true;
-                        aLog.inst = aInstance;
-                    }
-
-
-                    var aData = this.fConvertValueToJSON_limited( this._v_Data);
-                    if( !( aData == null)) {
-                        aHasLog = true;
-                        aLog.data = aData;
-                    }
-
-                    var aReason = this.fConvertReasonToJSON_limited( this._v_Reason);
-                    if( !( aReason == null)) {
-                        aHasLog = true;
-                        aLog.reason = aReason;
-                    }
-
-                    var aDetail = this.fConvertValueToJSON_limited( this._v_Detail);
-                    if( !( aDetail == null)) {
-                        aHasLog = true;
-                        aLog.detail = aDetail;
-                    }
-
-                    if( !aHasLog) {
-                        return null;
-                    }
-
-                    return aLog;
-                };
-                if( fAsLogObject_limited){}/* CQT */
-                aPrototype.fAsLogObject_limited = fAsLogObject_limited;
-
-
-
-
-
-
-
-
-
-
-
-                var fConvertReasonToJSON = function( theValue) {
-
-                    if( theValue == null) {
-                        return null;
-                    }
-
-                    if( typeof theValue == "number") {
-                        return theValue;
-                    }
-
-                    if( typeof theValue == "string") {
-                        return theValue;
-                    }
-
-                    if( ( theValue === this)) {
-                        return "this";
-                    }
-
-                    if( theValue.fAsReasonChain) {
-                        return theValue.fAsReasonChain();
-                    }
-
-                    if( theValue.fAsLogObject) {
-                        return theValue.fAsLogObject();
-                    }
-
-                    if( theValue.fAsJSONable) {
-                        return theValue.fAsJSONable();
-                    }
-
-                    if( theValue.fIdentifyingWithTitleJSON) {
-                        return theValue.fIdentifyingWithTitleJSON();
-                    }
-
-                    if( theValue.fIdentifyingJSON) {
-                        return theValue.fIdentifyingJSON();
-                    }
-
-                    if( theValue.fIdentifyingString) {
-                        return theValue.fIdentifyingString();
-                    }
-
-                    if( theValue.fLogString) {
-                        return theValue.fLogString();
-                    }
-
-                    var aJSONable = this.fAsJSONable( theValue);
-                    if( !( aJSONable == null)) {
-                        return aJSONable;
-                    }
-
-                    var aStr = theValue.toString().substr( 0, this.MAXDATASTRINGLEN);
-                    if( aStr){}/* CQT */
-                    return aStr;
-                };
-                if( fConvertReasonToJSON){}/* CQT */
-                aPrototype.fConvertReasonToJSON = fConvertReasonToJSON;
-
-
-
-
-
-
-
-
-
-
-                var fConvertReasonToJSON_limited = function( theValue) {
-
-                    if( theValue == null) {
-                        return null;
-                    }
-
-                    if( typeof theValue == "number") {
-                        return theValue;
-                    }
-
-                    if( typeof theValue == "string") {
-                        return theValue;
-                    }
-
-                    if( ( theValue === this)) {
-                        return "this";
-                    }
-
-                    if( theValue.fAsReasonChain_limited) {
-                        return theValue.fAsReasonChain_limited();
-                    }
-
-                    if( theValue.fAsLogObject_limited) {
-                        return theValue.fAsLogObject_limited();
-                    }
-
-                    if( theValue.fAsJSONable_limited) {
-                        return theValue.fAsJSONable_limited();
-                    }
-
-                    if( theValue.fIdentifyingWithTitleJSON) {
-                        return this.fJSONValue_orLimited( theValue.fIdentifyingWithTitleJSON());
-                    }
-
-                    if( theValue.fIdentifyingJSON) {
-                        return this.fJSONValue_orLimited( theValue.fIdentifyingJSON());
-                    }
-
-                    if( theValue.fIdentifyingString) {
-                        return this.fJSONValue_orLimited( theValue.fIdentifyingString());
-                    }
-
-                    if( theValue.fLogString_limited) {
-                        return theValue.fLogString_limited();
-                    }
-
-                    var aJSONable = this.fAsJSONable_limited( theValue);
-                    if( !( aJSONable == null)) {
-                        return aJSONable;
-                    }
-
-                    var aStr = theValue.toString();
-                    var aStr_limited = this.fString_limited( aStr);
-                    if( aStr_limited){}/* CQT */
-
-                    return aStr_limited;
-                };
-                if( fConvertReasonToJSON_limited){}/* CQT */
-                aPrototype.fConvertReasonToJSON_limited = fConvertReasonToJSON_limited;
-
-
-
-
-
-
-
-
-
-
-                var fAsReasonChain = function( theAlready) {
-
-
-                    if( theAlready && ( theAlready.indexOf( this) >= 0)) {
-                        return null;
-                    }
-
-                    var anAlready = theAlready;
-                    if( !anAlready) {
-                        anAlready = [ ];
-                    }
-
-                    anAlready.push( this);
-
-
-                    var aLog = {};
-                    var aHasLog = false;
-
-
-                    if( this._v_Id) {
-                        aHasLog = true;
-                        aLog.tre = this._v_Id;
-                    }
-
-                    var aEventKind = this.fConvertValueToJSON( this._v_EventKind);
-                    if( !( aEventKind == null)) {
-                        aHasLog = true;
-                        aLog.kind = aEventKind;
-                    }
-
-                    if( this._v_Reason) {
-                        var aReason = null;
-                        if( this._v_Reason.fAsReasonChain) {
-                            aReason = this._v_Reason.fAsReasonChain( anAlready);
-                        }
-                        else {
-                            aReason = this.fConvertValueToJSON( this._v_Reason);
-                        }
-                        if( !( aReason == null)) {
-                            aHasLog = true;
-                            aLog.reason = aReason;
-                        }
-                    }
-
-
-                    var aDetail = this.fConvertValueToJSON( this._v_Detail);
-                    if( !( aDetail == null)) {
-                        aHasLog = true;
-                        aLog.detail = aDetail;
-                    }
-
-                    if( !aHasLog) {
-                        return null;
-                    }
-
-                    return aLog;
-                };
-                if( fAsReasonChain){}/* CQT */
-                aPrototype.fAsReasonChain = fAsReasonChain;
-
-
-
-
-
-
-
-
-
-                var fAsReasonChain_limited = function( theAlready) {
-
-
-                    if( theAlready && ( theAlready.indexOf( this) >= 0)) {
-                        return null;
-                    }
-
-                    var anAlready = theAlready;
-                    if( !anAlready) {
-                        anAlready = [ ];
-                    }
-
-                    anAlready.push( this);
-
-
-                    var aLog = {};
-                    var aHasLog = false;
-
-
-                    if( this._v_Id) {
-                        aHasLog = true;
-                        aLog.tre = this._v_Id;
-                    }
-
-                    var aEventKind = this.fConvertValueToJSON_limited( this._v_EventKind);
-                    if( !( aEventKind == null)) {
-                        aHasLog = true;
-                        aLog.kind = aEventKind;
-                    }
-
-                    if( this._v_Reason) {
-                        var aReason = null;
-                        if( this._v_Reason.fAsReasonChain) {
-                            aReason = this.fConvertValueToJSON_limited( this._v_Reason.fAsReasonChain_limited( anAlready));
-                        }
-                        else {
-                            aReason = this.fConvertValueToJSON_limited( this._v_Reason);
-                        }
-                        if( !( aReason == null)) {
-                            aHasLog = true;
-                            aLog.reason = aReason;
-                        }
-                    }
-
-
-                    var aDetail = this.fConvertValueToJSON_limited( this._v_Detail);
-                    if( !( aDetail == null)) {
-                        aHasLog = true;
-                        aLog.detail = aDetail;
-                    }
-
-                    if( !aHasLog) {
-                        return null;
-                    }
-
-                    return aLog;
-                };
-                if( fAsReasonChain_limited){}/* CQT */
-                aPrototype.fAsReasonChain_limited = fAsReasonChain_limited;
-
-
-
-
-
-
-
-
-
-                var fConvertValueToJSON = function( theValue, theIncludeMembers) {
-
-                    if( theValue == null) {
-                        return null;
-                    }
-
-                    if( typeof theValue == "number") {
-                        return theValue;
-                    }
-
-                    if( typeof theValue == "string") {
-                        return theValue;
-                    }
-
-                    if( ( theValue === this)) {
-                        return "this";
-                    }
-
-                    if( theValue._v_Type && ( theValue._v_Type == this._v_Type)) {
-                        return theValue.fIdentifyingJSON();
-                    }
-
-                    if( theValue.fAsLogObject) {
-                        return theValue.fAsLogObject();
-                    }
-
-                    if( theValue.fAsJSONable) {
-                        return theValue.fAsJSONable();
-                    }
-
-                    if( theValue.fIdentifyingWithTitleJSON) {
-                        return theValue.fIdentifyingWithTitleJSON();
-                    }
-
-                    if( theValue.fIdentifyingJSON) {
-                        return theValue.fIdentifyingJSON();
-                    }
-
-                    if( theValue.fIdentifyingString) {
-                        return theValue.fIdentifyingString();
-                    }
-
-                    if( theValue.fLogString) {
-                        return theValue.fLogString();
-                    }
-
-                    var aJSONable = this.fAsJSONable( theValue);
-                    if( !( aJSONable == null)) {
-                        return aJSONable;
-                    }
-
-                    if( theIncludeMembers) {
-                        if( theValue.fToResultJSON) {
-                            return theValue.fToResultJSON();
-                        }
-
-                        try {
-                            var aJSONstr = JSON.stringify( theValue);
-                            if( aJSONstr){}/* CQT */
-                            return aJSONstr;
-                        }
-                        catch( anException) {}
-                    }
-
-                    var aStr = theValue.toString().substr( 0, this.MAXDATASTRINGLEN);
-                    if( aStr){}/* CQT */
-                    return aStr;
-                };
-                if( fConvertValueToJSON){}/* CQT */
-                aPrototype.fConvertValueToJSON = fConvertValueToJSON;
-
-
-
-
-
-
-
-
-
-
-
-
-
-                var fConvertValueToJSON_limited = function( theValue) {
-
-                    if( theValue == null) {
-                        return null;
-                    }
-
-                    if( typeof theValue == "number") {
-                        return theValue;
-                    }
-
-                    if( typeof theValue == "string") {
-                        return theValue;
-                    }
-
-                    if( ( theValue === this)) {
-                        return "this";
-                    }
-
-                    if( theValue._v_Type && ( theValue._v_Type == this._v_Type)) {
-                        return this.fJSONValue_orLimited( theValue.fIdentifyingJSON());
-                    }
-
-                    if( theValue.fAsLogObject) {
-                        return this.fJSONValue_orLimited( theValue.fAsLogObject());
-                    }
-
-                    if( theValue.fAsJSONable_limited) {
-                        return theValue.fAsJSONable_limited();
-                    }
-
-                    if( theValue.fIdentifyingWithTitleJSON) {
-                        return this.fJSONValue_orLimited( theValue.fIdentifyingWithTitleJSON());
-                    }
-
-                    if( theValue.fIdentifyingJSON) {
-                        return this.fJSONValue_orLimited( theValue.fIdentifyingJSON());
-                    }
-
-                    if( theValue.fIdentifyingString) {
-                        return this.fJSONValue_orLimited( theValue.fIdentifyingString);
-                    }
-
-                    if( theValue.fLogString_limited) {
-                        return theValue.fLogString_limited();
-                    }
-
-                    var aJSONable = this.fAsJSONable_limited( theValue);
-                    if( !( aJSONable == null)) {
-                        return aJSONable;
-                    }
-
-                    var aStr = theValue.toString();
-                    if( aStr){}/* CQT */
-
-                    var aStrLimited = this.fString_limited( aStr);
-                    if( aStrLimited){}/* CQT */
-
-                    return aStrLimited;
-                };
-                if( fConvertValueToJSON_limited){}/* CQT */
-                aPrototype.fConvertValueToJSON_limited = fConvertValueToJSON_limited;
-
-
-
-
-
-
-
-
-
-
-
-
-                var fAsJSONable = function( theValue) {
-
-                    if( theValue == null) {
-                        return null;
-                    }
-
-                    if( typeof theValue == "number") {
-                        return theValue;
-                    }
-
-                    if( typeof theValue == "string") {
-                        return theValue;
-                    }
-
-                    if( ( theValue === this)) {
-                        return "this";
-                    }
-
-                    if( theValue._v_Type && ( theValue._v_Type == this._v_Type)) {
-                        return theValue.fIdentifyingJSON();
-                    }
-
-                    if( theValue.fAsLogObject) {
-                        return theValue.fAsLogObject();
-                    }
-
-                    if( theValue.fIdentifyingWithTitleJSON) {
-                        return theValue.fIdentifyingWithTitleJSON();
-                    }
-
-                    if( theValue.fIdentifyingJSON) {
-                        return theValue.fIdentifyingJSON();
-                    }
-
-                    if( theValue.fIdentifyingWithTitleString) {
-                        return theValue.fIdentifyingWithTitleString();
-                    }
-
-                    if( theValue.fIdentifyingString) {
-                        return theValue.fIdentifyingString();
-                    }
-
-                    if( theValue.fLogString) {
-                        return theValue.fLogString();
-                    }
-
-                    if( theValue.fToResultJSON) {
-                        return theValue.fToResultJSON();
-                    }
-
-                    var aJSONstr = null;
-                    try {
-                        aJSONstr = JSON.stringify( theValue);
-                    }
-                    catch( anException) {}
-
-                    if( !( aJSONstr == null)) {
-                        var aJSONstrlen = aJSONstr.length;
-                        if ( aJSONstrlen > this.MAXJSONSTRINGLEN) {
-                            return aJSONstr.substr( 0, this.MAXJSONSTRINGLEN);
-                        }
-                        return theValue;
-                    }
-
-                    var aStr = theValue.toString().substr( 0, this.MAXDATASTRINGLEN);
-                    if( aStr){}/* CQT */
-                    return aStr;
-                };
-                if( fAsJSONable){}/* CQT */
-                aPrototype.fAsJSONable = fAsJSONable;
-
-
-
-
-
-
-
-
-
-                var fAsJSONable_limited = function( theValue) {
-
-                    if( theValue == null) {
-                        return null;
-                    }
-
-                    if( typeof theValue == "number") {
-                        return theValue;
-                    }
-
-                    if( typeof theValue == "string") {
-                        return theValue;
-                    }
-
-                    if( ( theValue === this)) {
-                        return "this";
-                    }
-
-                    if( theValue._v_Type && ( theValue._v_Type == this._v_Type)) {
-                        return this.fJSONValue_orLimited( theValue.fIdentifyingJSON());
-                    }
-
-                    if( theValue.fAsLogObject) {
-                        return theValue.fAsLogObject_limited();
-                    }
-
-                    if( theValue.fIdentifyingWithTitleJSON) {
-                        return this.fJSONValue_orLimited( theValue.fIdentifyingWithTitleJSON());
-                    }
-
-                    if( theValue.fIdentifyingJSON) {
-                        return this.fJSONValue_orLimited( theValue.fIdentifyingJSON());
-                    }
-
-                    if( theValue.fIdentifyingWithTitleString) {
-                        return this.fJSONValue_orLimited( theValue.fIdentifyingWithTitleString());
-                    }
-
-                    if( theValue.fIdentifyingString) {
-                        return this.fJSONValue_orLimited( theValue.fIdentifyingString());
-                    }
-
-                    if( theValue.fLogString_limited) {
-                        return theValue.fLogString_limited();
-                    }
-
-                    if( theValue.fToResultJSON) {
-                        return this.fJSONValue_orLimited( theValue.fToResultJSON());
-                    }
-
-                    var aJSONorStr = this.fJSONValue_orLimited( theValue);
-                    if( aJSONorStr){}/* CQT */
-
-                    return aJSONorStr;
-                };
-                if( fAsJSONable_limited){}/* CQT */
-                aPrototype.fAsJSONable_limited = fAsJSONable_limited;
-
-
-
-
-
-
-
-
-
-
-
-                var fIdentifyingJSON = function() {
-
-                    var aIdentifiyingJSON = {
-                        "recref": this._v_RecordId
-                    };
-                    if( aIdentifiyingJSON){}/* CQT */
-
-                    return aIdentifiyingJSON;
-                };
-                if( fIdentifyingJSON){}/* CQT */
-                aPrototype.fIdentifyingJSON = fIdentifyingJSON;
-
-
-
-
-
-
-                var fRecordHasEvent_recursive = function( theExpectedEvent, theAlready) {
-
-                    if( !theExpectedEvent) {
-                        return false;
-                    }
-
-                    if( theAlready  && ( theAlready.indexOf( this) >= 0)) {
-                        return false;
-                    }
-
-                    if( this._v_EventKind && ( this._v_EventKind == theExpectedEvent)) {
-                        return true;
-                    }
-
-                    if( theAlready) {
-                        theAlready.push( this);
-                    }
-
-
-                    if( this._v_Reason) {
-                        if( this._v_Reason.fRecordHasEvent_recursive) {
-                            return this._v_Reason.fRecordHasEvent_recursive( theExpectedEvent, theAlready);
-                        }
-
-                        if( this._v_Reason._v_Record) {
-                            return this._v_Reason._v_Record.fRecordHasEvent_recursive( theExpectedEvent, theAlready);
-                        }
-                    }
-
-                    return false;
-                };
-                if( fRecordHasEvent_recursive){}/* CQT */
-                aPrototype.fRecordHasEvent_recursive = fRecordHasEvent_recursive;
-
-
-
-
-
-
-                return aPrototype;
-            })();
-
-
-
-
-            var Record_Constructor = function( theRecorder, theRecordId, theInstance, theStep, theEventKind, theData, theReason, theDetail) {
-
-                this._v_Type = null;
-
-                this._v_Recorder   = null;
-                this._v_RecordId   = null;
-                this._v_Instance   = null;
-                this._v_Step       = null;
-                this._v_EventKind  = null;
-                this._v_Data       = null;
-                this._v_Reason     = null;
-                this._v_Detail     = null;
-
-                this._pInit_Record( theRecorder, theRecordId, theInstance, theStep, theEventKind, theData, theReason, theDetail);
-            };
-            Record_Constructor.prototype = aRecord_Prototype;
-
-
-
-
-
-            var Record_SuperPrototypeConstructor = function() {
-
-                this._v_Type = null;
-
-                this._v_Recorder   = null;
-                this._v_RecordId   = null;
-                this._v_Instance   = null;
-                this._v_Step       = null;
-                this._v_EventKind  = null;
-                this._v_Data       = null;
-                this._v_Reason     = null;
-                this._v_Detail     = null;
-            };
-            Record_SuperPrototypeConstructor.prototype = aRecord_Prototype;
-
-
-
-
-
-
-
-            var aModule = {
-                "Record_Prototype": aRecord_Prototype,
-                "Record_Constructor": Record_Constructor,
-                "Record_SuperPrototypeConstructor": Record_SuperPrototypeConstructor
-            };
-            pgInitFromModuleConstants( aModule);
-            aModule.ModuleName     = ModuleName;
-            aModule.ModulePackages = ModulePackages;
-            aModule.ModuleFullName = ModuleFullName;
-
-            aRecord_Prototype._v_Module = aModule;
-
-
-
-
-
-            return aModule;
-        };
-
-
-
-
-
-
-
-        var anExistingModule = theSS_typesregistry.fRegisteredModule( ModuleFullName);
-        if( !anExistingModule) {
-
-            var aModule = aMod_definer(
-                theSS_Overrider
-            );
-            anExistingModule = aModule;
-
-            theSS_typesregistry.fRegisterModule( ModuleFullName, aModule);
-        }
-
-
-
-
-
-
-        return anExistingModule;
-
+    it("Has module defined", function () {
+        expect( aRecord._v_Module).not.toBeUndefined();
     });
-}
 
+    it("Has module not null", function () {
+        expect( aRecord._v_Module).not.toBeNull( null);
+    });
+
+    it("Has module ModuleName record_type", function () {
+        expect( aRecord._v_Module.ModuleName).toBe( "record_type");
+    });
+
+    it("Has module ModulePackages identifying", function () {
+        expect( aRecord._v_Module.ModulePackages).toBe( "identifying");
+    });
+
+    it("Has module ModuleFullName identifying.record_type", function () {
+        expect( aRecord._v_Module.ModuleFullName).toBe( "identifying/record_type");
+    });
+
+    it("Has module Record_Prototype defined", function () {
+        expect( aRecord._v_Module.Record_Prototype).not.toBeUndefined();
+    });
+
+    it("Has module Record_Prototype not null", function () {
+        expect( aRecord._v_Module.Record_Prototype).not.toBeNull( null);
+    });
+
+    it("Has module Record_Constructor defined", function () {
+        expect( aRecord._v_Module.Record_Constructor).not.toBeUndefined();
+    });
+
+    it("Has module Record_Constructor not null", function () {
+        expect( aRecord._v_Module.Record_Constructor).not.toBeNull( null);
+    });
+
+    it("Has module Record_SuperPrototypeConstructor defined", function () {
+        expect( aRecord._v_Module.Record_SuperPrototypeConstructor).not.toBeUndefined();
+    });
+
+    it("Has module Record_SuperPrototypeConstructor not null", function () {
+        expect( aRecord._v_Module.Record_SuperPrototypeConstructor).not.toBeNull( null);
+    });
+
+
+
+    it("Has _v_Prototype defined", function () {
+        expect( aRecord._v_Prototype).not.toBeUndefined();
+    });
+
+    it("Has _v_Prototype module Record_Prototype", function () {
+        expect( aRecord._v_Prototype).toBe( aRecord._v_Module.Record_Prototype);
+    });
+
+    it("Has _v_Prototype_Record defined", function () {
+        expect( aRecord._v_Prototype_Record).not.toBeUndefined();
+    });
+
+    it("Has _v_Prototype_Record module Record_Prototype", function () {
+        expect( aRecord._v_Prototype).toBe( aRecord._v_Module.Record_Prototype);
+    });
+
+
+
+    it("Has _v_Type Record", function () {
+        expect( aRecord._v_Type).toBe( "Record");
+    });
+
+    it("Has title Record_DefaultName", function () {
+        expect( aRecord._v_Title).toBe( aRecordType_title);
+    });
+
+
+
+
+    it("Has fFullTypeNameString defined", function () {
+        expect( aRecord.fFullTypeNameString).not.toBeUndefined();
+    });
+
+    it("Has fFullTypeNameString typeof function", function () {
+        expect( typeof aRecord.fFullTypeNameString).toBe( "function");
+    });
+
+
+
+
+    it("Has fIdentifyingJSON defined", function () {
+        expect( aRecord.fIdentifyingJSON).not.toBeUndefined();
+    });
+
+    it("Has fIdentifyingJSON typeof function", function () {
+        expect( typeof aRecord.fIdentifyingJSON).toBe( "function");
+    });
+
+    it("Has fIdentifyingJSON() not null", function () {
+        expect( aRecord.fIdentifyingJSON()).not.toBeNull();
+    });
+
+    it("Has fIdentifyingJSON() type _v_Type", function () {
+        expect( aRecord.fIdentifyingJSON().type).toBe( aRecord._v_Type);
+    });
+
+    it("Has fIdentifyingJSON() id _v_Id", function () {
+        expect( aRecord.fIdentifyingJSON().id).toBe( aRecord._v_Id);
+    });
+
+
+
+
+    it("Has fIdentifyingString defined", function () {
+        expect( aRecord.fIdentifyingString).not.toBeUndefined();
+    });
+
+    it("Has fIdentifyingString typeof function", function () {
+        expect( typeof aRecord.fIdentifyingString).toBe( "function");
+    });
+
+    it("Has fIdentifyingString() not null", function () {
+        expect( aRecord.fIdentifyingString()).not.toBeNull();
+    });
+
+    it("Has fIdentifyingString() JSON.stringify( fIdentifyingJSON())", function () {
+        expect( aRecord.fIdentifyingString()).toBe( JSON.stringify( aRecord.fIdentifyingJSON()));
+    });
+
+
+
+
+
+    it("Has fIdentifyingWithTitleJSON defined", function () {
+        expect( aRecord.fIdentifyingWithTitleJSON).not.toBeUndefined();
+    });
+
+    it("Has fIdentifyingWithTitleJSON typeof function", function () {
+        expect( typeof aRecord.fIdentifyingWithTitleJSON).toBe( "function");
+    });
+
+    it("Has fIdentifyingWithTitleJSON() not null", function () {
+        expect( aRecord.fIdentifyingWithTitleJSON()).not.toBeNull();
+    });
+
+    it("Has fIdentifyingWithTitleJSON() type _v_Type", function () {
+        expect( aRecord.fIdentifyingWithTitleJSON().type).toBe( aRecord._v_Type);
+    });
+
+    it("Has fIdentifyingWithTitleJSON() id _v_Id", function () {
+        expect( aRecord.fIdentifyingWithTitleJSON().id).toBe( aRecord._v_Id);
+    });
+
+    it("Has fIdentifyingWithTitleJSON() id _v_Title", function () {
+        expect( aRecord.fIdentifyingWithTitleJSON().title).toBe( aRecord._v_Title);
+    });
+
+
+
+
+
+
+    it("Has fIdentifyingWithTitleString defined", function () {
+        expect( aRecord.fIdentifyingWithTitleString).not.toBeUndefined();
+    });
+
+    it("Has fIdentifyingWithTitleString typeof function", function () {
+        expect( typeof aRecord.fIdentifyingWithTitleString).toBe( "function");
+    });
+
+    it("Has fIdentifyingWithTitleString() not null", function () {
+        expect( aRecord.fIdentifyingWithTitleString()).not.toBeNull();
+    });
+
+    it("Has fIdentifyingWithTitleString() JSON.stringify( fIdentifyingJSON())", function () {
+        expect( aRecord.fIdentifyingWithTitleString()).toBe( JSON.stringify( aRecord.fIdentifyingWithTitleJSON()));
+    });
+
+
+
+
+    it("Has fToResultJSON defined", function () {
+        expect( aRecord.fToResultJSON).not.toBeUndefined();
+    });
+
+    it("Has fToResultJSON typeof function", function () {
+        expect( typeof aRecord.fToResultJSON).toBe( "function");
+    });
+
+    it("Has fToResultJSON()not null", function () {
+        expect( aRecord.fToResultJSON()).not.toBeNull();
+    });
+
+
+    it("Has fToResultJSON() type _v_Type", function () {
+        expect( aRecord.fToResultJSON().type).toBe( aRecord._v_Type);
+    });
+
+    it("Has fToResultJSON() id _v_Id", function () {
+        expect( aRecord.fToResultJSON().id).toBe( aRecord._v_Id);
+    });
+
+    it("Has fToResultJSON() id _v_Title", function () {
+        expect( aRecord.fToResultJSON().title).toBe( aRecord._v_Title);
+    });
+
+
+
+
+
+
+    it("Has fReserveId defined", function () {
+        expect( aRecord.fReserveId).not.toBeUndefined();
+    });
+
+    it("Has fReserveId typeof function", function () {
+        expect( typeof aRecord.fReserveId).toBe( "function");
+    });
+
+
+
+
+});
 
 
 

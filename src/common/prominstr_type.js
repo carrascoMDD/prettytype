@@ -1,7 +1,7 @@
 /*
  * prominstr_type.js
  *
- * Creado @author Antonio Carrasco Valero 201409301309
+ * Created @author Antonio Carrasco Valero 201409301309
  *
  *
  ***************************************************************************
@@ -53,9 +53,6 @@ function ModuleFactory_ProminstrType() {
         var aMod_definer = function( theS_Overrider,
                                      theS_CommonType,
                                      theS_IdentifierType,
-                                     /*
-                                     theS_ProminstrException,
-                                      */
                                      $q) {
 
 
@@ -335,6 +332,10 @@ function ModuleFactory_ProminstrType() {
 
 
 
+
+
+
+
                 var pDecorateNewDeferred_withMethods = function( theDeferred) {
 
                     if( !theDeferred) {
@@ -345,7 +346,13 @@ function ModuleFactory_ProminstrType() {
 
                     var fIdentifyingJSON = function() {
 
+                        var aModuleFullName = null;
+                        if( theDeferred._v_Module) {
+                            aModuleFullName = theDeferred._v_Module.ModuleFullName;
+                        }
+
                         var aIdentifiyingJSON = {
+                            "module": aModuleFullName,
                             "type": theDeferred._v_Type,
                             "id":   theDeferred._v_Id
                         };

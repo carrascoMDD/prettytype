@@ -1,7 +1,7 @@
 /*
  * overrider_type.js
  *
- * Creado @author Antonio Carrasco Valero 201410030300
+ * Created @author Antonio Carrasco Valero 201410030300
  *
  *
  ***************************************************************************
@@ -142,6 +142,18 @@ function ModuleFactory_OverriderType() {
 
 
 
+
+
+
+                var fFullTypeNameString = function() {
+
+                    var aFullTypeName = this._v_Module.ModuleFullName + "." + this._v_Type;
+                    if( aFullTypeName){}/* CQT */
+
+                    return aFullTypeName;
+                };
+                if( fFullTypeNameString){}/* CQT */
+                aPrototype.fFullTypeNameString = fFullTypeNameString;
 
 
 

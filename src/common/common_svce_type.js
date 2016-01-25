@@ -1,7 +1,7 @@
 /*
  * common_svce_type.js
  *
- * Creado @author Antonio Carrasco Valero 201409301309
+ * Created @author Antonio Carrasco Valero 201409301309
  *
  *
  ***************************************************************************
@@ -45,7 +45,7 @@ function ModuleFactory_CommonSvceType() {
               theSS_APIBaseURLSvce) {
 
 
-        var ModuleName     = "commonsvce_type";
+        var ModuleName     = "common_svce_type";
         var ModulePackages = "common";
         var ModuleFullName = ModulePackages + "/" + ModuleName;
 

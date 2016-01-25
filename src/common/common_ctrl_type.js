@@ -1,7 +1,7 @@
 /*
  * common_ctrl_type.js
  *
- * Creado @author Antonio Carrasco Valero 201409301309
+ * Created @author Antonio Carrasco Valero 201409301309
  *
  *
  ***************************************************************************
