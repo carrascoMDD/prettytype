@@ -39,7 +39,7 @@ permissions and limitations under the Licence.
 
 
 
-describe("ProminstrException tests", function () {
+describe("prettytype ProminstrException tests", function () {
 
 
 

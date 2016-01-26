@@ -40,7 +40,7 @@ permissions and limitations under the Licence.
 
 
 
-describe("Common record tests", function () {
+describe("prettytype Common record tests", function () {
 
     var aModule_TypesRegistrySvceFactory = ModuleFactory_TypesRegistrySvce();
     // console.log( "typeof aModule_TypesRegistrySvceFactory= " + typeof aModule_TypesRegistrySvceFactory);

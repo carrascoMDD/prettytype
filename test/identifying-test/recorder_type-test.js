@@ -41,7 +41,7 @@ permissions and limitations under the Licence.
 
 
 
-describe("Recorder tests", function () {
+describe("prettytypes Recorder tests", function () {
 
     var aModule_TypesRegistrySvceFactory = ModuleFactory_TypesRegistrySvce();
     //console.log( "typeof aModule_TypesRegistrySvceFactory= " + typeof aModule_TypesRegistrySvceFactory);

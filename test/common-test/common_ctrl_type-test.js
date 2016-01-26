@@ -40,7 +40,7 @@ permissions and limitations under the Licence.
 
 
 
-describe("CommonCtrl tests", function () {
+describe("prettytype CommonCtrl tests", function () {
 
 
     var aModule_TypesRegistrySvceFactory = ModuleFactory_TypesRegistrySvce();

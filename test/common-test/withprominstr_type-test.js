@@ -42,7 +42,7 @@ permissions and limitations under the Licence.
 
 
 
-describe("WithProminstr tests", function () {
+describe("prettytype WithProminstr tests", function () {
 
 
     var aModule_TypesRegistrySvceFactory = ModuleFactory_TypesRegistrySvce();

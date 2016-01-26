@@ -42,7 +42,7 @@ permissions and limitations under the Licence.
 
 
 
-describe("CommonSvce tests", function () {
+describe("prettytype CommonSvce tests", function () {
 
 
     var aModule_TypesRegistrySvceFactory = ModuleFactory_TypesRegistrySvce();

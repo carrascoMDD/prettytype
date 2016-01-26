@@ -37,7 +37,7 @@
 
 
 
-describe("TypesRegistry tests", function () {
+describe("prettytypes TypesRegistry tests", function () {
 
     var aModule_TypesRegistrySvceFactory = ModuleFactory_TypesRegistrySvce();
     //console.log( "typeof aModule_TypesRegistrySvceFactory= " + typeof aModule_TypesRegistrySvceFactory);
