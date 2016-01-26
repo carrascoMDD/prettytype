@@ -39,7 +39,7 @@ permissions and limitations under the Licence.
 
 
 
-describe("prettytypes Identifier tests", function () {
+describe("prettytype  Identifier tests", function () {
 
     var aModule_TypesRegistrySvceFactory = ModuleFactory_TypesRegistrySvce();
     //console.log( "typeof aModule_TypesRegistrySvceFactory= " + typeof aModule_TypesRegistrySvceFactory);
