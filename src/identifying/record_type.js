@@ -310,7 +310,7 @@ function ModuleFactory_RecordType() {
 
 
 
-
+                /*
                 var fIdentifyingJSON = function() {
 
                     var aIdentifiyingJSON = {
@@ -318,7 +318,21 @@ function ModuleFactory_RecordType() {
                         "type": this._v_Type,
                         "id":   this._v_RecordId
                     };
+                    return aIdentifiyingJSON;
+                };
+                aPrototype.fIdentifyingJSON = fIdentifyingJSON;
+                */
+
+
+
+
+                var fIdentifyingJSON = function() {
+
+                    var aIdentifiyingJSON = {
+                        "recref": this._v_RecordId
+                    };
                     if( aIdentifiyingJSON){}/* CQT */
+
                     return aIdentifiyingJSON;
                 };
                 if( fIdentifyingJSON){}/* CQT */
@@ -1333,22 +1347,6 @@ function ModuleFactory_RecordType() {
 
 
 
-
-
-
-
-
-                var fIdentifyingJSON = function() {
-
-                    var aIdentifiyingJSON = {
-                        "recref": this._v_RecordId
-                    };
-                    if( aIdentifiyingJSON){}/* CQT */
-
-                    return aIdentifiyingJSON;
-                };
-                if( fIdentifyingJSON){}/* CQT */
-                aPrototype.fIdentifyingJSON = fIdentifyingJSON;
 
 
 

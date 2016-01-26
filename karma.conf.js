@@ -9,6 +9,7 @@ module.exports = function(config){
             'test/typesregistry-test.js',
             'test/roots-test/overrider_type-test.js',
             'test/identifying-test/identifier_type-test.js',
+            'test/identifying-test/record_type-test.js',
             'test/identifying-test/recorder_type-test.js',
             'test/common-test/common_type-test.js',
             'test/common-test/common_type-record-test.js',

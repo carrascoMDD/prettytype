@@ -78,10 +78,28 @@ describe("prettytype  Record tests", function () {
 
     var aRecordType_title = "Record-Title-test";
 
-    var aRecord = new aModule_RecordType.Record_Constructor( aRecordType_title);
+    var aRecorder_Dummy   = {};
+    var aRecordId_Dummy   = "Record-test-id";
+    var anInstance_Dummy  = {};
+    var aStep_Dummy       = "Record-test-step";
+    var anEventKind_Dummy = "Record-test-step";
+    var aData_Dummy       = {};
+    var aReason_Dummy     = {};
+    var aDetail_Dummy     = {};
+
+
+    var aRecord = new aModule_RecordType.Record_Constructor(
+        aRecorder_Dummy,
+        aRecordId_Dummy,
+        anInstance_Dummy,
+        aStep_Dummy,
+        anEventKind_Dummy,
+        aData_Dummy,
+        aReason_Dummy,
+        aDetail_Dummy
+    );
     //console.log( "typeof aRecord= " + typeof aRecord);
     //console.log( "aRecord keys = " + Object.keys( aRecord));
-
 
 
 
@@ -153,11 +171,37 @@ describe("prettytype  Record tests", function () {
         expect( aRecord._v_Type).toBe( "Record");
     });
 
-    it("Has title Record_DefaultName", function () {
-        expect( aRecord._v_Title).toBe( aRecordType_title);
+    it("Has _v_Recorder supplied", function () {
+        expect( aRecord._v_Recorder).toBe( aRecorder_Dummy);
     });
 
+    it("Has _v_RecordId supplied", function () {
+        expect( aRecord._v_RecordId).toBe( aRecordId_Dummy);
+    });
 
+    it("Has _v_Instance supplied", function () {
+        expect( aRecord._v_Instance).toBe( anInstance_Dummy);
+    });
+
+    it("Has _v_Step supplied", function () {
+        expect( aRecord._v_Step).toBe( aStep_Dummy);
+    });
+
+    it("Has _v_EventKind supplied", function () {
+        expect( aRecord._v_EventKind).toBe( anEventKind_Dummy);
+    });
+
+    it("Has _v_Data supplied", function () {
+        expect( aRecord._v_Data).toBe( aData_Dummy);
+    });
+
+    it("Has _v_Reason supplied", function () {
+        expect( aRecord._v_Reason).toBe( aReason_Dummy);
+    });
+
+    it("Has _v_Detail supplied", function () {
+        expect( aRecord._v_Detail).toBe( aDetail_Dummy);
+    });
 
 
     it("Has fFullTypeNameString defined", function () {
@@ -183,11 +227,7 @@ describe("prettytype  Record tests", function () {
         expect( aRecord.fIdentifyingJSON()).not.toBeNull();
     });
 
-    it("Has fIdentifyingJSON() type _v_Type", function () {
-        expect( aRecord.fIdentifyingJSON().type).toBe( aRecord._v_Type);
-    });
-
-    it("Has fIdentifyingJSON() id _v_Id", function () {
+    it("Has fIdentifyingJSON() recref", function () {
         expect( aRecord.fIdentifyingJSON().id).toBe( aRecord._v_Id);
     });
 
@@ -226,16 +266,8 @@ describe("prettytype  Record tests", function () {
         expect( aRecord.fIdentifyingWithTitleJSON()).not.toBeNull();
     });
 
-    it("Has fIdentifyingWithTitleJSON() type _v_Type", function () {
-        expect( aRecord.fIdentifyingWithTitleJSON().type).toBe( aRecord._v_Type);
-    });
-
-    it("Has fIdentifyingWithTitleJSON() id _v_Id", function () {
+    it("Has fIdentifyingWithTitleJSON() recref _v_Id", function () {
         expect( aRecord.fIdentifyingWithTitleJSON().id).toBe( aRecord._v_Id);
-    });
-
-    it("Has fIdentifyingWithTitleJSON() id _v_Title", function () {
-        expect( aRecord.fIdentifyingWithTitleJSON().title).toBe( aRecord._v_Title);
     });
 
 
@@ -262,6 +294,8 @@ describe("prettytype  Record tests", function () {
 
 
 
+
+
     it("Has fToResultJSON defined", function () {
         expect( aRecord.fToResultJSON).not.toBeUndefined();
     });
@@ -275,33 +309,40 @@ describe("prettytype  Record tests", function () {
     });
 
 
-    it("Has fToResultJSON() type _v_Type", function () {
-        expect( aRecord.fToResultJSON().type).toBe( aRecord._v_Type);
-    });
-
-    it("Has fToResultJSON() id _v_Id", function () {
+    it("Has fToResultJSON() recref _v_Id", function () {
         expect( aRecord.fToResultJSON().id).toBe( aRecord._v_Id);
     });
 
-    it("Has fToResultJSON() id _v_Title", function () {
-        expect( aRecord.fToResultJSON().title).toBe( aRecord._v_Title);
+
+
+
+
+
+    it("Has fConvertReasonToJSON defined", function () {
+        expect( aRecord.fConvertReasonToJSON).not.toBeUndefined();
+    });
+
+    it("Has fConvertReasonToJSON typeof function", function () {
+        expect( typeof aRecord.fConvertReasonToJSON).toBe( "function");
     });
 
 
-
-
-
-
-    it("Has fReserveId defined", function () {
-        expect( aRecord.fReserveId).not.toBeUndefined();
+    it("Has fAsReasonChain defined", function () {
+        expect( aRecord.fAsReasonChain).not.toBeUndefined();
     });
 
-    it("Has fReserveId typeof function", function () {
-        expect( typeof aRecord.fReserveId).toBe( "function");
+    it("Has fAsReasonChain typeof function", function () {
+        expect( typeof aRecord.fAsReasonChain).toBe( "function");
     });
 
 
+    it("Has fAsJSONable defined", function () {
+        expect( aRecord.fAsJSONable).not.toBeUndefined();
+    });
 
+    it("Has fAsJSONable typeof function", function () {
+        expect( typeof aRecord.fAsJSONable).toBe( "function");
+    });
 
 });
 
