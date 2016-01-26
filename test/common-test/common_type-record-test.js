@@ -57,9 +57,9 @@ describe("prettytype Common record tests", function () {
     var aModule_OverriderType = aModule_OverriderTypeFactory( aTypesRegistrySvce);
     // console.log( "typeof aModule_OverriderType= " + typeof aModule_OverriderType);
 
-    var aOverriderType_title = "Overrider-Title-test"
+    var aOverrider_title = "Overrider-Title-test"
 
-    var anOverrider = new aModule_OverriderType.Overrider_Constructor( aOverriderType_title);
+    var anOverrider = new aModule_OverriderType.Overrider_Constructor( aOverrider_title);
     // console.log( "typeof anOverrider= " + typeof anOverrider);
     // console.log( "anOverrider keys = " + Object.keys( anOverrider));
 
@@ -74,9 +74,9 @@ describe("prettytype Common record tests", function () {
     var aModule_IdentifierType = aModule_IdentifierTypeFactory( aTypesRegistrySvce, anOverrider);
     // console.log( "typeof aModule_IdentifierType= " + typeof aModule_IdentifierType);
 
-    var aIdentifierType_title = "Identifier-Title-test"
+    var aIdentifier_title = "Identifier-Title-test"
 
-    var anIdentifier = new aModule_IdentifierType.Identifier_Constructor( aIdentifierType_title);
+    var anIdentifier = new aModule_IdentifierType.Identifier_Constructor( aIdentifier_title);
     // console.log( "typeof anIdentifier= " + typeof anIdentifier);
     // console.log( "anIdentifier keys = " + Object.keys( anIdentifier));
 
@@ -105,9 +105,12 @@ describe("prettytype Common record tests", function () {
     );
     // console.log( "typeof aModule_RecorderType= " + typeof aModule_RecorderType);
 
-    var aRecorderType_title = "Recorder-Title-test"
+    var aRecorder_title = "Recorder-Title-test"
 
-    var aRecorder = new aModule_RecorderType.Recorder_Constructor( aRecorderType_title);
+    var aRecorder = new aModule_RecorderType.Recorder_Constructor(
+        aRecorder_title,
+        anIdentifier
+    );
     // console.log( "typeof aRecorder= " + typeof aRecorder);
     // console.log( "aRecorder keys = " + Object.keys( aRecorder));
 
@@ -126,9 +129,13 @@ describe("prettytype Common record tests", function () {
     );
     // console.log( "typeof aModule_CommonType= " + typeof aModule_CommonType);
 
-    var aCommonType_title = "Common-Title-test"
+    var aCommon_title = "Common-Title-test"
 
-    var aCommon = new aModule_CommonType.Common_Constructor( aCommonType_title);
+    var aCommon = new aModule_CommonType.Common_Constructor(
+        aCommon_title,
+        anIdentifier,
+        aRecorder
+    );
     // console.log( "typeof aCommon= " + typeof aCommon);
     // console.log( "aCommon keys = " + Object.keys( aCommon));
 
@@ -156,6 +163,9 @@ describe("prettytype Common record tests", function () {
     var aReason     = "common_type_record_test__theReason";
     var aDetail     = "common_type_record_test__theDetail";
 
+
+
+    aCommon.LOGRECORDS = false;
 
     var aRecord = aCommon.fRecord( aMethodName, anEventKind, aData, aReason, aDetail);
 

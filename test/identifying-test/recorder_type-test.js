@@ -110,7 +110,10 @@ describe("prettytype  Recorder tests", function () {
 
     var aRecorderType_title = "Recorder-Title-test";
 
-    var aRecorder = new aModule_RecorderType.Recorder_Constructor( aRecorderType_title);
+    var aRecorder = new aModule_RecorderType.Recorder_Constructor(
+        aRecorderType_title,
+        anIdentifier
+    );
     //console.log( "typeof aRecorder= " + typeof aRecorder);
     //console.log( "aRecorder keys = " + Object.keys( aRecorder));
 

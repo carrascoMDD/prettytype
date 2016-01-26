@@ -942,7 +942,8 @@ function ModuleFactory_CommonType() {
             var aModule = {
                 "Common_Prototype": aCommon_Prototype,
                 "Common_Constructor": Common_Constructor,
-                "Common_SuperPrototypeConstructor": Common_SuperPrototypeConstructor
+                "Common_SuperPrototypeConstructor": Common_SuperPrototypeConstructor,
+                "ModuleConstants": ModuleConstants
             };
             pgInitFromModuleConstants( aModule);
             aModule.ModuleName     = ModuleName;
