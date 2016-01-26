@@ -1,5 +1,5 @@
 /*
- * prominstrexception.js
+ * prominstrexception-test.js
  *
  * Created @author Antonio Carrasco Valero 201410141126
  *
@@ -33,289 +33,240 @@ permissions and limitations under the Licence.
 
 
 
-function ModuleFactory_ProminstrException() {
+/// <reference path="src/identifying/prominstrexception.js"/>
+"use strict";
 
-    'use strict';
 
 
-    return ( function(){
 
+describe("ProminstrException tests", function () {
 
-        var ModuleName     = "prominstrexception";
-        var ModulePackages = "prominstr";
-        var ModuleFullName = ModulePackages + "/" + ModuleName;
 
 
+    var aModule_TypesRegistrySvceFactory = ModuleFactory_TypesRegistrySvce();
+    console.log( "typeof aModule_TypesRegistrySvceFactory= " + typeof aModule_TypesRegistrySvceFactory);
 
-        var aMod_definer = function() {
+    var aTypesRegistrySvce = aModule_TypesRegistrySvceFactory();
+    console.log( "typeof aTypesRegistrySvce= " + typeof aTypesRegistrySvce);
+    console.log( "aTypesRegistrySvce keys = " + Object.keys( aTypesRegistrySvce));
 
 
-            if( !( typeof FG_logModLoads == "undefined") && ( typeof FG_logModLoads == "function") && FG_logModLoads()) { FG_logModLoads(ModuleFullName);}
+    var aModule_OverriderTypeFactory = ModuleFactory_OverriderType();
+    console.log( "typeof aModule_OverriderTypeFactory= " + typeof aModule_OverriderTypeFactory);
 
 
+    var aModule_OverriderType = aModule_OverriderTypeFactory( aTypesRegistrySvce);
+    console.log( "typeof aModule_OverriderType= " + typeof aModule_OverriderType);
 
+    var aOverriderType_title = "Overrider-Title-test"
 
+    var anOverrider = new aModule_OverriderType.Overrider_Constructor( aOverriderType_title);
+    console.log( "typeof anOverrider= " + typeof anOverrider);
+    console.log( "anOverrider keys = " + Object.keys( anOverrider));
 
 
-            var pgInitWithModuleConstants = function( theToInit) {
 
-                if( !theToInit) {
-                    return;
-                }
 
-                theToInit.LOGEXCEPTIONS = true;
-            };
 
+    var aModule_IdentifierTypeFactory = ModuleFactory_IdentifierType();
+    console.log( "typeof aModule_IdentifierTypeFactory= " + typeof aModule_IdentifierTypeFactory);
 
 
+    var aModule_IdentifierType = aModule_IdentifierTypeFactory( aTypesRegistrySvce, anOverrider);
+    console.log( "typeof aModule_IdentifierType= " + typeof aModule_IdentifierType);
 
+    var aIdentifierType_title = "Identifier-Title-test"
 
-            var ModuleConstants = {};
-            pgInitWithModuleConstants( ModuleConstants);
+    var anIdentifier = new aModule_IdentifierType.Identifier_Constructor( aIdentifierType_title);
+    console.log( "typeof anIdentifier= " + typeof anIdentifier);
+    console.log( "anIdentifier keys = " + Object.keys( anIdentifier));
 
 
 
 
-            var pgInitFromModuleConstants = function( theToInit) {
-                if( !theToInit) {
-                    return;
-                }
+    var aModule_RecordTypeFactory = ModuleFactory_RecordType();
+    console.log( "typeof aModule_RecordTypeFactory= " + typeof aModule_RecordTypeFactory);
 
-                for( var aGlobalName in ModuleConstants) {
-                    if( ModuleConstants.hasOwnProperty( aGlobalName)) {
-                        theToInit[ aGlobalName] = ModuleConstants[ aGlobalName];
-                    }
-                }
-            };
 
+    var aModule_RecordType = aModule_RecordTypeFactory( aTypesRegistrySvce, anOverrider);
+    console.log( "typeof aModule_RecordType= " + typeof aModule_RecordType);
 
 
 
+    var aModule_RecorderTypeFactory = ModuleFactory_RecorderType();
+    console.log( "typeof aModule_RecorderTypeFactory= " + typeof aModule_RecorderTypeFactory);
 
 
+    var aModule_RecorderType = aModule_RecorderTypeFactory(
+        aTypesRegistrySvce,
+        anOverrider,
+        anIdentifier,
+        aModule_IdentifierType,
+        aModule_RecordType
+    );
+    console.log( "typeof aModule_RecorderType= " + typeof aModule_RecorderType);
 
-            var ProminstrException_Constructor = function( theRecord) {
+    var aRecorderType_title = "Recorder-Title-test"
 
-                pgInitFromModuleConstants( this);
+    var aRecorder = new aModule_RecorderType.Recorder_Constructor( aRecorderType_title);
+    console.log( "typeof aRecorder= " + typeof aRecorder);
+    console.log( "aRecorder keys = " + Object.keys( aRecorder));
 
-                this._v_Type  = "ProminstrException";
-                this._v_Id    = new Date().toISOString();
-                this._v_Title = "ProminstrException";
 
-                this._v_Trace = printStackTrace();
 
-                this._v_Record = theRecord;
 
+    var aModule_CommonTypeFactory = ModuleFactory_CommonType();
+    console.log( "typeof aModule_CommonTypeFactory= " + typeof aModule_CommonTypeFactory);
 
 
-                var aThis = this;
+    var aModule_CommonType = aModule_CommonTypeFactory(
+        aTypesRegistrySvce,
+        anOverrider,
+        anIdentifier,
+        aRecorder
+    );
+    console.log( "typeof aModule_CommonType= " + typeof aModule_CommonType);
 
+    var aCommonType_title = "Common-Title-test"
 
+    var aCommon = new aModule_CommonType.Common_Constructor( aCommonType_title);
+    console.log( "typeof aCommon= " + typeof aCommon);
+    console.log( "aCommon keys = " + Object.keys( aCommon));
 
-                var fIdentifyingJSON = function() {
 
-                    var aIdentifiyingJSON = {
-                        "type": aThis._v_Type,
-                        "id":   aThis._v_Id
-                    };
-                    if( aIdentifiyingJSON){}/* CQT */
-                    return aIdentifiyingJSON;
-                };
-                if( fIdentifyingJSON){}/* CQT */
-                this.fIdentifyingJSON = fIdentifyingJSON;
 
 
 
-
-
-
-                var fIdentifyingString = function() {
-
-                    var aIdentifyingJSON = aThis.fIdentifyingJSON();
-
-                    var aIdentifyingString = JSON.stringify( aIdentifyingJSON);
-                    if( aIdentifyingString){}/* CQT */
-
-                    return aIdentifyingString;
-                };
-                if( fIdentifyingString){}/* CQT */
-                this.fIdentifyingString = fIdentifyingString;
-
-
-
-
-
-
-
-                var fIdentifyingWithTitleJSON = function() {
-
-                    var aIdentifyingJSON = aThis.fIdentifyingJSON();
-
-                    aIdentifyingJSON[ "title"] = aThis._v_Title;
-
-                    return aIdentifyingJSON;
-                };
-                if( fIdentifyingWithTitleJSON){}/* CQT */
-                this.fIdentifyingWithTitleJSON = fIdentifyingWithTitleJSON;
-
-
-
-
-
-
-                var fIdentifyingWithTitleString = function() {
-
-                    var aIdentifyingJSON = aThis.fIdentifyingWithTitleJSON();
-
-                    var aIdentifyingString = JSON.stringify( aIdentifyingJSON);
-                    if( aIdentifyingString){}/* CQT */
-
-                    return aIdentifyingString;
-                };
-                if( fIdentifyingWithTitleString){}/* CQT */
-                this.fIdentifyingWithTitleString = fIdentifyingWithTitleString;
-
-
-
-
-                var fFullTypeNameString = function() {
-
-                    var aFullTypeName = aThis._v_Module.ModuleFullName + "." + aThis._v_Type;
-                    if( aFullTypeName){}/* CQT */
-
-                    return aFullTypeName;
-                };
-                if( fFullTypeNameString){}/* CQT */
-                this.fFullTypeNameString = fFullTypeNameString;
-
-
-
-
-
-
-                var fToResultJSON = function( theCommonObjects, theAlready) {
-                    if( !( theAlready == null)) {
-                        if( theAlready.fAlready( aThis)){
-                            return aThis.fIdentifyingJSON();
-                        }
-                    }
-
-                    var aResultJSON = aThis.fIdentifyingWithTitleJSON();
-                    if( aResultJSON){}/* CQT */
-
-                    return aResultJSON;
-                };
-                if( fToResultJSON){}/* CQT */
-                this.fToResultJSON = fToResultJSON;
-
-
-
-
-
-
-
-
-
-
-                var fConvertValueToJSON = function() {
-
-                    var aJSON = aThis.fIdentifyingWithTitleJSON();
-
-                    if( aThis._v_Record) {
-                        if( aThis._v_Record.fAsLogObject) {
-                            aJSON[ "record"] = aThis._v_Record.fAsLogObject()
-                        }
-                    }
-
-
-                    if( aThis._v_Trace) {
-                        aJSON[ "trace"] = aThis._v_Trace;
-                    }
-
-                    return aJSON;
-                };
-                if( fConvertValueToJSON){}/* CQT */
-                this.fConvertValueToJSON = fConvertValueToJSON;
-
-
-
-
-
-
-
-                var toString = function() {
-
-                    var aLog = aThis.fConvertValueToJSON();
-
-                    var aString = null;
-                    try {
-                        aString = JSON.stringify( aLog);
-                    }
-                    catch( anException) {
-                    }
-
-                    if( aString == null) {
-                        aString = aThis.fIdentifyingWithTitleString();
-                    }
-
-                    return aString;
-                };
-                if( toString){}/* CQT */
-                this.toString = toString;
-
-
-
-
-
-
-                if( this.LOGEXCEPTIONS) {
-                    console.log( this.toString());
-                }
-
-
-
-            };
-            ProminstrException_Constructor.prototype = Error.prototype;
-
-
-
-
-
-
-
-
-            var aModule = {
-                "ProminstrException_Constructor": ProminstrException_Constructor
-            };
-
-            pgInitFromModuleConstants( aModule);
-            aModule.ModuleName     = ModuleName;
-            aModule.ModulePackages = ModulePackages;
-            aModule.ModuleFullName = ModuleFullName;
-
-
-
-
-
-
-
-            return aModule;
-        };
-
-
-
-        var aService = aMod_definer();
-        if( aService){}/* CQT */
-
-        return aService;
-
+    it("Has fRecord defined", function () {
+        expect( aCommon.fRecord).not.toBeUndefined();
     });
-}
+
+    it("Has fRecord typeof function", function () {
+        expect( typeof aCommon.fRecord).toBe( "function");
+    });
 
 
 
 
+    
+    var aBeforeRecordMillis = new Date().getMilliseconds();
 
+    var aMethodName = "common_type_record_test__theMethodName";
+    var anEventKind = "common_type_record_test__theEventKind";
+    var aData       = "common_type_record_test__theData";
+    var aReason     = "common_type_record_test__theReason";
+    var aDetail     = "common_type_record_test__theDetail";
+
+
+    var aRecord = aCommon.fRecord( aMethodName, anEventKind, aData, aReason, aDetail);
+
+    it("Has fRecord() defined", function () {
+        expect( aRecord).not.toBeUndefined();
+    });
+
+    it("Has fRecord() not null", function () {
+        expect( aRecord).not.toBeNull();
+    });
+
+    it("Has fRecord() object", function () {
+        expect( typeof aRecord).toBe( "object");
+    });
+
+    it("Has fRecord() _v_Timestamp number", function () {
+        expect( typeof aRecord._v_Timestamp).toBe( "number");
+    });
+
+    it("Has fRecord() _v_Timestamp after", function () {
+        expect( aRecord._v_Timestamp >= aBeforeRecordMillis).toBe( true);
+    });
+
+    it("Has fRecord() _v_RecordId not null", function () {
+        expect( aRecord._v_RecordId).not.toBeNull();
+    });
+
+    it("Has fRecord() _v_Instance self", function () {
+        expect( aRecord._v_Instance).toBe( aCommon);
+    });
+
+    it("Has fRecord() _v_Step supplied", function () {
+        expect( aRecord._v_Step).toBe( aMethodName);
+    });
+
+    it("Has fRecord() _v_EventKind supplied", function () {
+        expect( aRecord._v_EventKind).toBe( anEventKind);
+    });
+
+    it("Has fRecord() _v_Data supplied", function () {
+        expect( aRecord._v_Data).toBe( aData);
+    });
+
+    it("Has fRecord() _v_Reason supplied", function () {
+        expect( aRecord._v_Reason).toBe( aReason);
+    });
+
+    it("Has fRecord() _v_Detail supplied", function () {
+        expect( aRecord._v_Detail).toBe( aDetail);
+    });
+
+
+    var aModule_ProminstrExceptionFactory = ModuleFactory_ProminstrException();
+    console.log( "typeof aModule_ProminstrExceptionFactory= " + typeof aModule_ProminstrExceptionFactory);
+
+
+    var aModule_ProminstrException = aModule_ProminstrExceptionFactory();
+    console.log( "typeof aModule_ProminstrException= " + typeof aModule_ProminstrException);
+
+
+
+
+    var aProminstrException = null;
+
+    try {
+        var aToThrowException = new aModule_ProminstrException.ProminstrException_Constructor( aRecord);
+        throw aToThrowException;
+    }
+    catch( anException) {
+        aProminstrException = anException;
+    }
+
+
+    console.log( aProminstrException);
+
+
+    it("Catched aProminstrException defined", function () {
+        expect( aProminstrException).not.toBeUndefined();
+    });
+
+    it("Catched aProminstrException not null", function () {
+        expect( aProminstrException).not.toBeNull();
+    });
+
+    it("Catched aProminstrException _v_Type ProminstrException", function () {
+        expect( aProminstrException._v_Type).toBe( "ProminstrException");
+    });
+
+    it("Catched aProminstrException _v_Record supplied", function () {
+        expect( aProminstrException._v_Record).toBe( aRecord);
+    });
+
+    it("Catched aProminstrException _v_Trace defined", function () {
+        expect( aProminstrException._v_Record).not.toBeUndefined();
+    });
+
+    it("Catched aProminstrException _v_Trace not null", function () {
+        expect( aProminstrException._v_Trace).not.toBeNull();
+    });
+
+    it("Catched aProminstrException typeof _v_Trace object", function () {
+        expect( typeof aProminstrException._v_Trace).toBe( "object");
+    });
+
+
+    it("Catched aProminstrException _v_Trace.length > 0", function () {
+        expect( aProminstrException._v_Trace.length).toBeGreaterThan( 0);
+    });
+
+});
 
 
 

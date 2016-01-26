@@ -42,7 +42,7 @@ function ModuleFactory_ProminstrException() {
 
 
         var ModuleName     = "prominstrexception";
-        var ModulePackages = "prominstr";
+        var ModulePackages = "common";
         var ModuleFullName = ModulePackages + "/" + ModuleName;
 
 

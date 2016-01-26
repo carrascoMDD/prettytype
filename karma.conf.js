@@ -20,7 +20,8 @@ module.exports = function(config){
             'test/common-test/apibaseurlmock.js',
             'test/common-test/locationngmock.js',
             'test/common-test/common_ctrl_type-test.js',
-            'test/common-test/common_svce_type-test.js'
+            'test/common-test/common_svce_type-test.js',
+            'test/common-test/prominstrexception-test.js'
         ],
 
         autoWatch : true,
