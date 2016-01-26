@@ -19,7 +19,9 @@
     "src",
     "build",
     "dist",
+    "test",
     "bower.json",
+    "karma.conf.js",
     "Gruntfile.js"
   ],
   "main": null,
