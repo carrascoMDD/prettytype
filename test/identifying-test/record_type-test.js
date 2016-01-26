@@ -44,25 +44,25 @@ permissions and limitations under the Licence.
 describe("Record tests", function () {
 
     var aModule_TypesRegistrySvceFactory = ModuleFactory_TypesRegistrySvce();
-    console.log( "typeof aModule_TypesRegistrySvceFactory= " + typeof aModule_TypesRegistrySvceFactory);
+    //console.log( "typeof aModule_TypesRegistrySvceFactory= " + typeof aModule_TypesRegistrySvceFactory);
 
     var aTypesRegistrySvce = aModule_TypesRegistrySvceFactory();
-    console.log( "typeof aTypesRegistrySvce= " + typeof aTypesRegistrySvce);
-    console.log( "aTypesRegistrySvce keys = " + Object.keys( aTypesRegistrySvce));
+    //console.log( "typeof aTypesRegistrySvce= " + typeof aTypesRegistrySvce);
+    //console.log( "aTypesRegistrySvce keys = " + Object.keys( aTypesRegistrySvce));
 
 
     var aModule_OverriderTypeFactory = ModuleFactory_OverriderType();
-    console.log( "typeof aModule_OverriderTypeFactory= " + typeof aModule_OverriderTypeFactory);
+    //console.log( "typeof aModule_OverriderTypeFactory= " + typeof aModule_OverriderTypeFactory);
 
 
     var aModule_OverriderType = aModule_OverriderTypeFactory( aTypesRegistrySvce);
-    console.log( "typeof aModule_OverriderType= " + typeof aModule_OverriderType);
+    //console.log( "typeof aModule_OverriderType= " + typeof aModule_OverriderType);
 
     var aOverriderType_title = "Overrider-Title-test";
 
     var anOverrider = new aModule_OverriderType.Overrider_Constructor( aOverriderType_title);
-    console.log( "typeof anOverrider= " + typeof anOverrider);
-    console.log( "anOverrider keys = " + Object.keys( anOverrider));
+    //console.log( "typeof anOverrider= " + typeof anOverrider);
+    //console.log( "anOverrider keys = " + Object.keys( anOverrider));
 
 
 
@@ -70,17 +70,17 @@ describe("Record tests", function () {
 
 
     var aModule_RecordTypeFactory = ModuleFactory_RecordType();
-    console.log( "typeof aModule_RecordTypeFactory= " + typeof aModule_RecordTypeFactory);
+    //console.log( "typeof aModule_RecordTypeFactory= " + typeof aModule_RecordTypeFactory);
 
 
     var aModule_RecordType = aModule_RecordTypeFactory( aTypesRegistrySvce, anOverrider);
-    console.log( "typeof aModule_RecordType= " + typeof aModule_RecordType);
+    //console.log( "typeof aModule_RecordType= " + typeof aModule_RecordType);
 
     var aRecordType_title = "Record-Title-test";
 
     var aRecord = new aModule_RecordType.Record_Constructor( aRecordType_title);
-    console.log( "typeof aRecord= " + typeof aRecord);
-    console.log( "aRecord keys = " + Object.keys( aRecord));
+    //console.log( "typeof aRecord= " + typeof aRecord);
+    //console.log( "aRecord keys = " + Object.keys( aRecord));
 
 
 

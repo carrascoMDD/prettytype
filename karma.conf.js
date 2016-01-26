@@ -6,7 +6,7 @@ module.exports = function(config){
 
         files: [
             'src/**/*.js',
-            'test/common-test/typesregistry-test.js',
+            'test/typesregistry-test.js',
             'test/roots-test/overrider_type-test.js',
             'test/identifying-test/identifier_type-test.js',
             'test/identifying-test/recorder_type-test.js',

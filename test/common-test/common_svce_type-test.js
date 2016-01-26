@@ -46,57 +46,57 @@ describe("CommonSvce tests", function () {
 
 
     var aModule_TypesRegistrySvceFactory = ModuleFactory_TypesRegistrySvce();
-    console.log( "typeof aModule_TypesRegistrySvceFactory= " + typeof aModule_TypesRegistrySvceFactory);
+    // console.log( "typeof aModule_TypesRegistrySvceFactory= " + typeof aModule_TypesRegistrySvceFactory);
 
     var aTypesRegistrySvce = aModule_TypesRegistrySvceFactory();
-    console.log( "typeof aTypesRegistrySvce= " + typeof aTypesRegistrySvce);
-    console.log( "aTypesRegistrySvce keys = " + Object.keys( aTypesRegistrySvce));
+    // console.log( "typeof aTypesRegistrySvce= " + typeof aTypesRegistrySvce);
+    // console.log( "aTypesRegistrySvce keys = " + Object.keys( aTypesRegistrySvce));
 
 
 
 
     var aModule_OverriderTypeFactory = ModuleFactory_OverriderType();
-    console.log( "typeof aModule_OverriderTypeFactory= " + typeof aModule_OverriderTypeFactory);
+    // console.log( "typeof aModule_OverriderTypeFactory= " + typeof aModule_OverriderTypeFactory);
 
     var aModule_OverriderType = aModule_OverriderTypeFactory( aTypesRegistrySvce);
-    console.log( "typeof aModule_OverriderType= " + typeof aModule_OverriderType);
+    // console.log( "typeof aModule_OverriderType= " + typeof aModule_OverriderType);
 
     var aOverriderType_title = "Overrider-Title-test";
 
     var anOverrider = new aModule_OverriderType.Overrider_Constructor( aOverriderType_title);
-    console.log( "typeof anOverrider= " + typeof anOverrider);
-    console.log( "anOverrider keys = " + Object.keys( anOverrider));
+    // console.log( "typeof anOverrider= " + typeof anOverrider);
+    // console.log( "anOverrider keys = " + Object.keys( anOverrider));
 
 
 
 
 
     var aModule_IdentifierTypeFactory = ModuleFactory_IdentifierType();
-    console.log( "typeof aModule_IdentifierTypeFactory= " + typeof aModule_IdentifierTypeFactory);
+    // console.log( "typeof aModule_IdentifierTypeFactory= " + typeof aModule_IdentifierTypeFactory);
 
     var aModule_IdentifierType = aModule_IdentifierTypeFactory( aTypesRegistrySvce, anOverrider);
-    console.log( "typeof aModule_IdentifierType= " + typeof aModule_IdentifierType);
+    // console.log( "typeof aModule_IdentifierType= " + typeof aModule_IdentifierType);
 
     var aIdentifierType_title = "Identifier-Title-test";
 
     var anIdentifier = new aModule_IdentifierType.Identifier_Constructor( aIdentifierType_title);
-    console.log( "typeof anIdentifier= " + typeof anIdentifier);
-    console.log( "anIdentifier keys = " + Object.keys( anIdentifier));
+    // console.log( "typeof anIdentifier= " + typeof anIdentifier);
+    // console.log( "anIdentifier keys = " + Object.keys( anIdentifier));
 
 
 
 
     var aModule_RecordTypeFactory = ModuleFactory_RecordType();
-    console.log( "typeof aModule_RecordTypeFactory= " + typeof aModule_RecordTypeFactory);
+    // console.log( "typeof aModule_RecordTypeFactory= " + typeof aModule_RecordTypeFactory);
 
     var aModule_RecordType = aModule_RecordTypeFactory( aTypesRegistrySvce, anOverrider);
-    console.log( "typeof aModule_RecordType= " + typeof aModule_RecordType);
+    // console.log( "typeof aModule_RecordType= " + typeof aModule_RecordType);
 
 
 
 
     var aModule_RecorderTypeFactory = ModuleFactory_RecorderType();
-    console.log( "typeof aModule_RecorderTypeFactory= " + typeof aModule_RecorderTypeFactory);
+    // console.log( "typeof aModule_RecorderTypeFactory= " + typeof aModule_RecorderTypeFactory);
 
     var aModule_RecorderType = aModule_RecorderTypeFactory(
         aTypesRegistrySvce,
@@ -105,20 +105,20 @@ describe("CommonSvce tests", function () {
         aModule_IdentifierType,
         aModule_RecordType
     );
-    console.log( "typeof aModule_RecorderType= " + typeof aModule_RecorderType);
+    // console.log( "typeof aModule_RecorderType= " + typeof aModule_RecorderType);
 
     var aRecorderType_title = "Recorder-Title-test";
 
     var aRecorder = new aModule_RecorderType.Recorder_Constructor( aRecorderType_title);
-    console.log( "typeof aRecorder= " + typeof aRecorder);
-    console.log( "aRecorder keys = " + Object.keys( aRecorder));
+    // console.log( "typeof aRecorder= " + typeof aRecorder);
+    // console.log( "aRecorder keys = " + Object.keys( aRecorder));
 
 
 
 
 
     var aModule_CommonTypeFactory = ModuleFactory_CommonType();
-    console.log( "typeof aModule_CommonTypeFactory= " + typeof aModule_CommonTypeFactory);
+    // console.log( "typeof aModule_CommonTypeFactory= " + typeof aModule_CommonTypeFactory);
 
     var aModule_CommonType = aModule_CommonTypeFactory(
         aTypesRegistrySvce,
@@ -126,28 +126,28 @@ describe("CommonSvce tests", function () {
         anIdentifier,
         aRecorder
     );
-    console.log( "typeof aModule_CommonType= " + typeof aModule_CommonType);
+    // console.log( "typeof aModule_CommonType= " + typeof aModule_CommonType);
 
 
 
 
 
     var aModule_QngMockFactory = ModuleFactory_QngMock();
-    console.log( "typeof aModule_QngMockFactory= " + typeof aModule_QngMockFactory);
+    // console.log( "typeof aModule_QngMockFactory= " + typeof aModule_QngMockFactory);
 
     var aModule_QngMock = aModule_QngMockFactory();
-    console.log( "typeof aModule_QngMock= " + typeof aModule_QngMock);
+    // console.log( "typeof aModule_QngMock= " + typeof aModule_QngMock);
 
     var aQngMock = new aModule_QngMock.QngMock_Constructor();
-    console.log( "typeof aQngMock= " + typeof aQngMock);
-    console.log( "aQngMock keys = " + Object.keys( aQngMock));
+    // console.log( "typeof aQngMock= " + typeof aQngMock);
+    // console.log( "aQngMock keys = " + Object.keys( aQngMock));
 
 
 
 
 
     var aModule_ProminstrTypeFactory = ModuleFactory_ProminstrType();
-    console.log( "typeof aModule_ProminstrTypeFactory= " + typeof aModule_ProminstrTypeFactory);
+    // console.log( "typeof aModule_ProminstrTypeFactory= " + typeof aModule_ProminstrTypeFactory);
 
 
     var aModule_ProminstrType = aModule_ProminstrTypeFactory(
@@ -157,13 +157,13 @@ describe("CommonSvce tests", function () {
         aModule_IdentifierType,
         aQngMock
     );
-    console.log( "typeof aModule_ProminstrType= " + typeof aModule_ProminstrType);
+    // console.log( "typeof aModule_ProminstrType= " + typeof aModule_ProminstrType);
 
     var aProminstrType_title = "Prominstr-Title-test";
 
     var aProminstr = new aModule_ProminstrType.Prominstr_Constructor( aProminstrType_title);
-    console.log( "typeof aProminstr= " + typeof aProminstr);
-    console.log( "aProminstr keys = " + Object.keys( aProminstr));
+    // console.log( "typeof aProminstr= " + typeof aProminstr);
+    // console.log( "aProminstr keys = " + Object.keys( aProminstr));
 
 
 
@@ -173,7 +173,7 @@ describe("CommonSvce tests", function () {
 
 
     var aModule_WithProminstrTypeFactory = ModuleFactory_WithProminstrType();
-    console.log( "typeof aModule_WithProminstrTypeFactory= " + typeof aModule_WithProminstrTypeFactory);
+    // console.log( "typeof aModule_WithProminstrTypeFactory= " + typeof aModule_WithProminstrTypeFactory);
 
 
     var aModule_WithProminstrType = aModule_WithProminstrTypeFactory(
@@ -182,7 +182,7 @@ describe("CommonSvce tests", function () {
         aModule_CommonType,
         aProminstr
     );
-    console.log( "typeof aModule_WithProminstrType= " + typeof aModule_WithProminstrType);
+    // console.log( "typeof aModule_WithProminstrType= " + typeof aModule_WithProminstrType);
 
 
 
@@ -192,7 +192,7 @@ describe("CommonSvce tests", function () {
 
 
     var aModule_AppBaseURLFactory = ModuleFactory_AppBaseURLMock();
-    console.log( "typeof aModule_AppBaseURLFactory= " + typeof aModule_AppBaseURLFactory);
+    // console.log( "typeof aModule_AppBaseURLFactory= " + typeof aModule_AppBaseURLFactory);
 
 
     var aModule_AppBaseURL = aModule_AppBaseURLFactory(
@@ -202,20 +202,20 @@ describe("CommonSvce tests", function () {
         aModule_IdentifierType,
         aQngMock
     );
-    console.log( "typeof aModule_AppBaseURL= " + typeof aModule_AppBaseURL);
+    // console.log( "typeof aModule_AppBaseURL= " + typeof aModule_AppBaseURL);
 
     var aAppBaseURL_title = "Prominstr-Title-test";
 
     var anAppBaseURLSvce = new aModule_AppBaseURL.AppBaseURLMock_Constructor( aAppBaseURL_title);
-    console.log( "typeof anAppBaseURLSvce= " + typeof anAppBaseURLSvce);
-    console.log( "anAppBaseURLSvce keys = " + Object.keys( anAppBaseURLSvce));
+    // console.log( "typeof anAppBaseURLSvce= " + typeof anAppBaseURLSvce);
+    // console.log( "anAppBaseURLSvce keys = " + Object.keys( anAppBaseURLSvce));
 
 
 
 
 
     var aModule_APIBaseURLFactory = ModuleFactory_APIBaseURLMock();
-    console.log( "typeof aModule_APIBaseURLFactory= " + typeof aModule_APIBaseURLFactory);
+    // console.log( "typeof aModule_APIBaseURLFactory= " + typeof aModule_APIBaseURLFactory);
 
 
     var aModule_APIBaseURL = aModule_APIBaseURLFactory(
@@ -225,13 +225,13 @@ describe("CommonSvce tests", function () {
         aModule_IdentifierType,
         aQngMock
     );
-    console.log( "typeof aModule_APIBaseURL= " + typeof aModule_APIBaseURL);
+    // console.log( "typeof aModule_APIBaseURL= " + typeof aModule_APIBaseURL);
 
     var aAPIBaseURL_title = "Prominstr-Title-test";
 
     var anAPIBaseURLSvce = new aModule_APIBaseURL.APIBaseURLMock_Constructor( aAPIBaseURL_title);
-    console.log( "typeof anAPIBaseURLSvce= " + typeof anAPIBaseURLSvce);
-    console.log( "anAPIBaseURLSvce keys = " + Object.keys( anAPIBaseURLSvce));
+    // console.log( "typeof anAPIBaseURLSvce= " + typeof anAPIBaseURLSvce);
+    // console.log( "anAPIBaseURLSvce keys = " + Object.keys( anAPIBaseURLSvce));
 
 
 
@@ -239,7 +239,7 @@ describe("CommonSvce tests", function () {
 
 
     var aModule_CommonSvceTypeFactory = ModuleFactory_CommonSvceType();
-    console.log( "typeof aModule_CommonSvceTypeFactory= " + typeof aModule_CommonSvceTypeFactory);
+    // console.log( "typeof aModule_CommonSvceTypeFactory= " + typeof aModule_CommonSvceTypeFactory);
 
 
     var aModule_CommonSvceType = aModule_CommonSvceTypeFactory(
@@ -249,13 +249,13 @@ describe("CommonSvce tests", function () {
         anAppBaseURLSvce,
         anAPIBaseURLSvce
     );
-    console.log( "typeof aModule_CommonSvceType= " + typeof aModule_CommonSvceType);
+    // console.log( "typeof aModule_CommonSvceType= " + typeof aModule_CommonSvceType);
 
     var aCommonSvceType_title = "CommonSvce-Title-test";
 
     var aCommonSvce = new aModule_CommonSvceType.CommonSvce_Constructor( aCommonSvceType_title);
-    console.log( "typeof aCommonSvce= " + typeof aCommonSvce);
-    console.log( "aCommonSvce keys = " + Object.keys( aCommonSvce));
+    // console.log( "typeof aCommonSvce= " + typeof aCommonSvce);
+    // console.log( "aCommonSvce keys = " + Object.keys( aCommonSvce));
 
 
 

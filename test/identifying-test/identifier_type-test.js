@@ -42,25 +42,25 @@ permissions and limitations under the Licence.
 describe("Identifier tests", function () {
 
     var aModule_TypesRegistrySvceFactory = ModuleFactory_TypesRegistrySvce();
-    console.log( "typeof aModule_TypesRegistrySvceFactory= " + typeof aModule_TypesRegistrySvceFactory);
+    //console.log( "typeof aModule_TypesRegistrySvceFactory= " + typeof aModule_TypesRegistrySvceFactory);
 
     var aTypesRegistrySvce = aModule_TypesRegistrySvceFactory();
-    console.log( "typeof aTypesRegistrySvce= " + typeof aTypesRegistrySvce);
-    console.log( "aTypesRegistrySvce keys = " + Object.keys( aTypesRegistrySvce));
+    //console.log( "typeof aTypesRegistrySvce= " + typeof aTypesRegistrySvce);
+    //console.log( "aTypesRegistrySvce keys = " + Object.keys( aTypesRegistrySvce));
 
 
     var aModule_OverriderTypeFactory = ModuleFactory_OverriderType();
-    console.log( "typeof aModule_OverriderTypeFactory= " + typeof aModule_OverriderTypeFactory);
+    //console.log( "typeof aModule_OverriderTypeFactory= " + typeof aModule_OverriderTypeFactory);
 
 
     var aModule_OverriderType = aModule_OverriderTypeFactory( aTypesRegistrySvce);
-    console.log( "typeof aModule_OverriderType= " + typeof aModule_OverriderType);
+    //console.log( "typeof aModule_OverriderType= " + typeof aModule_OverriderType);
 
     var aOverriderType_title = "Overrider-Title-test";
 
     var anOverrider = new aModule_OverriderType.Overrider_Constructor( aOverriderType_title);
-    console.log( "typeof anOverrider= " + typeof anOverrider);
-    console.log( "anOverrider keys = " + Object.keys( anOverrider));
+    //console.log( "typeof anOverrider= " + typeof anOverrider);
+    //console.log( "anOverrider keys = " + Object.keys( anOverrider));
 
 
 
@@ -68,17 +68,17 @@ describe("Identifier tests", function () {
 
 
     var aModule_IdentifierTypeFactory = ModuleFactory_IdentifierType();
-    console.log( "typeof aModule_IdentifierTypeFactory= " + typeof aModule_IdentifierTypeFactory);
+    //console.log( "typeof aModule_IdentifierTypeFactory= " + typeof aModule_IdentifierTypeFactory);
 
 
     var aModule_IdentifierType = aModule_IdentifierTypeFactory( aTypesRegistrySvce, anOverrider);
-    console.log( "typeof aModule_IdentifierType= " + typeof aModule_IdentifierType);
+    //console.log( "typeof aModule_IdentifierType= " + typeof aModule_IdentifierType);
 
     var aIdentifierType_title = "Identifier-Title-test";
 
     var anIdentifier = new aModule_IdentifierType.Identifier_Constructor( aIdentifierType_title);
-    console.log( "typeof anIdentifier= " + typeof anIdentifier);
-    console.log( "anIdentifier keys = " + Object.keys( anIdentifier));
+    //console.log( "typeof anIdentifier= " + typeof anIdentifier);
+    //console.log( "anIdentifier keys = " + Object.keys( anIdentifier));
 
 
 
