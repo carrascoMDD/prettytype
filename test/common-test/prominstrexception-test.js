@@ -148,14 +148,14 @@ describe("ProminstrException tests", function () {
 
 
 
-    
+
     var aBeforeRecordMillis = new Date().getMilliseconds();
 
-    var aMethodName = "common_type_record_test__theMethodName";
-    var anEventKind = "common_type_record_test__theEventKind";
-    var aData       = "common_type_record_test__theData";
-    var aReason     = "common_type_record_test__theReason";
-    var aDetail     = "common_type_record_test__theDetail";
+    var aMethodName = "prominstrexception_test_record__theMethodName";
+    var anEventKind = "prominstrexception_test_record__theEventKind";
+    var aData       = "prominstrexception_test_record__theData";
+    var aReason     = "prominstrexception_test_record__theReason";
+    var aDetail     = "prominstrexception_test_record__theDetail";
 
 
     var aRecord = aCommon.fRecord( aMethodName, anEventKind, aData, aReason, aDetail);
