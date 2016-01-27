@@ -285,14 +285,14 @@ function ModuleFactory_ProminstrException() {
 
 
             var aModule = {
-                "ProminstrException_Constructor": ProminstrException_Constructor,
-                "ModuleConstants":  ModuleConstants
+                "ProminstrException_Constructor": ProminstrException_Constructor
             };
 
             pgInitFromModuleConstants( aModule);
-            aModule.ModuleName     = ModuleName;
-            aModule.ModulePackages = ModulePackages;
-            aModule.ModuleFullName = ModuleFullName;
+            aModule.ModuleName      = ModuleName;
+            aModule.ModulePackages  = ModulePackages;
+            aModule.ModuleFullName  = ModuleFullName;
+            aModule.ModuleConstants = ModuleConstants;
 
 
 
