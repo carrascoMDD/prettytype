@@ -1,13 +1,13 @@
 /*
  * common_ctrl_type.js
  *
- * Creado @author Antonio Carrasco Valero 201409301309
+ * Created @author Antonio Carrasco Valero 201409301309
  *
  *
  ***************************************************************************
 
  Copyright 2014 2015 2016 Antonio Carrasco Valero
- uiwire asynchronous user interface written by Antonio Carrasco Valero in Javascript with AngularJS and licensed under EUPL  http://www.uiwire.org
+ Javascript for core modules including a base prototype and prototypes hierarchy, intended to be reused on the Browser as core for i.e. Angular Controllers and Services, as in the uiwire component. Licensed under EUPL  http://www.uiwire.org
 
 Licensed under the EUPL, Version 1.1 only (the "Licence");
 You may not use this work except in compliance with the
@@ -207,6 +207,8 @@ function ModuleFactory_CommonCtrlType() {
 
 
                 aPrototype._v_Type = "CommonCtrl";
+
+                aPrototype._v_Prototype_CommonCtrl = aPrototype;
 
                 aPrototype._v_Module = null;
 
@@ -680,13 +682,13 @@ function ModuleFactory_CommonCtrlType() {
 ;/*
  * common_svce_type.js
  *
- * Creado @author Antonio Carrasco Valero 201409301309
+ * Created @author Antonio Carrasco Valero 201409301309
  *
  *
  ***************************************************************************
 
  Copyright 2014 2015 2016 Antonio Carrasco Valero
- uiwire asynchronous user interface written by Antonio Carrasco Valero in Javascript with AngularJS and licensed under EUPL  http://www.uiwire.org
+ Javascript for core modules including a base prototype and prototypes hierarchy, intended to be reused on the Browser as core for i.e. Angular Controllers and Services, as in the uiwire component. Licensed under EUPL  http://www.uiwire.org
 
 Licensed under the EUPL, Version 1.1 only (the "Licence");
 You may not use this work except in compliance with the
@@ -724,7 +726,7 @@ function ModuleFactory_CommonSvceType() {
               theSS_APIBaseURLSvce) {
 
 
-        var ModuleName     = "commonsvce_type";
+        var ModuleName     = "common_svce_type";
         var ModulePackages = "common";
         var ModuleFullName = ModulePackages + "/" + ModuleName;
 
@@ -827,6 +829,8 @@ function ModuleFactory_CommonSvceType() {
 
 
                 aPrototype._v_Type = "CommonSvce";
+
+                aPrototype._v_Prototype_CommonSvce = aPrototype;
 
                 aPrototype._v_Module = null;
 
@@ -1006,13 +1010,13 @@ function ModuleFactory_CommonSvceType() {
 ;/*
  * common_type.js
  *
- * Creado @author Antonio Carrasco Valero 201410030426
+ * Created @author Antonio Carrasco Valero 201410030426
  *
  *
  ***************************************************************************
 
  Copyright 2014 2015 2016 Antonio Carrasco Valero
- uiwire asynchronous user interface written by Antonio Carrasco Valero in Javascript with AngularJS and licensed under EUPL  http://www.uiwire.org
+ Javascript for core modules including a base prototype and prototypes hierarchy, intended to be reused on the Browser as core for i.e. Angular Controllers and Services, as in the uiwire component. Licensed under EUPL  http://www.uiwire.org
 
 Licensed under the EUPL, Version 1.1 only (the "Licence");
 You may not use this work except in compliance with the
@@ -1044,9 +1048,9 @@ function ModuleFactory_CommonType() {
     'use strict';
 
     return ( function( theSS_typesregistry,
-              theSS_Overrider,
-              theSS_IdentifierSvce,
-              theSS_RecorderSvce){
+                       theSS_Overrider,
+                       theSS_IdentifierSvce,
+                       theSS_RecorderSvce){
 
 
         var ModuleName     = "common_type";
@@ -1443,6 +1447,8 @@ function ModuleFactory_CommonType() {
 
                 aPrototype._v_Type = "Common";
 
+                aPrototype._v_Prototype_Common = aPrototype;
+
                 aPrototype._v_Module = null;
 
                 aPrototype._v_Identifier = null;
@@ -1523,12 +1529,27 @@ function ModuleFactory_CommonType() {
 
 
 
+                var fFullTypeNameString = function() {
+
+                    var aFullTypeName = this._v_Module.ModuleFullName + "." + this._v_Type;
+                    if( aFullTypeName){}/* CQT */
+
+                    return aFullTypeName;
+                };
+                if( fFullTypeNameString){}/* CQT */
+                aPrototype.fFullTypeNameString = fFullTypeNameString;
+
+
+
+
+
 
 
 
                 var fIdentifyingJSON = function() {
 
                     var aIdentifiyingJSON = {
+                        "module": this._v_Module.ModuleFullName,
                         "type": this._v_Type,
                         "id":   this._v_Id
                     };
@@ -1592,18 +1613,6 @@ function ModuleFactory_CommonType() {
 
 
 
-                var fFullTypeNameString = function() {
-
-                    var aFullTypeName = this._v_Module.ModuleFullName + "." + this._v_Type;
-                    if( aFullTypeName){}/* CQT */
-
-                    return aFullTypeName;
-                };
-                if( fFullTypeNameString){}/* CQT */
-                aPrototype.fFullTypeNameString = fFullTypeNameString;
-
-
-
 
 
 
@@ -1621,6 +1630,10 @@ function ModuleFactory_CommonType() {
                 };
                 if( fToResultJSON){}/* CQT */
                 aPrototype.fToResultJSON = fToResultJSON;
+
+
+
+
 
 
 
@@ -1941,9 +1954,10 @@ function ModuleFactory_CommonType() {
                 "Common_SuperPrototypeConstructor": Common_SuperPrototypeConstructor
             };
             pgInitFromModuleConstants( aModule);
-            aModule.ModuleName     = ModuleName;
-            aModule.ModulePackages = ModulePackages;
-            aModule.ModuleFullName = ModuleFullName;
+            aModule.ModuleName      = ModuleName;
+            aModule.ModulePackages  = ModulePackages;
+            aModule.ModuleFullName  = ModuleFullName;
+            aModule.ModuleConstants = ModuleConstants;
 
             aCommon_Prototype._v_Module = aModule;
 
@@ -1988,13 +2002,13 @@ function ModuleFactory_CommonType() {
 ;/*
  * prominstr_type.js
  *
- * Creado @author Antonio Carrasco Valero 201409301309
+ * Created @author Antonio Carrasco Valero 201409301309
  *
  *
  ***************************************************************************
 
  Copyright 2014 2015 2016 Antonio Carrasco Valero
- uiwire asynchronous user interface written by Antonio Carrasco Valero in Javascript with AngularJS and licensed under EUPL  http://www.uiwire.org
+ Javascript for core modules including a base prototype and prototypes hierarchy, intended to be reused on the Browser as core for i.e. Angular Controllers and Services, as in the uiwire component. Licensed under EUPL  http://www.uiwire.org
 
 Licensed under the EUPL, Version 1.1 only (the "Licence");
 You may not use this work except in compliance with the
@@ -2040,9 +2054,6 @@ function ModuleFactory_ProminstrType() {
         var aMod_definer = function( theS_Overrider,
                                      theS_CommonType,
                                      theS_IdentifierType,
-                                     /*
-                                     theS_ProminstrException,
-                                      */
                                      $q) {
 
 
@@ -2180,6 +2191,8 @@ function ModuleFactory_ProminstrType() {
 
 
                 aPrototype._v_Type = "Prominstr";
+
+                aPrototype._v_Prototype_Prominstr = aPrototype;
 
                 aPrototype._v_Module = null;
 
@@ -2320,6 +2333,10 @@ function ModuleFactory_ProminstrType() {
 
 
 
+
+
+
+
                 var pDecorateNewDeferred_withMethods = function( theDeferred) {
 
                     if( !theDeferred) {
@@ -2330,7 +2347,13 @@ function ModuleFactory_ProminstrType() {
 
                     var fIdentifyingJSON = function() {
 
+                        var aModuleFullName = null;
+                        if( theDeferred._v_Module) {
+                            aModuleFullName = theDeferred._v_Module.ModuleFullName;
+                        }
+
                         var aIdentifiyingJSON = {
+                            "module": aModuleFullName,
                             "type": theDeferred._v_Type,
                             "id":   theDeferred._v_Id
                         };
@@ -3200,13 +3223,13 @@ function ModuleFactory_ProminstrType() {
 ;/*
  * prominstrexception.js
  *
- * Creado @author Antonio Carrasco Valero 201410141126
+ * Created @author Antonio Carrasco Valero 201410141126
  *
  *
  ***************************************************************************
 
  Copyright 2014 2015 2016 Antonio Carrasco Valero
- uiwire asynchronous user interface written by Antonio Carrasco Valero in Javascript with AngularJS and licensed under EUPL  http://www.uiwire.org
+ Javascript for core modules including a base prototype and prototypes hierarchy, intended to be reused on the Browser as core for i.e. Angular Controllers and Services, as in the uiwire component. Licensed under EUPL  http://www.uiwire.org
 
 Licensed under the EUPL, Version 1.1 only (the "Licence");
 You may not use this work except in compliance with the
@@ -3241,7 +3264,7 @@ function ModuleFactory_ProminstrException() {
 
 
         var ModuleName     = "prominstrexception";
-        var ModulePackages = "prominstr";
+        var ModulePackages = "common";
         var ModuleFullName = ModulePackages + "/" + ModuleName;
 
 
@@ -3488,9 +3511,10 @@ function ModuleFactory_ProminstrException() {
             };
 
             pgInitFromModuleConstants( aModule);
-            aModule.ModuleName     = ModuleName;
-            aModule.ModulePackages = ModulePackages;
-            aModule.ModuleFullName = ModuleFullName;
+            aModule.ModuleName      = ModuleName;
+            aModule.ModulePackages  = ModulePackages;
+            aModule.ModuleFullName  = ModuleFullName;
+            aModule.ModuleConstants = ModuleConstants;
 
 
 
@@ -3531,429 +3555,15 @@ function ModuleFactory_ProminstrException() {
 
 
 ;/*
- * typesregistry.js
- *
- * Creado @author Antonio Carrasco Valero 201409301309
- *
- *
- ***************************************************************************
-
- Copyright 2014 2015 2016 Antonio Carrasco Valero
- uiwire asynchronous user interface written by Antonio Carrasco Valero in Javascript with AngularJS and licensed under EUPL  http://www.uiwire.org
-
-Licensed under the EUPL, Version 1.1 only (the "Licence");
-You may not use this work except in compliance with the
-Licence.
-You may obtain a copy of the Licence at:
-https://joinup.ec.europa.eu/software/page/eupl/licence-eupl
-Unless required by applicable law or agreed to in
-writing, software distributed under the Licence is
-distributed on an "AS IS" basis,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
-express or implied.
-See the Licence for the specific language governing
-permissions and limitations under the Licence.
- {{License2}}
-
- {{Licensed1}}
- {{Licensed2}}
-
- ***************************************************************************
- *
- */
-
-
-
-
-function ModuleFactory_TypesRegistrySvce() {
-
-    'use strict';
-
-    return ( function(){
-
-
-
-        var ModuleName     = "typesregistry";
-        var ModulePackages = "common";
-        var ModuleFullName = ModulePackages + "/" + ModuleName;
-
-
-        var aMod_definer = function() {
-
-
-
-            if( !( typeof FG_logModLoads == "undefined") && ( typeof FG_logModLoads == "function") && FG_logModLoads()) { FG_logModLoads(ModuleFullName);}
-
-
-
-
-
-
-
-
-            var pgInitWithModuleVariations = function( theToInit) {
-
-                if( !theToInit) {
-                }
-            };
-
-
-
-
-
-            var pgInitFromModuleVariations = function( theToInit) {
-                if( !theToInit) {
-                    return;
-                }
-
-                for( var aGlobalName in ModuleVariations) {
-                    if( ModuleVariations.hasOwnProperty( aGlobalName)) {
-                        theToInit[ aGlobalName] = ModuleVariations[ aGlobalName];
-                    }
-                }
-            };
-
-
-            var ModuleVariations = { };
-            pgInitWithModuleVariations( ModuleVariations);
-
-
-
-
-
-
-
-
-            var pgInitWithModuleConstants = function( theToInit) {
-
-                if( !theToInit) {
-                    return;
-                }
-
-                theToInit.TYPESREGISTRYDEFAULTNAME = "TypesRegistry_DefaultName";
-            };
-
-
-
-            var ModuleConstants = {};
-            pgInitFromModuleVariations( ModuleConstants);
-            pgInitWithModuleConstants( ModuleConstants);
-
-
-
-
-            var pgInitFromModuleConstants = function( theToInit) {
-                if( !theToInit) {
-                    return;
-                }
-
-                for( var aGlobalName in ModuleConstants) {
-                    if( ModuleConstants.hasOwnProperty( aGlobalName)) {
-                        theToInit[ aGlobalName] = ModuleConstants[ aGlobalName];
-                    }
-                }
-            };
-
-
-
-
-
-
-            var aTypesRegistry_Prototype = (function() {
-
-
-                var aPrototype = {};
-
-                pgInitFromModuleConstants( aPrototype);
-
-
-
-
-                aPrototype._v_Type = "TypesRegistry";
-
-                aPrototype._v_Module = null;
-
-
-                aPrototype._v_Title = null;
-
-                aPrototype._v_ModulesByFullName = null;
-
-
-
-
-
-
-
-            var _pInit = function( theTitle) {
-
-                this._pInit_TypesRegistry( theTitle);
-            };
-            if( _pInit){}/* CQT */
-            aPrototype._pInit = _pInit;
-
-
-
-
-
-
-
-            var _pInit_TypesRegistry = function( theTitle) {
-
-                this._v_Prototype = aPrototype;
-                this._v_Type      = this._v_Prototype._v_Type;
-                this._v_Module    = aPrototype._v_Module;
-
-                this._v_Title = theTitle;
-                if( !this._v_Title) {
-                    this._v_Title = this.TYPESREGISTRYDEFAULTNAME;
-                }
-
-                this._v_ModulesByFullName = { };
-            };
-            if( _pInit_TypesRegistry){}/* CQT */
-            aPrototype._pInit_TypesRegistry = _pInit_TypesRegistry;
-
-
-
-
-
-
-
-
-
-            var fIdentifyingJSON = function() {
-
-                var aIdentifiyingJSON = {
-                    "type": this._v_Type
-                };
-                if( aIdentifiyingJSON){}/* CQT */
-                return aIdentifiyingJSON;
-            };
-            if( fIdentifyingJSON){}/* CQT */
-            aPrototype.fIdentifyingJSON = fIdentifyingJSON;
-
-
-
-
-
-
-            var fIdentifyingString = function() {
-
-                var aIdentifyingJSON = this.fIdentifyingJSON();
-
-                var aIdentifyingString = JSON.stringify( aIdentifyingJSON);
-                if( aIdentifyingString){}/* CQT */
-
-                return aIdentifyingString;
-            };
-            if( fIdentifyingString){}/* CQT */
-            aPrototype.fIdentifyingString = fIdentifyingString;
-
-
-
-
-
-
-
-            var fIdentifyingWithTitleJSON = function() {
-
-                var aIdentifyingJSON = this.fIdentifyingJSON();
-
-                aIdentifyingJSON[ "title"] = this._v_Title;
-
-                return aIdentifyingJSON;
-            };
-            if( fIdentifyingWithTitleJSON){}/* CQT */
-            aPrototype.fIdentifyingWithTitleJSON = fIdentifyingWithTitleJSON;
-
-
-
-
-
-
-            var fIdentifyingWithTitleString = function() {
-
-                var aIdentifyingJSON = this.fIdentifyingWithTitleJSON();
-
-                var aIdentifyingString = JSON.stringify( aIdentifyingJSON);
-                if( aIdentifyingString){}/* CQT */
-
-                return aIdentifyingString;
-            };
-            if( fIdentifyingWithTitleString){}/* CQT */
-            aPrototype.fIdentifyingWithTitleString = fIdentifyingWithTitleString;
-
-
-
-
-
-
-
-
-
-
-            var fToResultJSON = function( theCommonObjects, theAlready) {
-                if( !( theAlready == null)) {
-                    if( theAlready.fAlready( this)){
-                        return this.fIdentifyingJSON();
-                    }
-                }
-
-                var aResultJSON = this.fIdentifyingWithTitleJSON();
-                if( aResultJSON){}/* CQT */
-
-                return aResultJSON;
-            };
-            if( fToResultJSON){}/* CQT */
-            aPrototype.fToResultJSON = fToResultJSON;
-
-
-
-
-
-
-
-
-
-
-
-            var fRegisterModule = function( theModule) {
-                if( !theModule) {
-                    return false;
-                }
-
-                var aModuleFullName = theModule.ModuleFullName;
-                if( !aModuleFullName) {
-                    return false;
-                }
-
-                var anAlreadyRegisteredModule =  this._v_ModulesByFullName[ aModuleFullName];
-                if( !anAlreadyRegisteredModule) {
-                    console.log( "\nAttempt to register another module " + aModuleFullName + "\n");
-                    return false;
-                }
-
-
-                this._v_ModulesByFullName[ aModuleFullName] = theModule;
-
-                return true;
-            };
-            if( fRegisterModule){}/* CQT */
-            aPrototype.fRegisterModule = fRegisterModule;
-
-
-
-
-
-
-
-
-            var fRegisteredModule = function( theModuleFullName) {
-                if( !theModuleFullName) {
-                    return null;
-                }
-
-
-                var aRegisteredModule =  this._v_ModulesByFullName[ theModuleFullName];
-                if( !aRegisteredModule) {
-                    return null;
-                }
-
-                return aRegisteredModule;
-            };
-            if( fRegisteredModule){}/* CQT */
-            aPrototype.fRegisteredModule = fRegisteredModule;
-
-
-
-
-
-
-
-            return aPrototype;
-
-        })();
-
-
-
-
-        var TypesRegistry_Constructor = function( theTitle) {
-            this._v_Prototype = null;
-            this._v_Type      = null;
-            this._v_Module    = null;
-
-            this._v_Title = null;
-
-            this._v_ModulesByFullName = null;
-
-            this._pInit_TypesRegistry( theTitle);
-        };
-        TypesRegistry_Constructor.prototype = aTypesRegistry_Prototype;
-
-
-
-
-
-        var TypesRegistry_SuperPrototypeConstructor = function() {
-            this._v_Prototype = aTypesRegistry_Prototype;
-            this._v_Type      = null;
-            this._v_Module    = null;
-
-            this._v_Title     = null;
-
-            this._v_ModulesByFullName = null;
-        };
-        TypesRegistry_SuperPrototypeConstructor.prototype = aTypesRegistry_Prototype;
-
-
-
-        var aModule = {
-            "TypesRegistry_Prototype": aTypesRegistry_Prototype,
-            "TypesRegistry_Constructor": TypesRegistry_Constructor,
-            "TypesRegistry_SuperPrototypeConstructor": TypesRegistry_SuperPrototypeConstructor
-        };
-        pgInitFromModuleConstants( aModule);
-        aModule.ModuleName     = ModuleName;
-        aModule.ModulePackages = ModulePackages;
-        aModule.ModuleFullName = ModuleFullName;
-
-        aTypesRegistry_Prototype._v_Module = aModule;
-
-
-
-
-        return aModule;
-    };
-
-
-
-
-    var aModule = aMod_definer();
-
-    var aService = new aModule.TypesRegistry_Constructor();
-    if( aService){}/* CQT */
-
-    return aService;
-
-});
-}
-
-
-
-
-
-
-
-;/*
  * withprominstr_type.js
  *
- * Creado @author Antonio Carrasco Valero 201410141300
+ * Created @author Antonio Carrasco Valero 201410141300
  *
  *
  ***************************************************************************
 
  Copyright 2014 2015 2016 Antonio Carrasco Valero
- uiwire asynchronous user interface written by Antonio Carrasco Valero in Javascript with AngularJS and licensed under EUPL  http://www.uiwire.org
+ Javascript for core modules including a base prototype and prototypes hierarchy, intended to be reused on the Browser as core for i.e. Angular Controllers and Services, as in the uiwire component. Licensed under EUPL  http://www.uiwire.org
 
 Licensed under the EUPL, Version 1.1 only (the "Licence");
 You may not use this work except in compliance with the
@@ -4093,8 +3703,10 @@ function ModuleFactory_WithProminstrType() {
                 aPrototype._v_SuperPrototype = theS_CommonType.Common_Prototype;
 
 
-
                 aPrototype._v_Type = "WithProminstr";
+
+                aPrototype._v_Prototype_WithProminstr = aPrototype;
+
 
                 aPrototype._v_Module = null;
 
@@ -4690,13 +4302,13 @@ function ModuleFactory_WithProminstrType() {
 ;/*
  * identifier_type.js
  *
- * Creado @author Antonio Carrasco Valero 201410030300
+ * Created @author Antonio Carrasco Valero 201410030300
  *
  *
  ***************************************************************************
 
  Copyright 2014 2015 2016 Antonio Carrasco Valero
- uiwire asynchronous user interface written by Antonio Carrasco Valero in Javascript with AngularJS and licensed under EUPL  http://www.uiwire.org
+ Javascript for core modules including a base prototype and prototypes hierarchy, intended to be reused on the Browser as core for i.e. Angular Controllers and Services, as in the uiwire component. Licensed under EUPL  http://www.uiwire.org
 
 Licensed under the EUPL, Version 1.1 only (the "Licence");
 You may not use this work except in compliance with the
@@ -4853,6 +4465,8 @@ function ModuleFactory_IdentifierType() {
 
                 aPrototype._v_Type = "Identifier";
 
+                aPrototype._v_Prototype_Identifier = aPrototype;
+
                 aPrototype._v_Module = null;
 
                 aPrototype._v_Id    = null;
@@ -4916,10 +4530,25 @@ function ModuleFactory_IdentifierType() {
 
 
 
+                var fFullTypeNameString = function() {
+
+                    var aFullTypeName = this._v_Module.ModuleFullName + "." + this._v_Type;
+                    if( aFullTypeName){}/* CQT */
+
+                    return aFullTypeName;
+                };
+                if( fFullTypeNameString){}/* CQT */
+                aPrototype.fFullTypeNameString = fFullTypeNameString;
+
+
+
+
+
 
                 var fIdentifyingJSON = function() {
 
                     var aIdentifiyingJSON = {
+                        "module": this._v_Module.ModuleFullName,
                         "type": this._v_Type,
                         "id": this._v_Id
                     };
@@ -5041,7 +4670,11 @@ function ModuleFactory_IdentifierType() {
                 this._v_Type = null;
                 this._v_Module = null;
 
+
+                this._v_Id    = null;
                 this._v_Title = null;
+
+                this._v_IdsCounter = null;
 
                 this._pInit_Identifier( theTitle);
             };
@@ -5056,7 +4689,10 @@ function ModuleFactory_IdentifierType() {
                 this._v_Type      = null;
                 this._v_Module    = null;
 
-                this._v_Title     = null;
+                this._v_Id    = null;
+                this._v_Title = null;
+
+                this._v_IdsCounter = null;
             };
             Identifier_SuperPrototypeConstructor.prototype = aIdentifier_Prototype;
 
@@ -5118,13 +4754,13 @@ function ModuleFactory_IdentifierType() {
 ;/*
  * record.js
  *
- * Creado @author Antonio Carrasco Valero 201410030300
+ * Created @author Antonio Carrasco Valero 201410030300
  *
  *
  ***************************************************************************
 
  Copyright 2014 2015 2016 Antonio Carrasco Valero
- uiwire asynchronous user interface written by Antonio Carrasco Valero in Javascript with AngularJS and licensed under EUPL  http://www.uiwire.org
+ Javascript for core modules including a base prototype and prototypes hierarchy, intended to be reused on the Browser as core for i.e. Angular Controllers and Services, as in the uiwire component. Licensed under EUPL  http://www.uiwire.org
 
 Licensed under the EUPL, Version 1.1 only (the "Licence");
 You may not use this work except in compliance with the
@@ -5160,7 +4796,7 @@ function ModuleFactory_RecordType() {
               theSS_Overrider) {
 
 
-        var ModuleName     = "record";
+        var ModuleName     = "record_type";
         var ModulePackages = "identifying";
         var ModuleFullName = ModulePackages + "/" + ModuleName;
 
@@ -5290,6 +4926,11 @@ function ModuleFactory_RecordType() {
 
                 aPrototype._v_Type = "Record";
 
+                aPrototype._v_Prototype_Record = aPrototype;
+
+                aPrototype._v_Module = null;
+
+
                 aPrototype._v_Timestamp    = null;
                 aPrototype._v_Recorder     = null;
                 aPrototype._v_RecordId     = null;
@@ -5317,7 +4958,9 @@ function ModuleFactory_RecordType() {
 
                 var _pInit_Record = function( theRecorder, theRecordId, theInstance, theStep, theEventKind, theData, theReason, theDetail) {
 
+                    this._v_Prototype = aPrototype;
                     this._v_Type = aPrototype._v_Type;
+                    this._v_Module    = aPrototype._v_Module;
 
                     this._v_Timestamp    = Date.now();
                     this._v_Recorder     = theRecorder;
@@ -5331,6 +4974,10 @@ function ModuleFactory_RecordType() {
                 };
                 if( _pInit_Record){}/* CQT */
                 aPrototype._pInit_Record = _pInit_Record;
+
+
+
+
 
 
 
@@ -5397,6 +5044,124 @@ function ModuleFactory_RecordType() {
                 aPrototype.fCopyWithoutException = fCopyWithoutException;
 
 
+
+
+
+
+
+                var fFullTypeNameString = function() {
+
+                    var aFullTypeName = this._v_Module.ModuleFullName + "." + this._v_Type;
+                    if( aFullTypeName){}/* CQT */
+
+                    return aFullTypeName;
+                };
+                if( fFullTypeNameString){}/* CQT */
+                aPrototype.fFullTypeNameString = fFullTypeNameString;
+
+
+
+
+
+                /*
+                var fIdentifyingJSON = function() {
+
+                    var aIdentifiyingJSON = {
+                        "module": this._v_Module.ModuleFullName,
+                        "type": this._v_Type,
+                        "id":   this._v_RecordId
+                    };
+                    return aIdentifiyingJSON;
+                };
+                aPrototype.fIdentifyingJSON = fIdentifyingJSON;
+                */
+
+
+
+
+                var fIdentifyingJSON = function() {
+
+                    var aIdentifiyingJSON = {
+                        "recref": this._v_RecordId
+                    };
+                    if( aIdentifiyingJSON){}/* CQT */
+
+                    return aIdentifiyingJSON;
+                };
+                if( fIdentifyingJSON){}/* CQT */
+                aPrototype.fIdentifyingJSON = fIdentifyingJSON;
+
+
+
+
+
+
+                var fIdentifyingString = function() {
+
+                    var aIdentifyingJSON = this.fIdentifyingJSON();
+
+                    var aIdentifyingString = JSON.stringify( aIdentifyingJSON);
+                    if( aIdentifyingString){}/* CQT */
+
+                    return aIdentifyingString;
+                };
+                if( fIdentifyingString){}/* CQT */
+                aPrototype.fIdentifyingString = fIdentifyingString;
+
+
+
+
+
+
+
+                var fIdentifyingWithTitleJSON = function() {
+
+                    var aIdentifyingJSON = this.fIdentifyingJSON();
+
+                    aIdentifyingJSON[ "title"] = new Date( this._v_Timestamp).toISOString();
+
+                    return aIdentifyingJSON;
+                };
+                if( fIdentifyingWithTitleJSON){}/* CQT */
+                aPrototype.fIdentifyingWithTitleJSON = fIdentifyingWithTitleJSON;
+
+
+
+
+
+
+                var fIdentifyingWithTitleString = function() {
+
+                    var aIdentifyingJSON = this.fIdentifyingWithTitleJSON();
+
+                    var aIdentifyingString = JSON.stringify( aIdentifyingJSON);
+                    if( aIdentifyingString){}/* CQT */
+
+                    return aIdentifyingString;
+                };
+                if( fIdentifyingWithTitleString){}/* CQT */
+                aPrototype.fIdentifyingWithTitleString = fIdentifyingWithTitleString;
+
+
+
+
+
+
+
+                var fToResultJSON = function( theCommonObjects, theAlready) {
+                    if( !( theAlready == null)) {
+                        if( theAlready.fAlready( this)){
+                            return this.fIdentifyingJSON();
+                        }
+                    }
+
+                    var aResultJSON = this.fIdentifyingWithTitleJSON();
+                    if( aResultJSON){}/* CQT */
+
+                    return aResultJSON;
+                };
+                if( fToResultJSON){}/* CQT */
+                aPrototype.fToResultJSON = fToResultJSON;
 
 
 
@@ -6340,22 +6105,6 @@ function ModuleFactory_RecordType() {
 
 
 
-                var fIdentifyingJSON = function() {
-
-                    var aIdentifiyingJSON = {
-                        "recref": this._v_RecordId
-                    };
-                    if( aIdentifiyingJSON){}/* CQT */
-
-                    return aIdentifiyingJSON;
-                };
-                if( fIdentifyingJSON){}/* CQT */
-                aPrototype.fIdentifyingJSON = fIdentifyingJSON;
-
-
-
-
-
 
                 var fRecordHasEvent_recursive = function( theExpectedEvent, theAlready) {
 
@@ -6403,8 +6152,9 @@ function ModuleFactory_RecordType() {
 
 
             var Record_Constructor = function( theRecorder, theRecordId, theInstance, theStep, theEventKind, theData, theReason, theDetail) {
-
+                this._v_Prototype = null;
                 this._v_Type = null;
+                this._v_Module    = null;
 
                 this._v_Recorder   = null;
                 this._v_RecordId   = null;
@@ -6424,8 +6174,9 @@ function ModuleFactory_RecordType() {
 
 
             var Record_SuperPrototypeConstructor = function() {
-
+                this._v_Prototype = aRecord_Prototype;
                 this._v_Type = null;
+                this._v_Module    = null;
 
                 this._v_Recorder   = null;
                 this._v_RecordId   = null;
@@ -6497,13 +6248,13 @@ function ModuleFactory_RecordType() {
 ;/*
  * recorder_type.js
  *
- * Creado @author Antonio Carrasco Valero 201410030300
+ * Created @author Antonio Carrasco Valero 201410030300
  *
  *
  ***************************************************************************
 
  Copyright 2014 2015 2016 Antonio Carrasco Valero
- uiwire asynchronous user interface written by Antonio Carrasco Valero in Javascript with AngularJS and licensed under EUPL  http://www.uiwire.org
+ Javascript for core modules including a base prototype and prototypes hierarchy, intended to be reused on the Browser as core for i.e. Angular Controllers and Services, as in the uiwire component. Licensed under EUPL  http://www.uiwire.org
 
 Licensed under the EUPL, Version 1.1 only (the "Licence");
 You may not use this work except in compliance with the
@@ -6536,14 +6287,14 @@ function ModuleFactory_RecorderType() {
     'use strict';
 
     return ( function( theSS_typesregistry,
-          theSS_Overrider,
-          theSS_IdentifierSvce,
-          theSS_IdentifierType,
-          theSS_RecordType) {
+                       theSS_Overrider,
+                       theSS_IdentifierSvce,
+                       theSS_IdentifierType,
+                       theSS_RecordType) {
 
 
         var ModuleName     = "recorder_type";
-        var ModulePackages = "components";
+        var ModulePackages = "identifying";
         var ModuleFullName = ModulePackages + "/" + ModuleName;
 
 
@@ -6645,6 +6396,8 @@ function ModuleFactory_RecorderType() {
 
                 aPrototype._v_Module = null;
 
+                aPrototype._v_Prototype_Recorder = aPrototype;
+
                 aPrototype._v_Identifier = null;
 
                 aPrototype._v_Id         = null;
@@ -6711,6 +6464,19 @@ function ModuleFactory_RecorderType() {
 
 
 
+
+
+
+
+                var fFullTypeNameString = function() {
+
+                    var aFullTypeName = this._v_Module.ModuleFullName + "." + this._v_Type;
+                    if( aFullTypeName){}/* CQT */
+
+                    return aFullTypeName;
+                };
+                if( fFullTypeNameString){}/* CQT */
+                aPrototype.fFullTypeNameString = fFullTypeNameString;
 
 
 
@@ -6984,7 +6750,7 @@ function ModuleFactory_RecorderType() {
  ***************************************************************************
 
  Copyright 2014 2015 2016 Antonio Carrasco Valero
- uiwire asynchronous user interface written by Antonio Carrasco Valero in Javascript with AngularJS and licensed under EUPL  http://www.uiwire.org
+ Javascript for core modules including a base prototype and prototypes hierarchy, intended to be reused on the Browser as core for i.e. Angular Controllers and Services, as in the uiwire component. Licensed under EUPL  http://www.uiwire.org
 
 Licensed under the EUPL, Version 1.1 only (the "Licence");
 You may not use this work except in compliance with the
@@ -7022,13 +6788,13 @@ FG_logModLoads = function( theMessage) {
 ;/*
  * overrider_type.js
  *
- * Creado @author Antonio Carrasco Valero 201410030300
+ * Created @author Antonio Carrasco Valero 201410030300
  *
  *
  ***************************************************************************
 
  Copyright 2014 2015 2016 Antonio Carrasco Valero
- uiwire asynchronous user interface written by Antonio Carrasco Valero in Javascript with AngularJS and licensed under EUPL  http://www.uiwire.org
+ Javascript for core modules including a base prototype and prototypes hierarchy, intended to be reused on the Browser as core for i.e. Angular Controllers and Services, as in the uiwire component. Licensed under EUPL  http://www.uiwire.org
 
 Licensed under the EUPL, Version 1.1 only (the "Licence");
 You may not use this work except in compliance with the
@@ -7125,30 +6891,21 @@ function ModuleFactory_OverriderType() {
 
                 aPrototype._v_Type = "Overrider";
 
+                aPrototype._v_Prototype_Overrider = aPrototype;
+
                 aPrototype._v_Module = null;
 
 
 
 
 
-                var _pInit = function( theIdentifier, theRecorder, theTitle) {
+                var _pInit = function( theTitle) {
 
-                    this._pInit_Overrider( theIdentifier, theRecorder, theTitle);
+                    this._pInit_Overrider( theTitle);
                 };
                 if( _pInit){}/* CQT */
                 aPrototype._pInit = _pInit;
 
-
-
-
-
-
-                var _fTitleDefault = function( ) {
-
-                   return this.BASECMP_DEFAULTTITLE;
-                };
-                if( _fTitleDefault){}/* CQT */
-                aPrototype._fTitleDefault = _fTitleDefault;
 
 
 
@@ -7172,6 +6929,18 @@ function ModuleFactory_OverriderType() {
 
 
 
+
+
+
+                var fFullTypeNameString = function() {
+
+                    var aFullTypeName = this._v_Module.ModuleFullName + "." + this._v_Type;
+                    if( aFullTypeName){}/* CQT */
+
+                    return aFullTypeName;
+                };
+                if( fFullTypeNameString){}/* CQT */
+                aPrototype.fFullTypeNameString = fFullTypeNameString;
 
 
 
@@ -7363,15 +7132,444 @@ function ModuleFactory_OverriderType() {
 
 
 ;/*
- * decoratesystemprototypes_svce.js
+ * typesregistry.js
  *
- * Creado @author Antonio Carrasco Valero 201412070820
+ * Created @author Antonio Carrasco Valero 201409301309
  *
  *
  ***************************************************************************
 
  Copyright 2014 2015 2016 Antonio Carrasco Valero
- uiwire asynchronous user interface written by Antonio Carrasco Valero in Javascript with AngularJS and licensed under EUPL  http://www.uiwire.org
+ Javascript for core modules including a base prototype and prototypes hierarchy, intended to be reused on the Browser as core for i.e. Angular Controllers and Services, as in the uiwire component. Licensed under EUPL  http://www.uiwire.org
+
+Licensed under the EUPL, Version 1.1 only (the "Licence");
+You may not use this work except in compliance with the
+Licence.
+You may obtain a copy of the Licence at:
+https://joinup.ec.europa.eu/software/page/eupl/licence-eupl
+Unless required by applicable law or agreed to in
+writing, software distributed under the Licence is
+distributed on an "AS IS" basis,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+express or implied.
+See the Licence for the specific language governing
+permissions and limitations under the Licence.
+ {{License2}}
+
+ {{Licensed1}}
+ {{Licensed2}}
+
+ ***************************************************************************
+ *
+ */
+
+
+
+
+function ModuleFactory_TypesRegistrySvce() {
+
+    'use strict';
+
+    return ( function(){
+
+
+
+        var ModuleName     = "typesregistry";
+        var ModulePackages = "common";
+        var ModuleFullName = ModulePackages + "/" + ModuleName;
+
+
+        var aMod_definer = function() {
+
+
+
+            if( !( typeof FG_logModLoads == "undefined") && ( typeof FG_logModLoads == "function") && FG_logModLoads()) { FG_logModLoads(ModuleFullName);}
+
+
+
+
+
+
+
+
+            var pgInitWithModuleVariations = function( theToInit) {
+
+                if( !theToInit) {
+                }
+            };
+
+
+
+
+
+            var pgInitFromModuleVariations = function( theToInit) {
+                if( !theToInit) {
+                    return;
+                }
+
+                for( var aGlobalName in ModuleVariations) {
+                    if( ModuleVariations.hasOwnProperty( aGlobalName)) {
+                        theToInit[ aGlobalName] = ModuleVariations[ aGlobalName];
+                    }
+                }
+            };
+
+
+            var ModuleVariations = { };
+            pgInitWithModuleVariations( ModuleVariations);
+
+
+
+
+
+
+
+
+            var pgInitWithModuleConstants = function( theToInit) {
+
+                if( !theToInit) {
+                    return;
+                }
+
+                theToInit.TYPESREGISTRYDEFAULTNAME = "TypesRegistry_DefaultName";
+            };
+
+
+
+            var ModuleConstants = {};
+            pgInitFromModuleVariations( ModuleConstants);
+            pgInitWithModuleConstants( ModuleConstants);
+
+
+
+
+            var pgInitFromModuleConstants = function( theToInit) {
+                if( !theToInit) {
+                    return;
+                }
+
+                for( var aGlobalName in ModuleConstants) {
+                    if( ModuleConstants.hasOwnProperty( aGlobalName)) {
+                        theToInit[ aGlobalName] = ModuleConstants[ aGlobalName];
+                    }
+                }
+            };
+
+
+
+
+
+
+            var aTypesRegistry_Prototype = (function() {
+
+
+                var aPrototype = {};
+
+                pgInitFromModuleConstants( aPrototype);
+
+
+
+
+                aPrototype._v_Type = "TypesRegistry";
+
+                aPrototype._v_Prototype_TypesRegistry = aPrototype;
+
+                aPrototype._v_Module = null;
+
+
+                aPrototype._v_Title = null;
+
+                aPrototype._v_ModulesByFullName = null;
+
+
+
+
+
+
+
+                var _pInit = function( theTitle) {
+
+                    this._pInit_TypesRegistry( theTitle);
+                };
+                if( _pInit){}/* CQT */
+                aPrototype._pInit = _pInit;
+
+
+
+
+
+
+
+                var _pInit_TypesRegistry = function( theTitle) {
+
+                    this._v_Prototype = aPrototype;
+                    this._v_Type      = this._v_Prototype._v_Type;
+                    this._v_Module    = aPrototype._v_Module;
+
+                    this._v_Title = theTitle;
+                    if( !this._v_Title) {
+                        this._v_Title = this.TYPESREGISTRYDEFAULTNAME;
+                    }
+
+                    this._v_ModulesByFullName = { };
+                };
+                if( _pInit_TypesRegistry){}/* CQT */
+                aPrototype._pInit_TypesRegistry = _pInit_TypesRegistry;
+
+
+
+
+
+
+                var fFullTypeNameString = function() {
+
+                    var aFullTypeName = this._v_Module.ModuleFullName + "." + this._v_Type;
+                    if( aFullTypeName){}/* CQT */
+
+                    return aFullTypeName;
+                };
+                if( fFullTypeNameString){}/* CQT */
+                aPrototype.fFullTypeNameString = fFullTypeNameString;
+
+
+
+
+
+
+                var fIdentifyingJSON = function() {
+
+                    var aIdentifiyingJSON = {
+                        "module": this._v_Module.ModuleFullName,
+                        "type": this._v_Type
+                    };
+                    if( aIdentifiyingJSON){}/* CQT */
+                    return aIdentifiyingJSON;
+                };
+                if( fIdentifyingJSON){}/* CQT */
+                aPrototype.fIdentifyingJSON = fIdentifyingJSON;
+
+
+
+
+
+
+                var fIdentifyingString = function() {
+
+                    var aIdentifyingJSON = this.fIdentifyingJSON();
+
+                    var aIdentifyingString = JSON.stringify( aIdentifyingJSON);
+                    if( aIdentifyingString){}/* CQT */
+
+                    return aIdentifyingString;
+                };
+                if( fIdentifyingString){}/* CQT */
+                aPrototype.fIdentifyingString = fIdentifyingString;
+
+
+
+
+
+
+
+                var fIdentifyingWithTitleJSON = function() {
+
+                    var aIdentifyingJSON = this.fIdentifyingJSON();
+
+                    aIdentifyingJSON[ "title"] = this._v_Title;
+
+                    return aIdentifyingJSON;
+                };
+                if( fIdentifyingWithTitleJSON){}/* CQT */
+                aPrototype.fIdentifyingWithTitleJSON = fIdentifyingWithTitleJSON;
+
+
+
+
+
+
+                var fIdentifyingWithTitleString = function() {
+
+                    var aIdentifyingJSON = this.fIdentifyingWithTitleJSON();
+
+                    var aIdentifyingString = JSON.stringify( aIdentifyingJSON);
+                    if( aIdentifyingString){}/* CQT */
+
+                    return aIdentifyingString;
+                };
+                if( fIdentifyingWithTitleString){}/* CQT */
+                aPrototype.fIdentifyingWithTitleString = fIdentifyingWithTitleString;
+
+
+
+
+
+
+
+
+
+
+                var fToResultJSON = function( theCommonObjects, theAlready) {
+                    if( !( theAlready == null)) {
+                        if( theAlready.fAlready( this)){
+                            return this.fIdentifyingJSON();
+                        }
+                    }
+
+                    var aResultJSON = this.fIdentifyingWithTitleJSON();
+                    if( aResultJSON){}/* CQT */
+
+                    return aResultJSON;
+                };
+                if( fToResultJSON){}/* CQT */
+                aPrototype.fToResultJSON = fToResultJSON;
+
+
+
+
+
+
+
+
+
+
+
+                var fRegisterModule = function( theModule) {
+                    if( !theModule) {
+                        return false;
+                    }
+
+                    var aModuleFullName = theModule.ModuleFullName;
+                    if( !aModuleFullName) {
+                        return false;
+                    }
+
+                    var anAlreadyRegisteredModule =  this._v_ModulesByFullName[ aModuleFullName];
+                    if( !anAlreadyRegisteredModule) {
+                        console.log( "\nAttempt to register another module " + aModuleFullName + "\n");
+                        return false;
+                    }
+
+
+                    this._v_ModulesByFullName[ aModuleFullName] = theModule;
+
+                    return true;
+                };
+                if( fRegisterModule){}/* CQT */
+                aPrototype.fRegisterModule = fRegisterModule;
+
+
+
+
+
+
+
+
+                var fRegisteredModule = function( theModuleFullName) {
+                    if( !theModuleFullName) {
+                        return null;
+                    }
+
+
+                    var aRegisteredModule =  this._v_ModulesByFullName[ theModuleFullName];
+                    if( !aRegisteredModule) {
+                        return null;
+                    }
+
+                    return aRegisteredModule;
+                };
+                if( fRegisteredModule){}/* CQT */
+                aPrototype.fRegisteredModule = fRegisteredModule;
+
+
+
+
+
+
+
+            return aPrototype;
+
+        })();
+
+
+
+
+        var TypesRegistry_Constructor = function( theTitle) {
+            this._v_Prototype = null;
+            this._v_Type      = null;
+            this._v_Module    = null;
+
+            this._v_Title = null;
+
+            this._v_ModulesByFullName = null;
+
+            this._pInit_TypesRegistry( theTitle);
+        };
+        TypesRegistry_Constructor.prototype = aTypesRegistry_Prototype;
+
+
+
+
+
+        var TypesRegistry_SuperPrototypeConstructor = function() {
+            this._v_Prototype = aTypesRegistry_Prototype;
+            this._v_Type      = null;
+            this._v_Module    = null;
+
+            this._v_Title     = null;
+
+            this._v_ModulesByFullName = null;
+        };
+        TypesRegistry_SuperPrototypeConstructor.prototype = aTypesRegistry_Prototype;
+
+
+
+        var aModule = {
+            "TypesRegistry_Prototype": aTypesRegistry_Prototype,
+            "TypesRegistry_Constructor": TypesRegistry_Constructor,
+            "TypesRegistry_SuperPrototypeConstructor": TypesRegistry_SuperPrototypeConstructor
+        };
+        pgInitFromModuleConstants( aModule);
+        aModule.ModuleName     = ModuleName;
+        aModule.ModulePackages = ModulePackages;
+        aModule.ModuleFullName = ModuleFullName;
+
+        aTypesRegistry_Prototype._v_Module = aModule;
+
+
+
+
+        return aModule;
+    };
+
+
+
+
+    var aModule = aMod_definer();
+
+    var aService = new aModule.TypesRegistry_Constructor();
+    if( aService){}/* CQT */
+
+    return aService;
+
+});
+}
+
+
+
+
+
+
+
+;/*
+ * decoratesystemprototypes_svce.js
+ *
+ * Created @author Antonio Carrasco Valero 201412070820
+ *
+ *
+ ***************************************************************************
+
+ Copyright 2014 2015 2016 Antonio Carrasco Valero
+ Javascript for core modules including a base prototype and prototypes hierarchy, intended to be reused on the Browser as core for i.e. Angular Controllers and Services, as in the uiwire component. Licensed under EUPL  http://www.uiwire.org
 
 Licensed under the EUPL, Version 1.1 only (the "Licence");
 You may not use this work except in compliance with the
@@ -7533,13 +7731,13 @@ function ModuleFactory_DecoratesystemprototypesSvce() {
 /*
  * exceptiondetails_svce.js
  *
- * Creado @author Antonio Carrasco Valero 201409301309
+ * Created @author Antonio Carrasco Valero 201409301309
  *
  *
  ***************************************************************************
 
  Copyright 2014 2015 2016 Antonio Carrasco Valero
- uiwire asynchronous user interface written by Antonio Carrasco Valero in Javascript with AngularJS and licensed under EUPL  http://www.uiwire.org
+ Javascript for core modules including a base prototype and prototypes hierarchy, intended to be reused on the Browser as core for i.e. Angular Controllers and Services, as in the uiwire component. Licensed under EUPL  http://www.uiwire.org
 
 Licensed under the EUPL, Version 1.1 only (the "Licence");
 You may not use this work except in compliance with the
@@ -7714,5 +7912,494 @@ function ModuleFactory_ExceptionDetailsSvce() {
 
 
 
+;// Domain Public by Eric Wendelin http://www.eriwen.com/ (2008)
+//                  Luke Smith http://lucassmith.name/ (2008)
+//                  Loic Dachary <loic@dachary.org> (2008)
+//                  Johan Euphrosine <proppy@aminche.com> (2008)
+//                  Oyvind Sean Kinsey http://kinsey.no/blog (2010)
+//                  Victor Homyakov <victor-homyakov@users.sourceforge.net> (2010)
+/*global module, exports, define, ActiveXObject*/
+(function(global, factory) {
+    if (typeof exports === 'object') {
+        // Node
+        module.exports = factory();
+    } else if (typeof define === 'function' && define.amd) {
+        // AMD
+        define(factory);
+    } else {
+        // Browser globals
+        global.printStackTrace = factory();
+    }
+}(this, function() {
+    /**
+     * Main function giving a function stack trace with a forced or passed in Error
+     *
+     * @cfg {Error} e The error to create a stacktrace from (optional)
+     * @cfg {Boolean} guess If we should try to resolve the names of anonymous functions
+     * @return {Array} of Strings with functions, lines, files, and arguments where possible
+     */
+    function printStackTrace(options) {
+        options = options || {guess: true};
+        var ex = options.e || null, guess = !!options.guess, mode = options.mode || null;
+        var p = new printStackTrace.implementation(), result = p.run(ex, mode);
+        return (guess) ? p.guessAnonymousFunctions(result) : result;
+    }
+
+    printStackTrace.implementation = function() {
+    };
+
+    printStackTrace.implementation.prototype = {
+        /**
+         * @param {Error} [ex] The error to create a stacktrace from (optional)
+         * @param {String} [mode] Forced mode (optional, mostly for unit tests)
+         */
+        run: function(ex, mode) {
+            ex = ex || this.createException();
+            mode = mode || this.mode(ex);
+            if (mode === 'other') {
+                return this.other(arguments.callee);
+            } else {
+                return this[mode](ex);
+            }
+        },
+
+        createException: function() {
+            try {
+                this.undef();
+            } catch (e) {
+                return e;
+            }
+        },
+
+        /**
+         * Mode could differ for different exception, e.g.
+         * exceptions in Chrome may or may not have arguments or stack.
+         *
+         * @return {String} mode of operation for the exception
+         */
+        mode: function(e) {
+            if (e['arguments'] && e.stack) {
+                return 'chrome';
+            }
+
+            if (e.stack && e.sourceURL) {
+                return 'safari';
+            }
+
+            if (e.stack && e.number) {
+                return 'ie';
+            }
+
+            if (e.stack && e.fileName) {
+                return 'firefox';
+            }
+
+            if (e.message && e['opera#sourceloc']) {
+                // e.message.indexOf("Backtrace:") > -1 -> opera9
+                // 'opera#sourceloc' in e -> opera9, opera10a
+                // !e.stacktrace -> opera9
+                if (!e.stacktrace) {
+                    return 'opera9'; // use e.message
+                }
+                if (e.message.indexOf('\n') > -1 && e.message.split('\n').length > e.stacktrace.split('\n').length) {
+                    // e.message may have more stack entries than e.stacktrace
+                    return 'opera9'; // use e.message
+                }
+                return 'opera10a'; // use e.stacktrace
+            }
+
+            if (e.message && e.stack && e.stacktrace) {
+                // e.stacktrace && e.stack -> opera10b
+                if (e.stacktrace.indexOf("called from line") < 0) {
+                    return 'opera10b'; // use e.stacktrace, format differs from 'opera10a'
+                }
+                // e.stacktrace && e.stack -> opera11
+                return 'opera11'; // use e.stacktrace, format differs from 'opera10a', 'opera10b'
+            }
+
+            if (e.stack && !e.fileName) {
+                // Chrome 27 does not have e.arguments as earlier versions,
+                // but still does not have e.fileName as Firefox
+                return 'chrome';
+            }
+
+            return 'other';
+        },
+
+        /**
+         * Given a context, function name, and callback function, overwrite it so that it calls
+         * printStackTrace() first with a callback and then runs the rest of the body.
+         *
+         * @param {Object} context of execution (e.g. window)
+         * @param {String} functionName to instrument
+         * @param {Function} callback function to call with a stack trace on invocation
+         */
+        instrumentFunction: function(context, functionName, callback) {
+            context = context || window;
+            var original = context[functionName];
+            context[functionName] = function instrumented() {
+                callback.call(this, printStackTrace().slice(4));
+                return context[functionName]._instrumented.apply(this, arguments);
+            };
+            context[functionName]._instrumented = original;
+        },
+
+        /**
+         * Given a context and function name of a function that has been
+         * instrumented, revert the function to it's original (non-instrumented)
+         * state.
+         *
+         * @param {Object} context of execution (e.g. window)
+         * @param {String} functionName to de-instrument
+         */
+        deinstrumentFunction: function(context, functionName) {
+            if (context[functionName].constructor === Function &&
+                context[functionName]._instrumented &&
+                context[functionName]._instrumented.constructor === Function) {
+                context[functionName] = context[functionName]._instrumented;
+            }
+        },
+
+        /**
+         * Given an Error object, return a formatted Array based on Chrome's stack string.
+         *
+         * @param e - Error object to inspect
+         * @return Array<String> of function calls, files and line numbers
+         */
+        chrome: function(e) {
+            return (e.stack + '\n')
+                .replace(/^[\s\S]+?\s+at\s+/, ' at ') // remove message
+                .replace(/^\s+(at eval )?at\s+/gm, '') // remove 'at' and indentation
+                .replace(/^([^\(]+?)([\n$])/gm, '{anonymous}() ($1)$2')
+                .replace(/^Object.<anonymous>\s*\(([^\)]+)\)/gm, '{anonymous}() ($1)')
+                .replace(/^(.+) \((.+)\)$/gm, '$1@$2')
+                .split('\n')
+                .slice(0, -1);
+        },
+
+        /**
+         * Given an Error object, return a formatted Array based on Safari's stack string.
+         *
+         * @param e - Error object to inspect
+         * @return Array<String> of function calls, files and line numbers
+         */
+        safari: function(e) {
+            return e.stack.replace(/\[native code\]\n/m, '')
+                .replace(/^(?=\w+Error\:).*$\n/m, '')
+                .replace(/^@/gm, '{anonymous}()@')
+                .split('\n');
+        },
+
+        /**
+         * Given an Error object, return a formatted Array based on IE's stack string.
+         *
+         * @param e - Error object to inspect
+         * @return Array<String> of function calls, files and line numbers
+         */
+        ie: function(e) {
+            return e.stack
+                .replace(/^\s*at\s+(.*)$/gm, '$1')
+                .replace(/^Anonymous function\s+/gm, '{anonymous}() ')
+                .replace(/^(.+)\s+\((.+)\)$/gm, '$1@$2')
+                .split('\n')
+                .slice(1);
+        },
+
+        /**
+         * Given an Error object, return a formatted Array based on Firefox's stack string.
+         *
+         * @param e - Error object to inspect
+         * @return Array<String> of function calls, files and line numbers
+         */
+        firefox: function(e) {
+            return e.stack.replace(/(?:\n@:0)?\s+$/m, '')
+                .replace(/^(?:\((\S*)\))?@/gm, '{anonymous}($1)@')
+                .split('\n');
+        },
+
+        opera11: function(e) {
+            var ANON = '{anonymous}', lineRE = /^.*line (\d+), column (\d+)(?: in (.+))? in (\S+):$/;
+            var lines = e.stacktrace.split('\n'), result = [];
+
+            for (var i = 0, len = lines.length; i < len; i += 2) {
+                var match = lineRE.exec(lines[i]);
+                if (match) {
+                    var location = match[4] + ':' + match[1] + ':' + match[2];
+                    var fnName = match[3] || "global code";
+                    fnName = fnName.replace(/<anonymous function: (\S+)>/, "$1").replace(/<anonymous function>/, ANON);
+                    result.push(fnName + '@' + location + ' -- ' + lines[i + 1].replace(/^\s+/, ''));
+                }
+            }
+
+            return result;
+        },
+
+        opera10b: function(e) {
+            // "<anonymous function: run>([arguments not available])@file://localhost/G:/js/stacktrace.js:27\n" +
+            // "printStackTrace([arguments not available])@file://localhost/G:/js/stacktrace.js:18\n" +
+            // "@file://localhost/G:/js/test/functional/testcase1.html:15"
+            var lineRE = /^(.*)@(.+):(\d+)$/;
+            var lines = e.stacktrace.split('\n'), result = [];
+
+            for (var i = 0, len = lines.length; i < len; i++) {
+                var match = lineRE.exec(lines[i]);
+                if (match) {
+                    var fnName = match[1] ? (match[1] + '()') : "global code";
+                    result.push(fnName + '@' + match[2] + ':' + match[3]);
+                }
+            }
+
+            return result;
+        },
+
+        /**
+         * Given an Error object, return a formatted Array based on Opera 10's stacktrace string.
+         *
+         * @param e - Error object to inspect
+         * @return Array<String> of function calls, files and line numbers
+         */
+        opera10a: function(e) {
+            // "  Line 27 of linked script file://localhost/G:/js/stacktrace.js\n"
+            // "  Line 11 of inline#1 script in file://localhost/G:/js/test/functional/testcase1.html: In function foo\n"
+            var ANON = '{anonymous}', lineRE = /Line (\d+).*script (?:in )?(\S+)(?:: In function (\S+))?$/i;
+            var lines = e.stacktrace.split('\n'), result = [];
+
+            for (var i = 0, len = lines.length; i < len; i += 2) {
+                var match = lineRE.exec(lines[i]);
+                if (match) {
+                    var fnName = match[3] || ANON;
+                    result.push(fnName + '()@' + match[2] + ':' + match[1] + ' -- ' + lines[i + 1].replace(/^\s+/, ''));
+                }
+            }
+
+            return result;
+        },
+
+        // Opera 7.x-9.2x only!
+        opera9: function(e) {
+            // "  Line 43 of linked script file://localhost/G:/js/stacktrace.js\n"
+            // "  Line 7 of inline#1 script in file://localhost/G:/js/test/functional/testcase1.html\n"
+            var ANON = '{anonymous}', lineRE = /Line (\d+).*script (?:in )?(\S+)/i;
+            var lines = e.message.split('\n'), result = [];
+
+            for (var i = 2, len = lines.length; i < len; i += 2) {
+                var match = lineRE.exec(lines[i]);
+                if (match) {
+                    result.push(ANON + '()@' + match[2] + ':' + match[1] + ' -- ' + lines[i + 1].replace(/^\s+/, ''));
+                }
+            }
+
+            return result;
+        },
+
+        // Safari 5-, IE 9-, and others
+        other: function(curr) {
+            var ANON = '{anonymous}', fnRE = /function(?:\s+([\w$]+))?\s*\(/, stack = [], fn, args, maxStackSize = 10;
+            var slice = Array.prototype.slice;
+            while (curr && stack.length < maxStackSize) {
+                fn = fnRE.test(curr.toString()) ? RegExp.$1 || ANON : ANON;
+                try {
+                    args = slice.call(curr['arguments'] || []);
+                } catch (e) {
+                    args = ['Cannot access arguments: ' + e];
+                }
+                stack[stack.length] = fn + '(' + this.stringifyArguments(args) + ')';
+                try {
+                    curr = curr.caller;
+                } catch (e) {
+                    stack[stack.length] = 'Cannot access caller: ' + e;
+                    break;
+                }
+            }
+            return stack;
+        },
+
+        /**
+         * Given arguments array as a String, substituting type names for non-string types.
+         *
+         * @param {Arguments,Array} args
+         * @return {String} stringified arguments
+         */
+        stringifyArguments: function(args) {
+            var result = [];
+            var slice = Array.prototype.slice;
+            for (var i = 0; i < args.length; ++i) {
+                var arg = args[i];
+                if (arg === undefined) {
+                    result[i] = 'undefined';
+                } else if (arg === null) {
+                    result[i] = 'null';
+                } else if (arg.constructor) {
+                    // TODO constructor comparison does not work for iframes
+                    if (arg.constructor === Array) {
+                        if (arg.length < 3) {
+                            result[i] = '[' + this.stringifyArguments(arg) + ']';
+                        } else {
+                            result[i] = '[' + this.stringifyArguments(slice.call(arg, 0, 1)) + '...' + this.stringifyArguments(slice.call(arg, -1)) + ']';
+                        }
+                    } else if (arg.constructor === Object) {
+                        result[i] = '#object';
+                    } else if (arg.constructor === Function) {
+                        result[i] = '#function';
+                    } else if (arg.constructor === String) {
+                        result[i] = '"' + arg + '"';
+                    } else if (arg.constructor === Number) {
+                        result[i] = arg;
+                    } else {
+                        result[i] = '?';
+                    }
+                }
+            }
+            return result.join(',');
+        },
+
+        sourceCache: {},
+
+        /**
+         * @return {String} the text from a given URL
+         */
+        ajax: function(url) {
+            var req = this.createXMLHTTPObject();
+            if (req) {
+                try {
+                    req.open('GET', url, false);
+                    //req.overrideMimeType('text/plain');
+                    //req.overrideMimeType('text/javascript');
+                    req.send(null);
+                    //return req.status == 200 ? req.responseText : '';
+                    return req.responseText;
+                } catch (e) {
+                }
+            }
+            return '';
+        },
+
+        /**
+         * Try XHR methods in order and store XHR factory.
+         *
+         * @return {XMLHttpRequest} XHR function or equivalent
+         */
+        createXMLHTTPObject: function() {
+            var xmlhttp, XMLHttpFactories = [
+                function() {
+                    return new XMLHttpRequest();
+                }, function() {
+                    return new ActiveXObject('Msxml2.XMLHTTP');
+                }, function() {
+                    return new ActiveXObject('Msxml3.XMLHTTP');
+                }, function() {
+                    return new ActiveXObject('Microsoft.XMLHTTP');
+                }
+            ];
+            for (var i = 0; i < XMLHttpFactories.length; i++) {
+                try {
+                    xmlhttp = XMLHttpFactories[i]();
+                    // Use memoization to cache the factory
+                    this.createXMLHTTPObject = XMLHttpFactories[i];
+                    return xmlhttp;
+                } catch (e) {
+                }
+            }
+        },
+
+        /**
+         * Given a URL, check if it is in the same domain (so we can get the source
+         * via Ajax).
+         *
+         * @param url {String} source url
+         * @return {Boolean} False if we need a cross-domain request
+         */
+        isSameDomain: function(url) {
+            return typeof location !== "undefined" && url.indexOf(location.hostname) !== -1; // location may not be defined, e.g. when running from nodejs.
+        },
+
+        /**
+         * Get source code from given URL if in the same domain.
+         *
+         * @param url {String} JS source URL
+         * @return {Array} Array of source code lines
+         */
+        getSource: function(url) {
+            // TODO reuse source from script tags?
+            if (!(url in this.sourceCache)) {
+                this.sourceCache[url] = this.ajax(url).split('\n');
+            }
+            return this.sourceCache[url];
+        },
+
+        guessAnonymousFunctions: function(stack) {
+            for (var i = 0; i < stack.length; ++i) {
+                var reStack = /\{anonymous\}\(.*\)@(.*)/,
+                    reRef = /^(.*?)(?::(\d+))(?::(\d+))?(?: -- .+)?$/,
+                    frame = stack[i], ref = reStack.exec(frame);
+
+                if (ref) {
+                    var m = reRef.exec(ref[1]);
+                    if (m) { // If falsey, we did not get any file/line information
+                        var file = m[1], lineno = m[2], charno = m[3] || 0;
+                        if (file && this.isSameDomain(file) && lineno) {
+                            var functionName = this.guessAnonymousFunction(file, lineno, charno);
+                            stack[i] = frame.replace('{anonymous}', functionName);
+                        }
+                    }
+                }
+            }
+            return stack;
+        },
+
+        guessAnonymousFunction: function(url, lineNo, charNo) {
+            var ret;
+            try {
+                ret = this.findFunctionName(this.getSource(url), lineNo);
+            } catch (e) {
+                ret = 'getSource failed with url: ' + url + ', exception: ' + e.toString();
+            }
+            return ret;
+        },
+
+        findFunctionName: function(source, lineNo) {
+            // FIXME findFunctionName fails for compressed source
+            // (more than one function on the same line)
+            // function {name}({args}) m[1]=name m[2]=args
+            var reFunctionDeclaration = /function\s+([^(]*?)\s*\(([^)]*)\)/;
+            // {name} = function ({args}) TODO args capture
+            // /['"]?([0-9A-Za-z_]+)['"]?\s*[:=]\s*function(?:[^(]*)/
+            var reFunctionExpression = /['"]?([$_A-Za-z][$_A-Za-z0-9]*)['"]?\s*[:=]\s*function\b/;
+            // {name} = eval()
+            var reFunctionEvaluation = /['"]?([$_A-Za-z][$_A-Za-z0-9]*)['"]?\s*[:=]\s*(?:eval|new Function)\b/;
+            // Walk backwards in the source lines until we find
+            // the line which matches one of the patterns above
+            var code = "", line, maxLines = Math.min(lineNo, 20), m, commentPos;
+            for (var i = 0; i < maxLines; ++i) {
+                // lineNo is 1-based, source[] is 0-based
+                line = source[lineNo - i - 1];
+                commentPos = line.indexOf('//');
+                if (commentPos >= 0) {
+                    line = line.substr(0, commentPos);
+                }
+                // TODO check other types of comments? Commented code may lead to false positive
+                if (line) {
+                    code = line + code;
+                    m = reFunctionExpression.exec(code);
+                    if (m && m[1]) {
+                        return m[1];
+                    }
+                    m = reFunctionDeclaration.exec(code);
+                    if (m && m[1]) {
+                        //return m[1] + "(" + (m[2] || "") + ")";
+                        return m[1];
+                    }
+                    m = reFunctionEvaluation.exec(code);
+                    if (m && m[1]) {
+                        return m[1];
+                    }
+                }
+            }
+            return '(?)';
+        }
+    };
+
+    return printStackTrace;
+}));
 
 //# sourceMappingURL=prettytype.js.map
