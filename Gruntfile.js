@@ -19,13 +19,6 @@ module.exports = function(grunt) {
                     spawn:false,
                     event:['all']
                 },
-            },
-            karma: {
-                files: [
-                    'src/**/*.js',
-                    'test/**/*.js'
-                ],
-                tasks: ['karma:unit:run'] //NOTE the :run flag
             }
         },
         concat : {
@@ -40,7 +33,7 @@ module.exports = function(grunt) {
         },
         uglify: {
             options: {
-                banner: '/*! <%= pkg.name %> <%= grunt.template.today("yyyy-mm-dd") %> */\n',
+                banner: '/*! <%= pkg.name %> - v<%= pkg.version %> - */\n',
                 sourceMap : true,
                 sourceMapIncludeSources : true
             },
@@ -52,9 +45,6 @@ module.exports = function(grunt) {
 
         karma: {
             unit: {
-                configFile: 'karma.conf.js'
-            },
-            continuous: {
                 configFile: 'karma.conf.js',
                 singleRun: true
             }
