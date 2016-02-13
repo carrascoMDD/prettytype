@@ -1214,6 +1214,7 @@ function ModuleFactory_ProminstrType() {
 }
 
 
+if( ModuleFactory_ProminstrType){}/* CQT */
 
 
 

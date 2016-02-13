@@ -7,10 +7,30 @@ module.exports = function(grunt) {
     // Project configuration.
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
-        watch: {
+        kkwatch: {
             scripts: {
 
-                files: [ 'src/**/*.js'],
+                files: [
+                    'src/roots/logmoduleloads.js',
+
+                    'src/utils/decoratesystemprototypes_svce.js',
+                    'src/utils/stacktrace.js',
+                    'src/utils/exceptiondetails_svce.js',
+
+                    'src/typesregistry.js',
+                    'src/roots/overrider_type.js',
+
+                    'src/common/common_type.js',
+                    'src/common/prominstrexception.js',
+                    'src/common/prominstr_type.js',
+                    'src/common/withprominstr_type.js',
+                    'src/common/common_ctrl_type.js',
+                    'src/common/common_svce_type.js',
+
+                    'src/identifying/identifier_type.js',
+                    'src/identifying/record_type.js',
+                    'src/identifying/recorder_type.js'
+                ],
 
                 tasks: ['concat', 'uglify'],
 
@@ -18,7 +38,7 @@ module.exports = function(grunt) {
 
                     spawn:false,
                     event:['all']
-                },
+                }
             }
         },
         concat : {
@@ -27,7 +47,27 @@ module.exports = function(grunt) {
                 sourceMap :true
             },
             dist : {
-                src  : [ '<%= watch.scripts.files %>' ],
+                src  : [
+                    'src/roots/logmoduleloads.js',
+
+                    'src/utils/decoratesystemprototypes_svce.js',
+                    'src/utils/stacktrace.js',
+                    'src/utils/exceptiondetails_svce.js',
+
+                    'src/typesregistry.js',
+                    'src/roots/overrider_type.js',
+
+                    'src/common/common_type.js',
+                    'src/common/prominstrexception.js',
+                    'src/common/prominstr_type.js',
+                    'src/common/withprominstr_type.js',
+                    'src/common/common_ctrl_type.js',
+                    'src/common/common_svce_type.js',
+
+                    'src/identifying/identifier_type.js',
+                    'src/identifying/record_type.js',
+                    'src/identifying/recorder_type.js'
+                ],
                 dest : 'build/prettytype.js'
             }
         },
@@ -59,6 +99,6 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-karma');
 
     // Default task(s).
-    grunt.registerTask('default', ['watch']);
+    grunt.registerTask('default', [ 'concat', 'uglify']);
 
 };

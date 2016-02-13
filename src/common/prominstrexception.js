@@ -315,6 +315,7 @@ function ModuleFactory_ProminstrException() {
 
 
 
+if( ModuleFactory_ProminstrException){}/* CQT */
 
 
 

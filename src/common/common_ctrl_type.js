@@ -222,6 +222,7 @@ function ModuleFactory_CommonCtrlType() {
                 aPrototype._v_LocationURL  = null;
 
                 aPrototype._v_LastActionReport = null;
+                aPrototype._v_LastActionIsError = null;
 
 
 
@@ -270,8 +271,14 @@ function ModuleFactory_CommonCtrlType() {
                     this._v_LocationURL  = null;
 
                     this._v_LastActionReport = null;
+                    this._v_LastActionIsError = null;
 
                     this._pListenToDestroy();
+
+                    if( this._v_LocationQuery){}/* CQT */
+                    if( this._v_LocationURL){}/* CQT */
+                    if( this._v_LastActionReport){}/* CQT */
+                    if( this._v_LastActionIsError){}/* CQT */
                 };
                 if( _pInit_CommonCtrl){}/* CQT */
                 aPrototype._pInit_CommonCtrl = _pInit_CommonCtrl;
@@ -305,7 +312,7 @@ function ModuleFactory_CommonCtrlType() {
 
                 var fWasDestroyed = function( ) {
 
-                    var aWasDestroyed = ( this._v_Scope == null) ? true : false;
+                    var aWasDestroyed = ( this._v_Scope == null);
                     if( aWasDestroyed){}/* CQT */
 
                     return aWasDestroyed;
@@ -435,16 +442,6 @@ function ModuleFactory_CommonCtrlType() {
                 if( pInitFromAppBaseURL){}/* CQT */
                 aPrototype.pInitFromAppBaseURL = pInitFromAppBaseURL;
 
-
-
-
-
-                var pInitFromAPIBaseURL = function( ) {
-
-                    this._v_APIBaseURL    = theS_APIBaseURLSvce.fAPIBaseURL();
-                };
-                if( pInitFromAPIBaseURL){}/* CQT */
-                aPrototype.pInitFromAPIBaseURL = pInitFromAPIBaseURL;
 
 
 

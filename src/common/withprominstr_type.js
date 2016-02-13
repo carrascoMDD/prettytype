@@ -738,8 +738,7 @@ function ModuleFactory_WithProminstrType() {
 }
 
 
-
-
+if( ModuleFactory_WithProminstrType){}/* CQT */
 
 
 

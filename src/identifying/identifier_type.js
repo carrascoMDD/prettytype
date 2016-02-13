@@ -38,9 +38,8 @@ function ModuleFactory_IdentifierType() {
 
     'use strict';
 
-    return ( function(
-          theSS_typesregistry,
-          theSS_Overrider) {
+    return ( function( theSS_typesregistry,
+                       theSS_Overrider) {
 
 
         var ModuleName     = "identifier_type";
@@ -443,6 +442,7 @@ function ModuleFactory_IdentifierType() {
     });
 }
 
+if( ModuleFactory_IdentifierType){}/* CQT */
 
 
 

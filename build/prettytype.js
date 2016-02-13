@@ -1,5 +1,708 @@
+'donotuse strict';
+
 /*
- * common_ctrl_type.js
+ logmoduleloads.js
+ Creado 201409101529
+ */
+
+/*
+ ***************************************************************************
+
+ Copyright 2014 2015 2016 Antonio Carrasco Valero
+ Javascript for core modules including a base prototype and prototypes hierarchy, intended to be reused on the Browser as core for i.e. Angular Controllers and Services, as in the uiwire component. Licensed under EUPL  http://www.uiwire.org
+
+Licensed under the EUPL, Version 1.1 only (the "Licence");
+You may not use this work except in compliance with the
+Licence.
+You may obtain a copy of the Licence at:
+https://joinup.ec.europa.eu/software/page/eupl/licence-eupl
+Unless required by applicable law or agreed to in
+writing, software distributed under the Licence is
+distributed on an "AS IS" basis,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+express or implied.
+See the Licence for the specific language governing
+permissions and limitations under the Licence.
+ {{License2}}
+
+ {{Licensed1}}
+ {{Licensed2}}
+
+ ***************************************************************************
+ */
+
+var LOGMODULELOADS = false;
+
+FG_logModLoads = function( theMessage) {
+    if( !theMessage) {
+        return LOGMODULELOADS;
+    }
+    if( LOGMODULELOADS) {
+        console.log( ',{"MODULE", "' + theMessage + '"}');
+    }
+
+    return LOGMODULELOADS;
+};
+
+;/*
+ * decoratesystemprototypes_svce.js
+ *
+ * Created @author Antonio Carrasco Valero 201412070820
+ *
+ *
+ ***************************************************************************
+
+ Copyright 2014 2015 2016 Antonio Carrasco Valero
+ Javascript for core modules including a base prototype and prototypes hierarchy, intended to be reused on the Browser as core for i.e. Angular Controllers and Services, as in the uiwire component. Licensed under EUPL  http://www.uiwire.org
+
+Licensed under the EUPL, Version 1.1 only (the "Licence");
+You may not use this work except in compliance with the
+Licence.
+You may obtain a copy of the Licence at:
+https://joinup.ec.europa.eu/software/page/eupl/licence-eupl
+Unless required by applicable law or agreed to in
+writing, software distributed under the Licence is
+distributed on an "AS IS" basis,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+express or implied.
+See the Licence for the specific language governing
+permissions and limitations under the Licence.
+ {{License2}}
+
+ {{Licensed1}}
+ {{Licensed2}}
+
+ ***************************************************************************
+ *
+ */
+
+
+
+
+
+function ModuleFactory_DecoratesystemprototypesSvce() {
+
+    'use strict';
+
+    return ( function(){
+
+
+
+        var aMod_definer = function() {
+
+
+            var ModuleName     = "decoratesystemprototypes_svce";
+            var ModulePackages = "utils";
+            var ModuleFullName = ModulePackages + "/" + ModuleName;
+
+
+            if( !( typeof FG_logModLoads == "undefined") && ( typeof FG_logModLoads == "function") && FG_logModLoads()) { FG_logModLoads(ModuleFullName);}
+
+
+
+
+
+
+            var pgInitWithModuleConstants = function( theToInit) {
+
+                if( !theToInit) {
+                }
+            };
+
+
+
+
+            var ModuleConstants = {};
+            pgInitWithModuleConstants( ModuleConstants);
+
+
+
+
+            var pgInitFromModuleConstants = function( theToInit) {
+                if( !theToInit) {
+                    return;
+                }
+
+                for( var aGlobalName in ModuleConstants) {
+                    if( ModuleConstants.hasOwnProperty( aGlobalName)) {
+                        theToInit[ aGlobalName] = ModuleConstants[ aGlobalName];
+                    }
+                }
+            };
+
+
+
+
+            var aModule = { };
+            pgInitFromModuleConstants( aModule);
+            aModule.ModuleName     = ModuleName;
+            aModule.ModulePackages = ModulePackages;
+            aModule.ModuleFullName = ModuleFullName;
+
+
+
+
+
+
+            var fStringExtend = function( theString, theLen) {
+
+                if( !theLen) {
+                    return "";
+                }
+
+                var aThisLen = theString.length;
+                if( !aThisLen) {
+                    return "";
+                }
+
+                var aSource = theString;
+                var aNumRepeats = Math.floor( theLen / aThisLen);
+                aNumRepeats += 1;
+                if( aNumRepeats > 1) {
+
+                    if( aNumRepeats > 10000) {
+                        aNumRepeats = 10000;
+                    }
+                    aSource = Array.apply(null, new Array( aNumRepeats)).map(String.prototype.valueOf, theString).join( "");
+                }
+
+                var aExtended = aSource.slice( 0, theLen);
+                if( aExtended){}/* CQT */
+
+                return aExtended;
+            };
+            if( fStringExtend){}/* CQT */
+            aModule.fStringExtend = fStringExtend;
+
+
+
+
+
+            if( !String.prototype.Xtnd) {
+                String.prototype.Xtnd = function( theLen) {
+
+                    return aModule.fStringExtend( this, theLen);
+                };
+            }
+
+
+
+
+
+            return aModule;
+        };
+
+
+
+
+
+
+        var aService = aMod_definer();
+        if( aService){}/* CQT */
+
+        return aService;
+
+    });
+}
+
+
+if( ModuleFactory_DecoratesystemprototypesSvce){}/* CQT */
+
+
+
+
+;// Domain Public by Eric Wendelin http://www.eriwen.com/ (2008)
+//                  Luke Smith http://lucassmith.name/ (2008)
+//                  Loic Dachary <loic@dachary.org> (2008)
+//                  Johan Euphrosine <proppy@aminche.com> (2008)
+//                  Oyvind Sean Kinsey http://kinsey.no/blog (2010)
+//                  Victor Homyakov <victor-homyakov@users.sourceforge.net> (2010)
+/*global module, exports, define, ActiveXObject*/
+(function(global, factory) {
+    if (typeof exports === 'object') {
+        // Node
+        module.exports = factory();
+    } else if (typeof define === 'function' && define.amd) {
+        // AMD
+        define(factory);
+    } else {
+        // Browser globals
+        global.printStackTrace = factory();
+    }
+}(this, function() {
+    /**
+     * Main function giving a function stack trace with a forced or passed in Error
+     *
+     * @cfg {Error} e The error to create a stacktrace from (optional)
+     * @cfg {Boolean} guess If we should try to resolve the names of anonymous functions
+     * @return {Array} of Strings with functions, lines, files, and arguments where possible
+     */
+    function printStackTrace(options) {
+        options = options || {guess: true};
+        var ex = options.e || null, guess = !!options.guess, mode = options.mode || null;
+        var p = new printStackTrace.implementation(), result = p.run(ex, mode);
+        return (guess) ? p.guessAnonymousFunctions(result) : result;
+    }
+
+    printStackTrace.implementation = function() {
+    };
+
+    printStackTrace.implementation.prototype = {
+        /**
+         * @param {Error} [ex] The error to create a stacktrace from (optional)
+         * @param {String} [mode] Forced mode (optional, mostly for unit tests)
+         */
+        run: function(ex, mode) {
+            ex = ex || this.createException();
+            mode = mode || this.mode(ex);
+            if (mode === 'other') {
+                return this.other(arguments.callee);
+            } else {
+                return this[mode](ex);
+            }
+        },
+
+        createException: function() {
+            try {
+                this.undef();
+            } catch (e) {
+                return e;
+            }
+        },
+
+        /**
+         * Mode could differ for different exception, e.g.
+         * exceptions in Chrome may or may not have arguments or stack.
+         *
+         * @return {String} mode of operation for the exception
+         */
+        mode: function(e) {
+            if (e['arguments'] && e.stack) {
+                return 'chrome';
+            }
+
+            if (e.stack && e.sourceURL) {
+                return 'safari';
+            }
+
+            if (e.stack && e.number) {
+                return 'ie';
+            }
+
+            if (e.stack && e.fileName) {
+                return 'firefox';
+            }
+
+            if (e.message && e['opera#sourceloc']) {
+                // e.message.indexOf("Backtrace:") > -1 -> opera9
+                // 'opera#sourceloc' in e -> opera9, opera10a
+                // !e.stacktrace -> opera9
+                if (!e.stacktrace) {
+                    return 'opera9'; // use e.message
+                }
+                if (e.message.indexOf('\n') > -1 && e.message.split('\n').length > e.stacktrace.split('\n').length) {
+                    // e.message may have more stack entries than e.stacktrace
+                    return 'opera9'; // use e.message
+                }
+                return 'opera10a'; // use e.stacktrace
+            }
+
+            if (e.message && e.stack && e.stacktrace) {
+                // e.stacktrace && e.stack -> opera10b
+                if (e.stacktrace.indexOf("called from line") < 0) {
+                    return 'opera10b'; // use e.stacktrace, format differs from 'opera10a'
+                }
+                // e.stacktrace && e.stack -> opera11
+                return 'opera11'; // use e.stacktrace, format differs from 'opera10a', 'opera10b'
+            }
+
+            if (e.stack && !e.fileName) {
+                // Chrome 27 does not have e.arguments as earlier versions,
+                // but still does not have e.fileName as Firefox
+                return 'chrome';
+            }
+
+            return 'other';
+        },
+
+        /**
+         * Given a context, function name, and callback function, overwrite it so that it calls
+         * printStackTrace() first with a callback and then runs the rest of the body.
+         *
+         * @param {Object} context of execution (e.g. window)
+         * @param {String} functionName to instrument
+         * @param {Function} callback function to call with a stack trace on invocation
+         */
+        instrumentFunction: function(context, functionName, callback) {
+            context = context || window;
+            var original = context[functionName];
+            context[functionName] = function instrumented() {
+                callback.call(this, printStackTrace().slice(4));
+                return context[functionName]._instrumented.apply(this, arguments);
+            };
+            context[functionName]._instrumented = original;
+        },
+
+        /**
+         * Given a context and function name of a function that has been
+         * instrumented, revert the function to it's original (non-instrumented)
+         * state.
+         *
+         * @param {Object} context of execution (e.g. window)
+         * @param {String} functionName to de-instrument
+         */
+        deinstrumentFunction: function(context, functionName) {
+            if (context[functionName].constructor === Function &&
+                context[functionName]._instrumented &&
+                context[functionName]._instrumented.constructor === Function) {
+                context[functionName] = context[functionName]._instrumented;
+            }
+        },
+
+        /**
+         * Given an Error object, return a formatted Array based on Chrome's stack string.
+         *
+         * @param e - Error object to inspect
+         * @return Array<String> of function calls, files and line numbers
+         */
+        chrome: function(e) {
+            return (e.stack + '\n')
+                .replace(/^[\s\S]+?\s+at\s+/, ' at ') // remove message
+                .replace(/^\s+(at eval )?at\s+/gm, '') // remove 'at' and indentation
+                .replace(/^([^\(]+?)([\n$])/gm, '{anonymous}() ($1)$2')
+                .replace(/^Object.<anonymous>\s*\(([^\)]+)\)/gm, '{anonymous}() ($1)')
+                .replace(/^(.+) \((.+)\)$/gm, '$1@$2')
+                .split('\n')
+                .slice(0, -1);
+        },
+
+        /**
+         * Given an Error object, return a formatted Array based on Safari's stack string.
+         *
+         * @param e - Error object to inspect
+         * @return Array<String> of function calls, files and line numbers
+         */
+        safari: function(e) {
+            return e.stack.replace(/\[native code\]\n/m, '')
+                .replace(/^(?=\w+Error\:).*$\n/m, '')
+                .replace(/^@/gm, '{anonymous}()@')
+                .split('\n');
+        },
+
+        /**
+         * Given an Error object, return a formatted Array based on IE's stack string.
+         *
+         * @param e - Error object to inspect
+         * @return Array<String> of function calls, files and line numbers
+         */
+        ie: function(e) {
+            return e.stack
+                .replace(/^\s*at\s+(.*)$/gm, '$1')
+                .replace(/^Anonymous function\s+/gm, '{anonymous}() ')
+                .replace(/^(.+)\s+\((.+)\)$/gm, '$1@$2')
+                .split('\n')
+                .slice(1);
+        },
+
+        /**
+         * Given an Error object, return a formatted Array based on Firefox's stack string.
+         *
+         * @param e - Error object to inspect
+         * @return Array<String> of function calls, files and line numbers
+         */
+        firefox: function(e) {
+            return e.stack.replace(/(?:\n@:0)?\s+$/m, '')
+                .replace(/^(?:\((\S*)\))?@/gm, '{anonymous}($1)@')
+                .split('\n');
+        },
+
+        opera11: function(e) {
+            var ANON = '{anonymous}', lineRE = /^.*line (\d+), column (\d+)(?: in (.+))? in (\S+):$/;
+            var lines = e.stacktrace.split('\n'), result = [];
+
+            for (var i = 0, len = lines.length; i < len; i += 2) {
+                var match = lineRE.exec(lines[i]);
+                if (match) {
+                    var location = match[4] + ':' + match[1] + ':' + match[2];
+                    var fnName = match[3] || "global code";
+                    fnName = fnName.replace(/<anonymous function: (\S+)>/, "$1").replace(/<anonymous function>/, ANON);
+                    result.push(fnName + '@' + location + ' -- ' + lines[i + 1].replace(/^\s+/, ''));
+                }
+            }
+
+            return result;
+        },
+
+        opera10b: function(e) {
+            // "<anonymous function: run>([arguments not available])@file://localhost/G:/js/stacktrace.js:27\n" +
+            // "printStackTrace([arguments not available])@file://localhost/G:/js/stacktrace.js:18\n" +
+            // "@file://localhost/G:/js/test/functional/testcase1.html:15"
+            var lineRE = /^(.*)@(.+):(\d+)$/;
+            var lines = e.stacktrace.split('\n'), result = [];
+
+            for (var i = 0, len = lines.length; i < len; i++) {
+                var match = lineRE.exec(lines[i]);
+                if (match) {
+                    var fnName = match[1] ? (match[1] + '()') : "global code";
+                    result.push(fnName + '@' + match[2] + ':' + match[3]);
+                }
+            }
+
+            return result;
+        },
+
+        /**
+         * Given an Error object, return a formatted Array based on Opera 10's stacktrace string.
+         *
+         * @param e - Error object to inspect
+         * @return Array<String> of function calls, files and line numbers
+         */
+        opera10a: function(e) {
+            // "  Line 27 of linked script file://localhost/G:/js/stacktrace.js\n"
+            // "  Line 11 of inline#1 script in file://localhost/G:/js/test/functional/testcase1.html: In function foo\n"
+            var ANON = '{anonymous}', lineRE = /Line (\d+).*script (?:in )?(\S+)(?:: In function (\S+))?$/i;
+            var lines = e.stacktrace.split('\n'), result = [];
+
+            for (var i = 0, len = lines.length; i < len; i += 2) {
+                var match = lineRE.exec(lines[i]);
+                if (match) {
+                    var fnName = match[3] || ANON;
+                    result.push(fnName + '()@' + match[2] + ':' + match[1] + ' -- ' + lines[i + 1].replace(/^\s+/, ''));
+                }
+            }
+
+            return result;
+        },
+
+        // Opera 7.x-9.2x only!
+        opera9: function(e) {
+            // "  Line 43 of linked script file://localhost/G:/js/stacktrace.js\n"
+            // "  Line 7 of inline#1 script in file://localhost/G:/js/test/functional/testcase1.html\n"
+            var ANON = '{anonymous}', lineRE = /Line (\d+).*script (?:in )?(\S+)/i;
+            var lines = e.message.split('\n'), result = [];
+
+            for (var i = 2, len = lines.length; i < len; i += 2) {
+                var match = lineRE.exec(lines[i]);
+                if (match) {
+                    result.push(ANON + '()@' + match[2] + ':' + match[1] + ' -- ' + lines[i + 1].replace(/^\s+/, ''));
+                }
+            }
+
+            return result;
+        },
+
+        // Safari 5-, IE 9-, and others
+        other: function(curr) {
+            var ANON = '{anonymous}', fnRE = /function(?:\s+([\w$]+))?\s*\(/, stack = [], fn, args, maxStackSize = 10;
+            var slice = Array.prototype.slice;
+            while (curr && stack.length < maxStackSize) {
+                fn = fnRE.test(curr.toString()) ? RegExp.$1 || ANON : ANON;
+                try {
+                    args = slice.call(curr['arguments'] || []);
+                } catch (e) {
+                    args = ['Cannot access arguments: ' + e];
+                }
+                stack[stack.length] = fn + '(' + this.stringifyArguments(args) + ')';
+                try {
+                    curr = curr.caller;
+                } catch (e) {
+                    stack[stack.length] = 'Cannot access caller: ' + e;
+                    break;
+                }
+            }
+            return stack;
+        },
+
+        /**
+         * Given arguments array as a String, substituting type names for non-string types.
+         *
+         * @param {Arguments,Array} args
+         * @return {String} stringified arguments
+         */
+        stringifyArguments: function(args) {
+            var result = [];
+            var slice = Array.prototype.slice;
+            for (var i = 0; i < args.length; ++i) {
+                var arg = args[i];
+                if (arg === undefined) {
+                    result[i] = 'undefined';
+                } else if (arg === null) {
+                    result[i] = 'null';
+                } else if (arg.constructor) {
+                    // TODO constructor comparison does not work for iframes
+                    if (arg.constructor === Array) {
+                        if (arg.length < 3) {
+                            result[i] = '[' + this.stringifyArguments(arg) + ']';
+                        } else {
+                            result[i] = '[' + this.stringifyArguments(slice.call(arg, 0, 1)) + '...' + this.stringifyArguments(slice.call(arg, -1)) + ']';
+                        }
+                    } else if (arg.constructor === Object) {
+                        result[i] = '#object';
+                    } else if (arg.constructor === Function) {
+                        result[i] = '#function';
+                    } else if (arg.constructor === String) {
+                        result[i] = '"' + arg + '"';
+                    } else if (arg.constructor === Number) {
+                        result[i] = arg;
+                    } else {
+                        result[i] = '?';
+                    }
+                }
+            }
+            return result.join(',');
+        },
+
+        sourceCache: {},
+
+        /**
+         * @return {String} the text from a given URL
+         */
+        ajax: function(url) {
+            var req = this.createXMLHTTPObject();
+            if (req) {
+                try {
+                    req.open('GET', url, false);
+                    //req.overrideMimeType('text/plain');
+                    //req.overrideMimeType('text/javascript');
+                    req.send(null);
+                    //return req.status == 200 ? req.responseText : '';
+                    return req.responseText;
+                } catch (e) {
+                }
+            }
+            return '';
+        },
+
+        /**
+         * Try XHR methods in order and store XHR factory.
+         *
+         * @return {XMLHttpRequest} XHR function or equivalent
+         */
+        createXMLHTTPObject: function() {
+            var xmlhttp, XMLHttpFactories = [
+                function() {
+                    return new XMLHttpRequest();
+                }, function() {
+                    return new ActiveXObject('Msxml2.XMLHTTP');
+                }, function() {
+                    return new ActiveXObject('Msxml3.XMLHTTP');
+                }, function() {
+                    return new ActiveXObject('Microsoft.XMLHTTP');
+                }
+            ];
+            for (var i = 0; i < XMLHttpFactories.length; i++) {
+                try {
+                    xmlhttp = XMLHttpFactories[i]();
+                    // Use memoization to cache the factory
+                    this.createXMLHTTPObject = XMLHttpFactories[i];
+                    return xmlhttp;
+                } catch (e) {
+                }
+            }
+        },
+
+        /**
+         * Given a URL, check if it is in the same domain (so we can get the source
+         * via Ajax).
+         *
+         * @param url {String} source url
+         * @return {Boolean} False if we need a cross-domain request
+         */
+        isSameDomain: function(url) {
+            return typeof location !== "undefined" && url.indexOf(location.hostname) !== -1; // location may not be defined, e.g. when running from nodejs.
+        },
+
+        /**
+         * Get source code from given URL if in the same domain.
+         *
+         * @param url {String} JS source URL
+         * @return {Array} Array of source code lines
+         */
+        getSource: function(url) {
+            // TODO reuse source from script tags?
+            if (!(url in this.sourceCache)) {
+                this.sourceCache[url] = this.ajax(url).split('\n');
+            }
+            return this.sourceCache[url];
+        },
+
+        guessAnonymousFunctions: function(stack) {
+            for (var i = 0; i < stack.length; ++i) {
+                var reStack = /\{anonymous\}\(.*\)@(.*)/,
+                    reRef = /^(.*?)(?::(\d+))(?::(\d+))?(?: -- .+)?$/,
+                    frame = stack[i], ref = reStack.exec(frame);
+
+                if (ref) {
+                    var m = reRef.exec(ref[1]);
+                    if (m) { // If falsey, we did not get any file/line information
+                        var file = m[1], lineno = m[2], charno = m[3] || 0;
+                        if (file && this.isSameDomain(file) && lineno) {
+                            var functionName = this.guessAnonymousFunction(file, lineno, charno);
+                            stack[i] = frame.replace('{anonymous}', functionName);
+                        }
+                    }
+                }
+            }
+            return stack;
+        },
+
+        guessAnonymousFunction: function(url, lineNo, charNo) {
+            var ret;
+            try {
+                ret = this.findFunctionName(this.getSource(url), lineNo);
+            } catch (e) {
+                ret = 'getSource failed with url: ' + url + ', exception: ' + e.toString();
+            }
+            return ret;
+        },
+
+        findFunctionName: function(source, lineNo) {
+            // FIXME findFunctionName fails for compressed source
+            // (more than one function on the same line)
+            // function {name}({args}) m[1]=name m[2]=args
+            var reFunctionDeclaration = /function\s+([^(]*?)\s*\(([^)]*)\)/;
+            // {name} = function ({args}) TODO args capture
+            // /['"]?([0-9A-Za-z_]+)['"]?\s*[:=]\s*function(?:[^(]*)/
+            var reFunctionExpression = /['"]?([$_A-Za-z][$_A-Za-z0-9]*)['"]?\s*[:=]\s*function\b/;
+            // {name} = eval()
+            var reFunctionEvaluation = /['"]?([$_A-Za-z][$_A-Za-z0-9]*)['"]?\s*[:=]\s*(?:eval|new Function)\b/;
+            // Walk backwards in the source lines until we find
+            // the line which matches one of the patterns above
+            var code = "", line, maxLines = Math.min(lineNo, 20), m, commentPos;
+            for (var i = 0; i < maxLines; ++i) {
+                // lineNo is 1-based, source[] is 0-based
+                line = source[lineNo - i - 1];
+                commentPos = line.indexOf('//');
+                if (commentPos >= 0) {
+                    line = line.substr(0, commentPos);
+                }
+                // TODO check other types of comments? Commented code may lead to false positive
+                if (line) {
+                    code = line + code;
+                    m = reFunctionExpression.exec(code);
+                    if (m && m[1]) {
+                        return m[1];
+                    }
+                    m = reFunctionDeclaration.exec(code);
+                    if (m && m[1]) {
+                        //return m[1] + "(" + (m[2] || "") + ")";
+                        return m[1];
+                    }
+                    m = reFunctionEvaluation.exec(code);
+                    if (m && m[1]) {
+                        return m[1];
+                    }
+                }
+            }
+            return '(?)';
+        }
+    };
+
+    return printStackTrace;
+}));
+;
+/*
+ * exceptiondetails_svce.js
  *
  * Created @author Antonio Carrasco Valero 201409301309
  *
@@ -32,30 +735,206 @@ permissions and limitations under the Licence.
 
 
 
-function ModuleFactory_CommonCtrlType() {
+
+
+function ModuleFactory_ExceptionDetailsSvce() {
 
     'use strict';
 
-    return ( function(
-              theSS_typesregistry,
-              theSS_Overrider,
-              theSS_WithProminstrType,
-              theSS_AppBaseURLSvce,
-              theSS_APIBaseURLSvce,
-              theSS_location) {
+
+    return ( function(){
 
 
-        var ModuleName     = "common_ctrl_type";
+
+
+
+        var aMod_definer = function() {
+
+
+            var ModuleName     = "exceptiondetails_svce";
+            var ModulePackages = "utils";
+            var ModuleFullName = ModulePackages + "/" + ModuleName;
+
+
+            if( !( typeof FG_logModLoads == "undefined") && ( typeof FG_logModLoads == "function") && FG_logModLoads()) { FG_logModLoads(ModuleFullName);}
+
+
+
+
+
+
+
+
+
+
+
+            var pgInitWithModuleConstants = function( theToInit) {
+
+                if( !theToInit) {
+                }
+            };
+
+
+
+
+
+            var ModuleConstants = {};
+            pgInitWithModuleConstants( ModuleConstants);
+
+
+
+
+            var pgInitFromModuleConstants = function( theToInit) {
+                if( !theToInit) {
+                    return;
+                }
+
+                for( var aGlobalName in ModuleConstants) {
+                    if( ModuleConstants.hasOwnProperty( aGlobalName)) {
+                        theToInit[ aGlobalName] = ModuleConstants[ aGlobalName];
+                    }
+                }
+            };
+
+
+
+
+
+
+
+            var aModule = { };
+            pgInitFromModuleConstants( aModule);
+            aModule.ModuleName     = ModuleName;
+            aModule.ModulePackages = ModulePackages;
+            aModule.ModuleFullName = ModuleFullName;
+
+
+
+
+
+
+            var fExceptionDetail = function( theException) {
+                if( !theException) {
+                    return null;
+                }
+
+
+                var anExceptionDetail = {
+                    exception: theException.toString()
+                };
+
+
+                var anExceptionTrace = theM_stacktrace( { e: theException});
+                if( anExceptionTrace) {
+                    anExceptionDetail.trace = anExceptionTrace;
+                }
+
+                var aRecord = theException._v_Record;
+                if( aRecord) {
+                    if( aRecord.fIdentifyingJSON) {
+                        aRecord = aRecord.fIdentifyingJSON();
+                    }
+                    else {
+                        if( aRecord.fAsLogObject) {
+                            aRecord = aRecord.fAsLogObject();
+                        }
+                    }
+                    if( aRecord) {
+                        anExceptionDetail.recex = aRecord;
+                    }
+                }
+
+                if( this.LOGEXCEPTIONDETAILS) {
+                    console.log( "exception:" + anExceptionDetail.exception);
+                    console.log( anExceptionDetail.recex);
+                    console.log( anExceptionDetail.trace);
+                }
+
+                anExceptionDetail.fIdentifyingJSON = function() {
+                    return anExceptionDetail;
+                };
+
+                return anExceptionDetail;
+            };
+            if( fExceptionDetail){}/* CQT */
+            aModule.fExceptionDetail = fExceptionDetail;
+
+
+
+
+
+
+            return aModule;
+        };
+
+
+
+
+
+
+        var aService = aMod_definer();
+        if( aService){}/* CQT */
+
+        return aService;
+
+    });
+}
+
+if( ModuleFactory_ExceptionDetailsSvce){}/* CQT */
+
+
+
+
+;/*
+ * typesregistry.js
+ *
+ * Created @author Antonio Carrasco Valero 201409301309
+ *
+ *
+ ***************************************************************************
+
+ Copyright 2014 2015 2016 Antonio Carrasco Valero
+ Javascript for core modules including a base prototype and prototypes hierarchy, intended to be reused on the Browser as core for i.e. Angular Controllers and Services, as in the uiwire component. Licensed under EUPL  http://www.uiwire.org
+
+Licensed under the EUPL, Version 1.1 only (the "Licence");
+You may not use this work except in compliance with the
+Licence.
+You may obtain a copy of the Licence at:
+https://joinup.ec.europa.eu/software/page/eupl/licence-eupl
+Unless required by applicable law or agreed to in
+writing, software distributed under the Licence is
+distributed on an "AS IS" basis,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+express or implied.
+See the Licence for the specific language governing
+permissions and limitations under the Licence.
+ {{License2}}
+
+ {{Licensed1}}
+ {{Licensed2}}
+
+ ***************************************************************************
+ *
+ */
+
+
+
+
+function ModuleFactory_TypesRegistrySvce() {
+
+    'use strict';
+
+    return ( function(){
+
+
+
+        var ModuleName     = "typesregistry";
         var ModulePackages = "common";
         var ModuleFullName = ModulePackages + "/" + ModuleName;
 
 
+        var aMod_definer = function() {
 
-        var aMod_definer = function( theS_Overrider,
-                                     theS_WithProminstrType,
-                                     theS_AppBaseURLSvce,
-                                     theS_APIBaseURLSvce,
-                                     $location) {
 
 
             if( !( typeof FG_logModLoads == "undefined") && ( typeof FG_logModLoads == "function") && FG_logModLoads()) { FG_logModLoads(ModuleFullName);}
@@ -70,11 +949,7 @@ function ModuleFactory_CommonCtrlType() {
             var pgInitWithModuleVariations = function( theToInit) {
 
                 if( !theToInit) {
-                    return;
                 }
-
-                theToInit.LOGEVENTS                        = true;
-
             };
 
 
@@ -96,7 +971,6 @@ function ModuleFactory_CommonCtrlType() {
 
             var ModuleVariations = { };
             pgInitWithModuleVariations( ModuleVariations);
-            theS_Overrider.pOverrideModuleVariations( ModuleFullName, ModuleVariations);
 
 
 
@@ -110,61 +984,8 @@ function ModuleFactory_CommonCtrlType() {
                 if( !theToInit) {
                     return;
                 }
-                theToInit.COMMONCTRL_DEFAULTTITLE = "CtrlDefaultName";
 
-
-                theToInit.FILTERKIND_MENU      = "MENU";
-                theToInit.FILTERKIND_CHECKBOX  = "CHECKBOX";
-                theToInit.FILTERKIND_RADIO     = "RADIO";
-                theToInit.FILTERKIND_NUMBER    = "NUMBER";
-                theToInit.FILTERKIND_STRING    = "STRING";
-                theToInit.FILTERKIND_DATE      = "STRING";
-
-                theToInit.FILTERKINDS = [
-                    theToInit.FILTERKIND_MENU,
-                    theToInit.FILTERKIND_CHECKBOX,
-                    theToInit.FILTERKIND_RADIO,
-                    theToInit.FILTERKIND_NUMBER,
-                    theToInit.FILTERKIND_STRING,
-                    theToInit.FILTERKIND_DATE
-                ];
-
-                theToInit.UPDATEFILTERON_ROWSCHANGE      = "ROWSCHANGE";
-                theToInit.UPDATEFILTERON_SELECTIONCHANGE = "SELECTIONCHANGE";
-
-                theToInit.UPDATEFILTERONS = [
-                    theToInit.UPDATEFILTERON_ROWSCHANGE,
-                    theToInit.UPDATEFILTERON_SELECTIONCHANGE
-                ];
-
-
-                theToInit.LOCATIONPARMNAME_NAMES_SEPARATOR = ",";
-
-
-                theToInit.CANDIDATESFIELDINJECTEDPARAMETER = "candidatesField";
-
-
-
-                theToInit.LOCATIONPARMNAME_INITIALLOADGRIDNAMES  = "theInitialLoadGrids";
-                theToInit.LOCATIONPARMNAME_AUTOEDITNAMES         = "theAutoEditors";
-                theToInit.LOCATIONPARMNAME_AUTOSELECT            = "theAutoSelect";
-
-                theToInit.LOCATIONPARMALLNAMES = "ALL";
-
-
-                theToInit.MASTERPARMISOPTIONALSYMBOL = "optional";
-
-
-                theToInit.PARENTSENTINEL = "fParentCtrl()";
-
-                theToInit.RETRIEVALWITHPARENTSENTINEL = theToInit.PARENTSENTINEL + ".";
-
-                theToInit.RETRIEVALTARGETSUPPLIERPARENTSENTINEL = theToInit.RETRIEVALWITHPARENTSENTINEL;
-
-                theToInit.DOTARGETSENTINEL_WIREOWNER = "fWireOwner()";
-                theToInit.DOTARGETSENTINEL_FROMCTRL  = "fFromCtrl()";
-                theToInit.DOTARGETSENTINEL_TOCTRL    = "fToCtrl()";
-
+                theToInit.TYPESREGISTRYDEFAULTNAME = "TypesRegistry_DefaultName";
             };
 
 
@@ -193,42 +1014,36 @@ function ModuleFactory_CommonCtrlType() {
 
 
 
-            var aCommonCtrl_Prototype = (function() {
+            var aTypesRegistry_Prototype = (function() {
 
 
-
-                var aPrototype = new theS_WithProminstrType.WithProminstr_SuperPrototypeConstructor();
+                var aPrototype = {};
 
                 pgInitFromModuleConstants( aPrototype);
 
 
-                aPrototype._v_SuperPrototype = theS_WithProminstrType.WithProminstr_Prototype;
 
 
+                aPrototype._v_Type = "TypesRegistry";
 
-                aPrototype._v_Type = "CommonCtrl";
-
-                aPrototype._v_Prototype_CommonCtrl = aPrototype;
+                aPrototype._v_Prototype_TypesRegistry = aPrototype;
 
                 aPrototype._v_Module = null;
 
-                aPrototype._v_Scope = null;
 
-                aPrototype._v_UIhandlersEnabled = null;
+                aPrototype._v_Title = null;
 
-                aPrototype._v_AppBaseURL    = null;
-                aPrototype._v_APIBaseURL    = null;
-                aPrototype._v_LocationQuery = null;
-                aPrototype._v_LocationURL  = null;
-
-                aPrototype._v_LastActionReport = null;
+                aPrototype._v_ModulesByFullName = null;
 
 
 
 
-                var _pInit = function( theTitle, theIdentifier, theRecorder, theScope) {
 
-                    this._pInit_CommonCtrl( theTitle, theIdentifier, theRecorder, theScope);
+
+
+                var _pInit = function( theTitle) {
+
+                    this._pInit_TypesRegistry( theTitle);
                 };
                 if( _pInit){}/* CQT */
                 aPrototype._pInit = _pInit;
@@ -239,142 +1054,104 @@ function ModuleFactory_CommonCtrlType() {
 
 
 
-                var _fTitleDefault = function( ) {
-
-                    return this.COMMONCTRL_DEFAULTTITLE;
-                };
-                if( _fTitleDefault){}/* CQT */
-                aPrototype._fTitleDefault = _fTitleDefault;
-
-
-
-
-
-
-                var _pInit_CommonCtrl = function( theTitle, theIdentifier, theRecorder, theScope) {
-
-                    /* Delegate on super prototype initialization */
-                    aPrototype._v_SuperPrototype._pInit_WithProminstr.apply( this, [ theTitle, theIdentifier, theRecorder]);
+                var _pInit_TypesRegistry = function( theTitle) {
 
                     this._v_Prototype = aPrototype;
                     this._v_Type      = this._v_Prototype._v_Type;
                     this._v_Module    = aPrototype._v_Module;
 
-                    this._v_Scope = theScope;
-
-                    this._v_UIhandlersEnabled = true;
-
-                    this._v_AppBaseURL    = null;
-                    this._v_APIBaseURL    = null;
-                    this._v_LocationQuery = null;
-                    this._v_LocationURL  = null;
-
-                    this._v_LastActionReport = null;
-
-                    this._pListenToDestroy();
-                };
-                if( _pInit_CommonCtrl){}/* CQT */
-                aPrototype._pInit_CommonCtrl = _pInit_CommonCtrl;
-
-
-
-
-
-
-
-
-                var _pListenToDestroy = function( ) {
-
-                    if( !this._v_Scope) {
-                        return;
+                    this._v_Title = theTitle;
+                    if( !this._v_Title) {
+                        this._v_Title = this.TYPESREGISTRYDEFAULTNAME;
                     }
 
-                    var aThis = this;
-                    this._v_Scope.$on( "$destroy", function() {
-                        aThis.pDestroy();
-                    });
+                    this._v_ModulesByFullName = { };
                 };
-                if( _pListenToDestroy){}/* CQT */
-                aPrototype._pListenToDestroy = _pListenToDestroy;
+                if( _pInit_TypesRegistry){}/* CQT */
+                aPrototype._pInit_TypesRegistry = _pInit_TypesRegistry;
 
 
 
 
 
 
+                var fFullTypeNameString = function() {
 
-                var fWasDestroyed = function( ) {
+                    var aFullTypeName = this._v_Module.ModuleFullName + "." + this._v_Type;
+                    if( aFullTypeName){}/* CQT */
 
-                    var aWasDestroyed = ( this._v_Scope == null) ? true : false;
-                    if( aWasDestroyed){}/* CQT */
-
-                    return aWasDestroyed;
+                    return aFullTypeName;
                 };
-                if( fWasDestroyed){}/* CQT */
-                aPrototype.fWasDestroyed = fWasDestroyed;
+                if( fFullTypeNameString){}/* CQT */
+                aPrototype.fFullTypeNameString = fFullTypeNameString;
 
 
 
 
 
 
+                var fIdentifyingJSON = function() {
 
-
-                var pDestroy = function( ) {
-
-                    this._v_Scope = null;
-
-                    this._v_UIhandlersEnabled = null;
-
-                    this._v_AppBaseURL    = null;
-                    this._v_APIBaseURL    = null;
-                    this._v_LocationQuery = null;
-                    this._v_LocationURL  = null;
-
-                    this._v_LastActionReport = null;
+                    var aIdentifiyingJSON = {
+                        "module": this._v_Module.ModuleFullName,
+                        "type": this._v_Type
+                    };
+                    if( aIdentifiyingJSON){}/* CQT */
+                    return aIdentifiyingJSON;
                 };
-                if( pDestroy){}/* CQT */
-                aPrototype.pDestroy = pDestroy;
+                if( fIdentifyingJSON){}/* CQT */
+                aPrototype.fIdentifyingJSON = fIdentifyingJSON;
 
 
 
 
 
 
-                var fUIhandlersEnabled = function() {
+                var fIdentifyingString = function() {
 
-                    return this._v_UIhandlersEnabled;
+                    var aIdentifyingJSON = this.fIdentifyingJSON();
+
+                    var aIdentifyingString = JSON.stringify( aIdentifyingJSON);
+                    if( aIdentifyingString){}/* CQT */
+
+                    return aIdentifyingString;
                 };
-                if( fUIhandlersEnabled){}/* CQT */
-                aPrototype.fUIhandlersEnabled = fUIhandlersEnabled;
+                if( fIdentifyingString){}/* CQT */
+                aPrototype.fIdentifyingString = fIdentifyingString;
 
 
 
 
 
 
-                var fprDo_EnableUIhandlers = function() {
 
-                    this._v_UIhandlersEnabled = true;
+                var fIdentifyingWithTitleJSON = function() {
 
-                    return this.fNewDeferredResolveWithNothingPromise();
+                    var aIdentifyingJSON = this.fIdentifyingJSON();
+
+                    aIdentifyingJSON[ "title"] = this._v_Title;
+
+                    return aIdentifyingJSON;
                 };
-                if( fprDo_EnableUIhandlers){}/* CQT */
-                aPrototype.fprDo_EnableUIhandlers = fprDo_EnableUIhandlers;
+                if( fIdentifyingWithTitleJSON){}/* CQT */
+                aPrototype.fIdentifyingWithTitleJSON = fIdentifyingWithTitleJSON;
 
 
 
 
 
 
-                var fprDo_DisableUIhandlers = function() {
+                var fIdentifyingWithTitleString = function() {
 
-                    this._v_UIhandlersEnabled = false;
+                    var aIdentifyingJSON = this.fIdentifyingWithTitleJSON();
 
-                    return this.fNewDeferredResolveWithNothingPromise();
+                    var aIdentifyingString = JSON.stringify( aIdentifyingJSON);
+                    if( aIdentifyingString){}/* CQT */
+
+                    return aIdentifyingString;
                 };
-                if( fprDo_DisableUIhandlers){}/* CQT */
-                aPrototype.fprDo_DisableUIhandlers = fprDo_DisableUIhandlers;
+                if( fIdentifyingWithTitleString){}/* CQT */
+                aPrototype.fIdentifyingWithTitleString = fIdentifyingWithTitleString;
 
 
 
@@ -383,294 +1160,152 @@ function ModuleFactory_CommonCtrlType() {
 
 
 
-                var pLogEvent = function( theEvent, theData, theDetails) {
 
-                    if( !this.LOGEVENTS) {
-                        return;
+
+                var fToResultJSON = function( theCommonObjects, theAlready) {
+                    if( !( theAlready == null)) {
+                        if( theAlready.fAlready( this)){
+                            return this.fIdentifyingJSON();
+                        }
+                    }
+
+                    var aResultJSON = this.fIdentifyingWithTitleJSON();
+                    if( aResultJSON){}/* CQT */
+
+                    return aResultJSON;
+                };
+                if( fToResultJSON){}/* CQT */
+                aPrototype.fToResultJSON = fToResultJSON;
+
+
+
+
+
+
+
+
+
+
+
+                var fRegisterModule = function( theModule) {
+                    if( !theModule) {
+                        return false;
+                    }
+
+                    var aModuleFullName = theModule.ModuleFullName;
+                    if( !aModuleFullName) {
+                        return false;
+                    }
+
+                    var anAlreadyRegisteredModule =  this._v_ModulesByFullName[ aModuleFullName];
+                    if( !anAlreadyRegisteredModule) {
+                        console.log( "\nAttempt to register another module " + aModuleFullName + "\n");
+                        return false;
                     }
 
 
-                    if( !theEvent) {
-                        return;
-                    }
-
-                    this.fRecord( null, theEvent, theData, null, theDetails);
-                };
-                if( pLogEvent){}/* CQT */
-                aPrototype.pLogEvent = pLogEvent;
-
-
-
-
-
-
-
-
-
-                var pInitFromLocationURLquery = function( ) {
-
-                    this._v_LocationQuery = $location.search();
-                };
-                if( pInitFromLocationURLquery){}/* CQT */
-                aPrototype.pInitFromLocationURLquery = pInitFromLocationURLquery;
-
-
-
-
-                var pInitFromLocationURL = function( ) {
-
-                    this._v_LocationURL = $location.url();
-                };
-                if( pInitFromLocationURL){}/* CQT */
-                aPrototype.pInitFromLocationURL = pInitFromLocationURL;
-
-
-
-
-
-                var pInitFromAppBaseURL = function( ) {
-
-                    this._v_AppBaseURL    = theS_AppBaseURLSvce.fAppBaseURL();
-                };
-                if( pInitFromAppBaseURL){}/* CQT */
-                aPrototype.pInitFromAppBaseURL = pInitFromAppBaseURL;
-
-
-
-
-
-                var pInitFromAPIBaseURL = function( ) {
-
-                    this._v_APIBaseURL    = theS_APIBaseURLSvce.fAPIBaseURL();
-                };
-                if( pInitFromAPIBaseURL){}/* CQT */
-                aPrototype.pInitFromAPIBaseURL = pInitFromAPIBaseURL;
-
-
-
-
-
-                var fAppBaseURL = function() {
-
-                    if( this._v_AppBaseURL) {
-                        return this._v_AppBaseURL;
-                    }
-
-                    this.pInitFromAppBaseURL();
-
-                    return this._v_AppBaseURL;
-                };
-                if( fAppBaseURL){}/* CQT */
-                aPrototype.fAppBaseURL = fAppBaseURL;
-
-
-
-
-
-
-                var pInitFromAPIBaseURL = function( ) {
-
-                    this._v_APIBaseURL    = theS_APIBaseURLSvce.fAPIBaseURL();
-                };
-                if( pInitFromAPIBaseURL){}/* CQT */
-                aPrototype.pInitFromAPIBaseURL = pInitFromAPIBaseURL;
-
-
-
-
-
-                var fAPIBaseURL = function() {
-
-                    if( this._v_APIBaseURL) {
-                        return this._v_APIBaseURL;
-                    }
-
-                    this.pInitFromAPIBaseURL();
-
-                    return this._v_APIBaseURL;
-                };
-                if( fAPIBaseURL){}/* CQT */
-                aPrototype.fAPIBaseURL = fAPIBaseURL;
-
-
-
-
-
-
-
-
-                var fprDo_InitialExtra = function() {
-
-                    this.pInitFromAppBaseURL();
-
-                    this.pInitFromAPIBaseURL();
-
-                    return this.fNewDeferredResolveWithNothingPromise();
-                };
-                if( fprDo_InitialExtra){}/* CQT */
-                aPrototype.fprDo_InitialExtra = fprDo_InitialExtra;
-
-
-
-
-
-
-
-                var fprDo_Initial = function() {
-
-                    return this.fprDo_InitialExtra();
-                };
-                if( fprDo_Initial){}/* CQT */
-                aPrototype.fprDo_Initial = fprDo_Initial;
-
-
-
-
-
-
-
-
-
-
-
-                var fInspectFromTemplate = function( theLabel, theArg1, theArg2, theArg3, theArg4, theArg5, theArg6) {
-                    if( theLabel || theArg1 || theArg2 || theArg3 || theArg4 || theArg5 || theArg6){}/* CQT */
+                    this._v_ModulesByFullName[ aModuleFullName] = theModule;
 
                     return true;
                 };
-                if( fInspectFromTemplate){}/* CQT */
-                aPrototype.fInspectFromTemplate = fInspectFromTemplate;
+                if( fRegisterModule){}/* CQT */
+                aPrototype.fRegisterModule = fRegisterModule;
 
 
 
 
 
 
-                var fNewDescribe = function( theFieldName, theFieldLabel, theParmName) {
 
-                    return {
-                        fieldName:  theFieldName,
-                        fieldLabel: theFieldLabel,
-                        parmName:   theParmName
-                    };
+
+                var fRegisteredModule = function( theModuleFullName) {
+                    if( !theModuleFullName) {
+                        return null;
+                    }
+
+
+                    var aRegisteredModule =  this._v_ModulesByFullName[ theModuleFullName];
+                    if( !aRegisteredModule) {
+                        return null;
+                    }
+
+                    return aRegisteredModule;
                 };
-                if( fNewDescribe){}/* CQT */
-                aPrototype.fNewDescribe = fNewDescribe;
+                if( fRegisteredModule){}/* CQT */
+                aPrototype.fRegisteredModule = fRegisteredModule;
 
 
 
 
 
 
-                return aPrototype;
 
-            })();
+            return aPrototype;
 
-
-
-
-            var CommonCtrl_Constructor = function( theTitle, theIdentifier, theRecorder, theScope) {
-
-                /* Keep handy reference to super-prototype for super method invocation */
-                this._v_SuperPrototype = theS_WithProminstrType.WithProminstr_Prototype;
-
-                this._v_Prototype = null;
-                this._v_Type = null;
-                this._v_Module = null;
-
-                this._v_Scope = null;
-
-                this._v_UIhandlersEnabled = true;
-
-                this._v_AppBaseURL    = null;
-                this._v_APIBaseURL    = null;
-                this._v_LocationQuery = null;
-                this._v_LocationURL  = null;
-
-                this._v_LastActionReport = null;
-                this._v_LastActionIsError = null;
-
-                this._pInit_CommonCtrl( theTitle, theIdentifier, theRecorder, theScope);
-            };
-            CommonCtrl_Constructor.prototype = aCommonCtrl_Prototype;
+        })();
 
 
 
 
+        var TypesRegistry_Constructor = function( theTitle) {
+            this._v_Prototype = null;
+            this._v_Type      = null;
+            this._v_Module    = null;
 
-            var CommonCtrl_SuperPrototypeConstructor = function() {
+            this._v_Title = null;
 
-                /* Keep handy reference to super-prototype for super method invocation */
-                this._v_SuperPrototype = theS_WithProminstrType.WithProminstr_Prototype;
+            this._v_ModulesByFullName = null;
 
-                this._v_Prototype = aCommonCtrl_Prototype;
-                this._v_Type      = null;
-                this._v_Module    = null;
-
-                this._v_Scope = null;
-
-                this._v_UIhandlersEnabled = true;
-
-                this._v_AppBaseURL    = null;
-                this._v_APIBaseURL    = null;
-                this._v_LocationQuery = null;
-                this._v_LocationURL  = null;
-
-                this._v_LastActionReport = null;
-                this._v_LastActionIsError = null;
-            };
-            CommonCtrl_SuperPrototypeConstructor.prototype = aCommonCtrl_Prototype;
-
-
-
-            var aModule = {
-                "CommonCtrl_Prototype": aCommonCtrl_Prototype,
-                "CommonCtrl_Constructor": CommonCtrl_Constructor,
-                "CommonCtrl_SuperPrototypeConstructor": CommonCtrl_SuperPrototypeConstructor
-            };
-            pgInitFromModuleConstants( aModule);
-            aModule.ModuleName     = ModuleName;
-            aModule.ModulePackages = ModulePackages;
-            aModule.ModuleFullName = ModuleFullName;
-
-            aCommonCtrl_Prototype._v_Module = aModule;
-
-
-
-
-
-            return aModule;
+            this._pInit_TypesRegistry( theTitle);
         };
+        TypesRegistry_Constructor.prototype = aTypesRegistry_Prototype;
 
 
 
 
 
+        var TypesRegistry_SuperPrototypeConstructor = function() {
+            this._v_Prototype = aTypesRegistry_Prototype;
+            this._v_Type      = null;
+            this._v_Module    = null;
 
+            this._v_Title     = null;
 
-        var anExistingModule = theSS_typesregistry.fRegisteredModule( ModuleFullName);
-        if( !anExistingModule) {
-
-            var aModule = aMod_definer(
-                theSS_Overrider,
-                theSS_WithProminstrType,
-                theSS_AppBaseURLSvce,
-                theSS_APIBaseURLSvce,
-                theSS_location
-            );
-            anExistingModule = aModule;
-
-            theSS_typesregistry.fRegisterModule( ModuleFullName, aModule);
-        }
+            this._v_ModulesByFullName = null;
+        };
+        TypesRegistry_SuperPrototypeConstructor.prototype = aTypesRegistry_Prototype;
 
 
 
+        var aModule = {
+            "TypesRegistry_Prototype": aTypesRegistry_Prototype,
+            "TypesRegistry_Constructor": TypesRegistry_Constructor,
+            "TypesRegistry_SuperPrototypeConstructor": TypesRegistry_SuperPrototypeConstructor
+        };
+        pgInitFromModuleConstants( aModule);
+        aModule.ModuleName     = ModuleName;
+        aModule.ModulePackages = ModulePackages;
+        aModule.ModuleFullName = ModuleFullName;
+
+        aTypesRegistry_Prototype._v_Module = aModule;
 
 
 
-        return anExistingModule;
 
-    });
+        return aModule;
+    };
+
+
+
+
+    var aModule = aMod_definer();
+
+    var aService = new aModule.TypesRegistry_Constructor();
+    if( aService){}/* CQT */
+
+    return aService;
+
+});
 }
 
 
@@ -680,9 +1315,9 @@ function ModuleFactory_CommonCtrlType() {
 
 
 ;/*
- * common_svce_type.js
+ * overrider_type.js
  *
- * Created @author Antonio Carrasco Valero 201409301309
+ * Created @author Antonio Carrasco Valero 201410030300
  *
  *
  ***************************************************************************
@@ -714,65 +1349,24 @@ permissions and limitations under the Licence.
 
 
 
-function ModuleFactory_CommonSvceType() {
+function ModuleFactory_OverriderType() {
 
     'use strict';
 
-    return ( function(
-              theSS_typesregistry,
-              theSS_Overrider,
-              theSS_WithProminstrType,
-              theSS_AppBaseURLSvce,
-              theSS_APIBaseURLSvce) {
+
+    return ( function( theSS_typesregistry) {
 
 
-        var ModuleName     = "common_svce_type";
-        var ModulePackages = "common";
+        var ModuleName     = "overrider_type";
+        var ModulePackages = "roots";
         var ModuleFullName = ModulePackages + "/" + ModuleName;
 
 
 
-        var aMod_definer = function( theS_Overrider,
-                                     theS_WithProminstrType,
-                                     theS_AppBaseURLSvce,
-                                     theS_APIBaseURLSvce) {
+        var aMod_definer = function() {
 
 
             if( !( typeof FG_logModLoads == "undefined") && ( typeof FG_logModLoads == "function") && FG_logModLoads()) { FG_logModLoads(ModuleFullName);}
-
-
-
-
-
-
-
-
-            var pgInitWithModuleVariations = function( theToInit) {
-
-                if( !theToInit) {
-                }
-            };
-
-
-
-
-
-            var pgInitFromModuleVariations = function( theToInit) {
-                if( !theToInit) {
-                    return;
-                }
-
-                for( var aGlobalName in ModuleVariations) {
-                    if( ModuleVariations.hasOwnProperty( aGlobalName)) {
-                        theToInit[ aGlobalName] = ModuleVariations[ aGlobalName];
-                    }
-                }
-            };
-
-
-            var ModuleVariations = { };
-            pgInitWithModuleVariations( ModuleVariations);
-            theS_Overrider.pOverrideModuleVariations( ModuleFullName, ModuleVariations);
 
 
 
@@ -786,13 +1380,12 @@ function ModuleFactory_CommonSvceType() {
                 if( !theToInit) {
                     return;
                 }
-                theToInit.COMMONSVCE_DEFAULTTITLE = "SvceDefaultName";
+                theToInit.OVERRIDER_DEFAULTTITLE = "OverriderDefaultName";
             };
 
 
 
             var ModuleConstants = {};
-            pgInitFromModuleVariations( ModuleConstants);
             pgInitWithModuleConstants( ModuleConstants);
 
 
@@ -815,22 +1408,19 @@ function ModuleFactory_CommonSvceType() {
 
 
 
-            var aCommonSvce_Prototype = (function() {
+            var aOverrider_Prototype = (function() {
 
 
-
-                var aPrototype = new theS_WithProminstrType.WithProminstr_SuperPrototypeConstructor();
+                var aPrototype = {};
 
                 pgInitFromModuleConstants( aPrototype);
 
 
-                aPrototype._v_SuperPrototype = theS_WithProminstrType.WithProminstr_Prototype;
 
 
+                aPrototype._v_Type = "Overrider";
 
-                aPrototype._v_Type = "CommonSvce";
-
-                aPrototype._v_Prototype_CommonSvce = aPrototype;
+                aPrototype._v_Prototype_Overrider = aPrototype;
 
                 aPrototype._v_Module = null;
 
@@ -838,12 +1428,9 @@ function ModuleFactory_CommonSvceType() {
 
 
 
+                var _pInit = function( theTitle) {
 
-
-
-                var _pInit = function( theTitle, theIdentifier, theRecorder) {
-
-                    this._pInit_CommonSvce( theTitle, theIdentifier, theRecorder);
+                    this._pInit_Overrider( theTitle);
                 };
                 if( _pInit){}/* CQT */
                 aPrototype._pInit = _pInit;
@@ -854,29 +1441,19 @@ function ModuleFactory_CommonSvceType() {
 
 
 
-                var _fTitleDefault = function( ) {
-
-                    return this.COMMONSVCE_DEFAULTTITLE;
-                };
-                if( _fTitleDefault){}/* CQT */
-                aPrototype._fTitleDefault = _fTitleDefault;
-
-
-
-
-
-
-                var _pInit_CommonSvce = function( theTitle, theIdentifier, theRecorder) {
-
-                    /* Delegate on super prototype initialization */
-                    aPrototype._v_SuperPrototype._pInit_WithProminstr.apply( this, [ theTitle, theIdentifier, theRecorder]);
+                var _pInit_Overrider = function( theTitle) {
 
                     this._v_Prototype = aPrototype;
                     this._v_Type      = this._v_Prototype._v_Type;
                     this._v_Module    = aPrototype._v_Module;
+
+                    this._v_Title = theTitle;
+                    if( !this._v_Title) {
+                        this._v_Title = this.OVERRIDER_DEFAULTTITLE;
+                    }
                 };
-                if( _pInit_CommonSvce){}/* CQT */
-                aPrototype._pInit_CommonSvce = _pInit_CommonSvce;
+                if( _pInit_Overrider){}/* CQT */
+                aPrototype._pInit_Overrider = _pInit_Overrider;
 
 
 
@@ -884,31 +1461,117 @@ function ModuleFactory_CommonSvceType() {
 
 
 
-                var fAppBaseURL = function() {
+                var fFullTypeNameString = function() {
 
-                    var anAppBaseURL = theS_AppBaseURLSvce.fAppBaseURL();
-                    if( anAppBaseURL){}/* CQT */
+                    var aFullTypeName = this._v_Module.ModuleFullName + "." + this._v_Type;
+                    if( aFullTypeName){}/* CQT */
 
-                    return anAppBaseURL;
+                    return aFullTypeName;
                 };
-                if( fAppBaseURL){}/* CQT */
-                aPrototype.fAppBaseURL = fAppBaseURL;
+                if( fFullTypeNameString){}/* CQT */
+                aPrototype.fFullTypeNameString = fFullTypeNameString;
 
 
 
 
 
-                var fAPIBaseURL = function() {
+                var fIdentifyingJSON = function() {
 
-                    var anAppBaseURL = theS_APIBaseURLSvce.fAPIBaseURL();
-                    if( anAppBaseURL){}/* CQT */
-
-                    return anAppBaseURL;
+                    var aIdentifiyingJSON = {
+                        "type": this._v_Type,
+                        "id": this._v_Id
+                    };
+                    if( aIdentifiyingJSON){}/* CQT */
+                    return aIdentifiyingJSON;
                 };
-                if( fAPIBaseURL){}/* CQT */
-                aPrototype.fAPIBaseURL = fAPIBaseURL;
+                if( fIdentifyingJSON){}/* CQT */
+                aPrototype.fIdentifyingJSON = fIdentifyingJSON;
 
 
+
+
+
+
+                var fIdentifyingString = function() {
+
+                    var aIdentifyingJSON = this.fIdentifyingJSON();
+
+                    var aIdentifyingString = JSON.stringify( aIdentifyingJSON);
+                    if( aIdentifyingString){}/* CQT */
+
+                    return aIdentifyingString;
+                };
+                if( fIdentifyingString){}/* CQT */
+                aPrototype.fIdentifyingString = fIdentifyingString;
+
+
+
+
+
+
+
+                var fIdentifyingWithTitleJSON = function() {
+
+                    var aIdentifyingJSON = this.fIdentifyingJSON();
+
+                    aIdentifyingJSON[ "title"] = this._v_Title;
+
+                    return aIdentifyingJSON;
+                };
+                if( fIdentifyingWithTitleJSON){}/* CQT */
+                aPrototype.fIdentifyingWithTitleJSON = fIdentifyingWithTitleJSON;
+
+
+
+
+
+
+                var fIdentifyingWithTitleString = function() {
+
+                    var aIdentifyingJSON = this.fIdentifyingWithTitleJSON();
+
+                    var aIdentifyingString = JSON.stringify( aIdentifyingJSON);
+                    if( aIdentifyingString){}/* CQT */
+
+                    return aIdentifyingString;
+                };
+                if( fIdentifyingWithTitleString){}/* CQT */
+                aPrototype.fIdentifyingWithTitleString = fIdentifyingWithTitleString;
+
+
+
+
+
+
+
+
+
+
+                var fToResultJSON = function( theCommonObjects, theAlready) {
+                    if( !( theAlready == null)) {
+                        if( theAlready.fAlready( this)){
+                            return this.fIdentifyingJSON();
+                        }
+                    }
+
+                    var aResultJSON = this.fIdentifyingWithTitleJSON();
+                    if( aResultJSON){}/* CQT */
+
+                    return aResultJSON;
+                };
+                if( fToResultJSON){}/* CQT */
+                aPrototype.fToResultJSON = fToResultJSON;
+
+
+
+
+
+
+
+                var pOverrideModuleVariations = function( theModuleFullName, theModuleVariations) {
+                };
+                if( pOverrideModuleVariations){}/* CQT */
+                aPrototype.pOverrideModuleVariations = pOverrideModuleVariations;
 
 
 
@@ -923,48 +1586,43 @@ function ModuleFactory_CommonSvceType() {
 
 
 
-            var CommonSvce_Constructor = function( theTitle, theIdentifier, theRecorder) {
-
-                /* Keep handy reference to super-prototype for super method invocation */
-                this._v_SuperPrototype = theS_WithProminstrType.WithProminstr_Prototype;
-
+            var Overrider_Constructor = function( theTitle) {
                 this._v_Prototype = null;
                 this._v_Type = null;
                 this._v_Module = null;
 
-                this._pInit_CommonSvce( theTitle, theIdentifier, theRecorder);
+                this._v_Title = null;
+
+                this._pInit_Overrider( theTitle);
             };
-            CommonSvce_Constructor.prototype = aCommonSvce_Prototype;
+            Overrider_Constructor.prototype = aOverrider_Prototype;
 
 
 
 
 
-            var CommonSvce_SuperPrototypeConstructor = function() {
-
-                /* Keep handy reference to super-prototype for super method invocation */
-                this._v_SuperPrototype = theS_WithProminstrType.WithProminstr_Prototype;
-
-                this._v_Prototype = aCommonSvce_Prototype;
+            var Overrider_SuperPrototypeConstructor = function() {
+                this._v_Prototype = aOverrider_Prototype;
                 this._v_Type      = null;
                 this._v_Module    = null;
+
+                this._v_Title     = null;
             };
-            CommonSvce_SuperPrototypeConstructor.prototype = aCommonSvce_Prototype;
+            Overrider_SuperPrototypeConstructor.prototype = aOverrider_Prototype;
 
 
 
             var aModule = {
-                "CommonSvce_Prototype": aCommonSvce_Prototype,
-                "CommonSvce_Constructor": CommonSvce_Constructor,
-                "CommonSvce_SuperPrototypeConstructor": CommonSvce_SuperPrototypeConstructor
+                "Overrider_Prototype": aOverrider_Prototype,
+                "Overrider_Constructor": Overrider_Constructor,
+                "Overrider_SuperPrototypeConstructor": Overrider_SuperPrototypeConstructor
             };
             pgInitFromModuleConstants( aModule);
             aModule.ModuleName     = ModuleName;
             aModule.ModulePackages = ModulePackages;
             aModule.ModuleFullName = ModuleFullName;
 
-            aCommonSvce_Prototype._v_Module = aModule;
-
+            aOverrider_Prototype._v_Module = aModule;
 
 
 
@@ -977,19 +1635,16 @@ function ModuleFactory_CommonSvceType() {
 
 
 
+
         var anExistingModule = theSS_typesregistry.fRegisteredModule( ModuleFullName);
         if( !anExistingModule) {
 
-            var aModule = aMod_definer(
-                theSS_Overrider,
-                theSS_WithProminstrType,
-                theSS_AppBaseURLSvce,
-                theSS_APIBaseURLSvce
-            );
+            var aModule = aMod_definer();
             anExistingModule = aModule;
 
             theSS_typesregistry.fRegisterModule( ModuleFullName, aModule);
         }
+
 
 
 
@@ -1000,8 +1655,7 @@ function ModuleFactory_CommonSvceType() {
     });
 }
 
-
-
+if( ModuleFactory_OverriderType){}/* CQT */
 
 
 
@@ -1992,6 +2646,341 @@ function ModuleFactory_CommonType() {
 
     });
 }
+
+
+if( ModuleFactory_CommonType){}/* CQT */
+
+
+
+
+;/*
+ * prominstrexception.js
+ *
+ * Created @author Antonio Carrasco Valero 201410141126
+ *
+ *
+ ***************************************************************************
+
+ Copyright 2014 2015 2016 Antonio Carrasco Valero
+ Javascript for core modules including a base prototype and prototypes hierarchy, intended to be reused on the Browser as core for i.e. Angular Controllers and Services, as in the uiwire component. Licensed under EUPL  http://www.uiwire.org
+
+Licensed under the EUPL, Version 1.1 only (the "Licence");
+You may not use this work except in compliance with the
+Licence.
+You may obtain a copy of the Licence at:
+https://joinup.ec.europa.eu/software/page/eupl/licence-eupl
+Unless required by applicable law or agreed to in
+writing, software distributed under the Licence is
+distributed on an "AS IS" basis,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+express or implied.
+See the Licence for the specific language governing
+permissions and limitations under the Licence.
+ {{License2}}
+
+ {{Licensed1}}
+ {{Licensed2}}
+
+ ***************************************************************************
+ *
+ */
+
+
+
+
+function ModuleFactory_ProminstrException() {
+
+    'use strict';
+
+
+    return ( function(){
+
+
+        var ModuleName     = "prominstrexception";
+        var ModulePackages = "common";
+        var ModuleFullName = ModulePackages + "/" + ModuleName;
+
+
+
+        var aMod_definer = function() {
+
+
+            if( !( typeof FG_logModLoads == "undefined") && ( typeof FG_logModLoads == "function") && FG_logModLoads()) { FG_logModLoads(ModuleFullName);}
+
+
+
+
+
+
+            var pgInitWithModuleConstants = function( theToInit) {
+
+                if( !theToInit) {
+                    return;
+                }
+
+                theToInit.LOGEXCEPTIONS = true;
+            };
+
+
+
+
+
+            var ModuleConstants = {};
+            pgInitWithModuleConstants( ModuleConstants);
+
+
+
+
+            var pgInitFromModuleConstants = function( theToInit) {
+                if( !theToInit) {
+                    return;
+                }
+
+                for( var aGlobalName in ModuleConstants) {
+                    if( ModuleConstants.hasOwnProperty( aGlobalName)) {
+                        theToInit[ aGlobalName] = ModuleConstants[ aGlobalName];
+                    }
+                }
+            };
+
+
+
+
+
+
+
+            var ProminstrException_Constructor = function( theRecord) {
+
+                pgInitFromModuleConstants( this);
+
+                this._v_Type  = "ProminstrException";
+                this._v_Id    = new Date().toISOString();
+                this._v_Title = "ProminstrException";
+
+                this._v_Trace = printStackTrace();
+
+                this._v_Record = theRecord;
+
+
+
+                var aThis = this;
+
+
+
+                var fIdentifyingJSON = function() {
+
+                    var aIdentifiyingJSON = {
+                        "type": aThis._v_Type,
+                        "id":   aThis._v_Id
+                    };
+                    if( aIdentifiyingJSON){}/* CQT */
+                    return aIdentifiyingJSON;
+                };
+                if( fIdentifyingJSON){}/* CQT */
+                this.fIdentifyingJSON = fIdentifyingJSON;
+
+
+
+
+
+
+                var fIdentifyingString = function() {
+
+                    var aIdentifyingJSON = aThis.fIdentifyingJSON();
+
+                    var aIdentifyingString = JSON.stringify( aIdentifyingJSON);
+                    if( aIdentifyingString){}/* CQT */
+
+                    return aIdentifyingString;
+                };
+                if( fIdentifyingString){}/* CQT */
+                this.fIdentifyingString = fIdentifyingString;
+
+
+
+
+
+
+
+                var fIdentifyingWithTitleJSON = function() {
+
+                    var aIdentifyingJSON = aThis.fIdentifyingJSON();
+
+                    aIdentifyingJSON[ "title"] = aThis._v_Title;
+
+                    return aIdentifyingJSON;
+                };
+                if( fIdentifyingWithTitleJSON){}/* CQT */
+                this.fIdentifyingWithTitleJSON = fIdentifyingWithTitleJSON;
+
+
+
+
+
+
+                var fIdentifyingWithTitleString = function() {
+
+                    var aIdentifyingJSON = aThis.fIdentifyingWithTitleJSON();
+
+                    var aIdentifyingString = JSON.stringify( aIdentifyingJSON);
+                    if( aIdentifyingString){}/* CQT */
+
+                    return aIdentifyingString;
+                };
+                if( fIdentifyingWithTitleString){}/* CQT */
+                this.fIdentifyingWithTitleString = fIdentifyingWithTitleString;
+
+
+
+
+                var fFullTypeNameString = function() {
+
+                    var aFullTypeName = aThis._v_Module.ModuleFullName + "." + aThis._v_Type;
+                    if( aFullTypeName){}/* CQT */
+
+                    return aFullTypeName;
+                };
+                if( fFullTypeNameString){}/* CQT */
+                this.fFullTypeNameString = fFullTypeNameString;
+
+
+
+
+
+
+                var fToResultJSON = function( theCommonObjects, theAlready) {
+                    if( !( theAlready == null)) {
+                        if( theAlready.fAlready( aThis)){
+                            return aThis.fIdentifyingJSON();
+                        }
+                    }
+
+                    var aResultJSON = aThis.fIdentifyingWithTitleJSON();
+                    if( aResultJSON){}/* CQT */
+
+                    return aResultJSON;
+                };
+                if( fToResultJSON){}/* CQT */
+                this.fToResultJSON = fToResultJSON;
+
+
+
+
+
+
+
+
+
+
+                var fConvertValueToJSON = function() {
+
+                    var aJSON = aThis.fIdentifyingWithTitleJSON();
+
+                    if( aThis._v_Record) {
+                        if( aThis._v_Record.fAsLogObject) {
+                            aJSON[ "record"] = aThis._v_Record.fAsLogObject()
+                        }
+                    }
+
+
+                    if( aThis._v_Trace) {
+                        aJSON[ "trace"] = aThis._v_Trace;
+                    }
+
+                    return aJSON;
+                };
+                if( fConvertValueToJSON){}/* CQT */
+                this.fConvertValueToJSON = fConvertValueToJSON;
+
+
+
+
+
+
+
+                var toString = function() {
+
+                    var aLog = aThis.fConvertValueToJSON();
+
+                    var aString = null;
+                    try {
+                        aString = JSON.stringify( aLog);
+                    }
+                    catch( anException) {
+                    }
+
+                    if( aString == null) {
+                        aString = aThis.fIdentifyingWithTitleString();
+                    }
+
+                    return aString;
+                };
+                if( toString){}/* CQT */
+                this.toString = toString;
+
+
+
+
+
+
+                if( this.LOGEXCEPTIONS) {
+                    console.log( this.toString());
+                }
+
+
+
+            };
+            ProminstrException_Constructor.prototype = Error.prototype;
+
+
+
+
+
+
+
+
+            var aModule = {
+                "ProminstrException_Constructor": ProminstrException_Constructor
+            };
+
+            pgInitFromModuleConstants( aModule);
+            aModule.ModuleName      = ModuleName;
+            aModule.ModulePackages  = ModulePackages;
+            aModule.ModuleFullName  = ModuleFullName;
+            aModule.ModuleConstants = ModuleConstants;
+
+
+
+
+
+
+
+            return aModule;
+        };
+
+
+
+        var aService = aMod_definer();
+        if( aService){}/* CQT */
+
+        return aService;
+
+    });
+}
+
+
+
+if( ModuleFactory_ProminstrException){}/* CQT */
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -3215,340 +4204,7 @@ function ModuleFactory_ProminstrType() {
 }
 
 
-
-
-
-
-
-;/*
- * prominstrexception.js
- *
- * Created @author Antonio Carrasco Valero 201410141126
- *
- *
- ***************************************************************************
-
- Copyright 2014 2015 2016 Antonio Carrasco Valero
- Javascript for core modules including a base prototype and prototypes hierarchy, intended to be reused on the Browser as core for i.e. Angular Controllers and Services, as in the uiwire component. Licensed under EUPL  http://www.uiwire.org
-
-Licensed under the EUPL, Version 1.1 only (the "Licence");
-You may not use this work except in compliance with the
-Licence.
-You may obtain a copy of the Licence at:
-https://joinup.ec.europa.eu/software/page/eupl/licence-eupl
-Unless required by applicable law or agreed to in
-writing, software distributed under the Licence is
-distributed on an "AS IS" basis,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
-express or implied.
-See the Licence for the specific language governing
-permissions and limitations under the Licence.
- {{License2}}
-
- {{Licensed1}}
- {{Licensed2}}
-
- ***************************************************************************
- *
- */
-
-
-
-
-function ModuleFactory_ProminstrException() {
-
-    'use strict';
-
-
-    return ( function(){
-
-
-        var ModuleName     = "prominstrexception";
-        var ModulePackages = "common";
-        var ModuleFullName = ModulePackages + "/" + ModuleName;
-
-
-
-        var aMod_definer = function() {
-
-
-            if( !( typeof FG_logModLoads == "undefined") && ( typeof FG_logModLoads == "function") && FG_logModLoads()) { FG_logModLoads(ModuleFullName);}
-
-
-
-
-
-
-            var pgInitWithModuleConstants = function( theToInit) {
-
-                if( !theToInit) {
-                    return;
-                }
-
-                theToInit.LOGEXCEPTIONS = true;
-            };
-
-
-
-
-
-            var ModuleConstants = {};
-            pgInitWithModuleConstants( ModuleConstants);
-
-
-
-
-            var pgInitFromModuleConstants = function( theToInit) {
-                if( !theToInit) {
-                    return;
-                }
-
-                for( var aGlobalName in ModuleConstants) {
-                    if( ModuleConstants.hasOwnProperty( aGlobalName)) {
-                        theToInit[ aGlobalName] = ModuleConstants[ aGlobalName];
-                    }
-                }
-            };
-
-
-
-
-
-
-
-            var ProminstrException_Constructor = function( theRecord) {
-
-                pgInitFromModuleConstants( this);
-
-                this._v_Type  = "ProminstrException";
-                this._v_Id    = new Date().toISOString();
-                this._v_Title = "ProminstrException";
-
-                this._v_Trace = printStackTrace();
-
-                this._v_Record = theRecord;
-
-
-
-                var aThis = this;
-
-
-
-                var fIdentifyingJSON = function() {
-
-                    var aIdentifiyingJSON = {
-                        "type": aThis._v_Type,
-                        "id":   aThis._v_Id
-                    };
-                    if( aIdentifiyingJSON){}/* CQT */
-                    return aIdentifiyingJSON;
-                };
-                if( fIdentifyingJSON){}/* CQT */
-                this.fIdentifyingJSON = fIdentifyingJSON;
-
-
-
-
-
-
-                var fIdentifyingString = function() {
-
-                    var aIdentifyingJSON = aThis.fIdentifyingJSON();
-
-                    var aIdentifyingString = JSON.stringify( aIdentifyingJSON);
-                    if( aIdentifyingString){}/* CQT */
-
-                    return aIdentifyingString;
-                };
-                if( fIdentifyingString){}/* CQT */
-                this.fIdentifyingString = fIdentifyingString;
-
-
-
-
-
-
-
-                var fIdentifyingWithTitleJSON = function() {
-
-                    var aIdentifyingJSON = aThis.fIdentifyingJSON();
-
-                    aIdentifyingJSON[ "title"] = aThis._v_Title;
-
-                    return aIdentifyingJSON;
-                };
-                if( fIdentifyingWithTitleJSON){}/* CQT */
-                this.fIdentifyingWithTitleJSON = fIdentifyingWithTitleJSON;
-
-
-
-
-
-
-                var fIdentifyingWithTitleString = function() {
-
-                    var aIdentifyingJSON = aThis.fIdentifyingWithTitleJSON();
-
-                    var aIdentifyingString = JSON.stringify( aIdentifyingJSON);
-                    if( aIdentifyingString){}/* CQT */
-
-                    return aIdentifyingString;
-                };
-                if( fIdentifyingWithTitleString){}/* CQT */
-                this.fIdentifyingWithTitleString = fIdentifyingWithTitleString;
-
-
-
-
-                var fFullTypeNameString = function() {
-
-                    var aFullTypeName = aThis._v_Module.ModuleFullName + "." + aThis._v_Type;
-                    if( aFullTypeName){}/* CQT */
-
-                    return aFullTypeName;
-                };
-                if( fFullTypeNameString){}/* CQT */
-                this.fFullTypeNameString = fFullTypeNameString;
-
-
-
-
-
-
-                var fToResultJSON = function( theCommonObjects, theAlready) {
-                    if( !( theAlready == null)) {
-                        if( theAlready.fAlready( aThis)){
-                            return aThis.fIdentifyingJSON();
-                        }
-                    }
-
-                    var aResultJSON = aThis.fIdentifyingWithTitleJSON();
-                    if( aResultJSON){}/* CQT */
-
-                    return aResultJSON;
-                };
-                if( fToResultJSON){}/* CQT */
-                this.fToResultJSON = fToResultJSON;
-
-
-
-
-
-
-
-
-
-
-                var fConvertValueToJSON = function() {
-
-                    var aJSON = aThis.fIdentifyingWithTitleJSON();
-
-                    if( aThis._v_Record) {
-                        if( aThis._v_Record.fAsLogObject) {
-                            aJSON[ "record"] = aThis._v_Record.fAsLogObject()
-                        }
-                    }
-
-
-                    if( aThis._v_Trace) {
-                        aJSON[ "trace"] = aThis._v_Trace;
-                    }
-
-                    return aJSON;
-                };
-                if( fConvertValueToJSON){}/* CQT */
-                this.fConvertValueToJSON = fConvertValueToJSON;
-
-
-
-
-
-
-
-                var toString = function() {
-
-                    var aLog = aThis.fConvertValueToJSON();
-
-                    var aString = null;
-                    try {
-                        aString = JSON.stringify( aLog);
-                    }
-                    catch( anException) {
-                    }
-
-                    if( aString == null) {
-                        aString = aThis.fIdentifyingWithTitleString();
-                    }
-
-                    return aString;
-                };
-                if( toString){}/* CQT */
-                this.toString = toString;
-
-
-
-
-
-
-                if( this.LOGEXCEPTIONS) {
-                    console.log( this.toString());
-                }
-
-
-
-            };
-            ProminstrException_Constructor.prototype = Error.prototype;
-
-
-
-
-
-
-
-
-            var aModule = {
-                "ProminstrException_Constructor": ProminstrException_Constructor
-            };
-
-            pgInitFromModuleConstants( aModule);
-            aModule.ModuleName      = ModuleName;
-            aModule.ModulePackages  = ModulePackages;
-            aModule.ModuleFullName  = ModuleFullName;
-            aModule.ModuleConstants = ModuleConstants;
-
-
-
-
-
-
-
-            return aModule;
-        };
-
-
-
-        var aService = aMod_definer();
-        if( aService){}/* CQT */
-
-        return aService;
-
-    });
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+if( ModuleFactory_ProminstrType){}/* CQT */
 
 
 
@@ -4294,6 +4950,1011 @@ function ModuleFactory_WithProminstrType() {
 }
 
 
+if( ModuleFactory_WithProminstrType){}/* CQT */
+
+
+
+;/*
+ * common_ctrl_type.js
+ *
+ * Created @author Antonio Carrasco Valero 201409301309
+ *
+ *
+ ***************************************************************************
+
+ Copyright 2014 2015 2016 Antonio Carrasco Valero
+ Javascript for core modules including a base prototype and prototypes hierarchy, intended to be reused on the Browser as core for i.e. Angular Controllers and Services, as in the uiwire component. Licensed under EUPL  http://www.uiwire.org
+
+Licensed under the EUPL, Version 1.1 only (the "Licence");
+You may not use this work except in compliance with the
+Licence.
+You may obtain a copy of the Licence at:
+https://joinup.ec.europa.eu/software/page/eupl/licence-eupl
+Unless required by applicable law or agreed to in
+writing, software distributed under the Licence is
+distributed on an "AS IS" basis,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+express or implied.
+See the Licence for the specific language governing
+permissions and limitations under the Licence.
+ {{License2}}
+
+ {{Licensed1}}
+ {{Licensed2}}
+
+ ***************************************************************************
+ *
+ */
+
+
+
+function ModuleFactory_CommonCtrlType() {
+
+    'use strict';
+
+    return ( function(
+              theSS_typesregistry,
+              theSS_Overrider,
+              theSS_WithProminstrType,
+              theSS_AppBaseURLSvce,
+              theSS_APIBaseURLSvce,
+              theSS_location) {
+
+
+        var ModuleName     = "common_ctrl_type";
+        var ModulePackages = "common";
+        var ModuleFullName = ModulePackages + "/" + ModuleName;
+
+
+
+        var aMod_definer = function( theS_Overrider,
+                                     theS_WithProminstrType,
+                                     theS_AppBaseURLSvce,
+                                     theS_APIBaseURLSvce,
+                                     $location) {
+
+
+            if( !( typeof FG_logModLoads == "undefined") && ( typeof FG_logModLoads == "function") && FG_logModLoads()) { FG_logModLoads(ModuleFullName);}
+
+
+
+
+
+
+
+
+            var pgInitWithModuleVariations = function( theToInit) {
+
+                if( !theToInit) {
+                    return;
+                }
+
+                theToInit.LOGEVENTS                        = true;
+
+            };
+
+
+
+
+
+            var pgInitFromModuleVariations = function( theToInit) {
+                if( !theToInit) {
+                    return;
+                }
+
+                for( var aGlobalName in ModuleVariations) {
+                    if( ModuleVariations.hasOwnProperty( aGlobalName)) {
+                        theToInit[ aGlobalName] = ModuleVariations[ aGlobalName];
+                    }
+                }
+            };
+
+
+            var ModuleVariations = { };
+            pgInitWithModuleVariations( ModuleVariations);
+            theS_Overrider.pOverrideModuleVariations( ModuleFullName, ModuleVariations);
+
+
+
+
+
+
+
+
+            var pgInitWithModuleConstants = function( theToInit) {
+
+                if( !theToInit) {
+                    return;
+                }
+                theToInit.COMMONCTRL_DEFAULTTITLE = "CtrlDefaultName";
+
+
+                theToInit.FILTERKIND_MENU      = "MENU";
+                theToInit.FILTERKIND_CHECKBOX  = "CHECKBOX";
+                theToInit.FILTERKIND_RADIO     = "RADIO";
+                theToInit.FILTERKIND_NUMBER    = "NUMBER";
+                theToInit.FILTERKIND_STRING    = "STRING";
+                theToInit.FILTERKIND_DATE      = "STRING";
+
+                theToInit.FILTERKINDS = [
+                    theToInit.FILTERKIND_MENU,
+                    theToInit.FILTERKIND_CHECKBOX,
+                    theToInit.FILTERKIND_RADIO,
+                    theToInit.FILTERKIND_NUMBER,
+                    theToInit.FILTERKIND_STRING,
+                    theToInit.FILTERKIND_DATE
+                ];
+
+                theToInit.UPDATEFILTERON_ROWSCHANGE      = "ROWSCHANGE";
+                theToInit.UPDATEFILTERON_SELECTIONCHANGE = "SELECTIONCHANGE";
+
+                theToInit.UPDATEFILTERONS = [
+                    theToInit.UPDATEFILTERON_ROWSCHANGE,
+                    theToInit.UPDATEFILTERON_SELECTIONCHANGE
+                ];
+
+
+                theToInit.LOCATIONPARMNAME_NAMES_SEPARATOR = ",";
+
+
+                theToInit.CANDIDATESFIELDINJECTEDPARAMETER = "candidatesField";
+
+
+
+                theToInit.LOCATIONPARMNAME_INITIALLOADGRIDNAMES  = "theInitialLoadGrids";
+                theToInit.LOCATIONPARMNAME_AUTOEDITNAMES         = "theAutoEditors";
+                theToInit.LOCATIONPARMNAME_AUTOSELECT            = "theAutoSelect";
+
+                theToInit.LOCATIONPARMALLNAMES = "ALL";
+
+
+                theToInit.MASTERPARMISOPTIONALSYMBOL = "optional";
+
+
+                theToInit.PARENTSENTINEL = "fParentCtrl()";
+
+                theToInit.RETRIEVALWITHPARENTSENTINEL = theToInit.PARENTSENTINEL + ".";
+
+                theToInit.RETRIEVALTARGETSUPPLIERPARENTSENTINEL = theToInit.RETRIEVALWITHPARENTSENTINEL;
+
+                theToInit.DOTARGETSENTINEL_WIREOWNER = "fWireOwner()";
+                theToInit.DOTARGETSENTINEL_FROMCTRL  = "fFromCtrl()";
+                theToInit.DOTARGETSENTINEL_TOCTRL    = "fToCtrl()";
+
+            };
+
+
+
+            var ModuleConstants = {};
+            pgInitFromModuleVariations( ModuleConstants);
+            pgInitWithModuleConstants( ModuleConstants);
+
+
+
+
+            var pgInitFromModuleConstants = function( theToInit) {
+                if( !theToInit) {
+                    return;
+                }
+
+                for( var aGlobalName in ModuleConstants) {
+                    if( ModuleConstants.hasOwnProperty( aGlobalName)) {
+                        theToInit[ aGlobalName] = ModuleConstants[ aGlobalName];
+                    }
+                }
+            };
+
+
+
+
+
+
+            var aCommonCtrl_Prototype = (function() {
+
+
+
+                var aPrototype = new theS_WithProminstrType.WithProminstr_SuperPrototypeConstructor();
+
+                pgInitFromModuleConstants( aPrototype);
+
+
+                aPrototype._v_SuperPrototype = theS_WithProminstrType.WithProminstr_Prototype;
+
+
+
+                aPrototype._v_Type = "CommonCtrl";
+
+                aPrototype._v_Prototype_CommonCtrl = aPrototype;
+
+                aPrototype._v_Module = null;
+
+                aPrototype._v_Scope = null;
+
+                aPrototype._v_UIhandlersEnabled = null;
+
+                aPrototype._v_AppBaseURL    = null;
+                aPrototype._v_APIBaseURL    = null;
+                aPrototype._v_LocationQuery = null;
+                aPrototype._v_LocationURL  = null;
+
+                aPrototype._v_LastActionReport = null;
+                aPrototype._v_LastActionIsError = null;
+
+
+
+
+                var _pInit = function( theTitle, theIdentifier, theRecorder, theScope) {
+
+                    this._pInit_CommonCtrl( theTitle, theIdentifier, theRecorder, theScope);
+                };
+                if( _pInit){}/* CQT */
+                aPrototype._pInit = _pInit;
+
+
+
+
+
+
+
+                var _fTitleDefault = function( ) {
+
+                    return this.COMMONCTRL_DEFAULTTITLE;
+                };
+                if( _fTitleDefault){}/* CQT */
+                aPrototype._fTitleDefault = _fTitleDefault;
+
+
+
+
+
+
+                var _pInit_CommonCtrl = function( theTitle, theIdentifier, theRecorder, theScope) {
+
+                    /* Delegate on super prototype initialization */
+                    aPrototype._v_SuperPrototype._pInit_WithProminstr.apply( this, [ theTitle, theIdentifier, theRecorder]);
+
+                    this._v_Prototype = aPrototype;
+                    this._v_Type      = this._v_Prototype._v_Type;
+                    this._v_Module    = aPrototype._v_Module;
+
+                    this._v_Scope = theScope;
+
+                    this._v_UIhandlersEnabled = true;
+
+                    this._v_AppBaseURL    = null;
+                    this._v_APIBaseURL    = null;
+                    this._v_LocationQuery = null;
+                    this._v_LocationURL  = null;
+
+                    this._v_LastActionReport = null;
+                    this._v_LastActionIsError = null;
+
+                    this._pListenToDestroy();
+
+                    if( this._v_LocationQuery){}/* CQT */
+                    if( this._v_LocationURL){}/* CQT */
+                    if( this._v_LastActionReport){}/* CQT */
+                    if( this._v_LastActionIsError){}/* CQT */
+                };
+                if( _pInit_CommonCtrl){}/* CQT */
+                aPrototype._pInit_CommonCtrl = _pInit_CommonCtrl;
+
+
+
+
+
+
+
+
+                var _pListenToDestroy = function( ) {
+
+                    if( !this._v_Scope) {
+                        return;
+                    }
+
+                    var aThis = this;
+                    this._v_Scope.$on( "$destroy", function() {
+                        aThis.pDestroy();
+                    });
+                };
+                if( _pListenToDestroy){}/* CQT */
+                aPrototype._pListenToDestroy = _pListenToDestroy;
+
+
+
+
+
+
+
+                var fWasDestroyed = function( ) {
+
+                    var aWasDestroyed = ( this._v_Scope == null);
+                    if( aWasDestroyed){}/* CQT */
+
+                    return aWasDestroyed;
+                };
+                if( fWasDestroyed){}/* CQT */
+                aPrototype.fWasDestroyed = fWasDestroyed;
+
+
+
+
+
+
+
+
+                var pDestroy = function( ) {
+
+                    this._v_Scope = null;
+
+                    this._v_UIhandlersEnabled = null;
+
+                    this._v_AppBaseURL    = null;
+                    this._v_APIBaseURL    = null;
+                    this._v_LocationQuery = null;
+                    this._v_LocationURL  = null;
+
+                    this._v_LastActionReport = null;
+                };
+                if( pDestroy){}/* CQT */
+                aPrototype.pDestroy = pDestroy;
+
+
+
+
+
+
+                var fUIhandlersEnabled = function() {
+
+                    return this._v_UIhandlersEnabled;
+                };
+                if( fUIhandlersEnabled){}/* CQT */
+                aPrototype.fUIhandlersEnabled = fUIhandlersEnabled;
+
+
+
+
+
+
+                var fprDo_EnableUIhandlers = function() {
+
+                    this._v_UIhandlersEnabled = true;
+
+                    return this.fNewDeferredResolveWithNothingPromise();
+                };
+                if( fprDo_EnableUIhandlers){}/* CQT */
+                aPrototype.fprDo_EnableUIhandlers = fprDo_EnableUIhandlers;
+
+
+
+
+
+
+                var fprDo_DisableUIhandlers = function() {
+
+                    this._v_UIhandlersEnabled = false;
+
+                    return this.fNewDeferredResolveWithNothingPromise();
+                };
+                if( fprDo_DisableUIhandlers){}/* CQT */
+                aPrototype.fprDo_DisableUIhandlers = fprDo_DisableUIhandlers;
+
+
+
+
+
+
+
+
+                var pLogEvent = function( theEvent, theData, theDetails) {
+
+                    if( !this.LOGEVENTS) {
+                        return;
+                    }
+
+
+                    if( !theEvent) {
+                        return;
+                    }
+
+                    this.fRecord( null, theEvent, theData, null, theDetails);
+                };
+                if( pLogEvent){}/* CQT */
+                aPrototype.pLogEvent = pLogEvent;
+
+
+
+
+
+
+
+
+
+                var pInitFromLocationURLquery = function( ) {
+
+                    this._v_LocationQuery = $location.search();
+                };
+                if( pInitFromLocationURLquery){}/* CQT */
+                aPrototype.pInitFromLocationURLquery = pInitFromLocationURLquery;
+
+
+
+
+                var pInitFromLocationURL = function( ) {
+
+                    this._v_LocationURL = $location.url();
+                };
+                if( pInitFromLocationURL){}/* CQT */
+                aPrototype.pInitFromLocationURL = pInitFromLocationURL;
+
+
+
+
+
+                var pInitFromAppBaseURL = function( ) {
+
+                    this._v_AppBaseURL    = theS_AppBaseURLSvce.fAppBaseURL();
+                };
+                if( pInitFromAppBaseURL){}/* CQT */
+                aPrototype.pInitFromAppBaseURL = pInitFromAppBaseURL;
+
+
+
+
+
+
+                var fAppBaseURL = function() {
+
+                    if( this._v_AppBaseURL) {
+                        return this._v_AppBaseURL;
+                    }
+
+                    this.pInitFromAppBaseURL();
+
+                    return this._v_AppBaseURL;
+                };
+                if( fAppBaseURL){}/* CQT */
+                aPrototype.fAppBaseURL = fAppBaseURL;
+
+
+
+
+
+
+                var pInitFromAPIBaseURL = function( ) {
+
+                    this._v_APIBaseURL    = theS_APIBaseURLSvce.fAPIBaseURL();
+                };
+                if( pInitFromAPIBaseURL){}/* CQT */
+                aPrototype.pInitFromAPIBaseURL = pInitFromAPIBaseURL;
+
+
+
+
+
+                var fAPIBaseURL = function() {
+
+                    if( this._v_APIBaseURL) {
+                        return this._v_APIBaseURL;
+                    }
+
+                    this.pInitFromAPIBaseURL();
+
+                    return this._v_APIBaseURL;
+                };
+                if( fAPIBaseURL){}/* CQT */
+                aPrototype.fAPIBaseURL = fAPIBaseURL;
+
+
+
+
+
+
+
+
+                var fprDo_InitialExtra = function() {
+
+                    this.pInitFromAppBaseURL();
+
+                    this.pInitFromAPIBaseURL();
+
+                    return this.fNewDeferredResolveWithNothingPromise();
+                };
+                if( fprDo_InitialExtra){}/* CQT */
+                aPrototype.fprDo_InitialExtra = fprDo_InitialExtra;
+
+
+
+
+
+
+
+                var fprDo_Initial = function() {
+
+                    return this.fprDo_InitialExtra();
+                };
+                if( fprDo_Initial){}/* CQT */
+                aPrototype.fprDo_Initial = fprDo_Initial;
+
+
+
+
+
+
+
+
+
+
+
+                var fInspectFromTemplate = function( theLabel, theArg1, theArg2, theArg3, theArg4, theArg5, theArg6) {
+                    if( theLabel || theArg1 || theArg2 || theArg3 || theArg4 || theArg5 || theArg6){}/* CQT */
+
+                    return true;
+                };
+                if( fInspectFromTemplate){}/* CQT */
+                aPrototype.fInspectFromTemplate = fInspectFromTemplate;
+
+
+
+
+
+
+                var fNewDescribe = function( theFieldName, theFieldLabel, theParmName) {
+
+                    return {
+                        fieldName:  theFieldName,
+                        fieldLabel: theFieldLabel,
+                        parmName:   theParmName
+                    };
+                };
+                if( fNewDescribe){}/* CQT */
+                aPrototype.fNewDescribe = fNewDescribe;
+
+
+
+
+
+
+                return aPrototype;
+
+            })();
+
+
+
+
+            var CommonCtrl_Constructor = function( theTitle, theIdentifier, theRecorder, theScope) {
+
+                /* Keep handy reference to super-prototype for super method invocation */
+                this._v_SuperPrototype = theS_WithProminstrType.WithProminstr_Prototype;
+
+                this._v_Prototype = null;
+                this._v_Type = null;
+                this._v_Module = null;
+
+                this._v_Scope = null;
+
+                this._v_UIhandlersEnabled = true;
+
+                this._v_AppBaseURL    = null;
+                this._v_APIBaseURL    = null;
+                this._v_LocationQuery = null;
+                this._v_LocationURL  = null;
+
+                this._v_LastActionReport = null;
+                this._v_LastActionIsError = null;
+
+                this._pInit_CommonCtrl( theTitle, theIdentifier, theRecorder, theScope);
+            };
+            CommonCtrl_Constructor.prototype = aCommonCtrl_Prototype;
+
+
+
+
+
+            var CommonCtrl_SuperPrototypeConstructor = function() {
+
+                /* Keep handy reference to super-prototype for super method invocation */
+                this._v_SuperPrototype = theS_WithProminstrType.WithProminstr_Prototype;
+
+                this._v_Prototype = aCommonCtrl_Prototype;
+                this._v_Type      = null;
+                this._v_Module    = null;
+
+                this._v_Scope = null;
+
+                this._v_UIhandlersEnabled = true;
+
+                this._v_AppBaseURL    = null;
+                this._v_APIBaseURL    = null;
+                this._v_LocationQuery = null;
+                this._v_LocationURL  = null;
+
+                this._v_LastActionReport = null;
+                this._v_LastActionIsError = null;
+            };
+            CommonCtrl_SuperPrototypeConstructor.prototype = aCommonCtrl_Prototype;
+
+
+
+            var aModule = {
+                "CommonCtrl_Prototype": aCommonCtrl_Prototype,
+                "CommonCtrl_Constructor": CommonCtrl_Constructor,
+                "CommonCtrl_SuperPrototypeConstructor": CommonCtrl_SuperPrototypeConstructor
+            };
+            pgInitFromModuleConstants( aModule);
+            aModule.ModuleName     = ModuleName;
+            aModule.ModulePackages = ModulePackages;
+            aModule.ModuleFullName = ModuleFullName;
+
+            aCommonCtrl_Prototype._v_Module = aModule;
+
+
+
+
+
+            return aModule;
+        };
+
+
+
+
+
+
+
+        var anExistingModule = theSS_typesregistry.fRegisteredModule( ModuleFullName);
+        if( !anExistingModule) {
+
+            var aModule = aMod_definer(
+                theSS_Overrider,
+                theSS_WithProminstrType,
+                theSS_AppBaseURLSvce,
+                theSS_APIBaseURLSvce,
+                theSS_location
+            );
+            anExistingModule = aModule;
+
+            theSS_typesregistry.fRegisterModule( ModuleFullName, aModule);
+        }
+
+
+
+
+
+
+        return anExistingModule;
+
+    });
+}
+
+
+
+
+
+
+
+;/*
+ * common_svce_type.js
+ *
+ * Created @author Antonio Carrasco Valero 201409301309
+ *
+ *
+ ***************************************************************************
+
+ Copyright 2014 2015 2016 Antonio Carrasco Valero
+ Javascript for core modules including a base prototype and prototypes hierarchy, intended to be reused on the Browser as core for i.e. Angular Controllers and Services, as in the uiwire component. Licensed under EUPL  http://www.uiwire.org
+
+Licensed under the EUPL, Version 1.1 only (the "Licence");
+You may not use this work except in compliance with the
+Licence.
+You may obtain a copy of the Licence at:
+https://joinup.ec.europa.eu/software/page/eupl/licence-eupl
+Unless required by applicable law or agreed to in
+writing, software distributed under the Licence is
+distributed on an "AS IS" basis,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+express or implied.
+See the Licence for the specific language governing
+permissions and limitations under the Licence.
+ {{License2}}
+
+ {{Licensed1}}
+ {{Licensed2}}
+
+ ***************************************************************************
+ *
+ */
+
+
+
+
+function ModuleFactory_CommonSvceType() {
+
+    'use strict';
+
+    return ( function(
+              theSS_typesregistry,
+              theSS_Overrider,
+              theSS_WithProminstrType,
+              theSS_AppBaseURLSvce,
+              theSS_APIBaseURLSvce) {
+
+
+        var ModuleName     = "common_svce_type";
+        var ModulePackages = "common";
+        var ModuleFullName = ModulePackages + "/" + ModuleName;
+
+
+
+        var aMod_definer = function( theS_Overrider,
+                                     theS_WithProminstrType,
+                                     theS_AppBaseURLSvce,
+                                     theS_APIBaseURLSvce) {
+
+
+            if( !( typeof FG_logModLoads == "undefined") && ( typeof FG_logModLoads == "function") && FG_logModLoads()) { FG_logModLoads(ModuleFullName);}
+
+
+
+
+
+
+
+
+            var pgInitWithModuleVariations = function( theToInit) {
+
+                if( !theToInit) {
+                }
+            };
+
+
+
+
+
+            var pgInitFromModuleVariations = function( theToInit) {
+                if( !theToInit) {
+                    return;
+                }
+
+                for( var aGlobalName in ModuleVariations) {
+                    if( ModuleVariations.hasOwnProperty( aGlobalName)) {
+                        theToInit[ aGlobalName] = ModuleVariations[ aGlobalName];
+                    }
+                }
+            };
+
+
+            var ModuleVariations = { };
+            pgInitWithModuleVariations( ModuleVariations);
+            theS_Overrider.pOverrideModuleVariations( ModuleFullName, ModuleVariations);
+
+
+
+
+
+
+
+
+            var pgInitWithModuleConstants = function( theToInit) {
+
+                if( !theToInit) {
+                    return;
+                }
+                theToInit.COMMONSVCE_DEFAULTTITLE = "SvceDefaultName";
+            };
+
+
+
+            var ModuleConstants = {};
+            pgInitFromModuleVariations( ModuleConstants);
+            pgInitWithModuleConstants( ModuleConstants);
+
+
+
+
+            var pgInitFromModuleConstants = function( theToInit) {
+                if( !theToInit) {
+                    return;
+                }
+
+                for( var aGlobalName in ModuleConstants) {
+                    if( ModuleConstants.hasOwnProperty( aGlobalName)) {
+                        theToInit[ aGlobalName] = ModuleConstants[ aGlobalName];
+                    }
+                }
+            };
+
+
+
+
+
+
+            var aCommonSvce_Prototype = (function() {
+
+
+
+                var aPrototype = new theS_WithProminstrType.WithProminstr_SuperPrototypeConstructor();
+
+                pgInitFromModuleConstants( aPrototype);
+
+
+                aPrototype._v_SuperPrototype = theS_WithProminstrType.WithProminstr_Prototype;
+
+
+
+                aPrototype._v_Type = "CommonSvce";
+
+                aPrototype._v_Prototype_CommonSvce = aPrototype;
+
+                aPrototype._v_Module = null;
+
+
+
+
+
+
+
+
+                var _pInit = function( theTitle, theIdentifier, theRecorder) {
+
+                    this._pInit_CommonSvce( theTitle, theIdentifier, theRecorder);
+                };
+                if( _pInit){}/* CQT */
+                aPrototype._pInit = _pInit;
+
+
+
+
+
+
+
+                var _fTitleDefault = function( ) {
+
+                    return this.COMMONSVCE_DEFAULTTITLE;
+                };
+                if( _fTitleDefault){}/* CQT */
+                aPrototype._fTitleDefault = _fTitleDefault;
+
+
+
+
+
+
+                var _pInit_CommonSvce = function( theTitle, theIdentifier, theRecorder) {
+
+                    /* Delegate on super prototype initialization */
+                    aPrototype._v_SuperPrototype._pInit_WithProminstr.apply( this, [ theTitle, theIdentifier, theRecorder]);
+
+                    this._v_Prototype = aPrototype;
+                    this._v_Type      = this._v_Prototype._v_Type;
+                    this._v_Module    = aPrototype._v_Module;
+                };
+                if( _pInit_CommonSvce){}/* CQT */
+                aPrototype._pInit_CommonSvce = _pInit_CommonSvce;
+
+
+
+
+
+
+
+                var fAppBaseURL = function() {
+
+                    var anAppBaseURL = theS_AppBaseURLSvce.fAppBaseURL();
+                    if( anAppBaseURL){}/* CQT */
+
+                    return anAppBaseURL;
+                };
+                if( fAppBaseURL){}/* CQT */
+                aPrototype.fAppBaseURL = fAppBaseURL;
+
+
+
+
+
+                var fAPIBaseURL = function() {
+
+                    var anAppBaseURL = theS_APIBaseURLSvce.fAPIBaseURL();
+                    if( anAppBaseURL){}/* CQT */
+
+                    return anAppBaseURL;
+                };
+                if( fAPIBaseURL){}/* CQT */
+                aPrototype.fAPIBaseURL = fAPIBaseURL;
+
+
+
+
+
+
+
+
+
+                return aPrototype;
+
+            })();
+
+
+
+
+            var CommonSvce_Constructor = function( theTitle, theIdentifier, theRecorder) {
+
+                /* Keep handy reference to super-prototype for super method invocation */
+                this._v_SuperPrototype = theS_WithProminstrType.WithProminstr_Prototype;
+
+                this._v_Prototype = null;
+                this._v_Type = null;
+                this._v_Module = null;
+
+                this._pInit_CommonSvce( theTitle, theIdentifier, theRecorder);
+            };
+            CommonSvce_Constructor.prototype = aCommonSvce_Prototype;
+
+
+
+
+
+            var CommonSvce_SuperPrototypeConstructor = function() {
+
+                /* Keep handy reference to super-prototype for super method invocation */
+                this._v_SuperPrototype = theS_WithProminstrType.WithProminstr_Prototype;
+
+                this._v_Prototype = aCommonSvce_Prototype;
+                this._v_Type      = null;
+                this._v_Module    = null;
+            };
+            CommonSvce_SuperPrototypeConstructor.prototype = aCommonSvce_Prototype;
+
+
+
+            var aModule = {
+                "CommonSvce_Prototype": aCommonSvce_Prototype,
+                "CommonSvce_Constructor": CommonSvce_Constructor,
+                "CommonSvce_SuperPrototypeConstructor": CommonSvce_SuperPrototypeConstructor
+            };
+            pgInitFromModuleConstants( aModule);
+            aModule.ModuleName     = ModuleName;
+            aModule.ModulePackages = ModulePackages;
+            aModule.ModuleFullName = ModuleFullName;
+
+            aCommonSvce_Prototype._v_Module = aModule;
+
+
+
+
+
+            return aModule;
+        };
+
+
+
+
+
+
+        var anExistingModule = theSS_typesregistry.fRegisteredModule( ModuleFullName);
+        if( !anExistingModule) {
+
+            var aModule = aMod_definer(
+                theSS_Overrider,
+                theSS_WithProminstrType,
+                theSS_AppBaseURLSvce,
+                theSS_APIBaseURLSvce
+            );
+            anExistingModule = aModule;
+
+            theSS_typesregistry.fRegisterModule( ModuleFullName, aModule);
+        }
+
+
+
+
+
+        return anExistingModule;
+
+    });
+}
+
+
+
 
 
 
@@ -4339,9 +6000,8 @@ function ModuleFactory_IdentifierType() {
 
     'use strict';
 
-    return ( function(
-          theSS_typesregistry,
-          theSS_Overrider) {
+    return ( function( theSS_typesregistry,
+                       theSS_Overrider) {
 
 
         var ModuleName     = "identifier_type";
@@ -4744,6 +6404,7 @@ function ModuleFactory_IdentifierType() {
     });
 }
 
+if( ModuleFactory_IdentifierType){}/* CQT */
 
 
 
@@ -4793,7 +6454,7 @@ function ModuleFactory_RecordType() {
     'use strict';
 
     return ( function( theSS_typesregistry,
-              theSS_Overrider) {
+                       theSS_Overrider) {
 
 
         var ModuleName     = "record_type";
@@ -6242,6 +7903,7 @@ function ModuleFactory_RecordType() {
 }
 
 
+if( ModuleFactory_RecordType){}/* CQT */
 
 
 
@@ -6739,1667 +8401,5 @@ function ModuleFactory_RecorderType() {
 
 
 
-;'donotuse strict';
-
-/*
- logmoduleloads.js
- Creado 201409101529
- */
-
-/*
- ***************************************************************************
-
- Copyright 2014 2015 2016 Antonio Carrasco Valero
- Javascript for core modules including a base prototype and prototypes hierarchy, intended to be reused on the Browser as core for i.e. Angular Controllers and Services, as in the uiwire component. Licensed under EUPL  http://www.uiwire.org
-
-Licensed under the EUPL, Version 1.1 only (the "Licence");
-You may not use this work except in compliance with the
-Licence.
-You may obtain a copy of the Licence at:
-https://joinup.ec.europa.eu/software/page/eupl/licence-eupl
-Unless required by applicable law or agreed to in
-writing, software distributed under the Licence is
-distributed on an "AS IS" basis,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
-express or implied.
-See the Licence for the specific language governing
-permissions and limitations under the Licence.
- {{License2}}
-
- {{Licensed1}}
- {{Licensed2}}
-
- ***************************************************************************
- */
-
-var LOGMODULELOADS = false;
-
-FG_logModLoads = function( theMessage) {
-    if( !theMessage) {
-        return LOGMODULELOADS;
-    }
-    if( LOGMODULELOADS) {
-        console.log( ',{"MODULE", "' + theMessage + '"}');
-    }
-
-    return LOGMODULELOADS;
-};
-
-;/*
- * overrider_type.js
- *
- * Created @author Antonio Carrasco Valero 201410030300
- *
- *
- ***************************************************************************
-
- Copyright 2014 2015 2016 Antonio Carrasco Valero
- Javascript for core modules including a base prototype and prototypes hierarchy, intended to be reused on the Browser as core for i.e. Angular Controllers and Services, as in the uiwire component. Licensed under EUPL  http://www.uiwire.org
-
-Licensed under the EUPL, Version 1.1 only (the "Licence");
-You may not use this work except in compliance with the
-Licence.
-You may obtain a copy of the Licence at:
-https://joinup.ec.europa.eu/software/page/eupl/licence-eupl
-Unless required by applicable law or agreed to in
-writing, software distributed under the Licence is
-distributed on an "AS IS" basis,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
-express or implied.
-See the Licence for the specific language governing
-permissions and limitations under the Licence.
- {{License2}}
-
- {{Licensed1}}
- {{Licensed2}}
-
- ***************************************************************************
- *
- */
-
-
-
-
-function ModuleFactory_OverriderType() {
-
-    'use strict';
-
-
-    return ( function( theSS_typesregistry) {
-
-
-        var ModuleName     = "overrider_type";
-        var ModulePackages = "roots";
-        var ModuleFullName = ModulePackages + "/" + ModuleName;
-
-
-
-        var aMod_definer = function() {
-
-
-            if( !( typeof FG_logModLoads == "undefined") && ( typeof FG_logModLoads == "function") && FG_logModLoads()) { FG_logModLoads(ModuleFullName);}
-
-
-
-
-
-
-
-
-            var pgInitWithModuleConstants = function( theToInit) {
-
-                if( !theToInit) {
-                    return;
-                }
-                theToInit.OVERRIDER_DEFAULTTITLE = "OverriderDefaultName";
-            };
-
-
-
-            var ModuleConstants = {};
-            pgInitWithModuleConstants( ModuleConstants);
-
-
-
-
-            var pgInitFromModuleConstants = function( theToInit) {
-                if( !theToInit) {
-                    return;
-                }
-
-                for( var aGlobalName in ModuleConstants) {
-                    if( ModuleConstants.hasOwnProperty( aGlobalName)) {
-                        theToInit[ aGlobalName] = ModuleConstants[ aGlobalName];
-                    }
-                }
-            };
-
-
-
-
-
-
-            var aOverrider_Prototype = (function() {
-
-
-                var aPrototype = {};
-
-                pgInitFromModuleConstants( aPrototype);
-
-
-
-
-                aPrototype._v_Type = "Overrider";
-
-                aPrototype._v_Prototype_Overrider = aPrototype;
-
-                aPrototype._v_Module = null;
-
-
-
-
-
-                var _pInit = function( theTitle) {
-
-                    this._pInit_Overrider( theTitle);
-                };
-                if( _pInit){}/* CQT */
-                aPrototype._pInit = _pInit;
-
-
-
-
-
-
-
-                var _pInit_Overrider = function( theTitle) {
-
-                    this._v_Prototype = aPrototype;
-                    this._v_Type      = this._v_Prototype._v_Type;
-                    this._v_Module    = aPrototype._v_Module;
-
-                    this._v_Title = theTitle;
-                    if( !this._v_Title) {
-                        this._v_Title = this.OVERRIDER_DEFAULTTITLE;
-                    }
-                };
-                if( _pInit_Overrider){}/* CQT */
-                aPrototype._pInit_Overrider = _pInit_Overrider;
-
-
-
-
-
-
-
-                var fFullTypeNameString = function() {
-
-                    var aFullTypeName = this._v_Module.ModuleFullName + "." + this._v_Type;
-                    if( aFullTypeName){}/* CQT */
-
-                    return aFullTypeName;
-                };
-                if( fFullTypeNameString){}/* CQT */
-                aPrototype.fFullTypeNameString = fFullTypeNameString;
-
-
-
-
-
-                var fIdentifyingJSON = function() {
-
-                    var aIdentifiyingJSON = {
-                        "type": this._v_Type,
-                        "id": this._v_Id
-                    };
-                    if( aIdentifiyingJSON){}/* CQT */
-                    return aIdentifiyingJSON;
-                };
-                if( fIdentifyingJSON){}/* CQT */
-                aPrototype.fIdentifyingJSON = fIdentifyingJSON;
-
-
-
-
-
-
-                var fIdentifyingString = function() {
-
-                    var aIdentifyingJSON = this.fIdentifyingJSON();
-
-                    var aIdentifyingString = JSON.stringify( aIdentifyingJSON);
-                    if( aIdentifyingString){}/* CQT */
-
-                    return aIdentifyingString;
-                };
-                if( fIdentifyingString){}/* CQT */
-                aPrototype.fIdentifyingString = fIdentifyingString;
-
-
-
-
-
-
-
-                var fIdentifyingWithTitleJSON = function() {
-
-                    var aIdentifyingJSON = this.fIdentifyingJSON();
-
-                    aIdentifyingJSON[ "title"] = this._v_Title;
-
-                    return aIdentifyingJSON;
-                };
-                if( fIdentifyingWithTitleJSON){}/* CQT */
-                aPrototype.fIdentifyingWithTitleJSON = fIdentifyingWithTitleJSON;
-
-
-
-
-
-
-                var fIdentifyingWithTitleString = function() {
-
-                    var aIdentifyingJSON = this.fIdentifyingWithTitleJSON();
-
-                    var aIdentifyingString = JSON.stringify( aIdentifyingJSON);
-                    if( aIdentifyingString){}/* CQT */
-
-                    return aIdentifyingString;
-                };
-                if( fIdentifyingWithTitleString){}/* CQT */
-                aPrototype.fIdentifyingWithTitleString = fIdentifyingWithTitleString;
-
-
-
-
-
-
-
-
-
-
-                var fToResultJSON = function( theCommonObjects, theAlready) {
-                    if( !( theAlready == null)) {
-                        if( theAlready.fAlready( this)){
-                            return this.fIdentifyingJSON();
-                        }
-                    }
-
-                    var aResultJSON = this.fIdentifyingWithTitleJSON();
-                    if( aResultJSON){}/* CQT */
-
-                    return aResultJSON;
-                };
-                if( fToResultJSON){}/* CQT */
-                aPrototype.fToResultJSON = fToResultJSON;
-
-
-
-
-
-
-
-                var pOverrideModuleVariations = function( theModuleFullName, theModuleVariations) {
-                };
-                if( pOverrideModuleVariations){}/* CQT */
-                aPrototype.pOverrideModuleVariations = pOverrideModuleVariations;
-
-
-
-
-
-
-
-                return aPrototype;
-
-            })();
-
-
-
-
-            var Overrider_Constructor = function( theTitle) {
-                this._v_Prototype = null;
-                this._v_Type = null;
-                this._v_Module = null;
-
-                this._v_Title = null;
-
-                this._pInit_Overrider( theTitle);
-            };
-            Overrider_Constructor.prototype = aOverrider_Prototype;
-
-
-
-
-
-            var Overrider_SuperPrototypeConstructor = function() {
-                this._v_Prototype = aOverrider_Prototype;
-                this._v_Type      = null;
-                this._v_Module    = null;
-
-                this._v_Title     = null;
-            };
-            Overrider_SuperPrototypeConstructor.prototype = aOverrider_Prototype;
-
-
-
-            var aModule = {
-                "Overrider_Prototype": aOverrider_Prototype,
-                "Overrider_Constructor": Overrider_Constructor,
-                "Overrider_SuperPrototypeConstructor": Overrider_SuperPrototypeConstructor
-            };
-            pgInitFromModuleConstants( aModule);
-            aModule.ModuleName     = ModuleName;
-            aModule.ModulePackages = ModulePackages;
-            aModule.ModuleFullName = ModuleFullName;
-
-            aOverrider_Prototype._v_Module = aModule;
-
-
-
-
-            return aModule;
-        };
-
-
-
-
-
-
-
-        var anExistingModule = theSS_typesregistry.fRegisteredModule( ModuleFullName);
-        if( !anExistingModule) {
-
-            var aModule = aMod_definer();
-            anExistingModule = aModule;
-
-            theSS_typesregistry.fRegisterModule( ModuleFullName, aModule);
-        }
-
-
-
-
-
-
-        return anExistingModule;
-
-    });
-}
-
-
-
-
-
-
-;/*
- * typesregistry.js
- *
- * Created @author Antonio Carrasco Valero 201409301309
- *
- *
- ***************************************************************************
-
- Copyright 2014 2015 2016 Antonio Carrasco Valero
- Javascript for core modules including a base prototype and prototypes hierarchy, intended to be reused on the Browser as core for i.e. Angular Controllers and Services, as in the uiwire component. Licensed under EUPL  http://www.uiwire.org
-
-Licensed under the EUPL, Version 1.1 only (the "Licence");
-You may not use this work except in compliance with the
-Licence.
-You may obtain a copy of the Licence at:
-https://joinup.ec.europa.eu/software/page/eupl/licence-eupl
-Unless required by applicable law or agreed to in
-writing, software distributed under the Licence is
-distributed on an "AS IS" basis,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
-express or implied.
-See the Licence for the specific language governing
-permissions and limitations under the Licence.
- {{License2}}
-
- {{Licensed1}}
- {{Licensed2}}
-
- ***************************************************************************
- *
- */
-
-
-
-
-function ModuleFactory_TypesRegistrySvce() {
-
-    'use strict';
-
-    return ( function(){
-
-
-
-        var ModuleName     = "typesregistry";
-        var ModulePackages = "common";
-        var ModuleFullName = ModulePackages + "/" + ModuleName;
-
-
-        var aMod_definer = function() {
-
-
-
-            if( !( typeof FG_logModLoads == "undefined") && ( typeof FG_logModLoads == "function") && FG_logModLoads()) { FG_logModLoads(ModuleFullName);}
-
-
-
-
-
-
-
-
-            var pgInitWithModuleVariations = function( theToInit) {
-
-                if( !theToInit) {
-                }
-            };
-
-
-
-
-
-            var pgInitFromModuleVariations = function( theToInit) {
-                if( !theToInit) {
-                    return;
-                }
-
-                for( var aGlobalName in ModuleVariations) {
-                    if( ModuleVariations.hasOwnProperty( aGlobalName)) {
-                        theToInit[ aGlobalName] = ModuleVariations[ aGlobalName];
-                    }
-                }
-            };
-
-
-            var ModuleVariations = { };
-            pgInitWithModuleVariations( ModuleVariations);
-
-
-
-
-
-
-
-
-            var pgInitWithModuleConstants = function( theToInit) {
-
-                if( !theToInit) {
-                    return;
-                }
-
-                theToInit.TYPESREGISTRYDEFAULTNAME = "TypesRegistry_DefaultName";
-            };
-
-
-
-            var ModuleConstants = {};
-            pgInitFromModuleVariations( ModuleConstants);
-            pgInitWithModuleConstants( ModuleConstants);
-
-
-
-
-            var pgInitFromModuleConstants = function( theToInit) {
-                if( !theToInit) {
-                    return;
-                }
-
-                for( var aGlobalName in ModuleConstants) {
-                    if( ModuleConstants.hasOwnProperty( aGlobalName)) {
-                        theToInit[ aGlobalName] = ModuleConstants[ aGlobalName];
-                    }
-                }
-            };
-
-
-
-
-
-
-            var aTypesRegistry_Prototype = (function() {
-
-
-                var aPrototype = {};
-
-                pgInitFromModuleConstants( aPrototype);
-
-
-
-
-                aPrototype._v_Type = "TypesRegistry";
-
-                aPrototype._v_Prototype_TypesRegistry = aPrototype;
-
-                aPrototype._v_Module = null;
-
-
-                aPrototype._v_Title = null;
-
-                aPrototype._v_ModulesByFullName = null;
-
-
-
-
-
-
-
-                var _pInit = function( theTitle) {
-
-                    this._pInit_TypesRegistry( theTitle);
-                };
-                if( _pInit){}/* CQT */
-                aPrototype._pInit = _pInit;
-
-
-
-
-
-
-
-                var _pInit_TypesRegistry = function( theTitle) {
-
-                    this._v_Prototype = aPrototype;
-                    this._v_Type      = this._v_Prototype._v_Type;
-                    this._v_Module    = aPrototype._v_Module;
-
-                    this._v_Title = theTitle;
-                    if( !this._v_Title) {
-                        this._v_Title = this.TYPESREGISTRYDEFAULTNAME;
-                    }
-
-                    this._v_ModulesByFullName = { };
-                };
-                if( _pInit_TypesRegistry){}/* CQT */
-                aPrototype._pInit_TypesRegistry = _pInit_TypesRegistry;
-
-
-
-
-
-
-                var fFullTypeNameString = function() {
-
-                    var aFullTypeName = this._v_Module.ModuleFullName + "." + this._v_Type;
-                    if( aFullTypeName){}/* CQT */
-
-                    return aFullTypeName;
-                };
-                if( fFullTypeNameString){}/* CQT */
-                aPrototype.fFullTypeNameString = fFullTypeNameString;
-
-
-
-
-
-
-                var fIdentifyingJSON = function() {
-
-                    var aIdentifiyingJSON = {
-                        "module": this._v_Module.ModuleFullName,
-                        "type": this._v_Type
-                    };
-                    if( aIdentifiyingJSON){}/* CQT */
-                    return aIdentifiyingJSON;
-                };
-                if( fIdentifyingJSON){}/* CQT */
-                aPrototype.fIdentifyingJSON = fIdentifyingJSON;
-
-
-
-
-
-
-                var fIdentifyingString = function() {
-
-                    var aIdentifyingJSON = this.fIdentifyingJSON();
-
-                    var aIdentifyingString = JSON.stringify( aIdentifyingJSON);
-                    if( aIdentifyingString){}/* CQT */
-
-                    return aIdentifyingString;
-                };
-                if( fIdentifyingString){}/* CQT */
-                aPrototype.fIdentifyingString = fIdentifyingString;
-
-
-
-
-
-
-
-                var fIdentifyingWithTitleJSON = function() {
-
-                    var aIdentifyingJSON = this.fIdentifyingJSON();
-
-                    aIdentifyingJSON[ "title"] = this._v_Title;
-
-                    return aIdentifyingJSON;
-                };
-                if( fIdentifyingWithTitleJSON){}/* CQT */
-                aPrototype.fIdentifyingWithTitleJSON = fIdentifyingWithTitleJSON;
-
-
-
-
-
-
-                var fIdentifyingWithTitleString = function() {
-
-                    var aIdentifyingJSON = this.fIdentifyingWithTitleJSON();
-
-                    var aIdentifyingString = JSON.stringify( aIdentifyingJSON);
-                    if( aIdentifyingString){}/* CQT */
-
-                    return aIdentifyingString;
-                };
-                if( fIdentifyingWithTitleString){}/* CQT */
-                aPrototype.fIdentifyingWithTitleString = fIdentifyingWithTitleString;
-
-
-
-
-
-
-
-
-
-
-                var fToResultJSON = function( theCommonObjects, theAlready) {
-                    if( !( theAlready == null)) {
-                        if( theAlready.fAlready( this)){
-                            return this.fIdentifyingJSON();
-                        }
-                    }
-
-                    var aResultJSON = this.fIdentifyingWithTitleJSON();
-                    if( aResultJSON){}/* CQT */
-
-                    return aResultJSON;
-                };
-                if( fToResultJSON){}/* CQT */
-                aPrototype.fToResultJSON = fToResultJSON;
-
-
-
-
-
-
-
-
-
-
-
-                var fRegisterModule = function( theModule) {
-                    if( !theModule) {
-                        return false;
-                    }
-
-                    var aModuleFullName = theModule.ModuleFullName;
-                    if( !aModuleFullName) {
-                        return false;
-                    }
-
-                    var anAlreadyRegisteredModule =  this._v_ModulesByFullName[ aModuleFullName];
-                    if( !anAlreadyRegisteredModule) {
-                        console.log( "\nAttempt to register another module " + aModuleFullName + "\n");
-                        return false;
-                    }
-
-
-                    this._v_ModulesByFullName[ aModuleFullName] = theModule;
-
-                    return true;
-                };
-                if( fRegisterModule){}/* CQT */
-                aPrototype.fRegisterModule = fRegisterModule;
-
-
-
-
-
-
-
-
-                var fRegisteredModule = function( theModuleFullName) {
-                    if( !theModuleFullName) {
-                        return null;
-                    }
-
-
-                    var aRegisteredModule =  this._v_ModulesByFullName[ theModuleFullName];
-                    if( !aRegisteredModule) {
-                        return null;
-                    }
-
-                    return aRegisteredModule;
-                };
-                if( fRegisteredModule){}/* CQT */
-                aPrototype.fRegisteredModule = fRegisteredModule;
-
-
-
-
-
-
-
-            return aPrototype;
-
-        })();
-
-
-
-
-        var TypesRegistry_Constructor = function( theTitle) {
-            this._v_Prototype = null;
-            this._v_Type      = null;
-            this._v_Module    = null;
-
-            this._v_Title = null;
-
-            this._v_ModulesByFullName = null;
-
-            this._pInit_TypesRegistry( theTitle);
-        };
-        TypesRegistry_Constructor.prototype = aTypesRegistry_Prototype;
-
-
-
-
-
-        var TypesRegistry_SuperPrototypeConstructor = function() {
-            this._v_Prototype = aTypesRegistry_Prototype;
-            this._v_Type      = null;
-            this._v_Module    = null;
-
-            this._v_Title     = null;
-
-            this._v_ModulesByFullName = null;
-        };
-        TypesRegistry_SuperPrototypeConstructor.prototype = aTypesRegistry_Prototype;
-
-
-
-        var aModule = {
-            "TypesRegistry_Prototype": aTypesRegistry_Prototype,
-            "TypesRegistry_Constructor": TypesRegistry_Constructor,
-            "TypesRegistry_SuperPrototypeConstructor": TypesRegistry_SuperPrototypeConstructor
-        };
-        pgInitFromModuleConstants( aModule);
-        aModule.ModuleName     = ModuleName;
-        aModule.ModulePackages = ModulePackages;
-        aModule.ModuleFullName = ModuleFullName;
-
-        aTypesRegistry_Prototype._v_Module = aModule;
-
-
-
-
-        return aModule;
-    };
-
-
-
-
-    var aModule = aMod_definer();
-
-    var aService = new aModule.TypesRegistry_Constructor();
-    if( aService){}/* CQT */
-
-    return aService;
-
-});
-}
-
-
-
-
-
-
-
-;/*
- * decoratesystemprototypes_svce.js
- *
- * Created @author Antonio Carrasco Valero 201412070820
- *
- *
- ***************************************************************************
-
- Copyright 2014 2015 2016 Antonio Carrasco Valero
- Javascript for core modules including a base prototype and prototypes hierarchy, intended to be reused on the Browser as core for i.e. Angular Controllers and Services, as in the uiwire component. Licensed under EUPL  http://www.uiwire.org
-
-Licensed under the EUPL, Version 1.1 only (the "Licence");
-You may not use this work except in compliance with the
-Licence.
-You may obtain a copy of the Licence at:
-https://joinup.ec.europa.eu/software/page/eupl/licence-eupl
-Unless required by applicable law or agreed to in
-writing, software distributed under the Licence is
-distributed on an "AS IS" basis,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
-express or implied.
-See the Licence for the specific language governing
-permissions and limitations under the Licence.
- {{License2}}
-
- {{Licensed1}}
- {{Licensed2}}
-
- ***************************************************************************
- *
- */
-
-
-
-
-
-function ModuleFactory_DecoratesystemprototypesSvce() {
-
-    'use strict';
-
-    return ( function(){
-
-
-
-        var aMod_definer = function() {
-
-
-            var ModuleName     = "decoratesystemprototypes_svce";
-            var ModulePackages = "utils";
-            var ModuleFullName = ModulePackages + "/" + ModuleName;
-
-
-            if( !( typeof FG_logModLoads == "undefined") && ( typeof FG_logModLoads == "function") && FG_logModLoads()) { FG_logModLoads(ModuleFullName);}
-
-
-
-
-
-
-            var pgInitWithModuleConstants = function( theToInit) {
-
-                if( !theToInit) {
-                }
-            };
-
-
-
-
-            var ModuleConstants = {};
-            pgInitWithModuleConstants( ModuleConstants);
-
-
-
-
-            var pgInitFromModuleConstants = function( theToInit) {
-                if( !theToInit) {
-                    return;
-                }
-
-                for( var aGlobalName in ModuleConstants) {
-                    if( ModuleConstants.hasOwnProperty( aGlobalName)) {
-                        theToInit[ aGlobalName] = ModuleConstants[ aGlobalName];
-                    }
-                }
-            };
-
-
-
-
-            var aModule = { };
-            pgInitFromModuleConstants( aModule);
-            aModule.ModuleName     = ModuleName;
-            aModule.ModulePackages = ModulePackages;
-            aModule.ModuleFullName = ModuleFullName;
-
-
-
-
-
-
-            var fStringExtend = function( theString, theLen) {
-
-                if( !theLen) {
-                    return "";
-                }
-
-                var aThisLen = theString.length;
-                if( !aThisLen) {
-                    return "";
-                }
-
-                var aSource = theString;
-                var aNumRepeats = Math.floor( theLen / aThisLen);
-                aNumRepeats += 1;
-                if( aNumRepeats > 1) {
-
-                    if( aNumRepeats > 10000) {
-                        aNumRepeats = 10000;
-                    }
-                    aSource = Array.apply(null, new Array( aNumRepeats)).map(String.prototype.valueOf, theString).join( "");
-                }
-
-                var aExtended = aSource.slice( 0, theLen);
-                if( aExtended){}/* CQT */
-
-                return aExtended;
-            };
-            if( fStringExtend){}/* CQT */
-            aModule.fStringExtend = fStringExtend;
-
-
-
-
-
-            if( !String.prototype.Xtnd) {
-                String.prototype.Xtnd = function( theLen) {
-
-                    return aModule.fStringExtend( this, theLen);
-                };
-            }
-
-
-
-
-
-            return aModule;
-        };
-
-
-
-
-
-
-        var aService = aMod_definer();
-        if( aService){}/* CQT */
-
-        return aService;
-
-    });
-}
-
-
-
-
-
-
-
-;
-/*
- * exceptiondetails_svce.js
- *
- * Created @author Antonio Carrasco Valero 201409301309
- *
- *
- ***************************************************************************
-
- Copyright 2014 2015 2016 Antonio Carrasco Valero
- Javascript for core modules including a base prototype and prototypes hierarchy, intended to be reused on the Browser as core for i.e. Angular Controllers and Services, as in the uiwire component. Licensed under EUPL  http://www.uiwire.org
-
-Licensed under the EUPL, Version 1.1 only (the "Licence");
-You may not use this work except in compliance with the
-Licence.
-You may obtain a copy of the Licence at:
-https://joinup.ec.europa.eu/software/page/eupl/licence-eupl
-Unless required by applicable law or agreed to in
-writing, software distributed under the Licence is
-distributed on an "AS IS" basis,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
-express or implied.
-See the Licence for the specific language governing
-permissions and limitations under the Licence.
- {{License2}}
-
- {{Licensed1}}
- {{Licensed2}}
-
- ***************************************************************************
- *
- */
-
-
-
-
-
-function ModuleFactory_ExceptionDetailsSvce() {
-
-    'use strict';
-
-
-    return ( function(){
-
-
-
-
-
-        var aMod_definer = function() {
-
-
-            var ModuleName     = "exceptiondetails_svce";
-            var ModulePackages = "utils";
-            var ModuleFullName = ModulePackages + "/" + ModuleName;
-
-
-            if( !( typeof FG_logModLoads == "undefined") && ( typeof FG_logModLoads == "function") && FG_logModLoads()) { FG_logModLoads(ModuleFullName);}
-
-
-
-
-
-
-
-
-
-
-
-            var pgInitWithModuleConstants = function( theToInit) {
-
-                if( !theToInit) {
-                }
-            };
-
-
-
-
-
-            var ModuleConstants = {};
-            pgInitWithModuleConstants( ModuleConstants);
-
-
-
-
-            var pgInitFromModuleConstants = function( theToInit) {
-                if( !theToInit) {
-                    return;
-                }
-
-                for( var aGlobalName in ModuleConstants) {
-                    if( ModuleConstants.hasOwnProperty( aGlobalName)) {
-                        theToInit[ aGlobalName] = ModuleConstants[ aGlobalName];
-                    }
-                }
-            };
-
-
-
-
-
-
-
-            var aModule = { };
-            pgInitFromModuleConstants( aModule);
-            aModule.ModuleName     = ModuleName;
-            aModule.ModulePackages = ModulePackages;
-            aModule.ModuleFullName = ModuleFullName;
-
-
-
-
-
-
-            var fExceptionDetail = function( theException) {
-                if( !theException) {
-                    return null;
-                }
-
-
-                var anExceptionDetail = {
-                    exception: theException.toString()
-                };
-
-
-                var anExceptionTrace = theM_stacktrace( { e: theException});
-                if( anExceptionTrace) {
-                    anExceptionDetail.trace = anExceptionTrace;
-                }
-
-                var aRecord = theException._v_Record;
-                if( aRecord) {
-                    if( aRecord.fIdentifyingJSON) {
-                        aRecord = aRecord.fIdentifyingJSON();
-                    }
-                    else {
-                        if( aRecord.fAsLogObject) {
-                            aRecord = aRecord.fAsLogObject();
-                        }
-                    }
-                    if( aRecord) {
-                        anExceptionDetail.recex = aRecord;
-                    }
-                }
-
-                if( this.LOGEXCEPTIONDETAILS) {
-                    console.log( "exception:" + anExceptionDetail.exception);
-                    console.log( anExceptionDetail.recex);
-                    console.log( anExceptionDetail.trace);
-                }
-
-                anExceptionDetail.fIdentifyingJSON = function() {
-                    return anExceptionDetail;
-                };
-
-                return anExceptionDetail;
-            };
-            if( fExceptionDetail){}/* CQT */
-            aModule.fExceptionDetail = fExceptionDetail;
-
-
-
-
-
-
-            return aModule;
-        };
-
-
-
-
-
-
-        var aService = aMod_definer();
-        if( aService){}/* CQT */
-
-        return aService;
-
-    });
-}
-
-
-
-
-
-
-;// Domain Public by Eric Wendelin http://www.eriwen.com/ (2008)
-//                  Luke Smith http://lucassmith.name/ (2008)
-//                  Loic Dachary <loic@dachary.org> (2008)
-//                  Johan Euphrosine <proppy@aminche.com> (2008)
-//                  Oyvind Sean Kinsey http://kinsey.no/blog (2010)
-//                  Victor Homyakov <victor-homyakov@users.sourceforge.net> (2010)
-/*global module, exports, define, ActiveXObject*/
-(function(global, factory) {
-    if (typeof exports === 'object') {
-        // Node
-        module.exports = factory();
-    } else if (typeof define === 'function' && define.amd) {
-        // AMD
-        define(factory);
-    } else {
-        // Browser globals
-        global.printStackTrace = factory();
-    }
-}(this, function() {
-    /**
-     * Main function giving a function stack trace with a forced or passed in Error
-     *
-     * @cfg {Error} e The error to create a stacktrace from (optional)
-     * @cfg {Boolean} guess If we should try to resolve the names of anonymous functions
-     * @return {Array} of Strings with functions, lines, files, and arguments where possible
-     */
-    function printStackTrace(options) {
-        options = options || {guess: true};
-        var ex = options.e || null, guess = !!options.guess, mode = options.mode || null;
-        var p = new printStackTrace.implementation(), result = p.run(ex, mode);
-        return (guess) ? p.guessAnonymousFunctions(result) : result;
-    }
-
-    printStackTrace.implementation = function() {
-    };
-
-    printStackTrace.implementation.prototype = {
-        /**
-         * @param {Error} [ex] The error to create a stacktrace from (optional)
-         * @param {String} [mode] Forced mode (optional, mostly for unit tests)
-         */
-        run: function(ex, mode) {
-            ex = ex || this.createException();
-            mode = mode || this.mode(ex);
-            if (mode === 'other') {
-                return this.other(arguments.callee);
-            } else {
-                return this[mode](ex);
-            }
-        },
-
-        createException: function() {
-            try {
-                this.undef();
-            } catch (e) {
-                return e;
-            }
-        },
-
-        /**
-         * Mode could differ for different exception, e.g.
-         * exceptions in Chrome may or may not have arguments or stack.
-         *
-         * @return {String} mode of operation for the exception
-         */
-        mode: function(e) {
-            if (e['arguments'] && e.stack) {
-                return 'chrome';
-            }
-
-            if (e.stack && e.sourceURL) {
-                return 'safari';
-            }
-
-            if (e.stack && e.number) {
-                return 'ie';
-            }
-
-            if (e.stack && e.fileName) {
-                return 'firefox';
-            }
-
-            if (e.message && e['opera#sourceloc']) {
-                // e.message.indexOf("Backtrace:") > -1 -> opera9
-                // 'opera#sourceloc' in e -> opera9, opera10a
-                // !e.stacktrace -> opera9
-                if (!e.stacktrace) {
-                    return 'opera9'; // use e.message
-                }
-                if (e.message.indexOf('\n') > -1 && e.message.split('\n').length > e.stacktrace.split('\n').length) {
-                    // e.message may have more stack entries than e.stacktrace
-                    return 'opera9'; // use e.message
-                }
-                return 'opera10a'; // use e.stacktrace
-            }
-
-            if (e.message && e.stack && e.stacktrace) {
-                // e.stacktrace && e.stack -> opera10b
-                if (e.stacktrace.indexOf("called from line") < 0) {
-                    return 'opera10b'; // use e.stacktrace, format differs from 'opera10a'
-                }
-                // e.stacktrace && e.stack -> opera11
-                return 'opera11'; // use e.stacktrace, format differs from 'opera10a', 'opera10b'
-            }
-
-            if (e.stack && !e.fileName) {
-                // Chrome 27 does not have e.arguments as earlier versions,
-                // but still does not have e.fileName as Firefox
-                return 'chrome';
-            }
-
-            return 'other';
-        },
-
-        /**
-         * Given a context, function name, and callback function, overwrite it so that it calls
-         * printStackTrace() first with a callback and then runs the rest of the body.
-         *
-         * @param {Object} context of execution (e.g. window)
-         * @param {String} functionName to instrument
-         * @param {Function} callback function to call with a stack trace on invocation
-         */
-        instrumentFunction: function(context, functionName, callback) {
-            context = context || window;
-            var original = context[functionName];
-            context[functionName] = function instrumented() {
-                callback.call(this, printStackTrace().slice(4));
-                return context[functionName]._instrumented.apply(this, arguments);
-            };
-            context[functionName]._instrumented = original;
-        },
-
-        /**
-         * Given a context and function name of a function that has been
-         * instrumented, revert the function to it's original (non-instrumented)
-         * state.
-         *
-         * @param {Object} context of execution (e.g. window)
-         * @param {String} functionName to de-instrument
-         */
-        deinstrumentFunction: function(context, functionName) {
-            if (context[functionName].constructor === Function &&
-                context[functionName]._instrumented &&
-                context[functionName]._instrumented.constructor === Function) {
-                context[functionName] = context[functionName]._instrumented;
-            }
-        },
-
-        /**
-         * Given an Error object, return a formatted Array based on Chrome's stack string.
-         *
-         * @param e - Error object to inspect
-         * @return Array<String> of function calls, files and line numbers
-         */
-        chrome: function(e) {
-            return (e.stack + '\n')
-                .replace(/^[\s\S]+?\s+at\s+/, ' at ') // remove message
-                .replace(/^\s+(at eval )?at\s+/gm, '') // remove 'at' and indentation
-                .replace(/^([^\(]+?)([\n$])/gm, '{anonymous}() ($1)$2')
-                .replace(/^Object.<anonymous>\s*\(([^\)]+)\)/gm, '{anonymous}() ($1)')
-                .replace(/^(.+) \((.+)\)$/gm, '$1@$2')
-                .split('\n')
-                .slice(0, -1);
-        },
-
-        /**
-         * Given an Error object, return a formatted Array based on Safari's stack string.
-         *
-         * @param e - Error object to inspect
-         * @return Array<String> of function calls, files and line numbers
-         */
-        safari: function(e) {
-            return e.stack.replace(/\[native code\]\n/m, '')
-                .replace(/^(?=\w+Error\:).*$\n/m, '')
-                .replace(/^@/gm, '{anonymous}()@')
-                .split('\n');
-        },
-
-        /**
-         * Given an Error object, return a formatted Array based on IE's stack string.
-         *
-         * @param e - Error object to inspect
-         * @return Array<String> of function calls, files and line numbers
-         */
-        ie: function(e) {
-            return e.stack
-                .replace(/^\s*at\s+(.*)$/gm, '$1')
-                .replace(/^Anonymous function\s+/gm, '{anonymous}() ')
-                .replace(/^(.+)\s+\((.+)\)$/gm, '$1@$2')
-                .split('\n')
-                .slice(1);
-        },
-
-        /**
-         * Given an Error object, return a formatted Array based on Firefox's stack string.
-         *
-         * @param e - Error object to inspect
-         * @return Array<String> of function calls, files and line numbers
-         */
-        firefox: function(e) {
-            return e.stack.replace(/(?:\n@:0)?\s+$/m, '')
-                .replace(/^(?:\((\S*)\))?@/gm, '{anonymous}($1)@')
-                .split('\n');
-        },
-
-        opera11: function(e) {
-            var ANON = '{anonymous}', lineRE = /^.*line (\d+), column (\d+)(?: in (.+))? in (\S+):$/;
-            var lines = e.stacktrace.split('\n'), result = [];
-
-            for (var i = 0, len = lines.length; i < len; i += 2) {
-                var match = lineRE.exec(lines[i]);
-                if (match) {
-                    var location = match[4] + ':' + match[1] + ':' + match[2];
-                    var fnName = match[3] || "global code";
-                    fnName = fnName.replace(/<anonymous function: (\S+)>/, "$1").replace(/<anonymous function>/, ANON);
-                    result.push(fnName + '@' + location + ' -- ' + lines[i + 1].replace(/^\s+/, ''));
-                }
-            }
-
-            return result;
-        },
-
-        opera10b: function(e) {
-            // "<anonymous function: run>([arguments not available])@file://localhost/G:/js/stacktrace.js:27\n" +
-            // "printStackTrace([arguments not available])@file://localhost/G:/js/stacktrace.js:18\n" +
-            // "@file://localhost/G:/js/test/functional/testcase1.html:15"
-            var lineRE = /^(.*)@(.+):(\d+)$/;
-            var lines = e.stacktrace.split('\n'), result = [];
-
-            for (var i = 0, len = lines.length; i < len; i++) {
-                var match = lineRE.exec(lines[i]);
-                if (match) {
-                    var fnName = match[1] ? (match[1] + '()') : "global code";
-                    result.push(fnName + '@' + match[2] + ':' + match[3]);
-                }
-            }
-
-            return result;
-        },
-
-        /**
-         * Given an Error object, return a formatted Array based on Opera 10's stacktrace string.
-         *
-         * @param e - Error object to inspect
-         * @return Array<String> of function calls, files and line numbers
-         */
-        opera10a: function(e) {
-            // "  Line 27 of linked script file://localhost/G:/js/stacktrace.js\n"
-            // "  Line 11 of inline#1 script in file://localhost/G:/js/test/functional/testcase1.html: In function foo\n"
-            var ANON = '{anonymous}', lineRE = /Line (\d+).*script (?:in )?(\S+)(?:: In function (\S+))?$/i;
-            var lines = e.stacktrace.split('\n'), result = [];
-
-            for (var i = 0, len = lines.length; i < len; i += 2) {
-                var match = lineRE.exec(lines[i]);
-                if (match) {
-                    var fnName = match[3] || ANON;
-                    result.push(fnName + '()@' + match[2] + ':' + match[1] + ' -- ' + lines[i + 1].replace(/^\s+/, ''));
-                }
-            }
-
-            return result;
-        },
-
-        // Opera 7.x-9.2x only!
-        opera9: function(e) {
-            // "  Line 43 of linked script file://localhost/G:/js/stacktrace.js\n"
-            // "  Line 7 of inline#1 script in file://localhost/G:/js/test/functional/testcase1.html\n"
-            var ANON = '{anonymous}', lineRE = /Line (\d+).*script (?:in )?(\S+)/i;
-            var lines = e.message.split('\n'), result = [];
-
-            for (var i = 2, len = lines.length; i < len; i += 2) {
-                var match = lineRE.exec(lines[i]);
-                if (match) {
-                    result.push(ANON + '()@' + match[2] + ':' + match[1] + ' -- ' + lines[i + 1].replace(/^\s+/, ''));
-                }
-            }
-
-            return result;
-        },
-
-        // Safari 5-, IE 9-, and others
-        other: function(curr) {
-            var ANON = '{anonymous}', fnRE = /function(?:\s+([\w$]+))?\s*\(/, stack = [], fn, args, maxStackSize = 10;
-            var slice = Array.prototype.slice;
-            while (curr && stack.length < maxStackSize) {
-                fn = fnRE.test(curr.toString()) ? RegExp.$1 || ANON : ANON;
-                try {
-                    args = slice.call(curr['arguments'] || []);
-                } catch (e) {
-                    args = ['Cannot access arguments: ' + e];
-                }
-                stack[stack.length] = fn + '(' + this.stringifyArguments(args) + ')';
-                try {
-                    curr = curr.caller;
-                } catch (e) {
-                    stack[stack.length] = 'Cannot access caller: ' + e;
-                    break;
-                }
-            }
-            return stack;
-        },
-
-        /**
-         * Given arguments array as a String, substituting type names for non-string types.
-         *
-         * @param {Arguments,Array} args
-         * @return {String} stringified arguments
-         */
-        stringifyArguments: function(args) {
-            var result = [];
-            var slice = Array.prototype.slice;
-            for (var i = 0; i < args.length; ++i) {
-                var arg = args[i];
-                if (arg === undefined) {
-                    result[i] = 'undefined';
-                } else if (arg === null) {
-                    result[i] = 'null';
-                } else if (arg.constructor) {
-                    // TODO constructor comparison does not work for iframes
-                    if (arg.constructor === Array) {
-                        if (arg.length < 3) {
-                            result[i] = '[' + this.stringifyArguments(arg) + ']';
-                        } else {
-                            result[i] = '[' + this.stringifyArguments(slice.call(arg, 0, 1)) + '...' + this.stringifyArguments(slice.call(arg, -1)) + ']';
-                        }
-                    } else if (arg.constructor === Object) {
-                        result[i] = '#object';
-                    } else if (arg.constructor === Function) {
-                        result[i] = '#function';
-                    } else if (arg.constructor === String) {
-                        result[i] = '"' + arg + '"';
-                    } else if (arg.constructor === Number) {
-                        result[i] = arg;
-                    } else {
-                        result[i] = '?';
-                    }
-                }
-            }
-            return result.join(',');
-        },
-
-        sourceCache: {},
-
-        /**
-         * @return {String} the text from a given URL
-         */
-        ajax: function(url) {
-            var req = this.createXMLHTTPObject();
-            if (req) {
-                try {
-                    req.open('GET', url, false);
-                    //req.overrideMimeType('text/plain');
-                    //req.overrideMimeType('text/javascript');
-                    req.send(null);
-                    //return req.status == 200 ? req.responseText : '';
-                    return req.responseText;
-                } catch (e) {
-                }
-            }
-            return '';
-        },
-
-        /**
-         * Try XHR methods in order and store XHR factory.
-         *
-         * @return {XMLHttpRequest} XHR function or equivalent
-         */
-        createXMLHTTPObject: function() {
-            var xmlhttp, XMLHttpFactories = [
-                function() {
-                    return new XMLHttpRequest();
-                }, function() {
-                    return new ActiveXObject('Msxml2.XMLHTTP');
-                }, function() {
-                    return new ActiveXObject('Msxml3.XMLHTTP');
-                }, function() {
-                    return new ActiveXObject('Microsoft.XMLHTTP');
-                }
-            ];
-            for (var i = 0; i < XMLHttpFactories.length; i++) {
-                try {
-                    xmlhttp = XMLHttpFactories[i]();
-                    // Use memoization to cache the factory
-                    this.createXMLHTTPObject = XMLHttpFactories[i];
-                    return xmlhttp;
-                } catch (e) {
-                }
-            }
-        },
-
-        /**
-         * Given a URL, check if it is in the same domain (so we can get the source
-         * via Ajax).
-         *
-         * @param url {String} source url
-         * @return {Boolean} False if we need a cross-domain request
-         */
-        isSameDomain: function(url) {
-            return typeof location !== "undefined" && url.indexOf(location.hostname) !== -1; // location may not be defined, e.g. when running from nodejs.
-        },
-
-        /**
-         * Get source code from given URL if in the same domain.
-         *
-         * @param url {String} JS source URL
-         * @return {Array} Array of source code lines
-         */
-        getSource: function(url) {
-            // TODO reuse source from script tags?
-            if (!(url in this.sourceCache)) {
-                this.sourceCache[url] = this.ajax(url).split('\n');
-            }
-            return this.sourceCache[url];
-        },
-
-        guessAnonymousFunctions: function(stack) {
-            for (var i = 0; i < stack.length; ++i) {
-                var reStack = /\{anonymous\}\(.*\)@(.*)/,
-                    reRef = /^(.*?)(?::(\d+))(?::(\d+))?(?: -- .+)?$/,
-                    frame = stack[i], ref = reStack.exec(frame);
-
-                if (ref) {
-                    var m = reRef.exec(ref[1]);
-                    if (m) { // If falsey, we did not get any file/line information
-                        var file = m[1], lineno = m[2], charno = m[3] || 0;
-                        if (file && this.isSameDomain(file) && lineno) {
-                            var functionName = this.guessAnonymousFunction(file, lineno, charno);
-                            stack[i] = frame.replace('{anonymous}', functionName);
-                        }
-                    }
-                }
-            }
-            return stack;
-        },
-
-        guessAnonymousFunction: function(url, lineNo, charNo) {
-            var ret;
-            try {
-                ret = this.findFunctionName(this.getSource(url), lineNo);
-            } catch (e) {
-                ret = 'getSource failed with url: ' + url + ', exception: ' + e.toString();
-            }
-            return ret;
-        },
-
-        findFunctionName: function(source, lineNo) {
-            // FIXME findFunctionName fails for compressed source
-            // (more than one function on the same line)
-            // function {name}({args}) m[1]=name m[2]=args
-            var reFunctionDeclaration = /function\s+([^(]*?)\s*\(([^)]*)\)/;
-            // {name} = function ({args}) TODO args capture
-            // /['"]?([0-9A-Za-z_]+)['"]?\s*[:=]\s*function(?:[^(]*)/
-            var reFunctionExpression = /['"]?([$_A-Za-z][$_A-Za-z0-9]*)['"]?\s*[:=]\s*function\b/;
-            // {name} = eval()
-            var reFunctionEvaluation = /['"]?([$_A-Za-z][$_A-Za-z0-9]*)['"]?\s*[:=]\s*(?:eval|new Function)\b/;
-            // Walk backwards in the source lines until we find
-            // the line which matches one of the patterns above
-            var code = "", line, maxLines = Math.min(lineNo, 20), m, commentPos;
-            for (var i = 0; i < maxLines; ++i) {
-                // lineNo is 1-based, source[] is 0-based
-                line = source[lineNo - i - 1];
-                commentPos = line.indexOf('//');
-                if (commentPos >= 0) {
-                    line = line.substr(0, commentPos);
-                }
-                // TODO check other types of comments? Commented code may lead to false positive
-                if (line) {
-                    code = line + code;
-                    m = reFunctionExpression.exec(code);
-                    if (m && m[1]) {
-                        return m[1];
-                    }
-                    m = reFunctionDeclaration.exec(code);
-                    if (m && m[1]) {
-                        //return m[1] + "(" + (m[2] || "") + ")";
-                        return m[1];
-                    }
-                    m = reFunctionEvaluation.exec(code);
-                    if (m && m[1]) {
-                        return m[1];
-                    }
-                }
-            }
-            return '(?)';
-        }
-    };
-
-    return printStackTrace;
-}));
 
 //# sourceMappingURL=prettytype.js.map

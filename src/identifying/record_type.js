@@ -40,7 +40,7 @@ function ModuleFactory_RecordType() {
     'use strict';
 
     return ( function( theSS_typesregistry,
-              theSS_Overrider) {
+                       theSS_Overrider) {
 
 
         var ModuleName     = "record_type";
@@ -1489,6 +1489,7 @@ function ModuleFactory_RecordType() {
 }
 
 
+if( ModuleFactory_RecordType){}/* CQT */
 
 
 

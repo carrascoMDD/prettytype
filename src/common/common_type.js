@@ -985,7 +985,7 @@ function ModuleFactory_CommonType() {
 }
 
 
-
+if( ModuleFactory_CommonType){}/* CQT */
 
 
 
