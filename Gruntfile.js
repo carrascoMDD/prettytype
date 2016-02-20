@@ -41,6 +41,11 @@ module.exports = function(grunt) {
                 }
             }
         },
+
+
+        clean: [ "build/**/*", "dist/**/*"],
+
+
         concat : {
             options : {
                 separator: ';',
@@ -75,7 +80,8 @@ module.exports = function(grunt) {
             options: {
                 banner: '/*! <%= pkg.name %> - v<%= pkg.version %> - */\n',
                 sourceMap : true,
-                sourceMapIncludeSources : true
+                sourceMapIncludeSources : true,
+                sourceMapIn: 'build/prettytype.js.map'
             },
             build: {
                 src: '<%= concat.dist.dest %>',
@@ -92,6 +98,7 @@ module.exports = function(grunt) {
     });
 
     // Load the plugin that provides the "uglify" task.
+    grunt.loadNpmTasks('grunt-contrib-clean');
     grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-contrib-watch');

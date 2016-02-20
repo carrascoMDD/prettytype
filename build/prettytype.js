@@ -1742,7 +1742,7 @@ function ModuleFactory_CommonType() {
                 theToInit.EVENTSSETNOTFORCONSOLE = "EVENTKINDS_NOTFORCONSOLE_RESTRICTIVE";
                 theToInit.EVENTSSETNOTFORCONSOLE = "EVENTKINDS_NOTFORCONSOLE_RESTRICTIVE_NOPROMISE";
 
-                theToInit.EVENTSSETNOTFORCONSOLE = "EVENTKINDS_NOTFORCONSOLE_RESTRICTIVE_NOPROMISE";
+                theToInit.EVENTSSETNOTFORCONSOLE = "EVENTKINDS_NOTFORCONSOLE_NONE";
 
             };
 
@@ -1969,6 +1969,9 @@ function ModuleFactory_CommonType() {
                 theToInit.EVENTKINDS_NOTFORCONSOLE_ALL = theToInit.EVENTKINDS.slice();
 
                 theToInit.EVENTKINDS_NOTFORCONSOLE_DEFAULT = theToInit.EVENTKINDS_NOTFORCONSOLE_RESTRICTIVE_NOPROMISE.slice();
+
+                theToInit.EVENTKINDS_NOTFORCONSOLE_DEFAULT = theToInit.EVENTKINDS_NOTFORCONSOLE_NONE;
+
 
                 if( theToInit.EVENTSSETNOTFORCONSOLE) {
 
@@ -7720,7 +7723,7 @@ function ModuleFactory_RecordType() {
                         return this.fJSONValue_orLimited( theValue.fIdentifyingJSON());
                     }
 
-                    if( theValue.fAsLogObject) {
+                    if( theValue.fAsLogObject_limited) {
                         return theValue.fAsLogObject_limited();
                     }
 
@@ -7742,6 +7745,10 @@ function ModuleFactory_RecordType() {
 
                     if( theValue.fLogString_limited) {
                         return theValue.fLogString_limited();
+                    }
+
+                    if( theValue.fAsLogObject) {
+                        return theValue.fAsLogObject();
                     }
 
                     if( theValue.fToResultJSON) {

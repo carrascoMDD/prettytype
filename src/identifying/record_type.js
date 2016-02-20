@@ -1306,7 +1306,7 @@ function ModuleFactory_RecordType() {
                         return this.fJSONValue_orLimited( theValue.fIdentifyingJSON());
                     }
 
-                    if( theValue.fAsLogObject) {
+                    if( theValue.fAsLogObject_limited) {
                         return theValue.fAsLogObject_limited();
                     }
 
@@ -1328,6 +1328,10 @@ function ModuleFactory_RecordType() {
 
                     if( theValue.fLogString_limited) {
                         return theValue.fLogString_limited();
+                    }
+
+                    if( theValue.fAsLogObject) {
+                        return theValue.fAsLogObject();
                     }
 
                     if( theValue.fToResultJSON) {
