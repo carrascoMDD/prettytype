@@ -2407,7 +2407,6 @@ function ModuleFactory_CommonType() {
 
 
 
-
                 var fFirstDiff = function( theActualValue, theCheckValue) {
 
                     if( !( typeof theCheckValue == "undefined") &&  ( theCheckValue === this.DONOTCOMPAREVALUESYMBOL)) {
@@ -2475,9 +2474,48 @@ function ModuleFactory_CommonType() {
 
 
 
+                    var aOneLen   = theActualValue.length;
+                    var aOtherLen = theCheckValue.length;
+
+                    if( ( typeof aOneLen == "number") || ( typeof aOneLen == "number")) {
+
+                        if( ( typeof aOneLen == "undefined") || ( typeof aOneLen == "undefined")) {
+                            return this.VALUEDIFFATTOP;
+                        }
+
+                        if( !( aOneLen == aOtherLen)) {
+                            return this.VALUEDIFFATTOP;
+                        }
+
+                        if( aOneLen) {
+                            for( var aSubIdx=0; aSubIdx < aOneLen; aSubIdx++) {
+                                var aOneListSub   = theActualValue[ aSubIdx];
+                                var aOtherListSub = theCheckValue[ aSubIdx];
+
+                                var aSubsListDiff = this.fFirstDiff( aOneListSub, aOtherListSub);
+                                if( aSubsListDiff) {
+
+                                    if( aSubsListDiff == this.VALUEDIFFATTOP) {
+                                        return [ aSubIdx];
+                                    }
+
+                                    aSubsListDiff.unshift( aSubIdx);
+
+                                    return aSubsListDiff;
+                                }
+                            }
+                        }
+                    }
+
+
+
+
                     var someOneKeys   = Object.keys( theActualValue);
                     var someOtherKeys = Object.keys( theCheckValue);
 
+                    if( ( typeof someOneKeys == "undefined") || ( typeof someOtherKeys == "undefined")) {
+                        return this.VALUEDIFFATTOP;
+                    }
 
                     var allKeys = someOneKeys.slice();
                     var aNumOtherKeys = someOtherKeys.length;
@@ -2493,69 +2531,33 @@ function ModuleFactory_CommonType() {
 
                     var aNumKeys = allKeys.length;
 
-                    for( var aKeyIdx=0; aKeyIdx < aNumKeys; aKeyIdx++) {
-                        var aKey = allKeys[ aKeyIdx];
+                    if( aNumKeys) {
+                        for( var aKeyIdx=0; aKeyIdx < aNumKeys; aKeyIdx++) {
+                            var aKey = allKeys[ aKeyIdx];
 
-                        if( !theActualValue.hasOwnProperty( aKey)) {
-                            return [ aKey];
-                        }
-
-                        if( !theCheckValue.hasOwnProperty( aKey)) {
-                            return [ aKey];
-                        }
-
-
-                        var aOneSub   = theActualValue[ aKey];
-                        var aOtherSub = theCheckValue[ aKey];
-
-                        var aSubsDiff = this.fFirstDiff( aOneSub, aOtherSub);
-                        if( aSubsDiff) {
-
-                            if( aSubsDiff == this.VALUEDIFFATTOP) {
+                            if( !theActualValue.hasOwnProperty( aKey)) {
                                 return [ aKey];
                             }
 
-                            aSubsDiff.push( aKey);
-                            aSubsDiff.reverse();
-
-                            return aSubsDiff;
-                        }
-                    }
-
-
-
-
-
-                    var aOneLen   = theActualValue.length;
-                    var aOtherLen = theCheckValue.length;
-
-                    if( ( typeof aOneLen == "undefined") && ( typeof aOneLen == "undefined")) {
-                        return null;
-                    }
-
-                    if( ( typeof aOneLen == "undefined") || ( typeof aOneLen == "undefined")) {
-                        return this.VALUEDIFFATTOP;
-                    }
-
-                    if( !( aOneLen == aOtherLen)) {
-                        return this.VALUEDIFFATTOP;
-                    }
-
-                    for( var aSubIdx=0; aSubIdx < aOneLen; aSubIdx++) {
-                        var aOneListSub   = theActualValue[ aSubIdx];
-                        var aOtherListSub = theCheckValue[ aSubIdx];
-
-                        var aSubsListDiff = this.fFirstDiff( aOneListSub, aOtherListSub);
-                        if( aSubsListDiff) {
-
-                            if( aSubsListDiff == this.VALUEDIFFATTOP) {
+                            if( !theCheckValue.hasOwnProperty( aKey)) {
                                 return [ aKey];
                             }
 
-                            aSubsListDiff.push( aKey);
-                            aSubsListDiff.reverse();
 
-                            return aSubsListDiff;
+                            var aOneSub   = theActualValue[ aKey];
+                            var aOtherSub = theCheckValue[ aKey];
+
+                            var aSubsDiff = this.fFirstDiff( aOneSub, aOtherSub);
+                            if( aSubsDiff) {
+
+                                if( aSubsDiff == this.VALUEDIFFATTOP) {
+                                    return [ aKey];
+                                }
+
+                                aSubsDiff.unshift( aKey);
+
+                                return aSubsDiff;
+                            }
                         }
                     }
 
@@ -3256,7 +3258,7 @@ function ModuleFactory_ProminstrType() {
 
 
 
-                var fNewDeferred = function() {
+                var fNewDeferred = function( theActor) {
 
                     var aDeferred = $q.defer();
 
@@ -3264,7 +3266,7 @@ function ModuleFactory_ProminstrType() {
 
                     this._v_PendingDeferreds.push( aDeferred);
 
-                    this.pDecorateNewDeferred( aDeferred);
+                    this.pDecorateNewDeferred( aDeferred, theActor);
 
                     return aDeferred;
                 };
@@ -3279,13 +3281,13 @@ function ModuleFactory_ProminstrType() {
 
 
 
-                var pDecorateNewDeferred = function( theDeferred) {
+                var pDecorateNewDeferred = function( theDeferred, theActor) {
 
                     if( !theDeferred) {
                         return;
                     }
 
-                    this.pDecorateNewDeferred_withFields(  theDeferred);
+                    this.pDecorateNewDeferred_withFields(  theDeferred, theActor);
                     this.pDecorateNewDeferred_withMethods( theDeferred);
                 };
                 if( pDecorateNewDeferred){}/* CQT */
@@ -3297,7 +3299,7 @@ function ModuleFactory_ProminstrType() {
 
 
 
-                var pDecorateNewDeferred_withFields = function( theDeferred) {
+                var pDecorateNewDeferred_withFields = function( theDeferred, theActor) {
 
                     if( !theDeferred) {
                         return;
@@ -3306,12 +3308,14 @@ function ModuleFactory_ProminstrType() {
                     theDeferred._v_Module = this._v_Module;
                     theDeferred._v_Type   = this.DEFERREDTYPE;
                     theDeferred._v_Id     = this.fReserveDeferredId();
-
+                   
                     theDeferred._v_Resolution       = null;
                     theDeferred._v_ResolutionMode   = null;
                     theDeferred._v_Rejection        = null;
                     theDeferred._v_RejectionMode    = null;
 
+                    theDeferred._v_PromiserActor  = theActor;
+                    theDeferred._v_ContinuerActor = theActor;
 
                 };
                 if( pDecorateNewDeferred_withFields){}/* CQT */
@@ -3349,7 +3353,16 @@ function ModuleFactory_ProminstrType() {
                             "type": theDeferred._v_Type,
                             "id":   theDeferred._v_Id
                         };
-                        if( aIdentifiyingJSON){}/* CQT */
+
+
+                        if( theDeferred._v_PromiserActor && ( typeof theDeferred._v_PromiserActor.fIdentifyingJSON == "function")) {
+                            aIdentifiyingJSON[ "promiserActor"] = theDeferred._v_PromiserActor.fIdentifyingJSON();
+                        }
+
+                        if( theDeferred._v_ContinuerActor && ( typeof theDeferred._v_ContinuerActor.fIdentifyingJSON == "function")) {
+                            aIdentifiyingJSON[ "continuerActor"] = theDeferred._v_ContinuerActor.fIdentifyingJSON();
+                        }
+
                         return aIdentifiyingJSON;
                     };
                     if( fIdentifyingJSON){}/* CQT */
@@ -3414,7 +3427,15 @@ function ModuleFactory_ProminstrType() {
                     var fFullTypeNameString = function() {
 
                         var aFullTypeName = theDeferred._v_Module.ModuleFullName + "." + theDeferred._v_Type;
-                        if( aFullTypeName){}/* CQT */
+
+
+                        if( theDeferred._v_PromiserActor && ( typeof theDeferred._v_PromiserActor.fFullTypeNameString == "function")) {
+                            aFullTypeName += ( " promiserActor" + theDeferred._v_PromiserActor.fFullTypeNameString());
+                        }
+
+                        if( theDeferred._v_ContinuerActor && ( typeof theDeferred._v_ContinuerActor.fIdentifyingJSON == "function")) {
+                            aFullTypeName += ( " continuerActor" + theDeferred._v_ContinuerActor.fFullTypeNameString());
+                        }
 
                         return aFullTypeName;
                     };
@@ -3517,11 +3538,33 @@ function ModuleFactory_ProminstrType() {
 
 
 
-                var fNewDeferredResolvePromise = function( theResolution, theResolutionKind) {
+                var fRecordingObj = function( theActor) {
+                    if( !theActor) {
+                        return this;
+                    }
+
+                    if( !( typeof theActor.fRecord == "function")) {
+                        return this;
+                    }
+
+                    return theActor;
+                };
+                if( fRecordingObj){}/* CQT */
+                aPrototype.fRecordingObj = fRecordingObj;
+
+
+
+
+
+
+
+
+
+                var fNewDeferredResolvePromise = function( theResolution, theResolutionKind, theActor) {
 
                     var aDeferred = this.fNewDeferred();
 
-                    this.pDeferredResolve( aDeferred, theResolution, theResolutionKind);
+                    this.pDeferredResolve( aDeferred, theResolution, theResolutionKind, theActor);
 
                     return aDeferred.promise;
                 };
@@ -3533,23 +3576,27 @@ function ModuleFactory_ProminstrType() {
 
 
 
+                
+                
+                
 
 
-                var pDeferredResolve = function( theDeferred, theResolution, theResolutionKind) {
+
+                var pDeferredResolve = function( theDeferred, theResolution, theResolutionKind, theActor) {
 
                     var aMethodName = "pDeferredResolve";
 
 
                     if( !theDeferred) {
                         if( this.LOGDEFERREDREJECT) {
-                            this.fRecord( aMethodName, this.PROMINSTEVT_WARN_NODEFERREDTORESOLVE, theDeferred, theResolutionKind, theResolution)
+                            this.fRecordingObj( theActor).fRecord( aMethodName, this.PROMINSTEVT_WARN_NODEFERREDTORESOLVE, theDeferred, theResolutionKind, theResolution)
                         }
                         return;
                     }
 
 
                     if( this._v_ResolvedDeferreds.indexOf( theDeferred) >= 0) {
-                        var aRecord = this.fRecord( aMethodName, this.PROMINSTEVT_ERR_ATTEMPTTORESOLVE_ALREADYRESOLVED, theDeferred, theResolutionKind, theResolution);
+                        var aRecord = this.fRecordingObj( theActor).fRecord( aMethodName, this.PROMINSTEVT_ERR_ATTEMPTTORESOLVE_ALREADYRESOLVED, theDeferred, theResolutionKind, theResolution);
                         /*
                         throw new theS_ProminstrException.ProminstrException_Constructor( aRecord);
                         */
@@ -3559,7 +3606,7 @@ function ModuleFactory_ProminstrType() {
 
 
                     if( this._v_RejectedDeferreds.indexOf( theDeferred) >= 0) {
-                        var otherRecord = this.fRecord( aMethodName, this.PROMINSTEVT_ERR_ATTEMPTTORESOLVE_ALREADYREJECTED, theDeferred, theResolutionKind, theResolution);
+                        var otherRecord = this.fRecordingObj( theActor).fRecord( aMethodName, this.PROMINSTEVT_ERR_ATTEMPTTORESOLVE_ALREADYREJECTED, theDeferred, theResolutionKind, theResolution);
                         /*
                         throw new theS_ProminstrException.ProminstrException_Constructor( otherRecord);
                         */
@@ -3570,12 +3617,17 @@ function ModuleFactory_ProminstrType() {
 
                     var aPendingDeferredIndex = this._v_PendingDeferreds.indexOf( theDeferred);
                     if( aPendingDeferredIndex < 0) {
-                        var anotherRecord = this.fRecord( aMethodName, this.PROMINSTEVT_ERR_ATTEMPTTORESOLVE_NOTPENDING, theDeferred, theResolutionKind, theResolution);
+                        var anotherRecord = this.fRecordingObj( theActor).fRecord( aMethodName, this.PROMINSTEVT_ERR_ATTEMPTTORESOLVE_NOTPENDING, theDeferred, theResolutionKind, theResolution);
                         /*
                         throw new theS_ProminstrException.ProminstrException_Constructor( anotherRecord);
                         */
                         console.log( anotherRecord);
                     }
+
+
+
+
+                    theDeferred._v_ContinuerActor = theActor;
 
 
 
@@ -3594,13 +3646,13 @@ function ModuleFactory_ProminstrType() {
 
 
                     if( this.LOGDEFERREDRESOLVE) {
-                        this.fRecord( aMethodName, this.PROMINSTEVT_RESOLVED, theDeferred, theResolutionKind, theResolution);
+                        this.fRecordingObj( theActor).fRecord( aMethodName, this.PROMINSTEVT_RESOLVED, theDeferred, theResolutionKind, theResolution);
                     }
 
 
                     if( typeof theResolution == "undefined") {
                         if( !theDeferred.resolve) {
-                            this.fRecord( aMethodName, "!!!!ERROR !theDeferred.resolve", theDeferred, theResolutionKind, theResolution);
+                            this.fRecordingObj( theActor).fRecord( aMethodName, "!!!!ERROR !theDeferred.resolve", theDeferred, theResolutionKind, theResolution);
                             return;
                         }
 
@@ -3626,11 +3678,11 @@ function ModuleFactory_ProminstrType() {
 
 
 
-                var fNewDeferredResolveWithNothingPromise = function() {
+                var fNewDeferredResolveWithNothingPromise = function( theActor) {
 
                     var aDeferred = this.fNewDeferred();
 
-                    this.pDeferredResolveWithNothing( aDeferred);
+                    this.pDeferredResolveWithNothing( aDeferred, theActor);
 
                     return aDeferred.promise;
                 };
@@ -3641,8 +3693,10 @@ function ModuleFactory_ProminstrType() {
 
 
 
-                var pDeferredResolveWithNothing = function( theDeferred) {
-                    this.pDeferredResolve( theDeferred, undefined, this.RESOLUTIONKIND_WITHNOTHING);
+                var pDeferredResolveWithNothing = function( theDeferred, theActor) {
+
+                    this.pDeferredResolve( theDeferred, undefined, this.RESOLUTIONKIND_WITHNOTHING, theActor);
+
                 };
                 if( pDeferredResolveWithNothing){}/* CQT */
                 aPrototype.pDeferredResolveWithNothing = pDeferredResolveWithNothing;
@@ -3655,11 +3709,11 @@ function ModuleFactory_ProminstrType() {
 
 
 
-                var fNewDeferredResolveWithSomethingPromise = function() {
+                var fNewDeferredResolveWithSomethingPromise = function( theActor) {
 
                     var aDeferred = this.fNewDeferred();
 
-                    this.pDeferredResolveWithSomething( aDeferred);
+                    this.pDeferredResolveWithSomething( aDeferred, theActor);
 
                     return aDeferred.promise;
                 };
@@ -3670,8 +3724,10 @@ function ModuleFactory_ProminstrType() {
 
 
 
-                var pDeferredResolveWithSomething = function( theDeferred) {
-                    this.pDeferredResolve( theDeferred, undefined, this.RESOLUTIONKIND_WITHSOMETHING);
+                var pDeferredResolveWithSomething = function( theDeferred, theActor) {
+
+                    this.pDeferredResolve( theDeferred, undefined, this.RESOLUTIONKIND_WITHSOMETHING, theActor);
+
                 };
                 if( pDeferredResolveWithSomething){}/* CQT */
                 aPrototype.pDeferredResolveWithSomething = pDeferredResolveWithSomething;
@@ -3682,11 +3738,11 @@ function ModuleFactory_ProminstrType() {
 
 
 
-                var fNewDeferredResolveWithNullPromise = function() {
+                var fNewDeferredResolveWithNullPromise = function( theActor) {
 
                     var aDeferred = this.fNewDeferred();
 
-                    this.pDeferredResolveWithNull( aDeferred);
+                    this.pDeferredResolveWithNull( aDeferred, theActor);
 
                     return aDeferred.promise;
                 };
@@ -3700,8 +3756,10 @@ function ModuleFactory_ProminstrType() {
 
 
 
-                var pDeferredResolveWithNull = function( theDeferred) {
-                    this.pDeferredResolve( theDeferred, null, this.RESOLUTIONKIND_WITHNULL);
+                var pDeferredResolveWithNull = function( theDeferred, theActor) {
+
+                    this.pDeferredResolve( theDeferred, null, this.RESOLUTIONKIND_WITHNULL, theActor);
+
                 };
                 if( pDeferredResolveWithNull){}/* CQT */
                 aPrototype.pDeferredResolveWithNull = pDeferredResolveWithNull;
@@ -3714,11 +3772,11 @@ function ModuleFactory_ProminstrType() {
 
 
 
-                var fNewDeferredResolveWithResponsePromise = function( theResponse) {
+                var fNewDeferredResolveWithResponsePromise = function( theResponse, theActor) {
 
                     var aDeferred = this.fNewDeferred();
 
-                    this.pDeferredResolveWithResponse( aDeferred, theResponse);
+                    this.pDeferredResolveWithResponse( aDeferred, theResponse, theActor);
 
                     return aDeferred.promise;
                 };
@@ -3731,8 +3789,10 @@ function ModuleFactory_ProminstrType() {
 
 
 
-                var pDeferredResolveWithResponse = function( theDeferred, theResponse) {
-                    this.pDeferredResolve( theDeferred, theResponse, this.RESOLUTIONKIND_WITHRESPONSE);
+                var pDeferredResolveWithResponse = function( theDeferred, theResponse, theActor) {
+
+                    this.pDeferredResolve( theDeferred, theResponse, this.RESOLUTIONKIND_WITHRESPONSE, theActor);
+
                 };
                 if( pDeferredResolveWithResponse){}/* CQT */
                 aPrototype.pDeferredResolveWithResponse = pDeferredResolveWithResponse;
@@ -3748,11 +3808,11 @@ function ModuleFactory_ProminstrType() {
 
 
 
-                var fNewDeferredResolveWithRowsPromise = function( theRows) {
+                var fNewDeferredResolveWithRowsPromise = function( theRows, theActor) {
 
                     var aDeferred = this.fNewDeferred();
 
-                    this.pDeferredResolveWithRows( aDeferred, theRows);
+                    this.pDeferredResolveWithRows( aDeferred, theRows, theActor);
 
                     return aDeferred.promise;
                 };
@@ -3765,8 +3825,10 @@ function ModuleFactory_ProminstrType() {
 
 
 
-                var pDeferredResolveWithRows = function( theDeferred, theRows) {
-                    this.pDeferredResolve( theDeferred, theRows, this.RESOLUTIONKIND_WITHROWS);
+                var pDeferredResolveWithRows = function( theDeferred, theRows, theActor) {
+
+                    this.pDeferredResolve( theDeferred, theRows, this.RESOLUTIONKIND_WITHROWS, theActor);
+
                 };
                 if( pDeferredResolveWithRows){}/* CQT */
                 aPrototype.pDeferredResolveWithRows = pDeferredResolveWithRows;
@@ -3784,11 +3846,11 @@ function ModuleFactory_ProminstrType() {
 
 
 
-                var fNewDeferredResolveWithFieldsPromise = function( theFields) {
+                var fNewDeferredResolveWithFieldsPromise = function( theFields, theActor) {
 
                     var aDeferred = this.fNewDeferred();
 
-                    this.pDeferredResolveWithFields( aDeferred, theFields);
+                    this.pDeferredResolveWithFields( aDeferred, theFields, theActor);
 
                     return aDeferred.promise;
                 };
@@ -3803,8 +3865,10 @@ function ModuleFactory_ProminstrType() {
 
 
 
-                var pDeferredResolveWithFields = function( theDeferred, theFields) {
-                    this.pDeferredResolve( theDeferred, theFields, this.RESOLUTIONKIND_WITHFIELDS);
+                var pDeferredResolveWithFields = function( theDeferred, theFields, theActor) {
+
+                    this.pDeferredResolve( theDeferred, theFields, this.RESOLUTIONKIND_WITHFIELDS, theActor);
+
                 };
                 if( pDeferredResolveWithFields){}/* CQT */
                 aPrototype.pDeferredResolveWithFields = pDeferredResolveWithFields;
@@ -3820,11 +3884,11 @@ function ModuleFactory_ProminstrType() {
 
 
 
-                var fNewDeferredResolveWithSelectionIndexPromise = function( theSelectionIndex) {
+                var fNewDeferredResolveWithSelectionIndexPromise = function( theSelectionIndex, theActor) {
 
                     var aDeferred = this.fNewDeferred();
 
-                    this.pDeferredResolveWithSelectionIndex( aDeferred, theSelectionIndex);
+                    this.pDeferredResolveWithSelectionIndex( aDeferred, theSelectionIndex, theActor);
 
                     return aDeferred.promise;
                 };
@@ -3837,8 +3901,10 @@ function ModuleFactory_ProminstrType() {
 
 
 
-                var pDeferredResolveWithSelectionIndex = function( theDeferred, theSelectionIndex) {
-                    this.pDeferredResolve( theDeferred, theSelectionIndex, this.RESOLUTIONKIND_WITHSELECTIONINDEX);
+                var pDeferredResolveWithSelectionIndex = function( theDeferred, theSelectionIndex, theActor) {
+
+                    this.pDeferredResolve( theDeferred, theSelectionIndex, this.RESOLUTIONKIND_WITHSELECTIONINDEX, theActor);
+
                 };
                 if( pDeferredResolveWithSelectionIndex){}/* CQT */
                 aPrototype.pDeferredResolveWithSelectionIndex = pDeferredResolveWithSelectionIndex;
@@ -3854,11 +3920,11 @@ function ModuleFactory_ProminstrType() {
 
 
 
-                var fNewDeferredResolveWhenInDoubtPromise = function( theSomething) {
+                var fNewDeferredResolveWhenInDoubtPromise = function( theSomething, theActor) {
 
                     var aDeferred = this.fNewDeferred();
 
-                    this.pDeferredResolveWhenInDoubt( aDeferred, theSomething);
+                    this.pDeferredResolveWhenInDoubt( aDeferred, theSomething, theActor);
 
                     return aDeferred.promise;
                 };
@@ -3871,8 +3937,10 @@ function ModuleFactory_ProminstrType() {
 
 
 
-                var pDeferredResolveWhenInDoubt = function( theDeferred, theSomething) {
-                    this.pDeferredResolve( theDeferred, theSomething, this.RESOLUTIONKIND_WHENINDOUBT);
+                var pDeferredResolveWhenInDoubt = function( theDeferred, theSomething, theActor) {
+
+                    this.pDeferredResolve( theDeferred, theSomething, this.RESOLUTIONKIND_WHENINDOUBT, theActor);
+
                 };
                 if( pDeferredResolveWhenInDoubt){}/* CQT */
                 aPrototype.pDeferredResolveWhenInDoubt = pDeferredResolveWhenInDoubt;
@@ -3895,7 +3963,7 @@ function ModuleFactory_ProminstrType() {
 
 
 
-                var fNewPromiseAll = function( thePromises) {
+                var fNewPromiseAll = function( thePromises, theActor) {
 
                     var aPromiseAll = $q.all( thePromises);
                     if( aPromiseAll){}/* CQT */
@@ -3916,11 +3984,11 @@ function ModuleFactory_ProminstrType() {
 
 
 
-                var fNewDeferredRejectPromise = function( theRejection, theRejectionKind) {
+                var fNewDeferredRejectPromise = function( theRejection, theRejectionKind, theActor) {
 
                     var aDeferred = this.fNewDeferred();
 
-                    this.pDeferredReject( aDeferred, theRejection, theRejectionKind);
+                    this.pDeferredReject( aDeferred, theRejection, theRejectionKind, theActor);
 
                     return aDeferred.promise;
                 };
@@ -3933,21 +4001,21 @@ function ModuleFactory_ProminstrType() {
 
 
 
-                var pDeferredReject = function( theDeferred, theRejection, theRejectionKind) {
+                var pDeferredReject = function( theDeferred, theRejection, theRejectionKind, theActor) {
 
                     var aMethodName = "pDeferredReject";
 
 
                     if( !theDeferred) {
                         if( this.LOGDEFERREDREJECT) {
-                            this.fRecord( aMethodName, this.PROMINSTEVT_WARN_NODEFERREDTOREJECT, theDeferred, theRejectionKind, theRejection)
+                            this.fRecordingObj( theActor).fRecord( aMethodName, this.PROMINSTEVT_WARN_NODEFERREDTOREJECT, theDeferred, theRejectionKind, theRejection)
                         }
                         return;
                     }
 
 
                     if( this._v_ResolvedDeferreds.indexOf( theDeferred) >= 0) {
-                        var aRecord = this.fRecord( aMethodName, this.PROMINSTEVT_ERR_ATTEMPTTOREJECT_ALREADYRESOLVED, theDeferred, theRejectionKind, theRejection);
+                        var aRecord = this.fRecordingObj( theActor).fRecord( aMethodName, this.PROMINSTEVT_ERR_ATTEMPTTOREJECT_ALREADYRESOLVED, theDeferred, theRejectionKind, theRejection);
                         /*
                          throw new theS_ProminstrException.ProminstrException_Constructor( aRecord);*/
                         console.log( aRecord);
@@ -3955,7 +4023,7 @@ function ModuleFactory_ProminstrType() {
 
 
                     if( this._v_RejectedDeferreds.indexOf( theDeferred) >= 0) {
-                        var otherRecord = this.fRecord( aMethodName, this.PROMINSTEVT_ERR_ATTEMPTTOREJECT_ALREADYREJECTED, theDeferred, theRejectionKind, theRejection);
+                        var otherRecord = this.fRecordingObj( theActor).fRecord( aMethodName, this.PROMINSTEVT_ERR_ATTEMPTTOREJECT_ALREADYREJECTED, theDeferred, theRejectionKind, theRejection);
                         /*
                          throw new theS_ProminstrException.ProminstrException_Constructor( otherRecord);*/
                         console.log( otherRecord);
@@ -3965,13 +4033,16 @@ function ModuleFactory_ProminstrType() {
 
                     var aPendingDeferredIndex = this._v_PendingDeferreds.indexOf( theDeferred);
                     if( aPendingDeferredIndex < 0) {
-                        var anotherRecord = this.fRecord( aMethodName, this.PROMINSTEVT_ERR_ATTEMPTTOREJECT_NOTPENDING, theDeferred, theRejectionKind, theRejection);
+                        var anotherRecord = this.fRecordingObj( theActor).fRecord( aMethodName, this.PROMINSTEVT_ERR_ATTEMPTTOREJECT_NOTPENDING, theDeferred, theRejectionKind, theRejection);
                         /*
                         throw new theS_ProminstrException.ProminstrException_Constructor( anotherRecord);*/
                         console.log( anotherRecord);
                     }
 
 
+
+                    theDeferred._v_ContinuerActor = theActor;
+                    
 
                     this._v_PendingDeferreds.splice( aPendingDeferredIndex, 1);
 
@@ -3987,7 +4058,7 @@ function ModuleFactory_ProminstrType() {
 
 
                     if( this.LOGDEFERREDREJECT) {
-                        this.fRecord( aMethodName, this.PROMINSTEVT_REJECTED, theDeferred, theRejectionKind, theRejection);
+                        this.fRecordingObj( theActor).fRecord( aMethodName, this.PROMINSTEVT_REJECTED, theDeferred, theRejectionKind, theRejection);
                     }
 
 
@@ -4012,11 +4083,11 @@ function ModuleFactory_ProminstrType() {
 
 
 
-                var fNewDeferredResolveAjaxResponsePromise = function( theResolution) {
+                var fNewDeferredResolveAjaxResponsePromise = function( theResolution, theActor) {
 
                     var aDeferred = this.fNewDeferred();
 
-                    this.pDeferredResolveAjaxResponse( aDeferred, theResolution);
+                    this.pDeferredResolveAjaxResponse( aDeferred, theResolution, theActor);
 
                     return aDeferred.promise;
                 };
@@ -4028,9 +4099,9 @@ function ModuleFactory_ProminstrType() {
 
 
 
-                var pDeferredResolveAjaxResponse = function( theDeferred, theResolution) {
+                var pDeferredResolveAjaxResponse = function( theDeferred, theResolution, theActor) {
 
-                    this.pDeferredResolve( theDeferred, theResolution, this.RESOLUTIONKIND_AJAX);
+                    this.pDeferredResolve( theDeferred, theResolution, this.RESOLUTIONKIND_AJAX, theActor);
 
                 };
                 if( pDeferredResolveAjaxResponse){}/* CQT */
@@ -4042,11 +4113,11 @@ function ModuleFactory_ProminstrType() {
 
 
 
-                var fNewDeferredRejectAjaxErrorPromise = function( theRejection) {
+                var fNewDeferredRejectAjaxErrorPromise = function( theRejection, theActor) {
 
                     var aDeferred = this.fNewDeferred();
 
-                    this.pDeferredRejectAjaxError( aDeferred, theRejection);
+                    this.pDeferredRejectAjaxError( aDeferred, theRejection, theActor);
 
                     return aDeferred.promise;
                 };
@@ -4058,9 +4129,9 @@ function ModuleFactory_ProminstrType() {
 
 
 
-                var pDeferredRejectAjaxError = function( theDeferred, theRejection) {
+                var pDeferredRejectAjaxError = function( theDeferred, theRejection, theActor) {
 
-                    this.pDeferredReject( theDeferred, theRejection, this.REJECTIONKIND_AJAXERROR);
+                    this.pDeferredReject( theDeferred, theRejection, this.REJECTIONKIND_AJAXERROR, theActor);
 
                 };
                 if( pDeferredRejectAjaxError){}/* CQT */
@@ -4073,11 +4144,11 @@ function ModuleFactory_ProminstrType() {
 
 
 
-                var fNewDeferredRejectActionErrorPromise = function( theRejection) {
+                var fNewDeferredRejectActionErrorPromise = function( theRejection, theActor) {
 
                     var aDeferred = this.fNewDeferred();
 
-                    this.pDeferredRejectActionError( aDeferred, theRejection);
+                    this.pDeferredRejectActionError( aDeferred, theRejection, theActor);
 
                     return aDeferred.promise;
                 };
@@ -4089,9 +4160,9 @@ function ModuleFactory_ProminstrType() {
 
 
 
-                var pDeferredRejectActionError = function( theDeferred, theRejection) {
+                var pDeferredRejectActionError = function( theDeferred, theRejection, theActor) {
 
-                    this.pDeferredReject( theDeferred, theRejection, this.REJECTIONKIND_ACTIONERROR);
+                    this.pDeferredReject( theDeferred, theRejection, this.REJECTIONKIND_ACTIONERROR, theActor);
 
                 };
                 if( pDeferredRejectActionError){}/* CQT */
@@ -4283,7 +4354,11 @@ function ModuleFactory_WithProminstrType() {
             var pgInitWithModuleVariations = function( theToInit) {
 
                 if( !theToInit) {
+                    return;
                 }
+
+                theToInit.LOGDEFERREDREJECT  = true;
+                theToInit.LOGDEFERREDRESOLVE = true;
 
             };
 
@@ -4428,7 +4503,7 @@ function ModuleFactory_WithProminstrType() {
                         return null;
                     }
 
-                    return this._v_ProminstrSvce.fNewDeferred( );
+                    return this._v_ProminstrSvce.fNewDeferred( this);
                 };
                 if( fNewDeferred){}/* CQT */
                 aPrototype.fNewDeferred = fNewDeferred;
@@ -4445,7 +4520,7 @@ function ModuleFactory_WithProminstrType() {
                         return null;
                     }
 
-                    return this._v_ProminstrSvce.fNewDeferredResolvePromise( theResolution, theResolutionKind);
+                    return this._v_ProminstrSvce.fNewDeferredResolvePromise( theResolution, theResolutionKind, this);
                 };
                 if( fNewDeferredResolvePromise){}/* CQT */
                 aPrototype.fNewDeferredResolvePromise = fNewDeferredResolvePromise;
@@ -4459,7 +4534,7 @@ function ModuleFactory_WithProminstrType() {
                         return;
                     }
 
-                    this._v_ProminstrSvce.pDeferredResolve( theDeferred, theResolution, theResolutionKind);
+                    this._v_ProminstrSvce.pDeferredResolve( theDeferred, theResolution, theResolutionKind, this);
                 };
                 if( pDeferredResolve){}/* CQT */
                 aPrototype.pDeferredResolve = pDeferredResolve;
@@ -4479,7 +4554,7 @@ function ModuleFactory_WithProminstrType() {
                         return null;
                     }
 
-                    return this._v_ProminstrSvce.fNewDeferredResolveWithNothingPromise();
+                    return this._v_ProminstrSvce.fNewDeferredResolveWithNothingPromise( this);
                 };
                 if( fNewDeferredResolveWithNothingPromise){}/* CQT */
                 aPrototype.fNewDeferredResolveWithNothingPromise = fNewDeferredResolveWithNothingPromise;
@@ -4492,7 +4567,7 @@ function ModuleFactory_WithProminstrType() {
                         return;
                     }
 
-                    this._v_ProminstrSvce.pDeferredResolveWithNothing( theDeferred);
+                    this._v_ProminstrSvce.pDeferredResolveWithNothing( theDeferred, this);
                 };
                 if( pDeferredResolveWithNothing){}/* CQT */
                 aPrototype.pDeferredResolveWithNothing = pDeferredResolveWithNothing;
@@ -4513,7 +4588,8 @@ function ModuleFactory_WithProminstrType() {
                         return null;
                     }
 
-                    return this._v_ProminstrSvce.fNewDeferredResolveWithNullPromise();
+                    return this._v_ProminstrSvce.fNewDeferredResolveWithNullPromise( this);
+
                 };
                 if( fNewDeferredResolveWithNullPromise){}/* CQT */
                 aPrototype.fNewDeferredResolveWithNullPromise = fNewDeferredResolveWithNullPromise;
@@ -4526,7 +4602,7 @@ function ModuleFactory_WithProminstrType() {
                         return;
                     }
 
-                    this._v_ProminstrSvce.pDeferredResolveWithNull( theDeferred);
+                    this._v_ProminstrSvce.pDeferredResolveWithNull( theDeferred, this);
                 };
                 if( pDeferredResolveWithNull){}/* CQT */
                 aPrototype.pDeferredResolveWithNull = pDeferredResolveWithNull;
@@ -4544,7 +4620,7 @@ function ModuleFactory_WithProminstrType() {
                         return null;
                     }
 
-                    return this._v_ProminstrSvce.fNewDeferredResolveWithSomethingPromise();
+                    return this._v_ProminstrSvce.fNewDeferredResolveWithSomethingPromise( this);
                 };
                 if( fNewDeferredResolveWithSomethingPromise){}/* CQT */
                 aPrototype.fNewDeferredResolveWithSomethingPromise = fNewDeferredResolveWithSomethingPromise;
@@ -4557,7 +4633,7 @@ function ModuleFactory_WithProminstrType() {
                         return;
                     }
 
-                    this._v_ProminstrSvce.pDeferredResolveWithSomething( theDeferred);
+                    this._v_ProminstrSvce.pDeferredResolveWithSomething( theDeferred, this);
                 };
                 if( pDeferredResolveWithSomething){}/* CQT */
                 aPrototype.pDeferredResolveWithSomething = pDeferredResolveWithSomething;
@@ -4571,7 +4647,7 @@ function ModuleFactory_WithProminstrType() {
                         return null;
                     }
 
-                    return this._v_ProminstrSvce.fNewDeferredResolveWithResponsePromise( theResponse);
+                    return this._v_ProminstrSvce.fNewDeferredResolveWithResponsePromise( theResponse, this);
                 };
                 if( fNewDeferredResolveWithResponsePromise){}/* CQT */
                 aPrototype.fNewDeferredResolveWithResponsePromise = fNewDeferredResolveWithResponsePromise;
@@ -4585,7 +4661,7 @@ function ModuleFactory_WithProminstrType() {
                         return;
                     }
 
-                    this._v_ProminstrSvce.pDeferredResolveWithResponse( theDeferred, theResponse);
+                    this._v_ProminstrSvce.pDeferredResolveWithResponse( theDeferred, theResponse, this);
                 };
                 if( pDeferredResolveWithResponse){}/* CQT */
                 aPrototype.pDeferredResolveWithResponse = pDeferredResolveWithResponse;
@@ -4604,7 +4680,7 @@ function ModuleFactory_WithProminstrType() {
                         return null;
                     }
 
-                    return this._v_ProminstrSvce.fNewDeferredResolveWithRowsPromise( theRows);
+                    return this._v_ProminstrSvce.fNewDeferredResolveWithRowsPromise( theRows, this);
                 };
                 if( fNewDeferredResolveWithRowsPromise){}/* CQT */
                 aPrototype.fNewDeferredResolveWithRowsPromise = fNewDeferredResolveWithRowsPromise;
@@ -4617,7 +4693,7 @@ function ModuleFactory_WithProminstrType() {
                         return;
                     }
 
-                    this._v_ProminstrSvce.pDeferredResolveWithRows( theDeferred, theRows);
+                    this._v_ProminstrSvce.pDeferredResolveWithRows( theDeferred, theRows, this);
                 };
                 if( pDeferredResolveWithRows){}/* CQT */
                 aPrototype.pDeferredResolveWithRows = pDeferredResolveWithRows;
@@ -4634,7 +4710,7 @@ function ModuleFactory_WithProminstrType() {
                         return null;
                     }
 
-                    return this._v_ProminstrSvce.fNewDeferredResolveWithFieldsPromise( theFields);
+                    return this._v_ProminstrSvce.fNewDeferredResolveWithFieldsPromise( theFields, this);
                 };
                 if( fNewDeferredResolveWithFieldsPromise){}/* CQT */
                 aPrototype.fNewDeferredResolveWithFieldsPromise = fNewDeferredResolveWithFieldsPromise;
@@ -4647,7 +4723,7 @@ function ModuleFactory_WithProminstrType() {
                         return;
                     }
 
-                    this._v_ProminstrSvce.pDeferredResolveWithFields( theDeferred, theFields);
+                    this._v_ProminstrSvce.pDeferredResolveWithFields( theDeferred, theFields, this);
                 };
                 if( pDeferredResolveWithFields){}/* CQT */
                 aPrototype.pDeferredResolveWithFields = pDeferredResolveWithFields;
@@ -4664,7 +4740,7 @@ function ModuleFactory_WithProminstrType() {
                         return null;
                     }
 
-                    return this._v_ProminstrSvce.fNewDeferredResolveWithSelectionIndexPromise( theSelectionIndex);
+                    return this._v_ProminstrSvce.fNewDeferredResolveWithSelectionIndexPromise( theSelectionIndex, this);
                 };
                 if( fNewDeferredResolveWithSelectionIndexPromise){}/* CQT */
                 aPrototype.fNewDeferredResolveWithSelectionIndexPromise = fNewDeferredResolveWithSelectionIndexPromise;
@@ -4677,7 +4753,7 @@ function ModuleFactory_WithProminstrType() {
                         return;
                     }
 
-                    this._v_ProminstrSvce.pDeferredResolveWithSelectionIndex( theDeferred, theSelectionIndex);
+                    this._v_ProminstrSvce.pDeferredResolveWithSelectionIndex( theDeferred, theSelectionIndex, this);
                 };
                 if( pDeferredResolveWithSelectionIndex){}/* CQT */
                 aPrototype.pDeferredResolveWithSelectionIndex = pDeferredResolveWithSelectionIndex;
@@ -4698,7 +4774,7 @@ function ModuleFactory_WithProminstrType() {
                         return null;
                     }
 
-                    return this._v_ProminstrSvce.fNewDeferredResolveWhenInDoubtPromise( theSomething);
+                    return this._v_ProminstrSvce.fNewDeferredResolveWhenInDoubtPromise( theSomething, this);
                 };
                 if( fNewDeferredResolveWhenInDoubtPromise){}/* CQT */
                 aPrototype.fNewDeferredResolveWhenInDoubtPromise = fNewDeferredResolveWhenInDoubtPromise;
@@ -4714,7 +4790,7 @@ function ModuleFactory_WithProminstrType() {
                         return;
                     }
 
-                    this._v_ProminstrSvce.pDeferredResolveWhenInDoubt( theDeferred, theSomething);
+                    this._v_ProminstrSvce.pDeferredResolveWhenInDoubt( theDeferred, theSomething, this);
                 };
                 if( pDeferredResolveWhenInDoubt){}/* CQT */
                 aPrototype.pDeferredResolveWhenInDoubt = pDeferredResolveWhenInDoubt;
@@ -4735,7 +4811,7 @@ function ModuleFactory_WithProminstrType() {
                         return null;
                     }
 
-                    return this._v_ProminstrSvce.fNewDeferredRejectPromise( theRejection, theRejectionKind);
+                    return this._v_ProminstrSvce.fNewDeferredRejectPromise( theRejection, theRejectionKind, this);
                 };
                 if( fNewDeferredRejectPromise){}/* CQT */
                 aPrototype.fNewDeferredRejectPromise = fNewDeferredRejectPromise;
@@ -4749,7 +4825,7 @@ function ModuleFactory_WithProminstrType() {
                         return;
                     }
 
-                    this._v_ProminstrSvce.pDeferredReject( theDeferred, theRejection, theRejectionKind);
+                    this._v_ProminstrSvce.pDeferredReject( theDeferred, theRejection, theRejectionKind, this);
 
                 };
                 if( pDeferredReject){}/* CQT */
@@ -4760,12 +4836,12 @@ function ModuleFactory_WithProminstrType() {
 
 
 
-                var fNewDeferredResolveAjaxResponsePromise = function( theResolveion) {
+                var fNewDeferredResolveAjaxResponsePromise = function( theResponse) {
                     if( !this._v_ProminstrSvce) {
                         return null;
                     }
 
-                    return this._v_ProminstrSvce.fNewDeferredResolveAjaxResponsePromise( theResolveion);
+                    return this._v_ProminstrSvce.fNewDeferredResolveAjaxResponsePromise( theResponse, this);
                 };
                 if( fNewDeferredResolveAjaxResponsePromise){}/* CQT */
                 aPrototype.fNewDeferredResolveAjaxResponsePromise = fNewDeferredResolveAjaxResponsePromise;
@@ -4774,12 +4850,12 @@ function ModuleFactory_WithProminstrType() {
 
 
 
-                var pDeferredResolveAjaxResponse = function( theDeferred, theResolveion) {
+                var pDeferredResolveAjaxResponse = function( theDeferred, theResponse) {
                     if( !this._v_ProminstrSvce) {
                         return;
                     }
 
-                    this._v_ProminstrSvce.pDeferredResolveAjaxResponse( theDeferred, theResolveion);
+                    this._v_ProminstrSvce.pDeferredResolveAjaxResponse( theDeferred, theResponse, this);
 
                 };
                 if( pDeferredResolveAjaxResponse){}/* CQT */
@@ -4797,7 +4873,7 @@ function ModuleFactory_WithProminstrType() {
                         return null;
                     }
 
-                    return this._v_ProminstrSvce.fNewDeferredRejectAjaxErrorPromise( theRejection);
+                    return this._v_ProminstrSvce.fNewDeferredRejectAjaxErrorPromise( theRejection, this);
                 };
                 if( fNewDeferredRejectAjaxErrorPromise){}/* CQT */
                 aPrototype.fNewDeferredRejectAjaxErrorPromise = fNewDeferredRejectAjaxErrorPromise;
@@ -4811,7 +4887,7 @@ function ModuleFactory_WithProminstrType() {
                         return;
                     }
 
-                    this._v_ProminstrSvce.pDeferredRejectAjaxError( theDeferred, theRejection);
+                    this._v_ProminstrSvce.pDeferredRejectAjaxError( theDeferred, theRejection, this);
 
                 };
                 if( pDeferredRejectAjaxError){}/* CQT */
@@ -4827,7 +4903,7 @@ function ModuleFactory_WithProminstrType() {
                         return null;
                     }
 
-                    return this._v_ProminstrSvce.fNewDeferredRejectActionErrorPromise( theRejection);
+                    return this._v_ProminstrSvce.fNewDeferredRejectActionErrorPromise( theRejection, this);
                 };
                 if( fNewDeferredRejectActionErrorPromise){}/* CQT */
                 aPrototype.fNewDeferredRejectActionErrorPromise = fNewDeferredRejectActionErrorPromise;
@@ -4841,7 +4917,7 @@ function ModuleFactory_WithProminstrType() {
                         return;
                     }
 
-                    this._v_ProminstrSvce.pDeferredRejectActionError( theDeferred, theRejection);
+                    this._v_ProminstrSvce.pDeferredRejectActionError( theDeferred, theRejection, this);
                 };
                 if( pDeferredRejectActionError){}/* CQT */
                 aPrototype.pDeferredRejectActionError = pDeferredRejectActionError;
@@ -4857,7 +4933,7 @@ function ModuleFactory_WithProminstrType() {
                         return null;
                     }
 
-                    return this._v_ProminstrSvce.fNewPromiseAll( thePromises);
+                    return this._v_ProminstrSvce.fNewPromiseAll( thePromises, this);
                 };
                 if( fNewPromiseAll){}/* CQT */
                 aPrototype.fNewPromiseAll = fNewPromiseAll;

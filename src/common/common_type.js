@@ -744,7 +744,6 @@ function ModuleFactory_CommonType() {
 
 
 
-
                 var fFirstDiff = function( theActualValue, theCheckValue) {
 
                     if( !( typeof theCheckValue == "undefined") &&  ( theCheckValue === this.DONOTCOMPAREVALUESYMBOL)) {
@@ -812,9 +811,48 @@ function ModuleFactory_CommonType() {
 
 
 
+                    var aOneLen   = theActualValue.length;
+                    var aOtherLen = theCheckValue.length;
+
+                    if( ( typeof aOneLen == "number") || ( typeof aOneLen == "number")) {
+
+                        if( ( typeof aOneLen == "undefined") || ( typeof aOneLen == "undefined")) {
+                            return this.VALUEDIFFATTOP;
+                        }
+
+                        if( !( aOneLen == aOtherLen)) {
+                            return this.VALUEDIFFATTOP;
+                        }
+
+                        if( aOneLen) {
+                            for( var aSubIdx=0; aSubIdx < aOneLen; aSubIdx++) {
+                                var aOneListSub   = theActualValue[ aSubIdx];
+                                var aOtherListSub = theCheckValue[ aSubIdx];
+
+                                var aSubsListDiff = this.fFirstDiff( aOneListSub, aOtherListSub);
+                                if( aSubsListDiff) {
+
+                                    if( aSubsListDiff == this.VALUEDIFFATTOP) {
+                                        return [ aSubIdx];
+                                    }
+
+                                    aSubsListDiff.unshift( aSubIdx);
+
+                                    return aSubsListDiff;
+                                }
+                            }
+                        }
+                    }
+
+
+
+
                     var someOneKeys   = Object.keys( theActualValue);
                     var someOtherKeys = Object.keys( theCheckValue);
 
+                    if( ( typeof someOneKeys == "undefined") || ( typeof someOtherKeys == "undefined")) {
+                        return this.VALUEDIFFATTOP;
+                    }
 
                     var allKeys = someOneKeys.slice();
                     var aNumOtherKeys = someOtherKeys.length;
@@ -830,69 +868,33 @@ function ModuleFactory_CommonType() {
 
                     var aNumKeys = allKeys.length;
 
-                    for( var aKeyIdx=0; aKeyIdx < aNumKeys; aKeyIdx++) {
-                        var aKey = allKeys[ aKeyIdx];
+                    if( aNumKeys) {
+                        for( var aKeyIdx=0; aKeyIdx < aNumKeys; aKeyIdx++) {
+                            var aKey = allKeys[ aKeyIdx];
 
-                        if( !theActualValue.hasOwnProperty( aKey)) {
-                            return [ aKey];
-                        }
-
-                        if( !theCheckValue.hasOwnProperty( aKey)) {
-                            return [ aKey];
-                        }
-
-
-                        var aOneSub   = theActualValue[ aKey];
-                        var aOtherSub = theCheckValue[ aKey];
-
-                        var aSubsDiff = this.fFirstDiff( aOneSub, aOtherSub);
-                        if( aSubsDiff) {
-
-                            if( aSubsDiff == this.VALUEDIFFATTOP) {
+                            if( !theActualValue.hasOwnProperty( aKey)) {
                                 return [ aKey];
                             }
 
-                            aSubsDiff.push( aKey);
-                            aSubsDiff.reverse();
-
-                            return aSubsDiff;
-                        }
-                    }
-
-
-
-
-
-                    var aOneLen   = theActualValue.length;
-                    var aOtherLen = theCheckValue.length;
-
-                    if( ( typeof aOneLen == "undefined") && ( typeof aOneLen == "undefined")) {
-                        return null;
-                    }
-
-                    if( ( typeof aOneLen == "undefined") || ( typeof aOneLen == "undefined")) {
-                        return this.VALUEDIFFATTOP;
-                    }
-
-                    if( !( aOneLen == aOtherLen)) {
-                        return this.VALUEDIFFATTOP;
-                    }
-
-                    for( var aSubIdx=0; aSubIdx < aOneLen; aSubIdx++) {
-                        var aOneListSub   = theActualValue[ aSubIdx];
-                        var aOtherListSub = theCheckValue[ aSubIdx];
-
-                        var aSubsListDiff = this.fFirstDiff( aOneListSub, aOtherListSub);
-                        if( aSubsListDiff) {
-
-                            if( aSubsListDiff == this.VALUEDIFFATTOP) {
+                            if( !theCheckValue.hasOwnProperty( aKey)) {
                                 return [ aKey];
                             }
 
-                            aSubsListDiff.push( aKey);
-                            aSubsListDiff.reverse();
 
-                            return aSubsListDiff;
+                            var aOneSub   = theActualValue[ aKey];
+                            var aOtherSub = theCheckValue[ aKey];
+
+                            var aSubsDiff = this.fFirstDiff( aOneSub, aOtherSub);
+                            if( aSubsDiff) {
+
+                                if( aSubsDiff == this.VALUEDIFFATTOP) {
+                                    return [ aKey];
+                                }
+
+                                aSubsDiff.unshift( aKey);
+
+                                return aSubsDiff;
+                            }
                         }
                     }
 
