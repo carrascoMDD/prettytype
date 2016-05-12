@@ -78,8 +78,9 @@ function ModuleFactory_CommonType() {
                 theToInit.EVENTSSETNOTFORCONSOLE = "EVENTKINDS_NOTFORCONSOLE_NONE";
                 theToInit.EVENTSSETNOTFORCONSOLE = "EVENTKINDS_NOTFORCONSOLE_RESTRICTIVE";
                 theToInit.EVENTSSETNOTFORCONSOLE = "EVENTKINDS_NOTFORCONSOLE_RESTRICTIVE_NOPROMISE";
+                theToInit.EVENTSSETNOTFORCONSOLE = "EVENTKINDS_NOTFORCONSOLE_NOPROMISE";
 
-                theToInit.EVENTSSETNOTFORCONSOLE = "EVENTKINDS_NOTFORCONSOLE_NONE";
+                theToInit.EVENTSSETNOTFORCONSOLE = "EVENTKINDS_NOTFORCONSOLE_NOPROMISE";
 
             };
 
@@ -281,25 +282,15 @@ function ModuleFactory_CommonType() {
                     theToInit.EVENTKIND_SERVICEREPORT_POST         ,
                     theToInit.EVENTKIND_SERVICEREPORT_POSTOK       ,
                     theToInit.EVENTKIND_SERVICEREPORT_POSTFAIL     ,
-                    theToInit.EVENTKIND_SERVICEREPORT_UPLOADFAIL   ,
-
-                    theToInit.PROMINSTEVT_WARN_NODEFERREDTOREJECT             ,
-                    theToInit.PROMINSTEVT_WARN_NODEFERREDTORESOLVE            ,
-                    theToInit.PROMINSTEVT_ERR_ATTEMPTTOREJECT_ALREADYRESOLVED ,
-                    theToInit.PROMINSTEVT_ERR_ATTEMPTTOREJECT_ALREADYREJECTED ,
-                    theToInit.PROMINSTEVT_ERR_ATTEMPTTOREJECT_NOTPENDING      ,
-                    theToInit.PROMINSTEVT_ERR_ATTEMPTTORESOLVE_ALREADYRESOLVED,
-                    theToInit.PROMINSTEVT_ERR_ATTEMPTTORESOLVE_ALREADYREJECTED,
-                    theToInit.PROMINSTEVT_ERR_ATTEMPTTORESOLVE_NOTPENDING     ,
-                    theToInit.PROMINSTEVT_ALLSCHEDULED                        ,
-                    theToInit.PROMINSTEVT_REJECTED                            ,
-                    theToInit.PROMINSTEVT_RESOLVED
+                    theToInit.EVENTKIND_SERVICEREPORT_UPLOADFAIL
                 ];
 
 
+                
                 theToInit.EVENTKINDS_NOTFORCONSOLE_RESTRICTIVE_NOPROMISE = theToInit.EVENTKINDS_NOTFORCONSOLE_RESTRICTIVE.slice();
                 Array.prototype.push.apply( theToInit.EVENTKINDS_NOTFORCONSOLE_RESTRICTIVE_NOPROMISE, theToInit.EVENTKINDS_PROMISE);
 
+                theToInit.EVENTKINDS_NOTFORCONSOLE_NOPROMISE = theToInit.EVENTKINDS_PROMISE.slice();
 
 
                 theToInit.EVENTKINDS_NOTFORCONSOLE_NONE = [];
@@ -308,6 +299,8 @@ function ModuleFactory_CommonType() {
                 theToInit.EVENTKINDS_NOTFORCONSOLE_DEFAULT = theToInit.EVENTKINDS_NOTFORCONSOLE_RESTRICTIVE_NOPROMISE.slice();
 
                 theToInit.EVENTKINDS_NOTFORCONSOLE_DEFAULT = theToInit.EVENTKINDS_NOTFORCONSOLE_NONE;
+
+                theToInit.EVENTKINDS_NOTFORCONSOLE_DEFAULT = theToInit.EVENTKINDS_NOTFORCONSOLE_NOPROMISE;
 
 
                 if( theToInit.EVENTSSETNOTFORCONSOLE) {
@@ -438,7 +431,6 @@ function ModuleFactory_CommonType() {
 
 
 
-
                 aPrototype._v_Type = "Common";
 
                 aPrototype._v_Prototype_Common = aPrototype;
@@ -453,6 +445,9 @@ function ModuleFactory_CommonType() {
 
                 aPrototype._v_OwnRecords = null;
 
+
+
+                aPrototype._v_EventKindsNotForConsole = aPrototype.EVENTKINDS_NOTFORCONSOLE.slice();
 
 
 
@@ -716,11 +711,432 @@ function ModuleFactory_CommonType() {
 
 
 
+
+                var fSetEventKindsNotForConsole = function( theEventKinds) {
+
+                    this._v_EventKindsNotForConsole = theEventKinds;
+
+                    console.log( "EventKindsNotForConsole=\n" + JSON.stringify( this._v_EventKindsNotForConsole, null, 4));
+
+                    return this._v_EventKindsNotForConsole;
+                };
+                if( fSetEventKindsNotForConsole){}/* CQT */
+                aPrototype.fSetEventKindsNotForConsole = fSetEventKindsNotForConsole;
+
+
+
+
+
+                var fSetEventKindsNotForConsole_ALL = function() {
+
+                    this._v_EventKindsNotForConsole = this.EVENTKINDS_NOTFORCONSOLE_ALL;
+
+                    console.log( "EventKindsNotForConsole=\n" + JSON.stringify( this._v_EventKindsNotForConsole, null, 4));
+
+                    return this._v_EventKindsNotForConsole;
+                };
+                if( fSetEventKindsNotForConsole_ALL){}/* CQT */
+                aPrototype.fSetEventKindsNotForConsole_ALL = fSetEventKindsNotForConsole_ALL;
+
+
+
+
+
+                var fSetEventKindsNotForConsole_NONE = function() {
+
+                    this._v_EventKindsNotForConsole = this.EVENTKINDS_NOTFORCONSOLE_NONE;
+
+                    console.log( "EventKindsNotForConsole=\n" + JSON.stringify( this._v_EventKindsNotForConsole, null, 4));
+
+                    return this._v_EventKindsNotForConsole;
+                };
+                if( fSetEventKindsNotForConsole_NONE){}/* CQT */
+                aPrototype.fSetEventKindsNotForConsole_NONE = fSetEventKindsNotForConsole_NONE;
+
+
+
+                
+
+
+                var fSetEventKindsNotForConsole_DEFAULT = function() {
+
+                    this._v_EventKindsNotForConsole = this.EVENTKINDS_NOTFORCONSOLE_DEFAULT;
+
+                    console.log( "EventKindsNotForConsole=\n" + JSON.stringify( this._v_EventKindsNotForConsole, null, 4));
+
+                    return this._v_EventKindsNotForConsole;
+                };
+                if( fSetEventKindsNotForConsole_DEFAULT){}/* CQT */
+                aPrototype.fSetEventKindsNotForConsole_DEFAULT = fSetEventKindsNotForConsole_DEFAULT;
+
+
+
+
+
+
+                var fSetEventKindsNotForConsole_RESTRICTIVE = function() {
+
+                    this._v_EventKindsNotForConsole = this.EVENTKINDS_NOTFORCONSOLE_RESTRICTIVE;
+
+                    console.log( "EventKindsNotForConsole=\n" + JSON.stringify( this._v_EventKindsNotForConsole, null, 4));
+
+                    return this._v_EventKindsNotForConsole;
+                };
+                if( fSetEventKindsNotForConsole_RESTRICTIVE){}/* CQT */
+                aPrototype.fSetEventKindsNotForConsole_RESTRICTIVE = fSetEventKindsNotForConsole_RESTRICTIVE;
+
+
+
+
+
+
+
+                var fSetEventKindsNotForConsole_RESTRICTIVE_NOPROMISE = function() {
+
+                    this._v_EventKindsNotForConsole = this.EVENTKINDS_NOTFORCONSOLE_RESTRICTIVE_NOPROMISE;
+
+                    console.log( "EventKindsNotForConsole=\n" + JSON.stringify( this._v_EventKindsNotForConsole, null, 4));
+
+                    return this._v_EventKindsNotForConsole;
+                };
+                if( fSetEventKindsNotForConsole_RESTRICTIVE_NOPROMISE){}/* CQT */
+                aPrototype.fSetEventKindsNotForConsole_RESTRICTIVE_NOPROMISE = fSetEventKindsNotForConsole_RESTRICTIVE_NOPROMISE;
+
+
+
+
+
+
+                var fSetEventKindsNotForConsole_NOPROMISE = function() {
+
+                    this._v_EventKindsNotForConsole = this.EVENTKINDS_NOTFORCONSOLE_NOPROMISE;
+
+                    console.log( "EventKindsNotForConsole=\n" + JSON.stringify( this._v_EventKindsNotForConsole, null, 4));
+
+                    return this._v_EventKindsNotForConsole;
+                };
+                if( fSetEventKindsNotForConsole_NOPROMISE){}/* CQT */
+                aPrototype.fSetEventKindsNotForConsole_NOPROMISE = fSetEventKindsNotForConsole_NOPROMISE;
+
+
+
+
+
+
+
+
+
+
+
+
+
+                var fFewerEventKindsForConsole = function( theEventKinds) {
+
+                    if( !theEventKinds) {
+                        return this._v_EventKindsNotForConsole;
+                    }
+
+                    var aNumEventKinds = theEventKinds;
+                    if( !aNumEventKinds) {
+                        return this._v_EventKindsNotForConsole;
+                    }
+
+
+                    var someEventKinds = this._v_EventKindsNotForConsole.slice();
+
+                    for( var anEventKindIdx=0; anEventKindIdx < aNumEventKinds; anEventKindIdx++) {
+
+                        var anEventKind = theEventKinds[ anEventKindIdx];
+                        if( anEventKind) {
+
+                            var anEventKindIndex = someEventKinds.indexOf( anEventKind);
+                            if( anEventKindIndex >= 0) {
+
+                                someEventKinds.splice( anEventKindIndex, 1);
+                                if( !someEventKinds.length) {
+                                    break;
+                                }
+                            }
+                        }
+                    }
+
+
+                    this._v_EventKindsNotForConsole = someEventKinds;
+
+                    console.log( "EventKindsNotForConsole=\n" + JSON.stringify( this._v_EventKindsNotForConsole, null, 4));
+
+                    return this._v_EventKindsNotForConsole
+                };
+                if( fFewerEventKindsForConsole){}/* CQT */
+                aPrototype.fFewerEventKindsForConsole = fFewerEventKindsForConsole;
+
+
+
+
+
+
+
+                var fMoreEventKindsForConsole = function( theEventKinds) {
+
+                    if( !theEventKinds) {
+                        return this._v_EventKindsNotForConsole;
+                    }
+
+                    var aNumEventKinds = theEventKinds;
+                    if( !aNumEventKinds) {
+                        return this._v_EventKindsNotForConsole;
+                    }
+
+
+                    var someEventKinds = this._v_EventKindsNotForConsole.slice();
+
+                    for( var anEventKindIdx=0; anEventKindIdx < aNumEventKinds; anEventKindIdx++) {
+
+                        var anEventKind = theEventKinds[ anEventKindIdx];
+                        if( anEventKind) {
+
+                            var anEventKindIndex = someEventKinds.indexOf( anEventKind);
+                            if( anEventKindIndex < 0) {
+
+                                someEventKinds.push( anEventKind);
+                            }
+                        }
+                    }
+
+
+                    this._v_EventKindsNotForConsole = someEventKinds;
+
+                    console.log( "EventKindsNotForConsole=\n" + JSON.stringify( this._v_EventKindsNotForConsole, null, 4));
+
+                    return this._v_EventKindsNotForConsole
+                };
+                if( fMoreEventKindsForConsole){}/* CQT */
+                aPrototype.fMoreEventKindsForConsole = fMoreEventKindsForConsole;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                var fSetEventKindsNotForConsole_inPrototype = function( theEventKinds) {
+
+                    aPrototype._v_EventKindsNotForConsole = theEventKinds;
+
+                    console.log( "EventKindsNotForConsole_inPrototype=\n" + JSON.stringify( aPrototype._v_EventKindsNotForConsole, null, 4));
+
+                    return aPrototype._v_EventKindsNotForConsole;
+                };
+                if( fSetEventKindsNotForConsole_inPrototype){}/* CQT */
+                aPrototype.fSetEventKindsNotForConsole_inPrototype = fSetEventKindsNotForConsole_inPrototype;
+
+
+
+
+
+
+                var fSetEventKindsNotForConsole_ALL_inPrototype = function() {
+
+                    aPrototype._v_EventKindsNotForConsole = aPrototype.EVENTKINDS_NOTFORCONSOLE_ALL;
+
+                    console.log( "EventKindsNotForConsole_inPrototype=\n" + JSON.stringify( aPrototype._v_EventKindsNotForConsole, null, 4));
+
+                    return this._v_EventKindsNotForConsole;
+                };
+                if( fSetEventKindsNotForConsole_ALL_inPrototype){}/* CQT */
+                aPrototype.fSetEventKindsNotForConsole_ALL_inPrototype = fSetEventKindsNotForConsole_ALL_inPrototype;
+
+
+
+
+
+                var fSetEventKindsNotForConsole_NONE_inPrototype = function() {
+
+                    aPrototype._v_EventKindsNotForConsole = aPrototype.EVENTKINDS_NOTFORCONSOLE_NONE;
+
+                    console.log( "EventKindsNotForConsole_inPrototype=\n" + JSON.stringify( aPrototype._v_EventKindsNotForConsole, null, 4));
+
+                    return this._v_EventKindsNotForConsole;
+                };
+                if( fSetEventKindsNotForConsole_NONE_inPrototype){}/* CQT */
+                aPrototype.fSetEventKindsNotForConsole_NONE_inPrototype = fSetEventKindsNotForConsole_NONE_inPrototype;
+
+
+
+
+
+
+                var fSetEventKindsNotForConsole_DEFAULT_inPrototype = function() {
+
+                    aPrototype._v_EventKindsNotForConsole = aPrototype.EVENTKINDS_NOTFORCONSOLE_DEFAULT;
+
+                    console.log( "EventKindsNotForConsole_inPrototype=\n" + JSON.stringify( aPrototype._v_EventKindsNotForConsole, null, 4));
+
+                    return this._v_EventKindsNotForConsole;
+                };
+                if( fSetEventKindsNotForConsole_DEFAULT_inPrototype){}/* CQT */
+                aPrototype.fSetEventKindsNotForConsole_DEFAULT_inPrototype = fSetEventKindsNotForConsole_DEFAULT_inPrototype;
+
+
+
+
+
+
+                var fSetEventKindsNotForConsole_RESTRICTIVE_inPrototype = function() {
+
+                    aPrototype._v_EventKindsNotForConsole = aPrototype.EVENTKINDS_NOTFORCONSOLE_RESTRICTIVE;
+
+                    console.log( "EventKindsNotForConsole_inPrototype=\n" + JSON.stringify( aPrototype._v_EventKindsNotForConsole, null, 4));
+
+                    return this._v_EventKindsNotForConsole;
+                };
+                if( fSetEventKindsNotForConsole_RESTRICTIVE_inPrototype){}/* CQT */
+                aPrototype.fSetEventKindsNotForConsole_RESTRICTIVE_inPrototype = fSetEventKindsNotForConsole_RESTRICTIVE_inPrototype;
+
+
+
+
+
+
+
+                var fSetEventKindsNotForConsole_RESTRICTIVE_NOPROMISE_inPrototype = function() {
+
+                    aPrototype._v_EventKindsNotForConsole = aPrototype.EVENTKINDS_NOTFORCONSOLE_RESTRICTIVE_NOPROMISE;
+
+                    console.log( "EventKindsNotForConsole_inPrototype=\n" + JSON.stringify( aPrototype._v_EventKindsNotForConsole, null, 4));
+
+                    return this._v_EventKindsNotForConsole;
+                };
+                if( fSetEventKindsNotForConsole_RESTRICTIVE_NOPROMISE_inPrototype){}/* CQT */
+                aPrototype.fSetEventKindsNotForConsole_RESTRICTIVE_NOPROMISE_inPrototype = fSetEventKindsNotForConsole_RESTRICTIVE_NOPROMISE_inPrototype;
+
+
+
+
+
+
+                var fSetEventKindsNotForConsole_NOPROMISE_inPrototype = function() {
+
+                    aPrototype._v_EventKindsNotForConsole = aPrototype.EVENTKINDS_NOTFORCONSOLE_NOPROMISE;
+
+                    console.log( "EventKindsNotForConsole_inPrototype=\n" + JSON.stringify( aPrototype._v_EventKindsNotForConsole, null, 4));
+
+                    return this._v_EventKindsNotForConsole;
+                };
+                if( fSetEventKindsNotForConsole_NOPROMISE_inPrototype){}/* CQT */
+                aPrototype.fSetEventKindsNotForConsole_NOPROMISE_inPrototype = fSetEventKindsNotForConsole_NOPROMISE_inPrototype;
+
+
+
+
+
+
+                var fFewerEventKindsForConsole_inPrototype = function( theEventKinds) {
+
+                    if( !theEventKinds) {
+                        return aPrototype._v_EventKindsNotForConsole;
+                    }
+
+                    var aNumEventKinds = theEventKinds;
+                    if( !aNumEventKinds) {
+                        return aPrototype._v_EventKindsNotForConsole;
+                    }
+
+
+                    var someEventKinds = aPrototype._v_EventKindsNotForConsole.slice();
+
+                    for( var anEventKindIdx=0; anEventKindIdx < aNumEventKinds; anEventKindIdx++) {
+
+                        var anEventKind = theEventKinds[ anEventKindIdx];
+                        if( anEventKind) {
+
+                            var anEventKindIndex = someEventKinds.indexOf( anEventKind);
+                            if( anEventKindIndex >= 0) {
+
+                                someEventKinds.splice( anEventKindIndex, 1);
+                                if( !someEventKinds.length) {
+                                    break;
+                                }
+                            }
+                        }
+                    }
+
+
+                    aPrototype._v_EventKindsNotForConsole = someEventKinds;
+
+                    console.log( "EventKindsNotForConsole_inPrototype=\n" + JSON.stringify( aPrototype._v_EventKindsNotForConsole, null, 4));
+
+                    return aPrototype._v_EventKindsNotForConsole
+                };
+                if( fFewerEventKindsForConsole_inPrototype){}/* CQT */
+                aPrototype.fFewerEventKindsForConsole_inPrototype = fFewerEventKindsForConsole_inPrototype;
+
+
+
+
+
+
+
+                var fMoreEventKindsForConsole_inPrototype = function( theEventKinds) {
+
+                    if( !theEventKinds) {
+                        return aPrototype._v_EventKindsNotForConsole;
+                    }
+
+                    var aNumEventKinds = theEventKinds;
+                    if( !aNumEventKinds) {
+                        return aPrototype._v_EventKindsNotForConsole;
+                    }
+
+
+                    var someEventKinds = aPrototype._v_EventKindsNotForConsole.slice();
+
+                    for( var anEventKindIdx=0; anEventKindIdx < aNumEventKinds; anEventKindIdx++) {
+
+                        var anEventKind = theEventKinds[ anEventKindIdx];
+                        if( anEventKind) {
+
+                            var anEventKindIndex = someEventKinds.indexOf( anEventKind);
+                            if( anEventKindIndex < 0) {
+
+                                someEventKinds.push( anEventKind);
+                            }
+                        }
+                    }
+
+
+                    aPrototype._v_EventKindsNotForConsole = someEventKinds;
+
+                    console.log( "EventKindsNotForConsole_inPrototype=\n" + JSON.stringify( aPrototype._v_EventKindsNotForConsole, null, 4));
+
+                    return aPrototype._v_EventKindsNotForConsole
+                };
+                if( fMoreEventKindsForConsole_inPrototype){}/* CQT */
+                aPrototype.fMoreEventKindsForConsole_inPrototype = fMoreEventKindsForConsole_inPrototype;
+
+
+
+
+
+
+
+
+
+
+
                 var pLogRecord = function( theRecord) {
                     if( this.LOGRECORDS) {
                         if( theRecord) {
                             var anEventKind = theRecord._v_EventKind;
-                            if( this.EVENTKINDS_NOTFORCONSOLE.indexOf( anEventKind) < 0) {
+                            if( this._v_EventKindsNotForConsole.indexOf( anEventKind) < 0) {
                                 var aLogString = theRecord.fLogString( );
                                 if( aLogString) {
                                     console.log( "," + aLogString);
