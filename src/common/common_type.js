@@ -82,6 +82,10 @@ function ModuleFactory_CommonType() {
 
                 theToInit.EVENTSSETNOTFORCONSOLE = "EVENTKINDS_NOTFORCONSOLE_NOPROMISE";
 
+
+                theToInit.KEEPOWNRECORDS = false;
+
+
             };
 
 
@@ -692,7 +696,10 @@ function ModuleFactory_CommonType() {
                     }
 
                     var aRecord = this._v_Recorder.fCreateAndRegisterRecord( this, theMethodName, theEventKind, theData, theReason, theDetail);
-                    this._v_OwnRecords.push( aRecord);
+
+                    if( this.KEEPOWNRECORDS) {
+                        this._v_OwnRecords.push( aRecord);
+                    }
 
                     if( this.LOGRECORDS) {
                         this.pLogRecord( aRecord);
