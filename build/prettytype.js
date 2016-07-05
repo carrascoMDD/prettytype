@@ -1111,7 +1111,13 @@ function ModuleFactory_TypesRegistrySvce() {
 
                     var aIdentifyingJSON = this.fIdentifyingJSON();
 
-                    var aIdentifyingString = JSON.stringify( aIdentifyingJSON);
+                    var aIdentifyingString = "?";
+                    try {
+                        aIdentifyingString = JSON.stringify( aIdentifyingJSON);
+                    }
+                    catch( anException){
+                        aIdentifyingString = "Error_while_fIdentifyingString_JSON_stringify"
+                    }
                     if( aIdentifyingString){}/* CQT */
 
                     return aIdentifyingString;
@@ -1145,7 +1151,13 @@ function ModuleFactory_TypesRegistrySvce() {
 
                     var aIdentifyingJSON = this.fIdentifyingWithTitleJSON();
 
-                    var aIdentifyingString = JSON.stringify( aIdentifyingJSON);
+                    var aIdentifyingString = "?";
+                    try {
+                        aIdentifyingString = JSON.stringify( aIdentifyingJSON);
+                    }
+                    catch( anException){
+                        aIdentifyingString = "Error_whileJSON_stringify"
+                    }
                     if( aIdentifyingString){}/* CQT */
 
                     return aIdentifyingString;
@@ -1496,7 +1508,13 @@ function ModuleFactory_OverriderType() {
 
                     var aIdentifyingJSON = this.fIdentifyingJSON();
 
-                    var aIdentifyingString = JSON.stringify( aIdentifyingJSON);
+                    var aIdentifyingString = "?";
+                    try {
+                        aIdentifyingString = JSON.stringify( aIdentifyingJSON);
+                    }
+                    catch( anException){
+                        aIdentifyingString = "Error_while_fIdentifyingString_JSON_stringify"
+                    }
                     if( aIdentifyingString){}/* CQT */
 
                     return aIdentifyingString;
@@ -1530,7 +1548,13 @@ function ModuleFactory_OverriderType() {
 
                     var aIdentifyingJSON = this.fIdentifyingWithTitleJSON();
 
-                    var aIdentifyingString = JSON.stringify( aIdentifyingJSON);
+                    var aIdentifyingString = "?";
+                    try {
+                        aIdentifyingString = JSON.stringify( aIdentifyingJSON);
+                    }
+                    catch( anException){
+                        aIdentifyingString = "Error_while_fIdentifyingWithTitleString_JSON_stringify"
+                    }
                     if( aIdentifyingString){}/* CQT */
 
                     return aIdentifyingString;
@@ -1744,6 +1768,10 @@ function ModuleFactory_CommonType() {
                 theToInit.EVENTSSETNOTFORCONSOLE = "EVENTKINDS_NOTFORCONSOLE_NOPROMISE";
 
                 theToInit.EVENTSSETNOTFORCONSOLE = "EVENTKINDS_NOTFORCONSOLE_NOPROMISE";
+
+
+                theToInit.KEEPOWNRECORDS = false;
+
 
             };
 
@@ -2220,8 +2248,13 @@ function ModuleFactory_CommonType() {
 
                     var aIdentifyingJSON = this.fIdentifyingJSON();
 
-                    var aIdentifyingString = JSON.stringify( aIdentifyingJSON);
-                    if( aIdentifyingString){}/* CQT */
+                    var aIdentifyingString = "?";
+                    try {
+                        aIdentifyingString = JSON.stringify( aIdentifyingJSON);
+                    }
+                    catch( anException){
+                        aIdentifyingString = "Error_whileJSON_stringify"
+                    }
 
                     return aIdentifyingString;
                 };
@@ -2254,7 +2287,13 @@ function ModuleFactory_CommonType() {
 
                     var aIdentifyingJSON = this.fIdentifyingWithTitleJSON();
 
-                    var aIdentifyingString = JSON.stringify( aIdentifyingJSON);
+                    var aIdentifyingString = "?";
+                    try {
+                        aIdentifyingString = JSON.stringify( aIdentifyingJSON);
+                    }
+                    catch( anException){
+                        aIdentifyingString = "Error_whileJSON_stringify"
+                    }
                     if( aIdentifyingString){}/* CQT */
 
                     return aIdentifyingString;
@@ -2320,7 +2359,9 @@ function ModuleFactory_CommonType() {
                     try {
                         aLogString = JSON.stringify( aLog);
                     }
-                    catch( anException) {}
+                    catch( anException) {
+                        aLogString = "Error_while_fLogString_JSON_stringify"
+                    }
 
                     return aLogString;
                 };
@@ -2355,7 +2396,10 @@ function ModuleFactory_CommonType() {
                     }
 
                     var aRecord = this._v_Recorder.fCreateAndRegisterRecord( this, theMethodName, theEventKind, theData, theReason, theDetail);
-                    this._v_OwnRecords.push( aRecord);
+
+                    if( this.KEEPOWNRECORDS) {
+                        this._v_OwnRecords.push( aRecord);
+                    }
 
                     if( this.LOGRECORDS) {
                         this.pLogRecord( aRecord);
@@ -3209,7 +3253,13 @@ function ModuleFactory_ProminstrException() {
 
                     var aIdentifyingJSON = aThis.fIdentifyingJSON();
 
-                    var aIdentifyingString = JSON.stringify( aIdentifyingJSON);
+                    var aIdentifyingString = "?";
+                    try {
+                        aIdentifyingString = JSON.stringify( aIdentifyingJSON);
+                    }
+                    catch( anException){
+                        aIdentifyingString = "Error_while_fIdentifyingString_JSON_stringify"
+                    }
                     if( aIdentifyingString){}/* CQT */
 
                     return aIdentifyingString;
@@ -3243,7 +3293,13 @@ function ModuleFactory_ProminstrException() {
 
                     var aIdentifyingJSON = aThis.fIdentifyingWithTitleJSON();
 
-                    var aIdentifyingString = JSON.stringify( aIdentifyingJSON);
+                    var aIdentifyingString = "?";
+                    try {
+                        aIdentifyingString = JSON.stringify( aIdentifyingJSON);
+                    }
+                    catch( anException){
+                        aIdentifyingString = "Error_while_fIdentifyingString_JSON_stringify"
+                    }
                     if( aIdentifyingString){}/* CQT */
 
                     return aIdentifyingString;
@@ -3793,7 +3849,13 @@ function ModuleFactory_ProminstrType() {
 
                         var aIdentifyingJSON = theDeferred.fIdentifyingJSON();
 
-                        var aIdentifyingString = JSON.stringify( aIdentifyingJSON);
+                        var aIdentifyingString = "?";
+                        try {
+                            aIdentifyingString = JSON.stringify( aIdentifyingJSON);
+                        }
+                        catch( anException){
+                            aIdentifyingString = "Error_while_fIdentifyingString_JSON_stringify"
+                        }
                         if( aIdentifyingString){}/* CQT */
 
                         return aIdentifyingString;
@@ -3826,7 +3888,14 @@ function ModuleFactory_ProminstrType() {
 
                         var aIdentifyingJSON = theDeferred.fIdentifyingWithTitleJSON();
 
-                        var aIdentifyingString = JSON.stringify( aIdentifyingJSON);
+                        var aIdentifyingString = "?";
+                        try {
+                            aIdentifyingString = JSON.stringify( aIdentifyingJSON);
+                        }
+                        catch( anException){
+                            aIdentifyingString = "fIdentifyingWithTitleString"
+                        }
+                        if( aIdentifyingString){}/* CQT */
                         if( aIdentifyingString){}/* CQT */
 
                         return aIdentifyingString;
@@ -6722,7 +6791,13 @@ function ModuleFactory_IdentifierType() {
 
                     var aIdentifyingJSON = this.fIdentifyingJSON();
 
-                    var aIdentifyingString = JSON.stringify( aIdentifyingJSON);
+                    var aIdentifyingString = "?";
+                    try {
+                        aIdentifyingString = JSON.stringify( aIdentifyingJSON);
+                    }
+                    catch( anException){
+                        aIdentifyingString = "Error_while_fIdentifyingString_JSON_stringify"
+                    }
                     if( aIdentifyingString){}/* CQT */
 
                     return aIdentifyingString;
@@ -6756,7 +6831,13 @@ function ModuleFactory_IdentifierType() {
 
                     var aIdentifyingJSON = this.fIdentifyingWithTitleJSON();
 
-                    var aIdentifyingString = JSON.stringify( aIdentifyingJSON);
+                    var aIdentifyingString = "?";
+                    try {
+                        aIdentifyingString = JSON.stringify( aIdentifyingJSON);
+                    }
+                    catch( anException){
+                        aIdentifyingString = "Error_while_fIdentifyingWithTitleString_JSON_stringify"
+                    }
                     if( aIdentifyingString){}/* CQT */
 
                     return aIdentifyingString;
@@ -7256,7 +7337,13 @@ function ModuleFactory_RecordType() {
 
                     var aIdentifyingJSON = this.fIdentifyingJSON();
 
-                    var aIdentifyingString = JSON.stringify( aIdentifyingJSON);
+                    var aIdentifyingString = "?";
+                    try {
+                        aIdentifyingString = JSON.stringify( aIdentifyingJSON);
+                    }
+                    catch( anException){
+                        aIdentifyingString = "Error_while_fIdentifyingString_JSON_stringify"
+                    }
                     if( aIdentifyingString){}/* CQT */
 
                     return aIdentifyingString;
@@ -7290,7 +7377,13 @@ function ModuleFactory_RecordType() {
 
                     var aIdentifyingJSON = this.fIdentifyingWithTitleJSON();
 
-                    var aIdentifyingString = JSON.stringify( aIdentifyingJSON);
+                    var aIdentifyingString = "?";
+                    try {
+                        aIdentifyingString = JSON.stringify( aIdentifyingJSON);
+                    }
+                    catch( anException){
+                        aIdentifyingString = "Error_while_fIdentifyingWithTitleString_JSON_stringify"
+                    }
                     if( aIdentifyingString){}/* CQT */
 
                     return aIdentifyingString;
@@ -8665,7 +8758,13 @@ function ModuleFactory_RecorderType() {
 
                     var aIdentifyingJSON = this.fIdentifyingJSON();
 
-                    var aIdentifyingString = JSON.stringify( aIdentifyingJSON);
+                    var aIdentifyingString = "?";
+                    try {
+                        aIdentifyingString = JSON.stringify( aIdentifyingJSON);
+                    }
+                    catch( anException){
+                        aIdentifyingString = "Error_while_fIdentifyingString_JSON_stringify"
+                    }
                     if( aIdentifyingString){}/* CQT */
 
                     return aIdentifyingString;
@@ -8699,7 +8798,13 @@ function ModuleFactory_RecorderType() {
 
                     var aIdentifyingJSON = this.fIdentifyingWithTitleJSON();
 
-                    var aIdentifyingString = JSON.stringify( aIdentifyingJSON);
+                    var aIdentifyingString = "?";
+                    try {
+                        aIdentifyingString = JSON.stringify( aIdentifyingJSON);
+                    }
+                    catch( anException){
+                        aIdentifyingString = "Error_while_fIdentifyingWithTitleString_JSON_stringify"
+                    }
                     if( aIdentifyingString){}/* CQT */
 
                     return aIdentifyingString;
