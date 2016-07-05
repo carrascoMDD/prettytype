@@ -561,8 +561,13 @@ function ModuleFactory_CommonType() {
 
                     var aIdentifyingJSON = this.fIdentifyingJSON();
 
-                    var aIdentifyingString = JSON.stringify( aIdentifyingJSON);
-                    if( aIdentifyingString){}/* CQT */
+                    var aIdentifyingString = "?";
+                    try {
+                        aIdentifyingString = JSON.stringify( aIdentifyingJSON);
+                    }
+                    catch( anException){
+                        aIdentifyingString = "Error_whileJSON_stringify"
+                    }
 
                     return aIdentifyingString;
                 };
@@ -595,7 +600,13 @@ function ModuleFactory_CommonType() {
 
                     var aIdentifyingJSON = this.fIdentifyingWithTitleJSON();
 
-                    var aIdentifyingString = JSON.stringify( aIdentifyingJSON);
+                    var aIdentifyingString = "?";
+                    try {
+                        aIdentifyingString = JSON.stringify( aIdentifyingJSON);
+                    }
+                    catch( anException){
+                        aIdentifyingString = "Error_whileJSON_stringify"
+                    }
                     if( aIdentifyingString){}/* CQT */
 
                     return aIdentifyingString;
@@ -661,7 +672,9 @@ function ModuleFactory_CommonType() {
                     try {
                         aLogString = JSON.stringify( aLog);
                     }
-                    catch( anException) {}
+                    catch( anException) {
+                        aLogString = "Error_while_fLogString_JSON_stringify"
+                    }
 
                     return aLogString;
                 };

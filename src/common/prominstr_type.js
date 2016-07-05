@@ -382,7 +382,13 @@ function ModuleFactory_ProminstrType() {
 
                         var aIdentifyingJSON = theDeferred.fIdentifyingJSON();
 
-                        var aIdentifyingString = JSON.stringify( aIdentifyingJSON);
+                        var aIdentifyingString = "?";
+                        try {
+                            aIdentifyingString = JSON.stringify( aIdentifyingJSON);
+                        }
+                        catch( anException){
+                            aIdentifyingString = "Error_while_fIdentifyingString_JSON_stringify"
+                        }
                         if( aIdentifyingString){}/* CQT */
 
                         return aIdentifyingString;
@@ -415,7 +421,14 @@ function ModuleFactory_ProminstrType() {
 
                         var aIdentifyingJSON = theDeferred.fIdentifyingWithTitleJSON();
 
-                        var aIdentifyingString = JSON.stringify( aIdentifyingJSON);
+                        var aIdentifyingString = "?";
+                        try {
+                            aIdentifyingString = JSON.stringify( aIdentifyingJSON);
+                        }
+                        catch( anException){
+                            aIdentifyingString = "fIdentifyingWithTitleString"
+                        }
+                        if( aIdentifyingString){}/* CQT */
                         if( aIdentifyingString){}/* CQT */
 
                         return aIdentifyingString;

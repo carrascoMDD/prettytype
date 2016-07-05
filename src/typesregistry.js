@@ -224,7 +224,13 @@ function ModuleFactory_TypesRegistrySvce() {
 
                     var aIdentifyingJSON = this.fIdentifyingJSON();
 
-                    var aIdentifyingString = JSON.stringify( aIdentifyingJSON);
+                    var aIdentifyingString = "?";
+                    try {
+                        aIdentifyingString = JSON.stringify( aIdentifyingJSON);
+                    }
+                    catch( anException){
+                        aIdentifyingString = "Error_while_fIdentifyingString_JSON_stringify"
+                    }
                     if( aIdentifyingString){}/* CQT */
 
                     return aIdentifyingString;
@@ -258,7 +264,13 @@ function ModuleFactory_TypesRegistrySvce() {
 
                     var aIdentifyingJSON = this.fIdentifyingWithTitleJSON();
 
-                    var aIdentifyingString = JSON.stringify( aIdentifyingJSON);
+                    var aIdentifyingString = "?";
+                    try {
+                        aIdentifyingString = JSON.stringify( aIdentifyingJSON);
+                    }
+                    catch( anException){
+                        aIdentifyingString = "Error_whileJSON_stringify"
+                    }
                     if( aIdentifyingString){}/* CQT */
 
                     return aIdentifyingString;

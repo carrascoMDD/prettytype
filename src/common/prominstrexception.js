@@ -133,7 +133,13 @@ function ModuleFactory_ProminstrException() {
 
                     var aIdentifyingJSON = aThis.fIdentifyingJSON();
 
-                    var aIdentifyingString = JSON.stringify( aIdentifyingJSON);
+                    var aIdentifyingString = "?";
+                    try {
+                        aIdentifyingString = JSON.stringify( aIdentifyingJSON);
+                    }
+                    catch( anException){
+                        aIdentifyingString = "Error_while_fIdentifyingString_JSON_stringify"
+                    }
                     if( aIdentifyingString){}/* CQT */
 
                     return aIdentifyingString;
@@ -167,7 +173,13 @@ function ModuleFactory_ProminstrException() {
 
                     var aIdentifyingJSON = aThis.fIdentifyingWithTitleJSON();
 
-                    var aIdentifyingString = JSON.stringify( aIdentifyingJSON);
+                    var aIdentifyingString = "?";
+                    try {
+                        aIdentifyingString = JSON.stringify( aIdentifyingJSON);
+                    }
+                    catch( anException){
+                        aIdentifyingString = "Error_while_fIdentifyingString_JSON_stringify"
+                    }
                     if( aIdentifyingString){}/* CQT */
 
                     return aIdentifyingString;
