@@ -1,5 +1,5 @@
 /*
- * overrider_type.js
+ * overrider_type-structural-test.js
  *
  * Created @author Antonio Carrasco Valero 201601241610
  *
@@ -39,7 +39,7 @@ permissions and limitations under the Licence.
 
 
 
-describe("prettytype  Overrider tests", function () {
+describe("prettytype  Overrider structural tests", function () {
 
     var aModule_TypesRegistrySvceFactory = ModuleFactory_TypesRegistrySvce();
     //console.log( "typeof aModule_TypesRegistrySvceFactory= " + typeof aModule_TypesRegistrySvceFactory);

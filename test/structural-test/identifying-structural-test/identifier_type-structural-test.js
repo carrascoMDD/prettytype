@@ -1,5 +1,5 @@
 /*
- * identifier_type-test.js
+ * identifier_type-structural-test.js
  *
  * Created @author Antonio Carrasco Valero 201601241620
  *
@@ -39,7 +39,7 @@ permissions and limitations under the Licence.
 
 
 
-describe("prettytype  Identifier tests", function () {
+describe("prettytype  Identifier structural tests", function () {
 
     var aModule_TypesRegistrySvceFactory = ModuleFactory_TypesRegistrySvce();
     //console.log( "typeof aModule_TypesRegistrySvceFactory= " + typeof aModule_TypesRegistrySvceFactory);

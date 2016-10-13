@@ -1,7 +1,7 @@
 /*
- * common_ctrl_type.js
+ * prominstr_type-structural-test.js
  *
- * Created @author Antonio Carrasco Valero 201601250103
+ * Created @author Antonio Carrasco Valero 201601242134
  *
  *
  ***************************************************************************
@@ -32,15 +32,13 @@ permissions and limitations under the Licence.
 
 
 
-
-
-/// <reference path="src/common/common_ctrl_type.js"/>
+/// <reference path="src/common/common_type.js"/>
 "use strict";
 
 
 
 
-describe("prettytype CommonCtrl tests", function () {
+describe("prettytype Prominstr structural tests", function () {
 
 
     var aModule_TypesRegistrySvceFactory = ModuleFactory_TypesRegistrySvce();
@@ -93,15 +91,80 @@ describe("prettytype CommonCtrl tests", function () {
 
 
 
+
+
+    var aModule_RecordingPolicyTypeFactory = ModuleFactory_RecordingPolicyType();
+    // console.log( "typeof aModule_RecordingPolicyTypeFactory= " + typeof aModule_RecordingPolicyTypeFactory);
+
+
+    var aModule_RecordingPolicyType = aModule_RecordingPolicyTypeFactory(
+        aTypesRegistrySvce,
+        anOverrider,
+        anIdentifier);
+    // console.log( "typeof aModule_RecordingPolicyType= " + typeof aModule_RecordingPolicyType);
+
+
+
+    var aModule_RecordingPolicyKeepAllTypeFactory = ModuleFactory_RecordingPolicyKeepAllType();
+    // console.log( "typeof aModule_RecordingPolicyKeepAllTypeFactory= " + typeof aModule_RecordingPolicyKeepAllTypeFactory);
+
+
+    var aModule_RecordingPolicyKeepAllType = aModule_RecordingPolicyKeepAllTypeFactory( aTypesRegistrySvce, anOverrider, aModule_RecordingPolicyType);
+    // console.log( "typeof aModule_RecordingPolicyKeepAllType= " + typeof aModule_RecordingPolicyKeepAllType);
+
+
+
+
+
+
+
+    var aModule_ConsoleSvceFactory = ModuleFactory_ConsoleSvce();
+    // console.log( "typeof aModule_ConsoleSvceFactory= " + typeof aModule_ConsoleSvceFactory);
+
+    var aModule_ConsoleSvce = aModule_ConsoleSvceFactory( aTypesRegistrySvce, anOverrider);
+    // console.log( "typeof aModule_ConsoleSvce= " + typeof aModule_ConsoleSvce);
+
+
+
+
+    var aModule_DumpingPolicyTypeFactory = ModuleFactory_DumpingPolicyType();
+    // console.log( "typeof aModule_DumpingPolicyTypeFactory= " + typeof aModule_DumpingPolicyTypeFactory);
+
+
+    var aModule_DumpingPolicyType = aModule_DumpingPolicyTypeFactory( aTypesRegistrySvce, anOverrider, anIdentifier, aModule_ConsoleSvce);
+    // console.log( "typeof aModule_DumpingPolicyType= " + typeof aModule_DumpingPolicyType);
+
+
+
+
+    var aModule_CommonEventKindsFactory = ModuleFactory_CommonEventKinds();
+    // console.log( "typeof aModule_CommonEventKindsFactory= " + typeof aModule_CommonEventKindsFactory);
+
+    var aModule_CommonEventKinds = aModule_CommonEventKindsFactory( aTypesRegistrySvce);
+    // console.log( "typeof aModule_CommonEventKinds= " + typeof aModule_CommonEventKinds);
+
+    var aModule_DumpingPolicyFilterKindsTypeFactory = ModuleFactory_DumpingPolicyFilterKindsType();
+    // console.log( "typeof aModule_DumpingPolicyFilterKindsTypeFactory= " + typeof aModule_DumpingPolicyFilterKindsTypeFactory);
+
+
+    var aModule_DumpingPolicyFilterKindsType = aModule_DumpingPolicyFilterKindsTypeFactory( aTypesRegistrySvce, anOverrider, aModule_DumpingPolicyType, aModule_CommonEventKinds);
+    // console.log( "typeof aModule_DumpingPolicyFilterKindsType= " + typeof aModule_DumpingPolicyFilterKindsType);
+
+
+
     var aModule_RecorderTypeFactory = ModuleFactory_RecorderType();
     // console.log( "typeof aModule_RecorderTypeFactory= " + typeof aModule_RecorderTypeFactory);
+
 
     var aModule_RecorderType = aModule_RecorderTypeFactory(
         aTypesRegistrySvce,
         anOverrider,
         anIdentifier,
         aModule_IdentifierType,
-        aModule_RecordType
+        aModule_RecordType,
+        aModule_RecordingPolicyKeepAllType,
+        aModule_DumpingPolicyFilterKindsType
+
     );
     // console.log( "typeof aModule_RecorderType= " + typeof aModule_RecorderType);
 
@@ -144,9 +207,8 @@ describe("prettytype CommonCtrl tests", function () {
     // console.log( "aQngMock keys = " + Object.keys( aQngMock));
 
 
-
-
-
+        
+        
     var aModule_ProminstrTypeFactory = ModuleFactory_ProminstrType();
     // console.log( "typeof aModule_ProminstrTypeFactory= " + typeof aModule_ProminstrTypeFactory);
 
@@ -173,199 +235,86 @@ describe("prettytype CommonCtrl tests", function () {
 
 
 
-
-
-
-
-    var aModule_WithProminstrTypeFactory = ModuleFactory_WithProminstrType();
-    // console.log( "typeof aModule_WithProminstrTypeFactory= " + typeof aModule_WithProminstrTypeFactory);
-
-
-    var aModule_WithProminstrType = aModule_WithProminstrTypeFactory(
-        aTypesRegistrySvce,
-        anOverrider,
-        aModule_CommonType,
-        aProminstr
-    );
-    // console.log( "typeof aModule_WithProminstrType= " + typeof aModule_WithProminstrType);
-
-
-    
-    
-    
-    
-    
-
-    var aModule_AppBaseURLFactory = ModuleFactory_AppBaseURLMock();
-    // console.log( "typeof aModule_AppBaseURLFactory= " + typeof aModule_AppBaseURLFactory);
-
-
-    var aModule_AppBaseURL = aModule_AppBaseURLFactory(
-        aTypesRegistrySvce,
-        anOverrider,
-        aModule_CommonType,
-        aModule_IdentifierType,
-        aQngMock
-    );
-    // console.log( "typeof aModule_AppBaseURL= " + typeof aModule_AppBaseURL);
-
-    var aAppBaseURL_title = "Prominstr-Title-test";
-
-    var anAppBaseURLSvce = new aModule_AppBaseURL.AppBaseURLMock_Constructor( aAppBaseURL_title);
-    // console.log( "typeof anAppBaseURLSvce= " + typeof anAppBaseURLSvce);
-    // console.log( "anAppBaseURLSvce keys = " + Object.keys( anAppBaseURLSvce));
-
-
-
-
-
-    var aModule_APIBaseURLFactory = ModuleFactory_APIBaseURLMock();
-    // console.log( "typeof aModule_APIBaseURLFactory= " + typeof aModule_APIBaseURLFactory);
-
-
-    var aModule_APIBaseURL = aModule_APIBaseURLFactory(
-        aTypesRegistrySvce,
-        anOverrider,
-        aModule_CommonType,
-        aModule_IdentifierType,
-        aQngMock
-    );
-    // console.log( "typeof aModule_APIBaseURL= " + typeof aModule_APIBaseURL);
-
-    var aAPIBaseURL_title = "Prominstr-Title-test";
-
-    var anAPIBaseURLSvce = new aModule_APIBaseURL.APIBaseURLMock_Constructor( aAPIBaseURL_title);
-    // console.log( "typeof anAPIBaseURLSvce= " + typeof anAPIBaseURLSvce);
-    // console.log( "anAPIBaseURLSvce keys = " + Object.keys( anAPIBaseURLSvce));
-
-
-
-
-
-    var aModule_LocationngMockFactory = ModuleFactory_QngMock();
-    // console.log( "typeof aModule_LocationngMockFactory= " + typeof aModule_LocationngMockFactory);
-
-    var aModule_LocationngMock = aModule_LocationngMockFactory();
-    // console.log( "typeof aModule_LocationngMock= " + typeof aModule_LocationngMock);
-
-    var aLocationngMock = new aModule_QngMock.QngMock_Constructor();
-    // console.log( "typeof aLocationngMock= " + typeof aLocationngMock);
-    // console.log( "aLocationngMock keys = " + Object.keys( aLocationngMock));
-
-
-
-
-
-
-
-
-    var aModule_CommonCtrlTypeFactory = ModuleFactory_CommonCtrlType();
-    // console.log( "typeof aModule_CommonCtrlTypeFactory= " + typeof aModule_CommonCtrlTypeFactory);
-
-
-    var aModule_CommonCtrlType = aModule_CommonCtrlTypeFactory(
-        aTypesRegistrySvce,
-        anOverrider,
-        aModule_WithProminstrType,
-        anAppBaseURLSvce,
-        anAPIBaseURLSvce,
-        aLocationngMock
-    );
-    // console.log( "typeof aModule_CommonCtrlType= " + typeof aModule_CommonCtrlType);
-
-    var aCommonCtrl_title = "CommonCtrl-Title-test";
-
-    var aCommonCtrl = new aModule_CommonCtrlType.CommonCtrl_Constructor(
-        aCommonCtrl_title,
-        anIdentifier,
-        aRecorder);
-    // console.log( "typeof aCommonCtrl= " + typeof aCommonCtrl);
-    // console.log( "aCommonCtrl keys = " + Object.keys( aCommonCtrl));
-
-
-
-
-
     it("Has module defined", function () {
-        expect( aCommonCtrl._v_Module).not.toBeUndefined();
+        expect( aProminstr._v_Module).not.toBeUndefined();
     });
 
     it("Has module not null", function () {
-        expect( aCommonCtrl._v_Module).not.toBeNull( null);
+        expect( aProminstr._v_Module).not.toBeNull( null);
     });
 
-    it("Has module ModuleName common_ctrl_type", function () {
-        expect( aCommonCtrl._v_Module.ModuleName).toBe( "common_ctrl_type");
+    it("Has module ModuleName prominstr_type", function () {
+        expect( aProminstr._v_Module.ModuleName).toBe( "prominstr_type");
     });
 
     it("Has module ModulePackages common", function () {
-        expect( aCommonCtrl._v_Module.ModulePackages).toBe( "common");
+        expect( aProminstr._v_Module.ModulePackages).toBe( "common");
     });
 
-    it("Has module ModuleFullName common.commonctrl", function () {
-        expect( aCommonCtrl._v_Module.ModuleFullName).toBe( "common/common_ctrl_type");
+    it("Has module ModuleFullName common.prominstr_type", function () {
+        expect( aProminstr._v_Module.ModuleFullName).toBe( "common/prominstr_type");
     });
 
-    it("Has module CommonCtrl_Prototype defined", function () {
-        expect( aCommonCtrl._v_Module.CommonCtrl_Prototype).not.toBeUndefined();
+    it("Has module Prominstr_Prototype defined", function () {
+        expect( aProminstr._v_Module.Prominstr_Prototype).not.toBeUndefined();
     });
 
-    it("Has module CommonCtrl_Prototype not null", function () {
-        expect( aCommonCtrl._v_Module.CommonCtrl_Prototype).not.toBeNull( null);
+    it("Has module Prominstr_Prototype not null", function () {
+        expect( aProminstr._v_Module.Prominstr_Prototype).not.toBeNull( null);
     });
 
-    it("Has module CommonCtrl_Constructor defined", function () {
-        expect( aCommonCtrl._v_Module.CommonCtrl_Constructor).not.toBeUndefined();
+    it("Has module Prominstr_Constructor defined", function () {
+        expect( aProminstr._v_Module.Prominstr_Constructor).not.toBeUndefined();
     });
 
-    it("Has module CommonCtrl_Constructor not null", function () {
-        expect( aCommonCtrl._v_Module.CommonCtrl_Constructor).not.toBeNull( null);
+    it("Has module Prominstr_Constructor not null", function () {
+        expect( aProminstr._v_Module.Prominstr_Constructor).not.toBeNull( null);
     });
 
-    it("Has module CommonCtrl_SuperPrototypeConstructor defined", function () {
-        expect( aCommonCtrl._v_Module.CommonCtrl_SuperPrototypeConstructor).not.toBeUndefined();
+    it("Has module Prominstr_SuperPrototypeConstructor defined", function () {
+        expect( aProminstr._v_Module.Prominstr_SuperPrototypeConstructor).not.toBeUndefined();
     });
 
-    it("Has module CommonCtrl_SuperPrototypeConstructor not null", function () {
-        expect( aCommonCtrl._v_Module.CommonCtrl_SuperPrototypeConstructor).not.toBeNull( null);
+    it("Has module Prominstr_SuperPrototypeConstructor not null", function () {
+        expect( aProminstr._v_Module.Prominstr_SuperPrototypeConstructor).not.toBeNull( null);
     });
 
 
 
     it("Has _v_Prototype defined", function () {
-        expect( aCommonCtrl._v_Prototype).not.toBeUndefined();
+        expect( aProminstr._v_Prototype).not.toBeUndefined();
     });
 
-    it("Has _v_Prototype module CommonCtrl_Prototype", function () {
-        expect( aCommonCtrl._v_Prototype).toBe( aCommonCtrl._v_Module.CommonCtrl_Prototype);
+    it("Has _v_Prototype module Prominstr_Prototype", function () {
+        expect( aProminstr._v_Prototype).toBe( aProminstr._v_Module.Prominstr_Prototype);
     });
 
-    it("Has _v_Prototype_CommonCtrl defined", function () {
-        expect( aCommonCtrl._v_Prototype_CommonCtrl).not.toBeUndefined();
+    it("Has _v_Prototype_Prominstr defined", function () {
+        expect( aProminstr._v_Prototype_Prominstr).not.toBeUndefined();
     });
 
-    it("Has _v_Prototype_CommonCtrl module CommonCtrl_Prototype", function () {
-        expect( aCommonCtrl._v_Prototype).toBe( aCommonCtrl._v_Module.CommonCtrl_Prototype);
+    it("Has _v_Prototype_Prominstr module Prominstr_Prototype", function () {
+        expect( aProminstr._v_Prototype).toBe( aProminstr._v_Module.Prominstr_Prototype);
     });
 
 
 
-    it("Has _v_Type CommonCtrl", function () {
-        expect( aCommonCtrl._v_Type).toBe( "CommonCtrl");
+    it("Has _v_Type Prominstr", function () {
+        expect( aProminstr._v_Type).toBe( "Prominstr");
     });
 
-    it("Has title CommonCtrl_DefaultName", function () {
-        expect( aCommonCtrl._v_Title).toBe( aCommonCtrl_title);
+    it("Has title Prominstr_DefaultName", function () {
+        expect( aProminstr._v_Title).toBe( aProminstr_title);
     });
 
 
 
     it("Has fFullTypeNameString defined", function () {
-        expect( aCommonCtrl.fFullTypeNameString).not.toBeUndefined();
+        expect( aProminstr.fFullTypeNameString).not.toBeUndefined();
     });
 
     it("Has fFullTypeNameString typeof function", function () {
-        expect( typeof aCommonCtrl.fFullTypeNameString).toBe( "function");
+        expect( typeof aProminstr.fFullTypeNameString).toBe( "function");
     });
 
 
@@ -373,42 +322,42 @@ describe("prettytype CommonCtrl tests", function () {
 
 
     it("Has fIdentifyingJSON defined", function () {
-        expect( aCommonCtrl.fIdentifyingJSON).not.toBeUndefined();
+        expect( aProminstr.fIdentifyingJSON).not.toBeUndefined();
     });
 
     it("Has fIdentifyingJSON typeof function", function () {
-        expect( typeof aCommonCtrl.fIdentifyingJSON).toBe( "function");
+        expect( typeof aProminstr.fIdentifyingJSON).toBe( "function");
     });
 
     it("Has fIdentifyingJSON() not null", function () {
-        expect( aCommonCtrl.fIdentifyingJSON()).not.toBeNull();
+        expect( aProminstr.fIdentifyingJSON()).not.toBeNull();
     });
 
     it("Has fIdentifyingJSON() type _v_Type", function () {
-        expect( aCommonCtrl.fIdentifyingJSON().type).toBe( aCommonCtrl._v_Type);
+        expect( aProminstr.fIdentifyingJSON().type).toBe( aProminstr._v_Type);
     });
 
     it("Has fIdentifyingJSON() id _v_Id", function () {
-        expect( aCommonCtrl.fIdentifyingJSON().id).toBe( aCommonCtrl._v_Id);
+        expect( aProminstr.fIdentifyingJSON().id).toBe( aProminstr._v_Id);
     });
 
 
 
 
     it("Has fIdentifyingString defined", function () {
-        expect( aCommonCtrl.fIdentifyingString).not.toBeUndefined();
+        expect( aProminstr.fIdentifyingString).not.toBeUndefined();
     });
 
     it("Has fIdentifyingString typeof function", function () {
-        expect( typeof aCommonCtrl.fIdentifyingString).toBe( "function");
+        expect( typeof aProminstr.fIdentifyingString).toBe( "function");
     });
 
     it("Has fIdentifyingString() not null", function () {
-        expect( aCommonCtrl.fIdentifyingString()).not.toBeNull();
+        expect( aProminstr.fIdentifyingString()).not.toBeNull();
     });
 
     it("Has fIdentifyingString() JSON.stringify( fIdentifyingJSON())", function () {
-        expect( aCommonCtrl.fIdentifyingString()).toBe( JSON.stringify( aCommonCtrl.fIdentifyingJSON()));
+        expect( aProminstr.fIdentifyingString()).toBe( JSON.stringify( aProminstr.fIdentifyingJSON()));
     });
 
 
@@ -416,27 +365,27 @@ describe("prettytype CommonCtrl tests", function () {
 
 
     it("Has fIdentifyingWithTitleJSON defined", function () {
-        expect( aCommonCtrl.fIdentifyingWithTitleJSON).not.toBeUndefined();
+        expect( aProminstr.fIdentifyingWithTitleJSON).not.toBeUndefined();
     });
 
     it("Has fIdentifyingWithTitleJSON typeof function", function () {
-        expect( typeof aCommonCtrl.fIdentifyingWithTitleJSON).toBe( "function");
+        expect( typeof aProminstr.fIdentifyingWithTitleJSON).toBe( "function");
     });
 
     it("Has fIdentifyingWithTitleJSON() not null", function () {
-        expect( aCommonCtrl.fIdentifyingWithTitleJSON()).not.toBeNull();
+        expect( aProminstr.fIdentifyingWithTitleJSON()).not.toBeNull();
     });
 
     it("Has fIdentifyingWithTitleJSON() type _v_Type", function () {
-        expect( aCommonCtrl.fIdentifyingWithTitleJSON().type).toBe( aCommonCtrl._v_Type);
+        expect( aProminstr.fIdentifyingWithTitleJSON().type).toBe( aProminstr._v_Type);
     });
 
     it("Has fIdentifyingWithTitleJSON() id _v_Id", function () {
-        expect( aCommonCtrl.fIdentifyingWithTitleJSON().id).toBe( aCommonCtrl._v_Id);
+        expect( aProminstr.fIdentifyingWithTitleJSON().id).toBe( aProminstr._v_Id);
     });
 
     it("Has fIdentifyingWithTitleJSON() id _v_Title", function () {
-        expect( aCommonCtrl.fIdentifyingWithTitleJSON().title).toBe( aCommonCtrl._v_Title);
+        expect( aProminstr.fIdentifyingWithTitleJSON().title).toBe( aProminstr._v_Title);
     });
 
 
@@ -445,47 +394,47 @@ describe("prettytype CommonCtrl tests", function () {
 
 
     it("Has fIdentifyingWithTitleString defined", function () {
-        expect( aCommonCtrl.fIdentifyingWithTitleString).not.toBeUndefined();
+        expect( aProminstr.fIdentifyingWithTitleString).not.toBeUndefined();
     });
 
     it("Has fIdentifyingWithTitleString typeof function", function () {
-        expect( typeof aCommonCtrl.fIdentifyingWithTitleString).toBe( "function");
+        expect( typeof aProminstr.fIdentifyingWithTitleString).toBe( "function");
     });
 
     it("Has fIdentifyingWithTitleString() not null", function () {
-        expect( aCommonCtrl.fIdentifyingWithTitleString()).not.toBeNull();
+        expect( aProminstr.fIdentifyingWithTitleString()).not.toBeNull();
     });
 
     it("Has fIdentifyingWithTitleString() JSON.stringify( fIdentifyingJSON())", function () {
-        expect( aCommonCtrl.fIdentifyingWithTitleString()).toBe( JSON.stringify( aCommonCtrl.fIdentifyingWithTitleJSON()));
+        expect( aProminstr.fIdentifyingWithTitleString()).toBe( JSON.stringify( aProminstr.fIdentifyingWithTitleJSON()));
     });
 
 
 
 
     it("Has fToResultJSON defined", function () {
-        expect( aCommonCtrl.fToResultJSON).not.toBeUndefined();
+        expect( aProminstr.fToResultJSON).not.toBeUndefined();
     });
 
     it("Has fToResultJSON typeof function", function () {
-        expect( typeof aCommonCtrl.fToResultJSON).toBe( "function");
+        expect( typeof aProminstr.fToResultJSON).toBe( "function");
     });
 
     it("Has fToResultJSON() not null", function () {
-        expect( aCommonCtrl.fToResultJSON()).not.toBeNull();
+        expect( aProminstr.fToResultJSON()).not.toBeNull();
     });
 
 
     it("Has fToResultJSON() type _v_Type", function () {
-        expect( aCommonCtrl.fToResultJSON().type).toBe( aCommonCtrl._v_Type);
+        expect( aProminstr.fToResultJSON().type).toBe( aProminstr._v_Type);
     });
 
     it("Has fToResultJSON() id _v_Id", function () {
-        expect( aCommonCtrl.fToResultJSON().id).toBe( aCommonCtrl._v_Id);
+        expect( aProminstr.fToResultJSON().id).toBe( aProminstr._v_Id);
     });
 
     it("Has fToResultJSON() id _v_Title", function () {
-        expect( aCommonCtrl.fToResultJSON().title).toBe( aCommonCtrl._v_Title);
+        expect( aProminstr.fToResultJSON().title).toBe( aProminstr._v_Title);
     });
 
 
@@ -493,8 +442,10 @@ describe("prettytype CommonCtrl tests", function () {
 
 
 
-    var someCommonCtrlMethodNames = [
+    var someProminstrMethodNames = [
         "fNewDeferred",
+        "pDecorateNewDeferred",
+        "fReserveDeferredId",
         "fNewDeferredResolvePromise",
         "pDeferredResolve",
         "fNewDeferredResolveWithNothingPromise",
@@ -525,21 +476,21 @@ describe("prettytype CommonCtrl tests", function () {
     ];
 
 
-    var aNumCommonCtrlMethodNames = someCommonCtrlMethodNames.length;
-    for( var aCommonCtrlMethodNameIdx=0; aCommonCtrlMethodNameIdx < aNumCommonCtrlMethodNames; aCommonCtrlMethodNameIdx++) {
-        var aCommonCtrlMethodName = someCommonCtrlMethodNames[ aCommonCtrlMethodNameIdx];
-        if( aCommonCtrlMethodName) {
+    var aNumProminstrMethodNames = someProminstrMethodNames.length;
+    for( var aProminstrMethodNameIdx=0; aProminstrMethodNameIdx < aNumProminstrMethodNames; aProminstrMethodNameIdx++) {
+        var aProminstrMethodName = someProminstrMethodNames[ aProminstrMethodNameIdx];
+        if( aProminstrMethodName) {
 
             (function() {
 
-                var aCommonCtrlMethodName_here = aCommonCtrlMethodName;
+                var aProminstrMethodName_here = aProminstrMethodName;
 
-                it("Has " + aCommonCtrlMethodName_here + " defined", function () {
-                    expect( aCommonCtrl[ aCommonCtrlMethodName_here]).not.toBeUndefined();
+                it("Has " + aProminstrMethodName_here + " defined", function () {
+                    expect( aProminstr[ aProminstrMethodName_here]).not.toBeUndefined();
                 });
 
-                it("Has " + aCommonCtrlMethodName_here + " typeof function", function () {
-                    expect( typeof aCommonCtrl[ aCommonCtrlMethodName_here]).toBe( "function");
+                it("Has " + aProminstrMethodName_here + " typeof function", function () {
+                    expect( typeof aProminstr[ aProminstrMethodName_here]).toBe( "function");
                 })
             })();
         }

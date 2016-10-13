@@ -45,6 +45,447 @@ FG_logModLoads = function( theMessage) {
 };
 
 ;/*
+ * typesregistry.js
+ *
+ * Created @author Antonio Carrasco Valero 201409301309
+ *
+ *
+ ***************************************************************************
+
+ Copyright 2014 2015 2016 Antonio Carrasco Valero
+ Javascript for core modules including a base prototype and prototypes hierarchy, intended to be reused on the Browser as core for i.e. Angular Controllers and Services, as in the uiwire component. Licensed under EUPL  http://www.uiwire.org
+
+Licensed under the EUPL, Version 1.1 only (the "Licence");
+You may not use this work except in compliance with the
+Licence.
+You may obtain a copy of the Licence at:
+https://joinup.ec.europa.eu/software/page/eupl/licence-eupl
+Unless required by applicable law or agreed to in
+writing, software distributed under the Licence is
+distributed on an "AS IS" basis,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+express or implied.
+See the Licence for the specific language governing
+permissions and limitations under the Licence.
+ {{License2}}
+
+ {{Licensed1}}
+ {{Licensed2}}
+
+ ***************************************************************************
+ *
+ */
+
+
+
+
+function ModuleFactory_TypesRegistrySvce() {
+
+    'use strict';
+
+    return ( function(){
+
+
+
+        var ModuleName     = "typesregistry";
+        var ModulePackages = "base";
+        var ModuleFullName = ModulePackages + "/" + ModuleName;
+
+
+        var aMod_definer = function() {
+
+
+
+            if( !( typeof FG_logModLoads == "undefined") && ( typeof FG_logModLoads == "function") && FG_logModLoads()) { FG_logModLoads(ModuleFullName);}
+
+
+
+
+
+
+
+
+            var pgInitWithModuleVariations = function( theToInit) {
+
+                if( !theToInit) {
+                }
+            };
+
+
+
+
+
+            var pgInitFromModuleVariations = function( theToInit) {
+                if( !theToInit) {
+                    return;
+                }
+
+                for( var aGlobalName in ModuleVariations) {
+                    if( ModuleVariations.hasOwnProperty( aGlobalName)) {
+                        theToInit[ aGlobalName] = ModuleVariations[ aGlobalName];
+                    }
+                }
+            };
+
+
+            var ModuleVariations = { };
+            pgInitWithModuleVariations( ModuleVariations);
+
+
+
+
+
+
+
+
+            var pgInitWithModuleConstants = function( theToInit) {
+
+                if( !theToInit) {
+                    return;
+                }
+
+                theToInit.TYPESREGISTRYDEFAULTNAME = "TypesRegistry_DefaultName";
+            };
+
+
+
+            var ModuleConstants = {};
+            pgInitFromModuleVariations( ModuleConstants);
+            pgInitWithModuleConstants( ModuleConstants);
+
+
+
+
+            var pgInitFromModuleConstants = function( theToInit) {
+                if( !theToInit) {
+                    return;
+                }
+
+                for( var aGlobalName in ModuleConstants) {
+                    if( ModuleConstants.hasOwnProperty( aGlobalName)) {
+                        theToInit[ aGlobalName] = ModuleConstants[ aGlobalName];
+                    }
+                }
+            };
+
+
+
+
+
+
+            var aTypesRegistry_Prototype = (function() {
+
+
+                var aPrototype = {};
+
+                pgInitFromModuleConstants( aPrototype);
+
+
+
+
+                aPrototype._v_Type = "TypesRegistry";
+
+                aPrototype._v_Prototype_TypesRegistry = aPrototype;
+
+                aPrototype._v_Module = null;
+
+
+                aPrototype._v_Title = null;
+
+                aPrototype._v_ModulesByFullName = null;
+
+
+
+
+
+
+
+                var _pInit = function( theTitle) {
+
+                    this._pInit_TypesRegistry( theTitle);
+                };
+                if( _pInit){}/* CQT */
+                aPrototype._pInit = _pInit;
+
+
+
+
+
+
+
+                var _pInit_TypesRegistry = function( theTitle) {
+
+                    this._v_Prototype = aPrototype;
+                    this._v_Type      = this._v_Prototype._v_Type;
+                    this._v_Module    = aPrototype._v_Module;
+
+                    this._v_Title = theTitle;
+                    if( !this._v_Title) {
+                        this._v_Title = this.TYPESREGISTRYDEFAULTNAME;
+                    }
+
+                    this._v_ModulesByFullName = { };
+                };
+                if( _pInit_TypesRegistry){}/* CQT */
+                aPrototype._pInit_TypesRegistry = _pInit_TypesRegistry;
+
+
+
+
+
+
+                var fFullTypeNameString = function() {
+
+                    var aFullTypeName = this._v_Module.ModuleFullName + "." + this._v_Type;
+                    if( aFullTypeName){}/* CQT */
+
+                    return aFullTypeName;
+                };
+                if( fFullTypeNameString){}/* CQT */
+                aPrototype.fFullTypeNameString = fFullTypeNameString;
+
+
+
+
+
+
+                var fIdentifyingJSON = function() {
+
+                    var aIdentifiyingJSON = {
+                        "module": this._v_Module.ModuleFullName,
+                        "type": this._v_Type
+                    };
+                    if( aIdentifiyingJSON){}/* CQT */
+                    return aIdentifiyingJSON;
+                };
+                if( fIdentifyingJSON){}/* CQT */
+                aPrototype.fIdentifyingJSON = fIdentifyingJSON;
+
+
+
+
+
+
+                var fIdentifyingString = function() {
+
+                    var aIdentifyingJSON = this.fIdentifyingJSON();
+
+                    var aIdentifyingString = "?";
+                    try {
+                        aIdentifyingString = JSON.stringify( aIdentifyingJSON);
+                    }
+                    catch( anException){
+                        aIdentifyingString = "Error_while_fIdentifyingString_JSON_stringify"
+                    }
+                    if( aIdentifyingString){}/* CQT */
+
+                    return aIdentifyingString;
+                };
+                if( fIdentifyingString){}/* CQT */
+                aPrototype.fIdentifyingString = fIdentifyingString;
+
+
+
+
+
+
+
+                var fIdentifyingWithTitleJSON = function() {
+
+                    var aIdentifyingJSON = this.fIdentifyingJSON();
+
+                    aIdentifyingJSON[ "title"] = this._v_Title;
+
+                    return aIdentifyingJSON;
+                };
+                if( fIdentifyingWithTitleJSON){}/* CQT */
+                aPrototype.fIdentifyingWithTitleJSON = fIdentifyingWithTitleJSON;
+
+
+
+
+
+
+                var fIdentifyingWithTitleString = function() {
+
+                    var aIdentifyingJSON = this.fIdentifyingWithTitleJSON();
+
+                    var aIdentifyingString = "?";
+                    try {
+                        aIdentifyingString = JSON.stringify( aIdentifyingJSON);
+                    }
+                    catch( anException){
+                        aIdentifyingString = "Error_whileJSON_stringify"
+                    }
+                    if( aIdentifyingString){}/* CQT */
+
+                    return aIdentifyingString;
+                };
+                if( fIdentifyingWithTitleString){}/* CQT */
+                aPrototype.fIdentifyingWithTitleString = fIdentifyingWithTitleString;
+
+
+
+
+
+
+
+
+
+
+                var fToResultJSON = function( theCommonObjects, theAlready) {
+                    if( !( theAlready == null)) {
+                        if( theAlready.fAlready( this)){
+                            return this.fIdentifyingJSON();
+                        }
+                    }
+
+                    var aResultJSON = this.fIdentifyingWithTitleJSON();
+                    if( aResultJSON){}/* CQT */
+
+                    return aResultJSON;
+                };
+                if( fToResultJSON){}/* CQT */
+                aPrototype.fToResultJSON = fToResultJSON;
+
+
+
+
+
+
+
+
+
+
+
+                var fRegisterModule = function( theModule) {
+                    if( !theModule) {
+                        return false;
+                    }
+
+                    var aModuleFullName = theModule.ModuleFullName;
+                    if( !aModuleFullName) {
+                        return false;
+                    }
+
+                    var anAlreadyRegisteredModule =  this._v_ModulesByFullName[ aModuleFullName];
+                    if( !anAlreadyRegisteredModule) {
+                        console.log( "\nAttempt to register another module " + aModuleFullName + "\n");
+                        return false;
+                    }
+
+
+                    this._v_ModulesByFullName[ aModuleFullName] = theModule;
+
+                    return true;
+                };
+                if( fRegisterModule){}/* CQT */
+                aPrototype.fRegisterModule = fRegisterModule;
+
+
+
+
+
+
+
+
+                var fRegisteredModule = function( theModuleFullName) {
+                    if( !theModuleFullName) {
+                        return null;
+                    }
+
+
+                    var aRegisteredModule =  this._v_ModulesByFullName[ theModuleFullName];
+                    if( !aRegisteredModule) {
+                        return null;
+                    }
+
+                    return aRegisteredModule;
+                };
+                if( fRegisteredModule){}/* CQT */
+                aPrototype.fRegisteredModule = fRegisteredModule;
+
+
+
+
+
+
+
+            return aPrototype;
+
+        })();
+
+
+
+
+        var TypesRegistry_Constructor = function( theTitle) {
+            this._v_Prototype = null;
+            this._v_Type      = null;
+            this._v_Module    = null;
+
+            this._v_Title = null;
+
+            this._v_ModulesByFullName = null;
+
+            this._pInit_TypesRegistry( theTitle);
+        };
+        TypesRegistry_Constructor.prototype = aTypesRegistry_Prototype;
+
+
+
+
+
+        var TypesRegistry_SuperPrototypeConstructor = function() {
+            this._v_Prototype = aTypesRegistry_Prototype;
+            this._v_Type      = null;
+            this._v_Module    = null;
+
+            this._v_Title     = null;
+
+            this._v_ModulesByFullName = null;
+        };
+        TypesRegistry_SuperPrototypeConstructor.prototype = aTypesRegistry_Prototype;
+
+
+
+        var aModule = {
+            "TypesRegistry_Prototype": aTypesRegistry_Prototype,
+            "TypesRegistry_Constructor": TypesRegistry_Constructor,
+            "TypesRegistry_SuperPrototypeConstructor": TypesRegistry_SuperPrototypeConstructor
+        };
+        pgInitFromModuleConstants( aModule);
+        aModule.ModuleName     = ModuleName;
+        aModule.ModulePackages = ModulePackages;
+        aModule.ModuleFullName = ModuleFullName;
+
+        aTypesRegistry_Prototype._v_Module = aModule;
+
+
+
+
+        return aModule;
+    };
+
+
+
+
+    var aModule = aMod_definer();
+
+    var aService = new aModule.TypesRegistry_Constructor();
+    if( aService){}/* CQT */
+
+    return aService;
+
+});
+}
+
+
+
+
+
+
+
+;/*
  * decoratesystemprototypes_svce.js
  *
  * Created @author Antonio Carrasco Valero 201412070820
@@ -748,7 +1189,7 @@ function ModuleFactory_ExceptionDetailsSvce() {
 
 
 
-        var aMod_definer = function() {
+        var aMod_definer = function( theM_stacktrace) {
 
 
             var ModuleName     = "exceptiondetails_svce";
@@ -771,7 +1212,10 @@ function ModuleFactory_ExceptionDetailsSvce() {
             var pgInitWithModuleConstants = function( theToInit) {
 
                 if( !theToInit) {
+                    return;
                 }
+
+                theToInit.LOGEXCEPTIONDETAILS = false;
             };
 
 
@@ -886,9 +1330,9 @@ if( ModuleFactory_ExceptionDetailsSvce){}/* CQT */
 
 
 ;/*
- * typesregistry.js
+ * console_svce.js
  *
- * Created @author Antonio Carrasco Valero 201409301309
+ * Created @author Antonio Carrasco Valero 201610051442
  *
  *
  ***************************************************************************
@@ -896,18 +1340,18 @@ if( ModuleFactory_ExceptionDetailsSvce){}/* CQT */
  Copyright 2014 2015 2016 Antonio Carrasco Valero
  Javascript for core modules including a base prototype and prototypes hierarchy, intended to be reused on the Browser as core for i.e. Angular Controllers and Services, as in the uiwire component. Licensed under EUPL  http://www.uiwire.org
 
-Licensed under the EUPL, Version 1.1 only (the "Licence");
-You may not use this work except in compliance with the
-Licence.
-You may obtain a copy of the Licence at:
-https://joinup.ec.europa.eu/software/page/eupl/licence-eupl
-Unless required by applicable law or agreed to in
-writing, software distributed under the Licence is
-distributed on an "AS IS" basis,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
-express or implied.
-See the Licence for the specific language governing
-permissions and limitations under the Licence.
+ Licensed under the EUPL, Version 1.1 only (the "Licence");
+ You may not use this work except in compliance with the
+ Licence.
+ You may obtain a copy of the Licence at:
+ https://joinup.ec.europa.eu/software/page/eupl/licence-eupl
+ Unless required by applicable law or agreed to in
+ writing, software distributed under the Licence is
+ distributed on an "AS IS" basis,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+ express or implied.
+ See the Licence for the specific language governing
+ permissions and limitations under the Licence.
  {{License2}}
 
  {{Licensed1}}
@@ -920,21 +1364,23 @@ permissions and limitations under the Licence.
 
 
 
-function ModuleFactory_TypesRegistrySvce() {
+
+
+function ModuleFactory_ConsoleSvce() {
 
     'use strict';
 
-    return ( function(){
+    return ( function( theSS_typesregistry,
+                       theSS_Overrider) {
 
 
-
-        var ModuleName     = "typesregistry";
-        var ModulePackages = "common";
+        var ModuleName     = "console_svce";
+        var ModulePackages = "utils";
         var ModuleFullName = ModulePackages + "/" + ModuleName;
 
 
-        var aMod_definer = function() {
 
+        var aMod_definer = function( theS_Overrider) {
 
 
             if( !( typeof FG_logModLoads == "undefined") && ( typeof FG_logModLoads == "function") && FG_logModLoads()) { FG_logModLoads(ModuleFullName);}
@@ -949,7 +1395,13 @@ function ModuleFactory_TypesRegistrySvce() {
             var pgInitWithModuleVariations = function( theToInit) {
 
                 if( !theToInit) {
+                    return;
                 }
+
+                theToInit.WRITETOCONSOLE          = true;
+                theToInit.COLLECTLOGS             = false;
+                theToInit.MAXCOLLECTEDLOGSLENGTH  = 16 * 1024 * 1024;
+
             };
 
 
@@ -971,6 +1423,7 @@ function ModuleFactory_TypesRegistrySvce() {
 
             var ModuleVariations = { };
             pgInitWithModuleVariations( ModuleVariations);
+            theS_Overrider.pOverrideModuleVariations( ModuleFullName, ModuleVariations);
 
 
 
@@ -982,10 +1435,7 @@ function ModuleFactory_TypesRegistrySvce() {
             var pgInitWithModuleConstants = function( theToInit) {
 
                 if( !theToInit) {
-                    return;
                 }
-
-                theToInit.TYPESREGISTRYDEFAULTNAME = "TypesRegistry_DefaultName";
             };
 
 
@@ -1014,26 +1464,22 @@ function ModuleFactory_TypesRegistrySvce() {
 
 
 
-            var aTypesRegistry_Prototype = (function() {
+
+            var aModule = { };
+            pgInitFromModuleConstants( aModule);
+            aModule.ModuleName     = ModuleName;
+            aModule.ModulePackages = ModulePackages;
+            aModule.ModuleFullName = ModuleFullName;
 
 
-                var aPrototype = {};
 
-                pgInitFromModuleConstants( aPrototype);
-
-
-
-
-                aPrototype._v_Type = "TypesRegistry";
-
-                aPrototype._v_Prototype_TypesRegistry = aPrototype;
-
-                aPrototype._v_Module = null;
+            aModule._v_WriteToConsole          = aModule.WRITETOCONSOLE;
+            aModule._v_CollectLogs             = aModule.COLLECTLOGS;
+            aModule._v_MaxCollectedLogsLength  = aModule.MAXCOLLECTEDLOGSLENGTH;
 
 
-                aPrototype._v_Title = null;
-
-                aPrototype._v_ModulesByFullName = null;
+            aModule._v_CollectedLogs           = [ ];
+            aModule._v_CollectedLogsSize       = 0;
 
 
 
@@ -1041,89 +1487,99 @@ function ModuleFactory_TypesRegistrySvce() {
 
 
 
-                var _pInit = function( theTitle) {
+            var pSetWriteToConsole = function( theWriteToConsole) {
 
-                    this._pInit_TypesRegistry( theTitle);
-                };
-                if( _pInit){}/* CQT */
-                aPrototype._pInit = _pInit;
+                aModule._v_WriteToConsole = ( theWriteToConsole? true : false);
 
-
-
+            };
+            if( pSetWriteToConsole){}/* CQT */
+            aModule.pSetWriteToConsole = pSetWriteToConsole;
 
 
 
 
-                var _pInit_TypesRegistry = function( theTitle) {
 
-                    this._v_Prototype = aPrototype;
-                    this._v_Type      = this._v_Prototype._v_Type;
-                    this._v_Module    = aPrototype._v_Module;
 
-                    this._v_Title = theTitle;
-                    if( !this._v_Title) {
-                        this._v_Title = this.TYPESREGISTRYDEFAULTNAME;
+
+            var pSetCollectLogs = function( theCollectLogs) {
+
+                if( theCollectLogs) {
+
+                    aModule._v_CollectLogs = true;
+
+                    if( !aModule._v_CollectedLogs) {
+                        aModule._v_CollectedLogs      = [ ];
+                        aModule._v_CollectedLogsSize  = 0;
+                    }
+                }
+                else {
+                    aModule._v_CollectLogs        = false;
+                    aModule._v_CollectedLogs      = [ ];
+                    aModule._v_CollectedLogsSize  = 0;
+                }
+            };
+            if( pSetCollectLogs){}/* CQT */
+            aModule.pSetCollectLogs = pSetCollectLogs;
+
+
+
+
+
+            var pSetMaxCollectedLogsLength = function( theMaxCollectedLogsLength) {
+
+                aModule._v_MaxCollectedLogsLength = theMaxCollectedLogsLength;
+
+                aModule.pEnforceMaxCollectedLogsLength("");
+
+            };
+            if( pSetMaxCollectedLogsLength){}/* CQT */
+            aModule.pSetMaxCollectedLogsLength = pSetMaxCollectedLogsLength;
+
+
+
+
+
+
+
+
+            var fCollectedLogs = function() {
+
+               return aModule._v_CollectedLogs;
+
+            };
+            if( fCollectedLogs){}/* CQT */
+            aModule.fCollectedLogs = fCollectedLogs;
+
+
+
+
+
+
+
+
+
+            var log = function( theMessage) {
+
+                if( aModule._v_CollectLogs) {
+
+                    if( !aModule._v_CollectedLogs) {
+                        aModule._v_CollectedLogs = [ ];
                     }
 
-                    this._v_ModulesByFullName = { };
-                };
-                if( _pInit_TypesRegistry){}/* CQT */
-                aPrototype._pInit_TypesRegistry = _pInit_TypesRegistry;
+                    aModule._v_CollectedLogs.push( [ "log", theMessage]);
+
+                    aModule.pEnforceMaxCollectedLogsLength( theMessage);
+                }
 
 
+                if( aModule._v_WriteToConsole) {
 
+                    console.log( theMessage);
+                }
 
-
-
-                var fFullTypeNameString = function() {
-
-                    var aFullTypeName = this._v_Module.ModuleFullName + "." + this._v_Type;
-                    if( aFullTypeName){}/* CQT */
-
-                    return aFullTypeName;
-                };
-                if( fFullTypeNameString){}/* CQT */
-                aPrototype.fFullTypeNameString = fFullTypeNameString;
-
-
-
-
-
-
-                var fIdentifyingJSON = function() {
-
-                    var aIdentifiyingJSON = {
-                        "module": this._v_Module.ModuleFullName,
-                        "type": this._v_Type
-                    };
-                    if( aIdentifiyingJSON){}/* CQT */
-                    return aIdentifiyingJSON;
-                };
-                if( fIdentifyingJSON){}/* CQT */
-                aPrototype.fIdentifyingJSON = fIdentifyingJSON;
-
-
-
-
-
-
-                var fIdentifyingString = function() {
-
-                    var aIdentifyingJSON = this.fIdentifyingJSON();
-
-                    var aIdentifyingString = "?";
-                    try {
-                        aIdentifyingString = JSON.stringify( aIdentifyingJSON);
-                    }
-                    catch( anException){
-                        aIdentifyingString = "Error_while_fIdentifyingString_JSON_stringify"
-                    }
-                    if( aIdentifyingString){}/* CQT */
-
-                    return aIdentifyingString;
-                };
-                if( fIdentifyingString){}/* CQT */
-                aPrototype.fIdentifyingString = fIdentifyingString;
+            };
+            if( log){}/* CQT */
+            aModule.log = log;
 
 
 
@@ -1131,195 +1587,157 @@ function ModuleFactory_TypesRegistrySvce() {
 
 
 
-                var fIdentifyingWithTitleJSON = function() {
+            var error = function( theMessage) {
 
-                    var aIdentifyingJSON = this.fIdentifyingJSON();
+                if( aModule._v_CollectLogs) {
 
-                    aIdentifyingJSON[ "title"] = this._v_Title;
-
-                    return aIdentifyingJSON;
-                };
-                if( fIdentifyingWithTitleJSON){}/* CQT */
-                aPrototype.fIdentifyingWithTitleJSON = fIdentifyingWithTitleJSON;
-
-
-
-
-
-
-                var fIdentifyingWithTitleString = function() {
-
-                    var aIdentifyingJSON = this.fIdentifyingWithTitleJSON();
-
-                    var aIdentifyingString = "?";
-                    try {
-                        aIdentifyingString = JSON.stringify( aIdentifyingJSON);
-                    }
-                    catch( anException){
-                        aIdentifyingString = "Error_whileJSON_stringify"
-                    }
-                    if( aIdentifyingString){}/* CQT */
-
-                    return aIdentifyingString;
-                };
-                if( fIdentifyingWithTitleString){}/* CQT */
-                aPrototype.fIdentifyingWithTitleString = fIdentifyingWithTitleString;
-
-
-
-
-
-
-
-
-
-
-                var fToResultJSON = function( theCommonObjects, theAlready) {
-                    if( !( theAlready == null)) {
-                        if( theAlready.fAlready( this)){
-                            return this.fIdentifyingJSON();
-                        }
+                    if( !aModule._v_CollectedLogs) {
+                        aModule._v_CollectedLogs = [ ];
                     }
 
-                    var aResultJSON = this.fIdentifyingWithTitleJSON();
-                    if( aResultJSON){}/* CQT */
+                    aModule._v_CollectedLogs.push( [ "error", theMessage]);
 
-                    return aResultJSON;
-                };
-                if( fToResultJSON){}/* CQT */
-                aPrototype.fToResultJSON = fToResultJSON;
+                    aModule.pEnforceMaxCollectedLogsLength( theMessage);
+                }
 
 
+                if( aModule._v_WriteToConsole) {
+
+                    console.error( theMessage);
+                }
+
+            };
+            if( error){}/* CQT */
+            aModule.error = error;
 
 
 
 
+            
+            
 
 
+            var info = function( theMessage) {
 
+                if( aModule._v_CollectLogs) {
 
-
-                var fRegisterModule = function( theModule) {
-                    if( !theModule) {
-                        return false;
+                    if( !aModule._v_CollectedLogs) {
+                        aModule._v_CollectedLogs = [ ];
                     }
 
-                    var aModuleFullName = theModule.ModuleFullName;
-                    if( !aModuleFullName) {
-                        return false;
+                    aModule._v_CollectedLogs.push( [ "info", theMessage]);
+
+                    aModule.pEnforceMaxCollectedLogsLength( theMessage);
+                }
+
+
+                if( aModule._v_WriteToConsole) {
+
+                    console.log( theMessage);
+                }
+
+            };
+            if( info){}/* CQT */
+            aModule.info = info;
+
+
+
+
+
+
+            var clear = function() {
+
+                aModule._v_CollectedLogs     = [ ];
+                aModule._v_CollectedLogsSize = 0;
+
+                if( aModule._v_WriteToConsole) {
+
+                    console.clear();
+                }
+
+            };
+            if( clear){}/* CQT */
+            aModule.clear = clear;
+
+
+
+
+
+
+
+
+            var pEnforceMaxCollectedLogsLength = function( theMessage) {
+
+                if( !aModule._v_CollectLogs) {
+                    return;
+                }
+
+                var aMessageLen = ( ( typeof theMessage == "string") ? theMessage.length : 0);
+
+                aModule._v_CollectedLogsSize += aMessageLen;
+
+                if( aModule._v_MaxCollectedLogsLength <= 0) {
+                    return;
+                }
+
+
+                while( true) {
+
+                    if( aModule._v_CollectedLogsSize <= aModule._v_MaxCollectedLogsLength) {
+                        return;
                     }
 
-                    var anAlreadyRegisteredModule =  this._v_ModulesByFullName[ aModuleFullName];
-                    if( !anAlreadyRegisteredModule) {
-                        console.log( "\nAttempt to register another module " + aModuleFullName + "\n");
-                        return false;
+                    if( aModule._v_CollectLogs.length <= 1) {
+                        return;
                     }
 
+                    var aRemovedKindAndMessage = aModule._v_CollectedLogs.shift();
 
-                    this._v_ModulesByFullName[ aModuleFullName] = theModule;
+                    var aRemovedMessage = aRemovedKindAndMessage[ 1];
+                    var aRemovedMessageLen = ( ( typeof aRemovedMessage == "string") ? aRemovedMessage.length : 0);
 
-                    return true;
-                };
-                if( fRegisterModule){}/* CQT */
-                aPrototype.fRegisterModule = fRegisterModule;
-
-
+                    aModule._v_CollectedLogsSize -= aRemovedMessageLen;
+                }
 
 
-
-
-
-
-                var fRegisteredModule = function( theModuleFullName) {
-                    if( !theModuleFullName) {
-                        return null;
-                    }
-
-
-                    var aRegisteredModule =  this._v_ModulesByFullName[ theModuleFullName];
-                    if( !aRegisteredModule) {
-                        return null;
-                    }
-
-                    return aRegisteredModule;
-                };
-                if( fRegisteredModule){}/* CQT */
-                aPrototype.fRegisteredModule = fRegisteredModule;
+            };
+            if( pEnforceMaxCollectedLogsLength){}/* CQT */
+            aModule.pEnforceMaxCollectedLogsLength = pEnforceMaxCollectedLogsLength;
 
 
 
 
 
 
-
-            return aPrototype;
-
-        })();
-
-
-
-
-        var TypesRegistry_Constructor = function( theTitle) {
-            this._v_Prototype = null;
-            this._v_Type      = null;
-            this._v_Module    = null;
-
-            this._v_Title = null;
-
-            this._v_ModulesByFullName = null;
-
-            this._pInit_TypesRegistry( theTitle);
+            return aModule;
         };
-        TypesRegistry_Constructor.prototype = aTypesRegistry_Prototype;
 
 
 
 
 
-        var TypesRegistry_SuperPrototypeConstructor = function() {
-            this._v_Prototype = aTypesRegistry_Prototype;
-            this._v_Type      = null;
-            this._v_Module    = null;
-
-            this._v_Title     = null;
-
-            this._v_ModulesByFullName = null;
-        };
-        TypesRegistry_SuperPrototypeConstructor.prototype = aTypesRegistry_Prototype;
 
 
+        var anExistingModule = theSS_typesregistry.fRegisteredModule( ModuleFullName);
+        if( !anExistingModule) {
 
-        var aModule = {
-            "TypesRegistry_Prototype": aTypesRegistry_Prototype,
-            "TypesRegistry_Constructor": TypesRegistry_Constructor,
-            "TypesRegistry_SuperPrototypeConstructor": TypesRegistry_SuperPrototypeConstructor
-        };
-        pgInitFromModuleConstants( aModule);
-        aModule.ModuleName     = ModuleName;
-        aModule.ModulePackages = ModulePackages;
-        aModule.ModuleFullName = ModuleFullName;
+            var aModule = aMod_definer(
+                theSS_Overrider
+            );
+            anExistingModule = aModule;
 
-        aTypesRegistry_Prototype._v_Module = aModule;
+            theSS_typesregistry.fRegisterModule( ModuleFullName, aModule);
+        }
 
 
 
 
-        return aModule;
-    };
 
 
+        return anExistingModule;
 
-
-    var aModule = aMod_definer();
-
-    var aService = new aModule.TypesRegistry_Constructor();
-    if( aService){}/* CQT */
-
-    return aService;
-
-});
+    });
 }
-
 
 
 
@@ -1686,9 +2104,9 @@ if( ModuleFactory_OverriderType){}/* CQT */
 
 
 ;/*
- * common_type.js
+ * commoneventkinds.js
  *
- * Created @author Antonio Carrasco Valero 201410030426
+ * Created @author Antonio Carrasco Valero 201610051556
  *
  *
  ***************************************************************************
@@ -1721,82 +2139,23 @@ permissions and limitations under the Licence.
 
 
 
-function ModuleFactory_CommonType() {
+function ModuleFactory_CommonEventKinds() {
 
     'use strict';
 
-    return ( function( theSS_typesregistry,
-                       theSS_Overrider,
-                       theSS_IdentifierSvce,
-                       theSS_RecorderSvce){
+    return ( function( theSS_typesregistry){
 
 
-        var ModuleName     = "common_type";
-        var ModulePackages = "common";
+        var ModuleName     = "commoneventkinds";
+        var ModulePackages = "base";
         var ModuleFullName = ModulePackages + "/" + ModuleName;
 
 
 
-        var aMod_definer = function( theS_Overrider,
-                                     theS_IdentifierSvce,
-                                     theS_RecorderSvce) {
+        var aMod_definer = function() {
 
 
             if( !( typeof FG_logModLoads == "undefined") && ( typeof FG_logModLoads == "function") && FG_logModLoads()) { FG_logModLoads(ModuleFullName);}
-
-
-
-
-
-
-            var pgInitWithModuleVariations = function( theToInit) {
-
-                if( !theToInit) {
-                    return;
-                }
-
-                theToInit.LOGRECORDS = true;
-
-                theToInit.LOGDEFERREDREJECT  = true;
-                theToInit.LOGDEFERREDRESOLVE = true;
-
-
-
-                theToInit.EVENTSSETNOTFORCONSOLE = "EVENTKINDS_NOTFORCONSOLE_NONE";
-                theToInit.EVENTSSETNOTFORCONSOLE = "EVENTKINDS_NOTFORCONSOLE_RESTRICTIVE";
-                theToInit.EVENTSSETNOTFORCONSOLE = "EVENTKINDS_NOTFORCONSOLE_RESTRICTIVE_NOPROMISE";
-                theToInit.EVENTSSETNOTFORCONSOLE = "EVENTKINDS_NOTFORCONSOLE_NOPROMISE";
-
-                theToInit.EVENTSSETNOTFORCONSOLE = "EVENTKINDS_NOTFORCONSOLE_NOPROMISE";
-
-
-                theToInit.KEEPOWNRECORDS = false;
-
-
-            };
-
-
-
-
-
-            var pgInitFromModuleVariations = function( theToInit) {
-                if( !theToInit) {
-                    return;
-                }
-
-                for( var aGlobalName in ModuleVariations) {
-                    if( ModuleVariations.hasOwnProperty( aGlobalName)) {
-                        theToInit[ aGlobalName] = ModuleVariations[ aGlobalName];
-                    }
-                }
-            };
-
-
-            var ModuleVariations = { };
-            pgInitWithModuleVariations( ModuleVariations);
-            theS_Overrider.pOverrideModuleVariations( ModuleFullName, ModuleVariations);
-
-
 
 
 
@@ -1808,13 +2167,6 @@ function ModuleFactory_CommonType() {
                 if( !theToInit) {
                     return;
                 }
-
-                theToInit.COMMON_DEFAULTTITLE = "CommonDefaultName";
-
-                theToInit.UNKNOWNID = "?i?";
-
-                theToInit.VALUEDIFFATTOP = "/";
-                theToInit.DONOTCOMPAREVALUESYMBOL = "@DONOTCOMPARE699@";
 
 
                 theToInit.EVENTKIND_ACTIONREPORT_FAILED          = "EVT_ACTIONREPORT_FAILED";
@@ -1994,31 +2346,198 @@ function ModuleFactory_CommonType() {
                 theToInit.EVENTKINDS_NOTFORCONSOLE_DEFAULT = theToInit.EVENTKINDS_NOTFORCONSOLE_NOPROMISE;
 
 
-                if( theToInit.EVENTSSETNOTFORCONSOLE) {
 
-                    if( typeof theToInit.EVENTSSETNOTFORCONSOLE == "string") {
-                        var anEventsSetNotForConsole = theToInit[ theToInit.EVENTSSETNOTFORCONSOLE];
-                        if( anEventsSetNotForConsole) {
-                            theToInit.EVENTKINDS_NOTFORCONSOLE = anEventsSetNotForConsole.slice();
-                        }
-                        else {
-                            theToInit.EVENTKINDS_NOTFORCONSOLE = [];
-                        }
+
+            };
+
+
+
+            var ModuleConstants = {};
+            pgInitWithModuleConstants( ModuleConstants);
+
+
+
+
+            var pgInitFromModuleConstants = function( theToInit) {
+                if( !theToInit) {
+                    return;
+                }
+
+                for( var aGlobalName in ModuleConstants) {
+                    if( ModuleConstants.hasOwnProperty( aGlobalName)) {
+                        theToInit[ aGlobalName] = ModuleConstants[ aGlobalName];
                     }
-                    else {
-                        theToInit.EVENTKINDS_NOTFORCONSOLE = theToInit.EVENTSSETNOTFORCONSOLE;
+                }
+            };
+
+
+
+            var aModule = { };
+            pgInitFromModuleConstants( aModule);
+            aModule.ModuleName      = ModuleName;
+            aModule.ModulePackages  = ModulePackages;
+            aModule.ModuleFullName  = ModuleFullName;
+            aModule.ModuleConstants = ModuleConstants;
+            aModule.pgInitFromModuleConstants = pgInitFromModuleConstants;
+
+
+
+            return aModule;
+        };
+
+
+
+
+
+
+        var anExistingModule = theSS_typesregistry.fRegisteredModule( ModuleFullName);
+        if( !anExistingModule) {
+
+            var aModule = aMod_definer();
+            anExistingModule = aModule;
+
+            theSS_typesregistry.fRegisterModule( ModuleFullName, aModule);
+        }
+
+
+
+        return anExistingModule;
+
+
+    });
+}
+
+
+if( ModuleFactory_CommonEventKinds){}/* CQT */
+
+
+
+
+;/*
+ * common_type.js
+ *
+ * Created @author Antonio Carrasco Valero 201410030426
+ *
+ *
+ ***************************************************************************
+
+ Copyright 2014 2015 2016 Antonio Carrasco Valero
+ Javascript for core modules including a base prototype and prototypes hierarchy, intended to be reused on the Browser as core for i.e. Angular Controllers and Services, as in the uiwire component. Licensed under EUPL  http://www.uiwire.org
+
+Licensed under the EUPL, Version 1.1 only (the "Licence");
+You may not use this work except in compliance with the
+Licence.
+You may obtain a copy of the Licence at:
+https://joinup.ec.europa.eu/software/page/eupl/licence-eupl
+Unless required by applicable law or agreed to in
+writing, software distributed under the Licence is
+distributed on an "AS IS" basis,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+express or implied.
+See the Licence for the specific language governing
+permissions and limitations under the Licence.
+ {{License2}}
+
+ {{Licensed1}}
+ {{Licensed2}}
+
+ ***************************************************************************
+ *
+ */
+
+
+
+
+
+function ModuleFactory_CommonType() {
+
+    'use strict';
+
+    return ( function( theSS_typesregistry,
+                       theSS_Overrider,
+                       theSS_IdentifierSvce,
+                       theSS_RecorderSvce,
+                       theSS_CommonEventTypes){
+
+
+        var ModuleName     = "common_type";
+        var ModulePackages = "common";
+        var ModuleFullName = ModulePackages + "/" + ModuleName;
+
+
+
+        var aMod_definer = function( theS_Overrider,
+                                     theS_IdentifierSvce,
+                                     theS_RecorderSvce,
+                                     theS_CommonEventTypes) {
+
+
+            if( !( typeof FG_logModLoads == "undefined") && ( typeof FG_logModLoads == "function") && FG_logModLoads()) { FG_logModLoads(ModuleFullName);}
+
+
+
+
+
+
+            var pgInitWithModuleVariations = function( theToInit) {
+
+                if( !theToInit) {
+                    return;
+                }
+
+
+                /* BeWare: keeping references to record instances shall prevent reclamation of their memory by the garbage collector
+                   Note that when a recordingpolicy_keepall is plugged into the recorder, all records shall be kept in memory in the _v_Records slot property of the recorder instance
+                   */
+                theToInit.KEEPOWNRECORDS = false;
+
+
+            };
+
+
+
+
+
+            var pgInitFromModuleVariations = function( theToInit) {
+                if( !theToInit) {
+                    return;
+                }
+
+                for( var aGlobalName in ModuleVariations) {
+                    if( ModuleVariations.hasOwnProperty( aGlobalName)) {
+                        theToInit[ aGlobalName] = ModuleVariations[ aGlobalName];
                     }
                 }
-                else {
-                    theToInit.EVENTKINDS_NOTFORCONSOLE = theToInit.EVENTKINDS_NOTFORCONSOLE_DEFAULT.slice();
+            };
+
+
+            var ModuleVariations = { };
+            pgInitWithModuleVariations( ModuleVariations);
+            theS_Overrider.pOverrideModuleVariations( ModuleFullName, ModuleVariations);
+
+
+
+
+
+
+
+
+            var pgInitWithModuleConstants = function( theToInit) {
+
+                if( !theToInit) {
+                    return;
                 }
-                if( !theToInit.EVENTKINDS_NOTFORCONSOLE) {
-                    theToInit.EVENTKINDS_NOTFORCONSOLE = theToInit.EVENTKINDS_NOTFORCONSOLE_DEFAULT.slice();
+
+                if( theS_CommonEventTypes && theS_CommonEventTypes.pgInitFromModuleConstants) {
+                    theS_CommonEventTypes.pgInitFromModuleConstants( theToInit);
                 }
 
+                theToInit.COMMON_DEFAULTTITLE = "CommonDefaultName";
 
+                theToInit.UNKNOWNID = "?i?";
 
-
+                theToInit.VALUEDIFFATTOP = "/";
+                theToInit.DONOTCOMPAREVALUESYMBOL = "@DONOTCOMPARE699@";
 
 
 
@@ -2063,6 +2582,13 @@ function ModuleFactory_CommonType() {
                 theToInit.OPERATIONSTATUS_NOCREADO       = "NOCREADO";
 
 
+
+
+                theToInit.OPERATIONMESSAGE_ERROR          = "ERROR";
+                theToInit.OPERATIONMESSAGE_FALTAPARAMETRO = "FALTAPARAMETRO";
+                theToInit.OPERATIONMESSAGE_YAEXISTE       = "YAEXISTE";
+                theToInit.OPERATIONMESSAGE_NOEXISTE       = "NOEXISTE";
+                theToInit.OPERATIONMESSAGE_NOCREADO       = "NOCREADO";
 
 
                 theToInit.OPERATIONMESSAGESBYSTATUS = {};
@@ -2137,8 +2663,6 @@ function ModuleFactory_CommonType() {
                 aPrototype._v_OwnRecords = null;
 
 
-
-                aPrototype._v_EventKindsNotForConsole = aPrototype.EVENTKINDS_NOTFORCONSOLE.slice();
 
 
 
@@ -2401,10 +2925,6 @@ function ModuleFactory_CommonType() {
                         this._v_OwnRecords.push( aRecord);
                     }
 
-                    if( this.LOGRECORDS) {
-                        this.pLogRecord( aRecord);
-                    }
-
                     return aRecord;
                 };
                 if( fRecord){}/* CQT */
@@ -2419,445 +2939,23 @@ function ModuleFactory_CommonType() {
 
 
 
-                var fSetEventKindsNotForConsole = function( theEventKinds) {
-
-                    this._v_EventKindsNotForConsole = theEventKinds;
-
-                    console.log( "EventKindsNotForConsole=\n" + JSON.stringify( this._v_EventKindsNotForConsole, null, 4));
-
-                    return this._v_EventKindsNotForConsole;
-                };
-                if( fSetEventKindsNotForConsole){}/* CQT */
-                aPrototype.fSetEventKindsNotForConsole = fSetEventKindsNotForConsole;
-
-
-
-
-
-                var fSetEventKindsNotForConsole_ALL = function() {
-
-                    this._v_EventKindsNotForConsole = this.EVENTKINDS_NOTFORCONSOLE_ALL;
-
-                    console.log( "EventKindsNotForConsole=\n" + JSON.stringify( this._v_EventKindsNotForConsole, null, 4));
-
-                    return this._v_EventKindsNotForConsole;
-                };
-                if( fSetEventKindsNotForConsole_ALL){}/* CQT */
-                aPrototype.fSetEventKindsNotForConsole_ALL = fSetEventKindsNotForConsole_ALL;
-
-
-
-
-
-                var fSetEventKindsNotForConsole_NONE = function() {
-
-                    this._v_EventKindsNotForConsole = this.EVENTKINDS_NOTFORCONSOLE_NONE;
-
-                    console.log( "EventKindsNotForConsole=\n" + JSON.stringify( this._v_EventKindsNotForConsole, null, 4));
-
-                    return this._v_EventKindsNotForConsole;
-                };
-                if( fSetEventKindsNotForConsole_NONE){}/* CQT */
-                aPrototype.fSetEventKindsNotForConsole_NONE = fSetEventKindsNotForConsole_NONE;
-
-
-
-                
-
-
-                var fSetEventKindsNotForConsole_DEFAULT = function() {
-
-                    this._v_EventKindsNotForConsole = this.EVENTKINDS_NOTFORCONSOLE_DEFAULT;
-
-                    console.log( "EventKindsNotForConsole=\n" + JSON.stringify( this._v_EventKindsNotForConsole, null, 4));
-
-                    return this._v_EventKindsNotForConsole;
-                };
-                if( fSetEventKindsNotForConsole_DEFAULT){}/* CQT */
-                aPrototype.fSetEventKindsNotForConsole_DEFAULT = fSetEventKindsNotForConsole_DEFAULT;
-
-
-
-
-
-
-                var fSetEventKindsNotForConsole_RESTRICTIVE = function() {
-
-                    this._v_EventKindsNotForConsole = this.EVENTKINDS_NOTFORCONSOLE_RESTRICTIVE;
-
-                    console.log( "EventKindsNotForConsole=\n" + JSON.stringify( this._v_EventKindsNotForConsole, null, 4));
-
-                    return this._v_EventKindsNotForConsole;
-                };
-                if( fSetEventKindsNotForConsole_RESTRICTIVE){}/* CQT */
-                aPrototype.fSetEventKindsNotForConsole_RESTRICTIVE = fSetEventKindsNotForConsole_RESTRICTIVE;
-
-
-
-
-
-
-
-                var fSetEventKindsNotForConsole_RESTRICTIVE_NOPROMISE = function() {
-
-                    this._v_EventKindsNotForConsole = this.EVENTKINDS_NOTFORCONSOLE_RESTRICTIVE_NOPROMISE;
-
-                    console.log( "EventKindsNotForConsole=\n" + JSON.stringify( this._v_EventKindsNotForConsole, null, 4));
-
-                    return this._v_EventKindsNotForConsole;
-                };
-                if( fSetEventKindsNotForConsole_RESTRICTIVE_NOPROMISE){}/* CQT */
-                aPrototype.fSetEventKindsNotForConsole_RESTRICTIVE_NOPROMISE = fSetEventKindsNotForConsole_RESTRICTIVE_NOPROMISE;
-
-
-
-
-
-
-                var fSetEventKindsNotForConsole_NOPROMISE = function() {
-
-                    this._v_EventKindsNotForConsole = this.EVENTKINDS_NOTFORCONSOLE_NOPROMISE;
-
-                    console.log( "EventKindsNotForConsole=\n" + JSON.stringify( this._v_EventKindsNotForConsole, null, 4));
-
-                    return this._v_EventKindsNotForConsole;
-                };
-                if( fSetEventKindsNotForConsole_NOPROMISE){}/* CQT */
-                aPrototype.fSetEventKindsNotForConsole_NOPROMISE = fSetEventKindsNotForConsole_NOPROMISE;
-
-
-
-
-
-
-
-
-
-
-
-
-
-                var fFewerEventKindsForConsole = function( theEventKinds) {
-
-                    if( !theEventKinds) {
-                        return this._v_EventKindsNotForConsole;
-                    }
-
-                    var aNumEventKinds = theEventKinds;
-                    if( !aNumEventKinds) {
-                        return this._v_EventKindsNotForConsole;
-                    }
-
-
-                    var someEventKinds = this._v_EventKindsNotForConsole.slice();
-
-                    for( var anEventKindIdx=0; anEventKindIdx < aNumEventKinds; anEventKindIdx++) {
-
-                        var anEventKind = theEventKinds[ anEventKindIdx];
-                        if( anEventKind) {
-
-                            var anEventKindIndex = someEventKinds.indexOf( anEventKind);
-                            if( anEventKindIndex >= 0) {
-
-                                someEventKinds.splice( anEventKindIndex, 1);
-                                if( !someEventKinds.length) {
-                                    break;
-                                }
-                            }
-                        }
-                    }
-
-
-                    this._v_EventKindsNotForConsole = someEventKinds;
-
-                    console.log( "EventKindsNotForConsole=\n" + JSON.stringify( this._v_EventKindsNotForConsole, null, 4));
-
-                    return this._v_EventKindsNotForConsole
-                };
-                if( fFewerEventKindsForConsole){}/* CQT */
-                aPrototype.fFewerEventKindsForConsole = fFewerEventKindsForConsole;
-
-
-
-
-
-
-
-                var fMoreEventKindsForConsole = function( theEventKinds) {
-
-                    if( !theEventKinds) {
-                        return this._v_EventKindsNotForConsole;
-                    }
-
-                    var aNumEventKinds = theEventKinds;
-                    if( !aNumEventKinds) {
-                        return this._v_EventKindsNotForConsole;
-                    }
-
-
-                    var someEventKinds = this._v_EventKindsNotForConsole.slice();
-
-                    for( var anEventKindIdx=0; anEventKindIdx < aNumEventKinds; anEventKindIdx++) {
-
-                        var anEventKind = theEventKinds[ anEventKindIdx];
-                        if( anEventKind) {
-
-                            var anEventKindIndex = someEventKinds.indexOf( anEventKind);
-                            if( anEventKindIndex < 0) {
-
-                                someEventKinds.push( anEventKind);
-                            }
-                        }
-                    }
-
-
-                    this._v_EventKindsNotForConsole = someEventKinds;
-
-                    console.log( "EventKindsNotForConsole=\n" + JSON.stringify( this._v_EventKindsNotForConsole, null, 4));
-
-                    return this._v_EventKindsNotForConsole
-                };
-                if( fMoreEventKindsForConsole){}/* CQT */
-                aPrototype.fMoreEventKindsForConsole = fMoreEventKindsForConsole;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                var fSetEventKindsNotForConsole_inPrototype = function( theEventKinds) {
-
-                    aPrototype._v_EventKindsNotForConsole = theEventKinds;
-
-                    console.log( "EventKindsNotForConsole_inPrototype=\n" + JSON.stringify( aPrototype._v_EventKindsNotForConsole, null, 4));
-
-                    return aPrototype._v_EventKindsNotForConsole;
-                };
-                if( fSetEventKindsNotForConsole_inPrototype){}/* CQT */
-                aPrototype.fSetEventKindsNotForConsole_inPrototype = fSetEventKindsNotForConsole_inPrototype;
-
-
-
-
-
-
-                var fSetEventKindsNotForConsole_ALL_inPrototype = function() {
-
-                    aPrototype._v_EventKindsNotForConsole = aPrototype.EVENTKINDS_NOTFORCONSOLE_ALL;
-
-                    console.log( "EventKindsNotForConsole_inPrototype=\n" + JSON.stringify( aPrototype._v_EventKindsNotForConsole, null, 4));
-
-                    return this._v_EventKindsNotForConsole;
-                };
-                if( fSetEventKindsNotForConsole_ALL_inPrototype){}/* CQT */
-                aPrototype.fSetEventKindsNotForConsole_ALL_inPrototype = fSetEventKindsNotForConsole_ALL_inPrototype;
-
-
-
-
-
-                var fSetEventKindsNotForConsole_NONE_inPrototype = function() {
-
-                    aPrototype._v_EventKindsNotForConsole = aPrototype.EVENTKINDS_NOTFORCONSOLE_NONE;
-
-                    console.log( "EventKindsNotForConsole_inPrototype=\n" + JSON.stringify( aPrototype._v_EventKindsNotForConsole, null, 4));
-
-                    return this._v_EventKindsNotForConsole;
-                };
-                if( fSetEventKindsNotForConsole_NONE_inPrototype){}/* CQT */
-                aPrototype.fSetEventKindsNotForConsole_NONE_inPrototype = fSetEventKindsNotForConsole_NONE_inPrototype;
-
-
-
-
-
-
-                var fSetEventKindsNotForConsole_DEFAULT_inPrototype = function() {
-
-                    aPrototype._v_EventKindsNotForConsole = aPrototype.EVENTKINDS_NOTFORCONSOLE_DEFAULT;
-
-                    console.log( "EventKindsNotForConsole_inPrototype=\n" + JSON.stringify( aPrototype._v_EventKindsNotForConsole, null, 4));
-
-                    return this._v_EventKindsNotForConsole;
-                };
-                if( fSetEventKindsNotForConsole_DEFAULT_inPrototype){}/* CQT */
-                aPrototype.fSetEventKindsNotForConsole_DEFAULT_inPrototype = fSetEventKindsNotForConsole_DEFAULT_inPrototype;
-
-
-
-
-
-
-                var fSetEventKindsNotForConsole_RESTRICTIVE_inPrototype = function() {
-
-                    aPrototype._v_EventKindsNotForConsole = aPrototype.EVENTKINDS_NOTFORCONSOLE_RESTRICTIVE;
-
-                    console.log( "EventKindsNotForConsole_inPrototype=\n" + JSON.stringify( aPrototype._v_EventKindsNotForConsole, null, 4));
-
-                    return this._v_EventKindsNotForConsole;
-                };
-                if( fSetEventKindsNotForConsole_RESTRICTIVE_inPrototype){}/* CQT */
-                aPrototype.fSetEventKindsNotForConsole_RESTRICTIVE_inPrototype = fSetEventKindsNotForConsole_RESTRICTIVE_inPrototype;
-
-
-
-
-
-
-
-                var fSetEventKindsNotForConsole_RESTRICTIVE_NOPROMISE_inPrototype = function() {
-
-                    aPrototype._v_EventKindsNotForConsole = aPrototype.EVENTKINDS_NOTFORCONSOLE_RESTRICTIVE_NOPROMISE;
-
-                    console.log( "EventKindsNotForConsole_inPrototype=\n" + JSON.stringify( aPrototype._v_EventKindsNotForConsole, null, 4));
-
-                    return this._v_EventKindsNotForConsole;
-                };
-                if( fSetEventKindsNotForConsole_RESTRICTIVE_NOPROMISE_inPrototype){}/* CQT */
-                aPrototype.fSetEventKindsNotForConsole_RESTRICTIVE_NOPROMISE_inPrototype = fSetEventKindsNotForConsole_RESTRICTIVE_NOPROMISE_inPrototype;
-
-
-
-
-
-
-                var fSetEventKindsNotForConsole_NOPROMISE_inPrototype = function() {
-
-                    aPrototype._v_EventKindsNotForConsole = aPrototype.EVENTKINDS_NOTFORCONSOLE_NOPROMISE;
-
-                    console.log( "EventKindsNotForConsole_inPrototype=\n" + JSON.stringify( aPrototype._v_EventKindsNotForConsole, null, 4));
-
-                    return this._v_EventKindsNotForConsole;
-                };
-                if( fSetEventKindsNotForConsole_NOPROMISE_inPrototype){}/* CQT */
-                aPrototype.fSetEventKindsNotForConsole_NOPROMISE_inPrototype = fSetEventKindsNotForConsole_NOPROMISE_inPrototype;
-
-
-
-
-
-
-                var fFewerEventKindsForConsole_inPrototype = function( theEventKinds) {
-
-                    if( !theEventKinds) {
-                        return aPrototype._v_EventKindsNotForConsole;
-                    }
-
-                    var aNumEventKinds = theEventKinds;
-                    if( !aNumEventKinds) {
-                        return aPrototype._v_EventKindsNotForConsole;
-                    }
-
-
-                    var someEventKinds = aPrototype._v_EventKindsNotForConsole.slice();
-
-                    for( var anEventKindIdx=0; anEventKindIdx < aNumEventKinds; anEventKindIdx++) {
-
-                        var anEventKind = theEventKinds[ anEventKindIdx];
-                        if( anEventKind) {
-
-                            var anEventKindIndex = someEventKinds.indexOf( anEventKind);
-                            if( anEventKindIndex >= 0) {
-
-                                someEventKinds.splice( anEventKindIndex, 1);
-                                if( !someEventKinds.length) {
-                                    break;
-                                }
-                            }
-                        }
-                    }
-
-
-                    aPrototype._v_EventKindsNotForConsole = someEventKinds;
-
-                    console.log( "EventKindsNotForConsole_inPrototype=\n" + JSON.stringify( aPrototype._v_EventKindsNotForConsole, null, 4));
-
-                    return aPrototype._v_EventKindsNotForConsole
-                };
-                if( fFewerEventKindsForConsole_inPrototype){}/* CQT */
-                aPrototype.fFewerEventKindsForConsole_inPrototype = fFewerEventKindsForConsole_inPrototype;
-
-
-
-
-
-
-
-                var fMoreEventKindsForConsole_inPrototype = function( theEventKinds) {
-
-                    if( !theEventKinds) {
-                        return aPrototype._v_EventKindsNotForConsole;
-                    }
-
-                    var aNumEventKinds = theEventKinds;
-                    if( !aNumEventKinds) {
-                        return aPrototype._v_EventKindsNotForConsole;
-                    }
-
-
-                    var someEventKinds = aPrototype._v_EventKindsNotForConsole.slice();
-
-                    for( var anEventKindIdx=0; anEventKindIdx < aNumEventKinds; anEventKindIdx++) {
-
-                        var anEventKind = theEventKinds[ anEventKindIdx];
-                        if( anEventKind) {
-
-                            var anEventKindIndex = someEventKinds.indexOf( anEventKind);
-                            if( anEventKindIndex < 0) {
-
-                                someEventKinds.push( anEventKind);
-                            }
-                        }
-                    }
-
-
-                    aPrototype._v_EventKindsNotForConsole = someEventKinds;
-
-                    console.log( "EventKindsNotForConsole_inPrototype=\n" + JSON.stringify( aPrototype._v_EventKindsNotForConsole, null, 4));
-
-                    return aPrototype._v_EventKindsNotForConsole
-                };
-                if( fMoreEventKindsForConsole_inPrototype){}/* CQT */
-                aPrototype.fMoreEventKindsForConsole_inPrototype = fMoreEventKindsForConsole_inPrototype;
-
-
-
-
-
-
-
-
-
-
-
+                /* Deprecated. Kept in support of common type pLogRecord . Use fRecord which shall invoke recorder fCreateAndRegisterRecord and take care of delegating for the record to be recorded and dumped to console */
                 var pLogRecord = function( theRecord) {
-                    if( this.LOGRECORDS) {
-                        if( theRecord) {
-                            var anEventKind = theRecord._v_EventKind;
-                            if( this._v_EventKindsNotForConsole.indexOf( anEventKind) < 0) {
-                                var aLogString = theRecord.fLogString( );
-                                if( aLogString) {
-                                    console.log( "," + aLogString);
-                                }
-                            }
-                        }
+
+                    if( !theRecord) {
+                        return;
                     }
+
+                    if( !this._v_Recorder) {
+                        return;
+                    }
+
+
+                    this._v_Recorder.pLogRecord( theRecord);
+
                 };
                 if( pLogRecord){}/* CQT */
                 aPrototype.pLogRecord = pLogRecord;
-
-
-
-
 
 
 
@@ -3097,7 +3195,8 @@ function ModuleFactory_CommonType() {
             var aModule = aMod_definer(
                 theSS_Overrider,
                 theSS_IdentifierSvce,
-                theSS_RecorderSvce
+                theSS_RecorderSvce,
+                theSS_CommonEventTypes
             );
             anExistingModule = aModule;
 
@@ -4839,12 +4938,7 @@ function ModuleFactory_WithProminstrType() {
             var pgInitWithModuleVariations = function( theToInit) {
 
                 if( !theToInit) {
-                    return;
                 }
-
-                theToInit.LOGDEFERREDREJECT  = true;
-                theToInit.LOGDEFERREDRESOLVE = true;
-
             };
 
 
@@ -8500,6 +8594,2181 @@ if( ModuleFactory_RecordType){}/* CQT */
 
 
 ;/*
+ * recordingpolicy_type.js
+ *
+ * Created @author Antonio Carrasco Valero 201610051422
+ *
+ *
+ ***************************************************************************
+
+ Copyright 2014 2015 2016 Antonio Carrasco Valero
+ Javascript for core modules including a base prototype and prototypes hierarchy, intended to be reused on the Browser as core for i.e. Angular Controllers and Services, as in the uiwire component. Licensed under EUPL  http://www.uiwire.org
+
+Licensed under the EUPL, Version 1.1 only (the "Licence");
+You may not use this work except in compliance with the
+Licence.
+You may obtain a copy of the Licence at:
+https://joinup.ec.europa.eu/software/page/eupl/licence-eupl
+Unless required by applicable law or agreed to in
+writing, software distributed under the Licence is
+distributed on an "AS IS" basis,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+express or implied.
+See the Licence for the specific language governing
+permissions and limitations under the Licence.
+ {{License2}}
+
+ {{Licensed1}}
+ {{Licensed2}}
+
+ ***************************************************************************
+ *
+ */
+
+
+
+
+
+
+function ModuleFactory_RecordingPolicyType() {
+
+    'use strict';
+
+    return ( function( theSS_typesregistry,
+                       theSS_Overrider,
+                       theSS_IdentifierSvce) {
+
+
+        var ModuleName     = "recordingpolicy_type";
+        var ModulePackages = "identifying";
+        var ModuleFullName = ModulePackages + "/" + ModuleName;
+
+
+
+        var aMod_definer = function( theS_Overrider,
+                                     theS_IdentifierSvce) {
+
+
+            if( !( typeof FG_logModLoads == "undefined") && ( typeof FG_logModLoads == "function") && FG_logModLoads()) { FG_logModLoads(ModuleFullName);}
+
+
+
+
+
+
+
+
+            var pgInitWithModuleVariations = function( theToInit) {
+
+                if( !theToInit) {
+                }
+            };
+
+
+
+
+
+            var pgInitFromModuleVariations = function( theToInit) {
+                if( !theToInit) {
+                    return;
+                }
+
+                for( var aGlobalName in ModuleVariations) {
+                    if( ModuleVariations.hasOwnProperty( aGlobalName)) {
+                        theToInit[ aGlobalName] = ModuleVariations[ aGlobalName];
+                    }
+                }
+            };
+
+
+            var ModuleVariations = { };
+            pgInitWithModuleVariations( ModuleVariations);
+            theS_Overrider.pOverrideModuleVariations( ModuleFullName, ModuleVariations);
+
+
+
+
+
+
+
+
+            var pgInitWithModuleConstants = function( theToInit) {
+
+                if( !theToInit) {
+                    return;
+                }
+                theToInit.RECORDINGPOLICY_DEFAULTTITLE = "RecordingPolicyDefaultName";
+            };
+
+
+
+            var ModuleConstants = {};
+            pgInitFromModuleVariations( ModuleConstants);
+            pgInitWithModuleConstants( ModuleConstants);
+
+
+
+
+            var pgInitFromModuleConstants = function( theToInit) {
+                if( !theToInit) {
+                    return;
+                }
+
+                for( var aGlobalName in ModuleConstants) {
+                    if( ModuleConstants.hasOwnProperty( aGlobalName)) {
+                        theToInit[ aGlobalName] = ModuleConstants[ aGlobalName];
+                    }
+                }
+            };
+
+
+
+
+
+
+            var aRecordingPolicy_Prototype = (function() {
+
+
+                var aPrototype = {};
+
+                pgInitFromModuleConstants( aPrototype);
+
+
+
+
+                aPrototype._v_Type = "RecordingPolicy";
+
+                aPrototype._v_Module = null;
+
+                aPrototype._v_Prototype_RecordingPolicy = aPrototype;
+
+                aPrototype._v_Identifier = null;
+
+                aPrototype._v_Id         = null;
+                aPrototype._v_Title      = null;
+
+                aPrototype._v_Recorder    = null;
+
+
+
+
+
+                var _pInit = function( theTitle, theIdentifier) {
+
+                    this._pInit_RecordingPolicy( theTitle, theIdentifier);
+                };
+                if( _pInit){}/* CQT */
+                aPrototype._pInit = _pInit;
+
+
+
+
+
+
+                var _fTitleDefault = function( ) {
+
+                   return this.RECORDINGPOLICY_DEFAULTTITLE;
+                };
+                if( _fTitleDefault){}/* CQT */
+                aPrototype._fTitleDefault = _fTitleDefault;
+
+
+
+
+
+
+                var _pInit_RecordingPolicy = function( theTitle, theIdentifier, theRecorder) {
+
+                    this._v_Prototype = aPrototype;
+                    this._v_Type      = this._v_Prototype._v_Type;
+                    this._v_Module    = aPrototype._v_Module;
+
+                    this._v_Identifier = theIdentifier;
+
+                    this._v_Id    = null;
+
+                    this._v_Title = theTitle;
+                    if( !this._v_Title) {
+                        this._v_Title = this._fTitleDefault();
+                    }
+
+                    if( !this._v_Identifier) {
+                        this._v_Identifier = theS_IdentifierSvce;
+                    }
+
+                    this._v_Id = this._v_Identifier.fReserveId();
+
+                    this._v_Recorder    = theRecorder;
+                };
+                if( _pInit_RecordingPolicy){}/* CQT */
+                aPrototype._pInit_RecordingPolicy = _pInit_RecordingPolicy;
+
+
+
+
+
+
+
+                var fFullTypeNameString = function() {
+
+                    var aFullTypeName = this._v_Module.ModuleFullName + "." + this._v_Type;
+                    if( aFullTypeName){}/* CQT */
+
+                    return aFullTypeName;
+                };
+                if( fFullTypeNameString){}/* CQT */
+                aPrototype.fFullTypeNameString = fFullTypeNameString;
+
+
+
+
+
+
+                var fIdentifyingJSON = function() {
+
+                    var aIdentifiyingJSON = {
+                        "type": this._v_Type,
+                        "id": this._v_Id
+                    };
+                    if( aIdentifiyingJSON){}/* CQT */
+                    return aIdentifiyingJSON;
+                };
+                if( fIdentifyingJSON){}/* CQT */
+                aPrototype.fIdentifyingJSON = fIdentifyingJSON;
+
+
+
+
+
+
+                var fIdentifyingString = function() {
+
+                    var aIdentifyingJSON = this.fIdentifyingJSON();
+
+                    var aIdentifyingString = "?";
+                    try {
+                        aIdentifyingString = JSON.stringify( aIdentifyingJSON);
+                    }
+                    catch( anException){
+                        aIdentifyingString = "Error_while_fIdentifyingString_JSON_stringify"
+                    }
+                    if( aIdentifyingString){}/* CQT */
+
+                    return aIdentifyingString;
+                };
+                if( fIdentifyingString){}/* CQT */
+                aPrototype.fIdentifyingString = fIdentifyingString;
+
+
+
+
+
+
+
+                var fIdentifyingWithTitleJSON = function() {
+
+                    var aIdentifyingJSON = this.fIdentifyingJSON();
+
+                    aIdentifyingJSON[ "title"] = this._v_Title;
+
+                    return aIdentifyingJSON;
+                };
+                if( fIdentifyingWithTitleJSON){}/* CQT */
+                aPrototype.fIdentifyingWithTitleJSON = fIdentifyingWithTitleJSON;
+
+
+
+
+
+
+                var fIdentifyingWithTitleString = function() {
+
+                    var aIdentifyingJSON = this.fIdentifyingWithTitleJSON();
+
+                    var aIdentifyingString = "?";
+                    try {
+                        aIdentifyingString = JSON.stringify( aIdentifyingJSON);
+                    }
+                    catch( anException){
+                        aIdentifyingString = "Error_while_fIdentifyingWithTitleString_JSON_stringify"
+                    }
+                    if( aIdentifyingString){}/* CQT */
+
+                    return aIdentifyingString;
+                };
+                if( fIdentifyingWithTitleString){}/* CQT */
+                aPrototype.fIdentifyingWithTitleString = fIdentifyingWithTitleString;
+
+
+
+
+
+
+
+
+
+
+                var fToResultJSON = function( theCommonObjects, theAlready) {
+                    if( !( theAlready == null)) {
+                        if( theAlready.fAlready( this)){
+                            return this.fIdentifyingJSON();
+                        }
+                    }
+
+                    var aResultJSON = this.fIdentifyingWithTitleJSON();
+                    if( aResultJSON){}/* CQT */
+
+                    return aResultJSON;
+                };
+                if( fToResultJSON){}/* CQT */
+                aPrototype.fToResultJSON = fToResultJSON;
+
+
+
+
+
+
+
+
+
+
+
+
+                var fRecorder = function() {
+
+                    return this._v_Recorder;
+                };
+                if( fRecorder){}/* CQT */
+                aPrototype.fRecorder = fRecorder;
+
+
+
+
+
+
+                var pSetRecorder = function( theRecorder) {
+
+                    this._v_Recorder = theRecorder;
+                };
+                if( pSetRecorder){}/* CQT */
+                aPrototype.pSetRecorder = pSetRecorder;
+
+
+
+
+
+
+
+
+                var pRecordRecord = function( theRecord) {
+
+                    if( !theRecord) {
+                        return;
+                    }
+
+                    /* Subtype responsibility */
+                };
+                if( pRecordRecord){}/* CQT */
+                aPrototype.pRecordRecord = pRecordRecord;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                var pRelease = function() {
+
+                    this._v_Identifier       = null;
+
+                    this._v_Id               = null;
+                    this._v_Title            = null;
+
+                    this._v_Recorder         = null;
+
+                };
+                if( pRelease){}/* CQT */
+                aPrototype.pRelease = pRelease;
+
+
+
+
+
+
+
+
+
+
+                return aPrototype;
+
+            })();
+
+
+
+
+            var RecordingPolicy_Constructor = function( theTitle, theIdentifier, theRecorder) {
+                this._v_Prototype = null;
+                this._v_Type = null;
+                this._v_Module = null;
+
+                this._v_Identifier = null;
+
+                this._v_Id         = null;
+                this._v_Title      = null;
+
+                this._v_Recorder    = null;
+
+                this._pInit_RecordingPolicy( theTitle, theIdentifier, theRecorder);
+            };
+            RecordingPolicy_Constructor.prototype = aRecordingPolicy_Prototype;
+
+
+
+
+
+            var RecordingPolicy_SuperPrototypeConstructor = function() {
+                this._v_Prototype = aRecordingPolicy_Prototype;
+                this._v_Type      = null;
+                this._v_Module    = null;
+
+                this._v_Identifier = null;
+
+                this._v_Id         = null;
+                this._v_Title      = null;
+
+                this._v_Recorder    = null;
+
+            };
+            RecordingPolicy_SuperPrototypeConstructor.prototype = aRecordingPolicy_Prototype;
+
+
+
+            var aModule = {
+                "RecordingPolicy_Prototype": aRecordingPolicy_Prototype,
+                "RecordingPolicy_Constructor": RecordingPolicy_Constructor,
+                "RecordingPolicy_SuperPrototypeConstructor": RecordingPolicy_SuperPrototypeConstructor
+            };
+            pgInitFromModuleConstants( aModule);
+            aModule.ModuleName     = ModuleName;
+            aModule.ModulePackages = ModulePackages;
+            aModule.ModuleFullName = ModuleFullName;
+
+            aRecordingPolicy_Prototype._v_Module = aModule;
+
+
+
+
+
+            return aModule;
+        };
+
+
+
+
+
+
+
+        var anExistingModule = theSS_typesregistry.fRegisteredModule( ModuleFullName);
+        if( !anExistingModule) {
+
+            var aModule = aMod_definer(
+                theSS_Overrider,
+                theSS_IdentifierSvce
+            );
+            anExistingModule = aModule;
+
+            theSS_typesregistry.fRegisterModule( ModuleFullName, aModule);
+        }
+
+
+
+
+
+
+        return anExistingModule;
+
+    });
+}
+
+
+
+
+
+
+;/*
+ * recordingpolicy_keepall_type.js.js
+ *
+ * Created @author Antonio Carrasco Valero 201410141300
+ *
+ *
+ ***************************************************************************
+
+ Copyright 2014 2015 2016 Antonio Carrasco Valero
+ Javascript for core modules including a base prototype and prototypes hierarchy, intended to be reused on the Browser as core for i.e. Angular Controllers and Services, as in the uiwire component. Licensed under EUPL  http://www.uiwire.org
+
+Licensed under the EUPL, Version 1.1 only (the "Licence");
+You may not use this work except in compliance with the
+Licence.
+You may obtain a copy of the Licence at:
+https://joinup.ec.europa.eu/software/page/eupl/licence-eupl
+Unless required by applicable law or agreed to in
+writing, software distributed under the Licence is
+distributed on an "AS IS" basis,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+express or implied.
+See the Licence for the specific language governing
+permissions and limitations under the Licence.
+ {{License2}}
+
+ {{Licensed1}}
+ {{Licensed2}}
+
+ ***************************************************************************
+ *
+ */
+
+
+
+
+
+/* BeWare: With this policy, all records shall be kept in memory in the _v_Records slot property of the recorder instance.
+ and shall prevent reclamation of their memory by the garbage collector
+ Note that common_type has a configurable variation constant theToInit.KEEPOWNRECORDS = false;
+ which when true shall keep references to record instances and shall also prevent reclamation of their memory by the garbage collector.
+ */
+
+
+
+function ModuleFactory_RecordingPolicyKeepAllType() {
+
+    'use strict';
+
+
+    return ( function( theSS_typesregistry,
+                       theSS_Overrider,
+                       theSS_RecordingPolicyType) {
+
+
+        var ModuleName     = "recordingpolicy_keepall_type";
+        var ModulePackages = "identifying";
+        var ModuleFullName = ModulePackages + "/" + ModuleName;
+
+
+
+        var aMod_definer = function( theS_Overrider,
+                                     theS_RecordingPolicyType) {
+
+
+            if( !( typeof FG_logModLoads == "undefined") && ( typeof FG_logModLoads == "function") && FG_logModLoads()) { FG_logModLoads(ModuleFullName);}
+
+
+
+
+
+
+
+
+            var pgInitWithModuleVariations = function( theToInit) {
+
+                if( !theToInit) {
+                    return;
+                }
+
+                theToInit.MUSTKEEPRECORDS = true;
+
+            };
+
+
+
+
+
+            var pgInitFromModuleVariations = function( theToInit) {
+                if( !theToInit) {
+                    return;
+                }
+
+                for( var aGlobalName in ModuleVariations) {
+                    if( ModuleVariations.hasOwnProperty( aGlobalName)) {
+                        theToInit[ aGlobalName] = ModuleVariations[ aGlobalName];
+                    }
+                }
+            };
+
+
+            var ModuleVariations = { };
+            pgInitWithModuleVariations( ModuleVariations);
+            theS_Overrider.pOverrideModuleVariations( ModuleFullName, ModuleVariations);
+
+
+
+
+
+
+
+
+            var pgInitWithModuleConstants = function( theToInit) {
+
+                if( !theToInit) {
+                    return;
+                }
+                theToInit.RECORDINGPOLICYKEEPALL_DEFAULTTITLE = "RecordingPolicyKeepAllDefaultName";
+
+            };
+
+
+
+            var ModuleConstants = {};
+            pgInitFromModuleVariations( ModuleConstants);
+            pgInitWithModuleConstants( ModuleConstants);
+
+
+
+
+            var pgInitFromModuleConstants = function( theToInit) {
+                if( !theToInit) {
+                    return;
+                }
+
+                for( var aGlobalName in ModuleConstants) {
+                    if( ModuleConstants.hasOwnProperty( aGlobalName)) {
+                        theToInit[ aGlobalName] = ModuleConstants[ aGlobalName];
+                    }
+                }
+            };
+
+
+
+
+
+
+            var aRecordingPolicyKeepAll_Prototype = (function() {
+
+
+
+                var aPrototype = new theS_RecordingPolicyType.RecordingPolicy_SuperPrototypeConstructor();
+
+                pgInitFromModuleConstants( aPrototype);
+
+
+                aPrototype._v_SuperPrototype = theS_RecordingPolicyType.RecordingPolicy_Prototype;
+
+
+                aPrototype._v_Type = "RecordingPolicyKeepAll";
+
+                aPrototype._v_Prototype_RecordingPolicyKeepAll = aPrototype;
+
+
+                aPrototype._v_Module = null;
+
+
+                aPrototype._v_MustKeepRecords = null;
+
+
+
+
+                var _pInit = function( theTitle, theIdentifier, theRecorder) {
+
+                    this._pInit_RecordingPolicyKeepAll( theTitle, theIdentifier, theRecorder);
+
+                };
+                if( _pInit){}/* CQT */
+                aPrototype._pInit = _pInit;
+
+
+
+
+
+
+
+                var _fTitleDefault = function( ) {
+
+                    return this.RECORDINGPOLICYKEEPALL_DEFAULTTITLE;
+                };
+                if( _fTitleDefault){}/* CQT */
+                aPrototype._fTitleDefault = _fTitleDefault;
+
+
+
+
+
+
+                var _pInit_RecordingPolicyKeepAll = function( theTitle, theIdentifier, theRecorder) {
+
+                    /* Delegate on super prototype initialization */
+                    aPrototype._v_SuperPrototype._pInit_RecordingPolicy.apply( this, [ theTitle, theIdentifier, theRecorder]);
+
+                    this._v_Prototype = aPrototype;
+                    this._v_Type      = this._v_Prototype._v_Type;
+                    this._v_Module    = aPrototype._v_Module;
+
+                    this._v_MustKeepRecords = this.MUSTKEEPRECORDS;
+
+                };
+                if( _pInit_RecordingPolicyKeepAll){}/* CQT */
+                aPrototype._pInit_RecordingPolicyKeepAll = _pInit_RecordingPolicyKeepAll;
+
+
+
+
+
+
+
+
+
+
+                var pSetMustKeepRecords = function( theMustKeepRecords) {
+
+                    this._v_MustKeepRecords = theMustKeepRecords ? true : false;
+
+                };
+                if( pSetMustKeepRecords){}/* CQT */
+                aPrototype.pSetMustKeepRecords = pSetMustKeepRecords;
+
+
+
+
+                var fMustKeepRecords = function() {
+
+                    return this._v_MustKeepRecords;
+
+                };
+                if( fMustKeepRecords){}/* CQT */
+                aPrototype.fMustKeepRecords = fMustKeepRecords;
+
+
+
+
+
+
+                var pRecordRecord = function( theRecord) {
+
+                    if( !theRecord) {
+                        return;
+                    }
+
+                    if( !this.fMustKeepRecords()) {
+                        return;
+                    }
+
+                    if( this._v_Recorder) {
+                        this._v_Recorder.pKeepRecord( theRecord);
+                    }
+
+                };
+                if( pRecordRecord){}/* CQT */
+                aPrototype.pRecordRecord = pRecordRecord;
+
+
+
+
+
+
+
+
+
+
+
+                return aPrototype;
+
+            })();
+
+
+
+
+            var RecordingPolicyKeepAll_Constructor = function( theTitle, theIdentifier, theRecorder) {
+
+                /* Keep handy reference to super-prototype for super method invocation */
+                this._v_SuperPrototype = theS_RecordingPolicyType.RecordingPolicy_Prototype;
+
+                this._v_Prototype = null;
+                this._v_Type = null;
+                this._v_Module = null;
+
+                this._v_MustKeepRecords = null;
+
+                this._pInit_RecordingPolicyKeepAll( theTitle, theIdentifier, theRecorder);
+            };
+            RecordingPolicyKeepAll_Constructor.prototype = aRecordingPolicyKeepAll_Prototype;
+
+
+
+
+
+            var RecordingPolicyKeepAll_SuperPrototypeConstructor = function() {
+
+                /* Keep handy reference to super-prototype for super method invocation */
+                this._v_SuperPrototype = theS_RecordingPolicyType.RecordingPolicy_Prototype;
+
+                this._v_Prototype = aRecordingPolicyKeepAll_Prototype;
+                this._v_Type      = null;
+                this._v_Module    = null;
+
+                this._v_MustKeepRecords = null;
+
+            };
+            RecordingPolicyKeepAll_SuperPrototypeConstructor.prototype = aRecordingPolicyKeepAll_Prototype;
+
+
+
+            var aModule = {
+                "RecordingPolicyKeepAll_Prototype": aRecordingPolicyKeepAll_Prototype,
+                "RecordingPolicyKeepAll_Constructor": RecordingPolicyKeepAll_Constructor,
+                "RecordingPolicyKeepAll_SuperPrototypeConstructor": RecordingPolicyKeepAll_SuperPrototypeConstructor
+            };
+            pgInitFromModuleConstants( aModule);
+            aModule.ModuleName     = ModuleName;
+            aModule.ModulePackages = ModulePackages;
+            aModule.ModuleFullName = ModuleFullName;
+
+            aRecordingPolicyKeepAll_Prototype._v_Module = aModule;
+
+
+
+
+
+            return aModule;
+        };
+
+
+
+
+
+
+
+        var anExistingModule = theSS_typesregistry.fRegisteredModule( ModuleFullName);
+        if( !anExistingModule) {
+
+            var aModule = aMod_definer(
+                theSS_Overrider,
+                theSS_RecordingPolicyType
+            );
+            anExistingModule = aModule;
+
+            theSS_typesregistry.fRegisterModule( ModuleFullName, aModule);
+        }
+
+
+
+
+
+
+        return anExistingModule;
+
+    });
+}
+
+
+if( ModuleFactory_RecordingPolicyKeepAllType){}/* CQT */
+
+
+
+;/*
+ * dumpingpolicy_type.js
+ *
+ * Created @author Antonio Carrasco Valero 201610051442
+ *
+ *
+ ***************************************************************************
+
+ Copyright 2014 2015 2016 Antonio Carrasco Valero
+ Javascript for core modules including a base prototype and prototypes hierarchy, intended to be reused on the Browser as core for i.e. Angular Controllers and Services, as in the uiwire component. Licensed under EUPL  http://www.uiwire.org
+
+Licensed under the EUPL, Version 1.1 only (the "Licence");
+You may not use this work except in compliance with the
+Licence.
+You may obtain a copy of the Licence at:
+https://joinup.ec.europa.eu/software/page/eupl/licence-eupl
+Unless required by applicable law or agreed to in
+writing, software distributed under the Licence is
+distributed on an "AS IS" basis,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+express or implied.
+See the Licence for the specific language governing
+permissions and limitations under the Licence.
+ {{License2}}
+
+ {{Licensed1}}
+ {{Licensed2}}
+
+ ***************************************************************************
+ *
+ */
+
+
+
+
+
+
+function ModuleFactory_DumpingPolicyType() {
+
+    'use strict';
+
+    return ( function( theSS_typesregistry,
+                       theSS_Overrider,
+                       theSS_IdentifierSvce,
+                       theSS_ConsoleSvce) {
+
+
+        var ModuleName     = "dumpingpolicy_type";
+        var ModulePackages = "identifying";
+        var ModuleFullName = ModulePackages + "/" + ModuleName;
+
+
+
+        var aMod_definer = function( theS_Overrider,
+                                     theS_IdentifierSvce,
+                                     theS_ConsoleSvce) {
+
+
+            if( !( typeof FG_logModLoads == "undefined") && ( typeof FG_logModLoads == "function") && FG_logModLoads()) { FG_logModLoads(ModuleFullName);}
+
+
+
+
+
+
+
+
+            var pgInitWithModuleVariations = function( theToInit) {
+
+                if( !theToInit) {
+                    return;
+                }
+
+                theToInit.MAYDUMPRECORDS = true;
+
+            };
+
+
+
+
+
+            var pgInitFromModuleVariations = function( theToInit) {
+                if( !theToInit) {
+                    return;
+                }
+
+                for( var aGlobalName in ModuleVariations) {
+                    if( ModuleVariations.hasOwnProperty( aGlobalName)) {
+                        theToInit[ aGlobalName] = ModuleVariations[ aGlobalName];
+                    }
+                }
+            };
+
+
+            var ModuleVariations = { };
+            pgInitWithModuleVariations( ModuleVariations);
+            theS_Overrider.pOverrideModuleVariations( ModuleFullName, ModuleVariations);
+
+
+
+
+
+
+
+
+            var pgInitWithModuleConstants = function( theToInit) {
+
+                if( !theToInit) {
+                    return;
+                }
+                theToInit.DUMPINGPOLICY_DEFAULTTITLE = "DumpingPolicyDefaultName";
+            };
+
+
+
+            var ModuleConstants = {};
+            pgInitFromModuleVariations( ModuleConstants);
+            pgInitWithModuleConstants( ModuleConstants);
+
+
+
+
+            var pgInitFromModuleConstants = function( theToInit) {
+                if( !theToInit) {
+                    return;
+                }
+
+                for( var aGlobalName in ModuleConstants) {
+                    if( ModuleConstants.hasOwnProperty( aGlobalName)) {
+                        theToInit[ aGlobalName] = ModuleConstants[ aGlobalName];
+                    }
+                }
+            };
+
+
+
+
+
+
+            var aDumpingPolicy_Prototype = (function() {
+
+
+                var aPrototype = {};
+
+                pgInitFromModuleConstants( aPrototype);
+
+
+
+
+                aPrototype._v_Type = "DumpingPolicy";
+
+                aPrototype._v_Module = null;
+
+                aPrototype._v_Prototype_DumpingPolicy = aPrototype;
+
+                aPrototype._v_Identifier = null;
+
+                aPrototype._v_Id         = null;
+                aPrototype._v_Title      = null;
+
+                aPrototype._v_Recorder    = null;
+
+
+                aPrototype._v_MayDumpRecords   = null;
+
+
+
+                var _pInit = function( theTitle, theIdentifier) {
+
+                    this._pInit_DumpingPolicy( theTitle, theIdentifier);
+                };
+                if( _pInit){}/* CQT */
+                aPrototype._pInit = _pInit;
+
+
+
+
+
+
+                var _fTitleDefault = function( ) {
+
+                   return this.DUMPINGPOLICY_DEFAULTTITLE;
+                };
+                if( _fTitleDefault){}/* CQT */
+                aPrototype._fTitleDefault = _fTitleDefault;
+
+
+
+
+
+
+                var _pInit_DumpingPolicy = function( theTitle, theIdentifier, theRecorder) {
+
+                    this._v_Prototype = aPrototype;
+                    this._v_Type      = this._v_Prototype._v_Type;
+                    this._v_Module    = aPrototype._v_Module;
+
+                    this._v_Identifier = theIdentifier;
+
+                    this._v_Id    = null;
+
+                    this._v_Title = theTitle;
+                    if( !this._v_Title) {
+                        this._v_Title = this._fTitleDefault();
+                    }
+
+                    if( !this._v_Identifier) {
+                        this._v_Identifier = theS_IdentifierSvce;
+                    }
+
+                    this._v_Id = this._v_Identifier.fReserveId();
+
+                    this._v_Recorder    = theRecorder;
+
+                    this._v_MayDumpRecords   = this.MAYDUMPRECORDS;
+
+                };
+                if( _pInit_DumpingPolicy){}/* CQT */
+                aPrototype._pInit_DumpingPolicy = _pInit_DumpingPolicy;
+
+
+
+
+
+
+
+                var fFullTypeNameString = function() {
+
+                    var aFullTypeName = this._v_Module.ModuleFullName + "." + this._v_Type;
+                    if( aFullTypeName){}/* CQT */
+
+                    return aFullTypeName;
+                };
+                if( fFullTypeNameString){}/* CQT */
+                aPrototype.fFullTypeNameString = fFullTypeNameString;
+
+
+
+
+
+
+                var fIdentifyingJSON = function() {
+
+                    var aIdentifiyingJSON = {
+                        "type": this._v_Type,
+                        "id": this._v_Id
+                    };
+                    if( aIdentifiyingJSON){}/* CQT */
+                    return aIdentifiyingJSON;
+                };
+                if( fIdentifyingJSON){}/* CQT */
+                aPrototype.fIdentifyingJSON = fIdentifyingJSON;
+
+
+
+
+
+
+                var fIdentifyingString = function() {
+
+                    var aIdentifyingJSON = this.fIdentifyingJSON();
+
+                    var aIdentifyingString = "?";
+                    try {
+                        aIdentifyingString = JSON.stringify( aIdentifyingJSON);
+                    }
+                    catch( anException){
+                        aIdentifyingString = "Error_while_fIdentifyingString_JSON_stringify"
+                    }
+                    if( aIdentifyingString){}/* CQT */
+
+                    return aIdentifyingString;
+                };
+                if( fIdentifyingString){}/* CQT */
+                aPrototype.fIdentifyingString = fIdentifyingString;
+
+
+
+
+
+
+
+                var fIdentifyingWithTitleJSON = function() {
+
+                    var aIdentifyingJSON = this.fIdentifyingJSON();
+
+                    aIdentifyingJSON[ "title"] = this._v_Title;
+
+                    return aIdentifyingJSON;
+                };
+                if( fIdentifyingWithTitleJSON){}/* CQT */
+                aPrototype.fIdentifyingWithTitleJSON = fIdentifyingWithTitleJSON;
+
+
+
+
+
+
+                var fIdentifyingWithTitleString = function() {
+
+                    var aIdentifyingJSON = this.fIdentifyingWithTitleJSON();
+
+                    var aIdentifyingString = "?";
+                    try {
+                        aIdentifyingString = JSON.stringify( aIdentifyingJSON);
+                    }
+                    catch( anException){
+                        aIdentifyingString = "Error_while_fIdentifyingWithTitleString_JSON_stringify"
+                    }
+                    if( aIdentifyingString){}/* CQT */
+
+                    return aIdentifyingString;
+                };
+                if( fIdentifyingWithTitleString){}/* CQT */
+                aPrototype.fIdentifyingWithTitleString = fIdentifyingWithTitleString;
+
+
+
+
+
+
+
+
+
+
+                var fToResultJSON = function( theCommonObjects, theAlready) {
+                    if( !( theAlready == null)) {
+                        if( theAlready.fAlready( this)){
+                            return this.fIdentifyingJSON();
+                        }
+                    }
+
+                    var aResultJSON = this.fIdentifyingWithTitleJSON();
+                    if( aResultJSON){}/* CQT */
+
+                    return aResultJSON;
+                };
+                if( fToResultJSON){}/* CQT */
+                aPrototype.fToResultJSON = fToResultJSON;
+
+
+
+
+
+
+
+
+
+
+                var fConsoleService = function() {
+
+                    return theS_ConsoleSvce;
+
+                };
+                if( fConsoleService){}/* CQT */
+                aPrototype.fConsoleService = fConsoleService;
+
+
+
+
+
+
+
+
+                var fRecorder = function() {
+
+                    return this._v_Recorder;
+                };
+                if( fRecorder){}/* CQT */
+                aPrototype.fRecorder = fRecorder;
+
+
+
+
+
+
+                var pSetRecorder = function( theRecorder) {
+
+                    this._v_Recorder = theRecorder;
+                };
+                if( pSetRecorder){}/* CQT */
+                aPrototype.pSetRecorder = pSetRecorder;
+
+
+
+
+
+
+
+
+
+                var pSetMayDumpRecords = function( theMayDumpRecords) {
+
+                    this._v_MayDumpRecords = theMayDumpRecords ? true : false;
+
+                };
+                if( pSetMayDumpRecords){}/* CQT */
+                aPrototype.pSetMayDumpRecords = pSetMayDumpRecords;
+
+
+
+
+                var fMayDumpRecords = function() {
+
+                    return this._v_MayDumpRecords;
+
+                };
+                if( fMayDumpRecords){}/* CQT */
+                aPrototype.fMayDumpRecords = fMayDumpRecords;
+
+
+
+
+
+
+
+                var fMustDumpRecord = function( theRecord) {
+
+                    if( !theRecord) {
+                        return false;
+                    }
+
+                    if( !this.fMayDumpRecords()) {
+                        return false;
+                    }
+
+                    /* Subtype responsibility */
+
+                    return true;
+
+                };
+                if( fMustDumpRecord){}/* CQT */
+                aPrototype.fMustDumpRecord = fMustDumpRecord;
+
+
+
+
+
+
+                var pDumpRecord = function( theRecord) {
+
+                    if( !theRecord) {
+                        return;
+                    }
+
+                    if( !this.fMustDumpRecord( theRecord)) {
+                        return;
+                    }
+
+                    var aConsoleService = this.fConsoleService();
+                    if( !aConsoleService) {
+                        return;
+                    }
+
+
+                    var aLogString = theRecord.fLogString();
+                    if( !aLogString) {
+                        return;
+                    }
+
+                    aConsoleService.log(  "," + aLogString);
+
+                };
+                if( pDumpRecord){}/* CQT */
+                aPrototype.pDumpRecord = pDumpRecord;
+
+
+
+
+
+
+
+
+                var pRelease = function() {
+
+                    this._v_Identifier       = null;
+
+                    this._v_Id               = null;
+                    this._v_Title            = null;
+
+                    this._v_Recorder         = null;
+
+                    this._v_MayDumpRecords   = null;
+
+                };
+                if( pRelease){}/* CQT */
+                aPrototype.pRelease = pRelease;
+
+
+
+
+
+
+
+
+                return aPrototype;
+
+            })();
+
+
+
+
+            var DumpingPolicy_Constructor = function( theTitle, theIdentifier, theRecorder) {
+                this._v_Prototype = null;
+                this._v_Type = null;
+                this._v_Module = null;
+
+                this._v_Identifier       = null;
+
+                this._v_Id               = null;
+                this._v_Title            = null;
+
+                this._v_Recorder         = null;
+
+                this._v_MayDumpRecords   = null;
+
+                this._pInit_DumpingPolicy( theTitle, theIdentifier, theRecorder);
+            };
+            DumpingPolicy_Constructor.prototype = aDumpingPolicy_Prototype;
+
+
+
+
+
+            var DumpingPolicy_SuperPrototypeConstructor = function() {
+                this._v_Prototype = aDumpingPolicy_Prototype;
+                this._v_Type      = null;
+                this._v_Module    = null;
+
+                this._v_Identifier       = null;
+
+                this._v_Id               = null;
+                this._v_Title            = null;
+
+                this._v_Recorder         = null;
+
+                this._v_MayDumpRecords   = null;
+
+            };
+            DumpingPolicy_SuperPrototypeConstructor.prototype = aDumpingPolicy_Prototype;
+
+
+
+            var aModule = {
+                "DumpingPolicy_Prototype": aDumpingPolicy_Prototype,
+                "DumpingPolicy_Constructor": DumpingPolicy_Constructor,
+                "DumpingPolicy_SuperPrototypeConstructor": DumpingPolicy_SuperPrototypeConstructor
+            };
+            pgInitFromModuleConstants( aModule);
+            aModule.ModuleName     = ModuleName;
+            aModule.ModulePackages = ModulePackages;
+            aModule.ModuleFullName = ModuleFullName;
+
+            aDumpingPolicy_Prototype._v_Module = aModule;
+
+
+
+
+
+            return aModule;
+        };
+
+
+
+
+
+
+
+        var anExistingModule = theSS_typesregistry.fRegisteredModule( ModuleFullName);
+        if( !anExistingModule) {
+
+            var aModule = aMod_definer(
+                theSS_Overrider,
+                theSS_IdentifierSvce,
+                theSS_ConsoleSvce
+            );
+            anExistingModule = aModule;
+
+            theSS_typesregistry.fRegisterModule( ModuleFullName, aModule);
+        }
+
+
+
+
+
+
+        return anExistingModule;
+
+    });
+}
+
+
+
+
+
+
+;/*
+ * dumpingpolicy_filterkinds_type.js.js
+ *
+ * Created @author Antonio Carrasco Valero 201410141300
+ *
+ *
+ ***************************************************************************
+
+ Copyright 2014 2015 2016 Antonio Carrasco Valero
+ Javascript for core modules including a base prototype and prototypes hierarchy, intended to be reused on the Browser as core for i.e. Angular Controllers and Services, as in the uiwire component. Licensed under EUPL  http://www.uiwire.org
+
+Licensed under the EUPL, Version 1.1 only (the "Licence");
+You may not use this work except in compliance with the
+Licence.
+You may obtain a copy of the Licence at:
+https://joinup.ec.europa.eu/software/page/eupl/licence-eupl
+Unless required by applicable law or agreed to in
+writing, software distributed under the Licence is
+distributed on an "AS IS" basis,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+express or implied.
+See the Licence for the specific language governing
+permissions and limitations under the Licence.
+ {{License2}}
+
+ {{Licensed1}}
+ {{Licensed2}}
+
+ ***************************************************************************
+ *
+ */
+
+
+
+
+
+function ModuleFactory_DumpingPolicyFilterKindsType() {
+
+    'use strict';
+
+
+    return ( function( theSS_typesregistry,
+                       theSS_Overrider,
+                       theSS_DumpingPolicyType,
+                       theSS_CommonEventKinds) {
+
+
+        var ModuleName     = "dumpingpolicy_filterkinds_type";
+        var ModulePackages = "identifying";
+        var ModuleFullName = ModulePackages + "/" + ModuleName;
+
+
+
+        var aMod_definer = function( theS_Overrider,
+                                     theS_DumpingPolicyType,
+                                     theS_CommonEventKinds) {
+
+
+            if( !( typeof FG_logModLoads == "undefined") && ( typeof FG_logModLoads == "function") && FG_logModLoads()) { FG_logModLoads(ModuleFullName);}
+
+
+
+
+
+
+
+
+            var pgInitWithModuleVariations = function( theToInit) {
+
+                if( !theToInit) {
+                    return;
+                }
+
+                theToInit.LOGCHANGESTOEVENTKINDSNOTFORCONSOLE = true;
+
+
+
+                theToInit.EVENTSSETNOTFORCONSOLE = "EVENTKINDS_NOTFORCONSOLE_NONE";
+                theToInit.EVENTSSETNOTFORCONSOLE = "EVENTKINDS_NOTFORCONSOLE_RESTRICTIVE";
+                theToInit.EVENTSSETNOTFORCONSOLE = "EVENTKINDS_NOTFORCONSOLE_RESTRICTIVE_NOPROMISE";
+                theToInit.EVENTSSETNOTFORCONSOLE = "EVENTKINDS_NOTFORCONSOLE_NOPROMISE";
+
+                theToInit.EVENTSSETNOTFORCONSOLE = "EVENTKINDS_NOTFORCONSOLE_NOPROMISE";
+
+            };
+
+
+
+
+
+            var pgInitFromModuleVariations = function( theToInit) {
+                if( !theToInit) {
+                    return;
+                }
+
+                for( var aGlobalName in ModuleVariations) {
+                    if( ModuleVariations.hasOwnProperty( aGlobalName)) {
+                        theToInit[ aGlobalName] = ModuleVariations[ aGlobalName];
+                    }
+                }
+            };
+
+
+            var ModuleVariations = { };
+            pgInitWithModuleVariations( ModuleVariations);
+            theS_Overrider.pOverrideModuleVariations( ModuleFullName, ModuleVariations);
+
+
+
+
+
+
+
+
+            var pgInitWithModuleConstants = function( theToInit) {
+
+
+
+                if( !theToInit) {
+                    return;
+                }
+                theToInit.DUMPINGPOLICYFILTERKINDS_DEFAULTTITLE = "DumpingPolicyFilterKindsDefaultName";
+
+
+
+
+                if( theToInit.EVENTSSETNOTFORCONSOLE) {
+
+                    if( typeof theToInit.EVENTSSETNOTFORCONSOLE == "string") {
+                        var anEventsSetNotForConsole = theS_CommonEventKinds[ theToInit.EVENTSSETNOTFORCONSOLE];
+                        if( anEventsSetNotForConsole) {
+                            theToInit.EVENTKINDS_NOTFORCONSOLE = anEventsSetNotForConsole.slice();
+                        }
+                        else {
+                            theToInit.EVENTKINDS_NOTFORCONSOLE = [];
+                        }
+                    }
+                    else {
+                        theToInit.EVENTKINDS_NOTFORCONSOLE = theToInit.EVENTSSETNOTFORCONSOLE;
+                    }
+                }
+                else {
+                    theToInit.EVENTKINDS_NOTFORCONSOLE = theS_CommonEventKinds.EVENTKINDS_NOTFORCONSOLE_DEFAULT.slice();
+                }
+                if( !theToInit.EVENTKINDS_NOTFORCONSOLE) {
+                    theToInit.EVENTKINDS_NOTFORCONSOLE = theS_CommonEventKinds.EVENTKINDS_NOTFORCONSOLE_DEFAULT.slice();
+                }
+
+            };
+
+
+
+            var ModuleConstants = {};
+            pgInitFromModuleVariations( ModuleConstants);
+            pgInitWithModuleConstants( ModuleConstants);
+
+
+
+
+            var pgInitFromModuleConstants = function( theToInit) {
+                if( !theToInit) {
+                    return;
+                }
+
+                for( var aGlobalName in ModuleConstants) {
+                    if( ModuleConstants.hasOwnProperty( aGlobalName)) {
+                        theToInit[ aGlobalName] = ModuleConstants[ aGlobalName];
+                    }
+                }
+            };
+
+
+
+
+
+
+            var aDumpingPolicyFilterKinds_Prototype = (function() {
+
+
+
+                var aPrototype = new theS_DumpingPolicyType.DumpingPolicy_SuperPrototypeConstructor();
+
+                pgInitFromModuleConstants( aPrototype);
+
+
+                aPrototype._v_SuperPrototype = theS_DumpingPolicyType.DumpingPolicy_Prototype;
+
+
+                aPrototype._v_Type = "DumpingPolicyFilterKinds";
+
+                aPrototype._v_Prototype_DumpingPolicyFilterKinds = aPrototype;
+
+
+                aPrototype._v_Module = null;
+
+
+                aPrototype._v_EventKindsNotForConsole = null;
+
+
+                /* Slot property named _v_EventKindsNotForConsole only initialized in the prototype. May be overriden by individual instantes setting their own value */
+                if( theS_CommonEventKinds.EVENTKINDS_NOTFORCONSOLE) {
+                    aPrototype._v_EventKindsNotForConsole = aPrototype.EVENTKINDS_NOTFORCONSOLE.slice();
+                }
+
+
+
+
+
+
+                var _pInit = function( theTitle, theIdentifier, theRecorder) {
+
+                    this._pInit_DumpingPolicyFilterKinds( theTitle, theIdentifier, theRecorder);
+                };
+                if( _pInit){}/* CQT */
+                aPrototype._pInit = _pInit;
+
+
+
+
+
+
+
+                var _fTitleDefault = function( ) {
+
+                    return this.DUMPINGPOLICYFILTERKINDS_DEFAULTTITLE;
+                };
+                if( _fTitleDefault){}/* CQT */
+                aPrototype._fTitleDefault = _fTitleDefault;
+
+
+
+
+
+
+                var _pInit_DumpingPolicyFilterKinds = function( theTitle, theIdentifier, theRecorder) {
+
+                    /* Delegate on super prototype initialization */
+                    aPrototype._v_SuperPrototype._pInit_DumpingPolicy.apply( this, [ theTitle, theIdentifier, theRecorder]);
+
+                    this._v_Prototype = aPrototype;
+                    this._v_Type      = this._v_Prototype._v_Type;
+                    this._v_Module    = aPrototype._v_Module;
+
+                };
+                if( _pInit_DumpingPolicyFilterKinds){}/* CQT */
+                aPrototype._pInit_DumpingPolicyFilterKinds = _pInit_DumpingPolicyFilterKinds;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                var fSetEventKindsNotForConsole_inPrototype = function( theEventKinds) {
+
+                    aPrototype._v_EventKindsNotForConsole = theEventKinds;
+
+                    if( this.LOGCHANGESTOEVENTKINDSNOTFORCONSOLE) {
+                        console.log( "EventKindsNotForConsole_inPrototype=\n" + JSON.stringify( aPrototype._v_EventKindsNotForConsole, null, 4));
+                    }
+
+                    return aPrototype._v_EventKindsNotForConsole;
+                };
+                if( fSetEventKindsNotForConsole_inPrototype){}/* CQT */
+                aPrototype.fSetEventKindsNotForConsole_inPrototype = fSetEventKindsNotForConsole_inPrototype;
+
+
+
+
+
+                var fFewerEventKindsForConsole_inPrototype = function( theEventKinds) {
+
+                    if( !theEventKinds) {
+                        return aPrototype._v_EventKindsNotForConsole;
+                    }
+
+                    var aNumEventKinds = theEventKinds;
+                    if( !aNumEventKinds) {
+                        return aPrototype._v_EventKindsNotForConsole;
+                    }
+
+
+                    var someEventKinds = aPrototype._v_EventKindsNotForConsole.slice();
+
+                    for( var anEventKindIdx=0; anEventKindIdx < aNumEventKinds; anEventKindIdx++) {
+
+                        var anEventKind = theEventKinds[ anEventKindIdx];
+                        if( anEventKind) {
+
+                            var anEventKindIndex = someEventKinds.indexOf( anEventKind);
+                            if( anEventKindIndex >= 0) {
+
+                                someEventKinds.splice( anEventKindIndex, 1);
+                                if( !someEventKinds.length) {
+                                    break;
+                                }
+                            }
+                        }
+                    }
+
+
+                    aPrototype._v_EventKindsNotForConsole = someEventKinds;
+
+                    if( this.LOGCHANGESTOEVENTKINDSNOTFORCONSOLE) {
+                        console.log( "EventKindsNotForConsole_inPrototype=\n" + JSON.stringify( aPrototype._v_EventKindsNotForConsole, null, 4));
+                    }
+
+                    return aPrototype._v_EventKindsNotForConsole;
+                };
+                if( fFewerEventKindsForConsole_inPrototype){}/* CQT */
+                aPrototype.fFewerEventKindsForConsole_inPrototype = fFewerEventKindsForConsole_inPrototype;
+
+
+
+
+
+
+
+                var fMoreEventKindsForConsole_inPrototype = function( theEventKinds) {
+
+                    if( !theEventKinds) {
+                        return aPrototype._v_EventKindsNotForConsole;
+                    }
+
+                    var aNumEventKinds = theEventKinds;
+                    if( !aNumEventKinds) {
+                        return aPrototype._v_EventKindsNotForConsole;
+                    }
+
+
+                    var someEventKinds = aPrototype._v_EventKindsNotForConsole.slice();
+
+                    for( var anEventKindIdx=0; anEventKindIdx < aNumEventKinds; anEventKindIdx++) {
+
+                        var anEventKind = theEventKinds[ anEventKindIdx];
+                        if( anEventKind) {
+
+                            var anEventKindIndex = someEventKinds.indexOf( anEventKind);
+                            if( anEventKindIndex < 0) {
+
+                                someEventKinds.push( anEventKind);
+                            }
+                        }
+                    }
+
+
+                    aPrototype._v_EventKindsNotForConsole = someEventKinds;
+
+                    if( this.LOGCHANGESTOEVENTKINDSNOTFORCONSOLE) {
+                        console.log( "EventKindsNotForConsole_inPrototype=\n" + JSON.stringify( aPrototype._v_EventKindsNotForConsole, null, 4));
+                    }
+
+                    return aPrototype._v_EventKindsNotForConsole;
+                };
+                if( fMoreEventKindsForConsole_inPrototype){}/* CQT */
+                aPrototype.fMoreEventKindsForConsole_inPrototype = fMoreEventKindsForConsole_inPrototype;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                var fSetEventKindsNotForConsole = function( theEventKinds) {
+
+                    this._v_EventKindsNotForConsole = theEventKinds;
+
+                    if( this.LOGCHANGESTOEVENTKINDSNOTFORCONSOLE) {
+                        console.log( "EventKindsNotForConsole=\n" + JSON.stringify( this._v_EventKindsNotForConsole, null, 4));
+                    }
+
+                    return this._v_EventKindsNotForConsole;
+                };
+                if( fSetEventKindsNotForConsole){}/* CQT */
+                aPrototype.fSetEventKindsNotForConsole = fSetEventKindsNotForConsole;
+
+
+
+
+
+
+
+
+
+
+                var fFewerEventKindsForConsole = function( theEventKinds) {
+
+                    if( !theEventKinds) {
+                        return this._v_EventKindsNotForConsole;
+                    }
+
+
+                    if( !this._v_EventKindsNotForConsole) {
+                        this._v_EventKindsNotForConsole = [ ];
+                    }
+
+                    var aNumEventKinds = theEventKinds;
+                    if( !aNumEventKinds) {
+                        return this._v_EventKindsNotForConsole;
+                    }
+
+
+                    var someEventKinds = this._v_EventKindsNotForConsole.slice();
+
+                    for( var anEventKindIdx=0; anEventKindIdx < aNumEventKinds; anEventKindIdx++) {
+
+                        var anEventKind = theEventKinds[ anEventKindIdx];
+                        if( anEventKind) {
+
+                            var anEventKindIndex = someEventKinds.indexOf( anEventKind);
+                            if( anEventKindIndex >= 0) {
+
+                                someEventKinds.splice( anEventKindIndex, 1);
+                                if( !someEventKinds.length) {
+                                    break;
+                                }
+                            }
+                        }
+                    }
+
+
+                    this._v_EventKindsNotForConsole = someEventKinds;
+
+                    if( this.LOGCHANGESTOEVENTKINDSNOTFORCONSOLE) {
+                        console.log( "EventKindsNotForConsole=\n" + JSON.stringify( this._v_EventKindsNotForConsole, null, 4));
+                    }
+
+                    return this._v_EventKindsNotForConsole
+                };
+                if( fFewerEventKindsForConsole){}/* CQT */
+                aPrototype.fFewerEventKindsForConsole = fFewerEventKindsForConsole;
+
+
+
+
+
+
+
+
+
+
+                var fMoreEventKindsForConsole = function( theEventKinds) {
+
+                    if( !theEventKinds) {
+                        return this._v_EventKindsNotForConsole;
+                    }
+
+
+                    if( !this._v_EventKindsNotForConsole) {
+                        this._v_EventKindsNotForConsole = [ ];
+                    }
+
+                    var aNumEventKinds = theEventKinds;
+                    if( !aNumEventKinds) {
+                        return this._v_EventKindsNotForConsole;
+                    }
+
+
+                    var someEventKinds = this._v_EventKindsNotForConsole.slice();
+
+                    for( var anEventKindIdx=0; anEventKindIdx < aNumEventKinds; anEventKindIdx++) {
+
+                        var anEventKind = theEventKinds[ anEventKindIdx];
+                        if( anEventKind) {
+
+                            var anEventKindIndex = someEventKinds.indexOf( anEventKind);
+                            if( anEventKindIndex < 0) {
+
+                                someEventKinds.push( anEventKind);
+                            }
+                        }
+                    }
+
+
+                    this._v_EventKindsNotForConsole = someEventKinds;
+
+                    if( this.LOGCHANGESTOEVENTKINDSNOTFORCONSOLE) {
+                        console.log( "EventKindsNotForConsole=\n" + JSON.stringify( this._v_EventKindsNotForConsole, null, 4));
+                    }
+
+                    return this._v_EventKindsNotForConsole
+                };
+                if( fMoreEventKindsForConsole){}/* CQT */
+                aPrototype.fMoreEventKindsForConsole = fMoreEventKindsForConsole;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                var fMustDumpRecord = function( theRecord) {
+
+                    if( !theRecord) {
+                        return false;
+                    }
+
+                    if( !this.fMayDumpRecords( theRecord)) {
+                        return false;
+                    }
+
+
+                    var anEventKind = theRecord._v_EventKind;
+                    if( !anEventKind) {
+                        return false;
+                    }
+
+                    var someEventKindsNotForConsole = this.fEventKindsNotForConsole();
+                    if( !someEventKindsNotForConsole) {
+                        return true;
+                    }
+
+                    if( someEventKindsNotForConsole.indexOf( anEventKind) < 0) {
+                        return true;
+                    }
+
+                    return false;
+
+                };
+                if( fMustDumpRecord){}/* CQT */
+                aPrototype.fMustDumpRecord = fMustDumpRecord;
+
+
+
+
+
+
+
+                var fEventKindsNotForConsole = function() {
+
+                    /* Slot property named _v_EventKindsNotForConsole only initialized in the prototype. May be overriden by individual instantes setting their own value */
+
+                    /* Code below is redundant, just a point for debugging in the case of instances overiding the value of slot property named _v_EventKindsNotForConsole */
+                    if( this.hasOwnProperty( "_v_EventKindsNotForConsole")) {
+
+                        if( !this._v_EventKindsNotForConsole) {
+                            return null;
+                        }
+
+                        return this._v_EventKindsNotForConsole;
+                    }
+
+
+
+                    if( !this._v_EventKindsNotForConsole) {
+                        return null;
+                    }
+
+                    return this._v_EventKindsNotForConsole;
+
+                };
+                if( fEventKindsNotForConsole){}/* CQT */
+                aPrototype.fEventKindsNotForConsole = fEventKindsNotForConsole;
+
+
+
+
+
+                var pRelease = function() {
+
+                    this._v_Prototype_DumpingPolicy.pRelease.apply( this);
+
+                    if( this.hasOwnProperty( "_v_EventKindsNotForConsole")) {
+                        delete( this._v_EventKindsNotForConsole);
+                    }
+
+                };
+                if( pRelease){}/* CQT */
+                aPrototype.pRelease = pRelease;
+
+
+
+
+
+                return aPrototype;
+
+            })();
+
+
+
+
+            var DumpingPolicyFilterKinds_Constructor = function( theTitle, theIdentifier, theRecorder) {
+
+                /* Keep handy reference to super-prototype for super method invocation */
+                this._v_SuperPrototype = theS_DumpingPolicyType.DumpingPolicyFilterKinds_Prototype;
+
+                this._v_Prototype = null;
+                this._v_Type = null;
+                this._v_Module = null;
+
+                /* Slot property named _v_EventKindsNotForConsole only initialized in the prototype. May be overriden by individual instantes setting their own value */
+
+                this._pInit_DumpingPolicyFilterKinds( theTitle, theIdentifier, theRecorder);
+            };
+            DumpingPolicyFilterKinds_Constructor.prototype = aDumpingPolicyFilterKinds_Prototype;
+
+
+
+
+
+            var DumpingPolicyFilterKinds_SuperPrototypeConstructor = function() {
+
+                /* Keep handy reference to super-prototype for super method invocation */
+                this._v_SuperPrototype = theS_DumpingPolicyType.DumpingPolicyFilterKinds_Prototype;
+
+                this._v_Prototype = aDumpingPolicyFilterKinds_Prototype;
+                this._v_Type      = null;
+                this._v_Module    = null;
+
+                /* Slot property named _v_EventKindsNotForConsole only initialized in the prototype. May be overriden by individual instantes setting their own value */
+
+            };
+            DumpingPolicyFilterKinds_SuperPrototypeConstructor.prototype = aDumpingPolicyFilterKinds_Prototype;
+
+
+
+            var aModule = {
+                "DumpingPolicyFilterKinds_Prototype": aDumpingPolicyFilterKinds_Prototype,
+                "DumpingPolicyFilterKinds_Constructor": DumpingPolicyFilterKinds_Constructor,
+                "DumpingPolicyFilterKinds_SuperPrototypeConstructor": DumpingPolicyFilterKinds_SuperPrototypeConstructor
+            };
+            pgInitFromModuleConstants( aModule);
+            aModule.ModuleName     = ModuleName;
+            aModule.ModulePackages = ModulePackages;
+            aModule.ModuleFullName = ModuleFullName;
+
+            aDumpingPolicyFilterKinds_Prototype._v_Module = aModule;
+
+
+
+
+
+            return aModule;
+        };
+
+
+
+
+
+
+
+        var anExistingModule = theSS_typesregistry.fRegisteredModule( ModuleFullName);
+        if( !anExistingModule) {
+
+            var aModule = aMod_definer(
+                theSS_Overrider,
+                theSS_DumpingPolicyType,
+                theSS_CommonEventKinds
+            );
+            anExistingModule = aModule;
+
+            theSS_typesregistry.fRegisterModule( ModuleFullName, aModule);
+        }
+
+
+
+
+
+
+        return anExistingModule;
+
+    });
+}
+
+
+if( ModuleFactory_DumpingPolicyFilterKindsType){}/* CQT */
+
+
+
+;/*
  * recorder_type.js
  *
  * Created @author Antonio Carrasco Valero 201410030300
@@ -8544,7 +10813,9 @@ function ModuleFactory_RecorderType() {
                        theSS_Overrider,
                        theSS_IdentifierSvce,
                        theSS_IdentifierType,
-                       theSS_RecordType) {
+                       theSS_RecordType,
+                       theSS_RecordingPolicyKeepAllType,
+                       theSS_DumpingPolicyFilterKindsType) {
 
 
         var ModuleName     = "recorder_type";
@@ -8556,7 +10827,9 @@ function ModuleFactory_RecorderType() {
         var aMod_definer = function( theS_Overrider,
                                      theS_IdentifierSvce,
                                      theS_IdentifierType,
-                                     theS_RecordType) {
+                                     theS_RecordType,
+                                     theS_RecordingPolicyKeepAllType,
+                                     theS_DumpingPolicyFilterKindsType) {
 
 
             if( !( typeof FG_logModLoads == "undefined") && ( typeof FG_logModLoads == "function") && FG_logModLoads()) { FG_logModLoads(ModuleFullName);}
@@ -8661,6 +10934,8 @@ function ModuleFactory_RecorderType() {
 
                 aPrototype._v_RecordsIdentifier    = null;
 
+                aPrototype._v_RecordingPolicy = null;
+                aPrototype._v_DumpingPolicy   = null;
 
 
 
@@ -8709,9 +10984,24 @@ function ModuleFactory_RecorderType() {
 
                     this._v_Id = this._v_Identifier.fReserveId();
 
+                    this._v_RecordsIdentifier = new theS_IdentifierType.Identifier_Constructor( "(For-" + this._v_Title + ")");
+
+
+
                     this._v_Records    = [ ];
 
-                    this._v_RecordsIdentifier = new theS_IdentifierType.Identifier_Constructor( "(For-" + this._v_Title + ")");
+                    this.pClearKeptRecords();
+
+                    /* BeWare: With this policy, all records shall be kept in memory in the _v_Records slot property of the recorder instance.
+                     and shall prevent reclamation of their memory by the garbage collector
+                     Note that common_type has a configurable variation constant theToInit.KEEPOWNRECORDS = false;
+                     which when true shall keep references to record instances and shall also prevent reclamation of their memory by the garbage collector.
+                     */
+                    this._v_RecordingPolicy = new theS_RecordingPolicyKeepAllType.RecordingPolicyKeepAll_Constructor(     "(For-" + this._v_Title + ")", this._v_Identifier, this);
+
+
+                    this._v_DumpingPolicy   = new theS_DumpingPolicyFilterKindsType.DumpingPolicyFilterKinds_Constructor( "(For-" + this._v_Title + ")", this._v_Identifier, this);
+
                 };
                 if( _pInit_Recorder){}/* CQT */
                 aPrototype._pInit_Recorder = _pInit_Recorder;
@@ -8847,12 +11137,125 @@ function ModuleFactory_RecorderType() {
 
 
 
+
+
+
+                var fRecordingPolicy = function() {
+
+                    return this._v_RecordingPolicy;
+
+                };
+                if( fRecordingPolicy){}/* CQT */
+                aPrototype.fRecordingPolicy = fRecordingPolicy;
+
+
+
+
+
+
+
+                var pSetRecordingPolicy = function( theRecordingPolicy) {
+
+                    if( this._v_RecordingPolicy) {
+                        if( this._v_RecordingPolicy.pRelease && ( typeof this._v_RecordingPolicy.pRelease == "function")) {
+                            this._v_RecordingPolicy.pRelease();
+                        }
+                    }
+
+                    this._v_RecordingPolicy = theRecordingPolicy;
+
+                    var aRecordingPolicy_recorder = null;
+                    if( theRecordingPolicy.fRecorder && ( typeof theRecordingPolicy.fRecorder == "function")) {
+                        aRecordingPolicy_recorder = theRecordingPolicy.fRecorder();
+                    }
+
+                    if( !aRecordingPolicy_recorder) {
+                        return;
+                    }
+
+                    if( !( aRecordingPolicy_recorder === this)) {
+                        theRecordingPolicy.pSetRecorder( this);
+                    }
+
+                };
+                if( pSetRecordingPolicy){}/* CQT */
+                aPrototype.pSetRecordingPolicy = pSetRecordingPolicy;
+
+
+
+
+
+
+
+
+
+                var fDumpingPolicy = function() {
+
+                    return this._v_DumpingPolicy;
+
+                };
+                if( fDumpingPolicy){}/* CQT */
+                aPrototype.fDumpingPolicy = fDumpingPolicy;
+
+
+
+
+
+
+
+                var pSetDumpingPolicy = function( theDumpingPolicy) {
+
+                    if( this._v_DumpingPolicy) {
+                        if( this._v_DumpingPolicy.pRelease && ( typeof this._v_DumpingPolicy.pRelease == "function")) {
+                            this._v_DumpingPolicy.pRelease();
+                        }
+                    }
+
+                    this._v_DumpingPolicy = theDumpingPolicy;
+
+                    var aDumpingPolicy_recorder = null;
+                    if( theDumpingPolicy.fRecorder && ( typeof theDumpingPolicy.fRecorder == "function")) {
+                        aDumpingPolicy_recorder = theDumpingPolicy.fRecorder();
+                    }
+
+                    if( !aDumpingPolicy_recorder) {
+                        return;
+                    }
+
+                    if( !( aDumpingPolicy_recorder === this)) {
+                        theDumpingPolicy.pSetRecorder( this);
+                    }
+
+                };
+                if( pSetDumpingPolicy){}/* CQT */
+                aPrototype.pSetDumpingPolicy = pSetDumpingPolicy;
+
+
+
+
+
+
+
+
+
+
+
                 var fCreateAndRegisterRecord = function( theInstance, theStep, theEventKind, theData, theReason, theDetails) {
 
                     var aRecordId = this._v_RecordsIdentifier.fReserveId();
 
                     var aRecord = new theS_RecordType.Record_Constructor( this, aRecordId,  theInstance, theStep, theEventKind, theData, theReason, theDetails);
-                    this._v_Records.push( aRecord);
+
+                    if( aRecord) {
+
+                        if( this._v_RecordingPolicy) {
+                            this._v_RecordingPolicy.pRecordRecord( aRecord);
+                        }
+
+                        if( this._v_DumpingPolicy) {
+                            this._v_DumpingPolicy.pDumpRecord( aRecord);
+                        }
+                    }
 
                     return aRecord;
                 };
@@ -8861,6 +11264,85 @@ function ModuleFactory_RecorderType() {
 
 
 
+
+
+
+
+                /* Deprecated. Kept in support of common type pLogRecord . Use common type fRecord which shall invoke recorder fCreateAndRegisterRecord and take care of delegating for the record to be recorded and dumped to console */
+                var pLogRecord = function( theRecord) {
+
+                    if( !theRecord) {
+                        return;
+                    }
+
+
+                    if( this._v_RecordingPolicy) {
+                        this._v_RecordingPolicy.pRecordRecord( theRecord);
+                    }
+
+                    if( this._v_DumpingPolicy) {
+                        this._v_DumpingPolicy.pDumpRecord( theRecord);
+                    }
+                };
+                if( pLogRecord){}/* CQT */
+                aPrototype.pLogRecord = pLogRecord;
+
+
+
+
+                /* Invoked from RecordingPolicyKeepAll pRecordRecord() */
+                var pKeepRecord = function( theRecord) {
+
+                    if( !theRecord) {
+                        return;
+                    }
+
+                    if( !this._v_Records) {
+
+                        this._v_Records = [ ];
+                    }
+
+                    this._v_Records.push( theRecord);
+
+                };
+                if( pKeepRecord){}/* CQT */
+                aPrototype.pKeepRecord = pKeepRecord;
+
+
+
+
+                var fKeptRecords = function() {
+
+                    if( !this._v_Records) {
+                        return null;
+                    }
+
+                    if( !( typeof this._v_Records.slice == "function")) {
+                        return null;
+                    }
+
+                    return this._v_Records.slice();
+
+                };
+                if( fKeptRecords){}/* CQT */
+                aPrototype.fKeptRecords = fKeptRecords;
+
+
+
+
+
+
+                var pClearKeptRecords = function() {
+
+                    if( !this._v_Records) {
+                        return;
+                    }
+
+                    return this._v_Records = [ ];
+
+                };
+                if( pClearKeptRecords){}/* CQT */
+                aPrototype.pClearKeptRecords = pClearKeptRecords;
 
 
 
@@ -8925,6 +11407,9 @@ function ModuleFactory_RecorderType() {
 
                 this._v_RecordsIdentifier = null;
 
+                this._v_RecordingPolicy = null;
+                this._v_DumpingPolicy   = null;
+
                 this._pInit_Recorder( theTitle, theIdentifier);
             };
             Recorder_Constructor.prototype = aRecorder_Prototype;
@@ -8946,6 +11431,9 @@ function ModuleFactory_RecorderType() {
                 this._v_Records    = null;
 
                 this._v_RecordsIdentifier = null;
+
+                this._v_RecordingPolicy = null;
+                this._v_DumpingPolicy   = null;
             };
             Recorder_SuperPrototypeConstructor.prototype = aRecorder_Prototype;
 
@@ -8983,7 +11471,9 @@ function ModuleFactory_RecorderType() {
                 theSS_Overrider,
                 theSS_IdentifierSvce,
                 theSS_IdentifierType,
-                theSS_RecordType
+                theSS_RecordType,
+                theSS_RecordingPolicyKeepAllType,
+                theSS_DumpingPolicyFilterKindsType
             );
             anExistingModule = aModule;
 

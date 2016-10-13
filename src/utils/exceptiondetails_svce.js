@@ -46,7 +46,7 @@ function ModuleFactory_ExceptionDetailsSvce() {
 
 
 
-        var aMod_definer = function() {
+        var aMod_definer = function( theM_stacktrace) {
 
 
             var ModuleName     = "exceptiondetails_svce";
@@ -69,7 +69,10 @@ function ModuleFactory_ExceptionDetailsSvce() {
             var pgInitWithModuleConstants = function( theToInit) {
 
                 if( !theToInit) {
+                    return;
                 }
+
+                theToInit.LOGEXCEPTIONDETAILS = false;
             };
 
 

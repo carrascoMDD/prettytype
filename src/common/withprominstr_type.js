@@ -68,12 +68,7 @@ function ModuleFactory_WithProminstrType() {
             var pgInitWithModuleVariations = function( theToInit) {
 
                 if( !theToInit) {
-                    return;
                 }
-
-                theToInit.LOGDEFERREDREJECT  = true;
-                theToInit.LOGDEFERREDRESOLVE = true;
-
             };
 
 

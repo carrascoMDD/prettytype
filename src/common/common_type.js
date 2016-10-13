@@ -41,7 +41,8 @@ function ModuleFactory_CommonType() {
     return ( function( theSS_typesregistry,
                        theSS_Overrider,
                        theSS_IdentifierSvce,
-                       theSS_RecorderSvce){
+                       theSS_RecorderSvce,
+                       theSS_CommonEventTypes){
 
 
         var ModuleName     = "common_type";
@@ -52,7 +53,8 @@ function ModuleFactory_CommonType() {
 
         var aMod_definer = function( theS_Overrider,
                                      theS_IdentifierSvce,
-                                     theS_RecorderSvce) {
+                                     theS_RecorderSvce,
+                                     theS_CommonEventTypes) {
 
 
             if( !( typeof FG_logModLoads == "undefined") && ( typeof FG_logModLoads == "function") && FG_logModLoads()) { FG_logModLoads(ModuleFullName);}
@@ -68,21 +70,10 @@ function ModuleFactory_CommonType() {
                     return;
                 }
 
-                theToInit.LOGRECORDS = true;
 
-                theToInit.LOGDEFERREDREJECT  = true;
-                theToInit.LOGDEFERREDRESOLVE = true;
-
-
-
-                theToInit.EVENTSSETNOTFORCONSOLE = "EVENTKINDS_NOTFORCONSOLE_NONE";
-                theToInit.EVENTSSETNOTFORCONSOLE = "EVENTKINDS_NOTFORCONSOLE_RESTRICTIVE";
-                theToInit.EVENTSSETNOTFORCONSOLE = "EVENTKINDS_NOTFORCONSOLE_RESTRICTIVE_NOPROMISE";
-                theToInit.EVENTSSETNOTFORCONSOLE = "EVENTKINDS_NOTFORCONSOLE_NOPROMISE";
-
-                theToInit.EVENTSSETNOTFORCONSOLE = "EVENTKINDS_NOTFORCONSOLE_NOPROMISE";
-
-
+                /* BeWare: keeping references to record instances shall prevent reclamation of their memory by the garbage collector
+                   Note that when a recordingpolicy_keepall is plugged into the recorder, all records shall be kept in memory in the _v_Records slot property of the recorder instance
+                   */
                 theToInit.KEEPOWNRECORDS = false;
 
 
@@ -122,216 +113,16 @@ function ModuleFactory_CommonType() {
                     return;
                 }
 
+                if( theS_CommonEventTypes && theS_CommonEventTypes.pgInitFromModuleConstants) {
+                    theS_CommonEventTypes.pgInitFromModuleConstants( theToInit);
+                }
+
                 theToInit.COMMON_DEFAULTTITLE = "CommonDefaultName";
 
                 theToInit.UNKNOWNID = "?i?";
 
                 theToInit.VALUEDIFFATTOP = "/";
                 theToInit.DONOTCOMPAREVALUESYMBOL = "@DONOTCOMPARE699@";
-
-
-                theToInit.EVENTKIND_ACTIONREPORT_FAILED          = "EVT_ACTIONREPORT_FAILED";
-                theToInit.EVENTKIND_ACTIONREPORT_SUCCESS         = "EVT_ACTIONREPORT_SUCCESS";
-
-                theToInit.EVENTKIND_ACTIONREPORT_CREATED         = "EVT_ACTIONREPORT_CREATED";
-
-                theToInit.EVENTKIND_GRIDREGISTEREDINPARENT       = "EVT_GRIDREGISTEREDINPARENT";
-                theToInit.EVENTKIND_EDITORREGISTEREDINPARENT     = "EVT_EDITORREGISTEREDINPARENT";
-                theToInit.EVENTKIND_CREATORREGISTEREDINPARENT    = "EVT_CREATORREGISTEREDINPARENT";
-                theToInit.EVENTKIND_CANDIDATEREGISTEREDINEDITOR  = "EVT_CANDIDATEREGISTEREDINEDITOR";
-
-                theToInit.EVENTKIND_WIRED                        = "EVT_WIRED";
-                theToInit.EVENTKIND_UNWIRED                      = "EVT_UNWIRED";
-
-                theToInit.EVENTKIND_ADDROWSCHANGELISTENER         = "EVT_ADDROWSCHANGELISTENER";
-                theToInit.EVENTKIND_REMOVEROWSCHANGELISTENER      = "EVT_REMOVEROWSCHANGELISTENER";
-                theToInit.EVENTKIND_ADDSELECTIONCHANGELISTENER    = "EVT_ADDSELECTIONCHANGELISTENER";
-                theToInit.EVENTKIND_REMOVESELECTIONCHANGELISTENER = "EVT_REMOVESELECTIONCHANGELISTENER";
-                theToInit.EVENTKIND_ADDACTIONHAPPENEDLISTENER     = "EVT_ADDACTIONHAPPENEDLISTENER";
-                theToInit.EVENTKIND_REMOVEACTIONHAPPENEDLISTENER  = "EVT_REMOVEACTIONHAPPENEDLISTENER";
-
-                theToInit.EVENTKIND_TRYTORETRIEVEROWS            = "EVT_TRYTORETRIEVEROWS";
-                theToInit.EVENTKIND_RETRIEVEDROWS                = "EVT_RETRIEVEDROWS";
-                theToInit.EVENTKIND_TRYTORETRIEVEFIELDS          = "EVT_TRYTORETRIEVEFIELDS";
-                theToInit.EVENTKIND_RETRIEVEDFIELDS              = "EVT_RETRIEVEDFIELDS";
-
-                theToInit.EVENTKIND_LISTENED                     = "EVT_LISTENED";
-                theToInit.EVENTKIND_GRIDSELECTIONCHANGELISTENED  = "EVT_GRIDSELECTIONCHANGELISTENED";
-                theToInit.EVENTKIND_ARGUMENTSCHANGELISTENED      = "EVT_ARGUMENTSCHANGELISTENED";
-
-
-
-
-
-                theToInit.EVENTKIND_SERVICEREPORT_SENDING         = "EVT_SERVICEREPORT_SENDING";
-                theToInit.EVENTKIND_SERVICEREPORT_OK              = "EVT_SERVICEREPORT_OK";
-                theToInit.EVENTKIND_SERVICEREPORT_FAIL            = "EVT_SERVICEREPORT_FAIL";
-
-                theToInit.EVENTKIND_SERVICEREPORT_GET             = "EVT_SERVICEREPORT_GET";
-                theToInit.EVENTKIND_SERVICEREPORT_GETOK           = "EVT_SERVICEREPORT_GETOK";
-                theToInit.EVENTKIND_SERVICEREPORT_GETFAIL         = "EVT_SERVICEREPORT_GETFAIL";
-                theToInit.EVENTKIND_SERVICEREPORT_POST            = "EVT_SERVICEREPORT_POST";
-                theToInit.EVENTKIND_SERVICEREPORT_POSTOK          = "EVT_SERVICEREPORT_POSTOK";
-                theToInit.EVENTKIND_SERVICEREPORT_POSTFAIL        = "EVT_SERVICEREPORT_POSTFAIL";
-                theToInit.EVENTKIND_SERVICEREPORT_UPLOADFAIL      = "EVT_SERVICEREPORT_UPLOADFAIL";
-
-
-
-
-
-
-                theToInit.EVENTKINDS_NOPROMISE = [
-                    theToInit.EVENTKIND_ACTIONREPORT_FAILED        ,
-                    theToInit.EVENTKIND_ACTIONREPORT_SUCCESS       ,
-                    theToInit.EVENTKIND_ACTIONREPORT_CREATED       ,
-                    theToInit.EVENTKIND_GRIDREGISTEREDINPARENT     ,
-                    theToInit.EVENTKIND_EDITORREGISTEREDINPARENT   ,
-                    theToInit.EVENTKIND_CREATORREGISTEREDINPARENT  ,
-                    theToInit.EVENTKIND_CANDIDATEREGISTEREDINEDITOR,
-                    theToInit.EVENTKIND_WIRED                      ,
-                    theToInit.EVENTKIND_UNWIRED                    ,
-                    theToInit.EVENTKIND_ADDROWSCHANGELISTENER ,
-                    theToInit.EVENTKIND_REMOVEROWSCHANGELISTENER,
-                    theToInit.EVENTKIND_ADDSELECTIONCHANGELISTENER ,
-                    theToInit.EVENTKIND_REMOVESELECTIONCHANGELISTENER,
-                    theToInit.EVENTKIND_ADDACTIONHAPPENEDLISTENER  ,
-                    theToInit.EVENTKIND_REMOVEACTIONHAPPENEDLISTENER ,
-                    theToInit.EVENTKIND_TRYTORETRIEVEROWS          ,
-                    theToInit.EVENTKIND_RETRIEVEDROWS              ,
-                    theToInit.EVENTKIND_TRYTORETRIEVEFIELDS        ,
-                    theToInit.EVENTKIND_RETRIEVEDFIELDS            ,
-                    theToInit.EVENTKIND_LISTENED                   ,
-                    theToInit.EVENTKIND_GRIDSELECTIONCHANGELISTENED,
-                    theToInit.EVENTKIND_SERVICEREPORT_SENDING      ,
-                    theToInit.EVENTKIND_SERVICEREPORT_OK           ,
-                    theToInit.EVENTKIND_SERVICEREPORT_FAIL         ,
-                    theToInit.EVENTKIND_SERVICEREPORT_GET          ,
-                    theToInit.EVENTKIND_SERVICEREPORT_GETOK        ,
-                    theToInit.EVENTKIND_SERVICEREPORT_GETFAIL      ,
-                    theToInit.EVENTKIND_SERVICEREPORT_POST         ,
-                    theToInit.EVENTKIND_SERVICEREPORT_POSTOK       ,
-                    theToInit.EVENTKIND_SERVICEREPORT_POSTFAIL,
-                    theToInit.EVENTKIND_SERVICEREPORT_UPLOADFAIL
-                ];
-
-
-
-                theToInit.PROMINSTEVT_WARN_NODEFERREDTOREJECT              = "NODEFERREDTOREJECT";
-                theToInit.PROMINSTEVT_WARN_NODEFERREDTORESOLVE             = "NODEFERREDTORESOLVE";
-
-                theToInit.PROMINSTEVT_ERR_ATTEMPTTOREJECT_ALREADYRESOLVED  = "ATTEMPTTOREJECT_ALREADYRESOLVED";
-                theToInit.PROMINSTEVT_ERR_ATTEMPTTOREJECT_ALREADYREJECTED  = "ATTEMPTTOREJECT_ALREADYREJECTED";
-                theToInit.PROMINSTEVT_ERR_ATTEMPTTOREJECT_NOTPENDING       = "ATTEMPTTOREJECT_NOTPENDING";
-
-                theToInit.PROMINSTEVT_ERR_ATTEMPTTORESOLVE_ALREADYRESOLVED = "ATTEMPTTORESOLVE_ALREADYRESOLVED";
-                theToInit.PROMINSTEVT_ERR_ATTEMPTTORESOLVE_ALREADYREJECTED = "ATTEMPTTORESOLVE_ALREADYREJECTED";
-                theToInit.PROMINSTEVT_ERR_ATTEMPTTORESOLVE_NOTPENDING      = "ATTEMPTTORESOLVE_NOTPENDING";
-
-                theToInit.PROMINSTEVT_ALLSCHEDULED                         = "ALLSCHEDULED";
-
-                theToInit.PROMINSTEVT_REJECTED                             = "REJECTED";
-                theToInit.PROMINSTEVT_RESOLVED                             = "RESOLVED";
-
-
-
-
-                theToInit.EVENTKINDS_PROMISE = [
-                    theToInit.PROMINSTEVT_WARN_NODEFERREDTOREJECT             ,
-                    theToInit.PROMINSTEVT_WARN_NODEFERREDTORESOLVE            ,
-                    theToInit.PROMINSTEVT_ERR_ATTEMPTTOREJECT_ALREADYRESOLVED ,
-                    theToInit.PROMINSTEVT_ERR_ATTEMPTTOREJECT_ALREADYREJECTED ,
-                    theToInit.PROMINSTEVT_ERR_ATTEMPTTOREJECT_NOTPENDING      ,
-                    theToInit.PROMINSTEVT_ERR_ATTEMPTTORESOLVE_ALREADYRESOLVED,
-                    theToInit.PROMINSTEVT_ERR_ATTEMPTTORESOLVE_ALREADYREJECTED,
-                    theToInit.PROMINSTEVT_ERR_ATTEMPTTORESOLVE_NOTPENDING     ,
-                    theToInit.PROMINSTEVT_ALLSCHEDULED                        ,
-                    theToInit.PROMINSTEVT_REJECTED                            ,
-                    theToInit.PROMINSTEVT_RESOLVED
-
-                ];
-
-
-                theToInit.EVENTKINDS = theToInit.EVENTKINDS_NOPROMISE.slice();
-                Array.prototype.push.apply( theToInit.EVENTKINDS, theToInit.EVENTKINDS_PROMISE);
-
-
-
-                theToInit.EVENTKINDS_NOTFORCONSOLE_RESTRICTIVE = [
-
-                    theToInit.EVENTKIND_ACTIONREPORT_CREATED       ,
-                    theToInit.EVENTKIND_GRIDREGISTEREDINPARENT     ,
-                    theToInit.EVENTKIND_EDITORREGISTEREDINPARENT   ,
-                    theToInit.EVENTKIND_CREATORREGISTEREDINPARENT  ,
-                    theToInit.EVENTKIND_CANDIDATEREGISTEREDINEDITOR,
-                    theToInit.EVENTKIND_WIRED                      ,
-                    theToInit.EVENTKIND_UNWIRED                    ,
-                    theToInit.EVENTKIND_ADDROWSCHANGELISTENER ,
-                    theToInit.EVENTKIND_REMOVEROWSCHANGELISTENER,
-                    theToInit.EVENTKIND_ADDSELECTIONCHANGELISTENER ,
-                    theToInit.EVENTKIND_REMOVESELECTIONCHANGELISTENER,
-                    theToInit.EVENTKIND_ADDACTIONHAPPENEDLISTENER  ,
-                    theToInit.EVENTKIND_REMOVEACTIONHAPPENEDLISTENER ,
-                    theToInit.EVENTKIND_TRYTORETRIEVEROWS          ,
-                    theToInit.EVENTKIND_RETRIEVEDROWS              ,
-                    theToInit.EVENTKIND_TRYTORETRIEVEFIELDS        ,
-                    theToInit.EVENTKIND_RETRIEVEDFIELDS            ,
-                    theToInit.EVENTKIND_LISTENED                   ,
-                    theToInit.EVENTKIND_GRIDSELECTIONCHANGELISTENED,
-                    theToInit.EVENTKIND_SERVICEREPORT_SENDING      ,
-                    theToInit.EVENTKIND_SERVICEREPORT_OK           ,
-                    theToInit.EVENTKIND_SERVICEREPORT_FAIL         ,
-                    theToInit.EVENTKIND_SERVICEREPORT_GET          ,
-                    theToInit.EVENTKIND_SERVICEREPORT_GETOK        ,
-                    theToInit.EVENTKIND_SERVICEREPORT_GETFAIL      ,
-                    theToInit.EVENTKIND_SERVICEREPORT_POST         ,
-                    theToInit.EVENTKIND_SERVICEREPORT_POSTOK       ,
-                    theToInit.EVENTKIND_SERVICEREPORT_POSTFAIL     ,
-                    theToInit.EVENTKIND_SERVICEREPORT_UPLOADFAIL
-                ];
-
-
-                
-                theToInit.EVENTKINDS_NOTFORCONSOLE_RESTRICTIVE_NOPROMISE = theToInit.EVENTKINDS_NOTFORCONSOLE_RESTRICTIVE.slice();
-                Array.prototype.push.apply( theToInit.EVENTKINDS_NOTFORCONSOLE_RESTRICTIVE_NOPROMISE, theToInit.EVENTKINDS_PROMISE);
-
-                theToInit.EVENTKINDS_NOTFORCONSOLE_NOPROMISE = theToInit.EVENTKINDS_PROMISE.slice();
-
-
-                theToInit.EVENTKINDS_NOTFORCONSOLE_NONE = [];
-                theToInit.EVENTKINDS_NOTFORCONSOLE_ALL = theToInit.EVENTKINDS.slice();
-
-                theToInit.EVENTKINDS_NOTFORCONSOLE_DEFAULT = theToInit.EVENTKINDS_NOTFORCONSOLE_RESTRICTIVE_NOPROMISE.slice();
-
-                theToInit.EVENTKINDS_NOTFORCONSOLE_DEFAULT = theToInit.EVENTKINDS_NOTFORCONSOLE_NONE;
-
-                theToInit.EVENTKINDS_NOTFORCONSOLE_DEFAULT = theToInit.EVENTKINDS_NOTFORCONSOLE_NOPROMISE;
-
-
-                if( theToInit.EVENTSSETNOTFORCONSOLE) {
-
-                    if( typeof theToInit.EVENTSSETNOTFORCONSOLE == "string") {
-                        var anEventsSetNotForConsole = theToInit[ theToInit.EVENTSSETNOTFORCONSOLE];
-                        if( anEventsSetNotForConsole) {
-                            theToInit.EVENTKINDS_NOTFORCONSOLE = anEventsSetNotForConsole.slice();
-                        }
-                        else {
-                            theToInit.EVENTKINDS_NOTFORCONSOLE = [];
-                        }
-                    }
-                    else {
-                        theToInit.EVENTKINDS_NOTFORCONSOLE = theToInit.EVENTSSETNOTFORCONSOLE;
-                    }
-                }
-                else {
-                    theToInit.EVENTKINDS_NOTFORCONSOLE = theToInit.EVENTKINDS_NOTFORCONSOLE_DEFAULT.slice();
-                }
-                if( !theToInit.EVENTKINDS_NOTFORCONSOLE) {
-                    theToInit.EVENTKINDS_NOTFORCONSOLE = theToInit.EVENTKINDS_NOTFORCONSOLE_DEFAULT.slice();
-                }
-
-
-
-
 
 
 
@@ -376,6 +167,13 @@ function ModuleFactory_CommonType() {
                 theToInit.OPERATIONSTATUS_NOCREADO       = "NOCREADO";
 
 
+
+
+                theToInit.OPERATIONMESSAGE_ERROR          = "ERROR";
+                theToInit.OPERATIONMESSAGE_FALTAPARAMETRO = "FALTAPARAMETRO";
+                theToInit.OPERATIONMESSAGE_YAEXISTE       = "YAEXISTE";
+                theToInit.OPERATIONMESSAGE_NOEXISTE       = "NOEXISTE";
+                theToInit.OPERATIONMESSAGE_NOCREADO       = "NOCREADO";
 
 
                 theToInit.OPERATIONMESSAGESBYSTATUS = {};
@@ -450,8 +248,6 @@ function ModuleFactory_CommonType() {
                 aPrototype._v_OwnRecords = null;
 
 
-
-                aPrototype._v_EventKindsNotForConsole = aPrototype.EVENTKINDS_NOTFORCONSOLE.slice();
 
 
 
@@ -714,10 +510,6 @@ function ModuleFactory_CommonType() {
                         this._v_OwnRecords.push( aRecord);
                     }
 
-                    if( this.LOGRECORDS) {
-                        this.pLogRecord( aRecord);
-                    }
-
                     return aRecord;
                 };
                 if( fRecord){}/* CQT */
@@ -732,445 +524,23 @@ function ModuleFactory_CommonType() {
 
 
 
-                var fSetEventKindsNotForConsole = function( theEventKinds) {
-
-                    this._v_EventKindsNotForConsole = theEventKinds;
-
-                    console.log( "EventKindsNotForConsole=\n" + JSON.stringify( this._v_EventKindsNotForConsole, null, 4));
-
-                    return this._v_EventKindsNotForConsole;
-                };
-                if( fSetEventKindsNotForConsole){}/* CQT */
-                aPrototype.fSetEventKindsNotForConsole = fSetEventKindsNotForConsole;
-
-
-
-
-
-                var fSetEventKindsNotForConsole_ALL = function() {
-
-                    this._v_EventKindsNotForConsole = this.EVENTKINDS_NOTFORCONSOLE_ALL;
-
-                    console.log( "EventKindsNotForConsole=\n" + JSON.stringify( this._v_EventKindsNotForConsole, null, 4));
-
-                    return this._v_EventKindsNotForConsole;
-                };
-                if( fSetEventKindsNotForConsole_ALL){}/* CQT */
-                aPrototype.fSetEventKindsNotForConsole_ALL = fSetEventKindsNotForConsole_ALL;
-
-
-
-
-
-                var fSetEventKindsNotForConsole_NONE = function() {
-
-                    this._v_EventKindsNotForConsole = this.EVENTKINDS_NOTFORCONSOLE_NONE;
-
-                    console.log( "EventKindsNotForConsole=\n" + JSON.stringify( this._v_EventKindsNotForConsole, null, 4));
-
-                    return this._v_EventKindsNotForConsole;
-                };
-                if( fSetEventKindsNotForConsole_NONE){}/* CQT */
-                aPrototype.fSetEventKindsNotForConsole_NONE = fSetEventKindsNotForConsole_NONE;
-
-
-
-                
-
-
-                var fSetEventKindsNotForConsole_DEFAULT = function() {
-
-                    this._v_EventKindsNotForConsole = this.EVENTKINDS_NOTFORCONSOLE_DEFAULT;
-
-                    console.log( "EventKindsNotForConsole=\n" + JSON.stringify( this._v_EventKindsNotForConsole, null, 4));
-
-                    return this._v_EventKindsNotForConsole;
-                };
-                if( fSetEventKindsNotForConsole_DEFAULT){}/* CQT */
-                aPrototype.fSetEventKindsNotForConsole_DEFAULT = fSetEventKindsNotForConsole_DEFAULT;
-
-
-
-
-
-
-                var fSetEventKindsNotForConsole_RESTRICTIVE = function() {
-
-                    this._v_EventKindsNotForConsole = this.EVENTKINDS_NOTFORCONSOLE_RESTRICTIVE;
-
-                    console.log( "EventKindsNotForConsole=\n" + JSON.stringify( this._v_EventKindsNotForConsole, null, 4));
-
-                    return this._v_EventKindsNotForConsole;
-                };
-                if( fSetEventKindsNotForConsole_RESTRICTIVE){}/* CQT */
-                aPrototype.fSetEventKindsNotForConsole_RESTRICTIVE = fSetEventKindsNotForConsole_RESTRICTIVE;
-
-
-
-
-
-
-
-                var fSetEventKindsNotForConsole_RESTRICTIVE_NOPROMISE = function() {
-
-                    this._v_EventKindsNotForConsole = this.EVENTKINDS_NOTFORCONSOLE_RESTRICTIVE_NOPROMISE;
-
-                    console.log( "EventKindsNotForConsole=\n" + JSON.stringify( this._v_EventKindsNotForConsole, null, 4));
-
-                    return this._v_EventKindsNotForConsole;
-                };
-                if( fSetEventKindsNotForConsole_RESTRICTIVE_NOPROMISE){}/* CQT */
-                aPrototype.fSetEventKindsNotForConsole_RESTRICTIVE_NOPROMISE = fSetEventKindsNotForConsole_RESTRICTIVE_NOPROMISE;
-
-
-
-
-
-
-                var fSetEventKindsNotForConsole_NOPROMISE = function() {
-
-                    this._v_EventKindsNotForConsole = this.EVENTKINDS_NOTFORCONSOLE_NOPROMISE;
-
-                    console.log( "EventKindsNotForConsole=\n" + JSON.stringify( this._v_EventKindsNotForConsole, null, 4));
-
-                    return this._v_EventKindsNotForConsole;
-                };
-                if( fSetEventKindsNotForConsole_NOPROMISE){}/* CQT */
-                aPrototype.fSetEventKindsNotForConsole_NOPROMISE = fSetEventKindsNotForConsole_NOPROMISE;
-
-
-
-
-
-
-
-
-
-
-
-
-
-                var fFewerEventKindsForConsole = function( theEventKinds) {
-
-                    if( !theEventKinds) {
-                        return this._v_EventKindsNotForConsole;
-                    }
-
-                    var aNumEventKinds = theEventKinds;
-                    if( !aNumEventKinds) {
-                        return this._v_EventKindsNotForConsole;
-                    }
-
-
-                    var someEventKinds = this._v_EventKindsNotForConsole.slice();
-
-                    for( var anEventKindIdx=0; anEventKindIdx < aNumEventKinds; anEventKindIdx++) {
-
-                        var anEventKind = theEventKinds[ anEventKindIdx];
-                        if( anEventKind) {
-
-                            var anEventKindIndex = someEventKinds.indexOf( anEventKind);
-                            if( anEventKindIndex >= 0) {
-
-                                someEventKinds.splice( anEventKindIndex, 1);
-                                if( !someEventKinds.length) {
-                                    break;
-                                }
-                            }
-                        }
-                    }
-
-
-                    this._v_EventKindsNotForConsole = someEventKinds;
-
-                    console.log( "EventKindsNotForConsole=\n" + JSON.stringify( this._v_EventKindsNotForConsole, null, 4));
-
-                    return this._v_EventKindsNotForConsole
-                };
-                if( fFewerEventKindsForConsole){}/* CQT */
-                aPrototype.fFewerEventKindsForConsole = fFewerEventKindsForConsole;
-
-
-
-
-
-
-
-                var fMoreEventKindsForConsole = function( theEventKinds) {
-
-                    if( !theEventKinds) {
-                        return this._v_EventKindsNotForConsole;
-                    }
-
-                    var aNumEventKinds = theEventKinds;
-                    if( !aNumEventKinds) {
-                        return this._v_EventKindsNotForConsole;
-                    }
-
-
-                    var someEventKinds = this._v_EventKindsNotForConsole.slice();
-
-                    for( var anEventKindIdx=0; anEventKindIdx < aNumEventKinds; anEventKindIdx++) {
-
-                        var anEventKind = theEventKinds[ anEventKindIdx];
-                        if( anEventKind) {
-
-                            var anEventKindIndex = someEventKinds.indexOf( anEventKind);
-                            if( anEventKindIndex < 0) {
-
-                                someEventKinds.push( anEventKind);
-                            }
-                        }
-                    }
-
-
-                    this._v_EventKindsNotForConsole = someEventKinds;
-
-                    console.log( "EventKindsNotForConsole=\n" + JSON.stringify( this._v_EventKindsNotForConsole, null, 4));
-
-                    return this._v_EventKindsNotForConsole
-                };
-                if( fMoreEventKindsForConsole){}/* CQT */
-                aPrototype.fMoreEventKindsForConsole = fMoreEventKindsForConsole;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                var fSetEventKindsNotForConsole_inPrototype = function( theEventKinds) {
-
-                    aPrototype._v_EventKindsNotForConsole = theEventKinds;
-
-                    console.log( "EventKindsNotForConsole_inPrototype=\n" + JSON.stringify( aPrototype._v_EventKindsNotForConsole, null, 4));
-
-                    return aPrototype._v_EventKindsNotForConsole;
-                };
-                if( fSetEventKindsNotForConsole_inPrototype){}/* CQT */
-                aPrototype.fSetEventKindsNotForConsole_inPrototype = fSetEventKindsNotForConsole_inPrototype;
-
-
-
-
-
-
-                var fSetEventKindsNotForConsole_ALL_inPrototype = function() {
-
-                    aPrototype._v_EventKindsNotForConsole = aPrototype.EVENTKINDS_NOTFORCONSOLE_ALL;
-
-                    console.log( "EventKindsNotForConsole_inPrototype=\n" + JSON.stringify( aPrototype._v_EventKindsNotForConsole, null, 4));
-
-                    return this._v_EventKindsNotForConsole;
-                };
-                if( fSetEventKindsNotForConsole_ALL_inPrototype){}/* CQT */
-                aPrototype.fSetEventKindsNotForConsole_ALL_inPrototype = fSetEventKindsNotForConsole_ALL_inPrototype;
-
-
-
-
-
-                var fSetEventKindsNotForConsole_NONE_inPrototype = function() {
-
-                    aPrototype._v_EventKindsNotForConsole = aPrototype.EVENTKINDS_NOTFORCONSOLE_NONE;
-
-                    console.log( "EventKindsNotForConsole_inPrototype=\n" + JSON.stringify( aPrototype._v_EventKindsNotForConsole, null, 4));
-
-                    return this._v_EventKindsNotForConsole;
-                };
-                if( fSetEventKindsNotForConsole_NONE_inPrototype){}/* CQT */
-                aPrototype.fSetEventKindsNotForConsole_NONE_inPrototype = fSetEventKindsNotForConsole_NONE_inPrototype;
-
-
-
-
-
-
-                var fSetEventKindsNotForConsole_DEFAULT_inPrototype = function() {
-
-                    aPrototype._v_EventKindsNotForConsole = aPrototype.EVENTKINDS_NOTFORCONSOLE_DEFAULT;
-
-                    console.log( "EventKindsNotForConsole_inPrototype=\n" + JSON.stringify( aPrototype._v_EventKindsNotForConsole, null, 4));
-
-                    return this._v_EventKindsNotForConsole;
-                };
-                if( fSetEventKindsNotForConsole_DEFAULT_inPrototype){}/* CQT */
-                aPrototype.fSetEventKindsNotForConsole_DEFAULT_inPrototype = fSetEventKindsNotForConsole_DEFAULT_inPrototype;
-
-
-
-
-
-
-                var fSetEventKindsNotForConsole_RESTRICTIVE_inPrototype = function() {
-
-                    aPrototype._v_EventKindsNotForConsole = aPrototype.EVENTKINDS_NOTFORCONSOLE_RESTRICTIVE;
-
-                    console.log( "EventKindsNotForConsole_inPrototype=\n" + JSON.stringify( aPrototype._v_EventKindsNotForConsole, null, 4));
-
-                    return this._v_EventKindsNotForConsole;
-                };
-                if( fSetEventKindsNotForConsole_RESTRICTIVE_inPrototype){}/* CQT */
-                aPrototype.fSetEventKindsNotForConsole_RESTRICTIVE_inPrototype = fSetEventKindsNotForConsole_RESTRICTIVE_inPrototype;
-
-
-
-
-
-
-
-                var fSetEventKindsNotForConsole_RESTRICTIVE_NOPROMISE_inPrototype = function() {
-
-                    aPrototype._v_EventKindsNotForConsole = aPrototype.EVENTKINDS_NOTFORCONSOLE_RESTRICTIVE_NOPROMISE;
-
-                    console.log( "EventKindsNotForConsole_inPrototype=\n" + JSON.stringify( aPrototype._v_EventKindsNotForConsole, null, 4));
-
-                    return this._v_EventKindsNotForConsole;
-                };
-                if( fSetEventKindsNotForConsole_RESTRICTIVE_NOPROMISE_inPrototype){}/* CQT */
-                aPrototype.fSetEventKindsNotForConsole_RESTRICTIVE_NOPROMISE_inPrototype = fSetEventKindsNotForConsole_RESTRICTIVE_NOPROMISE_inPrototype;
-
-
-
-
-
-
-                var fSetEventKindsNotForConsole_NOPROMISE_inPrototype = function() {
-
-                    aPrototype._v_EventKindsNotForConsole = aPrototype.EVENTKINDS_NOTFORCONSOLE_NOPROMISE;
-
-                    console.log( "EventKindsNotForConsole_inPrototype=\n" + JSON.stringify( aPrototype._v_EventKindsNotForConsole, null, 4));
-
-                    return this._v_EventKindsNotForConsole;
-                };
-                if( fSetEventKindsNotForConsole_NOPROMISE_inPrototype){}/* CQT */
-                aPrototype.fSetEventKindsNotForConsole_NOPROMISE_inPrototype = fSetEventKindsNotForConsole_NOPROMISE_inPrototype;
-
-
-
-
-
-
-                var fFewerEventKindsForConsole_inPrototype = function( theEventKinds) {
-
-                    if( !theEventKinds) {
-                        return aPrototype._v_EventKindsNotForConsole;
-                    }
-
-                    var aNumEventKinds = theEventKinds;
-                    if( !aNumEventKinds) {
-                        return aPrototype._v_EventKindsNotForConsole;
-                    }
-
-
-                    var someEventKinds = aPrototype._v_EventKindsNotForConsole.slice();
-
-                    for( var anEventKindIdx=0; anEventKindIdx < aNumEventKinds; anEventKindIdx++) {
-
-                        var anEventKind = theEventKinds[ anEventKindIdx];
-                        if( anEventKind) {
-
-                            var anEventKindIndex = someEventKinds.indexOf( anEventKind);
-                            if( anEventKindIndex >= 0) {
-
-                                someEventKinds.splice( anEventKindIndex, 1);
-                                if( !someEventKinds.length) {
-                                    break;
-                                }
-                            }
-                        }
-                    }
-
-
-                    aPrototype._v_EventKindsNotForConsole = someEventKinds;
-
-                    console.log( "EventKindsNotForConsole_inPrototype=\n" + JSON.stringify( aPrototype._v_EventKindsNotForConsole, null, 4));
-
-                    return aPrototype._v_EventKindsNotForConsole
-                };
-                if( fFewerEventKindsForConsole_inPrototype){}/* CQT */
-                aPrototype.fFewerEventKindsForConsole_inPrototype = fFewerEventKindsForConsole_inPrototype;
-
-
-
-
-
-
-
-                var fMoreEventKindsForConsole_inPrototype = function( theEventKinds) {
-
-                    if( !theEventKinds) {
-                        return aPrototype._v_EventKindsNotForConsole;
-                    }
-
-                    var aNumEventKinds = theEventKinds;
-                    if( !aNumEventKinds) {
-                        return aPrototype._v_EventKindsNotForConsole;
-                    }
-
-
-                    var someEventKinds = aPrototype._v_EventKindsNotForConsole.slice();
-
-                    for( var anEventKindIdx=0; anEventKindIdx < aNumEventKinds; anEventKindIdx++) {
-
-                        var anEventKind = theEventKinds[ anEventKindIdx];
-                        if( anEventKind) {
-
-                            var anEventKindIndex = someEventKinds.indexOf( anEventKind);
-                            if( anEventKindIndex < 0) {
-
-                                someEventKinds.push( anEventKind);
-                            }
-                        }
-                    }
-
-
-                    aPrototype._v_EventKindsNotForConsole = someEventKinds;
-
-                    console.log( "EventKindsNotForConsole_inPrototype=\n" + JSON.stringify( aPrototype._v_EventKindsNotForConsole, null, 4));
-
-                    return aPrototype._v_EventKindsNotForConsole
-                };
-                if( fMoreEventKindsForConsole_inPrototype){}/* CQT */
-                aPrototype.fMoreEventKindsForConsole_inPrototype = fMoreEventKindsForConsole_inPrototype;
-
-
-
-
-
-
-
-
-
-
-
+                /* Deprecated. Kept in support of common type pLogRecord . Use fRecord which shall invoke recorder fCreateAndRegisterRecord and take care of delegating for the record to be recorded and dumped to console */
                 var pLogRecord = function( theRecord) {
-                    if( this.LOGRECORDS) {
-                        if( theRecord) {
-                            var anEventKind = theRecord._v_EventKind;
-                            if( this._v_EventKindsNotForConsole.indexOf( anEventKind) < 0) {
-                                var aLogString = theRecord.fLogString( );
-                                if( aLogString) {
-                                    console.log( "," + aLogString);
-                                }
-                            }
-                        }
+
+                    if( !theRecord) {
+                        return;
                     }
+
+                    if( !this._v_Recorder) {
+                        return;
+                    }
+
+
+                    this._v_Recorder.pLogRecord( theRecord);
+
                 };
                 if( pLogRecord){}/* CQT */
                 aPrototype.pLogRecord = pLogRecord;
-
-
-
-
 
 
 
@@ -1410,7 +780,8 @@ function ModuleFactory_CommonType() {
             var aModule = aMod_definer(
                 theSS_Overrider,
                 theSS_IdentifierSvce,
-                theSS_RecorderSvce
+                theSS_RecorderSvce,
+                theSS_CommonEventTypes
             );
             anExistingModule = aModule;
 

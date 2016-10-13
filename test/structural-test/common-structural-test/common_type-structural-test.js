@@ -1,5 +1,5 @@
 /*
- * common_type-test.js
+ * common_type-structural-test.js
  *
  * Created @author Antonio Carrasco Valero 201601241650
  *
@@ -40,7 +40,7 @@ permissions and limitations under the Licence.
 
 
 
-describe("prettytype Common tests", function () {
+describe("prettytype Common structural tests", function () {
 
     var aModule_TypesRegistrySvceFactory = ModuleFactory_TypesRegistrySvce();
     // console.log( "typeof aModule_TypesRegistrySvceFactory= " + typeof aModule_TypesRegistrySvceFactory);
@@ -92,6 +92,64 @@ describe("prettytype Common tests", function () {
 
 
 
+    var aModule_RecordingPolicyTypeFactory = ModuleFactory_RecordingPolicyType();
+    // console.log( "typeof aModule_RecordingPolicyTypeFactory= " + typeof aModule_RecordingPolicyTypeFactory);
+
+
+    var aModule_RecordingPolicyType = aModule_RecordingPolicyTypeFactory(
+        aTypesRegistrySvce,
+        anOverrider,
+        anIdentifier);
+    // console.log( "typeof aModule_RecordingPolicyType= " + typeof aModule_RecordingPolicyType);
+
+
+    
+    var aModule_RecordingPolicyKeepAllTypeFactory = ModuleFactory_RecordingPolicyKeepAllType();
+    // console.log( "typeof aModule_RecordingPolicyKeepAllTypeFactory= " + typeof aModule_RecordingPolicyKeepAllTypeFactory);
+
+
+    var aModule_RecordingPolicyKeepAllType = aModule_RecordingPolicyKeepAllTypeFactory( aTypesRegistrySvce, anOverrider, aModule_RecordingPolicyType);
+    // console.log( "typeof aModule_RecordingPolicyKeepAllType= " + typeof aModule_RecordingPolicyKeepAllType);
+
+
+
+
+
+
+
+    var aModule_ConsoleSvceFactory = ModuleFactory_ConsoleSvce();
+    // console.log( "typeof aModule_ConsoleSvceFactory= " + typeof aModule_ConsoleSvceFactory);
+
+    var aModule_ConsoleSvce = aModule_ConsoleSvceFactory( aTypesRegistrySvce, anOverrider);
+    // console.log( "typeof aModule_ConsoleSvce= " + typeof aModule_ConsoleSvce);
+
+
+
+
+    var aModule_DumpingPolicyTypeFactory = ModuleFactory_DumpingPolicyType();
+    // console.log( "typeof aModule_DumpingPolicyTypeFactory= " + typeof aModule_DumpingPolicyTypeFactory);
+
+
+    var aModule_DumpingPolicyType = aModule_DumpingPolicyTypeFactory( aTypesRegistrySvce, anOverrider, anIdentifier, aModule_ConsoleSvce);
+    // console.log( "typeof aModule_DumpingPolicyType= " + typeof aModule_DumpingPolicyType);
+
+
+
+    var aModule_CommonEventKindsFactory = ModuleFactory_CommonEventKinds();
+    // console.log( "typeof aModule_CommonEventKindsFactory= " + typeof aModule_CommonEventKindsFactory);
+
+    var aModule_CommonEventKinds = aModule_CommonEventKindsFactory( aTypesRegistrySvce);
+    // console.log( "typeof aModule_CommonEventKinds= " + typeof aModule_CommonEventKinds);
+
+    var aModule_DumpingPolicyFilterKindsTypeFactory = ModuleFactory_DumpingPolicyFilterKindsType();
+    // console.log( "typeof aModule_DumpingPolicyFilterKindsTypeFactory= " + typeof aModule_DumpingPolicyFilterKindsTypeFactory);
+
+
+    var aModule_DumpingPolicyFilterKindsType = aModule_DumpingPolicyFilterKindsTypeFactory( aTypesRegistrySvce, anOverrider, aModule_DumpingPolicyType, aModule_CommonEventKinds);
+    // console.log( "typeof aModule_DumpingPolicyFilterKindsType= " + typeof aModule_DumpingPolicyFilterKindsType);
+
+
+
     var aModule_RecorderTypeFactory = ModuleFactory_RecorderType();
     // console.log( "typeof aModule_RecorderTypeFactory= " + typeof aModule_RecorderTypeFactory);
 
@@ -101,7 +159,10 @@ describe("prettytype Common tests", function () {
         anOverrider,
         anIdentifier,
         aModule_IdentifierType,
-        aModule_RecordType
+        aModule_RecordType,
+        aModule_RecordingPolicyKeepAllType,
+        aModule_DumpingPolicyFilterKindsType
+
     );
     // console.log( "typeof aModule_RecorderType= " + typeof aModule_RecorderType);
 

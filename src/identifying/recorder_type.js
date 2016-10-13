@@ -43,7 +43,9 @@ function ModuleFactory_RecorderType() {
                        theSS_Overrider,
                        theSS_IdentifierSvce,
                        theSS_IdentifierType,
-                       theSS_RecordType) {
+                       theSS_RecordType,
+                       theSS_RecordingPolicyKeepAllType,
+                       theSS_DumpingPolicyFilterKindsType) {
 
 
         var ModuleName     = "recorder_type";
@@ -55,7 +57,9 @@ function ModuleFactory_RecorderType() {
         var aMod_definer = function( theS_Overrider,
                                      theS_IdentifierSvce,
                                      theS_IdentifierType,
-                                     theS_RecordType) {
+                                     theS_RecordType,
+                                     theS_RecordingPolicyKeepAllType,
+                                     theS_DumpingPolicyFilterKindsType) {
 
 
             if( !( typeof FG_logModLoads == "undefined") && ( typeof FG_logModLoads == "function") && FG_logModLoads()) { FG_logModLoads(ModuleFullName);}
@@ -160,6 +164,8 @@ function ModuleFactory_RecorderType() {
 
                 aPrototype._v_RecordsIdentifier    = null;
 
+                aPrototype._v_RecordingPolicy = null;
+                aPrototype._v_DumpingPolicy   = null;
 
 
 
@@ -208,9 +214,24 @@ function ModuleFactory_RecorderType() {
 
                     this._v_Id = this._v_Identifier.fReserveId();
 
+                    this._v_RecordsIdentifier = new theS_IdentifierType.Identifier_Constructor( "(For-" + this._v_Title + ")");
+
+
+
                     this._v_Records    = [ ];
 
-                    this._v_RecordsIdentifier = new theS_IdentifierType.Identifier_Constructor( "(For-" + this._v_Title + ")");
+                    this.pClearKeptRecords();
+
+                    /* BeWare: With this policy, all records shall be kept in memory in the _v_Records slot property of the recorder instance.
+                     and shall prevent reclamation of their memory by the garbage collector
+                     Note that common_type has a configurable variation constant theToInit.KEEPOWNRECORDS = false;
+                     which when true shall keep references to record instances and shall also prevent reclamation of their memory by the garbage collector.
+                     */
+                    this._v_RecordingPolicy = new theS_RecordingPolicyKeepAllType.RecordingPolicyKeepAll_Constructor(     "(For-" + this._v_Title + ")", this._v_Identifier, this);
+
+
+                    this._v_DumpingPolicy   = new theS_DumpingPolicyFilterKindsType.DumpingPolicyFilterKinds_Constructor( "(For-" + this._v_Title + ")", this._v_Identifier, this);
+
                 };
                 if( _pInit_Recorder){}/* CQT */
                 aPrototype._pInit_Recorder = _pInit_Recorder;
@@ -346,12 +367,125 @@ function ModuleFactory_RecorderType() {
 
 
 
+
+
+
+                var fRecordingPolicy = function() {
+
+                    return this._v_RecordingPolicy;
+
+                };
+                if( fRecordingPolicy){}/* CQT */
+                aPrototype.fRecordingPolicy = fRecordingPolicy;
+
+
+
+
+
+
+
+                var pSetRecordingPolicy = function( theRecordingPolicy) {
+
+                    if( this._v_RecordingPolicy) {
+                        if( this._v_RecordingPolicy.pRelease && ( typeof this._v_RecordingPolicy.pRelease == "function")) {
+                            this._v_RecordingPolicy.pRelease();
+                        }
+                    }
+
+                    this._v_RecordingPolicy = theRecordingPolicy;
+
+                    var aRecordingPolicy_recorder = null;
+                    if( theRecordingPolicy.fRecorder && ( typeof theRecordingPolicy.fRecorder == "function")) {
+                        aRecordingPolicy_recorder = theRecordingPolicy.fRecorder();
+                    }
+
+                    if( !aRecordingPolicy_recorder) {
+                        return;
+                    }
+
+                    if( !( aRecordingPolicy_recorder === this)) {
+                        theRecordingPolicy.pSetRecorder( this);
+                    }
+
+                };
+                if( pSetRecordingPolicy){}/* CQT */
+                aPrototype.pSetRecordingPolicy = pSetRecordingPolicy;
+
+
+
+
+
+
+
+
+
+                var fDumpingPolicy = function() {
+
+                    return this._v_DumpingPolicy;
+
+                };
+                if( fDumpingPolicy){}/* CQT */
+                aPrototype.fDumpingPolicy = fDumpingPolicy;
+
+
+
+
+
+
+
+                var pSetDumpingPolicy = function( theDumpingPolicy) {
+
+                    if( this._v_DumpingPolicy) {
+                        if( this._v_DumpingPolicy.pRelease && ( typeof this._v_DumpingPolicy.pRelease == "function")) {
+                            this._v_DumpingPolicy.pRelease();
+                        }
+                    }
+
+                    this._v_DumpingPolicy = theDumpingPolicy;
+
+                    var aDumpingPolicy_recorder = null;
+                    if( theDumpingPolicy.fRecorder && ( typeof theDumpingPolicy.fRecorder == "function")) {
+                        aDumpingPolicy_recorder = theDumpingPolicy.fRecorder();
+                    }
+
+                    if( !aDumpingPolicy_recorder) {
+                        return;
+                    }
+
+                    if( !( aDumpingPolicy_recorder === this)) {
+                        theDumpingPolicy.pSetRecorder( this);
+                    }
+
+                };
+                if( pSetDumpingPolicy){}/* CQT */
+                aPrototype.pSetDumpingPolicy = pSetDumpingPolicy;
+
+
+
+
+
+
+
+
+
+
+
                 var fCreateAndRegisterRecord = function( theInstance, theStep, theEventKind, theData, theReason, theDetails) {
 
                     var aRecordId = this._v_RecordsIdentifier.fReserveId();
 
                     var aRecord = new theS_RecordType.Record_Constructor( this, aRecordId,  theInstance, theStep, theEventKind, theData, theReason, theDetails);
-                    this._v_Records.push( aRecord);
+
+                    if( aRecord) {
+
+                        if( this._v_RecordingPolicy) {
+                            this._v_RecordingPolicy.pRecordRecord( aRecord);
+                        }
+
+                        if( this._v_DumpingPolicy) {
+                            this._v_DumpingPolicy.pDumpRecord( aRecord);
+                        }
+                    }
 
                     return aRecord;
                 };
@@ -360,6 +494,85 @@ function ModuleFactory_RecorderType() {
 
 
 
+
+
+
+
+                /* Deprecated. Kept in support of common type pLogRecord . Use common type fRecord which shall invoke recorder fCreateAndRegisterRecord and take care of delegating for the record to be recorded and dumped to console */
+                var pLogRecord = function( theRecord) {
+
+                    if( !theRecord) {
+                        return;
+                    }
+
+
+                    if( this._v_RecordingPolicy) {
+                        this._v_RecordingPolicy.pRecordRecord( theRecord);
+                    }
+
+                    if( this._v_DumpingPolicy) {
+                        this._v_DumpingPolicy.pDumpRecord( theRecord);
+                    }
+                };
+                if( pLogRecord){}/* CQT */
+                aPrototype.pLogRecord = pLogRecord;
+
+
+
+
+                /* Invoked from RecordingPolicyKeepAll pRecordRecord() */
+                var pKeepRecord = function( theRecord) {
+
+                    if( !theRecord) {
+                        return;
+                    }
+
+                    if( !this._v_Records) {
+
+                        this._v_Records = [ ];
+                    }
+
+                    this._v_Records.push( theRecord);
+
+                };
+                if( pKeepRecord){}/* CQT */
+                aPrototype.pKeepRecord = pKeepRecord;
+
+
+
+
+                var fKeptRecords = function() {
+
+                    if( !this._v_Records) {
+                        return null;
+                    }
+
+                    if( !( typeof this._v_Records.slice == "function")) {
+                        return null;
+                    }
+
+                    return this._v_Records.slice();
+
+                };
+                if( fKeptRecords){}/* CQT */
+                aPrototype.fKeptRecords = fKeptRecords;
+
+
+
+
+
+
+                var pClearKeptRecords = function() {
+
+                    if( !this._v_Records) {
+                        return;
+                    }
+
+                    return this._v_Records = [ ];
+
+                };
+                if( pClearKeptRecords){}/* CQT */
+                aPrototype.pClearKeptRecords = pClearKeptRecords;
 
 
 
@@ -424,6 +637,9 @@ function ModuleFactory_RecorderType() {
 
                 this._v_RecordsIdentifier = null;
 
+                this._v_RecordingPolicy = null;
+                this._v_DumpingPolicy   = null;
+
                 this._pInit_Recorder( theTitle, theIdentifier);
             };
             Recorder_Constructor.prototype = aRecorder_Prototype;
@@ -445,6 +661,9 @@ function ModuleFactory_RecorderType() {
                 this._v_Records    = null;
 
                 this._v_RecordsIdentifier = null;
+
+                this._v_RecordingPolicy = null;
+                this._v_DumpingPolicy   = null;
             };
             Recorder_SuperPrototypeConstructor.prototype = aRecorder_Prototype;
 
@@ -482,7 +701,9 @@ function ModuleFactory_RecorderType() {
                 theSS_Overrider,
                 theSS_IdentifierSvce,
                 theSS_IdentifierType,
-                theSS_RecordType
+                theSS_RecordType,
+                theSS_RecordingPolicyKeepAllType,
+                theSS_DumpingPolicyFilterKindsType
             );
             anExistingModule = aModule;
 

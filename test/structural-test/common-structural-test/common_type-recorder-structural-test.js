@@ -1,7 +1,7 @@
 /*
- * common_type-record-test.js
+ * common_type-recorder-structural-test.js
  *
- * Created @author Antonio Carrasco Valero 201601241700
+ * Created @author Antonio Carrasco Valero 2016010121544
  *
  *
  ***************************************************************************
@@ -40,7 +40,7 @@ permissions and limitations under the Licence.
 
 
 
-describe("prettytype Common record tests", function () {
+describe("prettytype Common recorder structural tests", function () {
 
     var aModule_TypesRegistrySvceFactory = ModuleFactory_TypesRegistrySvce();
     // console.log( "typeof aModule_TypesRegistrySvceFactory= " + typeof aModule_TypesRegistrySvceFactory);
@@ -91,6 +91,63 @@ describe("prettytype Common record tests", function () {
     // console.log( "typeof aModule_RecordType= " + typeof aModule_RecordType);
 
 
+    var aModule_RecordingPolicyTypeFactory = ModuleFactory_RecordingPolicyType();
+    // console.log( "typeof aModule_RecordingPolicyTypeFactory= " + typeof aModule_RecordingPolicyTypeFactory);
+
+
+    var aModule_RecordingPolicyType = aModule_RecordingPolicyTypeFactory(
+        aTypesRegistrySvce,
+        anOverrider,
+        anIdentifier);
+    // console.log( "typeof aModule_RecordingPolicyType= " + typeof aModule_RecordingPolicyType);
+
+
+
+    var aModule_RecordingPolicyKeepAllTypeFactory = ModuleFactory_RecordingPolicyKeepAllType();
+    // console.log( "typeof aModule_RecordingPolicyKeepAllTypeFactory= " + typeof aModule_RecordingPolicyKeepAllTypeFactory);
+
+
+    var aModule_RecordingPolicyKeepAllType = aModule_RecordingPolicyKeepAllTypeFactory( aTypesRegistrySvce, anOverrider, aModule_RecordingPolicyType);
+    // console.log( "typeof aModule_RecordingPolicyKeepAllType= " + typeof aModule_RecordingPolicyKeepAllType);
+
+
+
+
+
+
+    var aModule_ConsoleSvceFactory = ModuleFactory_ConsoleSvce();
+    // console.log( "typeof aModule_ConsoleSvceFactory= " + typeof aModule_ConsoleSvceFactory);
+
+    var aModule_ConsoleSvce = aModule_ConsoleSvceFactory( aTypesRegistrySvce, anOverrider);
+    // console.log( "typeof aModule_ConsoleSvce= " + typeof aModule_ConsoleSvce);
+
+
+
+
+    var aModule_DumpingPolicyTypeFactory = ModuleFactory_DumpingPolicyType();
+    // console.log( "typeof aModule_DumpingPolicyTypeFactory= " + typeof aModule_DumpingPolicyTypeFactory);
+
+
+    var aModule_DumpingPolicyType = aModule_DumpingPolicyTypeFactory( aTypesRegistrySvce, anOverrider, anIdentifier, aModule_ConsoleSvce);
+    // console.log( "typeof aModule_DumpingPolicyType= " + typeof aModule_DumpingPolicyType);
+
+
+
+
+    var aModule_CommonEventKindsFactory = ModuleFactory_CommonEventKinds();
+    // console.log( "typeof aModule_CommonEventKindsFactory= " + typeof aModule_CommonEventKindsFactory);
+
+    var aModule_CommonEventKinds = aModule_CommonEventKindsFactory( aTypesRegistrySvce);
+    // console.log( "typeof aModule_CommonEventKinds= " + typeof aModule_CommonEventKinds);
+
+    var aModule_DumpingPolicyFilterKindsTypeFactory = ModuleFactory_DumpingPolicyFilterKindsType();
+    // console.log( "typeof aModule_DumpingPolicyFilterKindsTypeFactory= " + typeof aModule_DumpingPolicyFilterKindsTypeFactory);
+
+
+    var aModule_DumpingPolicyFilterKindsType = aModule_DumpingPolicyFilterKindsTypeFactory( aTypesRegistrySvce, anOverrider, aModule_DumpingPolicyType, aModule_CommonEventKinds);
+    // console.log( "typeof aModule_DumpingPolicyFilterKindsType= " + typeof aModule_DumpingPolicyFilterKindsType);
+
+
 
     var aModule_RecorderTypeFactory = ModuleFactory_RecorderType();
     // console.log( "typeof aModule_RecorderTypeFactory= " + typeof aModule_RecorderTypeFactory);
@@ -101,7 +158,10 @@ describe("prettytype Common record tests", function () {
         anOverrider,
         anIdentifier,
         aModule_IdentifierType,
-        aModule_RecordType
+        aModule_RecordType,
+        aModule_RecordingPolicyKeepAllType,
+        aModule_DumpingPolicyFilterKindsType
+
     );
     // console.log( "typeof aModule_RecorderType= " + typeof aModule_RecorderType);
 
@@ -144,107 +204,68 @@ describe("prettytype Common record tests", function () {
 
 
 
-
-    it("Has fRecord defined", function () {
-        expect( aCommon.fRecord).not.toBeUndefined();
+    it("Has _v_Recorder defined", function () {
+        expect( aCommon._v_Recorder).not.toBeUndefined();
     });
 
-    it("Has fRecord typeof function", function () {
-        expect( typeof aCommon.fRecord).toBe( "function");
+    it("Has _v_Recorder typeof object", function () {
+        expect( typeof aCommon._v_Recorder).toBe( "object");
     });
 
-
-
-    var aBeforeRecordMillis = new Date().getMilliseconds();
-
-    var aMethodName = "common_type_record_test__theMethodName";
-    var anEventKind = "common_type_record_test__theEventKind";
-    var aData       = "common_type_record_test__theData";
-    var aReason     = "common_type_record_test__theReason";
-    var aDetail     = "common_type_record_test__theDetail";
-
-
-
-    aCommon.LOGRECORDS = false;
-
-    var aRecord = aCommon.fRecord( aMethodName, anEventKind, aData, aReason, aDetail);
-
-    it("Has fRecord() defined", function () {
-        expect( aRecord).not.toBeUndefined();
-    });
-
-    it("Has fRecord() not null", function () {
-        expect( aRecord).not.toBeNull();
-    });
-
-    it("Has fRecord() object", function () {
-        expect( typeof aRecord).toBe( "object");
-    });
-
-    it("Has fRecord() _v_Timestamp number", function () {
-        expect( typeof aRecord._v_Timestamp).toBe( "number");
-    });
-
-    it("Has fRecord() _v_Timestamp after", function () {
-        expect( aRecord._v_Timestamp >= aBeforeRecordMillis).toBe( true);
-    });
-
-    it("Has fRecord() _v_RecordId not null", function () {
-        expect( aRecord._v_RecordId).not.toBeNull();
-    });
-
-    it("Has fRecord() _v_Instance self", function () {
-        expect( aRecord._v_Instance).toBe( aCommon);
-    });
-
-    it("Has fRecord() _v_Step supplied", function () {
-        expect( aRecord._v_Step).toBe( aMethodName);
-    });
-
-    it("Has fRecord() _v_EventKind supplied", function () {
-        expect( aRecord._v_EventKind).toBe( anEventKind);
-    });
-
-    it("Has fRecord() _v_Data supplied", function () {
-        expect( aRecord._v_Data).toBe( aData);
-    });
-
-    it("Has fRecord() _v_Reason supplied", function () {
-        expect( aRecord._v_Reason).toBe( aReason);
-    });
-
-    it("Has fRecord() _v_Detail supplied", function () {
-        expect( aRecord._v_Detail).toBe( aDetail);
+    it("Has _v_Recorder not null", function () {
+        expect( aCommon._v_Recorder).not.toBeNull();
     });
 
 
 
-    var otherRecord = aCommon.fRecord( aMethodName, anEventKind, aData, aReason, aDetail);
-
-    it("Has other fRecord() defined", function () {
-        expect( otherRecord).not.toBeUndefined();
+    it("Has fCreateAndRegisterRecord defined", function () {
+        expect( aCommon._v_Recorder.fCreateAndRegisterRecord).not.toBeUndefined();
     });
 
-    it("Has other fRecord() not null", function () {
-        expect( otherRecord).not.toBeNull();
-    });
-
-    it("Has other fRecord() _v_RecordId not null", function () {
-        expect( otherRecord._v_RecordId).not.toBeNull();
-    });
-
-    it("Has other fRecord() _v_RecordId > first fRecord() _v_RecordId not null", function () {
-        expect( otherRecord._v_RecordId > aRecord._v_RecordId).not.toBeNull();
+    it("Has fCreateAndRegisterRecord typeof function", function () {
+        expect( typeof aCommon._v_Recorder.fCreateAndRegisterRecord).toBe( "function");
     });
 
 
 
-    it("Has pLogRecord defined", function () {
-        expect( aCommon.pLogRecord).not.toBeUndefined();
+
+    it("Has fRecordingPolicy defined", function () {
+        expect( aCommon._v_Recorder.fRecordingPolicy).not.toBeUndefined();
     });
 
-    it("Has pLogRecord typeof function", function () {
-        expect( typeof aCommon.pLogRecord).toBe( "function");
+    it("Has fRecordingPolicy typeof function", function () {
+        expect( typeof aCommon._v_Recorder.fRecordingPolicy).toBe( "function");
+    });
+
+
+    it("Has pSetRecordingPolicy defined", function () {
+        expect( aCommon._v_Recorder.pSetRecordingPolicy).not.toBeUndefined();
+    });
+
+    it("Has pSetRecordingPolicy typeof function", function () {
+        expect( typeof aCommon._v_Recorder.pSetRecordingPolicy).toBe( "function");
+    });
+
+
+
+
+
+
+    it("Has fDumpingPolicy defined", function () {
+        expect( aCommon._v_Recorder.fDumpingPolicy).not.toBeUndefined();
+    });
+
+    it("Has fDumpingPolicy typeof function", function () {
+        expect( typeof aCommon._v_Recorder.fDumpingPolicy).toBe( "function");
+    });
+
+
+    it("Has pSetDumpingPolicy defined", function () {
+        expect( aCommon._v_Recorder.pSetDumpingPolicy).not.toBeUndefined();
+    });
+
+    it("Has pSetDumpingPolicy typeof function", function () {
+        expect( typeof aCommon._v_Recorder.pSetDumpingPolicy).toBe( "function");
     });
 
 

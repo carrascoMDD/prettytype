@@ -7,7 +7,7 @@ module.exports = function(grunt) {
     // Project configuration.
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
-        kkwatch: {
+        watch: {
             scripts: {
 
                 files: [
@@ -16,10 +16,12 @@ module.exports = function(grunt) {
                     'src/utils/decoratesystemprototypes_svce.js',
                     'src/utils/stacktrace.js',
                     'src/utils/exceptiondetails_svce.js',
+                    'src/utils/console_svce.js',
 
                     'src/typesregistry.js',
                     'src/roots/overrider_type.js',
 
+                    'src/commoneventkinds.js',
                     'src/common/common_type.js',
                     'src/common/prominstrexception.js',
                     'src/common/prominstr_type.js',
@@ -28,6 +30,11 @@ module.exports = function(grunt) {
                     'src/common/common_svce_type.js',
 
                     'src/identifying/identifier_type.js',
+                    'src/identifying/record_type.js',
+                    'src/identifying/recordingpolicy_type.js',
+                    'src/identifying/recordingpolicy_keepall_type.js',
+                    'src/identifying/dumpingpolicy_type.js',
+                    'src/identifying/dumpingpolicy_filterkinds_type.js',
                     'src/identifying/record_type.js',
                     'src/identifying/recorder_type.js'
                 ],
@@ -55,13 +62,16 @@ module.exports = function(grunt) {
                 src  : [
                     'src/roots/logmoduleloads.js',
 
+                    'src/typesregistry.js',
+
                     'src/utils/decoratesystemprototypes_svce.js',
                     'src/utils/stacktrace.js',
                     'src/utils/exceptiondetails_svce.js',
+                    'src/utils/console_svce.js',
 
-                    'src/typesregistry.js',
                     'src/roots/overrider_type.js',
 
+                    'src/commoneventkinds.js',
                     'src/common/common_type.js',
                     'src/common/prominstrexception.js',
                     'src/common/prominstr_type.js',
@@ -70,6 +80,11 @@ module.exports = function(grunt) {
                     'src/common/common_svce_type.js',
 
                     'src/identifying/identifier_type.js',
+                    'src/identifying/record_type.js',
+                    'src/identifying/recordingpolicy_type.js',
+                    'src/identifying/recordingpolicy_keepall_type.js',
+                    'src/identifying/dumpingpolicy_type.js',
+                    'src/identifying/dumpingpolicy_filterkinds_type.js',
                     'src/identifying/record_type.js',
                     'src/identifying/recorder_type.js'
                 ],

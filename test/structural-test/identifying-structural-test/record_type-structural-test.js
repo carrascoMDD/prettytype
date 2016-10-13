@@ -1,5 +1,5 @@
 /*
- * record.js
+ * record_type-structural-test.js
  *
  * Created @author Antonio Carrasco Valero 201601241630
  *
@@ -41,7 +41,7 @@ permissions and limitations under the Licence.
 
 
 
-describe("prettytype  Record tests", function () {
+describe("prettytype  Record structural tests", function () {
 
     var aModule_TypesRegistrySvceFactory = ModuleFactory_TypesRegistrySvce();
     //console.log( "typeof aModule_TypesRegistrySvceFactory= " + typeof aModule_TypesRegistrySvceFactory);
