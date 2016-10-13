@@ -186,15 +186,15 @@ describe("prettytype  ConsoleSvce structural tests", function () {
 
 
 
-    it("Has module ModuleName dumpingpolicy_type", function () {
+    it("Has module ModuleName console_svce", function () {
         expect( aModule_ConsoleSvce.ModuleName).toBe( "console_svce");
     });
 
-    it("Has module ModulePackages identifying", function () {
+    it("Has module ModulePackages utils", function () {
         expect( aModule_ConsoleSvce.ModulePackages).toBe( "utils");
     });
 
-    it("Has module ModuleFullName identifying.recorder_type", function () {
+    it("Has module ModuleFullName utils.console_svce", function () {
         expect( aModule_ConsoleSvce.ModuleFullName).toBe( "utils/console_svce");
     });
 
