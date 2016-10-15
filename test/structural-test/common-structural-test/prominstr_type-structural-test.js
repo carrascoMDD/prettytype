@@ -188,7 +188,8 @@ describe("prettytype Prominstr structural tests", function () {
         aTypesRegistrySvce,
         anOverrider,
         anIdentifier,
-        aRecorder
+        aRecorder,
+        aModule_CommonEventKinds
     );
     // console.log( "typeof aModule_CommonType= " + typeof aModule_CommonType);
 

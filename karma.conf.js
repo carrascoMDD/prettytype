@@ -30,7 +30,6 @@ module.exports = function(config){
             'src/identifying/recordingpolicy_keepall_type.js',
             'src/identifying/dumpingpolicy_type.js',
             'src/identifying/dumpingpolicy_filterkinds_type.js',
-            'src/identifying/record_type.js',
             'src/identifying/recorder_type.js',
 
 
@@ -47,6 +46,7 @@ module.exports = function(config){
             'test/structural-test/common-structural-test/common_type-structural-test.js',
             'test/structural-test/common-structural-test/common_type-recorder-structural-test.js',
             'test/structural-test/common-structural-test/common_type-misc-structural-test.js',
+            'test/structural-test/common-structural-test/common_type-commoneventkinds-structural-test.js',
             'test/structural-test/common-structural-test/qngmock.js',
             'test/structural-test/common-structural-test/prominstr_type-structural-test.js',
             'test/structural-test/common-structural-test/withprominstr_type-structural-test.js',

@@ -185,7 +185,8 @@ describe("prettytype Common dumpingpolicy filterkinds may not dump behavioral te
         aTypesRegistrySvce,
         anOverrider,
         anIdentifier,
-        aRecorder
+        aRecorder,
+        aModule_CommonEventKinds
     );
     // console.log( "typeof aModule_CommonType= " + typeof aModule_CommonType);
 

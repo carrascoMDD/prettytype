@@ -10266,7 +10266,7 @@ function ModuleFactory_DumpingPolicyFilterKindsType() {
 
 
                 /* Slot property named _v_EventKindsNotForConsole only initialized in the prototype. May be overriden by individual instantes setting their own value */
-                if( theS_CommonEventKinds.EVENTKINDS_NOTFORCONSOLE) {
+                if( aPrototype.EVENTKINDS_NOTFORCONSOLE) {
                     aPrototype._v_EventKindsNotForConsole = aPrototype.EVENTKINDS_NOTFORCONSOLE.slice();
                 }
 

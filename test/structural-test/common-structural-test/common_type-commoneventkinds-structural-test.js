@@ -1,7 +1,7 @@
 /*
- * common_type-record-behavioral-test.js
+ * common_type-commoneventkinds-structural-test.js
  *
- * Created @author Antonio Carrasco Valero 201610121542
+ * Created @author Antonio Carrasco Valero 201610141403
  *
  *
  ***************************************************************************
@@ -40,7 +40,7 @@ permissions and limitations under the Licence.
 
 
 
-describe("prettytype Common record behavioral tests", function () {
+describe("prettytype Common event kinds structural tests", function () {
 
     var aModule_TypesRegistrySvceFactory = ModuleFactory_TypesRegistrySvce();
     // console.log( "typeof aModule_TypesRegistrySvceFactory= " + typeof aModule_TypesRegistrySvceFactory);
@@ -57,7 +57,7 @@ describe("prettytype Common record behavioral tests", function () {
     var aModule_OverriderType = aModule_OverriderTypeFactory( aTypesRegistrySvce);
     // console.log( "typeof aModule_OverriderType= " + typeof aModule_OverriderType);
 
-    var aOverrider_title = "Overrider-Title-test"
+    var aOverrider_title = "Overrider-Title-test";
 
     var anOverrider = new aModule_OverriderType.Overrider_Constructor( aOverrider_title);
     // console.log( "typeof anOverrider= " + typeof anOverrider);
@@ -74,7 +74,7 @@ describe("prettytype Common record behavioral tests", function () {
     var aModule_IdentifierType = aModule_IdentifierTypeFactory( aTypesRegistrySvce, anOverrider);
     // console.log( "typeof aModule_IdentifierType= " + typeof aModule_IdentifierType);
 
-    var aIdentifier_title = "Identifier-Title-test"
+    var aIdentifier_title = "Identifier-Title-test";
 
     var anIdentifier = new aModule_IdentifierType.Identifier_Constructor( aIdentifier_title);
     // console.log( "typeof anIdentifier= " + typeof anIdentifier);
@@ -91,6 +91,7 @@ describe("prettytype Common record behavioral tests", function () {
     // console.log( "typeof aModule_RecordType= " + typeof aModule_RecordType);
 
 
+
     var aModule_RecordingPolicyTypeFactory = ModuleFactory_RecordingPolicyType();
     // console.log( "typeof aModule_RecordingPolicyTypeFactory= " + typeof aModule_RecordingPolicyTypeFactory);
 
@@ -102,13 +103,14 @@ describe("prettytype Common record behavioral tests", function () {
     // console.log( "typeof aModule_RecordingPolicyType= " + typeof aModule_RecordingPolicyType);
 
 
-
+    
     var aModule_RecordingPolicyKeepAllTypeFactory = ModuleFactory_RecordingPolicyKeepAllType();
     // console.log( "typeof aModule_RecordingPolicyKeepAllTypeFactory= " + typeof aModule_RecordingPolicyKeepAllTypeFactory);
 
 
     var aModule_RecordingPolicyKeepAllType = aModule_RecordingPolicyKeepAllTypeFactory( aTypesRegistrySvce, anOverrider, aModule_RecordingPolicyType);
     // console.log( "typeof aModule_RecordingPolicyKeepAllType= " + typeof aModule_RecordingPolicyKeepAllType);
+
 
 
 
@@ -130,7 +132,6 @@ describe("prettytype Common record behavioral tests", function () {
 
     var aModule_DumpingPolicyType = aModule_DumpingPolicyTypeFactory( aTypesRegistrySvce, anOverrider, anIdentifier, aModule_ConsoleSvce);
     // console.log( "typeof aModule_DumpingPolicyType= " + typeof aModule_DumpingPolicyType);
-
 
 
 
@@ -165,12 +166,9 @@ describe("prettytype Common record behavioral tests", function () {
     );
     // console.log( "typeof aModule_RecorderType= " + typeof aModule_RecorderType);
 
-    var aRecorder_title = "Recorder-Title-test"
+    var aRecorder_title = "Recorder-Title-test";
 
-    var aRecorder = new aModule_RecorderType.Recorder_Constructor(
-        aRecorder_title,
-        anIdentifier
-    );
+    var aRecorder = new aModule_RecorderType.Recorder_Constructor( aRecorder_title);
     // console.log( "typeof aRecorder= " + typeof aRecorder);
     // console.log( "aRecorder keys = " + Object.keys( aRecorder));
 
@@ -190,7 +188,7 @@ describe("prettytype Common record behavioral tests", function () {
     );
     // console.log( "typeof aModule_CommonType= " + typeof aModule_CommonType);
 
-    var aCommon_title = "Common-Title-test"
+    var aCommon_title = "Common-Title-test";
 
     var aCommon = new aModule_CommonType.Common_Constructor(
         aCommon_title,
@@ -203,142 +201,73 @@ describe("prettytype Common record behavioral tests", function () {
 
 
 
+    
+    var someEventKinds = [
+        "EVENTKIND_SERVICEREPORT_OK",
+        "EVENTKIND_SERVICEREPORT_FAIL",
 
-
-
-    it("Has fRecord defined", function () {
-        expect( aCommon.fRecord).not.toBeUndefined();
-    });
-
-    it("Has fRecord typeof function", function () {
-        expect( typeof aCommon.fRecord).toBe( "function");
-    });
-
-
-
-    var aBeforeRecordMillis = new Date().getMilliseconds();
-
-    var aMethodName = "common_type_record_test__theMethodName";
-    var anEventKind = "common_type_record_test__theEventKind";
-    var aData       = "common_type_record_test__theData";
-    var aReason     = "common_type_record_test__theReason";
-    var aDetail     = "common_type_record_test__theDetail";
-
-
-
-
-    var aRecord = aCommon.fRecord( aMethodName, anEventKind, aData, aReason, aDetail);
-
-
-
-    var aMethodName2 = "common_type_record_test__theMethodName2";
-    var anEventKind2 = "common_type_record_test__theEventKind2";
-    var aData2       = "common_type_record_test__theData2";
-    var aReason2     = "common_type_record_test__theReason2";
-    var aDetail2     = "common_type_record_test__theDetail2";
-
-    var otherRecord = aCommon.fRecord( aMethodName2, anEventKind2, aData2, aReason2, aDetail2);
+        "PROMINSTEVT_WARN_NODEFERREDTOREJECT",
+        "PROMINSTEVT_WARN_NODEFERREDTORESOLVE",
+        "PROMINSTEVT_ERR_ATTEMPTTOREJECT_ALREADYRESOLVED",
+        "PROMINSTEVT_ERR_ATTEMPTTOREJECT_ALREADYREJECTED",
+        "PROMINSTEVT_ERR_ATTEMPTTOREJECT_NOTPENDING",
+        "PROMINSTEVT_ERR_ATTEMPTTORESOLVE_ALREADYRESOLVED",
+        "PROMINSTEVT_ERR_ATTEMPTTORESOLVE_ALREADYREJECTED",
+        "PROMINSTEVT_ERR_ATTEMPTTORESOLVE_NOTPENDING",
+        "PROMINSTEVT_ALLSCHEDULED",
+        "PROMINSTEVT_REJECTED",
+        "PROMINSTEVT_RESOLVED"
+    ];
 
 
 
 
+    var someEventSets = [
+        "EVENTKINDS",
+        "EVENTKINDS_PROMISE",
+        "EVENTKINDS_NOPROMISE",
+        "EVENTKINDS_NOTFORCONSOLE_RESTRICTIVE",
+        "EVENTKINDS_NOTFORCONSOLE_RESTRICTIVE_NOPROMISE",
+        "EVENTKINDS_NOTFORCONSOLE_NOPROMISE",
+        "EVENTKINDS_NOTFORCONSOLE_NONE",
+        "EVENTKINDS_NOTFORCONSOLE_ALL",
+        "EVENTKINDS_NOTFORCONSOLE_DEFAULT"
+    ];
+    
+    
 
+    it("Has Event Kinds", function () {
 
+        var aNumEventKinds = someEventKinds.length;
+        for( var anEventKindIdx=0; anEventKindIdx < aNumEventKinds; anEventKindIdx++) {
 
-    it("Has fRecord() defined", function () {
-        expect( aRecord).not.toBeUndefined();
-    });
+            var anEventKind = someEventKinds[ anEventKindIdx];
+            if( anEventKind) {
+                expect( aCommon[ anEventKind]).not.toBeUndefined();
+                expect( aCommon[ anEventKind]).not.toBeNull();
+            }
+        }
 
-    it("Has fRecord() not null", function () {
-        expect( aRecord).not.toBeNull();
-    });
-
-    it("Has fRecord() object", function () {
-        expect( typeof aRecord).toBe( "object");
-    });
-
-    it("Has fRecord() _v_Timestamp number", function () {
-        expect( typeof aRecord._v_Timestamp).toBe( "number");
-    });
-
-    it("Has fRecord() _v_Timestamp after", function () {
-        expect( aRecord._v_Timestamp >= aBeforeRecordMillis).toBe( true);
-    });
-
-    it("Has fRecord() _v_RecordId not null", function () {
-        expect( aRecord._v_RecordId).not.toBeNull();
-    });
-
-    it("Has fRecord() _v_Instance self", function () {
-        expect( aRecord._v_Instance).toBe( aCommon);
-    });
-
-    it("Has fRecord() _v_Step supplied", function () {
-        expect( aRecord._v_Step).toBe( aMethodName);
-    });
-
-    it("Has fRecord() _v_EventKind supplied", function () {
-        expect( aRecord._v_EventKind).toBe( anEventKind);
-    });
-
-    it("Has fRecord() _v_Data supplied", function () {
-        expect( aRecord._v_Data).toBe( aData);
-    });
-
-    it("Has fRecord() _v_Reason supplied", function () {
-        expect( aRecord._v_Reason).toBe( aReason);
-    });
-
-    it("Has fRecord() _v_Detail supplied", function () {
-        expect( aRecord._v_Detail).toBe( aDetail);
     });
 
 
 
 
 
-    it("Has other fRecord() defined", function () {
-        expect( otherRecord).not.toBeUndefined();
+
+    it("Has Event Sets", function () {
+
+        var aNumEventSets = someEventSets.length;
+        for( var anEventSetIdx=0; anEventSetIdx < aNumEventSets; anEventSetIdx++) {
+
+            var anEventSet = someEventSets[ anEventSetIdx];
+            if( anEventSet) {
+                expect( aCommon[ anEventSet]).not.toBeUndefined();
+                expect( aCommon[ anEventSet]).not.toBeNull();
+            }
+        }
+
     });
-
-    it("Has other fRecord() not null", function () {
-        expect( otherRecord).not.toBeNull();
-    });
-
-    it("Has other fRecord() _v_RecordId not null", function () {
-        expect( otherRecord._v_RecordId).not.toBeNull();
-    });
-
-    it("Has other fRecord() _v_RecordId > first fRecord() _v_RecordId not null", function () {
-        expect( otherRecord._v_RecordId > aRecord._v_RecordId).not.toBeNull();
-    });
-
-
-    it("Has fRecord() _v_Instance self", function () {
-        expect( otherRecord._v_Instance).toBe( aCommon);
-    });
-
-    it("Has fRecord() _v_Step supplied", function () {
-        expect( otherRecord._v_Step).toBe( aMethodName2);
-    });
-
-    it("Has fRecord() _v_EventKind supplied", function () {
-        expect( otherRecord._v_EventKind).toBe( anEventKind2);
-    });
-
-    it("Has fRecord() _v_Data supplied", function () {
-        expect( otherRecord._v_Data).toBe( aData2);
-    });
-
-    it("Has fRecord() _v_Reason supplied", function () {
-        expect( otherRecord._v_Reason).toBe( aReason2);
-    });
-
-    it("Has fRecord() _v_Detail supplied", function () {
-        expect( otherRecord._v_Detail).toBe( aDetail2);
-    });
-
-
 
 
 });
