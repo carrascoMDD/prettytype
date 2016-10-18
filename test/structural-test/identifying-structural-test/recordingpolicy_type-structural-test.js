@@ -212,7 +212,7 @@ describe("prettytype  RecordingPolicy structural tests", function () {
         expect( aRecordingPolicy._v_Module.ModulePackages).toBe( "identifying");
     });
 
-    it("Has module ModuleFullName identifying.recorder_type", function () {
+    it("Has module ModuleFullName identifying.recordingpolicy_type", function () {
         expect( aRecordingPolicy._v_Module.ModuleFullName).toBe( "identifying/recordingpolicy_type");
     });
 

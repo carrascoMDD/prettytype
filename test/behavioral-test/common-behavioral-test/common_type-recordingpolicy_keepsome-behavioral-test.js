@@ -1,7 +1,7 @@
 /*
- * common_type-recordingpolicy_keepall-behavioral-test.js
+ * common_type-recordingpolicy_keepsome-behavioral-test.js
  *
- * Created @author Antonio Carrasco Valero 201610121553
+ * Created @author Antonio Carrasco Valero 201610181618
  *
  *
  ***************************************************************************
@@ -40,7 +40,19 @@ permissions and limitations under the Licence.
 
 
 
-describe("prettytype Common recordingpolicy keepAll behavioral tests", function () {
+describe("prettytype Common recordingpolicy keepSome behavioral tests", function () {
+
+
+
+    var aMustKeepRecordsMaxNumber = 10;
+
+
+    var aNumRecordsToSubmit = aMustKeepRecordsMaxNumber + 1;
+
+
+
+
+
 
     var aModule_TypesRegistrySvceFactory = ModuleFactory_TypesRegistrySvce();
     // console.log( "typeof aModule_TypesRegistrySvceFactory= " + typeof aModule_TypesRegistrySvceFactory);
@@ -103,12 +115,34 @@ describe("prettytype Common recordingpolicy keepAll behavioral tests", function 
 
 
 
+
+
+
     var aModule_RecordingPolicyKeepAllTypeFactory = ModuleFactory_RecordingPolicyKeepAllType();
     // console.log( "typeof aModule_RecordingPolicyKeepAllTypeFactory= " + typeof aModule_RecordingPolicyKeepAllTypeFactory);
 
 
-    var aModule_RecordingPolicyKeepAllType = aModule_RecordingPolicyKeepAllTypeFactory( aTypesRegistrySvce, anOverrider, aModule_RecordingPolicyType);
+    var aModule_RecordingPolicyKeepAllType = aModule_RecordingPolicyKeepAllTypeFactory(
+        aTypesRegistrySvce,
+        anOverrider,
+        aModule_RecordingPolicyType);
     // console.log( "typeof aModule_RecordingPolicyKeepAllType= " + typeof aModule_RecordingPolicyKeepAllType);
+
+
+
+
+
+
+    var aModule_RecordingPolicyKeepSomeTypeFactory = ModuleFactory_RecordingPolicyKeepSomeType();
+    // console.log( "typeof aModule_RecordingPolicyKeepSomeTypeFactory= " + typeof aModule_RecordingPolicyKeepSomeTypeFactory);
+
+
+    var aModule_RecordingPolicyKeepSomeType = aModule_RecordingPolicyKeepSomeTypeFactory(
+        aTypesRegistrySvce,
+        anOverrider,
+        aModule_RecordingPolicyKeepAllType);
+    // console.log( "typeof aModule_RecordingPolicyKeepSomeType= " + typeof aModule_RecordingPolicyKeepSomeType);
+
 
 
 
@@ -159,7 +193,7 @@ describe("prettytype Common recordingpolicy keepAll behavioral tests", function 
         anIdentifier,
         aModule_IdentifierType,
         aModule_RecordType,
-        aModule_RecordingPolicyKeepAllType,
+        aModule_RecordingPolicyKeepSomeType,
         aModule_DumpingPolicyFilterKindsType
 
     );
@@ -210,19 +244,19 @@ describe("prettytype Common recordingpolicy keepAll behavioral tests", function 
 
 
 
-    var aRecordingPolicyKeepAll = new aModule_RecordingPolicyKeepAllType.RecordingPolicyKeepAll_Constructor( "RecordingPolicy-for-common_type-recordingpolicy_keepall-behavioral-test.js", aCommon_Identifier, aCommon_Recorder)
 
-    aRecordingPolicyKeepAll.pSetMustKeepRecords( true);
+    var aRecordingPolicyKeepSome = new aModule_RecordingPolicyKeepSomeType.RecordingPolicyKeepSome_Constructor( "RecordingPolicy-for-common_type-recordingpolicy_keepsome-behavioral-test.js", aCommon_Identifier, aCommon_Recorder)
 
-    aCommon_Recorder.pSetRecordingPolicy( aRecordingPolicyKeepAll);
+    aRecordingPolicyKeepSome.pSetMustKeepRecords( true);
+    aRecordingPolicyKeepSome.pSetMustKeepRecordsMaxNumber( aMustKeepRecordsMaxNumber);
+
+    aCommon_Recorder.pSetRecordingPolicy( aRecordingPolicyKeepSome);
 
 
     var aCommon_Recorder_SetRecordingPolicy = aCommon_Recorder.fRecordingPolicy();
 
     var aCommon_Recorder_SetRecordingPolicy_MustKeepRecords = aCommon_Recorder_SetRecordingPolicy.fMustKeepRecords();
 
-
-    var aBeforeRecordMillis = new Date().getMilliseconds();
 
     var aMethodName = "common_type_record_test_recordingpolicykeepall__theMethodName";
     var anEventKind = "common_type_record_test_recordingpolicykeepall__theEventKind";
@@ -236,25 +270,23 @@ describe("prettytype Common recordingpolicy keepAll behavioral tests", function 
 
     var someKeptRecordsBefore = aCommon_Recorder.fKeptRecords();
 
-    var aRecord = aCommon.fRecord( aMethodName, anEventKind, aData, aReason, aDetail);
 
-    var aMethodName2 = "common_type_record_test_recordingpolicykeepall__theMethodName2";
-    var anEventKind2 = "common_type_record_test_recordingpolicykeepall__theEventKind2";
-    var aData2       = "common_type_record_test_recordingpolicykeepall__theData2";
-    var aReason2     = "common_type_record_test_recordingpolicykeepall__theReason2";
-    var aDetail2     = "common_type_record_test_recordingpolicykeepall__theDetail2";
 
-    var otherRecord = aCommon.fRecord( aMethodName2, anEventKind2, aData2, aReason2, aDetail2);
+
+
+
+    for( var aSubmittedRecordIdx=0; aSubmittedRecordIdx < aNumRecordsToSubmit; aSubmittedRecordIdx++) {
+
+        var aPrefix = "0000" + aSubmittedRecordIdx;
+        aPrefix = aPrefix.substr( aPrefix.length - 4);
+        var aSubmittedRecord = aCommon.fRecord( aMethodName + aPrefix, anEventKind + aPrefix, aData + aPrefix, aReason + aPrefix, aDetail + aPrefix);
+    }
+
+
+
 
 
     var someKeptRecords = aCommon_Recorder.fKeptRecords();
-    var aKeptRecord_1 = someKeptRecords[ 0];
-    var aKeptRecord_2 = someKeptRecords[ 1];
-
-
-
-
-
 
 
 
@@ -311,7 +343,7 @@ describe("prettytype Common recordingpolicy keepAll behavioral tests", function 
     });
 
     it("Has after pSetRecordingPolicy() _v_Recorder.fRecordingPolicy() same as set", function () {
-        expect( aCommon_Recorder_SetRecordingPolicy).toBe( aRecordingPolicyKeepAll);
+        expect( aCommon_Recorder_SetRecordingPolicy).toBe( aRecordingPolicyKeepSome);
     });
 
 
@@ -319,6 +351,10 @@ describe("prettytype Common recordingpolicy keepAll behavioral tests", function 
         expect( aCommon_Recorder_SetRecordingPolicy_MustKeepRecords).toBe( true);
     });
 
+
+    it("Has after pSetRecordingPolicy() _v_Recorder.fRecordingPolicy().fMustKeepRecordsMaxNumber() same as set MustKeepRecordsMaxNumber", function () {
+        expect( aCommon_Recorder_SetRecordingPolicy_MustKeepRecords).toBe( true);
+    });
 
 
 
@@ -342,138 +378,39 @@ describe("prettytype Common recordingpolicy keepAll behavioral tests", function 
 
 
 
-    it("Has aCommon_Recorder.fKeptRecords() defined", function () {
+    it("Has someKeptRecordsBefore defined", function () {
         expect( someKeptRecordsBefore).not.toBeUndefined();
     });
 
-    it("Has aCommon_Recorder.fKeptRecords() typeof object", function () {
+    it("Has someKeptRecordsBefore typeof object", function () {
         expect( typeof someKeptRecordsBefore).toBe( "object");
     });
 
-    it("Has aCommon_Recorder.fKeptRecords() not null", function () {
+    it("Has someKeptRecordsBefore not null", function () {
         expect( someKeptRecordsBefore).not.toBeNull();
     });
 
-    it("Has aCommon_Recorder.fKeptRecords() length == 0", function () {
+    it("Has someKeptRecordsBefore length == 0", function () {
         expect( someKeptRecordsBefore.length).toBe( 0);
     });
 
 
 
 
-
-
-    it("Has fRecord() defined", function () {
-        expect( aRecord).not.toBeUndefined();
-    });
-
-    it("Has fRecord() not null", function () {
-        expect( aRecord).not.toBeNull();
-    });
-
-    it("Has fRecord() object", function () {
-        expect( typeof aRecord).toBe( "object");
-    });
-
-    it("Has fRecord() _v_Timestamp number", function () {
-        expect( typeof aRecord._v_Timestamp).toBe( "number");
-    });
-
-    it("Has fRecord() _v_Timestamp after", function () {
-        expect( aRecord._v_Timestamp >= aBeforeRecordMillis).toBe( true);
-    });
-
-    it("Has fRecord() _v_RecordId not null", function () {
-        expect( aRecord._v_RecordId).not.toBeNull();
-    });
-
-    it("Has fRecord() _v_Instance self", function () {
-        expect( aRecord._v_Instance).toBe( aCommon);
-    });
-
-    it("Has fRecord() _v_Step supplied", function () {
-        expect( aRecord._v_Step).toBe( aMethodName);
-    });
-
-    it("Has fRecord() _v_EventKind supplied", function () {
-        expect( aRecord._v_EventKind).toBe( anEventKind);
-    });
-
-    it("Has fRecord() _v_Data supplied", function () {
-        expect( aRecord._v_Data).toBe( aData);
-    });
-
-    it("Has fRecord() _v_Reason supplied", function () {
-        expect( aRecord._v_Reason).toBe( aReason);
-    });
-
-    it("Has fRecord() _v_Detail supplied", function () {
-        expect( aRecord._v_Detail).toBe( aDetail);
-    });
-
-
-
-
-
-
-
-    it("Has other fRecord() defined", function () {
-        expect( otherRecord).not.toBeUndefined();
-    });
-
-    it("Has other fRecord() not null", function () {
-        expect( otherRecord).not.toBeNull();
-    });
-
-    it("Has other fRecord() _v_RecordId not null", function () {
-        expect( otherRecord._v_RecordId).not.toBeNull();
-    });
-
-    it("Has other fRecord() _v_RecordId > first fRecord() _v_RecordId not null", function () {
-        expect( otherRecord._v_RecordId > aRecord._v_RecordId).not.toBeNull();
-    });
-
-    it("Has fRecord() _v_Instance self", function () {
-        expect( otherRecord._v_Instance).toBe( aCommon);
-    });
-
-    it("Has fRecord() _v_Step supplied", function () {
-        expect( otherRecord._v_Step).toBe( aMethodName2);
-    });
-
-    it("Has fRecord() _v_EventKind supplied", function () {
-        expect( otherRecord._v_EventKind).toBe( anEventKind2);
-    });
-
-    it("Has fRecord() _v_Data supplied", function () {
-        expect( otherRecord._v_Data).toBe( aData2);
-    });
-
-    it("Has fRecord() _v_Reason supplied", function () {
-        expect( otherRecord._v_Reason).toBe( aReason2);
-    });
-
-    it("Has fRecord() _v_Detail supplied", function () {
-        expect( otherRecord._v_Detail).toBe( aDetail2);
-    });
-
-
-
-
-    it("Has aCommon_Recorder.fKeptRecords() defined", function () {
+    it("Has someKeptRecords defined", function () {
         expect( someKeptRecords).not.toBeUndefined();
     });
 
-    it("Has aCommon_Recorder.fKeptRecords() typeof object", function () {
+    it("Has someKeptRecords typeof object", function () {
         expect( typeof someKeptRecords).toBe( "object");
     });
 
-    it("Has aCommon_Recorder.fKeptRecords() not null", function () {
+    it("Has someKeptRecords not null", function () {
         expect( someKeptRecords).not.toBeNull();
     });
 
-    it("Has aCommon_Recorder.fKeptRecords() length == 2", function () {
-        expect( someKeptRecords.length).toBe( 2);
+    it("Has someKeptRecords length == aMustKeepRecordsMaxNumber", function () {
+        expect( someKeptRecords.length).toBe( aMustKeepRecordsMaxNumber);
     });
 
 
@@ -481,127 +418,19 @@ describe("prettytype Common recordingpolicy keepAll behavioral tests", function 
 
 
 
-
-    it("Has aCommon_Recorder.fKeptRecords()[ 0] defined", function () {
-        expect( aKeptRecord_1).not.toBeUndefined();
-    });
-
-    it("Has aCommon_Recorder.fKeptRecords()[ 0] typeof object", function () {
-        expect( typeof aKeptRecord_1).toBe( "object");
-    });
-
-    it("Has aCommon_Recorder.fKeptRecords()[ 0] not null", function () {
-        expect( aKeptRecord_1).not.toBeNull();
-    });
-
-    it("Has fRecord() _v_Timestamp number", function () {
-        expect( typeof aKeptRecord_1._v_Timestamp).toBe( "number");
-    });
-
-    it("Has fRecord() _v_Timestamp after", function () {
-        expect( aKeptRecord_1._v_Timestamp >= aBeforeRecordMillis).toBe( true);
-    });
-
-    it("Has fRecord() _v_RecordId not null", function () {
-        expect( aKeptRecord_1._v_RecordId).not.toBeNull();
-    });
-
-    it("Has fRecord() _v_Instance self", function () {
-        expect( aKeptRecord_1._v_Instance).toBe( aCommon);
-    });
-
-    it("Has fRecord() _v_Step supplied", function () {
-        expect( aKeptRecord_1._v_Step).toBe( aMethodName);
-    });
-
-    it("Has fRecord() _v_EventKind supplied", function () {
-        expect( aKeptRecord_1._v_EventKind).toBe( anEventKind);
-    });
-
-    it("Has fRecord() _v_Data supplied", function () {
-        expect( aKeptRecord_1._v_Data).toBe( aData);
-    });
-
-    it("Has fRecord() _v_Reason supplied", function () {
-        expect( aKeptRecord_1._v_Reason).toBe( aReason);
-    });
-
-    it("Has fRecord() _v_Detail supplied", function () {
-        expect( aKeptRecord_1._v_Detail).toBe( aDetail);
-    });
-
-
-
-
-
-
-
-
-    it("Has aCommon_Recorder.fKeptRecords()[ 1] defined", function () {
-        expect( aKeptRecord_2).not.toBeUndefined();
-    });
-
-    it("Has aCommon_Recorder.fKeptRecords()[ 1] typeof object", function () {
-        expect( typeof aKeptRecord_2).toBe( "object");
-    });
-
-    it("Has aCommon_Recorder.fKeptRecords()[ 1] not null", function () {
-        expect( aKeptRecord_2).not.toBeNull();
-    });
-
-    it("Has fRecord() _v_Timestamp number", function () {
-        expect( typeof aKeptRecord_2._v_Timestamp).toBe( "number");
-    });
-
-    it("Has fRecord() _v_Timestamp after", function () {
-        expect( aKeptRecord_2._v_Timestamp >= aBeforeRecordMillis).toBe( true);
-    });
-
-    it("Has fRecord() _v_RecordId not null", function () {
-        expect( aKeptRecord_2._v_RecordId).not.toBeNull();
-    });
-
-    it("Has fRecord() _v_Instance self", function () {
-        expect( aKeptRecord_2._v_Instance).toBe( aCommon);
-    });
-
-    it("Has fRecord() _v_Step supplied", function () {
-        expect( aKeptRecord_2._v_Step).toBe( aMethodName2);
-    });
-
-    it("Has fRecord() _v_EventKind supplied", function () {
-        expect( aKeptRecord_2._v_EventKind).toBe( anEventKind2);
-    });
-
-    it("Has fRecord() _v_Data supplied", function () {
-        expect( aKeptRecord_2._v_Data).toBe( aData2);
-    });
-
-    it("Has fRecord() _v_Reason supplied", function () {
-        expect( aKeptRecord_2._v_Reason).toBe( aReason2);
-    });
-
-    it("Has fRecord() _v_Detail supplied", function () {
-        expect( aKeptRecord_2._v_Detail).toBe( aDetail2);
-    });
-
-
-
-
-
-    it("Has aCommon_Recorder.fKeptRecords() defined", function () {
+    it("Has someKeptRecordsAfterFinalClear defined", function () {
         expect( someKeptRecordsAfterFinalClear).not.toBeUndefined();
     });
 
-    it("Has aCommon_Recorder.fKeptRecords() typeof object", function () {
+    it("Has someKeptRecordsAfterFinalClear typeof object", function () {
         expect( typeof someKeptRecordsAfterFinalClear).toBe( "object");
     });
 
-    it("Has aCommon_Recorder.fKeptRecords() not null", function () {
+    it("Has someKeptRecordsAfterFinalClear not null", function () {
         expect( someKeptRecordsAfterFinalClear).not.toBeNull();
     });
 
-    it("Has aCommon_Recorder.fKeptRecords() length == 0", function () {
+    it("Has someKeptRecordsAfterFinalClear length == 0", function () {
         expect( someKeptRecordsAfterFinalClear.length).toBe( 0);
     });
 

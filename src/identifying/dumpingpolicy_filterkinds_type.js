@@ -1,7 +1,7 @@
 /*
  * dumpingpolicy_filterkinds_type.js.js
  *
- * Created @author Antonio Carrasco Valero 201410141300
+ * Created @author Antonio Carrasco Valero 201610051442
  *
  *
  ***************************************************************************

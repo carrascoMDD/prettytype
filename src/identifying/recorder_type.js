@@ -44,7 +44,7 @@ function ModuleFactory_RecorderType() {
                        theSS_IdentifierSvce,
                        theSS_IdentifierType,
                        theSS_RecordType,
-                       theSS_RecordingPolicyKeepAllType,
+                       theSS_RecordingPolicyType,
                        theSS_DumpingPolicyFilterKindsType) {
 
 
@@ -58,7 +58,7 @@ function ModuleFactory_RecorderType() {
                                      theS_IdentifierSvce,
                                      theS_IdentifierType,
                                      theS_RecordType,
-                                     theS_RecordingPolicyKeepAllType,
+                                     theS_RecordingPolicyType,
                                      theS_DumpingPolicyFilterKindsType) {
 
 
@@ -227,7 +227,7 @@ function ModuleFactory_RecorderType() {
                      Note that common_type has a configurable variation constant theToInit.KEEPOWNRECORDS = false;
                      which when true shall keep references to record instances and shall also prevent reclamation of their memory by the garbage collector.
                      */
-                    this._v_RecordingPolicy = new theS_RecordingPolicyKeepAllType.RecordingPolicyKeepAll_Constructor(     "(For-" + this._v_Title + ")", this._v_Identifier, this);
+                    this._v_RecordingPolicy = new theS_RecordingPolicyType.RecordingPolicy_Constructor(     "(For-" + this._v_Title + ")", this._v_Identifier, this);
 
 
                     this._v_DumpingPolicy   = new theS_DumpingPolicyFilterKindsType.DumpingPolicyFilterKinds_Constructor( "(For-" + this._v_Title + ")", this._v_Identifier, this);
@@ -362,6 +362,34 @@ function ModuleFactory_RecorderType() {
 
 
 
+                var fEventsToResultJSON = function( ) {
+
+                    var someCommonObjects = null;
+                    var aJSON = this.fToResultJSON( someCommonObjects);
+
+                    var someRecordLogObjects = [];
+                    aJSON.records = someRecordLogObjects;
+
+                    if( this._v_Records) {
+                        var aNumRecords = this._v_Records.length;
+                        for( var aRecordIdx=0; aRecordIdx < aNumRecords; aRecordIdx++) {
+                            var aRecord = this._v_Records[ aRecordIdx];
+                            var aRecordLogObject = aRecord.fAsLogObject();
+                            if( aRecordLogObject) {
+                                someRecordLogObjects.push( aRecordLogObject);
+                            }
+                        }
+                    }
+
+                    return aJSON;
+                };
+                if( fEventsToResultJSON){}/* CQT */
+                aPrototype.fEventsToResultJSON = fEventsToResultJSON;
+
+
+
+
+
 
 
 
@@ -476,15 +504,20 @@ function ModuleFactory_RecorderType() {
 
                     var aRecord = new theS_RecordType.Record_Constructor( this, aRecordId,  theInstance, theStep, theEventKind, theData, theReason, theDetails);
 
-                    if( aRecord) {
+                    try {
+                        if( aRecord) {
 
-                        if( this._v_RecordingPolicy) {
-                            this._v_RecordingPolicy.pRecordRecord( aRecord);
-                        }
+                            if( this._v_RecordingPolicy) {
+                                this._v_RecordingPolicy.pRecordRecord( aRecord);
+                            }
 
-                        if( this._v_DumpingPolicy) {
-                            this._v_DumpingPolicy.pDumpRecord( aRecord);
+                            if( this._v_DumpingPolicy) {
+                                this._v_DumpingPolicy.pDumpRecord( aRecord);
+                            }
                         }
+                    }
+                    catch( anException) {
+
                     }
 
                     return aRecord;
@@ -520,7 +553,11 @@ function ModuleFactory_RecorderType() {
 
 
 
-                /* Invoked from RecordingPolicyKeepAll pRecordRecord() */
+
+
+
+
+                /* Invoked from RecordingPolicy pRecordRecord() */
                 var pKeepRecord = function( theRecord) {
 
                     if( !theRecord) {
@@ -537,6 +574,8 @@ function ModuleFactory_RecorderType() {
                 };
                 if( pKeepRecord){}/* CQT */
                 aPrototype.pKeepRecord = pKeepRecord;
+
+
 
 
 
@@ -580,30 +619,104 @@ function ModuleFactory_RecorderType() {
 
 
 
-                var fEventsToResultJSON = function( ) {
 
-                    var someCommonObjects = null;
-                    var aJSON = this.fToResultJSON( someCommonObjects);
 
-                    var someRecordLogObjects = [];
-                    aJSON.records = someRecordLogObjects;
 
-                    if( this._v_Records) {
-                        var aNumRecords = this._v_Records.length;
-                        for( var aRecordIdx=0; aRecordIdx < aNumRecords; aRecordIdx++) {
-                            var aRecord = this._v_Records[ aRecordIdx];
-                            var aRecordLogObject = aRecord.fAsLogObject();
-                            if( aRecordLogObject) {
-                                someRecordLogObjects.push( aRecordLogObject);
+
+                var pDiscardRecordsToMaxNumber = function( theMaxNumberOfRecords) {
+
+                    if( !theMaxNumberOfRecords || ( theMaxNumberOfRecords < 0)) {
+                        return;
+                    }
+
+
+                    if( !this._v_Records) {
+                        return;
+                    }
+
+                    var aNumRecords = this._v_Records.length;
+                    if( !aNumRecords) {
+                        return;
+                    }
+
+                    if( aNumRecords <= theMaxNumberOfRecords) {
+                        return;
+                    }
+
+                    var aFirstRecordIndexToKeep = aNumRecords - theMaxNumberOfRecords;
+                    if( aFirstRecordIndexToKeep <= 0) {
+                        return;
+                    }
+
+                    this._v_Records.splice( 0, aFirstRecordIndexToKeep);
+
+                };
+                if( pDiscardRecordsToMaxNumber){}/* CQT */
+                aPrototype.pDiscardRecordsToMaxNumber = pDiscardRecordsToMaxNumber;
+
+
+
+
+
+
+
+
+
+
+
+                var pDiscardRecordsOlderThan = function( theOlderThanMillis) {
+
+                    if( !theOlderThanMillis || ( theOlderThanMillis < 0)) {
+                        return;
+                    }
+
+
+                    if( !this._v_Records) {
+                        return;
+                    }
+
+                    var aNumRecords = this._v_Records.length;
+                    if( !aNumRecords) {
+                        return;
+                    }
+
+
+                    var aNowMillis = new Date().getTime();
+                    var anEarlierMillis = aNowMillis - theOlderThanMillis;
+                    if( anEarlierMillis <= 0) {
+                        return;
+                    }
+
+
+                    var aFirstRecordIndexToKeep = 0;
+
+                    for( var aRecordIdx=0; aRecordIdx < aNumRecords; aRecordIdx++) {
+
+                        aFirstRecordIndexToKeep = aRecordIdx;
+
+                        var aRecord = this._v_Records[ aRecordIdx];
+                        if( aRecord) {
+
+                            var aRecord_timestamp_millis = aRecord._v_Timestamp;
+                            if( aRecord_timestamp_millis) {
+
+                                if( aRecord_timestamp_millis >= anEarlierMillis) {
+                                    break;
+                                }
                             }
                         }
                     }
 
-                    return aJSON;
-                };
-                if( fEventsToResultJSON){}/* CQT */
-                aPrototype.fEventsToResultJSON = fEventsToResultJSON;
 
+                    if( !aFirstRecordIndexToKeep) {
+                        return;
+                    }
+
+                    this._v_Records.splice( 0, aFirstRecordIndexToKeep);
+
+                };
+                if( pDiscardRecordsOlderThan){}/* CQT */
+                aPrototype.pDiscardRecordsOlderThan = pDiscardRecordsOlderThan;
 
 
 
@@ -702,7 +815,7 @@ function ModuleFactory_RecorderType() {
                 theSS_IdentifierSvce,
                 theSS_IdentifierType,
                 theSS_RecordType,
-                theSS_RecordingPolicyKeepAllType,
+                theSS_RecordingPolicyType,
                 theSS_DumpingPolicyFilterKindsType
             );
             anExistingModule = aModule;

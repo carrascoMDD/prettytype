@@ -1,7 +1,7 @@
 /*
- * recordingpolicy_keepall_type.js.js
+ * recordingpolicy_keeprecent_type.js
  *
- * Created @author Antonio Carrasco Valero 201610051442
+ * Created @author Antonio Carrasco Valero 201510171137
  *
  *
  ***************************************************************************
@@ -34,32 +34,26 @@ permissions and limitations under the Licence.
 
 
 
-/* BeWare: With this policy, all records shall be kept in memory in the _v_Records slot property of the recorder instance.
- and shall prevent reclamation of their memory by the garbage collector
- Note that common_type has a configurable variation constant theToInit.KEEPOWNRECORDS = false;
- which when true shall keep references to record instances and shall also prevent reclamation of their memory by the garbage collector.
- */
 
 
-
-function ModuleFactory_RecordingPolicyKeepAllType() {
+function ModuleFactory_RecordingPolicyKeepRecentType() {
 
     'use strict';
 
 
     return ( function( theSS_typesregistry,
                        theSS_Overrider,
-                       theSS_RecordingPolicyType) {
+                       theSS_RecordingPolicyKeepSomeType) {
 
 
-        var ModuleName     = "recordingpolicy_keepall_type";
+        var ModuleName     = "recordingpolicy_keeprecent_type";
         var ModulePackages = "identifying";
         var ModuleFullName = ModulePackages + "/" + ModuleName;
 
 
 
         var aMod_definer = function( theS_Overrider,
-                                     theS_RecordingPolicyType) {
+                                     theS_RecordingPolicyKeepSomeType) {
 
 
             if( !( typeof FG_logModLoads == "undefined") && ( typeof FG_logModLoads == "function") && FG_logModLoads()) { FG_logModLoads(ModuleFullName);}
@@ -77,7 +71,7 @@ function ModuleFactory_RecordingPolicyKeepAllType() {
                     return;
                 }
 
-                theToInit.MUSTKEEPRECORDS = true;
+                theToInit.MUSTKEEPRECORDSRECENTMILLIS = 5 * 60 * 1000;
 
             };
 
@@ -114,7 +108,7 @@ function ModuleFactory_RecordingPolicyKeepAllType() {
                 if( !theToInit) {
                     return;
                 }
-                theToInit.RECORDINGPOLICYKEEPALL_DEFAULTTITLE = "RecordingPolicyKeepAllDefaultName";
+                theToInit.RECORDINGPOLICYKEEPRECENT_DEFAULTTITLE = "RecordingPolicyKeepRecentDefaultName";
 
             };
 
@@ -144,34 +138,34 @@ function ModuleFactory_RecordingPolicyKeepAllType() {
 
 
 
-            var aRecordingPolicyKeepAll_Prototype = (function() {
+            var aRecordingPolicyKeepRecent_Prototype = (function() {
 
 
 
-                var aPrototype = new theS_RecordingPolicyType.RecordingPolicy_SuperPrototypeConstructor();
+                var aPrototype = new theS_RecordingPolicyKeepSomeType.RecordingPolicyKeepSome_SuperPrototypeConstructor();
 
                 pgInitFromModuleConstants( aPrototype);
 
 
-                aPrototype._v_SuperPrototype = theS_RecordingPolicyType.RecordingPolicy_Prototype;
+                aPrototype._v_SuperPrototype = theS_RecordingPolicyKeepSomeType.RecordingPolicyKeepSome_Prototype;
 
 
-                aPrototype._v_Type = "RecordingPolicyKeepAll";
+                aPrototype._v_Type = "RecordingPolicyKeepRecent";
 
-                aPrototype._v_Prototype_RecordingPolicyKeepAll = aPrototype;
+                aPrototype._v_Prototype_RecordingPolicyKeepRecent = aPrototype;
 
 
                 aPrototype._v_Module = null;
 
 
-                aPrototype._v_MustKeepRecords = null;
+                aPrototype._v_MustKeepRecordsRecentMillis = null;
 
 
 
 
                 var _pInit = function( theTitle, theIdentifier, theRecorder) {
 
-                    this._pInit_RecordingPolicyKeepAll( theTitle, theIdentifier, theRecorder);
+                    this._pInit_RecordingPolicyKeepRecent( theTitle, theIdentifier, theRecorder);
 
                 };
                 if( _pInit){}/* CQT */
@@ -185,7 +179,7 @@ function ModuleFactory_RecordingPolicyKeepAllType() {
 
                 var _fTitleDefault = function( ) {
 
-                    return this.RECORDINGPOLICYKEEPALL_DEFAULTTITLE;
+                    return this.RECORDINGPOLICYKEEPRECENT_DEFAULTTITLE;
                 };
                 if( _fTitleDefault){}/* CQT */
                 aPrototype._fTitleDefault = _fTitleDefault;
@@ -195,7 +189,7 @@ function ModuleFactory_RecordingPolicyKeepAllType() {
 
 
 
-                var _pInit_RecordingPolicyKeepAll = function( theTitle, theIdentifier, theRecorder) {
+                var _pInit_RecordingPolicyKeepRecent = function( theTitle, theIdentifier, theRecorder) {
 
                     /* Delegate on super prototype initialization */
                     aPrototype._v_SuperPrototype._pInit_RecordingPolicy.apply( this, [ theTitle, theIdentifier, theRecorder]);
@@ -204,11 +198,11 @@ function ModuleFactory_RecordingPolicyKeepAllType() {
                     this._v_Type      = this._v_Prototype._v_Type;
                     this._v_Module    = aPrototype._v_Module;
 
-                    this._v_MustKeepRecords = this.MUSTKEEPRECORDS;
+                    this._v_MustKeepRecordsRecentMillis = this.MUSTKEEPRECORDSRECENTMILLIS;
 
                 };
-                if( _pInit_RecordingPolicyKeepAll){}/* CQT */
-                aPrototype._pInit_RecordingPolicyKeepAll = _pInit_RecordingPolicyKeepAll;
+                if( _pInit_RecordingPolicyKeepRecent){}/* CQT */
+                aPrototype._pInit_RecordingPolicyKeepRecent = _pInit_RecordingPolicyKeepRecent;
 
 
 
@@ -219,24 +213,13 @@ function ModuleFactory_RecordingPolicyKeepAllType() {
 
 
 
-                var pSetMustKeepRecords = function( theMustKeepRecords) {
+                var pSetMustKeepRecordsRecentMillis = function( theMustKeepRecordsRecentMillis) {
 
-                    this._v_MustKeepRecords = theMustKeepRecords ? true : false;
-
-                };
-                if( pSetMustKeepRecords){}/* CQT */
-                aPrototype.pSetMustKeepRecords = pSetMustKeepRecords;
-
-
-
-
-                var fMustKeepRecords = function() {
-
-                    return this._v_MustKeepRecords;
+                    this._v_MustKeepRecordsRecentMillis = theMustKeepRecordsRecentMillis;
 
                 };
-                if( fMustKeepRecords){}/* CQT */
-                aPrototype.fMustKeepRecords = fMustKeepRecords;
+                if( pSetMustKeepRecordsRecentMillis){}/* CQT */
+                aPrototype.pSetMustKeepRecordsRecentMillis = pSetMustKeepRecordsRecentMillis;
 
 
 
@@ -244,25 +227,13 @@ function ModuleFactory_RecordingPolicyKeepAllType() {
 
 
 
-                var pRecordRecord = function( theRecord) {
+                var fMustKeepRecordsRecentMillis = function() {
 
-                    if( !theRecord) {
-                        return;
-                    }
-
-                    if( !this.fMustKeepRecords()) {
-                        return;
-                    }
-
-                    if( this._v_Recorder) {
-                        this._v_Recorder.pKeepRecord( theRecord);
-                    }
-
-                    this.pPruneRecords();
+                    return this._v_MustKeepRecordsRecentMillis;
 
                 };
-                if( pRecordRecord){}/* CQT */
-                aPrototype.pRecordRecord = pRecordRecord;
+                if( fMustKeepRecordsRecentMillis){}/* CQT */
+                aPrototype.fMustKeepRecordsRecentMillis = fMustKeepRecordsRecentMillis;
 
 
 
@@ -271,12 +242,24 @@ function ModuleFactory_RecordingPolicyKeepAllType() {
 
 
 
-                /* Subtype responsibility */
+
+
                 var pPruneRecords = function() {
+
+                    this._v_Prototype_RecordingPolicyKeepSome.pPruneRecords.apply( this);
+
+
+                    if( !this._v_Recorder) {
+                        return;
+                    }
+
+                    this._v_Recorder.pDiscardRecordsOlderThan( this.fMustKeepRecordsRecentMillis());
 
                 };
                 if( pPruneRecords){}/* CQT */
                 aPrototype.pPruneRecords = pPruneRecords;
+
+
 
 
 
@@ -290,53 +273,53 @@ function ModuleFactory_RecordingPolicyKeepAllType() {
 
 
 
-            var RecordingPolicyKeepAll_Constructor = function( theTitle, theIdentifier, theRecorder) {
+            var RecordingPolicyKeepRecent_Constructor = function( theTitle, theIdentifier, theRecorder) {
 
                 /* Keep handy reference to super-prototype for super method invocation */
-                this._v_SuperPrototype = theS_RecordingPolicyType.RecordingPolicy_Prototype;
+                this._v_SuperPrototype = theS_RecordingPolicyKeepSomeType.RecordingPolicyKeepSome_Prototype;
 
                 this._v_Prototype = null;
                 this._v_Type = null;
                 this._v_Module = null;
 
-                this._v_MustKeepRecords = null;
+                this._v_MustKeepRecordsRecentMillis = null;
 
-                this._pInit_RecordingPolicyKeepAll( theTitle, theIdentifier, theRecorder);
+                this._pInit_RecordingPolicyKeepRecent( theTitle, theIdentifier, theRecorder);
             };
-            RecordingPolicyKeepAll_Constructor.prototype = aRecordingPolicyKeepAll_Prototype;
+            RecordingPolicyKeepRecent_Constructor.prototype = aRecordingPolicyKeepRecent_Prototype;
 
 
 
 
 
-            var RecordingPolicyKeepAll_SuperPrototypeConstructor = function() {
+            var RecordingPolicyKeepRecent_SuperPrototypeConstructor = function() {
 
                 /* Keep handy reference to super-prototype for super method invocation */
-                this._v_SuperPrototype = theS_RecordingPolicyType.RecordingPolicy_Prototype;
+                this._v_SuperPrototype = theS_RecordingPolicyKeepSomeType.RecordingPolicyKeepSome_Prototype;
 
-                this._v_Prototype = aRecordingPolicyKeepAll_Prototype;
+                this._v_Prototype = aRecordingPolicyKeepRecent_Prototype;
                 this._v_Type      = null;
                 this._v_Module    = null;
 
-                this._v_MustKeepRecords = null;
+                this._v_MustKeepRecordsRecentMillis = null;
 
             };
-            RecordingPolicyKeepAll_SuperPrototypeConstructor.prototype = aRecordingPolicyKeepAll_Prototype;
+            RecordingPolicyKeepRecent_SuperPrototypeConstructor.prototype = aRecordingPolicyKeepRecent_Prototype;
 
 
 
             var aModule = {
-                "RecordingPolicyKeepAll_Prototype":   aRecordingPolicyKeepAll_Prototype,
-                "RecordingPolicyKeepAll_Constructor": RecordingPolicyKeepAll_Constructor,
-                "RecordingPolicy_Constructor":        RecordingPolicyKeepAll_Constructor,
-                "RecordingPolicyKeepAll_SuperPrototypeConstructor": RecordingPolicyKeepAll_SuperPrototypeConstructor
+                "RecordingPolicyKeepRecent_Prototype":   aRecordingPolicyKeepRecent_Prototype,
+                "RecordingPolicyKeepRecent_Constructor": RecordingPolicyKeepRecent_Constructor,
+                "RecordingPolicy_Constructor":           RecordingPolicyKeepRecent_Constructor,
+                "RecordingPolicyKeepRecent_SuperPrototypeConstructor": RecordingPolicyKeepRecent_SuperPrototypeConstructor
             };
             pgInitFromModuleConstants( aModule);
             aModule.ModuleName     = ModuleName;
             aModule.ModulePackages = ModulePackages;
             aModule.ModuleFullName = ModuleFullName;
 
-            aRecordingPolicyKeepAll_Prototype._v_Module = aModule;
+            aRecordingPolicyKeepRecent_Prototype._v_Module = aModule;
 
 
 
@@ -356,7 +339,7 @@ function ModuleFactory_RecordingPolicyKeepAllType() {
 
             var aModule = aMod_definer(
                 theSS_Overrider,
-                theSS_RecordingPolicyType
+                theSS_RecordingPolicyKeepSomeType
             );
             anExistingModule = aModule;
 
@@ -374,7 +357,7 @@ function ModuleFactory_RecordingPolicyKeepAllType() {
 }
 
 
-if( ModuleFactory_RecordingPolicyKeepAllType){}/* CQT */
+if( ModuleFactory_RecordingPolicyKeepRecentType){}/* CQT */
 
 
 

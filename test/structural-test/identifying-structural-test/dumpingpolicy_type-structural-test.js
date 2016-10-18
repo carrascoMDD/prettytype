@@ -212,7 +212,7 @@ describe("prettytype  DumpingPolicy structural tests", function () {
         expect( aDumpingPolicy._v_Module.ModulePackages).toBe( "identifying");
     });
 
-    it("Has module ModuleFullName identifying.recorder_type", function () {
+    it("Has module ModuleFullName identifying.dumpingpolicy_type", function () {
         expect( aDumpingPolicy._v_Module.ModuleFullName).toBe( "identifying/dumpingpolicy_type");
     });
 
