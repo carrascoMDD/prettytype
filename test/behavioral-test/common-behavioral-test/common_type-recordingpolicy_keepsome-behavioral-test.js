@@ -47,10 +47,6 @@ describe("prettytype Common recordingpolicy keepSome behavioral tests", function
     var aMustKeepRecordsMaxNumber = 10;
 
 
-    var aNumRecordsToSubmit = aMustKeepRecordsMaxNumber + 1;
-
-
-
 
 
 
@@ -224,7 +220,7 @@ describe("prettytype Common recordingpolicy keepSome behavioral tests", function
     );
     // console.log( "typeof aModule_CommonType= " + typeof aModule_CommonType);
 
-    var aCommon_title = "Common-Title-test"
+    var aCommon_title = "Common-Title-test";
 
     var aCommon = new aModule_CommonType.Common_Constructor(
         aCommon_title,
@@ -238,6 +234,28 @@ describe("prettytype Common recordingpolicy keepSome behavioral tests", function
 
 
 
+
+
+    var aMethodName = "common_type_record_test_recordingpolicykeepall__theMethodName";
+    var anEventKind = "common_type_record_test_recordingpolicykeepall__theEventKind";
+    var aData       = "common_type_record_test_recordingpolicykeepall__theData";
+    var aReason     = "common_type_record_test_recordingpolicykeepall__theReason";
+    var aDetail     = "common_type_record_test_recordingpolicykeepall__theDetail";
+
+
+
+
+
+    var aRecordPointerName_keepsome_01         = "recordPointerName_keepsome_01";
+    var aRecordPointerName_keepsome_02         = "recordPointerName_keepsome_02";
+    var aRecordPointerName_keepsome_03         = "recordPointerName_keepsome_03";
+
+
+
+
+
+
+
     var aCommon_Recorder   = aCommon._v_Recorder;
     var aCommon_Identifier = aCommon._v_Identifier;
 
@@ -246,23 +264,20 @@ describe("prettytype Common recordingpolicy keepSome behavioral tests", function
 
 
     var aRecordingPolicyKeepSome = new aModule_RecordingPolicyKeepSomeType.RecordingPolicyKeepSome_Constructor( "RecordingPolicy-for-common_type-recordingpolicy_keepsome-behavioral-test.js", aCommon_Identifier, aCommon_Recorder)
-
-    aRecordingPolicyKeepSome.pSetMustKeepRecords( true);
-    aRecordingPolicyKeepSome.pSetMustKeepRecordsMaxNumber( aMustKeepRecordsMaxNumber);
-
     aCommon_Recorder.pSetRecordingPolicy( aRecordingPolicyKeepSome);
-
 
     var aCommon_Recorder_SetRecordingPolicy = aCommon_Recorder.fRecordingPolicy();
 
+    aRecordingPolicyKeepSome.pSetMustKeepRecords( true);
     var aCommon_Recorder_SetRecordingPolicy_MustKeepRecords = aCommon_Recorder_SetRecordingPolicy.fMustKeepRecords();
 
 
-    var aMethodName = "common_type_record_test_recordingpolicykeepall__theMethodName";
-    var anEventKind = "common_type_record_test_recordingpolicykeepall__theEventKind";
-    var aData       = "common_type_record_test_recordingpolicykeepall__theData";
-    var aReason     = "common_type_record_test_recordingpolicykeepall__theReason";
-    var aDetail     = "common_type_record_test_recordingpolicykeepall__theDetail";
+    aRecordingPolicyKeepSome.pSetMustKeepRecordsMaxNumber( aMustKeepRecordsMaxNumber);
+    var aCommon_Recorder_SetRecordingPolicy_MustKeepRecordsMaxNumber = aCommon_Recorder_SetRecordingPolicy.fMustKeepRecordsMaxNumber();
+
+
+
+
 
 
 
@@ -274,13 +289,50 @@ describe("prettytype Common recordingpolicy keepSome behavioral tests", function
 
 
 
+    aCommon_Recorder.pSetRecordPointer( aRecordPointerName_keepsome_01, null /* point to last record */);
+    var aCommon_Recorder_SetRecordingPointer_01_beforeAnyRecords = aCommon_Recorder.fGetRecordPointerNamed( aRecordPointerName_keepsome_01);
 
-    for( var aSubmittedRecordIdx=0; aSubmittedRecordIdx < aNumRecordsToSubmit; aSubmittedRecordIdx++) {
+
+
+
+
+
+
+
+
+    for( var aSubmittedRecordIdx=0; aSubmittedRecordIdx < aMustKeepRecordsMaxNumber; aSubmittedRecordIdx++) {
 
         var aPrefix = "0000" + aSubmittedRecordIdx;
         aPrefix = aPrefix.substr( aPrefix.length - 4);
         var aSubmittedRecord = aCommon.fRecord( aMethodName + aPrefix, anEventKind + aPrefix, aData + aPrefix, aReason + aPrefix, aDetail + aPrefix);
     }
+
+
+
+    aCommon_Recorder.pSetRecordPointer( aRecordPointerName_keepsome_02, null /* point to last record */);
+
+    var aCommon_Recorder_SetRecordingPointer_01_afterExactlyMaxRecords = aCommon_Recorder.fGetRecordPointerNamed( aRecordPointerName_keepsome_01);
+    var aCommon_Recorder_SetRecordingPointer_02_afterExactlyMaxRecords = aCommon_Recorder.fGetRecordPointerNamed( aRecordPointerName_keepsome_02);
+
+
+
+
+
+    var aLastRecordIdx = aMustKeepRecordsMaxNumber;
+    var otherPrefix = "0000" + aLastRecordIdx;
+    otherPrefix = otherPrefix.substr( aPrefix.length - 4);
+    var otherSubmittedRecord = aCommon.fRecord( aMethodName + otherPrefix, anEventKind + otherPrefix, aData + otherPrefix, aReason + otherPrefix, aDetail + otherPrefix);
+
+
+
+
+    aCommon_Recorder.pSetRecordPointer( aRecordPointerName_keepsome_03, null /* point to last record */);
+
+
+    var aCommon_Recorder_SetRecordingPointer_01_afterExceedingMaxRecords = aCommon_Recorder.fGetRecordPointerNamed( aRecordPointerName_keepsome_01);
+    var aCommon_Recorder_SetRecordingPointer_02_afterExceedingMaxRecords = aCommon_Recorder.fGetRecordPointerNamed( aRecordPointerName_keepsome_02);
+    var aCommon_Recorder_SetRecordingPointer_03_afterExceedingMaxRecords = aCommon_Recorder.fGetRecordPointerNamed( aRecordPointerName_keepsome_03);
+
 
 
 
@@ -353,8 +405,11 @@ describe("prettytype Common recordingpolicy keepSome behavioral tests", function
 
 
     it("Has after pSetRecordingPolicy() _v_Recorder.fRecordingPolicy().fMustKeepRecordsMaxNumber() same as set MustKeepRecordsMaxNumber", function () {
-        expect( aCommon_Recorder_SetRecordingPolicy_MustKeepRecords).toBe( true);
+        expect( aCommon_Recorder_SetRecordingPolicy_MustKeepRecordsMaxNumber).toBe( aMustKeepRecordsMaxNumber);
     });
+
+
+
 
 
 
@@ -433,6 +488,43 @@ describe("prettytype Common recordingpolicy keepSome behavioral tests", function
     it("Has someKeptRecordsAfterFinalClear length == 0", function () {
         expect( someKeptRecordsAfterFinalClear.length).toBe( 0);
     });
+
+
+
+
+
+    it("Has aCommon_Recorder_SetRecordingPointer_01_beforeAnyRecords == -1", function () {
+        expect( aCommon_Recorder_SetRecordingPointer_01_beforeAnyRecords).toBe( -1);
+    });
+
+
+    it("Has aCommon_Recorder_SetRecordingPointer_01_afterExactlyMaxRecords == -1", function () {
+        expect( aCommon_Recorder_SetRecordingPointer_01_afterExactlyMaxRecords).toBe( -1);
+    });
+
+
+    it("Has aCommon_Recorder_SetRecordingPointer_02_afterExactlyMaxRecords == aMustKeepRecordsMaxNumber", function () {
+        expect( aCommon_Recorder_SetRecordingPointer_02_afterExactlyMaxRecords).toBe( aMustKeepRecordsMaxNumber - 1);
+    });
+
+
+
+    it("Has aCommon_Recorder_SetRecordingPointer_01_afterExceedingMaxRecords == -1", function () {
+        expect( aCommon_Recorder_SetRecordingPointer_01_afterExceedingMaxRecords).toBe( -2);
+    });
+
+
+    it("Has aCommon_Recorder_SetRecordingPointer_02_afterExceedingMaxRecords == aMustKeepRecordsMaxNumber - 1", function () {
+        expect( aCommon_Recorder_SetRecordingPointer_02_afterExceedingMaxRecords).toBe( aMustKeepRecordsMaxNumber - 2);
+    });
+
+
+    it("Has aCommon_Recorder_SetRecordingPointer_03_afterExceedingMaxRecords == aMustKeepRecordsMaxNumber - 1", function () {
+        expect( aCommon_Recorder_SetRecordingPointer_03_afterExceedingMaxRecords).toBe( aMustKeepRecordsMaxNumber - 1);
+    });
+
+
+
 
 
 

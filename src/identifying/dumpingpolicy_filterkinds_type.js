@@ -528,7 +528,7 @@ function ModuleFactory_DumpingPolicyFilterKindsType() {
                         return false;
                     }
 
-                    if( !this.fMayDumpRecords( theRecord)) {
+                    if( !this.fMayDumpRecords()) {
                         return false;
                     }
 
@@ -648,8 +648,9 @@ function ModuleFactory_DumpingPolicyFilterKindsType() {
 
 
             var aModule = {
-                "DumpingPolicyFilterKinds_Prototype": aDumpingPolicyFilterKinds_Prototype,
-                "DumpingPolicyFilterKinds_Constructor": DumpingPolicyFilterKinds_Constructor,
+                "DumpingPolicyFilterKinds_Prototype":                 aDumpingPolicyFilterKinds_Prototype,
+                "DumpingPolicyFilterKinds_Constructor":               DumpingPolicyFilterKinds_Constructor,
+                "DumpingPolicy_Constructor":                          DumpingPolicyFilterKinds_Constructor,
                 "DumpingPolicyFilterKinds_SuperPrototypeConstructor": DumpingPolicyFilterKinds_SuperPrototypeConstructor
             };
             pgInitFromModuleConstants( aModule);

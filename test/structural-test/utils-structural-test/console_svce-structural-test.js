@@ -280,5 +280,16 @@ describe("prettytype  ConsoleSvce structural tests", function () {
 
 
 
+    it("Has fCollectedLogsCopy defined", function () {
+        expect( aModule_ConsoleSvce.fCollectedLogsCopy).not.toBeUndefined();
+    });
+
+    it("Has fCollectedLogsCopy typeof function", function () {
+        expect( typeof aModule_ConsoleSvce.fCollectedLogsCopy).toBe( "function");
+    });
+
+
+
+
 
 });

@@ -464,14 +464,6 @@ describe("prettytype  DumpingPolicyFilterKinds structural tests", function () {
 
 
 
-    it("Has pRelease defined", function () {
-        expect( aDumpingPolicyFilterKinds.pRelease).not.toBeUndefined();
-    });
-
-    it("Has pRelease typeof function", function () {
-        expect( typeof aDumpingPolicyFilterKinds.pRelease).toBe( "function");
-    });
-
 
 
 
@@ -512,19 +504,6 @@ describe("prettytype  DumpingPolicyFilterKinds structural tests", function () {
 
 
 
-    it("Has pRelease defined", function () {
-        expect( aDumpingPolicyFilterKinds.pRelease).not.toBeUndefined();
-    });
-
-    it("Has pRelease typeof function", function () {
-        expect( typeof aDumpingPolicyFilterKinds.pRelease).toBe( "function");
-    });
-
-
-
-
-
-
     it("Has fSetEventKindsNotForConsole_inPrototype defined", function () {
         expect( aDumpingPolicyFilterKinds.fSetEventKindsNotForConsole_inPrototype).not.toBeUndefined();
     });
@@ -548,6 +527,19 @@ describe("prettytype  DumpingPolicyFilterKinds structural tests", function () {
     it("Has fMoreEventKindsForConsole_inPrototype typeof function", function () {
         expect( typeof aDumpingPolicyFilterKinds.fMoreEventKindsForConsole_inPrototype).toBe( "function");
     });
+
+
+
+
+
+    it("Has pRelease defined", function () {
+        expect( aDumpingPolicyFilterKinds.pRelease).not.toBeUndefined();
+    });
+
+    it("Has pRelease typeof function", function () {
+        expect( typeof aDumpingPolicyFilterKinds.pRelease).toBe( "function");
+    });
+
 
 
 

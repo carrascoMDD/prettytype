@@ -1,7 +1,7 @@
 /*
- * common_type-dumpingpolicy_filterkinds_maynotdump-behavioral-test.js
+ * common_type-dumpingpolicy_triggerkinds_all-behavioral-test.js
  *
- * Created @author Antonio Carrasco Valero 201610131311
+ * Created @author Antonio Carrasco Valero 201610231506
  *
  *
  ***************************************************************************
@@ -40,7 +40,7 @@ permissions and limitations under the Licence.
 
 
 
-describe("prettytype Common dumpingpolicy filterkinds may not dump behavioral tests", function () {
+describe("prettytype Common dumpingpolicy filterkinds all behavioral tests", function () {
 
     var aModule_TypesRegistrySvceFactory = ModuleFactory_TypesRegistrySvce();
     // console.log( "typeof aModule_TypesRegistrySvceFactory= " + typeof aModule_TypesRegistrySvceFactory);
@@ -140,12 +140,29 @@ describe("prettytype Common dumpingpolicy filterkinds may not dump behavioral te
     var aModule_CommonEventKinds = aModule_CommonEventKindsFactory( aTypesRegistrySvce);
     // console.log( "typeof aModule_CommonEventKinds= " + typeof aModule_CommonEventKinds);
 
+    
+    
+    
     var aModule_DumpingPolicyFilterKindsTypeFactory = ModuleFactory_DumpingPolicyFilterKindsType();
     // console.log( "typeof aModule_DumpingPolicyFilterKindsTypeFactory= " + typeof aModule_DumpingPolicyFilterKindsTypeFactory);
 
-
     var aModule_DumpingPolicyFilterKindsType = aModule_DumpingPolicyFilterKindsTypeFactory( aTypesRegistrySvce, anOverrider, aModule_DumpingPolicyType, aModule_CommonEventKinds);
     // console.log( "typeof aModule_DumpingPolicyFilterKindsType= " + typeof aModule_DumpingPolicyFilterKindsType);
+
+
+
+
+    var aModule_DumpingPolicyTriggerKindsTypeFactory = ModuleFactory_DumpingPolicyTriggerKindsType();
+    // console.log( "typeof aModule_DumpingPolicyTriggerKindsTypeFactory= " + typeof aModule_DumpingPolicyTriggerKindsTypeFactory);
+
+    var aModule_DumpingPolicyTriggerKindsType = aModule_DumpingPolicyTriggerKindsTypeFactory( 
+        aTypesRegistrySvce, 
+        anOverrider,
+        aModule_DumpingPolicyFilterKindsType,
+        aModule_CommonEventKinds);
+    // console.log( "typeof aModule_DumpingPolicyTriggerKindsType= " + typeof aModule_DumpingPolicyTriggerKindsType);
+
+
 
 
 
@@ -211,19 +228,53 @@ describe("prettytype Common dumpingpolicy filterkinds may not dump behavioral te
 
 
 
+    var aMethodName = "common_type_record_test_dumpingpolicfilterkindsall__theMethodName";
+    var anEventKind = "common_type_record_test_dumpingpolicfilterkindsall__theEventKind";
+    var aData       = "common_type_record_test_dumpingpolicfilterkindsall__theData";
+    var aReason     = "common_type_record_test_dumpingpolicfilterkindsall__theReason";
+    var aDetail     = "common_type_record_test_dumpingpolicfilterkindsall__theDetail";
 
 
-    var aDumpingPolicyFilterKindsAll = new aModule_DumpingPolicyFilterKindsType.DumpingPolicyFilterKinds_Constructor( "DumpingPolicy-for-common_type-dumpingpolicy_filterkinds_all-behavioral-test.js", aCommon_Identifier, aCommon_Recorder)
-
-    aDumpingPolicyFilterKindsAll.pSetMayDumpRecords( false);
-    aDumpingPolicyFilterKindsAll.fSetEventKindsNotForConsole( [ ]);
 
 
-    aCommon_Recorder.pSetDumpingPolicy( aDumpingPolicyFilterKindsAll);
+    var aMethodName2 = "common_type_record_test_dumpingpolicfilterkindsall__theMethodName2";
+    var anEventKind2 = "common_type_record_test_dumpingpolicfilterkindsall__theEventKind2";
+    var aData2       = "common_type_record_test_dumpingpolicfilterkindsall__theData2";
+    var aReason2     = "common_type_record_test_dumpingpolicfilterkindsall__theReason2";
+    var aDetail2     = "common_type_record_test_dumpingpolicfilterkindsall__theDetail2";
+
+
+
+    var aMethodName3 = "common_type_record_test_dumpingpolicfilterkindsall__theMethodName3";
+    var anEventKind3 = "common_type_record_test_dumpingpolicfilterkindsall__theEventKind3";
+    var aData3       = "common_type_record_test_dumpingpolicfilterkindsall__theData3";
+    var aReason3     = "common_type_record_test_dumpingpolicfilterkindsall__theReason3";
+    var aDetail3     = "common_type_record_test_dumpingpolicfilterkindsall__theDetail3";
+
+
+    var aRecordPointerName_triggerkinds_01 = "recordPointerName_triggerkinds_01";
+    var aRecordPointerName_triggerkinds_02 = "recordPointerName_triggerkinds_02";
+    var aRecordPointerName_triggerkinds_03 = "recordPointerName_triggerkinds_03";
+    var aRecordPointerName_triggerkinds_04 = "recordPointerName_triggerkinds_04";
+
+
+
+
+
+
+
+    var aDumpingPolicyTriggerKinds = new aModule_DumpingPolicyTriggerKindsType.DumpingPolicyTriggerKinds_Constructor( "DumpingPolicy-for-common_type-dumpingpolicy_filterkinds_all-behavioral-test.js", aCommon_Identifier, aCommon_Recorder)
+
+    aDumpingPolicyTriggerKinds.pSetMayDumpRecords( true);
+    aDumpingPolicyTriggerKinds.fSetEventKindsNotForConsole( [ ]);
+    aDumpingPolicyTriggerKinds.fSetEventKindsTriggeringDump( [ anEventKind, anEventKind2, anEventKind3]);
+
+    aCommon_Recorder.pSetDumpingPolicy( aDumpingPolicyTriggerKinds);
 
     var aCommon_Recorder_SetDumpingPolicy                = aCommon_Recorder.fDumpingPolicy();
     var aCommon_Recorder_SetDumpingPolicy_MayDumpRecords = aCommon_Recorder_SetDumpingPolicy.fMayDumpRecords();
-    var aCommon_Recorder_SetDumpingPolicy_EventKindsNotForConsole = aCommon_Recorder_SetDumpingPolicy.fEventKindsNotForConsole();
+    var aCommon_Recorder_SetDumpingPolicy_EventKindsNotForConsole  = aCommon_Recorder_SetDumpingPolicy.fEventKindsNotForConsole();
+    var aCommon_Recorder_SetDumpingPolicy_EventKindsTriggeringDump = aCommon_Recorder_SetDumpingPolicy.fEventKindsTriggeringDump();
 
 
     aModule_ConsoleSvce.pSetWriteToConsole(          true);
@@ -240,17 +291,6 @@ describe("prettytype Common dumpingpolicy filterkinds may not dump behavioral te
 
     var aBeforeRecordMillis = new Date().getMilliseconds();
 
-    var aMethodName = "common_type_record_test_dumpingpolicfilterkindsall__theMethodName";
-    var anEventKind = "common_type_record_test_dumpingpolicfilterkindsall__theEventKind";
-    var aData       = "common_type_record_test_dumpingpolicfilterkindsall__theData";
-    var aReason     = "common_type_record_test_dumpingpolicfilterkindsall__theReason";
-    var aDetail     = "common_type_record_test_dumpingpolicfilterkindsall__theDetail";
-
-
-
-    var aRecordPointerName_filterkinds_01 = "recordPointerName_filterkinds_01";
-    var aRecordPointerName_filterkinds_02 = "recordPointerName_filterkinds_02";
-    var aRecordPointerName_filterkinds_03 = "recordPointerName_filterkinds_03";
 
 
 
@@ -258,12 +298,13 @@ describe("prettytype Common dumpingpolicy filterkinds may not dump behavioral te
 
 
 
-    aCommon_Recorder.pSetRecordPointer( aRecordPointerName_filterkinds_01, null /* point to last record */);
+    aCommon_Recorder.pSetRecordPointer( aRecordPointerName_triggerkinds_01, null /* point to last record */);
 
-
-    var aCommon_Recorder_SetRecordingPointer_01_beforeAnyRecords = aCommon_Recorder.fGetRecordPointerNamed( aRecordPointerName_filterkinds_01);
+    var aCommon_Recorder_SetRecordingPointer_01_beforeAnyRecords = aCommon_Recorder.fGetRecordPointerNamed( aRecordPointerName_triggerkinds_01);
 
     var aCommon_Recorder_SetRecordingPointer_LastDumpedRecord_beforeAnyRecords = aCommon_Recorder.fGetRecordPointerNamed( aCommon_Recorder_SetDumpingPolicy.RECORDPOINTERNAME_LASTDUMPED);
+
+
 
 
 
@@ -274,16 +315,12 @@ describe("prettytype Common dumpingpolicy filterkinds may not dump behavioral te
 
 
 
+    aCommon_Recorder.pSetRecordPointer( aRecordPointerName_triggerkinds_02, null /* point to last record */);
 
-    aCommon_Recorder.pSetRecordPointer( aRecordPointerName_filterkinds_02, null /* point to last record */);
-
-
-    var aCommon_Recorder_SetRecordingPointer_01_afterFirstRecord = aCommon_Recorder.fGetRecordPointerNamed( aRecordPointerName_filterkinds_01);
-    var aCommon_Recorder_SetRecordingPointer_02_afterFirstRecord = aCommon_Recorder.fGetRecordPointerNamed( aRecordPointerName_filterkinds_02);
+    var aCommon_Recorder_SetRecordingPointer_01_afterFirstRecord = aCommon_Recorder.fGetRecordPointerNamed( aRecordPointerName_triggerkinds_01);
+    var aCommon_Recorder_SetRecordingPointer_02_afterFirstRecord = aCommon_Recorder.fGetRecordPointerNamed( aRecordPointerName_triggerkinds_02);
 
     var aCommon_Recorder_SetRecordingPointer_LastDumpedRecord_afterFirstRecord = aCommon_Recorder.fGetRecordPointerNamed( aCommon_Recorder_SetDumpingPolicy.RECORDPOINTERNAME_LASTDUMPED);
-
-
 
 
 
@@ -296,35 +333,53 @@ describe("prettytype Common dumpingpolicy filterkinds may not dump behavioral te
 
 
 
-
-
-
-    var aMethodName2 = "common_type_record_test_dumpingpolicfilterkindsall__theMethodName2";
-    var anEventKind2 = "common_type_record_test_dumpingpolicfilterkindsall__theEventKind2";
-    var aData2       = "common_type_record_test_dumpingpolicfilterkindsall__theData2";
-    var aReason2     = "common_type_record_test_dumpingpolicfilterkindsall__theReason2";
-    var aDetail2     = "common_type_record_test_dumpingpolicfilterkindsall__theDetail2";
-
-
-
-
     var otherRecord = aCommon.fRecord( aMethodName2, anEventKind2, aData2, aReason2, aDetail2);
 
 
-    aCommon_Recorder.pSetRecordPointer( aRecordPointerName_filterkinds_03, null /* point to last record */);
+
+    aCommon_Recorder.pSetRecordPointer( aRecordPointerName_triggerkinds_03, null /* point to last record */);
 
 
-    var aCommon_Recorder_SetRecordingPointer_01_afterSecondRecord = aCommon_Recorder.fGetRecordPointerNamed( aRecordPointerName_filterkinds_01);
-    var aCommon_Recorder_SetRecordingPointer_02_afterSecondRecord = aCommon_Recorder.fGetRecordPointerNamed( aRecordPointerName_filterkinds_02);
-    var aCommon_Recorder_SetRecordingPointer_03_afterSecondRecord = aCommon_Recorder.fGetRecordPointerNamed( aRecordPointerName_filterkinds_03);
+    var aCommon_Recorder_SetRecordingPointer_01_afterSecondRecord = aCommon_Recorder.fGetRecordPointerNamed( aRecordPointerName_triggerkinds_01);
+    var aCommon_Recorder_SetRecordingPointer_02_afterSecondRecord = aCommon_Recorder.fGetRecordPointerNamed( aRecordPointerName_triggerkinds_02);
+    var aCommon_Recorder_SetRecordingPointer_03_afterSecondRecord = aCommon_Recorder.fGetRecordPointerNamed( aRecordPointerName_triggerkinds_03);
 
     var aCommon_Recorder_SetRecordingPointer_LastDumpedRecord_afterSecondRecord = aCommon_Recorder.fGetRecordPointerNamed( aCommon_Recorder_SetDumpingPolicy.RECORDPOINTERNAME_LASTDUMPED);
 
 
 
 
+
     var someCollectedLogsAfter2 = aModule_ConsoleSvce.fCollectedLogsCopy();
     var aNumCollectedLogsAfter2 = someCollectedLogsAfter2.length;
+
+
+
+
+
+
+
+
+    var anotherRecord = aCommon.fRecord( aMethodName3, anEventKind3, aData3, aReason3, aDetail3);
+
+
+
+    aCommon_Recorder.pSetRecordPointer( aRecordPointerName_triggerkinds_04, null /* point to last record */);
+
+
+    var aCommon_Recorder_SetRecordingPointer_01_afterThirdRecord = aCommon_Recorder.fGetRecordPointerNamed( aRecordPointerName_triggerkinds_01);
+    var aCommon_Recorder_SetRecordingPointer_02_afterThirdRecord = aCommon_Recorder.fGetRecordPointerNamed( aRecordPointerName_triggerkinds_02);
+    var aCommon_Recorder_SetRecordingPointer_03_afterThirdRecord = aCommon_Recorder.fGetRecordPointerNamed( aRecordPointerName_triggerkinds_03);
+    var aCommon_Recorder_SetRecordingPointer_04_afterThirdRecord = aCommon_Recorder.fGetRecordPointerNamed( aRecordPointerName_triggerkinds_04);
+
+    var aCommon_Recorder_SetRecordingPointer_LastDumpedRecord_afterThirdRecord = aCommon_Recorder.fGetRecordPointerNamed( aCommon_Recorder_SetDumpingPolicy.RECORDPOINTERNAME_LASTDUMPED);
+
+
+    var someCollectedLogsAfter3 = aModule_ConsoleSvce.fCollectedLogsCopy();
+    var aNumCollectedLogsAfter3 = someCollectedLogsAfter3.length;
+
+
+
 
 
 
@@ -349,14 +404,14 @@ describe("prettytype Common dumpingpolicy filterkinds may not dump behavioral te
     });
 
     it("Has after pSetDumpingPolicy() _v_Recorder.fDumpingPolicy() same as set", function () {
-        expect( aCommon_Recorder_SetDumpingPolicy).toBe( aDumpingPolicyFilterKindsAll);
+        expect( aCommon_Recorder_SetDumpingPolicy).toBe( aDumpingPolicyTriggerKinds);
     });
 
 
-
-    it("Has after pSetDumpingPolicy() _v_Recorder.fDumpingPolicy().fMayDumpRecords() same as set MayDumpRecords", function () {
-        expect( aCommon_Recorder_SetDumpingPolicy_MayDumpRecords).toBe( false);
+    it("Has after pSetDumpingPolicy() _v_Recorder.fDumpingPolicy() same as set fMayDumpRecords", function () {
+        expect( aCommon_Recorder_SetDumpingPolicy_MayDumpRecords).toBe( true);
     });
+
 
     it("Has after pSetDumpingPolicy() _v_Recorder.fDumpingPolicy().fEventKindsNotForConsole() same as set EventKindsNotForConsole", function () {
         expect( aCommon_Recorder_SetDumpingPolicy_EventKindsNotForConsole.length).toBe( 0);
@@ -364,8 +419,12 @@ describe("prettytype Common dumpingpolicy filterkinds may not dump behavioral te
 
 
 
-
-
+    it("Has after pSetDumpingPolicy() _v_Recorder.fDumpingPolicy().fEventKindsTriggeringDump() same as set EventKindsTriggeringDump", function () {
+        expect( aCommon_Recorder_SetDumpingPolicy_EventKindsTriggeringDump.length).toBe( 3);
+        expect( aCommon_Recorder_SetDumpingPolicy_EventKindsTriggeringDump[ 0]).toBe( anEventKind);
+        expect( aCommon_Recorder_SetDumpingPolicy_EventKindsTriggeringDump[ 1]).toBe( anEventKind2);
+        expect( aCommon_Recorder_SetDumpingPolicy_EventKindsTriggeringDump[ 2]).toBe( anEventKind3);
+    });
 
 
 
@@ -472,14 +531,84 @@ describe("prettytype Common dumpingpolicy filterkinds may not dump behavioral te
     });
 
 
-    it("Has aNumCollectedLogsAfter1 == 0", function () {
-        expect( aNumCollectedLogsAfter1).toBe( 0);
+    it("Has aNumCollectedLogsAfter1 == 1", function () {
+        expect( aNumCollectedLogsAfter1).toBe( 1);
+    });
+
+    it("Has aLastCollectedLogAfter1 == aRecord", function () {
+
+        var aLastCollectedLogAfter1 = someCollectedLogsAfter1[ 0];
+
+        expect( aLastCollectedLogAfter1).toBeTruthy();
+
+        var aLastCollectedLogAfter1_kind    = aLastCollectedLogAfter1[ 0];
+        var aLastCollectedLogAfter1_message = aLastCollectedLogAfter1[ 1];
+
+        expect( aLastCollectedLogAfter1_kind).toBe( "log");
+        expect( aLastCollectedLogAfter1_message).toBe( "," + aRecord.fLogString());
     });
 
 
-    it("Has aNumCollectedLogsAfter2 == 0", function () {
-        expect( aNumCollectedLogsAfter2).toBe( 0);
+
+    it("Has aNumCollectedLogsAfter2 == 2", function () {
+        expect( aNumCollectedLogsAfter2).toBe( 2);
     });
+
+
+    it("Has aLastCollectedLogAfter2 == otherRecord", function () {
+
+        var aLastCollectedLogAfter2 = someCollectedLogsAfter2[ 1];
+
+        expect( aLastCollectedLogAfter2).toBeTruthy();
+
+        var aLastCollectedLogAfter2_kind    = aLastCollectedLogAfter2[ 0];
+        var aLastCollectedLogAfter2_message = aLastCollectedLogAfter2[ 1];
+
+        expect( aLastCollectedLogAfter2_kind).toBe( "log");
+        expect( aLastCollectedLogAfter2_message).toBe( "," + otherRecord.fLogString());
+
+    });
+
+
+
+
+
+
+
+    it("Has aNumCollectedLogsAfter3 == 3", function () {
+        expect( aNumCollectedLogsAfter3).toBe( 3);
+    });
+
+
+    it("Has aBeforeLastCollectedLogAfter3 == otherRecord", function () {
+
+        var aLastCollectedLogAfter3       = someCollectedLogsAfter3[ 1];
+        expect( aLastCollectedLogAfter3).toBeTruthy();
+
+        var aLastCollectedLogAfter2_kind    = aLastCollectedLogAfter3[ 0];
+        var aLastCollectedLogAfter2_message = aLastCollectedLogAfter3[ 1];
+
+        expect( aLastCollectedLogAfter2_kind).toBe( "log");
+        expect( aLastCollectedLogAfter2_message).toBe( "," + otherRecord.fLogString());
+
+    });
+
+
+
+    it("Has aLastCollectedLogAfter3 == anotherRecord", function () {
+
+        var aBeforeLastCollectedLogAfter3 = someCollectedLogsAfter3[ 2];
+        expect( aBeforeLastCollectedLogAfter3).toBeTruthy();
+
+        var aBeforeLastCollectedLogAfter3_kind    = aBeforeLastCollectedLogAfter3[ 0];
+        var aBeforeLastCollectedLogAfter3_message = aBeforeLastCollectedLogAfter3[ 1];
+
+        expect( aBeforeLastCollectedLogAfter3_kind).toBe( "log");
+        expect( aBeforeLastCollectedLogAfter3_message).toBe( "," + anotherRecord.fLogString());
+
+    });
+
+
 
 
 
@@ -520,18 +649,22 @@ describe("prettytype Common dumpingpolicy filterkinds may not dump behavioral te
 
 
 
+
     it("Has aCommon_Recorder_SetRecordingPointer_LastDumpedRecord_beforeAnyRecords == undefined", function () {
         expect( aCommon_Recorder_SetRecordingPointer_LastDumpedRecord_beforeAnyRecords).toBe( undefined);
     });
 
-    it("Has aCommon_Recorder_SetRecordingPointer_LastDumpedRecord_afterFirstRecord == undefined", function () {
-        expect( aCommon_Recorder_SetRecordingPointer_LastDumpedRecord_afterFirstRecord).toBe( undefined);
+    it("Has aCommon_Recorder_SetRecordingPointer_LastDumpedRecord_afterFirstRecord == 0", function () {
+        expect( aCommon_Recorder_SetRecordingPointer_LastDumpedRecord_afterFirstRecord).toBe( 0);
     });
 
-    it("Has aCommon_Recorder_SetRecordingPointer_LastDumpedRecord_afterSecondRecord == undefined", function () {
-        expect( aCommon_Recorder_SetRecordingPointer_LastDumpedRecord_afterSecondRecord).toBe( undefined);
+    it("Has aCommon_Recorder_SetRecordingPointer_LastDumpedRecord_afterSecondRecord == 1", function () {
+        expect( aCommon_Recorder_SetRecordingPointer_LastDumpedRecord_afterSecondRecord).toBe( 1);
     });
 
+    it("Has aCommon_Recorder_SetRecordingPointer_LastDumpedRecord_afterThirdRecord == 2", function () {
+        expect( aCommon_Recorder_SetRecordingPointer_LastDumpedRecord_afterThirdRecord).toBe( 2);
+    });
 
 });
 

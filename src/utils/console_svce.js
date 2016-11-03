@@ -224,6 +224,21 @@ function ModuleFactory_ConsoleSvce() {
 
 
 
+            var fCollectedLogsCopy = function() {
+
+                if( !aModule._v_CollectedLogs) {
+                    return null;
+                }
+
+                return aModule._v_CollectedLogs.slice();
+
+            };
+            if( fCollectedLogsCopy){}/* CQT */
+            aModule.fCollectedLogsCopy = fCollectedLogsCopy;
+
+
+
+
 
 
 

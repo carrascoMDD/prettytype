@@ -433,12 +433,12 @@ describe("prettytype  RecordingPolicyKeepRecent structural tests", function () {
 
 
 
-    it("Has pRecordRecord defined", function () {
-        expect( aRecordingPolicyKeepRecent.pRecordRecord).not.toBeUndefined();
+    it("Has fRecordRecord defined", function () {
+        expect( aRecordingPolicyKeepRecent.fRecordRecord).not.toBeUndefined();
     });
 
-    it("Has pRecordRecord typeof function", function () {
-        expect( typeof aRecordingPolicyKeepRecent.pRecordRecord).toBe( "function");
+    it("Has fRecordRecord typeof function", function () {
+        expect( typeof aRecordingPolicyKeepRecent.fRecordRecord).toBe( "function");
     });
 
 

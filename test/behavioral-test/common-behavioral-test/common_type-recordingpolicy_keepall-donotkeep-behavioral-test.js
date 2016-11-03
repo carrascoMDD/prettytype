@@ -190,7 +190,7 @@ describe("prettytype Common recordingpolicy keepAll doNotKeep behavioral tests",
     );
     // console.log( "typeof aModule_CommonType= " + typeof aModule_CommonType);
 
-    var aCommon_title = "Common-Title-test"
+    var aCommon_title = "Common-Title-test";
 
     var aCommon = new aModule_CommonType.Common_Constructor(
         aCommon_title,
@@ -232,23 +232,62 @@ describe("prettytype Common recordingpolicy keepAll doNotKeep behavioral tests",
     var aDetail     = "common_type_record_test_recordingpolicykeepalldonotkeep__theDetail";
 
 
-
-    aCommon_Recorder.pClearKeptRecords();
-
-    var someKeptRecordsBefore = aCommon_Recorder.fKeptRecords();
-
-    var aRecord = aCommon.fRecord( aMethodName, anEventKind, aData, aReason, aDetail);
-
-
     var aMethodName2 = "common_type_record_test_recordingpolicykeepalldonotkeep__theMethodName2";
     var anEventKind2 = "common_type_record_test_recordingpolicykeepalldonotkeep__theEventKind2";
     var aData2       = "common_type_record_test_recordingpolicykeepalldonotkeep__theData2";
     var aReason2     = "common_type_record_test_recordingpolicykeepalldonotkeep__theReason2";
     var aDetail2     = "common_type_record_test_recordingpolicykeepalldonotkeep__theDetail2";
 
+
+
+    var aRecordPointerName_keepall_01         = "recordPointerName_keepall_01";
+    var aRecordPointerName_keepall_02         = "recordPointerName_keepall_02";
+    var aRecordPointerName_keepall_03         = "recordPointerName_keepall_03";
+
+
+
+    aCommon_Recorder.pClearKeptRecords();
+
+    var someKeptRecordsBefore = aCommon_Recorder.fKeptRecords();
+
+
+
+    aCommon_Recorder.pSetRecordPointer( aRecordPointerName_keepall_01, null /* point to last record */);
+    var aCommon_Recorder_SetRecordingPointer_01_beforeAnyRecords = aCommon_Recorder.fGetRecordPointerNamed( aRecordPointerName_keepall_01);
+
+
+
+
+
+
+    var aRecord = aCommon.fRecord( aMethodName, anEventKind, aData, aReason, aDetail);
+
+
+    aCommon_Recorder.pSetRecordPointer( aRecordPointerName_keepall_02, null /* point to last record */);
+
+    var aCommon_Recorder_SetRecordingPointer_01_afterFirstRecord = aCommon_Recorder.fGetRecordPointerNamed( aRecordPointerName_keepall_01);
+    var aCommon_Recorder_SetRecordingPointer_02_afterFirstRecord = aCommon_Recorder.fGetRecordPointerNamed( aRecordPointerName_keepall_02);
+
+
+
+
+
+
     var otherRecord = aCommon.fRecord( aMethodName2, anEventKind2, aData2, aReason2, aDetail2);
 
     var someKeptRecords = aCommon_Recorder.fKeptRecords();
+
+
+
+    aCommon_Recorder.pSetRecordPointer( aRecordPointerName_keepall_03, null /* point to last record */);
+
+
+    var aCommon_Recorder_SetRecordingPointer_01_afterSecondRecord = aCommon_Recorder.fGetRecordPointerNamed( aRecordPointerName_keepall_01);
+    var aCommon_Recorder_SetRecordingPointer_02_afterSecondRecord = aCommon_Recorder.fGetRecordPointerNamed( aRecordPointerName_keepall_02);
+    var aCommon_Recorder_SetRecordingPointer_03_afterSecondRecord = aCommon_Recorder.fGetRecordPointerNamed( aRecordPointerName_keepall_03);
+
+
+
 
 
     aCommon_Recorder.pClearKeptRecords();
@@ -500,6 +539,41 @@ describe("prettytype Common recordingpolicy keepAll doNotKeep behavioral tests",
 
     it("Has aCommon_Recorder.fKeptRecords() length == 0", function () {
         expect( someKeptRecordsAfterClear.length).toBe( 0);
+    });
+
+
+
+
+
+
+    it("Has aCommon_Recorder_SetRecordingPointer_01_beforeAnyRecords == -1", function () {
+        expect( aCommon_Recorder_SetRecordingPointer_01_beforeAnyRecords).toBe( -1);
+    });
+
+
+    it("Has aCommon_Recorder_SetRecordingPointer_01_afterFirstRecord == -1", function () {
+        expect( aCommon_Recorder_SetRecordingPointer_01_afterFirstRecord).toBe( -1);
+    });
+
+
+    it("Has aCommon_Recorder_SetRecordingPointer_02_afterFirstRecord == -1", function () {
+        expect( aCommon_Recorder_SetRecordingPointer_02_afterFirstRecord).toBe( -1);
+    });
+
+
+
+    it("Has aCommon_Recorder_SetRecordingPointer_01_afterSecondRecord == -1", function () {
+        expect( aCommon_Recorder_SetRecordingPointer_01_afterSecondRecord).toBe( -1);
+    });
+
+
+    it("Has aCommon_Recorder_SetRecordingPointer_02_afterSecondRecord == -1", function () {
+        expect( aCommon_Recorder_SetRecordingPointer_02_afterSecondRecord).toBe( -1);
+    });
+
+
+    it("Has aCommon_Recorder_SetRecordingPointer_03_afterSecondRecord == -1", function () {
+        expect( aCommon_Recorder_SetRecordingPointer_03_afterSecondRecord).toBe( -1);
     });
 
 

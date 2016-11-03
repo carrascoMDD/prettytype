@@ -413,12 +413,12 @@ describe("prettytype  RecordingPolicy structural tests", function () {
 
 
 
-    it("Has pRecordRecord defined", function () {
-        expect( aRecordingPolicy.pRecordRecord).not.toBeUndefined();
+    it("Has fRecordRecord defined", function () {
+        expect( aRecordingPolicy.fRecordRecord).not.toBeUndefined();
     });
 
-    it("Has pRecordRecord typeof function", function () {
-        expect( typeof aRecordingPolicy.pRecordRecord).toBe( "function");
+    it("Has fRecordRecord typeof function", function () {
+        expect( typeof aRecordingPolicy.fRecordRecord).toBe( "function");
     });
 
 

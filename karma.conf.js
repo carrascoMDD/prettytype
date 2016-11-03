@@ -32,6 +32,7 @@ module.exports = function(config){
             'src/identifying/recordingpolicy_keeprecent_type.js',
             'src/identifying/dumpingpolicy_type.js',
             'src/identifying/dumpingpolicy_filterkinds_type.js',
+            'src/identifying/dumpingpolicy_triggerkinds_type.js',
             'src/identifying/recorder_type.js',
 
 
@@ -46,6 +47,7 @@ module.exports = function(config){
             'test/structural-test/identifying-structural-test/recordingpolicy_keeprecent_type-structural-test.js',
             'test/structural-test/identifying-structural-test/dumpingpolicy_type-structural-test.js',
             'test/structural-test/identifying-structural-test/dumpingpolicy_filterkinds_type-structural-test.js',
+            'test/structural-test/identifying-structural-test/dumpingpolicy_triggerkinds_type-structural-test.js',
             'test/structural-test/identifying-structural-test/recorder_type-structural-test.js',
             'test/structural-test/common-structural-test/common_type-structural-test.js',
             'test/structural-test/common-structural-test/common_type-recorder-structural-test.js',
@@ -72,7 +74,12 @@ module.exports = function(config){
             'test/behavioral-test/common-behavioral-test/common_type-recordingpolicy_keeprecent-behavioral-test.js',
             'test/behavioral-test/common-behavioral-test/common_type-dumpingpolicy_filterkinds_all-behavioral-test.js',
             'test/behavioral-test/common-behavioral-test/common_type-dumpingpolicy_filterkinds_maynotdump-behavioral-test.js',
-            'test/behavioral-test/common-behavioral-test/common_type-dumpingpolicy_filterkinds_some-behavioral-test.js'
+            'test/behavioral-test/common-behavioral-test/common_type-dumpingpolicy_filterkinds_some-behavioral-test.js',
+            'test/behavioral-test/common-behavioral-test/common_type-dumpingpolicy_triggerkinds_all-behavioral-test.js',
+            'test/behavioral-test/common-behavioral-test/common_type-dumpingpolicy_triggerkinds_none-behavioral-test.js',
+            'test/behavioral-test/common-behavioral-test/common_type-dumpingpolicy_triggerkinds_some-behavioral-test.js',
+            'test/behavioral-test/common-behavioral-test/common_type-dumpingpolicy_triggerkinds_some-recordingpolicy_keepsome-behavioral-test.js',
+            'test/behavioral-test/common-behavioral-test/common_type-dumpingpolicy_triggerkinds_some-recordingpolicy_keeprecent-behavioral-test.js'
         ],
 
         autoWatch : true,

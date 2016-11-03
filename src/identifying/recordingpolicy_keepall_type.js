@@ -244,15 +244,16 @@ function ModuleFactory_RecordingPolicyKeepAllType() {
 
 
 
-                var pRecordRecord = function( theRecord) {
+                var fRecordRecord = function( theRecord) {
 
                     if( !theRecord) {
-                        return;
+                        return null;
                     }
 
                     if( !this.fMustKeepRecords()) {
-                        return;
+                        return null;
                     }
+
 
                     if( this._v_Recorder) {
                         this._v_Recorder.pKeepRecord( theRecord);
@@ -260,9 +261,13 @@ function ModuleFactory_RecordingPolicyKeepAllType() {
 
                     this.pPruneRecords();
 
+                    var aRecordedRecordPointer = this._v_Recorder.fLastKeptRecordPointer();
+
+                    return aRecordedRecordPointer;
+
                 };
-                if( pRecordRecord){}/* CQT */
-                aPrototype.pRecordRecord = pRecordRecord;
+                if( fRecordRecord){}/* CQT */
+                aPrototype.fRecordRecord = fRecordRecord;
 
 
 

@@ -365,16 +365,18 @@ function ModuleFactory_RecordingPolicyType() {
 
 
 
-                var pRecordRecord = function( theRecord) {
+                var fRecordRecord = function( theRecord) {
 
                     if( !theRecord) {
-                        return;
+                        return null;
                     }
 
                     /* Subtype responsibility */
+                    return null;
+
                 };
-                if( pRecordRecord){}/* CQT */
-                aPrototype.pRecordRecord = pRecordRecord;
+                if( fRecordRecord){}/* CQT */
+                aPrototype.fRecordRecord = fRecordRecord;
 
 
 

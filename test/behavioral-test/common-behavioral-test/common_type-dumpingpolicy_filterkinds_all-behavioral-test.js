@@ -190,7 +190,7 @@ describe("prettytype Common dumpingpolicy filterkinds all behavioral tests", fun
     );
     // console.log( "typeof aModule_CommonType= " + typeof aModule_CommonType);
 
-    var aCommon_title = "Common-Title-test"
+    var aCommon_title = "Common-Title-test";
 
     var aCommon = new aModule_CommonType.Common_Constructor(
         aCommon_title,
@@ -223,6 +223,7 @@ describe("prettytype Common dumpingpolicy filterkinds all behavioral tests", fun
 
     var aCommon_Recorder_SetDumpingPolicy                = aCommon_Recorder.fDumpingPolicy();
     var aCommon_Recorder_SetDumpingPolicy_MayDumpRecords = aCommon_Recorder_SetDumpingPolicy.fMayDumpRecords();
+    var aCommon_Recorder_SetDumpingPolicy_EventKindsNotForConsole = aCommon_Recorder_SetDumpingPolicy.fEventKindsNotForConsole();
 
 
     aModule_ConsoleSvce.pSetWriteToConsole(          true);
@@ -232,7 +233,7 @@ describe("prettytype Common dumpingpolicy filterkinds all behavioral tests", fun
 
     aModule_ConsoleSvce.clear();
 
-    var someCollectedLogsBefore = aModule_ConsoleSvce.fCollectedLogs();
+    var someCollectedLogsBefore = aModule_ConsoleSvce.fCollectedLogsCopy();
     var aNumCollectedLogsBefore = someCollectedLogsBefore.length;
 
 
@@ -245,13 +246,6 @@ describe("prettytype Common dumpingpolicy filterkinds all behavioral tests", fun
     var aReason     = "common_type_record_test_dumpingpolicfilterkindsall__theReason";
     var aDetail     = "common_type_record_test_dumpingpolicfilterkindsall__theDetail";
 
-    var aRecord = aCommon.fRecord( aMethodName, anEventKind, aData, aReason, aDetail);
-
-
-
-    var someCollectedLogsAfter1 = aModule_ConsoleSvce.fCollectedLogs();
-    var aNumCollectedLogsAfter1 = someCollectedLogsAfter1.length;
-
 
 
     var aMethodName2 = "common_type_record_test_dumpingpolicfilterkindsall__theMethodName2";
@@ -260,10 +254,90 @@ describe("prettytype Common dumpingpolicy filterkinds all behavioral tests", fun
     var aReason2     = "common_type_record_test_dumpingpolicfilterkindsall__theReason2";
     var aDetail2     = "common_type_record_test_dumpingpolicfilterkindsall__theDetail2";
 
+
+
+
+    var aRecordPointerName_filterkinds_01 = "recordPointerName_filterkinds_01";
+    var aRecordPointerName_filterkinds_02 = "recordPointerName_filterkinds_02";
+    var aRecordPointerName_filterkinds_03 = "recordPointerName_filterkinds_03";
+
+
+
+
+
+
+
+
+
+
+    aCommon_Recorder.pSetRecordPointer( aRecordPointerName_filterkinds_01, null /* point to last record */);
+
+    var aCommon_Recorder_SetRecordingPointer_01_beforeAnyRecords = aCommon_Recorder.fGetRecordPointerNamed( aRecordPointerName_filterkinds_01);
+
+    var aCommon_Recorder_SetRecordingPointer_LastDumpedRecord_beforeAnyRecords = aCommon_Recorder.fGetRecordPointerNamed( aCommon_Recorder_SetDumpingPolicy.RECORDPOINTERNAME_LASTDUMPED);
+
+
+
+
+
+
+
+
+
+
+
+    var aRecord = aCommon.fRecord( aMethodName, anEventKind, aData, aReason, aDetail);
+
+
+
+    aCommon_Recorder.pSetRecordPointer( aRecordPointerName_filterkinds_02, null /* point to last record */);
+
+    var aCommon_Recorder_SetRecordingPointer_01_afterFirstRecord = aCommon_Recorder.fGetRecordPointerNamed( aRecordPointerName_filterkinds_01);
+    var aCommon_Recorder_SetRecordingPointer_02_afterFirstRecord = aCommon_Recorder.fGetRecordPointerNamed( aRecordPointerName_filterkinds_02);
+
+    var aCommon_Recorder_SetRecordingPointer_LastDumpedRecord_afterFirstRecord = aCommon_Recorder.fGetRecordPointerNamed( aCommon_Recorder_SetDumpingPolicy.RECORDPOINTERNAME_LASTDUMPED);
+
+
+
+
+
+    var someCollectedLogsAfter1 = aModule_ConsoleSvce.fCollectedLogsCopy();
+    var aNumCollectedLogsAfter1 = someCollectedLogsAfter1.length;
+
+
+
+
+
+
+
+
+
     var otherRecord = aCommon.fRecord( aMethodName2, anEventKind2, aData2, aReason2, aDetail2);
 
-    var someCollectedLogsAfter2 = aModule_ConsoleSvce.fCollectedLogs();
+
+
+    aCommon_Recorder.pSetRecordPointer( aRecordPointerName_filterkinds_03, null /* point to last record */);
+
+
+    var aCommon_Recorder_SetRecordingPointer_01_afterSecondRecord = aCommon_Recorder.fGetRecordPointerNamed( aRecordPointerName_filterkinds_01);
+    var aCommon_Recorder_SetRecordingPointer_02_afterSecondRecord = aCommon_Recorder.fGetRecordPointerNamed( aRecordPointerName_filterkinds_02);
+    var aCommon_Recorder_SetRecordingPointer_03_afterSecondRecord = aCommon_Recorder.fGetRecordPointerNamed( aRecordPointerName_filterkinds_03);
+
+    var aCommon_Recorder_SetRecordingPointer_LastDumpedRecord_afterSecondRecord = aCommon_Recorder.fGetRecordPointerNamed( aCommon_Recorder_SetDumpingPolicy.RECORDPOINTERNAME_LASTDUMPED);
+
+
+    var someCollectedLogsAfter2 = aModule_ConsoleSvce.fCollectedLogsCopy();
     var aNumCollectedLogsAfter2 = someCollectedLogsAfter2.length;
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -292,13 +366,19 @@ describe("prettytype Common dumpingpolicy filterkinds all behavioral tests", fun
     });
 
 
-    it("Has after pSetDumpingPolicy() _v_Recorder.fDumpingPolicy() same as set fMayDumpRecords", function () {
+
+    it("Has after pSetDumpingPolicy() _v_Recorder.fDumpingPolicy().fMayDumpRecords() same as set MayDumpRecords", function () {
         expect( aCommon_Recorder_SetDumpingPolicy_MayDumpRecords).toBe( true);
     });
 
 
-    
-    
+    it("Has after pSetDumpingPolicy() _v_Recorder.fDumpingPolicy().fEventKindsNotForConsole() same as set EventKindsNotForConsole", function () {
+        expect( aCommon_Recorder_SetDumpingPolicy_EventKindsNotForConsole.length).toBe( 0);
+    });
+
+
+
+
 
 
 
@@ -445,6 +525,57 @@ describe("prettytype Common dumpingpolicy filterkinds all behavioral tests", fun
     });
 
 
+
+
+
+
+
+
+    it("Has aCommon_Recorder_SetRecordingPointer_01_beforeAnyRecords == -1", function () {
+        expect( aCommon_Recorder_SetRecordingPointer_01_beforeAnyRecords).toBe( -1);
+    });
+
+
+    it("Has aCommon_Recorder_SetRecordingPointer_01_afterExactlyMaxRecords == -1", function () {
+        expect( aCommon_Recorder_SetRecordingPointer_01_afterFirstRecord).toBe( -1);
+    });
+
+
+    it("Has aCommon_Recorder_SetRecordingPointer_02_afterExactlyMaxRecords == 0", function () {
+        expect( aCommon_Recorder_SetRecordingPointer_02_afterFirstRecord).toBe( 0);
+    });
+
+
+
+    it("Has aCommon_Recorder_SetRecordingPointer_01_afterSecondRecord == -1", function () {
+        expect( aCommon_Recorder_SetRecordingPointer_01_afterSecondRecord).toBe( -1);
+    });
+
+
+    it("Has aCommon_Recorder_SetRecordingPointer_02_afterSecondRecord == 0", function () {
+        expect( aCommon_Recorder_SetRecordingPointer_02_afterSecondRecord).toBe( 0);
+    });
+
+
+    it("Has aCommon_Recorder_SetRecordingPointer_03_afterSecondRecord == 1", function () {
+        expect( aCommon_Recorder_SetRecordingPointer_03_afterSecondRecord).toBe( 1);
+    });
+
+
+
+
+
+    it("Has aCommon_Recorder_SetRecordingPointer_LastDumpedRecord_beforeAnyRecords == undefined", function () {
+        expect( aCommon_Recorder_SetRecordingPointer_LastDumpedRecord_beforeAnyRecords).toBe( undefined);
+    });
+
+    it("Has aCommon_Recorder_SetRecordingPointer_LastDumpedRecord_afterFirstRecord == 0", function () {
+        expect( aCommon_Recorder_SetRecordingPointer_LastDumpedRecord_afterFirstRecord).toBe( 0);
+    });
+
+    it("Has aCommon_Recorder_SetRecordingPointer_LastDumpedRecord_afterSecondRecord == 1", function () {
+        expect( aCommon_Recorder_SetRecordingPointer_LastDumpedRecord_afterSecondRecord).toBe( 1);
+    });
 
 
 

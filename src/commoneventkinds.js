@@ -150,6 +150,7 @@ function ModuleFactory_CommonEventKinds() {
 
 
 
+
                 theToInit.PROMINSTEVT_WARN_NODEFERREDTOREJECT              = "NODEFERREDTOREJECT";
                 theToInit.PROMINSTEVT_WARN_NODEFERREDTORESOLVE             = "NODEFERREDTORESOLVE";
 
@@ -240,6 +241,33 @@ function ModuleFactory_CommonEventKinds() {
 
                 theToInit.EVENTKINDS_NOTFORCONSOLE_DEFAULT = theToInit.EVENTKINDS_NOTFORCONSOLE_NOPROMISE;
 
+
+
+
+
+
+                theToInit.EVENTKINDS_ERRORS = [
+                    theToInit.PROMINSTEVT_WARN_NODEFERREDTOREJECT             ,
+                    theToInit.PROMINSTEVT_WARN_NODEFERREDTORESOLVE            ,
+                    theToInit.PROMINSTEVT_ERR_ATTEMPTTOREJECT_ALREADYRESOLVED ,
+                    theToInit.PROMINSTEVT_ERR_ATTEMPTTOREJECT_ALREADYREJECTED ,
+                    theToInit.PROMINSTEVT_ERR_ATTEMPTTOREJECT_NOTPENDING      ,
+                    theToInit.PROMINSTEVT_ERR_ATTEMPTTORESOLVE_ALREADYRESOLVED,
+                    theToInit.PROMINSTEVT_ERR_ATTEMPTTORESOLVE_ALREADYREJECTED,
+                    theToInit.PROMINSTEVT_ERR_ATTEMPTTORESOLVE_NOTPENDING     ,
+                    theToInit.EVENTKIND_ACTIONREPORT_FAILED        ,
+                    theToInit.EVENTKIND_SERVICEREPORT_FAIL         ,
+                    theToInit.EVENTKIND_SERVICEREPORT_GETFAIL      ,
+                    theToInit.EVENTKIND_SERVICEREPORT_POSTFAIL,
+                    theToInit.EVENTKIND_SERVICEREPORT_UPLOADFAIL
+                ];
+
+
+                theToInit.EVENTKINDS_TRIGGERDUMP_ERRORS  = theToInit.EVENTKINDS_ERRORS.slice();
+
+                theToInit.EVENTKINDS_TRIGGERDUMP_ALL     = theToInit.EVENTKINDS.slice();
+
+                theToInit.EVENTKINDS_TRIGGERDUMP_DEFAULT = theToInit.EVENTKINDS_TRIGGERDUMP_ERRORS;
 
 
 

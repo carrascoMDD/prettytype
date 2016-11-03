@@ -164,7 +164,7 @@ describe("prettytype  ConsoleSvce tests", function () {
 
         var aMessage = "MessageOne";
 
-        var someCollectedLogsBefore = aModule_ConsoleSvce.fCollectedLogs();
+        var someCollectedLogsBefore = aModule_ConsoleSvce.fCollectedLogsCopy();
         var aNumCollectedLogsBefore = someCollectedLogsBefore.length;
         expect( aNumCollectedLogsBefore).toBe( 0);
 
@@ -174,7 +174,7 @@ describe("prettytype  ConsoleSvce tests", function () {
 
         aModule_ConsoleSvce.info( aMessage);
 
-        var someCollectedLogsAfter = aModule_ConsoleSvce.fCollectedLogs();
+        var someCollectedLogsAfter = aModule_ConsoleSvce.fCollectedLogsCopy();
         var aNumCollectedLogsAfter = someCollectedLogsAfter ? someCollectedLogsAfter.length : 0;
         expect( aNumCollectedLogsAfter).toBe( 0);
 
@@ -199,13 +199,13 @@ describe("prettytype  ConsoleSvce tests", function () {
 
         var aMessage = "MessageOne";
 
-        var someCollectedLogsBefore = aModule_ConsoleSvce.fCollectedLogs();
+        var someCollectedLogsBefore = aModule_ConsoleSvce.fCollectedLogsCopy();
         var aNumCollectedLogsBefore = someCollectedLogsBefore.length;
         expect( aNumCollectedLogsBefore).toBe( 0);
 
         aModule_ConsoleSvce.log( aMessage);
 
-        var someCollectedLogsAfter = aModule_ConsoleSvce.fCollectedLogs();
+        var someCollectedLogsAfter = aModule_ConsoleSvce.fCollectedLogsCopy();
         var aNumCollectedLogsAfter = someCollectedLogsAfter.length;
         expect( aNumCollectedLogsAfter).toBe( 1);
 
@@ -240,13 +240,13 @@ describe("prettytype  ConsoleSvce tests", function () {
 
         var aMessage = "MessageOne";
 
-        var someCollectedLogsBefore = aModule_ConsoleSvce.fCollectedLogs();
+        var someCollectedLogsBefore = aModule_ConsoleSvce.fCollectedLogsCopy();
         var aNumCollectedLogsBefore = someCollectedLogsBefore.length;
         expect( aNumCollectedLogsBefore).toBe( 0);
 
         aModule_ConsoleSvce.error( aMessage);
 
-        var someCollectedLogsAfter = aModule_ConsoleSvce.fCollectedLogs();
+        var someCollectedLogsAfter = aModule_ConsoleSvce.fCollectedLogsCopy();
         var aNumCollectedLogsAfter = someCollectedLogsAfter.length;
         expect( aNumCollectedLogsAfter).toBe( 1);
 
@@ -283,13 +283,13 @@ describe("prettytype  ConsoleSvce tests", function () {
 
         var aMessage = "MessageOne";
 
-        var someCollectedLogsBefore = aModule_ConsoleSvce.fCollectedLogs();
+        var someCollectedLogsBefore = aModule_ConsoleSvce.fCollectedLogsCopy();
         var aNumCollectedLogsBefore = someCollectedLogsBefore.length;
         expect( aNumCollectedLogsBefore).toBe( 0);
 
         aModule_ConsoleSvce.info( aMessage);
 
-        var someCollectedLogsAfter = aModule_ConsoleSvce.fCollectedLogs();
+        var someCollectedLogsAfter = aModule_ConsoleSvce.fCollectedLogsCopy();
         var aNumCollectedLogsAfter = someCollectedLogsAfter.length;
         expect( aNumCollectedLogsAfter).toBe( 1);
 
@@ -325,7 +325,7 @@ describe("prettytype  ConsoleSvce tests", function () {
         aModule_ConsoleSvce.pSetMaxCollectedLogsLength(  1000);
 
         
-        var someCollectedLogsBefore = aModule_ConsoleSvce.fCollectedLogs();
+        var someCollectedLogsBefore = aModule_ConsoleSvce.fCollectedLogsCopy();
         var aNumCollectedLogsBefore = someCollectedLogsBefore.length;
         expect( aNumCollectedLogsBefore).toBe( 0);
 
@@ -336,7 +336,7 @@ describe("prettytype  ConsoleSvce tests", function () {
         var aMessage500 = strRepeat( "x", 500);
         aModule_ConsoleSvce.log( aMessage500);
 
-        var someCollectedLogsAfter = aModule_ConsoleSvce.fCollectedLogs();
+        var someCollectedLogsAfter = aModule_ConsoleSvce.fCollectedLogsCopy();
         var aNumCollectedLogsAfter = someCollectedLogsAfter.length;
         expect( aNumCollectedLogsAfter).toBe( 1);
 
@@ -359,7 +359,7 @@ describe("prettytype  ConsoleSvce tests", function () {
         var aMessage499 = strRepeat( "x", 499);
         aModule_ConsoleSvce.log( aMessage499);
 
-        someCollectedLogsAfter = aModule_ConsoleSvce.fCollectedLogs();
+        someCollectedLogsAfter = aModule_ConsoleSvce.fCollectedLogsCopy();
         aNumCollectedLogsAfter = someCollectedLogsAfter.length;
         expect( aNumCollectedLogsAfter).toBe( 2);
 
@@ -392,7 +392,7 @@ describe("prettytype  ConsoleSvce tests", function () {
         var aMessage2 = strRepeat( "x", 2);
         aModule_ConsoleSvce.log( aMessage2);
 
-        someCollectedLogsAfter = aModule_ConsoleSvce.fCollectedLogs();
+        someCollectedLogsAfter = aModule_ConsoleSvce.fCollectedLogsCopy();
         aNumCollectedLogsAfter = someCollectedLogsAfter.length;
         expect( aNumCollectedLogsAfter).toBe( 2);
 

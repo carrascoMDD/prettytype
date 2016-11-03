@@ -45,7 +45,7 @@ function ModuleFactory_RecorderType() {
                        theSS_IdentifierType,
                        theSS_RecordType,
                        theSS_RecordingPolicyType,
-                       theSS_DumpingPolicyFilterKindsType) {
+                       theSS_DumpingPolicyType) {
 
 
         var ModuleName     = "recorder_type";
@@ -59,7 +59,7 @@ function ModuleFactory_RecorderType() {
                                      theS_IdentifierType,
                                      theS_RecordType,
                                      theS_RecordingPolicyType,
-                                     theS_DumpingPolicyFilterKindsType) {
+                                     theS_DumpingPolicyType) {
 
 
             if( !( typeof FG_logModLoads == "undefined") && ( typeof FG_logModLoads == "function") && FG_logModLoads()) { FG_logModLoads(ModuleFullName);}
@@ -161,6 +161,8 @@ function ModuleFactory_RecorderType() {
                 aPrototype._v_Title      = null;
 
                 aPrototype._v_Records    = null;
+                aPrototype._v_RecordPointersByName = null;
+
 
                 aPrototype._v_RecordsIdentifier    = null;
 
@@ -219,6 +221,7 @@ function ModuleFactory_RecorderType() {
 
 
                     this._v_Records    = [ ];
+                    this._v_RecordPointersByName = { };
 
                     this.pClearKeptRecords();
 
@@ -230,7 +233,7 @@ function ModuleFactory_RecorderType() {
                     this._v_RecordingPolicy = new theS_RecordingPolicyType.RecordingPolicy_Constructor(     "(For-" + this._v_Title + ")", this._v_Identifier, this);
 
 
-                    this._v_DumpingPolicy   = new theS_DumpingPolicyFilterKindsType.DumpingPolicyFilterKinds_Constructor( "(For-" + this._v_Title + ")", this._v_Identifier, this);
+                    this._v_DumpingPolicy   = new theS_DumpingPolicyType.DumpingPolicy_Constructor( "(For-" + this._v_Title + ")", this._v_Identifier, this);
 
                 };
                 if( _pInit_Recorder){}/* CQT */
@@ -507,12 +510,14 @@ function ModuleFactory_RecorderType() {
                     try {
                         if( aRecord) {
 
+                            var aRecordedRecordPointer = null;
+
                             if( this._v_RecordingPolicy) {
-                                this._v_RecordingPolicy.pRecordRecord( aRecord);
+                                aRecordedRecordPointer = this._v_RecordingPolicy.fRecordRecord( aRecord);
                             }
 
                             if( this._v_DumpingPolicy) {
-                                this._v_DumpingPolicy.pDumpRecord( aRecord);
+                                this._v_DumpingPolicy.pDumpRecord( aRecord, aRecordedRecordPointer);
                             }
                         }
                     }
@@ -538,14 +543,16 @@ function ModuleFactory_RecorderType() {
                         return;
                     }
 
+                    var aRecordedRecordPointer = null;
 
                     if( this._v_RecordingPolicy) {
-                        this._v_RecordingPolicy.pRecordRecord( theRecord);
+                        aRecordedRecordPointer = this._v_RecordingPolicy.fRecordRecord( theRecord);
                     }
 
                     if( this._v_DumpingPolicy) {
-                        this._v_DumpingPolicy.pDumpRecord( theRecord);
+                        this._v_DumpingPolicy.pDumpRecord( theRecord, aRecordedRecordPointer);
                     }
+
                 };
                 if( pLogRecord){}/* CQT */
                 aPrototype.pLogRecord = pLogRecord;
@@ -557,7 +564,7 @@ function ModuleFactory_RecorderType() {
 
 
 
-                /* Invoked from RecordingPolicy pRecordRecord() */
+                /* Invoked from RecordingPolicy fRecordRecord() */
                 var pKeepRecord = function( theRecord) {
 
                     if( !theRecord) {
@@ -565,7 +572,6 @@ function ModuleFactory_RecorderType() {
                     }
 
                     if( !this._v_Records) {
-
                         this._v_Records = [ ];
                     }
 
@@ -574,6 +580,8 @@ function ModuleFactory_RecorderType() {
                 };
                 if( pKeepRecord){}/* CQT */
                 aPrototype.pKeepRecord = pKeepRecord;
+
+
 
 
 
@@ -600,6 +608,30 @@ function ModuleFactory_RecorderType() {
 
 
 
+                var fKeptRecordsSlice = function( theFirstIndex) {
+
+                    if( theFirstIndex < 0) {
+                        return this._v_Records.slice();
+                    }
+
+
+                    if( !this._v_Records) {
+                        return [];
+                    }
+
+                    if( !( typeof this._v_Records.slice == "function")) {
+                        return [];
+                    }
+
+                    return this._v_Records.slice( theFirstIndex);
+
+                };
+                if( fKeptRecordsSlice){}/* CQT */
+                aPrototype.fKeptRecordsSlice = fKeptRecordsSlice;
+
+
+
+
 
                 var pClearKeptRecords = function() {
 
@@ -607,7 +639,8 @@ function ModuleFactory_RecorderType() {
                         return;
                     }
 
-                    return this._v_Records = [ ];
+                    this._v_Records = [ ];
+                    this._v_RecordPointersByName = { };
 
                 };
                 if( pClearKeptRecords){}/* CQT */
@@ -615,6 +648,169 @@ function ModuleFactory_RecorderType() {
 
 
 
+
+
+
+
+                var fLastKeptRecordPointer = function() {
+
+                    if( !this._v_Records) {
+                        return null;
+                    }
+
+                    return this._v_Records.length;
+
+                };
+                if( fLastKeptRecordPointer){}/* CQT */
+                aPrototype.fLastKeptRecordPointer = fLastKeptRecordPointer;
+
+
+
+
+
+
+
+
+
+                var pSetRecordPointer = function( theRecordPointerName, theRecordPointer /* If not a record pointer in range by array index then point to last record */ ) {
+
+                    if( !theRecordPointerName) {
+                        return;
+                    }
+
+                    if( !this._v_RecordPointersByName) {
+                        this._v_RecordPointersByName = { };
+                    }
+
+
+                    var aRecordPointer = -1;
+
+                    if( typeof theRecordPointer == "number") {
+
+                        if( !isNaN( theRecordPointer)) {
+
+                            if( theRecordPointer >= 0) {
+
+                                if( this._v_Records) {
+
+                                    var aNumRecords = this._v_Records.length;
+                                    if( aNumRecords) {
+
+                                        if( theRecordPointer < aNumRecords) {
+
+                                            aRecordPointer = theRecordPointer;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+
+                    if( aRecordPointer < 0) {
+                        if( this._v_Records) {
+
+                            var aNumRecords = this._v_Records.length;
+                            if( aNumRecords) {
+
+                                aRecordPointer = aNumRecords - 1;
+                            }
+                        }
+                    }
+
+                    this._v_RecordPointersByName[ theRecordPointerName] = aRecordPointer;
+
+                };
+                if( pSetRecordPointer){}/* CQT */
+                aPrototype.pSetRecordPointer = pSetRecordPointer;
+
+
+
+
+
+
+                var pClearRecordPointer = function( theRecordPointerName) {
+
+                    if( !theRecordPointerName) {
+                        return;
+                    }
+
+                    if( !this._v_RecordPointersByName) {
+                        return;
+                    }
+
+                    if( !this._v_RecordPointersByName.hasOwnProperty( theRecordPointerName)) {
+                        return;
+                    }
+
+                    delete this._v_RecordPointersByName[ theRecordPointerName];
+
+                };
+                if( pClearRecordPointer){}/* CQT */
+                aPrototype.pClearRecordPointer = pClearRecordPointer;
+
+
+
+
+
+                var fGetRecordPointerNamed = function( theRecordPointerName) {
+
+                    if( !theRecordPointerName) {
+                        return null;
+                    }
+
+                    return this._v_RecordPointersByName[ theRecordPointerName];
+
+                };
+                if( fGetRecordPointerNamed){}/* CQT */
+                aPrototype.fGetRecordPointerNamed = fGetRecordPointerNamed;
+
+
+
+
+
+
+
+                var pSubstractFromAllRecordPointers = function( theAmountToSubstract) {
+
+                    if( !theAmountToSubstract || ( theAmountToSubstract < 0)) {
+                        return;
+                    }
+
+                    if( !this._v_RecordPointersByName) {
+                        return;
+                    }
+
+                    var someRecordPointersByNameKeys = Object.keys( this._v_RecordPointersByName);
+                    if( !someRecordPointersByNameKeys) {
+                        return;
+                    }
+
+                    var aNumRecordPointersByNameKeysLen = someRecordPointersByNameKeys.length;
+                    if( !aNumRecordPointersByNameKeysLen) {
+                        return;
+                    }
+
+                    for( var aRecordPointerByNameKeyIdx=0; aRecordPointerByNameKeyIdx < aNumRecordPointersByNameKeysLen; aRecordPointerByNameKeyIdx++) {
+                        var aRecordPointerByNameKey = someRecordPointersByNameKeys[ aRecordPointerByNameKeyIdx];
+                        if( aRecordPointerByNameKey) {
+                            if( this._v_RecordPointersByName.hasOwnProperty( aRecordPointerByNameKey)) {
+
+                                var aRecordPointerValue = this._v_RecordPointersByName[ aRecordPointerByNameKey];
+                                if( typeof aRecordPointerValue == "number") {
+                                    if( !isNaN( aRecordPointerValue)) {
+
+                                        var anUpdatedRecordPointerValue = aRecordPointerValue - theAmountToSubstract;
+                                        this._v_RecordPointersByName[ aRecordPointerByNameKey] = anUpdatedRecordPointerValue;
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                };
+                if( pSubstractFromAllRecordPointers){}/* CQT */
+                aPrototype.pSubstractFromAllRecordPointers = pSubstractFromAllRecordPointers;
 
 
 
@@ -649,6 +845,8 @@ function ModuleFactory_RecorderType() {
                     }
 
                     this._v_Records.splice( 0, aFirstRecordIndexToKeep);
+
+                    this.pSubstractFromAllRecordPointers( aFirstRecordIndexToKeep);
 
                 };
                 if( pDiscardRecordsToMaxNumber){}/* CQT */
@@ -714,6 +912,8 @@ function ModuleFactory_RecorderType() {
 
                     this._v_Records.splice( 0, aFirstRecordIndexToKeep);
 
+                    this.pSubstractFromAllRecordPointers( aFirstRecordIndexToKeep);
+
                 };
                 if( pDiscardRecordsOlderThan){}/* CQT */
                 aPrototype.pDiscardRecordsOlderThan = pDiscardRecordsOlderThan;
@@ -747,6 +947,7 @@ function ModuleFactory_RecorderType() {
                 this._v_Title      = null;
 
                 this._v_Records    = null;
+                this._v_RecordPointersByName = null;
 
                 this._v_RecordsIdentifier = null;
 
@@ -772,6 +973,7 @@ function ModuleFactory_RecorderType() {
                 this._v_Title      = null;
 
                 this._v_Records    = null;
+                this._v_RecordPointersByName = null;
 
                 this._v_RecordsIdentifier = null;
 
@@ -816,7 +1018,7 @@ function ModuleFactory_RecorderType() {
                 theSS_IdentifierType,
                 theSS_RecordType,
                 theSS_RecordingPolicyType,
-                theSS_DumpingPolicyFilterKindsType
+                theSS_DumpingPolicyType
             );
             anExistingModule = aModule;
 

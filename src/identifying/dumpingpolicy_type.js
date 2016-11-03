@@ -108,7 +108,13 @@ function ModuleFactory_DumpingPolicyType() {
                 if( !theToInit) {
                     return;
                 }
+
                 theToInit.DUMPINGPOLICY_DEFAULTTITLE = "DumpingPolicyDefaultName";
+
+
+
+                theToInit.RECORDPOINTERNAME_LASTDUMPED = "RECORDPOINTERNAME_LASTDUMPED";
+
             };
 
 
@@ -437,7 +443,7 @@ function ModuleFactory_DumpingPolicyType() {
 
 
 
-                var pDumpRecord = function( theRecord) {
+                var pDumpRecord = function( theRecord, theRecordedRecordPointer) {
 
                     if( !theRecord) {
                         return;
@@ -453,12 +459,21 @@ function ModuleFactory_DumpingPolicyType() {
                     }
 
 
+                    var aRecorder = this.fRecorder();
+                    if( !aRecorder) {
+                        return;
+                    }
+
+
                     var aLogString = theRecord.fLogString();
                     if( !aLogString) {
                         return;
                     }
 
                     aConsoleService.log(  "," + aLogString);
+
+
+                    aRecorder.pSetRecordPointer( this.RECORDPOINTERNAME_LASTDUMPED, theRecordedRecordPointer);
 
                 };
                 if( pDumpRecord){}/* CQT */
