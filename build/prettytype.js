@@ -2129,18 +2129,18 @@ if( ModuleFactory_OverriderType){}/* CQT */
  Copyright 2014 2015 2016 Antonio Carrasco Valero
  Javascript for core modules including a base prototype and prototypes hierarchy, intended to be reused on the Browser as core for i.e. Angular Controllers and Services, as in the uiwire component. Licensed under EUPL  http://www.uiwire.org
 
-Licensed under the EUPL, Version 1.1 only (the "Licence");
-You may not use this work except in compliance with the
-Licence.
-You may obtain a copy of the Licence at:
-https://joinup.ec.europa.eu/software/page/eupl/licence-eupl
-Unless required by applicable law or agreed to in
-writing, software distributed under the Licence is
-distributed on an "AS IS" basis,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
-express or implied.
-See the Licence for the specific language governing
-permissions and limitations under the Licence.
+ Licensed under the EUPL, Version 1.1 only (the "Licence");
+ You may not use this work except in compliance with the
+ Licence.
+ You may obtain a copy of the Licence at:
+ https://joinup.ec.europa.eu/software/page/eupl/licence-eupl
+ Unless required by applicable law or agreed to in
+ writing, software distributed under the Licence is
+ distributed on an "AS IS" basis,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+ express or implied.
+ See the Licence for the specific language governing
+ permissions and limitations under the Licence.
  {{License2}}
 
  {{Licensed1}}
@@ -2233,9 +2233,17 @@ function ModuleFactory_CommonEventKinds() {
 
 
 
-
-                theToInit.EVENTKINDS_NOPROMISE = [
+                theToInit.EVENTKINDS_NOPROMISE_FAILURES = [
                     theToInit.EVENTKIND_ACTIONREPORT_FAILED        ,
+                    theToInit.EVENTKIND_SERVICEREPORT_FAIL         ,
+                    theToInit.EVENTKIND_SERVICEREPORT_GETFAIL      ,
+                    theToInit.EVENTKIND_SERVICEREPORT_POSTFAIL     ,
+                    theToInit.EVENTKIND_SERVICEREPORT_UPLOADFAIL
+                ];
+
+
+
+                theToInit.EVENTKINDS_NOPROMISE_NOTFAILURES = [
                     theToInit.EVENTKIND_ACTIONREPORT_SUCCESS       ,
                     theToInit.EVENTKIND_ACTIONREPORT_CREATED       ,
                     theToInit.EVENTKIND_GRIDREGISTEREDINPARENT     ,
@@ -2258,15 +2266,17 @@ function ModuleFactory_CommonEventKinds() {
                     theToInit.EVENTKIND_GRIDSELECTIONCHANGELISTENED,
                     theToInit.EVENTKIND_SERVICEREPORT_SENDING      ,
                     theToInit.EVENTKIND_SERVICEREPORT_OK           ,
-                    theToInit.EVENTKIND_SERVICEREPORT_FAIL         ,
                     theToInit.EVENTKIND_SERVICEREPORT_GET          ,
                     theToInit.EVENTKIND_SERVICEREPORT_GETOK        ,
-                    theToInit.EVENTKIND_SERVICEREPORT_GETFAIL      ,
                     theToInit.EVENTKIND_SERVICEREPORT_POST         ,
-                    theToInit.EVENTKIND_SERVICEREPORT_POSTOK       ,
-                    theToInit.EVENTKIND_SERVICEREPORT_POSTFAIL,
-                    theToInit.EVENTKIND_SERVICEREPORT_UPLOADFAIL
+                    theToInit.EVENTKIND_SERVICEREPORT_POSTOK
                 ];
+
+
+
+                theToInit.EVENTKINDS_NOPROMISE = [];
+                Array.prototype.push.apply( theToInit.EVENTKINDS_NOPROMISE, theToInit.EVENTKINDS_NOPROMISE_NOTFAILURES);
+                Array.prototype.push.apply( theToInit.EVENTKINDS_NOPROMISE, theToInit.EVENTKINDS_NOPROMISE_FAILURES);
 
 
 
@@ -2290,7 +2300,7 @@ function ModuleFactory_CommonEventKinds() {
 
 
 
-                theToInit.EVENTKINDS_PROMISE = [
+                theToInit.EVENTKINDS_PROMISE_FAILURES = [
                     theToInit.PROMINSTEVT_WARN_NODEFERREDTOREJECT             ,
                     theToInit.PROMINSTEVT_WARN_NODEFERREDTORESOLVE            ,
                     theToInit.PROMINSTEVT_ERR_ATTEMPTTOREJECT_ALREADYRESOLVED ,
@@ -2298,7 +2308,11 @@ function ModuleFactory_CommonEventKinds() {
                     theToInit.PROMINSTEVT_ERR_ATTEMPTTOREJECT_NOTPENDING      ,
                     theToInit.PROMINSTEVT_ERR_ATTEMPTTORESOLVE_ALREADYRESOLVED,
                     theToInit.PROMINSTEVT_ERR_ATTEMPTTORESOLVE_ALREADYREJECTED,
-                    theToInit.PROMINSTEVT_ERR_ATTEMPTTORESOLVE_NOTPENDING     ,
+                    theToInit.PROMINSTEVT_ERR_ATTEMPTTORESOLVE_NOTPENDING
+
+                ];
+
+                theToInit.EVENTKINDS_PROMISE_NOTFAILURES = [
                     theToInit.PROMINSTEVT_ALLSCHEDULED                        ,
                     theToInit.PROMINSTEVT_REJECTED                            ,
                     theToInit.PROMINSTEVT_RESOLVED
@@ -2306,8 +2320,30 @@ function ModuleFactory_CommonEventKinds() {
                 ];
 
 
+
+
+                theToInit.EVENTKINDS_FAILURES = [ ];
+                Array.prototype.push.apply( theToInit.EVENTKINDS_FAILURES, theToInit.EVENTKINDS_PROMISE_FAILURES);
+                Array.prototype.push.apply( theToInit.EVENTKINDS_FAILURES, theToInit.EVENTKINDS_NOPROMISE_FAILURES);
+
+
+
+
+                theToInit.EVENTKINDS_NOTFAILURES = [ ];
+                Array.prototype.push.apply( theToInit.EVENTKINDS_NOTFAILURES, theToInit.EVENTKINDS_PROMISE_NOTFAILURES);
+                Array.prototype.push.apply( theToInit.EVENTKINDS_NOTFAILURES, theToInit.EVENTKINDS_NOPROMISE_NOTFAILURES);
+
+
+
+
+
+
+
                 theToInit.EVENTKINDS = theToInit.EVENTKINDS_NOPROMISE.slice();
-                Array.prototype.push.apply( theToInit.EVENTKINDS, theToInit.EVENTKINDS_PROMISE);
+                Array.prototype.push.apply( theToInit.EVENTKINDS, theToInit.EVENTKINDS_PROMISE_FAILURES);
+                Array.prototype.push.apply( theToInit.EVENTKINDS, theToInit.EVENTKINDS_PROMISE_NOTFAILURES);
+
+
 
 
 
@@ -2345,11 +2381,11 @@ function ModuleFactory_CommonEventKinds() {
                 ];
 
 
-                
-                theToInit.EVENTKINDS_NOTFORCONSOLE_RESTRICTIVE_NOPROMISE = theToInit.EVENTKINDS_NOTFORCONSOLE_RESTRICTIVE.slice();
-                Array.prototype.push.apply( theToInit.EVENTKINDS_NOTFORCONSOLE_RESTRICTIVE_NOPROMISE, theToInit.EVENTKINDS_PROMISE);
 
-                theToInit.EVENTKINDS_NOTFORCONSOLE_NOPROMISE = theToInit.EVENTKINDS_PROMISE.slice();
+                theToInit.EVENTKINDS_NOTFORCONSOLE_RESTRICTIVE_NOPROMISE = theToInit.EVENTKINDS_NOTFORCONSOLE_RESTRICTIVE.slice();
+                Array.prototype.push.apply( theToInit.EVENTKINDS_NOTFORCONSOLE_RESTRICTIVE_NOPROMISE, theToInit.EVENTKINDS_PROMISE_NOTFAILURES);
+
+                theToInit.EVENTKINDS_NOTFORCONSOLE_NOPROMISE = theToInit.EVENTKINDS_PROMISE_NOTFAILURES.slice();
 
 
                 theToInit.EVENTKINDS_NOTFORCONSOLE_NONE = [];
@@ -11585,18 +11621,18 @@ if( ModuleFactory_DumpingPolicyFilterKindsType){}/* CQT */
  Copyright 2014 2015 2016 Antonio Carrasco Valero
  Javascript for core modules including a base prototype and prototypes hierarchy, intended to be reused on the Browser as core for i.e. Angular Controllers and Services, as in the uiwire component. Licensed under EUPL  http://www.uiwire.org
 
-Licensed under the EUPL, Version 1.1 only (the "Licence");
-You may not use this work except in compliance with the
-Licence.
-You may obtain a copy of the Licence at:
-https://joinup.ec.europa.eu/software/page/eupl/licence-eupl
-Unless required by applicable law or agreed to in
-writing, software distributed under the Licence is
-distributed on an "AS IS" basis,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
-express or implied.
-See the Licence for the specific language governing
-permissions and limitations under the Licence.
+ Licensed under the EUPL, Version 1.1 only (the "Licence");
+ You may not use this work except in compliance with the
+ Licence.
+ You may obtain a copy of the Licence at:
+ https://joinup.ec.europa.eu/software/page/eupl/licence-eupl
+ Unless required by applicable law or agreed to in
+ writing, software distributed under the Licence is
+ distributed on an "AS IS" basis,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+ express or implied.
+ See the Licence for the specific language governing
+ permissions and limitations under the Licence.
  {{License2}}
 
  {{Licensed1}}
@@ -12157,6 +12193,10 @@ function ModuleFactory_DumpingPolicyTriggerKindsType() {
                     for( var aRecordToDumpIdx=0; aRecordToDumpIdx < aNumRecordsToDump; aRecordToDumpIdx++) {
                         var aRecordToDump = someRecordsToDump[ aRecordToDumpIdx];
                         if( aRecordToDump) {
+
+                            if( !this.fMustDumpRecord( aRecordToDump)) {
+                                continue;
+                            }
 
                             var aLogString = aRecordToDump.fLogString();
                             if( !aLogString) {
