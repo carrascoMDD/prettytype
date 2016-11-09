@@ -286,7 +286,7 @@ function ModuleFactory_DumpingPolicyTriggerKindsType() {
                         return aPrototype._v_EventKindsTriggeringDump;
                     }
 
-                    var aNumEventKinds = theEventKinds;
+                    var aNumEventKinds = theEventKinds.length;
                     if( !aNumEventKinds) {
                         return aPrototype._v_EventKindsTriggeringDump;
                     }
@@ -334,7 +334,7 @@ function ModuleFactory_DumpingPolicyTriggerKindsType() {
                         return aPrototype._v_EventKindsTriggeringDump;
                     }
 
-                    var aNumEventKinds = theEventKinds;
+                    var aNumEventKinds = theEventKinds.length;
                     if( !aNumEventKinds) {
                         return aPrototype._v_EventKindsTriggeringDump;
                     }
@@ -418,7 +418,7 @@ function ModuleFactory_DumpingPolicyTriggerKindsType() {
                         this._v_EventKindsTriggeringDump = [ ];
                     }
 
-                    var aNumEventKinds = theEventKinds;
+                    var aNumEventKinds = theEventKinds.length;
                     if( !aNumEventKinds) {
                         return this._v_EventKindsTriggeringDump;
                     }
@@ -474,7 +474,7 @@ function ModuleFactory_DumpingPolicyTriggerKindsType() {
                         this._v_EventKindsTriggeringDump = [ ];
                     }
 
-                    var aNumEventKinds = theEventKinds;
+                    var aNumEventKinds = theEventKinds.length;
                     if( !aNumEventKinds) {
                         return this._v_EventKindsTriggeringDump;
                     }

@@ -223,15 +223,7 @@ describe("prettytype Common event kinds structural tests", function () {
 
 
     var someEventSets = [
-        "EVENTKINDS",
-        "EVENTKINDS_PROMISE",
-        "EVENTKINDS_NOPROMISE",
-        "EVENTKINDS_NOTFORCONSOLE_RESTRICTIVE",
-        "EVENTKINDS_NOTFORCONSOLE_RESTRICTIVE_NOPROMISE",
-        "EVENTKINDS_NOTFORCONSOLE_NOPROMISE",
-        "EVENTKINDS_NOTFORCONSOLE_NONE",
-        "EVENTKINDS_NOTFORCONSOLE_ALL",
-        "EVENTKINDS_NOTFORCONSOLE_DEFAULT"
+        "EVENTKINDS"
     ];
     
     

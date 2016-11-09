@@ -486,20 +486,20 @@ describe("prettytype  DumpingPolicyFilterKinds structural tests", function () {
         expect( typeof aDumpingPolicyFilterKinds.fSetEventKindsNotForConsole).toBe( "function");
     });
 
-    it("Has fFewerEventKindsForConsole defined", function () {
-        expect( aDumpingPolicyFilterKinds.fFewerEventKindsForConsole).not.toBeUndefined();
+    it("Has fFewerEventKindsNotForConsole defined", function () {
+        expect( aDumpingPolicyFilterKinds.fFewerEventKindsNotForConsole).not.toBeUndefined();
     });
 
-    it("Has fFewerEventKindsForConsole typeof function", function () {
-        expect( typeof aDumpingPolicyFilterKinds.fFewerEventKindsForConsole).toBe( "function");
+    it("Has fFewerEventKindsNotForConsole typeof function", function () {
+        expect( typeof aDumpingPolicyFilterKinds.fFewerEventKindsNotForConsole).toBe( "function");
     });
 
-    it("Has fMoreEventKindsForConsole defined", function () {
-        expect( aDumpingPolicyFilterKinds.fMoreEventKindsForConsole).not.toBeUndefined();
+    it("Has fMoreEventKindsNotForConsole defined", function () {
+        expect( aDumpingPolicyFilterKinds.fMoreEventKindsNotForConsole).not.toBeUndefined();
     });
 
-    it("Has fMoreEventKindsForConsole typeof function", function () {
-        expect( typeof aDumpingPolicyFilterKinds.fMoreEventKindsForConsole).toBe( "function");
+    it("Has fMoreEventKindsNotForConsole typeof function", function () {
+        expect( typeof aDumpingPolicyFilterKinds.fMoreEventKindsNotForConsole).toBe( "function");
     });
 
 
@@ -512,20 +512,20 @@ describe("prettytype  DumpingPolicyFilterKinds structural tests", function () {
         expect( typeof aDumpingPolicyFilterKinds.fSetEventKindsNotForConsole_inPrototype).toBe( "function");
     });
 
-    it("Has fFewerEventKindsForConsole_inPrototype defined", function () {
-        expect( aDumpingPolicyFilterKinds.fFewerEventKindsForConsole_inPrototype).not.toBeUndefined();
+    it("Has fFewerEventKindsNotForConsole_inPrototype defined", function () {
+        expect( aDumpingPolicyFilterKinds.fFewerEventKindsNotForConsole_inPrototype).not.toBeUndefined();
     });
 
-    it("Has fFewerEventKindsForConsole_inPrototype typeof function", function () {
-        expect( typeof aDumpingPolicyFilterKinds.fFewerEventKindsForConsole_inPrototype).toBe( "function");
+    it("Has fFewerEventKindsNotForConsole_inPrototype typeof function", function () {
+        expect( typeof aDumpingPolicyFilterKinds.fFewerEventKindsNotForConsole_inPrototype).toBe( "function");
     });
 
-    it("Has fMoreEventKindsForConsole_inPrototype defined", function () {
-        expect( aDumpingPolicyFilterKinds.fMoreEventKindsForConsole_inPrototype).not.toBeUndefined();
+    it("Has fMoreEventKindsNotForConsole_inPrototype defined", function () {
+        expect( aDumpingPolicyFilterKinds.fMoreEventKindsNotForConsole_inPrototype).not.toBeUndefined();
     });
 
-    it("Has fMoreEventKindsForConsole_inPrototype typeof function", function () {
-        expect( typeof aDumpingPolicyFilterKinds.fMoreEventKindsForConsole_inPrototype).toBe( "function");
+    it("Has fMoreEventKindsNotForConsole_inPrototype typeof function", function () {
+        expect( typeof aDumpingPolicyFilterKinds.fMoreEventKindsNotForConsole_inPrototype).toBe( "function");
     });
 
 

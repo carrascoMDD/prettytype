@@ -11187,13 +11187,13 @@ function ModuleFactory_DumpingPolicyFilterKindsType() {
 
 
 
-                var fFewerEventKindsForConsole_inPrototype = function( theEventKinds) {
+                var fFewerEventKindsNotForConsole_inPrototype = function( theEventKinds) {
 
                     if( !theEventKinds) {
                         return aPrototype._v_EventKindsNotForConsole;
                     }
 
-                    var aNumEventKinds = theEventKinds;
+                    var aNumEventKinds = theEventKinds.length;
                     if( !aNumEventKinds) {
                         return aPrototype._v_EventKindsNotForConsole;
                     }
@@ -11226,8 +11226,8 @@ function ModuleFactory_DumpingPolicyFilterKindsType() {
 
                     return aPrototype._v_EventKindsNotForConsole;
                 };
-                if( fFewerEventKindsForConsole_inPrototype){}/* CQT */
-                aPrototype.fFewerEventKindsForConsole_inPrototype = fFewerEventKindsForConsole_inPrototype;
+                if( fFewerEventKindsNotForConsole_inPrototype){}/* CQT */
+                aPrototype.fFewerEventKindsNotForConsole_inPrototype = fFewerEventKindsNotForConsole_inPrototype;
 
 
 
@@ -11235,13 +11235,13 @@ function ModuleFactory_DumpingPolicyFilterKindsType() {
 
 
 
-                var fMoreEventKindsForConsole_inPrototype = function( theEventKinds) {
+                var fMoreEventKindsNotForConsole_inPrototype = function( theEventKinds) {
 
                     if( !theEventKinds) {
                         return aPrototype._v_EventKindsNotForConsole;
                     }
 
-                    var aNumEventKinds = theEventKinds;
+                    var aNumEventKinds = theEventKinds.length;
                     if( !aNumEventKinds) {
                         return aPrototype._v_EventKindsNotForConsole;
                     }
@@ -11271,8 +11271,8 @@ function ModuleFactory_DumpingPolicyFilterKindsType() {
 
                     return aPrototype._v_EventKindsNotForConsole;
                 };
-                if( fMoreEventKindsForConsole_inPrototype){}/* CQT */
-                aPrototype.fMoreEventKindsForConsole_inPrototype = fMoreEventKindsForConsole_inPrototype;
+                if( fMoreEventKindsNotForConsole_inPrototype){}/* CQT */
+                aPrototype.fMoreEventKindsNotForConsole_inPrototype = fMoreEventKindsNotForConsole_inPrototype;
 
 
 
@@ -11314,7 +11314,7 @@ function ModuleFactory_DumpingPolicyFilterKindsType() {
 
 
 
-                var fFewerEventKindsForConsole = function( theEventKinds) {
+                var fFewerEventKindsNotForConsole = function( theEventKinds) {
 
                     if( !theEventKinds) {
                         return this._v_EventKindsNotForConsole;
@@ -11325,7 +11325,7 @@ function ModuleFactory_DumpingPolicyFilterKindsType() {
                         this._v_EventKindsNotForConsole = [ ];
                     }
 
-                    var aNumEventKinds = theEventKinds;
+                    var aNumEventKinds = theEventKinds.length;
                     if( !aNumEventKinds) {
                         return this._v_EventKindsNotForConsole;
                     }
@@ -11358,8 +11358,8 @@ function ModuleFactory_DumpingPolicyFilterKindsType() {
 
                     return this._v_EventKindsNotForConsole
                 };
-                if( fFewerEventKindsForConsole){}/* CQT */
-                aPrototype.fFewerEventKindsForConsole = fFewerEventKindsForConsole;
+                if( fFewerEventKindsNotForConsole){}/* CQT */
+                aPrototype.fFewerEventKindsNotForConsole = fFewerEventKindsNotForConsole;
 
 
 
@@ -11370,7 +11370,7 @@ function ModuleFactory_DumpingPolicyFilterKindsType() {
 
 
 
-                var fMoreEventKindsForConsole = function( theEventKinds) {
+                var fMoreEventKindsNotForConsole = function( theEventKinds) {
 
                     if( !theEventKinds) {
                         return this._v_EventKindsNotForConsole;
@@ -11381,7 +11381,7 @@ function ModuleFactory_DumpingPolicyFilterKindsType() {
                         this._v_EventKindsNotForConsole = [ ];
                     }
 
-                    var aNumEventKinds = theEventKinds;
+                    var aNumEventKinds = theEventKinds.length;
                     if( !aNumEventKinds) {
                         return this._v_EventKindsNotForConsole;
                     }
@@ -11411,8 +11411,8 @@ function ModuleFactory_DumpingPolicyFilterKindsType() {
 
                     return this._v_EventKindsNotForConsole
                 };
-                if( fMoreEventKindsForConsole){}/* CQT */
-                aPrototype.fMoreEventKindsForConsole = fMoreEventKindsForConsole;
+                if( fMoreEventKindsNotForConsole){}/* CQT */
+                aPrototype.fMoreEventKindsNotForConsole = fMoreEventKindsNotForConsole;
 
 
 
@@ -11898,7 +11898,7 @@ function ModuleFactory_DumpingPolicyTriggerKindsType() {
                         return aPrototype._v_EventKindsTriggeringDump;
                     }
 
-                    var aNumEventKinds = theEventKinds;
+                    var aNumEventKinds = theEventKinds.length;
                     if( !aNumEventKinds) {
                         return aPrototype._v_EventKindsTriggeringDump;
                     }
@@ -11946,7 +11946,7 @@ function ModuleFactory_DumpingPolicyTriggerKindsType() {
                         return aPrototype._v_EventKindsTriggeringDump;
                     }
 
-                    var aNumEventKinds = theEventKinds;
+                    var aNumEventKinds = theEventKinds.length;
                     if( !aNumEventKinds) {
                         return aPrototype._v_EventKindsTriggeringDump;
                     }
@@ -12030,7 +12030,7 @@ function ModuleFactory_DumpingPolicyTriggerKindsType() {
                         this._v_EventKindsTriggeringDump = [ ];
                     }
 
-                    var aNumEventKinds = theEventKinds;
+                    var aNumEventKinds = theEventKinds.length;
                     if( !aNumEventKinds) {
                         return this._v_EventKindsTriggeringDump;
                     }
@@ -12086,7 +12086,7 @@ function ModuleFactory_DumpingPolicyTriggerKindsType() {
                         this._v_EventKindsTriggeringDump = [ ];
                     }
 
-                    var aNumEventKinds = theEventKinds;
+                    var aNumEventKinds = theEventKinds.length;
                     if( !aNumEventKinds) {
                         return this._v_EventKindsTriggeringDump;
                     }
