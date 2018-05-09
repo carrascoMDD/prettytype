@@ -1,6 +1,6 @@
 {
   "name": "prettytype",
-  "version": "0.1.19",
+  "version": "0.1.20",
   "description": "Javascript for core modules including a base prototype and prototypes hierarchy, intended to be reused on the Browser as core for i.e. Angular Controllers and Services, as in the uiwire component.",
   "keywords": [
     "core",
@@ -31,7 +31,10 @@
     "type": "git",
     "url": "http://github.com/carrascoMDD/prettytype.git"
   },
-  "scripts": {},
+  "scripts": {
+    "bower": "bower",
+    "grunt": "grunt"
+  },
   "config": {},
   "dependencies": {},
   "devDependencies": {
@@ -41,6 +44,7 @@
     "grunt-contrib-uglify": "^0.11.0",
     "grunt-contrib-watch": "^0.6.1",
     "grunt-karma": "^0.12.1",
+    "bower": "^1.7.2",
     "jasmine-core": "^2.4.1",
     "karma": "^0.13.19",
     "karma-chrome-launcher": "^0.2.2",
