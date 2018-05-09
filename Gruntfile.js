@@ -23,11 +23,6 @@ module.exports = function(grunt) {
 
                     'src/commoneventkinds.js',
                     'src/common/common_type.js',
-                    'src/common/prominstrexception.js',
-                    'src/common/prominstr_type.js',
-                    'src/common/withprominstr_type.js',
-                    'src/common/common_ctrl_type.js',
-                    'src/common/common_svce_type.js',
 
                     'src/identifying/identifier_type.js',
                     'src/identifying/record_type.js',
