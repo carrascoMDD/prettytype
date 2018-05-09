@@ -1,4 +1,3 @@
 #! /bin/bash
 
-
-grunt
+npm run grunt
