@@ -33,8 +33,11 @@ module.exports = function(grunt) {
                     'src/identifying/dumpingpolicy_type.js',
                     'src/identifying/dumpingpolicy_filterkinds_type.js',
                     'src/identifying/dumpingpolicy_triggerkinds_type.js',
-                    'src/identifying/record_type.js',
-                    'src/identifying/recorder_type.js'
+                    'src/identifying/recorder_type.js',
+    
+                    'src/identifying/identifier_svce.js',
+                    'src/identifying/recorder_svce.js',
+
                 ],
 
                 tasks: ['concat', 'uglify'],

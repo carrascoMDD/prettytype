@@ -1,7 +1,7 @@
 /*
- * identifier_type.js
+ * typesregistry.js
  *
- * Created @author Antonio Carrasco Valero 201410030300
+ * Created @author Antonio Carrasco Valero 201409301309
  *
  *
  ***************************************************************************
@@ -33,53 +33,43 @@ permissions and limitations under the Licence.
 'use strict';
 
 (function () {
-    var aMod_definer = ( function( theSS_typesregistry,
-                                   theSS_Overrider) {
+ 
+    /* Only module-like (or actual module under Angular, or RequireJS, or nodejs, or ...) with no dependencies.
+    All other modules with want to make sure they's me instantiated only once may get this typesregistry injected
+    and check with it whether the module(-like) has already been instantiated.
+    
+    Sample code snippet to inser at the end of the module instantiation function.
+    See examples in other javascript src in this prettytype package.
+    
+    var anExistingModule = null;
+    if(    !( typeof theSS_typesregistry === 'undefined')
+        && ( typeof theSS_typesregistry.fRegisteredModule === 'function')) {
+        anExistingModule = theSS_typesregistry.fRegisteredModule( ModuleFullName);
+    }
+    if( !anExistingModule) {
+        var aModule = aMod_builder(
+            theSS_typesregistry,
+            theSS_Overrider
+        );
         
+        anExistingModule = aModule;
         
-        var ModuleName     = "identifier_type";
-        var ModulePackages = "identifying";
+        if(    !( typeof theSS_typesregistry === 'undefined')
+            && ( typeof theSS_typesregistry.fRegisterModule === 'function')) {
+            theSS_typesregistry.fRegisterModule( ModuleFullName, aModule);
+        }
+    }
+    */
+    var aMod_definer = ( function(){
+        
+        var ModuleName     = "typesregistry";
+        var ModulePackages = "modboot";
         var ModuleFullName = ModulePackages + "/" + ModuleName;
         
         
-        
-        var aMod_builder = function( theS_Overrider) {
+        var aMod_builder = function() {
             
             if( typeof FG_logModLoads === 'function') { FG_logModLoads(ModuleFullName);}
-            
-            
-            
-            var pgInitWithModuleVariations = function( theToInit) {
-                
-                if( !theToInit) {
-                }
-            };
-            
-            
-            
-            
-            
-            var pgInitFromModuleVariations = function( theToInit) {
-                if( !theToInit) {
-                    return;
-                }
-                
-                for( var aGlobalName in ModuleVariations) {
-                    if( ModuleVariations.hasOwnProperty( aGlobalName)) {
-                        theToInit[ aGlobalName] = ModuleVariations[ aGlobalName];
-                    }
-                }
-            };
-            
-            
-            var ModuleVariations = { };
-            pgInitWithModuleVariations( ModuleVariations);
-            theS_Overrider.pOverrideModuleVariations( ModuleFullName, ModuleVariations);
-            
-            
-            
-            
-            
             
             
             
@@ -88,13 +78,13 @@ permissions and limitations under the Licence.
                 if( !theToInit) {
                     return;
                 }
-                theToInit.IDENTIFIER_DEFAULTTITLE = "IdentifierDefaultName";
+                
+                theToInit.TYPESREGISTRYDEFAULTNAME = "TypesRegistry_DefaultName";
             };
             
             
             
             var ModuleConstants = {};
-            pgInitFromModuleVariations( ModuleConstants);
             pgInitWithModuleConstants( ModuleConstants);
             
             
@@ -111,54 +101,45 @@ permissions and limitations under the Licence.
                     }
                 }
             };
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
+    
+    
+    
+    
             var pgInitModuleGlobalsOn = function( theToInit) {
-                
+        
                 if( !theToInit) {
                 }
             };
-            
-            
-            
+    
+    
+    
             var ModuleGlobals = { };
             pgInitModuleGlobalsOn( ModuleGlobals);
-            
-            
-            
-            
-            
-            
-            
-            
-            var aIdentifier_Prototype = (function() {
+    
+    
+    
+    
+    
+            var aTypesRegistry_Prototype = (function() {
                 
                 
                 var aPrototype = {};
                 
                 pgInitFromModuleConstants( aPrototype);
     
+    
                 aPrototype._v_SuperPrototype = null;
     
-                aPrototype._v_Type = "Identifier";
+                aPrototype._v_Type = "TypesRegistry";
                 
-                aPrototype._v_Prototype_Identifier = aPrototype;
+                aPrototype._v_Prototype_TypesRegistry = aPrototype;
                 
                 aPrototype._v_Module = null;
                 
-                aPrototype._v_Id    = null;
+                
                 aPrototype._v_Title = null;
                 
-                aPrototype._v_IdsCounter = null;
+                aPrototype._v_ModulesByFullName = null;
                 
                 
                 
@@ -168,7 +149,7 @@ permissions and limitations under the Licence.
                 
                 var _pInit = function( theTitle) {
                     
-                    this._pInit_Identifier( theTitle);
+                    this._pInit_TypesRegistry( theTitle);
                 };
                 if( _pInit){}/* CQT */
                 aPrototype._pInit = _pInit;
@@ -178,38 +159,22 @@ permissions and limitations under the Licence.
                 
                 
                 
-                var _fTitleDefault = function( ) {
-                    
-                    return this.IDENTIFIER_DEFAULTTITLE;
-                };
-                if( _fTitleDefault){}/* CQT */
-                aPrototype._fTitleDefault = _fTitleDefault;
                 
-                
-                
-                
-                
-                
-                var _pInit_Identifier = function( theTitle) {
+                var _pInit_TypesRegistry = function( theTitle) {
                     
                     this._v_Prototype = aPrototype;
                     this._v_Type      = this._v_Prototype._v_Type;
                     this._v_Module    = aPrototype._v_Module;
                     
-                    this._v_Id    = null;
-                    
                     this._v_Title = theTitle;
                     if( !this._v_Title) {
-                        this._v_Title = this._fTitleDefault();
+                        this._v_Title = this.TYPESREGISTRYDEFAULTNAME;
                     }
                     
-                    this._v_IdsCounter = 0;
-                    
-                    this._v_Id = this.fReserveId();
-                    
+                    this._v_ModulesByFullName = { };
                 };
-                if( _pInit_Identifier){}/* CQT */
-                aPrototype._pInit_Identifier = _pInit_Identifier;
+                if( _pInit_TypesRegistry){}/* CQT */
+                aPrototype._pInit_TypesRegistry = _pInit_TypesRegistry;
                 
                 
                 
@@ -235,8 +200,7 @@ permissions and limitations under the Licence.
                     
                     var aIdentifiyingJSON = {
                         "module": this._v_Module.ModuleFullName,
-                        "type": this._v_Type,
-                        "id": this._v_Id
+                        "type": this._v_Type
                     };
                     if( aIdentifiyingJSON){}/* CQT */
                     return aIdentifiyingJSON;
@@ -298,7 +262,7 @@ permissions and limitations under the Licence.
                         aIdentifyingString = JSON.stringify( aIdentifyingJSON);
                     }
                     catch( anException){
-                        aIdentifyingString = "Error_while_fIdentifyingWithTitleString_JSON_stringify"
+                        aIdentifyingString = "Error_whileJSON_stringify"
                     }
                     if( aIdentifyingString){}/* CQT */
                     
@@ -340,16 +304,60 @@ permissions and limitations under the Licence.
                 
                 
                 
-                var fReserveId = function() {
+                
+                var fRegisterModule = function( theModuleFullName, theModule) {
+                    if( !theModule) {
+                        return false;
+                    }
                     
-                    this._v_IdsCounter += 1;
+                    var aModuleFullName = theModuleFullName;
+                    if( !aModuleFullName) {
+                        aModuleFullName = theModule.ModuleFullName;
+                    }
+                    if( !aModuleFullName) {
+                        return false;
+                    }
                     
-                    var anId = this._v_IdsCounter;
+                    var anAlreadyRegisteredModule =  this._v_ModulesByFullName[ aModuleFullName];
+                    if( anAlreadyRegisteredModule) {
+                        console.log( "\nAttempt to register another module " + aModuleFullName + "\n");
+                        return false;
+                    }
                     
-                    return anId.toString();
+                    this._v_ModulesByFullName[ aModuleFullName] = theModule;
+                    
+                    if( ( typeof theModule === 'object') || ( typeof theModule === 'function')) {
+                        theModule[ "TYPESREGISTRY"] = this;
+                    }
+                    
+                    return true;
                 };
-                if( fReserveId){}/* CQT */
-                aPrototype.fReserveId = fReserveId;
+                if( fRegisterModule){}/* CQT */
+                aPrototype.fRegisterModule = fRegisterModule;
+                
+                
+                
+                
+                
+                
+                
+                
+                var fRegisteredModule = function( theModuleFullName) {
+                    if( !theModuleFullName) {
+                        return null;
+                    }
+                    
+                    
+                    var aRegisteredModule =  this._v_ModulesByFullName[ theModuleFullName];
+                    if( !aRegisteredModule) {
+                        return null;
+                    }
+                    
+                    return aRegisteredModule;
+                };
+                if( fRegisteredModule){}/* CQT */
+                aPrototype.fRegisteredModule = fRegisteredModule;
+                
                 
                 
                 
@@ -363,90 +371,90 @@ permissions and limitations under the Licence.
             
             
             
-            var Identifier_Constructor = function( theTitle) {
+            var TypesRegistry_Constructor = function( theTitle) {
                 this._v_Prototype = null;
-                this._v_SuperPrototype = null;
-                this._v_Type = null;
-                this._v_Module = null;
-                
-                
-                this._v_Id    = null;
-                this._v_Title = null;
-                
-                this._v_IdsCounter = null;
-                
-                this._pInit_Identifier( theTitle);
-            };
-            Identifier_Constructor.prototype = aIdentifier_Prototype;
-            
-            
-            
-            
-            
-            var Identifier_SuperPrototypeConstructor = function() {
-                this._v_Prototype = aIdentifier_Prototype;
                 this._v_SuperPrototype = null;
                 this._v_Type      = null;
                 this._v_Module    = null;
                 
-                this._v_Id    = null;
                 this._v_Title = null;
                 
-                this._v_IdsCounter = null;
+                this._v_ModulesByFullName = null;
+                
+                this._pInit_TypesRegistry( theTitle);
             };
-            Identifier_SuperPrototypeConstructor.prototype = aIdentifier_Prototype;
+            TypesRegistry_Constructor.prototype = aTypesRegistry_Prototype;
+            
+            
+            
+            
+            
+            var TypesRegistry_SuperPrototypeConstructor = function() {
+                this._v_Prototype = aTypesRegistry_Prototype;
+                this._v_SuperPrototype = null;
+                this._v_Type      = null;
+                this._v_Module    = null;
+                
+                this._v_Title     = null;
+                
+                this._v_ModulesByFullName = null;
+            };
+            TypesRegistry_SuperPrototypeConstructor.prototype = aTypesRegistry_Prototype;
             
             
             
             var aModule = {
-                "Identifier_Prototype": aIdentifier_Prototype,
-                "Identifier_Constructor": Identifier_Constructor,
-                "Identifier_SuperPrototypeConstructor": Identifier_SuperPrototypeConstructor
+                "TypesRegistry_Prototype": aTypesRegistry_Prototype,
+                "TypesRegistry_Constructor": TypesRegistry_Constructor,
+                "TypesRegistry_SuperPrototypeConstructor": TypesRegistry_SuperPrototypeConstructor,
+                "Prototype": aTypesRegistry_Prototype,
+                "Constructor": TypesRegistry_Constructor,
+                "SuperPrototypeConstructor": TypesRegistry_SuperPrototypeConstructor
             };
             pgInitFromModuleConstants( aModule);
             aModule._v_Type = "module";
-            aModule.ModuleName     = ModuleName;
-            aModule.ModulePackages = ModulePackages;
-            aModule.ModuleFullName = ModuleFullName;
-            aModule.ModuleVariations= ModuleVariations;             aModule.ModuleConstants = ModuleConstants;
+            aModule.ModuleName      = ModuleName;
+            aModule.ModulePackages  = ModulePackages;
+            aModule.ModuleFullName  = ModuleFullName;
+            aModule.ModuleConstants = ModuleConstants;
             aModule.ModuleGlobals   = ModuleGlobals;
             aModule.pgInitFromModuleConstants  = pgInitFromModuleConstants;
-            aModule.pgInitFromModuleVariations = pgInitFromModuleVariations;
             aModule.pgInitModuleGlobalsOn      = pgInitModuleGlobalsOn;
-    
-            aIdentifier_Prototype._v_Module = aModule;
+            
+            aTypesRegistry_Prototype._v_Module = aModule;
+            
+            
             
             
             return aModule;
         };
+        
+        
+        
+        
+        var aModule = aMod_builder();
+    
+        aModule.ModuleBuilder = aMod_builder;
+        aModule.ModuleSource  = aMod_builder.toString();
+    
+        var aService = new aModule.TypesRegistry_Constructor( "Types_Registry_singleton");
+    
+        /* Register, just for completion of the types registry, this very same module, and the instance by its name*/
+        aService.fRegisterModule( ModuleFullName, aModule);
+    
+        /* Register, just for completion of the types registry, this very same service instance by its name
+        as supplied above in the TypesRegistry_Constructor() or defaulted to module constant TYPESREGISTRYDEFAULTNAME
+        */
+        aService.fRegisterModule( ModuleFullName + "." + aService._v_Title, aService);
     
     
-    
-    
-        var anExistingModule = null;
-        if(    !( typeof theSS_typesregistry === 'undefined')
-            && ( typeof theSS_typesregistry.fRegisteredModule === 'function')) {
-            anExistingModule = theSS_typesregistry.fRegisteredModule( ModuleFullName);
+        /* Register, just for completion of the types registry, the utility function to log module loads, if such exists */
+        if( typeof FG_logModLoads === 'function') {
+            aService.fRegisterModule( FG_logModLoads.ModuleFullName ? FG_logModLoads.ModuleFullName : "FG_logModLoads", FG_logModLoads);
         }
-        if( !anExistingModule) {
-        
-            var aModule = aMod_builder(
-                theSS_Overrider
-            );
-        
-            aModule.ModuleBuilder = aMod_builder;
-            aModule.ModuleSource  = aMod_builder.toString();
-        
-            anExistingModule = aModule;
-        
-            if(    !( typeof theSS_typesregistry === 'undefined')
-                && ( typeof theSS_typesregistry.fRegisterModule === 'function')) {
-                theSS_typesregistry.fRegisterModule( ModuleFullName, aModule);
-            }
-        }
-        
-        
-        return anExistingModule;
+    
+    
+        return aService;
         
     });
     
@@ -455,25 +463,19 @@ permissions and limitations under the Licence.
     if( !( typeof angular === 'undefined') && angular.module) {
         // Angular (1.x)
         
-        angular.module("identifyingTypes").factory("IdentifierType",[
-            "TypesRegistrySvce",
-            "OverriderSvce",
+        // typesRegistry dependencies declared here (as none) because there is no separate file defining the angular.module("typesRegistry"
+        // other modules with multiple factories, i.e. identifyingTypes, declare the module and its dependiencies in a separate file identifying_types.js
+        angular.module("modbootTypes").factory("TypesRegistrySvce",
             aMod_definer
-        ]);
-        
+        );
+    
     }
     else if ( !(typeof module === 'undefined') && module.exports) {
         // Node.js
         
         module.exports = (function() {
             
-            var aM_typesregistry = require('./typesregistry');
-            var aM_overrider     = require('./overrider_type');
-            
-            return aMod_definer(
-                aM_typesregistry,
-                aM_overrider
-            );
+            return aMod_definer();
         })();
         
     }
@@ -481,24 +483,18 @@ permissions and limitations under the Licence.
         // AMD / RequireJS
         
         define([
-            "../typesregistry",
-            "../modboot/overrider_type"
         ],
         aMod_definer
         /* function (
-            theM_typesregistry,
-            theM_overrider
         ) {
-            return aMod_definer(
-                theM_typesregistry,
-                theM_overrider
-            );
+            return aMod_definer();
         }
         */);
+        
     }
     
+    
 })();
-
 
 
 

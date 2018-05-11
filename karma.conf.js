@@ -6,7 +6,7 @@ module.exports = function(config){
 
         files: [
 
-            'src/roots/logmoduleloads.js',
+            'src/modboot/logmoduleloads.js',
 
             'src/utils/decoratesystemprototypes_svce.js',
             'src/utils/stacktrace.js',
@@ -14,7 +14,7 @@ module.exports = function(config){
             'src/utils/console_svce.js',
 
             'src/typesregistry.js',
-            'src/roots/overrider_type.js',
+            'src/modboot/overrider_type.js',
 
             'src/commoneventkinds.js',
             'src/common/common_type.js',

@@ -6,8 +6,8 @@
  *
  ***************************************************************************
 
- Copyright 2014 2015 2016 2017 2018 Antonio Carrasco Valero
- Javascript for core modules including a base prototype and prototypes hierarchy, intended to be reused on the Browser with AngularJS or RequireJS modules, or in the server as node modules. Licensed under EUPL  http://www.uiwire.org
+ Copyright 2014 2015 2016 Antonio Carrasco Valero
+ Javascript for core modules including a base prototype and prototypes hierarchy, intended to be reused on the Browser as core for i.e. Angular Controllers and Services, as in the uiwire component. Licensed under EUPL  http://www.uiwire.org
 
 Licensed under the EUPL, Version 1.1 only (the "Licence");
 You may not use this work except in compliance with the
@@ -31,296 +31,284 @@ permissions and limitations under the Licence.
  */
 
 
-'use strict';
 
 
-(function () {
-    
-    var aMod_definer = ( function( theSS_typesregistry,
+
+
+
+function ModuleFactory_RecordingPolicyKeepSomeType() {
+
+    'use strict';
+
+
+    return ( function( theSS_typesregistry,
                        theSS_Overrider,
                        theSS_RecordingPolicyKeepAllType) {
-        
-        
+
+
         var ModuleName     = "recordingpolicy_keepsome_type";
         var ModulePackages = "identifying";
         var ModuleFullName = ModulePackages + "/" + ModuleName;
-        
-        
-        
-        var aMod_builder = function( theS_Overrider,
+
+
+
+        var aMod_definer = function( theS_Overrider,
                                      theS_RecordingPolicyKeepAllType) {
-            
-            
-            if( typeof FG_logModLoads === 'function') { FG_logModLoads(ModuleFullName);}
-            
-            
-            
-            
-            
-            
-            
-            
+
+
+            if( !( typeof FG_logModLoads == "undefined") && ( typeof FG_logModLoads == "function") && FG_logModLoads()) { FG_logModLoads(ModuleFullName);}
+
+
+
+
+
+
+
+
             var pgInitWithModuleVariations = function( theToInit) {
-                
+
                 if( !theToInit) {
                     return;
                 }
-                
+
                 theToInit.MUSTKEEPRECORDSMAXNUMBER = 1000;
-                
+
             };
-            
-            
-            
-            
-            
+
+
+
+
+
             var pgInitFromModuleVariations = function( theToInit) {
                 if( !theToInit) {
                     return;
                 }
-                
+
                 for( var aGlobalName in ModuleVariations) {
                     if( ModuleVariations.hasOwnProperty( aGlobalName)) {
                         theToInit[ aGlobalName] = ModuleVariations[ aGlobalName];
                     }
                 }
             };
-            
-            
+
+
             var ModuleVariations = { };
             pgInitWithModuleVariations( ModuleVariations);
             theS_Overrider.pOverrideModuleVariations( ModuleFullName, ModuleVariations);
-            
-            
-            
-            
-            
-            
-            
-            
+
+
+
+
+
+
+
+
             var pgInitWithModuleConstants = function( theToInit) {
-                
+
                 if( !theToInit) {
                     return;
                 }
                 theToInit.RECORDINGPOLICYKEEPSOME_DEFAULTTITLE = "RecordingPolicyKeepSomeDefaultName";
-                
+
             };
-            
-            
-            
+
+
+
             var ModuleConstants = {};
             pgInitFromModuleVariations( ModuleConstants);
             pgInitWithModuleConstants( ModuleConstants);
-            
-            
-            
-            
+
+
+
+
             var pgInitFromModuleConstants = function( theToInit) {
                 if( !theToInit) {
                     return;
                 }
-                
+
                 for( var aGlobalName in ModuleConstants) {
                     if( ModuleConstants.hasOwnProperty( aGlobalName)) {
                         theToInit[ aGlobalName] = ModuleConstants[ aGlobalName];
                     }
                 }
             };
-    
-    
-            
-            
-            
-    
-    
-            var pgInitModuleGlobalsOn = function( theToInit) {
-        
-                if( !theToInit) {
-                }
-            };
-    
-    
-    
-            var ModuleGlobals = { };
-            pgInitModuleGlobalsOn( ModuleGlobals);
-    
-    
-    
-    
-    
-    
+
+
+
+
+
+
             var aRecordingPolicyKeepSome_Prototype = (function() {
-                
-                
-                
+
+
+
                 var aPrototype = new theS_RecordingPolicyKeepAllType.RecordingPolicyKeepAll_SuperPrototypeConstructor();
-                
+
                 pgInitFromModuleConstants( aPrototype);
-                
-                
+
+
                 aPrototype._v_SuperPrototype = theS_RecordingPolicyKeepAllType.RecordingPolicyKeepAll_Prototype;
-                
-                
+
+
                 aPrototype._v_Type = "RecordingPolicyKeepSome";
-                
+
                 aPrototype._v_Prototype_RecordingPolicyKeepSome = aPrototype;
-                
-                
+
+
                 aPrototype._v_Module = null;
-                
-                
+
+
                 aPrototype._v_MustKeepRecordsMaxNumber = null;
-                
-                
-                
-                
+
+
+
+
                 var _pInit = function( theTitle, theIdentifier, theRecorder) {
-                    
+
                     this._pInit_RecordingPolicyKeepSome( theTitle, theIdentifier, theRecorder);
-                    
+
                 };
                 if( _pInit){}/* CQT */
                 aPrototype._pInit = _pInit;
-                
-                
-                
-                
-                
-                
-                
+
+
+
+
+
+
+
                 var _fTitleDefault = function( ) {
-                    
+
                     return this.RECORDINGPOLICYKEEPSOME_DEFAULTTITLE;
                 };
                 if( _fTitleDefault){}/* CQT */
                 aPrototype._fTitleDefault = _fTitleDefault;
-                
-                
-                
-                
-                
-                
+
+
+
+
+
+
                 var _pInit_RecordingPolicyKeepSome = function( theTitle, theIdentifier, theRecorder) {
-                    
+
                     /* Delegate on super prototype initialization */
                     aPrototype._v_SuperPrototype._pInit_RecordingPolicy.apply( this, [ theTitle, theIdentifier, theRecorder]);
-                    
+
                     this._v_Prototype = aPrototype;
                     this._v_Type      = this._v_Prototype._v_Type;
                     this._v_Module    = aPrototype._v_Module;
-                    
+
                     this._v_MustKeepRecordsMaxNumber = this.MUSTKEEPRECORDSMAXNUMBER;
-                    
+
                 };
                 if( _pInit_RecordingPolicyKeepSome){}/* CQT */
                 aPrototype._pInit_RecordingPolicyKeepSome = _pInit_RecordingPolicyKeepSome;
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
+
+
+
+
+
+
+
+
+
+
+
+
                 var pSetMustKeepRecordsMaxNumber = function( theMustKeepRecordsMaxNumber) {
-                    
+
                     this._v_MustKeepRecordsMaxNumber = theMustKeepRecordsMaxNumber;
-                    
+
                 };
                 if( pSetMustKeepRecordsMaxNumber){}/* CQT */
                 aPrototype.pSetMustKeepRecordsMaxNumber = pSetMustKeepRecordsMaxNumber;
-                
-                
-                
-                
-                
-                
+
+
+
+
+
+
                 var fMustKeepRecordsMaxNumber = function() {
-                    
+
                     return this._v_MustKeepRecordsMaxNumber;
-                    
+
                 };
                 if( fMustKeepRecordsMaxNumber){}/* CQT */
                 aPrototype.fMustKeepRecordsMaxNumber = fMustKeepRecordsMaxNumber;
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
+
+
+
+
+
+
+
+
+
+
                 var pPruneRecords = function() {
-                    
+
                     this._v_Prototype_RecordingPolicyKeepAll.pPruneRecords.apply( this);
-                    
-                    
+
+
                     if( !this._v_Recorder) {
                         return;
                     }
-                    
+
                     this._v_Recorder.pDiscardRecordsToMaxNumber( this.fMustKeepRecordsMaxNumber());
-                    
+
                 };
                 if( pPruneRecords){}/* CQT */
                 aPrototype.pPruneRecords = pPruneRecords;
-                
-                
-                
-                
-                
-                
-                
-                
+
+
+
+
+
+
+
+
                 return aPrototype;
-                
+
             })();
-            
-            
-            
-            
+
+
+
+
             var RecordingPolicyKeepSome_Constructor = function( theTitle, theIdentifier, theRecorder) {
-                
+
                 /* Keep handy reference to super-prototype for super method invocation */
                 this._v_SuperPrototype = theS_RecordingPolicyKeepAllType.RecordingPolicyKeepAll_Prototype;
-                
+
                 this._v_Prototype = null;
                 this._v_Type = null;
                 this._v_Module = null;
-                
+
                 this._v_MustKeepRecordsMaxNumber = null;
-                
+
                 this._pInit_RecordingPolicyKeepSome( theTitle, theIdentifier, theRecorder);
             };
             RecordingPolicyKeepSome_Constructor.prototype = aRecordingPolicyKeepSome_Prototype;
-            
-            
-            
-            
-            
+
+
+
+
+
             var RecordingPolicyKeepSome_SuperPrototypeConstructor = function() {
-                
+
                 /* Keep handy reference to super-prototype for super method invocation */
                 this._v_SuperPrototype = theS_RecordingPolicyKeepAllType.RecordingPolicyKeepAll_Prototype;
-                
+
                 this._v_Prototype = aRecordingPolicyKeepSome_Prototype;
                 this._v_Type      = null;
                 this._v_Module    = null;
-                
+
                 this._v_MustKeepRecordsMaxNumber = null;
-                
+
             };
             RecordingPolicyKeepSome_SuperPrototypeConstructor.prototype = aRecordingPolicyKeepSome_Prototype;
-            
-            
-            
+
+
+
             var aModule = {
                 "RecordingPolicyKeepSome_Prototype":   aRecordingPolicyKeepSome_Prototype,
                 "RecordingPolicyKeepSome_Constructor": RecordingPolicyKeepSome_Constructor,
@@ -328,119 +316,49 @@ permissions and limitations under the Licence.
                 "RecordingPolicyKeepSome_SuperPrototypeConstructor": RecordingPolicyKeepSome_SuperPrototypeConstructor
             };
             pgInitFromModuleConstants( aModule);
-            aModule._v_Type = "module";
             aModule.ModuleName     = ModuleName;
             aModule.ModulePackages = ModulePackages;
             aModule.ModuleFullName = ModuleFullName;
-            aModule.ModuleGlobals   = ModuleGlobals;
-            aModule.pgInitFromModuleConstants  = pgInitFromModuleConstants;
-            aModule.pgInitFromModuleVariations = pgInitFromModuleVariations;
-            aModule.pgInitModuleGlobalsOn      = pgInitModuleGlobalsOn;
-    
+
             aRecordingPolicyKeepSome_Prototype._v_Module = aModule;
-            
-            
-            
-            
-            
+
+
+
+
+
             return aModule;
         };
-        
-        
-        
-        
-      
-        
-    
-        var anExistingModule = null;
-        if(    !( typeof theSS_typesregistry === 'undefined')
-            && ( typeof theSS_typesregistry.fRegisteredModule === 'function')) {
-            anExistingModule = theSS_typesregistry.fRegisteredModule( ModuleFullName);
-        }
+
+
+
+
+
+
+
+        var anExistingModule = theSS_typesregistry.fRegisteredModule( ModuleFullName);
         if( !anExistingModule) {
-        
-            var aModule = aMod_builder(
+
+            var aModule = aMod_definer(
                 theSS_Overrider,
                 theSS_RecordingPolicyKeepAllType
-        
             );
-        
-            aModule.ModuleBuilder = aMod_builder;
-            aModule.ModuleSource  = aMod_builder.toString();
-        
             anExistingModule = aModule;
-        
-            if(    !( typeof theSS_typesregistry === 'undefined')
-                && ( typeof theSS_typesregistry.fRegisterModule === 'function')) {
-                theSS_typesregistry.fRegisterModule( ModuleFullName, aModule);
-            }
+
+            theSS_typesregistry.fRegisterModule( ModuleFullName, aModule);
         }
-    
-    
-    
-    
+
+
+
+
+
+
         return anExistingModule;
-        
+
     });
-    
-    
-    
-    
-    if( !( typeof angular === 'undefined') && angular.module) {
-        // Angular (1.x)
-        
-        angular.module("identifyingTypes").factory("RecordingPolicyKeepSomeType",[
-            "TypesRegistrySvce",
-            "OverriderSvce",
-            "RecordingPolicyKeepAllType",
-            aMod_definer
-        ]);
-        
-    }
-    else if ( !(typeof module === 'undefined') && module.exports) {
-        // Node.js
-        
-        module.exports = (function() {
-            
-            var aM_typesregistry   = require('../typesregistry');
-            var aM_overrider       = require('../modboot/overrider_svce');
-            var aM_recordingpolicy = require('./recordingpolicy_keepall_type');
-            
-            return aMod_definer(
-                aM_typesregistry,
-                aM_overrider,
-                aM_recordingpolicy
-            );
-        })();
-        
-    }
-    else if ( !(typeof define === 'undefined') && define.amd) {
-        // AMD / RequireJS
-        
-        define([
-                "../typesregistry",
-                "../modboot/overrider_type",
-                "./recordingpolicy_keepall_type"
-            ],
-            aMod_definer
-            /* function (
-                theM_typesregistry,
-                theM_overrider,
-                theM_recordingpolicy
-            ) {
-                return aMod_definer(
-                    theM_typesregistry,
-                    theM_overrider,
-                    theM_recordingpolicy
-                );
-            } */
-        );
-    }
-    
-    
-})();
+}
 
 
+if( ModuleFactory_RecordingPolicyKeepSomeType){}/* CQT */
 
 
 

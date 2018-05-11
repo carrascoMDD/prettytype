@@ -6,8 +6,8 @@
  *
  ***************************************************************************
 
- Copyright 2014 2015 2016 Antonio Carrasco Valero
- Javascript for core modules including a base prototype and prototypes hierarchy, intended to be reused on the Browser as core for i.e. Angular Controllers and Services, as in the uiwire component. Licensed under EUPL  http://www.uiwire.org
+ Copyright 2014 2015 2016 2017 2018 Antonio Carrasco Valero
+ Javascript for core modules including a base prototype and prototypes hierarchy, intended to be reused on the Browser with AngularJS or RequireJS modules, or in the server as node modules. Licensed under EUPL  http://www.uiwire.org
 
  Licensed under the EUPL, Version 1.1 only (the "Licence");
  You may not use this work except in compliance with the
@@ -33,397 +33,465 @@
 
 
 
-
-
-function ModuleFactory_ConsoleSvce() {
-
-    'use strict';
-
-    return ( function( theSS_typesregistry,
-                       theSS_Overrider) {
-
-
+(function () {
+    
+    var aMod_definer = ( function( theSS_typesregistry,
+                                   theSS_Overrider) {
+        
+        
         var ModuleName     = "console_svce";
         var ModulePackages = "utils";
         var ModuleFullName = ModulePackages + "/" + ModuleName;
-
-
-
-        var aMod_definer = function( theS_Overrider) {
-
-
-            if( !( typeof FG_logModLoads == "undefined") && ( typeof FG_logModLoads == "function") && FG_logModLoads()) { FG_logModLoads(ModuleFullName);}
-
-
-
-
-
-
-
-
+        
+        
+        
+        var aMod_builder = function( theS_Overrider) {
+            
+            if( typeof FG_logModLoads === 'function') { FG_logModLoads(ModuleFullName);}
+            
+            
+            
+            
             var pgInitWithModuleVariations = function( theToInit) {
-
+                
                 if( !theToInit) {
                     return;
                 }
-
+                
                 theToInit.WRITETOCONSOLE          = true;
                 theToInit.COLLECTLOGS             = false;
                 theToInit.MAXCOLLECTEDLOGSLENGTH  = 16 * 1024 * 1024;
-
+                
             };
-
-
-
-
-
+            
+            
+            
+            
+            
             var pgInitFromModuleVariations = function( theToInit) {
                 if( !theToInit) {
                     return;
                 }
-
+                
                 for( var aGlobalName in ModuleVariations) {
                     if( ModuleVariations.hasOwnProperty( aGlobalName)) {
                         theToInit[ aGlobalName] = ModuleVariations[ aGlobalName];
                     }
                 }
             };
-
-
+            
+            
             var ModuleVariations = { };
             pgInitWithModuleVariations( ModuleVariations);
             theS_Overrider.pOverrideModuleVariations( ModuleFullName, ModuleVariations);
-
-
-
-
-
-
-
-
+            
+            
+            
+            
+            
+            
+            
+            
             var pgInitWithModuleConstants = function( theToInit) {
-
+                
                 if( !theToInit) {
                 }
             };
-
-
-
+            
+            
+            
             var ModuleConstants = {};
             pgInitFromModuleVariations( ModuleConstants);
             pgInitWithModuleConstants( ModuleConstants);
-
-
-
-
+            
+            
+            
+            
             var pgInitFromModuleConstants = function( theToInit) {
                 if( !theToInit) {
                     return;
                 }
-
+                
                 for( var aGlobalName in ModuleConstants) {
                     if( ModuleConstants.hasOwnProperty( aGlobalName)) {
                         theToInit[ aGlobalName] = ModuleConstants[ aGlobalName];
                     }
                 }
             };
-
-
-
-
-
-
-
+    
+    
+    
+    
+            var pgInitModuleGlobalsOn = function( theToInit) {
+        
+                if( !theToInit) {
+                    return;
+                }
+    
+                theToInit._g_WriteToConsole          = aModule.WRITETOCONSOLE;
+                theToInit._g_CollectLogs             = aModule.COLLECTLOGS;
+                theToInit._g_MaxCollectedLogsLength  = aModule.MAXCOLLECTEDLOGSLENGTH;
+    
+                theToInit._g_CollectedLogs           = [ ];
+                theToInit._g_CollectedLogsSize       = 0;
+            };
+    
+    
+            var ModuleGlobals = { };
+            pgInitModuleGlobalsOn( ModuleGlobals);
+    
+    
+    
+    
+    
             var aModule = { };
             pgInitFromModuleConstants( aModule);
+            aModule._v_Type = "module";
             aModule.ModuleName     = ModuleName;
             aModule.ModulePackages = ModulePackages;
             aModule.ModuleFullName = ModuleFullName;
+            aModule.ModuleVariations= ModuleVariations;             aModule.ModuleConstants = ModuleConstants;
+            aModule.ModuleGlobals   = ModuleGlobals;
+            aModule.pgInitFromModuleConstants  = pgInitFromModuleConstants;
+            aModule.pgInitFromModuleVariations = pgInitFromModuleVariations;
+            aModule.pgInitModuleGlobalsOn      = pgInitModuleGlobalsOn;
 
-
-
-            aModule._v_WriteToConsole          = aModule.WRITETOCONSOLE;
-            aModule._v_CollectLogs             = aModule.COLLECTLOGS;
-            aModule._v_MaxCollectedLogsLength  = aModule.MAXCOLLECTEDLOGSLENGTH;
-
-
-            aModule._v_CollectedLogs           = [ ];
-            aModule._v_CollectedLogsSize       = 0;
-
-
-
-
-
-
-
+            
+        
+            
+            
+            
+            
+            
+            
+            
             var pSetWriteToConsole = function( theWriteToConsole) {
-
-                aModule._v_WriteToConsole = ( theWriteToConsole? true : false);
-
+                
+                aModule.ModuleGlobals._g_WriteToConsole = ( theWriteToConsole? true : false);
+                
             };
             if( pSetWriteToConsole){}/* CQT */
             aModule.pSetWriteToConsole = pSetWriteToConsole;
-
-
-
-
-
-
-
+            
+            
+            
+            
+            
+            
+            
             var pSetCollectLogs = function( theCollectLogs) {
-
+                
                 if( theCollectLogs) {
-
-                    aModule._v_CollectLogs = true;
-
-                    if( !aModule._v_CollectedLogs) {
-                        aModule._v_CollectedLogs      = [ ];
-                        aModule._v_CollectedLogsSize  = 0;
+                    
+                    aModule.ModuleGlobals._g_CollectLogs = true;
+                    
+                    if( !aModule.ModuleGlobals._g_CollectedLogs) {
+                        aModule.ModuleGlobals._g_CollectedLogs      = [ ];
+                        aModule.ModuleGlobals._g_CollectedLogsSize  = 0;
                     }
                 }
                 else {
-                    aModule._v_CollectLogs        = false;
-                    aModule._v_CollectedLogs      = [ ];
-                    aModule._v_CollectedLogsSize  = 0;
+                    aModule.ModuleGlobals._g_CollectLogs        = false;
+                    aModule.ModuleGlobals._g_CollectedLogs      = [ ];
+                    aModule.ModuleGlobals._g_CollectedLogsSize  = 0;
                 }
             };
             if( pSetCollectLogs){}/* CQT */
             aModule.pSetCollectLogs = pSetCollectLogs;
-
-
-
-
-
+            
+            
+            
+            
+            
             var pSetMaxCollectedLogsLength = function( theMaxCollectedLogsLength) {
-
-                aModule._v_MaxCollectedLogsLength = theMaxCollectedLogsLength;
-
+                
+                aModule.ModuleGlobals._g_MaxCollectedLogsLength = theMaxCollectedLogsLength;
+                
                 aModule.pEnforceMaxCollectedLogsLength("");
-
+                
             };
             if( pSetMaxCollectedLogsLength){}/* CQT */
             aModule.pSetMaxCollectedLogsLength = pSetMaxCollectedLogsLength;
-
-
-
-
-
-
-
-
+            
+            
+            
+            
+            
+            
+            
+            
             var fCollectedLogs = function() {
-
-               return aModule._v_CollectedLogs;
-
+                
+                return aModule.ModuleGlobals._g_CollectedLogs;
+                
             };
             if( fCollectedLogs){}/* CQT */
             aModule.fCollectedLogs = fCollectedLogs;
-
-
-
-
-
-
+            
+            
+            
+            
+            
+            
             var fCollectedLogsCopy = function() {
-
-                if( !aModule._v_CollectedLogs) {
+                
+                if( !aModule.ModuleGlobals._g_CollectedLogs) {
                     return null;
                 }
-
-                return aModule._v_CollectedLogs.slice();
-
+                
+                return aModule.ModuleGlobals._g_CollectedLogs.slice();
+                
             };
             if( fCollectedLogsCopy){}/* CQT */
             aModule.fCollectedLogsCopy = fCollectedLogsCopy;
-
-
-
-
-
-
-
+            
+            
+            
+            
+            
+            
+            
             var log = function( theMessage) {
-
-                if( aModule._v_CollectLogs) {
-
-                    if( !aModule._v_CollectedLogs) {
-                        aModule._v_CollectedLogs = [ ];
+                
+                if( aModule.ModuleGlobals._g_CollectLogs) {
+                    
+                    if( !aModule.ModuleGlobals._g_CollectedLogs) {
+                        aModule.ModuleGlobals._g_CollectedLogs = [ ];
                     }
-
-                    aModule._v_CollectedLogs.push( [ "log", theMessage]);
-
+                    
+                    aModule.ModuleGlobals._g_CollectedLogs.push( [ "log", theMessage]);
+                    
                     aModule.pEnforceMaxCollectedLogsLength( theMessage);
                 }
-
-
-                if( aModule._v_WriteToConsole) {
-
+                
+                
+                if( aModule.ModuleGlobals._g_WriteToConsole) {
+                    
                     console.log( theMessage);
                 }
-
+                
             };
             if( log){}/* CQT */
             aModule.log = log;
-
-
-
-
-
-
-
+            
+            
+            
+            
+            
+            
+            
             var error = function( theMessage) {
-
-                if( aModule._v_CollectLogs) {
-
-                    if( !aModule._v_CollectedLogs) {
-                        aModule._v_CollectedLogs = [ ];
+                
+                if( aModule.ModuleGlobals._g_CollectLogs) {
+                    
+                    if( !aModule.ModuleGlobals._g_CollectedLogs) {
+                        aModule.ModuleGlobals._g_CollectedLogs = [ ];
                     }
-
-                    aModule._v_CollectedLogs.push( [ "error", theMessage]);
-
+                    
+                    aModule.ModuleGlobals._g_CollectedLogs.push( [ "error", theMessage]);
+                    
                     aModule.pEnforceMaxCollectedLogsLength( theMessage);
                 }
-
-
-                if( aModule._v_WriteToConsole) {
-
+                
+                
+                if( aModule.ModuleGlobals._g_WriteToConsole) {
+                    
                     console.error( theMessage);
                 }
-
+                
             };
             if( error){}/* CQT */
             aModule.error = error;
-
-
-
-
             
             
-
-
+            
+            
+            
+            
+            
+            
             var info = function( theMessage) {
-
-                if( aModule._v_CollectLogs) {
-
-                    if( !aModule._v_CollectedLogs) {
-                        aModule._v_CollectedLogs = [ ];
+                
+                if( aModule.ModuleGlobals._g_CollectLogs) {
+                    
+                    if( !aModule.ModuleGlobals._g_CollectedLogs) {
+                        aModule.ModuleGlobals._g_CollectedLogs = [ ];
                     }
-
-                    aModule._v_CollectedLogs.push( [ "info", theMessage]);
-
+                    
+                    aModule.ModuleGlobals._g_CollectedLogs.push( [ "info", theMessage]);
+                    
                     aModule.pEnforceMaxCollectedLogsLength( theMessage);
                 }
-
-
-                if( aModule._v_WriteToConsole) {
-
+                
+                
+                if( aModule.ModuleGlobals._g_WriteToConsole) {
+                    
                     console.log( theMessage);
                 }
-
+                
             };
             if( info){}/* CQT */
             aModule.info = info;
-
-
-
-
-
-
+            
+            
+            
+            
+            
+            
             var clear = function() {
-
-                aModule._v_CollectedLogs     = [ ];
-                aModule._v_CollectedLogsSize = 0;
-
-                if( aModule._v_WriteToConsole) {
-
+                
+                aModule.ModuleGlobals._g_CollectedLogs     = [ ];
+                aModule.ModuleGlobals._g_CollectedLogsSize = 0;
+                
+                if( aModule.ModuleGlobals._g_WriteToConsole) {
+                    
                     console.clear();
                 }
-
+                
             };
             if( clear){}/* CQT */
             aModule.clear = clear;
-
-
-
-
-
-
-
-
+            
+            
+            
+            
+            
+            
+            
+            
             var pEnforceMaxCollectedLogsLength = function( theMessage) {
-
-                if( !aModule._v_CollectLogs) {
+                
+                if( !aModule.ModuleGlobals._g_CollectLogs) {
                     return;
                 }
-
+                
                 var aMessageLen = ( ( typeof theMessage == "string") ? theMessage.length : 0);
-
-                aModule._v_CollectedLogsSize += aMessageLen;
-
-                if( aModule._v_MaxCollectedLogsLength <= 0) {
+                
+                aModule.ModuleGlobals._g_CollectedLogsSize += aMessageLen;
+                
+                if( aModule.ModuleGlobals._g_MaxCollectedLogsLength <= 0) {
                     return;
                 }
-
-
+                
+                
                 while( true) {
-
-                    if( aModule._v_CollectedLogsSize <= aModule._v_MaxCollectedLogsLength) {
+                    
+                    if( aModule.ModuleGlobals._g_CollectedLogsSize <= aModule.ModuleGlobals._g_MaxCollectedLogsLength) {
                         return;
                     }
-
-                    if( aModule._v_CollectLogs.length <= 1) {
+                    
+                    if( aModule.ModuleGlobals._g_CollectLogs.length <= 1) {
                         return;
                     }
-
-                    var aRemovedKindAndMessage = aModule._v_CollectedLogs.shift();
-
+                    
+                    var aRemovedKindAndMessage = aModule.ModuleGlobals._g_CollectedLogs.shift();
+                    
                     var aRemovedMessage = aRemovedKindAndMessage[ 1];
                     var aRemovedMessageLen = ( ( typeof aRemovedMessage == "string") ? aRemovedMessage.length : 0);
-
-                    aModule._v_CollectedLogsSize -= aRemovedMessageLen;
+                    
+                    aModule.ModuleGlobals._g_CollectedLogsSize -= aRemovedMessageLen;
                 }
-
-
+                
+                
             };
             if( pEnforceMaxCollectedLogsLength){}/* CQT */
             aModule.pEnforceMaxCollectedLogsLength = pEnforceMaxCollectedLogsLength;
-
-
-
-
-
-
+            
+            
+            
+            
+            
+            
             return aModule;
         };
-
-
-
-
-
-
-
-        var anExistingModule = theSS_typesregistry.fRegisteredModule( ModuleFullName);
+    
+    
+    
+    
+    
+        var anExistingModule = null;
+        if(    !( typeof theSS_typesregistry === 'undefined')
+            && ( typeof theSS_typesregistry.fRegisteredModule === 'function')) {
+            anExistingModule = theSS_typesregistry.fRegisteredModule( ModuleFullName);
+        }
         if( !anExistingModule) {
-
-            var aModule = aMod_definer(
+        
+            var aModule = aMod_builder(
                 theSS_Overrider
             );
+        
+            aModule.ModuleBuilder = aMod_builder;
+            aModule.ModuleSource  = aMod_builder.toString();
+        
             anExistingModule = aModule;
-
-            theSS_typesregistry.fRegisterModule( ModuleFullName, aModule);
+        
+            if(    !( typeof theSS_typesregistry === 'undefined')
+                && ( typeof theSS_typesregistry.fRegisterModule === 'function')) {
+                theSS_typesregistry.fRegisterModule( ModuleFullName, aModule);
+            }
         }
-
-
-
-
-
-
+    
+    
+    
         return anExistingModule;
-
+        
     });
-}
-
-
+    
+    
+    
+    
+    
+    
+    if( !( typeof angular === 'undefined') && angular.module) {
+        // Angular (1.x)
+        
+        angular.module("consoleSvce", [
+            "typesRegistry",
+            "rootsTypes"
+        ]).factory("ConsoleSvce",[
+            "TypesRegistrySvce",
+            "OverriderSvce",
+            aMod_definer
+        ]);
+        
+    }
+    else if ( !(typeof module === 'undefined') && module.exports) {
+        // Node.js
+        
+        module.exports = (function() {
+            
+            var aM_typesregistry  = require('./typesregistry');
+            var aM_overrider_svce = require('./overrider_svce');
+            
+            return aMod_definer(
+                aM_typesregistry,
+                aM_overrider_svce
+            );
+        })();
+        
+    }
+    else if ( !(typeof define === 'undefined') && define.amd) {
+        // AMD / RequireJS
+        
+        define([
+            "../typesregistry",
+            "../modboot/overrider_svce"
+        
+        ], function (
+            theM_typesregistry,
+            theM_overrider
+        ) {
+            return aMod_definer(
+                theM_typesregistry,
+                theM_overrider
+            );
+        });
+        
+    }
+    
+})();
+    
+    
 
 
 

@@ -1,7 +1,7 @@
 {
   "name": "prettytype",
-  "version": "0.2.2",
-  "description": "Javascript for core modules including a base prototype and prototypes hierarchy, intended to be reused on the Browser as core for i.e. Angular Controllers and Services, as in the uiwire component.",
+  "version": "1.0.0",
+  "description": "Javascript for core modules including a base prototype and prototypes hierarchy, intended to be reused on the Browser with AngularJS or RequireJS modules, or in the server as node modules",
   "keywords": [
     "core",
     "uiwire"
