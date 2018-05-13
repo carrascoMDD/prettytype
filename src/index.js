@@ -1,7 +1,7 @@
 /*
  * index.js
  *
- * Created @author Antonio Carrasco Valero 201410030426
+ * Created @author Antonio Carrasco Valero 201805140022
  *
  *
  ***************************************************************************
@@ -191,7 +191,6 @@ permissions and limitations under the Licence.
     
     
             aModule[ "modboot"] = {
-                "m_logmoduleloads":                    FG_logModLoads,
                 "m_typesregistry":                     theS_typesregistry,
                 "m_overrider_type":                    theS_overrider_type,
                 "m_overrider_svce":                    theS_overrider_svce
@@ -229,7 +228,6 @@ permissions and limitations under the Licence.
     
             
     
-            aModule[ "m_logmoduleloads"] =                    FG_logModLoads;
             aModule[ "m_typesregistry"] =                     theS_typesregistry;
             aModule[ "m_overrider_type"] =                    theS_overrider_type;
             aModule[ "m_overrider_svce"] =                    theS_overrider_svce;
@@ -255,7 +253,6 @@ permissions and limitations under the Licence.
             aModule[ "m_common_type"] =                       theS_common_type;
     
     
-            aModule[ "FG_logModLoads"] =                   FG_logModLoads;
             aModule[ "TypesRegistrySvce"] =                theS_typesregistry;
             aModule[ "OverriderType"] =                    theS_overrider_type;
             aModule[ "OverriderSvce"] =                    theS_overrider_svce;
@@ -360,7 +357,7 @@ permissions and limitations under the Licence.
                 "eventKinds_Common",
                 "commonTypes"
             ]).factory(
-                "CommonType",
+                "Index",
             [
                 "TypesRegistrySvce",
                 "OverriderType",
@@ -398,7 +395,7 @@ permissions and limitations under the Licence.
             var aM_overrider_type                   = require( './modboot/overrider_type.js');
             var aM_overrider_svce                   = require( './modboot/overrider_svce.js');
             var aM_decoratesystemprototypes_svce    = require( './utils/decoratesystemprototypes_svce.js');
-            var aM_stacktrace                       = require( './utils/stacktrace.js');
+            var aM_stacktrace                       = require( './utils/stacktrace_svce.js');
             var aM_exceptiondetails_svce            = require( './utils/exceptiondetails_svce.js');
             var aM_console_svce                     = require( './utils/console_svce.js');
             var aM_traversals                       = require( './utils/traversals.js');
@@ -456,7 +453,7 @@ permissions and limitations under the Licence.
                 "m_overrider_type",
                 "m_overrider_svce",
                 "m_decoratesystemprototypes_svce",
-                "m_stacktrace",
+                "m_stacktrace_svce",
                 "m_exceptiondetails_svce",
                 "m_console_svce",
                 "m_traversals",

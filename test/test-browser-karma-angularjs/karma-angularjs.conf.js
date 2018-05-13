@@ -76,6 +76,7 @@ var someKarmaConfFiles = [
     '../../src/common/common_types.js',
     '../../src/common/common_type.js',
     
+    '../../src/index.js',
     
     /*
     '../../src/common/commoneventkinds.js',
@@ -111,6 +112,8 @@ var someKarmaConfFiles = [
     
     '../structural-test/common-structural-test/common_type-structural-test.js',
     '../structural-test/common-structural-test/common_type-eventkinds_common-structural-test.js',
+    
+    '../structural-test/index-structural-test.js',
     
     '../behavioral-test/modboot-behavioral-test/typesregistry-behavioral-test.js',
     '../behavioral-test/modboot-behavioral-test/overrider_svce-behavioral-test.js',

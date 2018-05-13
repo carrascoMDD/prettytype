@@ -71,6 +71,8 @@ requirejs.config({
         "m_common_type_structural_test",
         "m_common_type_eventkinds_common_structural_test",
     
+        "m_index_structural_test",
+    
         "m_typesregistry_behavioral_test",
         "m_overrider_svce_behavioral_test",
         "m_traversals_fgFirstDiff_behavioral_test",
@@ -106,8 +108,10 @@ requirejs.config({
         'm_recorder_svce_structural_test':                    './test/structural-test/identifying-structural-test/recorder_svce-structural-test',
     
         'm_common_type_structural_test':                      './test/structural-test/common-structural-test/common_type-structural-test',
-        'm_common_type_eventkinds_common_structural_test':     './test/structural-test/common-structural-test/common_type-eventkinds_common-structural-test',
+        'm_common_type_eventkinds_common_structural_test':    './test/structural-test/common-structural-test/common_type-eventkinds_common-structural-test',
     
+        'm_index_structural_test':                            './test/structural-test/index-structural-test',
+        
         'm_typesregistry_behavioral_test':  './test/behavioral-test/modboot-behavioral-test/typesregistry-behavioral-test',
         'm_overrider_svce_behavioral_test': './test/behavioral-test/modboot-behavioral-test/overrider_svce-behavioral-test',
         'm_traversals_fgFirstDiff_behavioral_test': './test/behavioral-test/utils-behavioral-test/traversals-fgFirstDiff-behavioral-test',

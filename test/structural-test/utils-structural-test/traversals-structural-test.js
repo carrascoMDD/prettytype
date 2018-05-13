@@ -54,9 +54,7 @@ var aTest_spec = (function( theSS_traversals) {
             beforeEach( module( 'typesRegistry', 'modbootTypes', 'traversals'));
             
             beforeEach( inject(function( _Traversals_) {
-                if( !aM_traversals) {
-                    aM_traversals = _Traversals_;
-                }
+                aM_traversals = _Traversals_;
             }));
         }
         else if ( !(typeof module === 'undefined') && module.exports) {

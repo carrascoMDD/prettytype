@@ -66,6 +66,9 @@ var someKarmaConfFiles = [
     
     './src/common/common_type.js',
     
+    './src/index.js',
+    
+    
     './test/structural-test/modboot-structural-test/typesregistry-structural-test.js' ,
     './test/structural-test/modboot-structural-test/overrider_type-structural-test.js' ,
     './test/structural-test/modboot-structural-test/overrider_svce-structural-test.js',
@@ -78,6 +81,8 @@ var someKarmaConfFiles = [
     './test/structural-test/utils-structural-test/decoratesystemprototypes_svce-structural-test.js',
     
     './test/structural-test/eventkinds-structural-test/eventkinds_common-structural-test.js',
+    
+    './test/structural-test/index-structural-test.js',
     
     './test/structural-test/identifying-structural-test/identifier_type-structural-test.js',
     './test/structural-test/identifying-structural-test/identifier_svce-structural-test.js',
