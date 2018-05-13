@@ -277,6 +277,31 @@ permissions and limitations under the Licence.
             aModule[ "EventKinds_Common"] =                theS_eventkinds_common;
             aModule[ "CommonType"] =                       theS_common_type;
     
+    
+            theS_typesregistry.ModuleIndex = aModule;
+            theS_overrider_type.ModuleIndex = aModule;
+            theS_overrider_svce.ModuleIndex = aModule;
+            theS_decoratesystemprototypes_svce.ModuleIndex = aModule;
+            theS_exceptiondetails_svce.ModuleIndex = aModule;
+            theS_console_svce.ModuleIndex = aModule;
+            theS_traversals.ModuleIndex = aModule;
+            theS_checks.ModuleIndex = aModule;
+            theS_identifier_type.ModuleIndex = aModule;
+            theS_identifier_svce.ModuleIndex = aModule;
+            theS_record_type.ModuleIndex = aModule;
+            theS_recordingpolicy_type.ModuleIndex = aModule;
+            theS_recordingpolicy_keepall_type.ModuleIndex = aModule;
+            theS_recordingpolicy_keepsome_type.ModuleIndex = aModule;
+            theS_recordingpolicy_keeprecent_type.ModuleIndex = aModule;
+            theS_dumpingpolicy_type.ModuleIndex = aModule;
+            theS_dumpingpolicy_filterkinds_type.ModuleIndex = aModule;
+            theS_dumpingpolicy_triggerkinds_type.ModuleIndex = aModule;
+            theS_recorder_type.ModuleIndex = aModule;
+            theS_recorder_svce.ModuleIndex = aModule;
+            theS_eventkinds_common.ModuleIndex = aModule;
+            theS_common_type.ModuleIndex = aModule;
+            
+    
             return aModule;
         };
         
