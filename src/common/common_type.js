@@ -38,9 +38,11 @@ permissions and limitations under the Licence.
                                    theSS_Overrider,
                                    theSS_IdentifierSvce,
                                    theSS_RecorderSvce,
-                                   theSS_CommonEventTypes){
-                    
-        
+                                   theSS_EventTypes_Common,
+                                   theSS_Travesals){
+    
+    
+        var ComponentName    = "prettytype";
         var ModuleName     = "common_type";
         var ModulePackages = "common";
         var ModuleFullName = ModulePackages + "/" + ModuleName;
@@ -50,12 +52,11 @@ permissions and limitations under the Licence.
         var aMod_builder = function( theS_Overrider,
                                      theS_IdentifierSvce,
                                      theS_RecorderSvce,
-                                     theS_CommonEventTypes) {
+                                     theS_EventTypes_Common,
+                                     theS_Travesals) {
             
             
             if( typeof FG_logModLoads === 'function') { FG_logModLoads(ModuleFullName);}
-            
-            
             
             
             
@@ -71,8 +72,6 @@ permissions and limitations under the Licence.
                    Note that when a recordingpolicy_keepall is plugged into the recorder, all records shall be kept in memory in the _v_Records slot property of the recorder instance
                    */
                 theToInit.KEEPOWNRECORDS = false;
-                
-                
             };
             
             
@@ -109,8 +108,8 @@ permissions and limitations under the Licence.
                     return;
                 }
                 
-                if( theS_CommonEventTypes && theS_CommonEventTypes.pgInitFromModuleConstants) {
-                    theS_CommonEventTypes.pgInitFromModuleConstants( theToInit);
+                if( theS_EventTypes_Common && theS_EventTypes_Common.pgInitFromModuleConstants) {
+                    theS_EventTypes_Common.pgInitFromModuleConstants( theToInit);
                 }
                 
                 theToInit.COMMON_DEFAULTTITLE = "CommonDefaultName";
@@ -181,14 +180,15 @@ permissions and limitations under the Licence.
                 var aPrototype = {};
                 
                 pgInitFromModuleConstants( aPrototype);
-                
-                
+    
+                aPrototype._v_SuperPrototype = null;
                 
                 aPrototype._v_Type = "Common";
                 
-                aPrototype._v_Prototype_Common = aPrototype;
-                
                 aPrototype._v_Module = null;
+    
+                aPrototype._v_Prototype_Common = aPrototype;
+    
                 
                 aPrototype._v_Identifier = null;
                 aPrototype._v_Recorder   = null;
@@ -503,160 +503,7 @@ permissions and limitations under the Licence.
                 
                 var fFirstDiff = function( theActualValue, theCheckValue) {
                     
-                    if( !( typeof theCheckValue == "undefined") &&  ( theCheckValue === this.DONOTCOMPAREVALUESYMBOL)) {
-                        return null;
-                    }
-                    
-                    if( ( typeof theActualValue == "undefined") && ( typeof theCheckValue == "undefined") ) {
-                        return null;
-                    }
-                    
-                    if( ( typeof theActualValue == "undefined") || ( typeof theCheckValue == "undefined") ) {
-                        return this.VALUEDIFFATTOP;
-                    }
-                    
-                    if( ( theActualValue == null) && ( theCheckValue == null)) {
-                        return null;
-                    }
-                    
-                    if( ( theActualValue == null) || ( theCheckValue == null)) {
-                        return this.VALUEDIFFATTOP;
-                    }
-                    
-                    
-                    if( !( ( typeof theActualValue) == ( typeof theCheckValue))) {
-                        return this.VALUEDIFFATTOP;
-                    }
-                    
-                    
-                    
-                    
-                    
-                    if( typeof theActualValue == "string" ) {
-                        if( theCheckValue === this.DONOTCOMPAREVALUESYMBOL) {
-                            return null;
-                        }
-                        if( !( theActualValue == theCheckValue)) {
-                            return this.VALUEDIFFATTOP;
-                        }
-                        return null;
-                    }
-                    
-                    
-                    if( typeof theActualValue == "number" ) {
-                        if( !( theActualValue == theCheckValue)) {
-                            return this.VALUEDIFFATTOP;
-                        }
-                        return null;
-                    }
-                    
-                    
-                    if( typeof theActualValue == "boolean" ) {
-                        if( !( theActualValue == theCheckValue)) {
-                            return this.VALUEDIFFATTOP;
-                        }
-                        return null;
-                    }
-                    
-                    
-                    
-                    if( !( typeof theActualValue == "object" )) {
-                        return this.VALUEDIFFATTOP;
-                    }
-                    
-                    
-                    
-                    
-                    
-                    var aOneLen   = theActualValue.length;
-                    var aOtherLen = theCheckValue.length;
-                    
-                    if( ( typeof aOneLen == "number") || ( typeof aOneLen == "number")) {
-                        
-                        if( ( typeof aOneLen == "undefined") || ( typeof aOneLen == "undefined")) {
-                            return this.VALUEDIFFATTOP;
-                        }
-                        
-                        if( !( aOneLen == aOtherLen)) {
-                            return this.VALUEDIFFATTOP;
-                        }
-                        
-                        if( aOneLen) {
-                            for( var aSubIdx=0; aSubIdx < aOneLen; aSubIdx++) {
-                                var aOneListSub   = theActualValue[ aSubIdx];
-                                var aOtherListSub = theCheckValue[ aSubIdx];
-                                
-                                var aSubsListDiff = this.fFirstDiff( aOneListSub, aOtherListSub);
-                                if( aSubsListDiff) {
-                                    
-                                    if( aSubsListDiff == this.VALUEDIFFATTOP) {
-                                        return [ aSubIdx];
-                                    }
-                                    
-                                    aSubsListDiff.unshift( aSubIdx);
-                                    
-                                    return aSubsListDiff;
-                                }
-                            }
-                        }
-                    }
-                    
-                    
-                    
-                    
-                    var someOneKeys   = Object.keys( theActualValue);
-                    var someOtherKeys = Object.keys( theCheckValue);
-                    
-                    if( ( typeof someOneKeys == "undefined") || ( typeof someOtherKeys == "undefined")) {
-                        return this.VALUEDIFFATTOP;
-                    }
-                    
-                    var allKeys = someOneKeys.slice();
-                    var aNumOtherKeys = someOtherKeys.length;
-                    
-                    for( var aOtherKeyIdx=0; aOtherKeyIdx < aNumOtherKeys; aOtherKeyIdx++) {
-                        var aOtherKey = someOtherKeys[ aOtherKeyIdx];
-                        if( allKeys.indexOf( aOtherKey) < 0) {
-                            allKeys.push( aOtherKey);
-                        }
-                    }
-                    allKeys.sort();
-                    
-                    
-                    var aNumKeys = allKeys.length;
-                    
-                    if( aNumKeys) {
-                        for( var aKeyIdx=0; aKeyIdx < aNumKeys; aKeyIdx++) {
-                            var aKey = allKeys[ aKeyIdx];
-                            
-                            if( !theActualValue.hasOwnProperty( aKey)) {
-                                return [ aKey];
-                            }
-                            
-                            if( !theCheckValue.hasOwnProperty( aKey)) {
-                                return [ aKey];
-                            }
-                            
-                            
-                            var aOneSub   = theActualValue[ aKey];
-                            var aOtherSub = theCheckValue[ aKey];
-                            
-                            var aSubsDiff = this.fFirstDiff( aOneSub, aOtherSub);
-                            if( aSubsDiff) {
-                                
-                                if( aSubsDiff == this.VALUEDIFFATTOP) {
-                                    return [ aKey];
-                                }
-                                
-                                aSubsDiff.unshift( aKey);
-                                
-                                return aSubsDiff;
-                            }
-                        }
-                    }
-                    
-                    
-                    return null;
+                    return theS_Travesals.fFirstDiff( theActualValue, theCheckValue);
                 };
                 if( fFirstDiff){}/* CQT */
                 aPrototype.fFirstDiff = fFirstDiff;
@@ -677,10 +524,17 @@ permissions and limitations under the Licence.
             
             var Common_Constructor = function( theTitle, theIdentifier, theRecorder) {
                 this._v_Prototype = null;
+                this._v_SuperPrototype = null;
                 this._v_Type      = null;
                 this._v_Module    = null;
                 
+                this._v_Identifier = null;
+                this._v_Recorder   = null;
+    
+                this._v_Id    = null;
                 this._v_Title = null;
+    
+                this._v_OwnRecords = null;
                 
                 this._pInit_Common( theTitle, theIdentifier, theRecorder);
             };
@@ -692,10 +546,17 @@ permissions and limitations under the Licence.
             
             var Common_SuperPrototypeConstructor = function() {
                 this._v_Prototype = aCommon_Prototype;
+                this._v_SuperPrototype = null;
                 this._v_Type      = null;
                 this._v_Module    = null;
-                
-                this._v_Title     = null;
+    
+                this._v_Identifier = null;
+                this._v_Recorder   = null;
+    
+                this._v_Id    = null;
+                this._v_Title = null;
+    
+                this._v_OwnRecords = null;
             };
             Common_SuperPrototypeConstructor.prototype = aCommon_Prototype;
             
@@ -711,10 +572,11 @@ permissions and limitations under the Licence.
             };
             pgInitFromModuleConstants( aModule);
             aModule._v_Type = "module";
+            aModule.ComponentName     = ComponentName;
             aModule.ModuleName      = ModuleName;
             aModule.ModulePackages  = ModulePackages;
             aModule.ModuleFullName  = ModuleFullName;
-            aModule.ModuleVariations= ModuleVariations;             aModule.ModuleConstants = ModuleConstants;
+            aModule.ModuleVariations= ModuleVariations;
             aModule.ModuleConstants = ModuleConstants;
             aModule.ModuleGlobals   = ModuleGlobals;
             aModule.pgInitFromModuleConstants  = pgInitFromModuleConstants;
@@ -746,7 +608,8 @@ permissions and limitations under the Licence.
                 theSS_Overrider,
                 theSS_IdentifierSvce,
                 theSS_RecorderSvce,
-                theSS_CommonEventTypes
+                theSS_EventTypes_Common,
+                theSS_Travesals
             );
         
             aModule.ModuleBuilder = aMod_builder;
@@ -778,7 +641,8 @@ permissions and limitations under the Licence.
             "OverriderSvce",
             "IdentifierSvce",
             "RecorderSvce",
-            "CommonEventKinds",
+            "EventKinds_Common",
+            "Traversals",
             aMod_definer
         ]);
         
@@ -788,18 +652,20 @@ permissions and limitations under the Licence.
         
         module.exports = (function() {
             
-            var aM_typesregistry  = require('../typesregistry');
-            var aM_overrider      = require('../modboot/overrider_type');
-            var aM_identifierSvce = require('./identifier_svce');
-            var aM_recorderSvce   = require('./recorder_svce');
-            var aM_commoneventkinds  = require('../commoneventkinds');
-            
+            var aM_typesregistry     = require('../modboot/typesregistry');
+            var aM_overrider         = require('../modboot/overrider_svce');
+            var aM_identifierSvce    = require('../identifying/identifier_svce');
+            var aM_recorderSvce      = require('../identifying/recorder_svce');
+            var aM_eventkinds_common = require('../eventkinds/eventkinds_common');
+            var aM_traversals        = require('../utils/traversals');
+    
             return aMod_definer(
                 aM_typesregistry,
                 aM_overrider,
                 aM_identifierSvce,
                 aM_recorderSvce,
-                aM_commoneventkinds
+                aM_eventkinds_common,
+                aM_traversals
             );
         })();
         
@@ -807,30 +673,17 @@ permissions and limitations under the Licence.
     else if ( !(typeof define === 'undefined') && define.amd) {
         // AMD / RequireJS
         
-        define([
-                "../typesregistry",
-                "../modboot/overrider_type",
-                "./identifier_svce",
-                "./recorder_svce",
-                "../commoneventkinds"
+        define( "m_common_type",
+            [
+                "m_typesregistry",
+                "m_overrider_svce",
+                "m_identifier_svce",
+                "m_recorder_svce",
+                "m_eventkinds_common",
+                "m_traversals"
             ],
             aMod_definer
-            /* function (
-                theM_typesregistry,
-                theM_overrider,
-                theM_identifierSvce,
-                theM_recorderSvce,
-                theM_commoneventkinds
-            ) {
-                return aMod_definer(
-                    theM_typesregistry,
-                    theM_overrider,
-                    theM_identifierSvce,
-                theM_recorderSvce,
-                theM_commoneventkinds
-                );
-            }
-            */);
+           );
     }
     
 })();

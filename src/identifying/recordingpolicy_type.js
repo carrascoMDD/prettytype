@@ -38,8 +38,9 @@ permissions and limitations under the Licence.
     var aMod_definer =  ( function( theSS_typesregistry,
                                     theSS_Overrider,
                                     theSS_IdentifierSvce) {
-        
-        
+    
+    
+        var ComponentName    = "prettytype";
         var ModuleName     = "recordingpolicy_type";
         var ModulePackages = "identifying";
         var ModuleFullName = ModulePackages + "/" + ModuleName;
@@ -51,10 +52,6 @@ permissions and limitations under the Licence.
             
             
             if( typeof FG_logModLoads === 'function') { FG_logModLoads(ModuleFullName);}
-            
-            
-            
-            
             
             
             
@@ -159,6 +156,7 @@ permissions and limitations under the Licence.
                 
                 aPrototype._v_Prototype_RecordingPolicy = aPrototype;
                 
+
                 aPrototype._v_Identifier = null;
                 
                 aPrototype._v_Id         = null;
@@ -475,14 +473,19 @@ permissions and limitations under the Licence.
             var aModule = {
                 "RecordingPolicy_Prototype": aRecordingPolicy_Prototype,
                 "RecordingPolicy_Constructor": RecordingPolicy_Constructor,
-                "RecordingPolicy_SuperPrototypeConstructor": RecordingPolicy_SuperPrototypeConstructor
+                "RecordingPolicy_SuperPrototypeConstructor": RecordingPolicy_SuperPrototypeConstructor,
+                "Prototype": aRecordingPolicy_Prototype,
+                "Constructor": RecordingPolicy_Constructor,
+                "SuperPrototypeConstructor": RecordingPolicy_SuperPrototypeConstructor
             };
             pgInitFromModuleConstants( aModule);
             aModule._v_Type = "module";
+            aModule.ComponentName     = ComponentName;
             aModule.ModuleName     = ModuleName;
             aModule.ModulePackages = ModulePackages;
             aModule.ModuleFullName = ModuleFullName;
-            aModule.ModuleVariations= ModuleVariations;             aModule.ModuleConstants = ModuleConstants;
+            aModule.ModuleVariations= ModuleVariations;
+            aModule.ModuleConstants = ModuleConstants;
             aModule.ModuleGlobals   = ModuleGlobals;
             aModule.pgInitFromModuleConstants  = pgInitFromModuleConstants;
             aModule.pgInitFromModuleVariations = pgInitFromModuleVariations;
@@ -545,8 +548,8 @@ permissions and limitations under the Licence.
         
         module.exports = (function() {
             
-            var aM_typesregistry = require('../typesregistry');
-            var aM_overrider     = require('../modboot/overrider_type');
+            var aM_typesregistry = require('../modboot/typesregistry');
+            var aM_overrider     = require('../modboot/overrider_svce');
             var aM_identifier    = require('./identifier_type');
             
             return aMod_definer(
@@ -560,23 +563,13 @@ permissions and limitations under the Licence.
     else if ( !(typeof define === 'undefined') && define.amd) {
         // AMD / RequireJS
         
-        define([
-            "../typesregistry",
-            "../modboot/overrider_type",
-            "./identifier_type"
-        ],
-        aMod_definer
-        /* function (
-            theM_typesregistry,
-            theM_overrider,
-            theM_identifier
-        ) {
-            return aMod_definer(
-                theM_typesregistry,
-                theM_overrider,
-                theM_identifier
-            );
-        } */
+        define("m_recordingpolicy_type",
+            [
+                "m_typesregistry",
+                "m_overrider_svce",
+                "m_identifier_type"
+            ],
+            aMod_definer
         );
     }
     

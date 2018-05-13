@@ -60,13 +60,15 @@ permissions and limitations under the Licence.
         }
     }
     */
+    
+    var ComponentName    = "prettytype";
+    var ModuleName     = "typesregistry";
+    var ModulePackages = "modboot";
+    var ModuleFullName = ModulePackages + "/" + ModuleName;
+    var ModuleSymbolicName /* for RequireJS */ = "m_" + ModuleName.replace( /-/, "_");
+    
     var aMod_definer = ( function(){
-        
-        var ModuleName     = "typesregistry";
-        var ModulePackages = "modboot";
-        var ModuleFullName = ModulePackages + "/" + ModuleName;
-        
-        
+    
         var aMod_builder = function() {
             
             if( typeof FG_logModLoads === 'function') { FG_logModLoads(ModuleFullName);}
@@ -126,7 +128,6 @@ permissions and limitations under the Licence.
                 var aPrototype = {};
                 
                 pgInitFromModuleConstants( aPrototype);
-    
     
                 aPrototype._v_SuperPrototype = null;
     
@@ -357,13 +358,46 @@ permissions and limitations under the Licence.
                 };
                 if( fRegisteredModule){}/* CQT */
                 aPrototype.fRegisteredModule = fRegisteredModule;
-                
-                
-                
-                
-                
-                
-                
+    
+    
+    
+                var fUnregisterModule = function( theModuleFullName, theModule) {
+        
+                    var aModuleFullName = theModuleFullName;
+                    if( !aModuleFullName) {
+                        if( theModule) {
+                            aModuleFullName = theModule.ModuleFullName;
+                        }
+                    }
+                    if( !aModuleFullName) {
+                        return false;
+                    }
+        
+                    var anAlreadyRegisteredModule =  this._v_ModulesByFullName[ aModuleFullName];
+                    if( !anAlreadyRegisteredModule) {
+                        return false;
+                    }
+                    
+                    if( theModule) {
+                        if( !( anAlreadyRegisteredModule === theModule)) {
+                            return false;
+                        }
+    
+                        delete anAlreadyRegisteredModule[ "TYPESREGISTRY"];
+                    }
+        
+                    delete this._v_ModulesByFullName[ aModuleFullName];
+                    
+                    return true;
+                };
+                if( fUnregisterModule){}/* CQT */
+                aPrototype.fUnregisterModule = fUnregisterModule;
+    
+    
+    
+    
+    
+    
                 return aPrototype;
                 
             })();
@@ -413,6 +447,7 @@ permissions and limitations under the Licence.
             };
             pgInitFromModuleConstants( aModule);
             aModule._v_Type = "module";
+            aModule.ComponentName     = ComponentName;
             aModule.ModuleName      = ModuleName;
             aModule.ModulePackages  = ModulePackages;
             aModule.ModuleFullName  = ModuleFullName;
@@ -422,8 +457,8 @@ permissions and limitations under the Licence.
             aModule.pgInitModuleGlobalsOn      = pgInitModuleGlobalsOn;
             
             aTypesRegistry_Prototype._v_Module = aModule;
-            
-            
+    
+    
             
             
             return aModule;
@@ -459,13 +494,12 @@ permissions and limitations under the Licence.
     });
     
     
-    
     if( !( typeof angular === 'undefined') && angular.module) {
         // Angular (1.x)
         
         // typesRegistry dependencies declared here (as none) because there is no separate file defining the angular.module("typesRegistry"
         // other modules with multiple factories, i.e. identifyingTypes, declare the module and its dependiencies in a separate file identifying_types.js
-        angular.module("modbootTypes").factory("TypesRegistrySvce",
+        angular.module("typesRegistry", []).factory("TypesRegistrySvce",
             aMod_definer
         );
     
@@ -482,14 +516,9 @@ permissions and limitations under the Licence.
     else if ( !(typeof define === 'undefined') && define.amd) {
         // AMD / RequireJS
         
-        define([
-        ],
-        aMod_definer
-        /* function (
-        ) {
-            return aMod_definer();
-        }
-        */);
+        define( ModuleSymbolicName,
+            aMod_definer
+        );
         
     }
     

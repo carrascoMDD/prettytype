@@ -42,10 +42,10 @@ if( !( typeof angular === 'undefined') && angular.module) {
     
     angular.module("commonTypes", [
         "typesRegistry",
-        "rootsTypes",
-        "commonEventKinds",
+        "modbootTypes",
+        "eventKinds_Common",
         "identifyingTypes",
-        "baseURLs"
+        "traversals"
     ]);
     
     

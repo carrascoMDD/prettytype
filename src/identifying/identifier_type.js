@@ -35,8 +35,9 @@ permissions and limitations under the Licence.
 (function () {
     var aMod_definer = ( function( theSS_typesregistry,
                                    theSS_Overrider) {
-        
-        
+    
+    
+        var ComponentName    = "prettytype";
         var ModuleName     = "identifier_type";
         var ModulePackages = "identifying";
         var ModuleFullName = ModulePackages + "/" + ModuleName;
@@ -401,10 +402,14 @@ permissions and limitations under the Licence.
             var aModule = {
                 "Identifier_Prototype": aIdentifier_Prototype,
                 "Identifier_Constructor": Identifier_Constructor,
-                "Identifier_SuperPrototypeConstructor": Identifier_SuperPrototypeConstructor
+                "Identifier_SuperPrototypeConstructor": Identifier_SuperPrototypeConstructor,
+                "Prototype": aIdentifier_Prototype,
+                "Constructor": Identifier_Constructor,
+                "SuperPrototypeConstructor": Identifier_SuperPrototypeConstructor
             };
             pgInitFromModuleConstants( aModule);
             aModule._v_Type = "module";
+            aModule.ComponentName     = ComponentName;
             aModule.ModuleName     = ModuleName;
             aModule.ModulePackages = ModulePackages;
             aModule.ModuleFullName = ModuleFullName;
@@ -467,8 +472,8 @@ permissions and limitations under the Licence.
         
         module.exports = (function() {
             
-            var aM_typesregistry = require('./typesregistry');
-            var aM_overrider     = require('./overrider_type');
+            var aM_typesregistry = require('../modboot/typesregistry');
+            var aM_overrider     = require('../modboot/overrider_svce');
             
             return aMod_definer(
                 aM_typesregistry,
@@ -480,21 +485,13 @@ permissions and limitations under the Licence.
     else if ( !(typeof define === 'undefined') && define.amd) {
         // AMD / RequireJS
         
-        define([
-            "../typesregistry",
-            "../modboot/overrider_type"
-        ],
-        aMod_definer
-        /* function (
-            theM_typesregistry,
-            theM_overrider
-        ) {
-            return aMod_definer(
-                theM_typesregistry,
-                theM_overrider
-            );
-        }
-        */);
+        define( "m_identifier_type",
+            [
+                "m_typesregistry",
+                "m_overrider_svce"
+            ],
+            aMod_definer
+        );
     }
     
 })();

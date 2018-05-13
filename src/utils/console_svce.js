@@ -37,8 +37,9 @@
     
     var aMod_definer = ( function( theSS_typesregistry,
                                    theSS_Overrider) {
-        
-        
+    
+    
+        var ComponentName    = "prettytype";
         var ModuleName     = "console_svce";
         var ModulePackages = "utils";
         var ModuleFullName = ModulePackages + "/" + ModuleName;
@@ -128,9 +129,9 @@
                     return;
                 }
     
-                theToInit._g_WriteToConsole          = aModule.WRITETOCONSOLE;
-                theToInit._g_CollectLogs             = aModule.COLLECTLOGS;
-                theToInit._g_MaxCollectedLogsLength  = aModule.MAXCOLLECTEDLOGSLENGTH;
+                theToInit._g_WriteToConsole          = ModuleConstants.WRITETOCONSOLE;
+                theToInit._g_CollectLogs             = ModuleConstants.COLLECTLOGS;
+                theToInit._g_MaxCollectedLogsLength  = ModuleConstants.MAXCOLLECTEDLOGSLENGTH;
     
                 theToInit._g_CollectedLogs           = [ ];
                 theToInit._g_CollectedLogsSize       = 0;
@@ -147,10 +148,12 @@
             var aModule = { };
             pgInitFromModuleConstants( aModule);
             aModule._v_Type = "module";
+            aModule.ComponentName     = ComponentName;
             aModule.ModuleName     = ModuleName;
             aModule.ModulePackages = ModulePackages;
             aModule.ModuleFullName = ModuleFullName;
-            aModule.ModuleVariations= ModuleVariations;             aModule.ModuleConstants = ModuleConstants;
+            aModule.ModuleVariations= ModuleVariations;
+            aModule.ModuleConstants = ModuleConstants;
             aModule.ModuleGlobals   = ModuleGlobals;
             aModule.pgInitFromModuleConstants  = pgInitFromModuleConstants;
             aModule.pgInitFromModuleVariations = pgInitFromModuleVariations;
@@ -365,8 +368,9 @@
                     return;
                 }
                 
-                var aMessageLen = ( ( typeof theMessage == "string") ? theMessage.length : 0);
-                
+                var aMessageLen = ( ( typeof theMessage === "string") ? theMessage.length : 0);
+                if( aMessageLen){}/* CQT */
+    
                 aModule.ModuleGlobals._g_CollectedLogsSize += aMessageLen;
                 
                 if( aModule.ModuleGlobals._g_MaxCollectedLogsLength <= 0) {
@@ -387,8 +391,9 @@
                     var aRemovedKindAndMessage = aModule.ModuleGlobals._g_CollectedLogs.shift();
                     
                     var aRemovedMessage = aRemovedKindAndMessage[ 1];
-                    var aRemovedMessageLen = ( ( typeof aRemovedMessage == "string") ? aRemovedMessage.length : 0);
-                    
+                    var aRemovedMessageLen = ( ( typeof aRemovedMessage === "string") ? aRemovedMessage.length : 0);
+                    if( aRemovedMessageLen){}/* CQT */
+    
                     aModule.ModuleGlobals._g_CollectedLogsSize -= aRemovedMessageLen;
                 }
                 
@@ -447,7 +452,7 @@
         
         angular.module("consoleSvce", [
             "typesRegistry",
-            "rootsTypes"
+            "modbootTypes"
         ]).factory("ConsoleSvce",[
             "TypesRegistrySvce",
             "OverriderSvce",
@@ -460,8 +465,8 @@
         
         module.exports = (function() {
             
-            var aM_typesregistry  = require('./typesregistry');
-            var aM_overrider_svce = require('./overrider_svce');
+            var aM_typesregistry  = require('../modboot/typesregistry');
+            var aM_overrider_svce = require('../modboot/overrider_svce');
             
             return aMod_definer(
                 aM_typesregistry,
@@ -473,19 +478,12 @@
     else if ( !(typeof define === 'undefined') && define.amd) {
         // AMD / RequireJS
         
-        define([
-            "../typesregistry",
-            "../modboot/overrider_svce"
-        
-        ], function (
-            theM_typesregistry,
-            theM_overrider
-        ) {
-            return aMod_definer(
-                theM_typesregistry,
-                theM_overrider
-            );
-        });
+        define( "m_console_svce",
+            [
+                "m_typesregistry",
+                "m_overrider_svce"
+            ],
+            aMod_definer);
         
     }
     

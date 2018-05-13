@@ -1,7 +1,7 @@
 /*
- * console_svce-behavioral-test.js
+ * console_svce-test.js
  *
- * Created @author Antonio Carrasco Valero 201610081846
+ * Created @author Antonio Carrasco Valero 201610131355
  *
  *
  ***************************************************************************
@@ -33,102 +33,26 @@ permissions and limitations under the Licence.
 
 
 
-
-
-/// <reference path="src/identifying/dumpingpolicy_type.js"/>
+/// <reference path="src/utils/console_ng_svce.js"/>
 "use strict";
 
 
 
 
-describe("prettytype  ConsoleSvce tests", function () {
-
-    var aModule_TypesRegistrySvceFactory = ModuleFactory_TypesRegistrySvce();
-    //console.log( "typeof aModule_TypesRegistrySvceFactory= " + typeof aModule_TypesRegistrySvceFactory);
-
-    var aTypesRegistrySvce = aModule_TypesRegistrySvceFactory();
-    //console.log( "typeof aTypesRegistrySvce= " + typeof aTypesRegistrySvce);
-    //console.log( "aTypesRegistrySvce keys = " + Object.keys( aTypesRegistrySvce));
+describe("prettytypes-ng console_svce behavioral tests", function () {
 
 
-    var aModule_OverriderTypeFactory = ModuleFactory_OverriderType();
-    //console.log( "typeof aModule_OverriderTypeFactory= " + typeof aModule_OverriderTypeFactory);
+    beforeEach( module( "typesRegistry", "rootsTypes", "consoleSvce"));
+
+    var aConsoleSvce           = null;
 
 
-    var aModule_OverriderType = aModule_OverriderTypeFactory( aTypesRegistrySvce);
-    //console.log( "typeof aModule_OverriderType= " + typeof aModule_OverriderType);
+    beforeEach( inject(function( _ConsoleSvce_){
 
-    var aOverriderType_title = "Overrider-Title-test";
-
-    var anOverrider = new aModule_OverriderType.Overrider_Constructor( aOverriderType_title);
-    //console.log( "typeof anOverrider= " + typeof anOverrider);
-    //console.log( "anOverrider keys = " + Object.keys( anOverrider));
-
-
-
-
-
-    var aModule_IdentifierTypeFactory = ModuleFactory_IdentifierType();
-    //console.log( "typeof aModule_IdentifierTypeFactory= " + typeof aModule_IdentifierTypeFactory);
-
-
-    var aModule_IdentifierType = aModule_IdentifierTypeFactory( aTypesRegistrySvce, anOverrider);
-    //console.log( "typeof aModule_IdentifierType= " + typeof aModule_IdentifierType);
-
-    var aIdentifierType_title = "Identifier-Title-test";
-
-    var anIdentifier = new aModule_IdentifierType.Identifier_Constructor( aIdentifierType_title);
-    //console.log( "typeof anIdentifier= " + typeof anIdentifier);
-    //console.log( "anIdentifier keys = " + Object.keys( anIdentifier));
-
-
-
-
-    var aModule_RecordTypeFactory = ModuleFactory_RecordType();
-    //console.log( "typeof aModule_RecordTypeFactory= " + typeof aModule_RecordTypeFactory);
-
-
-    var aModule_RecordType = aModule_RecordTypeFactory( aTypesRegistrySvce, anOverrider);
-    //console.log( "typeof aModule_RecordType= " + typeof aModule_RecordType);
-
-
-
-
-
-
-
-    var aModule_RecordingPolicyTypeFactory = ModuleFactory_RecordingPolicyType();
-    // console.log( "typeof aModule_RecordingPolicyTypeFactory= " + typeof aModule_RecordingPolicyTypeFactory);
-
-
-    var aModule_RecordingPolicyType = aModule_RecordingPolicyTypeFactory(
-        aTypesRegistrySvce,
-        anOverrider,
-        anIdentifier);
-    // console.log( "typeof aModule_RecordingPolicyType= " + typeof aModule_RecordingPolicyType);
-
-
-
-    var aModule_RecordingPolicyKeepAllTypeFactory = ModuleFactory_RecordingPolicyKeepAllType();
-    // console.log( "typeof aModule_RecordingPolicyKeepAllTypeFactory= " + typeof aModule_RecordingPolicyKeepAllTypeFactory);
-
-
-    var aModule_RecordingPolicyKeepAllType = aModule_RecordingPolicyKeepAllTypeFactory( aTypesRegistrySvce, anOverrider, aModule_RecordingPolicyType);
-    // console.log( "typeof aModule_RecordingPolicyKeepAllType= " + typeof aModule_RecordingPolicyKeepAllType);
-
-
-
-
-
-
-
-    var aModule_ConsoleSvceFactory = ModuleFactory_ConsoleSvce();
-    // console.log( "typeof aModule_ConsoleSvceFactory= " + typeof aModule_ConsoleSvceFactory);
-
-    var aModule_ConsoleSvce = aModule_ConsoleSvceFactory( aTypesRegistrySvce, anOverrider);
-    // console.log( "typeof aModule_ConsoleSvce= " + typeof aModule_ConsoleSvce);
-
-
+        aConsoleSvce = _ConsoleSvce_;
+        // console.log( "typeof anOverrider= " + typeof anOverrider);
+        // console.log( "anOverrider keys = " + Object.keys( anOverrider));
+    }));
 
 
 
@@ -156,31 +80,31 @@ describe("prettytype  ConsoleSvce tests", function () {
 
     it("Does not Collect log error info", function () {
 
-        aModule_ConsoleSvce.clear();
+        aConsoleSvce.clear();
 
 
-        aModule_ConsoleSvce.pSetWriteToConsole(          true);
-        aModule_ConsoleSvce.pSetCollectLogs(             false);
+        aConsoleSvce.pSetWriteToConsole(          true);
+        aConsoleSvce.pSetCollectLogs(             false);
 
         var aMessage = "MessageOne";
 
-        var someCollectedLogsBefore = aModule_ConsoleSvce.fCollectedLogsCopy();
+        var someCollectedLogsBefore = aConsoleSvce.fCollectedLogsCopy();
         var aNumCollectedLogsBefore = someCollectedLogsBefore.length;
         expect( aNumCollectedLogsBefore).toBe( 0);
 
-        aModule_ConsoleSvce.log( aMessage);
+        aConsoleSvce.log( aMessage);
 
-        aModule_ConsoleSvce.error( aMessage);
+        aConsoleSvce.error( aMessage);
 
-        aModule_ConsoleSvce.info( aMessage);
+        aConsoleSvce.info( aMessage);
 
-        var someCollectedLogsAfter = aModule_ConsoleSvce.fCollectedLogsCopy();
+        var someCollectedLogsAfter = aConsoleSvce.fCollectedLogsCopy();
         var aNumCollectedLogsAfter = someCollectedLogsAfter ? someCollectedLogsAfter.length : 0;
         expect( aNumCollectedLogsAfter).toBe( 0);
 
-        aModule_ConsoleSvce.pSetCollectLogs(    false);
+        aConsoleSvce.pSetCollectLogs(    false);
 
-        aModule_ConsoleSvce.clear();
+        aConsoleSvce.clear();
     });
 
 
@@ -190,22 +114,22 @@ describe("prettytype  ConsoleSvce tests", function () {
 
     it("Collects log MessageOne", function () {
 
-        aModule_ConsoleSvce.clear();
+        aConsoleSvce.clear();
 
 
-        aModule_ConsoleSvce.pSetWriteToConsole(          true);
-        aModule_ConsoleSvce.pSetCollectLogs(             true);
-        aModule_ConsoleSvce.pSetMaxCollectedLogsLength(  1000);
+        aConsoleSvce.pSetWriteToConsole(          true);
+        aConsoleSvce.pSetCollectLogs(             true);
+        aConsoleSvce.pSetMaxCollectedLogsLength(  1000);
 
         var aMessage = "MessageOne";
 
-        var someCollectedLogsBefore = aModule_ConsoleSvce.fCollectedLogsCopy();
+        var someCollectedLogsBefore = aConsoleSvce.fCollectedLogsCopy();
         var aNumCollectedLogsBefore = someCollectedLogsBefore.length;
         expect( aNumCollectedLogsBefore).toBe( 0);
 
-        aModule_ConsoleSvce.log( aMessage);
+        aConsoleSvce.log( aMessage);
 
-        var someCollectedLogsAfter = aModule_ConsoleSvce.fCollectedLogsCopy();
+        var someCollectedLogsAfter = aConsoleSvce.fCollectedLogsCopy();
         var aNumCollectedLogsAfter = someCollectedLogsAfter.length;
         expect( aNumCollectedLogsAfter).toBe( 1);
 
@@ -219,9 +143,9 @@ describe("prettytype  ConsoleSvce tests", function () {
         var aLastLogMessage = aLastLog[ 1];
         expect( aLastLogMessage).toBe( aMessage);
 
-        aModule_ConsoleSvce.pSetCollectLogs(    false);
+        aConsoleSvce.pSetCollectLogs(    false);
 
-        aModule_ConsoleSvce.clear();
+        aConsoleSvce.clear();
     });
 
 
@@ -231,22 +155,22 @@ describe("prettytype  ConsoleSvce tests", function () {
 
     it("Collects error MessageOne", function () {
 
-        aModule_ConsoleSvce.clear();
+        aConsoleSvce.clear();
 
 
-        aModule_ConsoleSvce.pSetWriteToConsole(          true);
-        aModule_ConsoleSvce.pSetCollectLogs(             true);
-        aModule_ConsoleSvce.pSetMaxCollectedLogsLength(  1000);
+        aConsoleSvce.pSetWriteToConsole(          true);
+        aConsoleSvce.pSetCollectLogs(             true);
+        aConsoleSvce.pSetMaxCollectedLogsLength(  1000);
 
         var aMessage = "MessageOne";
 
-        var someCollectedLogsBefore = aModule_ConsoleSvce.fCollectedLogsCopy();
+        var someCollectedLogsBefore = aConsoleSvce.fCollectedLogsCopy();
         var aNumCollectedLogsBefore = someCollectedLogsBefore.length;
         expect( aNumCollectedLogsBefore).toBe( 0);
 
-        aModule_ConsoleSvce.error( aMessage);
+        aConsoleSvce.error( aMessage);
 
-        var someCollectedLogsAfter = aModule_ConsoleSvce.fCollectedLogsCopy();
+        var someCollectedLogsAfter = aConsoleSvce.fCollectedLogsCopy();
         var aNumCollectedLogsAfter = someCollectedLogsAfter.length;
         expect( aNumCollectedLogsAfter).toBe( 1);
 
@@ -260,9 +184,9 @@ describe("prettytype  ConsoleSvce tests", function () {
         var aLastLogMessage = aLastLog[ 1];
         expect( aLastLogMessage).toBe( aMessage);
 
-        aModule_ConsoleSvce.pSetCollectLogs(    false);
+        aConsoleSvce.pSetCollectLogs(    false);
 
-        aModule_ConsoleSvce.clear();
+        aConsoleSvce.clear();
     });
 
 
@@ -274,22 +198,22 @@ describe("prettytype  ConsoleSvce tests", function () {
 
     it("Collects info MessageOne", function () {
 
-        aModule_ConsoleSvce.clear();
+        aConsoleSvce.clear();
 
 
-        aModule_ConsoleSvce.pSetWriteToConsole(          true);
-        aModule_ConsoleSvce.pSetCollectLogs(             true);
-        aModule_ConsoleSvce.pSetMaxCollectedLogsLength(  1000);
+        aConsoleSvce.pSetWriteToConsole(          true);
+        aConsoleSvce.pSetCollectLogs(             true);
+        aConsoleSvce.pSetMaxCollectedLogsLength(  1000);
 
         var aMessage = "MessageOne";
 
-        var someCollectedLogsBefore = aModule_ConsoleSvce.fCollectedLogsCopy();
+        var someCollectedLogsBefore = aConsoleSvce.fCollectedLogsCopy();
         var aNumCollectedLogsBefore = someCollectedLogsBefore.length;
         expect( aNumCollectedLogsBefore).toBe( 0);
 
-        aModule_ConsoleSvce.info( aMessage);
+        aConsoleSvce.info( aMessage);
 
-        var someCollectedLogsAfter = aModule_ConsoleSvce.fCollectedLogsCopy();
+        var someCollectedLogsAfter = aConsoleSvce.fCollectedLogsCopy();
         var aNumCollectedLogsAfter = someCollectedLogsAfter.length;
         expect( aNumCollectedLogsAfter).toBe( 1);
 
@@ -303,9 +227,9 @@ describe("prettytype  ConsoleSvce tests", function () {
         var aLastLogMessage = aLastLog[ 1];
         expect( aLastLogMessage).toBe( aMessage);
 
-        aModule_ConsoleSvce.pSetCollectLogs(    false);
+        aConsoleSvce.pSetCollectLogs(    false);
 
-        aModule_ConsoleSvce.clear();
+        aConsoleSvce.clear();
     });
 
 
@@ -317,26 +241,26 @@ describe("prettytype  ConsoleSvce tests", function () {
 
     it("Collects log upto size 1000", function () {
 
-        aModule_ConsoleSvce.clear();
+        aConsoleSvce.clear();
 
 
-        aModule_ConsoleSvce.pSetWriteToConsole(          true);
-        aModule_ConsoleSvce.pSetCollectLogs(             true);
-        aModule_ConsoleSvce.pSetMaxCollectedLogsLength(  1000);
+        aConsoleSvce.pSetWriteToConsole(          true);
+        aConsoleSvce.pSetCollectLogs(             true);
+        aConsoleSvce.pSetMaxCollectedLogsLength(  1000);
 
-        
-        var someCollectedLogsBefore = aModule_ConsoleSvce.fCollectedLogsCopy();
+
+        var someCollectedLogsBefore = aConsoleSvce.fCollectedLogsCopy();
         var aNumCollectedLogsBefore = someCollectedLogsBefore.length;
         expect( aNumCollectedLogsBefore).toBe( 0);
 
 
-        
+
         /* First log of 500 chars, which fit the 1000 limit */
 
         var aMessage500 = strRepeat( "x", 500);
-        aModule_ConsoleSvce.log( aMessage500);
+        aConsoleSvce.log( aMessage500);
 
-        var someCollectedLogsAfter = aModule_ConsoleSvce.fCollectedLogsCopy();
+        var someCollectedLogsAfter = aConsoleSvce.fCollectedLogsCopy();
         var aNumCollectedLogsAfter = someCollectedLogsAfter.length;
         expect( aNumCollectedLogsAfter).toBe( 1);
 
@@ -357,9 +281,9 @@ describe("prettytype  ConsoleSvce tests", function () {
         /* Second log of 499 chars, which added to the previous 500 chars for a total of 999 still fit the 1000 limit */
 
         var aMessage499 = strRepeat( "x", 499);
-        aModule_ConsoleSvce.log( aMessage499);
+        aConsoleSvce.log( aMessage499);
 
-        someCollectedLogsAfter = aModule_ConsoleSvce.fCollectedLogsCopy();
+        someCollectedLogsAfter = aConsoleSvce.fCollectedLogsCopy();
         aNumCollectedLogsAfter = someCollectedLogsAfter.length;
         expect( aNumCollectedLogsAfter).toBe( 2);
 
@@ -390,9 +314,9 @@ describe("prettytype  ConsoleSvce tests", function () {
         /* Third log of 2 chars, which added to the previous 500 + 499 chars = 999 for a total of 1001 do not fit the 1000 limit so the first log is discarded */
 
         var aMessage2 = strRepeat( "x", 2);
-        aModule_ConsoleSvce.log( aMessage2);
+        aConsoleSvce.log( aMessage2);
 
-        someCollectedLogsAfter = aModule_ConsoleSvce.fCollectedLogsCopy();
+        someCollectedLogsAfter = aConsoleSvce.fCollectedLogsCopy();
         aNumCollectedLogsAfter = someCollectedLogsAfter.length;
         expect( aNumCollectedLogsAfter).toBe( 2);
 
@@ -420,14 +344,16 @@ describe("prettytype  ConsoleSvce tests", function () {
 
 
 
-        aModule_ConsoleSvce.pSetCollectLogs(    false);
+        aConsoleSvce.pSetCollectLogs(    false);
 
-        aModule_ConsoleSvce.clear();
+        aConsoleSvce.clear();
     });
 
 
 
 
 
-
 });
+
+
+

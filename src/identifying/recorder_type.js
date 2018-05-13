@@ -42,8 +42,9 @@ permissions and limitations under the Licence.
                                    theSS_RecordType,
                                    theSS_RecordingPolicyType,
                                    theSS_DumpingPolicyType) {
-        
-        
+    
+    
+        var ComponentName    = "prettytype";
         var ModuleName     = "recorder_type";
         var ModulePackages = "identifying";
         var ModuleFullName = ModulePackages + "/" + ModuleName;
@@ -161,6 +162,7 @@ permissions and limitations under the Licence.
                 
                 aPrototype._v_Prototype_Recorder = aPrototype;
                 
+                
                 aPrototype._v_Identifier = null;
                 
                 aPrototype._v_Id         = null;
@@ -225,7 +227,6 @@ permissions and limitations under the Licence.
                     this._v_RecordsIdentifier = new theS_IdentifierType.Identifier_Constructor( "(For-" + this._v_Title + ")");
                     
                     
-                    
                     this._v_Records    = [ ];
                     this._v_RecordPointersByName = { };
                     
@@ -237,7 +238,6 @@ permissions and limitations under the Licence.
                      which when true shall keep references to record instances and shall also prevent reclamation of their memory by the garbage collector.
                      */
                     this._v_RecordingPolicy = new theS_RecordingPolicyType.RecordingPolicy_Constructor(     "(For-" + this._v_Title + ")", this._v_Identifier, this);
-                    
                     
                     this._v_DumpingPolicy   = new theS_DumpingPolicyType.DumpingPolicy_Constructor( "(For-" + this._v_Title + ")", this._v_Identifier, this);
                     
@@ -424,7 +424,11 @@ permissions and limitations under the Licence.
                 var pSetRecordingPolicy = function( theRecordingPolicy) {
                     
                     if( this._v_RecordingPolicy) {
-                        if( this._v_RecordingPolicy.pRelease && ( typeof this._v_RecordingPolicy.pRelease == "function")) {
+                        if( this._v_RecordingPolicy === theRecordingPolicy) {
+                            return;
+                        }
+                        
+                        if( this._v_RecordingPolicy.pRelease && ( typeof this._v_RecordingPolicy.pRelease === "function")) {
                             this._v_RecordingPolicy.pRelease();
                         }
                     }
@@ -432,7 +436,7 @@ permissions and limitations under the Licence.
                     this._v_RecordingPolicy = theRecordingPolicy;
                     
                     var aRecordingPolicy_recorder = null;
-                    if( theRecordingPolicy.fRecorder && ( typeof theRecordingPolicy.fRecorder == "function")) {
+                    if( theRecordingPolicy.fRecorder && ( typeof theRecordingPolicy.fRecorder === "function")) {
                         aRecordingPolicy_recorder = theRecordingPolicy.fRecorder();
                     }
                     
@@ -473,7 +477,7 @@ permissions and limitations under the Licence.
                 var pSetDumpingPolicy = function( theDumpingPolicy) {
                     
                     if( this._v_DumpingPolicy) {
-                        if( this._v_DumpingPolicy.pRelease && ( typeof this._v_DumpingPolicy.pRelease == "function")) {
+                        if( this._v_DumpingPolicy.pRelease && ( typeof this._v_DumpingPolicy.pRelease === "function")) {
                             this._v_DumpingPolicy.pRelease();
                         }
                     }
@@ -481,7 +485,7 @@ permissions and limitations under the Licence.
                     this._v_DumpingPolicy = theDumpingPolicy;
                     
                     var aDumpingPolicy_recorder = null;
-                    if( theDumpingPolicy.fRecorder && ( typeof theDumpingPolicy.fRecorder == "function")) {
+                    if( theDumpingPolicy.fRecorder && ( typeof theDumpingPolicy.fRecorder === "function")) {
                         aDumpingPolicy_recorder = theDumpingPolicy.fRecorder();
                     }
                     
@@ -600,7 +604,7 @@ permissions and limitations under the Licence.
                         return null;
                     }
                     
-                    if( !( typeof this._v_Records.slice == "function")) {
+                    if( !( typeof this._v_Records.slice === "function")) {
                         return null;
                     }
                     
@@ -625,7 +629,7 @@ permissions and limitations under the Licence.
                         return [];
                     }
                     
-                    if( !( typeof this._v_Records.slice == "function")) {
+                    if( !( typeof this._v_Records.slice === "function")) {
                         return [];
                     }
                     
@@ -691,7 +695,7 @@ permissions and limitations under the Licence.
                     
                     var aRecordPointer = -1;
                     
-                    if( typeof theRecordPointer == "number") {
+                    if( typeof theRecordPointer === "number") {
                         
                         if( !isNaN( theRecordPointer)) {
                             
@@ -716,10 +720,10 @@ permissions and limitations under the Licence.
                     if( aRecordPointer < 0) {
                         if( this._v_Records) {
                             
-                            var aNumRecords = this._v_Records.length;
-                            if( aNumRecords) {
+                            var otherNumRecords = this._v_Records.length;
+                            if( otherNumRecords) {
                                 
-                                aRecordPointer = aNumRecords - 1;
+                                aRecordPointer = otherNumRecords - 1;
                             }
                         }
                     }
@@ -803,10 +807,11 @@ permissions and limitations under the Licence.
                             if( this._v_RecordPointersByName.hasOwnProperty( aRecordPointerByNameKey)) {
                                 
                                 var aRecordPointerValue = this._v_RecordPointersByName[ aRecordPointerByNameKey];
-                                if( typeof aRecordPointerValue == "number") {
+                                if( typeof aRecordPointerValue === "number") {
                                     if( !isNaN( aRecordPointerValue)) {
                                         
                                         var anUpdatedRecordPointerValue = aRecordPointerValue - theAmountToSubstract;
+                                        if( anUpdatedRecordPointerValue){}/* CQT */
                                         this._v_RecordPointersByName[ aRecordPointerByNameKey] = anUpdatedRecordPointerValue;
                                     }
                                 }
@@ -995,14 +1000,19 @@ permissions and limitations under the Licence.
             var aModule = {
                 "Recorder_Prototype": aRecorder_Prototype,
                 "Recorder_Constructor": Recorder_Constructor,
-                "Recorder_SuperPrototypeConstructor": Recorder_SuperPrototypeConstructor
+                "Recorder_SuperPrototypeConstructor": Recorder_SuperPrototypeConstructor,
+                "Prototype": aRecorder_Prototype,
+                "Constructor": Recorder_Constructor,
+                "SuperPrototypeConstructor": Recorder_SuperPrototypeConstructor
             };
             pgInitFromModuleConstants( aModule);
             aModule._v_Type = "module";
+            aModule.ComponentName     = ComponentName;
             aModule.ModuleName     = ModuleName;
             aModule.ModulePackages = ModulePackages;
             aModule.ModuleFullName = ModuleFullName;
-            aModule.ModuleVariations= ModuleVariations;             aModule.ModuleConstants = ModuleConstants;
+            aModule.ModuleVariations= ModuleVariations;
+            aModule.ModuleConstants = ModuleConstants;
             aModule.ModuleGlobals   = ModuleGlobals;
             aModule.pgInitFromModuleConstants  = pgInitFromModuleConstants;
             aModule.pgInitFromModuleVariations = pgInitFromModuleVariations;
@@ -1077,8 +1087,8 @@ permissions and limitations under the Licence.
         
         module.exports = (function() {
             
-            var aM_typesregistry  = require('../typesregistry');
-            var aM_overrider      = require('../modboot/overrider_type');
+            var aM_typesregistry  = require('../modboot/typesregistry');
+            var aM_overrider      = require('../modboot/overrider_svce');
             var aM_identifierSvce = require('./identifier_svce');
             var aM_identifier     = require('./identifier_type');
             var aM_record         = require('./record_type');
@@ -1100,36 +1110,17 @@ permissions and limitations under the Licence.
     else if ( !(typeof define === 'undefined') && define.amd) {
         // AMD / RequireJS
         
-        define([
-            "../typesregistry",
-            "../modboot/overrider_type",
-            "./identifier_svce",
-            "./identifier_type",
-            "./record_type",
-            "./recordingpolicy_keepall_type",
-            "./dumpingpolicy_filterkinds_type"
-        ],
-        aMod_definer
-        /* function (
-            theM_typesregistry,
-            theM_overrider,
-            theM_identifierSvce,
-            theM_identifier,
-            theM_record,
-            theM_recordingpolicy,
-            theM_dumpingpolicy
-        ) {
-            return aMod_definer(
-                theM_typesregistry,
-                theM_overrider,
-                theM_identifierSvce,
-                theM_identifier,
-                theM_record,
-                theM_recordingpolicy,
-                theM_dumpingpolicy
-            );
-        }
-        */);
+        define( "m_recorder_type",
+            [
+                "m_typesregistry",
+                "m_overrider_svce",
+                "m_identifier_svce",
+                "m_identifier_type",
+                "m_record_type",
+                "m_recordingpolicy_keepall_type",
+                "m_dumpingpolicy_filterkinds_type"
+            ],
+            aMod_definer);
     }
     
     

@@ -36,8 +36,9 @@ permissions and limitations under the Licence.
     
     var aMod_definer = ( function( theSS_typesregistry,
                                    theSS_Overrider) {
-        
-        
+    
+    
+        var ComponentName    = "prettytype";
         var ModuleName     = "record_type";
         var ModulePackages = "identifying";
         var ModuleFullName = ModulePackages + "/" + ModuleName;
@@ -1450,14 +1451,19 @@ permissions and limitations under the Licence.
             var aModule = {
                 "Record_Prototype": aRecord_Prototype,
                 "Record_Constructor": Record_Constructor,
-                "Record_SuperPrototypeConstructor": Record_SuperPrototypeConstructor
+                "Record_SuperPrototypeConstructor": Record_SuperPrototypeConstructor,
+                "Prototype": aRecord_Prototype,
+                "Constructor": Record_Constructor,
+                "SuperPrototypeConstructor": Record_SuperPrototypeConstructor
             };
             pgInitFromModuleConstants( aModule);
             aModule._v_Type = "module";
+            aModule.ComponentName     = ComponentName;
             aModule.ModuleName     = ModuleName;
             aModule.ModulePackages = ModulePackages;
             aModule.ModuleFullName = ModuleFullName;
-            aModule.ModuleVariations= ModuleVariations;             aModule.ModuleConstants = ModuleConstants;
+            aModule.ModuleVariations= ModuleVariations;
+            aModule.ModuleConstants = ModuleConstants;
             aModule.ModuleGlobals   = ModuleGlobals;
             aModule.pgInitFromModuleConstants  = pgInitFromModuleConstants;
             aModule.pgInitFromModuleVariations = pgInitFromModuleVariations;
@@ -1521,8 +1527,8 @@ permissions and limitations under the Licence.
         
         module.exports = (function() {
             
-            var aM_typesregistry = require('./typesregistry');
-            var aM_overrider     = require('./overrider_type');
+            var aM_typesregistry = require('../modboot/typesregistry');
+            var aM_overrider     = require('../modboot/overrider_svce');
     
             return aMod_definer(
                 aM_typesregistry,
@@ -1534,19 +1540,12 @@ permissions and limitations under the Licence.
     else if ( !(typeof define === 'undefined') && define.amd) {
         // AMD / RequireJS
         
-        define([
-            "../typesregistry",
-            "../modboot/overrider_type"
-        
-        ], function (
-            theM_typesregistry,
-            theM_overrider
-        ) {
-            return aMod_definer(
-                theM_typesregistry,
-                theM_overrider
-            );
-        });
+        define( "m_record_type",
+            [
+                "m_typesregistry",
+                "m_overrider_svce"
+            ],
+            aMod_definer);
         
     }
     

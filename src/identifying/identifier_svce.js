@@ -82,6 +82,7 @@
         // Angular (1.x)
     
         angular.module("identifyingTypes").factory("IdentifierSvce",[
+            "TypesRegistrySvce",
             "IdentifierType",
             aMod_definer
         ]);
@@ -91,10 +92,12 @@
         // Node.js
         
         module.exports = (function() {
-            
-            var aM_identifier = require('./identifier_type');
+    
+            var aM_typesregistry = require('../modboot/typesregistry');
+            var aM_identifier    = require('./identifier_type');
             
             return aMod_definer(
+                aM_typesregistry,
                 aM_identifier
             );
         })();
@@ -103,18 +106,12 @@
     else if ( !(typeof define === 'undefined') && define.amd) {
         // AMD / RequireJS
     
-        define([
-            "./identifier_type"
-        ],
-        aMod_definer
-        /* function (
-            theM_identifier
-        ) {
-            return aMod_definer(
-                theM_identifier
-            );
-        }
-        */
+        define( "m_identifier_svce",
+            [
+                "m_typesregistry",
+                "m_identifier_type"
+            ],
+            aMod_definer
         );
         
     }

@@ -36,16 +36,17 @@ permissions and limitations under the Licence.
     var aMod_definer = ( function( theSS_typesregistry,
                                    theSS_Overrider,
                                    theSS_stacktraceSvce){
+    
+    
+        var ComponentName    = "prettytype";
+        var ModuleName     = "exceptiondetails_svce";
+        var ModulePackages = "utils";
+        var ModuleFullName = ModulePackages + "/" + ModuleName;
         
         
         var aMod_builder = function( theS_Overrider,
                                      theS_stacktraceSvce) {
-            
-            
-            var ModuleName     = "exceptiondetails_svce";
-            var ModulePackages = "utils";
-            var ModuleFullName = ModulePackages + "/" + ModuleName;
-            
+    
             
             if( typeof FG_logModLoads === 'function') { FG_logModLoads(ModuleFullName);}
     
@@ -72,13 +73,14 @@ permissions and limitations under the Licence.
                 }
             };
         
-    
 
     
             var ModuleVariations = { };
             pgInitWithModuleVariations( ModuleVariations);
             theS_Overrider.pOverrideModuleVariations( ModuleFullName, ModuleVariations);
     
+            
+            
     
             var pgInitWithModuleConstants = function( theToInit) {
                 
@@ -136,6 +138,7 @@ permissions and limitations under the Licence.
             var aModule = { };
             pgInitFromModuleConstants( aModule);
             aModule._v_Type = "module";
+            aModule.ComponentName     = ComponentName;
             aModule.ModuleName     = ModuleName;
             aModule.ModulePackages = ModulePackages;
             aModule.ModuleFullName = ModuleFullName;
@@ -150,7 +153,7 @@ permissions and limitations under the Licence.
             
             
             
-            var fExceptionDetail = function( theException) {
+            var fgExceptionDetail = function( theException) {
                 if( !theException) {
                     return null;
                 }
@@ -193,8 +196,8 @@ permissions and limitations under the Licence.
                 
                 return anExceptionDetail;
             };
-            if( fExceptionDetail){}/* CQT */
-            aModule.fExceptionDetail = fExceptionDetail;
+            if( fgExceptionDetail){}/* CQT */
+            aModule.fgExceptionDetail = fgExceptionDetail;
     
     
     
@@ -229,11 +232,8 @@ permissions and limitations under the Licence.
             }
         }
         
-        var aService = anExistingModule;
-        if( aService){}/* CQT */
-        
-        return aService;
-        
+    
+        return anExistingModule;
     });
     
     
@@ -244,7 +244,11 @@ permissions and limitations under the Licence.
         // Angular (1.x)
         
         
-        angular.module("stacktrace").factory("StacktraceSvce",[
+        angular.module("exceptiondetails", [
+            "typesRegistry",
+            "modbootTypes",
+            "stacktrace"
+        ]).factory("ExceptionDetailsSvce",[
             "TypesRegistrySvce",
             "OverriderSvce",
             "StacktraceSvce",
@@ -256,8 +260,8 @@ permissions and limitations under the Licence.
         
         module.exports = (function() {
             
-            var aM_typesregistry = require('./typesregistry');
-            var aM_overrider     = require('./overrider_type');
+            var aM_typesregistry   = require('../modboot/typesregistry');
+            var aM_overrider       = require('../modboot/overrider_svce');
             var aM_stacktrace_svce = require('./stacktrace_svce');
     
             return aMod_definer(
@@ -271,22 +275,14 @@ permissions and limitations under the Licence.
     else if ( !(typeof define === 'undefined') && define.amd) {
         // AMD / RequireJS
         
-        define([
-                "../modboot/typesregistry",
-                "../modboot/overrider_type",
-                "./stacktrace_svce"
+        define( "m_exceptiondetails_svce",
+            [
+                "m_typesregistry",
+                "m_overrider_svce",
+                "m_stacktrace_svce"
             ],
             aMod_definer
-            /* function (
-                theM_typesregistry,
-                theM_overrider
-            ) {
-                return aMod_definer(
-                    theM_typesregistry,
-                    theM_overrider
-                );
-            }
-            */);
+            );
     }
     
     

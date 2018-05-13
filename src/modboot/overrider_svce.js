@@ -39,13 +39,16 @@
     var aMod_definer = ( function( theSS_typesregistry,
                                    theSS_OverriderType){
     
+        var ComponentName    = "prettytype";
         var ModuleName     = "overrider_svce";
         var ModulePackages = "modboot";
         var ModuleFullName = ModulePackages + "/" + ModuleName;
     
         
         var aMod_builder = function( theS_OverriderType) {
-        
+    
+            if( typeof FG_logModLoads === 'function') { FG_logModLoads(ModuleFullName);}
+    
             return new theS_OverriderType.Overrider_Constructor( "Overrider_Service");
         };
     
@@ -106,24 +109,15 @@
     else if ( !(typeof define === 'undefined') && define.amd) {
         // AMD / RequireJS
     
-        define([
-                "./typesregistry",
-                "./overrider_type"
+        define("m_overrider_svce",
+            [
+                "m_typesregistry",
+                "m_overrider_type"
             ],
             aMod_definer
-            /* function (
-                theM_overrider
-            ) {
-                return aMod_definer(
-                    theM_overrider
-                );
-            }
-            */
         );
         
     }
-    
-    
     
 })();
 

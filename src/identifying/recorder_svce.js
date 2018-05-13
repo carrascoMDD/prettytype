@@ -40,6 +40,7 @@
                                    theSS_IdentifierSvce,
                                    theSS_RecorderType){
     
+        var ComponentName    = "prettytype";
         var ModuleName     = "recorder_svce";
         var ModulePackages = "identifying";
         var ModuleFullName = ModulePackages + "/" + ModuleName;
@@ -84,7 +85,8 @@
     if( !( typeof angular === 'undefined') && angular.module) {
         // Angular (1.x)
     
-        angular.module("identifyingTypes").factory("IdentifierSvce",[
+        angular.module("identifyingTypes").factory("RecorderSvce",[
+            "TypesRegistrySvce",
             "IdentifierSvce",
             "RecorderType",
             aMod_definer
@@ -95,11 +97,13 @@
         // Node.js
         
         module.exports = (function() {
-            
+    
+            var aM_typesregistry = require('../modboot/typesregistry');
             var aM_identifier_svce = require('./identifier_svce');
             var aM_recorder        = require('./recorder_type');
     
             return aMod_definer(
+                aM_typesregistry,
                 aM_identifier_svce,
                 aM_recorder
             );
@@ -109,21 +113,13 @@
     else if ( !(typeof define === 'undefined') && define.amd) {
         // AMD / RequireJS
     
-        define([
-            "./identifier_svce",
-            "./recorder_type"
+        define( "m_recorder_svce",
+            [
+                "m_typesregistry",
+                "m_identifier_svce",
+                "m_recorder_type"
             ],
-        aMod_definer
-        /* function (
-            theM_identifier_svce,
-             theM_recorder
-        ) {
-            return aMod_definer(
-                theM_identifier_svce,
-                theM_recorder
-            );
-        }
-        */
+            aMod_definer
         );
         
     }

@@ -37,10 +37,11 @@ permissions and limitations under the Licence.
 (function () {
     
     var aMod_definer = ( function( theSS_typesregistry,
-                       theSS_Overrider,
-                       theSS_RecordingPolicyKeepAllType) {
-        
-        
+                                   theSS_Overrider,
+                                   theSS_RecordingPolicyKeepAllType) {
+    
+    
+        var ComponentName    = "prettytype";
         var ModuleName     = "recordingpolicy_keepsome_type";
         var ModulePackages = "identifying";
         var ModuleFullName = ModulePackages + "/" + ModuleName;
@@ -52,10 +53,6 @@ permissions and limitations under the Licence.
             
             
             if( typeof FG_logModLoads === 'function') { FG_logModLoads(ModuleFullName);}
-            
-            
-            
-            
             
             
             
@@ -161,13 +158,12 @@ permissions and limitations under the Licence.
                 
                 aPrototype._v_SuperPrototype = theS_RecordingPolicyKeepAllType.RecordingPolicyKeepAll_Prototype;
                 
-                
                 aPrototype._v_Type = "RecordingPolicyKeepSome";
                 
                 aPrototype._v_Prototype_RecordingPolicyKeepSome = aPrototype;
                 
-                
                 aPrototype._v_Module = null;
+                
                 
                 
                 aPrototype._v_MustKeepRecordsMaxNumber = null;
@@ -325,13 +321,19 @@ permissions and limitations under the Licence.
                 "RecordingPolicyKeepSome_Prototype":   aRecordingPolicyKeepSome_Prototype,
                 "RecordingPolicyKeepSome_Constructor": RecordingPolicyKeepSome_Constructor,
                 "RecordingPolicy_Constructor":         RecordingPolicyKeepSome_Constructor,
-                "RecordingPolicyKeepSome_SuperPrototypeConstructor": RecordingPolicyKeepSome_SuperPrototypeConstructor
+                "RecordingPolicyKeepSome_SuperPrototypeConstructor": RecordingPolicyKeepSome_SuperPrototypeConstructor,
+                "Prototype": aRecordingPolicyKeepSome_Prototype,
+                "Constructor": RecordingPolicyKeepSome_Constructor,
+                "SuperPrototypeConstructor": RecordingPolicyKeepSome_SuperPrototypeConstructor
             };
             pgInitFromModuleConstants( aModule);
             aModule._v_Type = "module";
+            aModule.ComponentName     = ComponentName;
             aModule.ModuleName     = ModuleName;
             aModule.ModulePackages = ModulePackages;
             aModule.ModuleFullName = ModuleFullName;
+            aModule.ModuleVariations= ModuleVariations;
+            aModule.ModuleConstants = ModuleConstants;
             aModule.ModuleGlobals   = ModuleGlobals;
             aModule.pgInitFromModuleConstants  = pgInitFromModuleConstants;
             aModule.pgInitFromModuleVariations = pgInitFromModuleVariations;
@@ -378,7 +380,6 @@ permissions and limitations under the Licence.
     
     
     
-    
         return anExistingModule;
         
     });
@@ -402,7 +403,7 @@ permissions and limitations under the Licence.
         
         module.exports = (function() {
             
-            var aM_typesregistry   = require('../typesregistry');
+            var aM_typesregistry   = require('../modboot/typesregistry');
             var aM_overrider       = require('../modboot/overrider_svce');
             var aM_recordingpolicy = require('./recordingpolicy_keepall_type');
             
@@ -417,23 +418,13 @@ permissions and limitations under the Licence.
     else if ( !(typeof define === 'undefined') && define.amd) {
         // AMD / RequireJS
         
-        define([
-                "../typesregistry",
-                "../modboot/overrider_type",
-                "./recordingpolicy_keepall_type"
+        define( "m_recordingpolicy_keepsome_type",
+            [
+                "m_typesregistry",
+                "m_overrider_svce",
+                "m_recordingpolicy_keepall_type"
             ],
             aMod_definer
-            /* function (
-                theM_typesregistry,
-                theM_overrider,
-                theM_recordingpolicy
-            ) {
-                return aMod_definer(
-                    theM_typesregistry,
-                    theM_overrider,
-                    theM_recordingpolicy
-                );
-            } */
         );
     }
     

@@ -37,9 +37,10 @@ permissions and limitations under the Licence.
     var aMod_definer = ( function( theSS_typesregistry,
                                    theSS_Overrider,
                                    theSS_DumpingPolicyType,
-                                   theSS_CommonEventKinds) {
-        
-        
+                                   theSS_EventKinds_Common) {
+    
+    
+        var ComponentName    = "prettytype";
         var ModuleName     = "dumpingpolicy_filterkinds_type";
         var ModulePackages = "identifying";
         var ModuleFullName = ModulePackages + "/" + ModuleName;
@@ -48,12 +49,10 @@ permissions and limitations under the Licence.
         
         var aMod_builder = function( theS_Overrider,
                                      theS_DumpingPolicyType,
-                                     theS_CommonEventKinds) {
+                                     theS_EventKinds_Common) {
             
             
             if( typeof FG_logModLoads === 'function') { FG_logModLoads(ModuleFullName);}
-            
-            
             
             
             
@@ -64,7 +63,6 @@ permissions and limitations under the Licence.
                 }
                 
                 theToInit.LOGCHANGESTOEVENTKINDSNOTFORCONSOLE = true;
-                
                 
                 
                 theToInit.EVENTSSETNOTFORCONSOLE = "EVENTKINDS_NOTFORCONSOLE_NONE";
@@ -118,8 +116,8 @@ permissions and limitations under the Licence.
                 
                 if( theToInit.EVENTSSETNOTFORCONSOLE) {
                     
-                    if( typeof theToInit.EVENTSSETNOTFORCONSOLE == "string") {
-                        var anEventsSetNotForConsole = theS_CommonEventKinds[ theToInit.EVENTSSETNOTFORCONSOLE];
+                    if( typeof theToInit.EVENTSSETNOTFORCONSOLE === "string") {
+                        var anEventsSetNotForConsole = theS_EventKinds_Common[ theToInit.EVENTSSETNOTFORCONSOLE];
                         if( anEventsSetNotForConsole) {
                             theToInit.EVENTKINDS_NOTFORCONSOLE = anEventsSetNotForConsole.slice();
                         }
@@ -132,10 +130,10 @@ permissions and limitations under the Licence.
                     }
                 }
                 else {
-                    theToInit.EVENTKINDS_NOTFORCONSOLE = theS_CommonEventKinds.EVENTKINDS_NOTFORCONSOLE_DEFAULT.slice();
+                    theToInit.EVENTKINDS_NOTFORCONSOLE = theS_EventKinds_Common.EVENTKINDS_NOTFORCONSOLE_DEFAULT.slice();
                 }
                 if( !theToInit.EVENTKINDS_NOTFORCONSOLE) {
-                    theToInit.EVENTKINDS_NOTFORCONSOLE = theS_CommonEventKinds.EVENTKINDS_NOTFORCONSOLE_DEFAULT.slice();
+                    theToInit.EVENTKINDS_NOTFORCONSOLE = theS_EventKinds_Common.EVENTKINDS_NOTFORCONSOLE_DEFAULT.slice();
                 }
                 
             };
@@ -185,7 +183,6 @@ permissions and limitations under the Licence.
             var aDumpingPolicyFilterKinds_Prototype = (function() {
                 
                 
-                
                 var aPrototype = new theS_DumpingPolicyType.DumpingPolicy_SuperPrototypeConstructor();
                 
                 pgInitFromModuleConstants( aPrototype);
@@ -193,15 +190,13 @@ permissions and limitations under the Licence.
                 aPrototype._v_SuperPrototype = theS_DumpingPolicyType.DumpingPolicy_Prototype;
                 
                 aPrototype._v_Type = "DumpingPolicyFilterKinds";
-                
+    
+                aPrototype._v_Module = null;
+    
                 aPrototype._v_Prototype_DumpingPolicyFilterKinds = aPrototype;
                 
                 
-                aPrototype._v_Module = null;
-                
-                
                 aPrototype._v_EventKindsNotForConsole = null;
-                
                 
                 /* Slot property named _v_EventKindsNotForConsole only initialized in the prototype. May be overriden by individual instantes setting their own value */
                 if( aPrototype.EVENTKINDS_NOTFORCONSOLE) {
@@ -250,9 +245,6 @@ permissions and limitations under the Licence.
                 };
                 if( _pInit_DumpingPolicyFilterKinds){}/* CQT */
                 aPrototype._pInit_DumpingPolicyFilterKinds = _pInit_DumpingPolicyFilterKinds;
-                
-                
-                
                 
                 
                 
@@ -552,7 +544,8 @@ permissions and limitations under the Licence.
                     if( someEventKindsNotForConsole.indexOf( anEventKind) < 0) {
                         return true;
                     }
-                    
+                    if( null){}/* CQT */
+    
                     return false;
                     
                 };
@@ -657,20 +650,25 @@ permissions and limitations under the Licence.
                 "DumpingPolicyFilterKinds_Prototype":                 aDumpingPolicyFilterKinds_Prototype,
                 "DumpingPolicyFilterKinds_Constructor":               DumpingPolicyFilterKinds_Constructor,
                 "DumpingPolicy_Constructor":                          DumpingPolicyFilterKinds_Constructor,
-                "DumpingPolicyFilterKinds_SuperPrototypeConstructor": DumpingPolicyFilterKinds_SuperPrototypeConstructor
+                "DumpingPolicyFilterKinds_SuperPrototypeConstructor": DumpingPolicyFilterKinds_SuperPrototypeConstructor,
+                "Prototype": aDumpingPolicyFilterKinds_Prototype,
+                "Constructor": DumpingPolicyFilterKinds_Constructor,
+                "SuperPrototypeConstructor": DumpingPolicyFilterKinds_SuperPrototypeConstructor
             };
             pgInitFromModuleConstants( aModule);
             aModule._v_Type = "module";
+            aModule.ComponentName     = ComponentName;
             aModule.ModuleName     = ModuleName;
             aModule.ModulePackages = ModulePackages;
             aModule.ModuleFullName = ModuleFullName;
+            aModule.ModuleVariations= ModuleVariations;
+            aModule.ModuleConstants = ModuleConstants;
             aModule.ModuleGlobals   = ModuleGlobals;
             aModule.pgInitFromModuleConstants  = pgInitFromModuleConstants;
             aModule.pgInitFromModuleVariations = pgInitFromModuleVariations;
             aModule.pgInitModuleGlobalsOn      = pgInitModuleGlobalsOn;
-    
+        
             aDumpingPolicyFilterKinds_Prototype._v_Module = aModule;
-            
             
             
             
@@ -693,7 +691,7 @@ permissions and limitations under the Licence.
             var aModule = aMod_builder(
                 theSS_Overrider,
                 theSS_DumpingPolicyType,
-                theSS_CommonEventKinds
+                theSS_EventKinds_Common
             );
         
             aModule.ModuleBuilder = aMod_builder;
@@ -723,7 +721,7 @@ permissions and limitations under the Licence.
             "TypesRegistrySvce",
             "OverriderSvce",
             "DumpingPolicyType",
-            "CommonEventKinds",
+            "EventKinds_Common",
             aMod_definer
         ]);
         
@@ -733,16 +731,16 @@ permissions and limitations under the Licence.
         
         module.exports = (function() {
             
-            var aM_typesregistry = require('../typesregistry');
+            var aM_typesregistry = require('../modboot/typesregistry');
             var aM_overrider     = require('../modboot/overrider_svce');
             var aM_dumpingpolicy = require('./dumpingpolicy_type');
-            var aM_commoneventkinds = require('../commoneventkinds');
+            var aM_eventkinds_common = require('../eventkinds/eventkinds_common');
     
             return aMod_definer(
                 aM_typesregistry,
                 aM_overrider,
                 aM_dumpingpolicy,
-                aM_commoneventkinds
+                aM_eventkinds_common
             );
         })();
         
@@ -750,26 +748,15 @@ permissions and limitations under the Licence.
     else if ( !(typeof define === 'undefined') && define.amd) {
         // AMD / RequireJS
         
-        define([
-                "../typesregistry",
-                "../modboot/overrider_type",
-                "./dumpingpolicy_type",
-                "../commoneventkinds"
+        define( "m_dumpingpolicy_filterkinds_type",
+            [
+                "m_typesregistry",
+                "m_overrider_svce",
+                "m_dumpingpolicy_type",
+                "m_eventkinds_common"
             ],
             aMod_definer
-            /* function (
-                theM_typesregistry,
-                theM_overrider,
-                theM_dumpingpolicy,
-                theM_commoneventkinds
-            ) {
-                return aMod_definer(
-                    theM_typesregistry,
-                    theM_overrider,
-                    theM_dumpingpolicy,
-                    theM_commoneventkinds
-                );
-            } */
+            
         );
     }
     

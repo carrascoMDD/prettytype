@@ -33,16 +33,85 @@ permissions and limitations under the Licence.
 
 var LOGMODULELOADS = false;
 
-FG_logModLoads = function( theMessage) {
-    if( !theMessage) {
-        return LOGMODULELOADS;
+FG_logModLoads = function( theBoolOrMessage) {
+    
+    if(    ( typeof theBoolOrMessage === 'undefined')
+        || ( ( typeof theBoolOrMessage === 'object') && ( theBoolOrMessage === null))) {
+        
+        return LOGMODULELOADS === true;
     }
+    
+    if( ( typeof theBoolOrMessage === 'boolean')) {
+        
+        LOGMODULELOADS = theBoolOrMessage;
+        if( theBoolOrMessage) {
+            console.log( ',{"SHALL_LOG_MODULE_LOADS"}');
+        }
+        else {
+            console.log( ',{"SHALL_NOT_LOG_MODULE_LOADS"}');
+        }
+        
+        return LOGMODULELOADS === true;
+    }
+    
     if( LOGMODULELOADS) {
-        console.log( ',{"MODULE", "' + theMessage + '"}');
+        if( theBoolOrMessage) {
+        
+        }
+        console.log( ',{"MODULE", "' + theBoolOrMessage + '"}');
     }
 
     return LOGMODULELOADS;
 };
+
+
+FG_logModLoads._v_Type = "toplevelfunction";
+FG_logModLoads.ModuleName     = "FG_logModLoads";
+FG_logModLoads.ModulePackages = "modboot";
+FG_logModLoads.ModuleFullName = FG_logModLoads.ModulePackages + "/" + FG_logModLoads.ModuleName;
+FG_logModLoads.ModuleSource   = FG_logModLoads.toString();;'use strict';
+
+/*
+ * roots_types.js
+ *
+ * Created @author Antonio Carrasco Valero 201410030329
+ *
+ *
+ ***************************************************************************
+
+ Copyright 2014 2015 2016 Antonio Carrasco Valero
+ Angular Wrappers as Controllers and Services on prettytype Javascript skeletons for modules including a base prototype and prototypes hierarchy, intended to be reused.  licensed under EUPL  http://www.uiwire.org
+
+Licensed under the EUPL, Version 1.1 only (the "Licence");
+You may not use this work except in compliance with the
+Licence.
+You may obtain a copy of the Licence at:
+https://joinup.ec.europa.eu/software/page/eupl/licence-eupl
+Unless required by applicable law or agreed to in
+writing, software distributed under the Licence is
+distributed on an "AS IS" basis,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+express or implied.
+See the Licence for the specific language governing
+permissions and limitations under the Licence.
+ {{License2}}
+
+ {{Licensed1}}
+ {{Licensed2}}
+
+ ***************************************************************************
+ *
+ */
+
+
+if( !( typeof angular === 'undefined') && angular.module) {
+    // Angular (1.x)
+    
+    angular.module("modbootTypes", [ "typesRegistry"]);
+}
+
+
+
 
 ;/*
  * typesregistry.js
@@ -76,19 +145,48 @@ permissions and limitations under the Licence.
  *
  */
 
+'use strict';
 
 (function () {
  
-   var aMod_definer = ( function(){
+    /* Only module-like (or actual module under Angular, or RequireJS, or nodejs, or ...) with no dependencies.
+    All other modules with want to make sure they's me instantiated only once may get this typesregistry injected
+    and check with it whether the module(-like) has already been instantiated.
+    
+    Sample code snippet to inser at the end of the module instantiation function.
+    See examples in other javascript src in this prettytype package.
+    
+    var anExistingModule = null;
+    if(    !( typeof theSS_typesregistry === 'undefined')
+        && ( typeof theSS_typesregistry.fRegisteredModule === 'function')) {
+        anExistingModule = theSS_typesregistry.fRegisteredModule( ModuleFullName);
+    }
+    if( !anExistingModule) {
+        var aModule = aMod_builder(
+            theSS_typesregistry,
+            theSS_Overrider
+        );
         
-        var ModuleName     = "typesregistry";
-        var ModulePackages = "base";
-        var ModuleFullName = ModulePackages + "/" + ModuleName;
+        anExistingModule = aModule;
         
-        
+        if(    !( typeof theSS_typesregistry === 'undefined')
+            && ( typeof theSS_typesregistry.fRegisterModule === 'function')) {
+            theSS_typesregistry.fRegisterModule( ModuleFullName, aModule);
+        }
+    }
+    */
+    
+    var ComponentName    = "prettytype";
+    var ModuleName     = "typesregistry";
+    var ModulePackages = "modboot";
+    var ModuleFullName = ModulePackages + "/" + ModuleName;
+    var ModuleSymbolicName /* for RequireJS */ = "m_" + ModuleName.replace( /-/, "_");
+    
+    var aMod_definer = ( function(){
+    
         var aMod_builder = function() {
             
-            if( !( typeof FG_logModLoads == "undefined") && ( typeof FG_logModLoads == "function") && FG_logModLoads()) { FG_logModLoads(ModuleFullName);}
+            if( typeof FG_logModLoads === 'function') { FG_logModLoads(ModuleFullName);}
             
             
             
@@ -145,7 +243,6 @@ permissions and limitations under the Licence.
                 var aPrototype = {};
                 
                 pgInitFromModuleConstants( aPrototype);
-    
     
                 aPrototype._v_SuperPrototype = null;
     
@@ -324,24 +421,30 @@ permissions and limitations under the Licence.
                 
                 
                 
-                var fRegisterModule = function( theModule) {
+                var fRegisterModule = function( theModuleFullName, theModule) {
                     if( !theModule) {
                         return false;
                     }
                     
-                    var aModuleFullName = theModule.ModuleFullName;
+                    var aModuleFullName = theModuleFullName;
+                    if( !aModuleFullName) {
+                        aModuleFullName = theModule.ModuleFullName;
+                    }
                     if( !aModuleFullName) {
                         return false;
                     }
                     
                     var anAlreadyRegisteredModule =  this._v_ModulesByFullName[ aModuleFullName];
-                    if( !anAlreadyRegisteredModule) {
+                    if( anAlreadyRegisteredModule) {
                         console.log( "\nAttempt to register another module " + aModuleFullName + "\n");
                         return false;
                     }
                     
-                    
                     this._v_ModulesByFullName[ aModuleFullName] = theModule;
+                    
+                    if( ( typeof theModule === 'object') || ( typeof theModule === 'function')) {
+                        theModule[ "TYPESREGISTRY"] = this;
+                    }
                     
                     return true;
                 };
@@ -370,13 +473,46 @@ permissions and limitations under the Licence.
                 };
                 if( fRegisteredModule){}/* CQT */
                 aPrototype.fRegisteredModule = fRegisteredModule;
-                
-                
-                
-                
-                
-                
-                
+    
+    
+    
+                var fUnregisterModule = function( theModuleFullName, theModule) {
+        
+                    var aModuleFullName = theModuleFullName;
+                    if( !aModuleFullName) {
+                        if( theModule) {
+                            aModuleFullName = theModule.ModuleFullName;
+                        }
+                    }
+                    if( !aModuleFullName) {
+                        return false;
+                    }
+        
+                    var anAlreadyRegisteredModule =  this._v_ModulesByFullName[ aModuleFullName];
+                    if( !anAlreadyRegisteredModule) {
+                        return false;
+                    }
+                    
+                    if( theModule) {
+                        if( !( anAlreadyRegisteredModule === theModule)) {
+                            return false;
+                        }
+    
+                        delete anAlreadyRegisteredModule[ "TYPESREGISTRY"];
+                    }
+        
+                    delete this._v_ModulesByFullName[ aModuleFullName];
+                    
+                    return true;
+                };
+                if( fUnregisterModule){}/* CQT */
+                aPrototype.fUnregisterModule = fUnregisterModule;
+    
+    
+    
+    
+    
+    
                 return aPrototype;
                 
             })();
@@ -419,10 +555,14 @@ permissions and limitations under the Licence.
             var aModule = {
                 "TypesRegistry_Prototype": aTypesRegistry_Prototype,
                 "TypesRegistry_Constructor": TypesRegistry_Constructor,
-                "TypesRegistry_SuperPrototypeConstructor": TypesRegistry_SuperPrototypeConstructor
+                "TypesRegistry_SuperPrototypeConstructor": TypesRegistry_SuperPrototypeConstructor,
+                "Prototype": aTypesRegistry_Prototype,
+                "Constructor": TypesRegistry_Constructor,
+                "SuperPrototypeConstructor": TypesRegistry_SuperPrototypeConstructor
             };
             pgInitFromModuleConstants( aModule);
             aModule._v_Type = "module";
+            aModule.ComponentName     = ComponentName;
             aModule.ModuleName      = ModuleName;
             aModule.ModulePackages  = ModulePackages;
             aModule.ModuleFullName  = ModuleFullName;
@@ -432,8 +572,8 @@ permissions and limitations under the Licence.
             aModule.pgInitModuleGlobalsOn      = pgInitModuleGlobalsOn;
             
             aTypesRegistry_Prototype._v_Module = aModule;
-            
-            
+    
+    
             
             
             return aModule;
@@ -444,30 +584,42 @@ permissions and limitations under the Licence.
         
         var aModule = aMod_builder();
     
-       aModule.ModuleBuilder = aMod_builder;
-       aModule.ModuleSource  = aMod_builder.toString();
+        aModule.ModuleBuilder = aMod_builder;
+        aModule.ModuleSource  = aMod_builder.toString();
     
-       var aService = new aModule.TypesRegistry_Constructor();
-        if( aService){}/* CQT */
-        
+        var aService = new aModule.TypesRegistry_Constructor( "Types_Registry_singleton");
+    
+        /* Register, just for completion of the types registry, this very same module, and the instance by its name*/
+        aService.fRegisterModule( ModuleFullName, aModule);
+    
+        /* Register, just for completion of the types registry, this very same service instance by its name
+        as supplied above in the TypesRegistry_Constructor() or defaulted to module constant TYPESREGISTRYDEFAULTNAME
+        */
+        aService.fRegisterModule( ModuleFullName + "." + aService._v_Title, aService);
+    
+    
+        /* Register, just for completion of the types registry, the utility function to log module loads, if such exists */
+        if( typeof FG_logModLoads === 'function') {
+            aService.fRegisterModule( FG_logModLoads.ModuleFullName ? FG_logModLoads.ModuleFullName : "FG_logModLoads", FG_logModLoads);
+        }
+    
+    
         return aService;
         
     });
     
     
-    
-    if( typeof angular !== 'undefined' && angular.module) {
+    if( !( typeof angular === 'undefined') && angular.module) {
         // Angular (1.x)
         
         // typesRegistry dependencies declared here (as none) because there is no separate file defining the angular.module("typesRegistry"
         // other modules with multiple factories, i.e. identifyingTypes, declare the module and its dependiencies in a separate file identifying_types.js
-        angular.module("typesRegistry", []).factory("TypesRegistrySvce",[
-            "TypesRegistrySvce",
+        angular.module("typesRegistry", []).factory("TypesRegistrySvce",
             aMod_definer
-        ]);
+        );
     
     }
-    else if (typeof module !== 'undefined' && module.exports) {
+    else if ( !(typeof module === 'undefined') && module.exports) {
         // Node.js
         
         module.exports = (function() {
@@ -476,17 +628,789 @@ permissions and limitations under the Licence.
         })();
         
     }
-    else if (typeof define !== 'undefined' && define.amd) {
+    else if ( !(typeof define === 'undefined') && define.amd) {
         // AMD / RequireJS
         
-        define([
-        ], function (
-        ) {
-            return aMod_definer();
-        });
+        define( ModuleSymbolicName,
+            aMod_definer
+        );
         
     }
     
+    
+})();
+
+
+
+
+
+
+;/*
+ * overrider_type.js
+ *
+ * Created @author Antonio Carrasco Valero 201410030300
+ *
+ *
+ ***************************************************************************
+
+ Copyright 2014 2015 2016 2017 2018 Antonio Carrasco Valero
+ Javascript for core modules including a base prototype and prototypes hierarchy, intended to be reused on the Browser with AngularJS or RequireJS modules, or in the server as node modules. Licensed under EUPL  http://www.uiwire.org
+
+Licensed under the EUPL, Version 1.1 only (the "Licence");
+You may not use this work except in compliance with the
+Licence.
+You may obtain a copy of the Licence at:
+https://joinup.ec.europa.eu/software/page/eupl/licence-eupl
+Unless required by applicable law or agreed to in
+writing, software distributed under the Licence is
+distributed on an "AS IS" basis,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+express or implied.
+See the Licence for the specific language governing
+permissions and limitations under the Licence.
+ {{License2}}
+
+ {{Licensed1}}
+ {{Licensed2}}
+
+ ***************************************************************************
+ *
+ */
+
+'use strict';
+
+
+(function () {
+    
+    var aMod_definer =  ( function( theSS_typesregistry) {
+    
+        var ComponentName    = "prettytype";
+        var ModuleName     = "overrider_type";
+        var ModulePackages = "modboot";
+        var ModuleFullName = ModulePackages + "/" + ModuleName;
+        
+        
+        
+        var aMod_builder = function() {
+            
+            if( typeof FG_logModLoads === 'function') { FG_logModLoads(ModuleFullName);}
+            
+            
+            
+            var pgInitWithModuleConstants = function( theToInit) {
+                
+                if( !theToInit) {
+                    return;
+                }
+                theToInit.OVERRIDER_DEFAULTTITLE = "OverriderDefaultName";
+    
+                theToInit.MODULENAMESTEPSEPARATOR = "/";
+    
+                theToInit.PARMKEYS_OVERRIDERARGUMENTSVARIATIONPATHSEPARATOR_REGEXP = "\_\-\_";
+                
+                theToInit.LOGOVERRIDESFROMCOMMANDLINE = false;
+            };
+            
+            
+            
+            var ModuleConstants = {};
+            pgInitWithModuleConstants( ModuleConstants);
+            
+            
+            
+            
+            var pgInitFromModuleConstants = function( theToInit) {
+                if( !theToInit) {
+                    return;
+                }
+                
+                for( var aGlobalName in ModuleConstants) {
+                    if( ModuleConstants.hasOwnProperty( aGlobalName)) {
+                        theToInit[ aGlobalName] = ModuleConstants[ aGlobalName];
+                    }
+                }
+            };
+    
+    
+            
+            var pgInitModuleGlobalsOn = function( theToInit) {
+        
+                if( !theToInit) {
+                }
+            };
+    
+    
+    
+            var ModuleGlobals = { };
+            pgInitModuleGlobalsOn( ModuleGlobals);
+    
+    
+    
+    
+    
+    
+            var aOverrider_Prototype = (function() {
+                
+                
+                var aPrototype = {};
+                
+                pgInitFromModuleConstants( aPrototype);
+
+                aPrototype._v_SuperPrototype = null;
+    
+                aPrototype._v_Type = "Overrider";
+                
+                aPrototype._v_Prototype_Overrider = aPrototype;
+                
+                aPrototype._v_Module = null;
+    
+                aPrototype._v_Overriderarguments = null;
+                aPrototype._v_Custom = null;
+                aPrototype._v_Overrides = null;
+                
+                
+                
+                var _pInit = function( theTitle) {
+                    
+                    this._pInit_Overrider( theTitle);
+                };
+                if( _pInit){}/* CQT */
+                aPrototype._pInit = _pInit;
+                
+                
+                
+                
+                
+                
+                
+                var _pInit_Overrider = function( theTitle) {
+                    
+                    this._v_Prototype = aPrototype;
+                    this._v_Type      = this._v_Prototype._v_Type;
+                    this._v_Module    = aPrototype._v_Module;
+                    
+                    this._v_Title = theTitle;
+                    if( !this._v_Title) {
+                        this._v_Title = this.OVERRIDER_DEFAULTTITLE;
+                    }
+    
+                    this._v_Overriderarguments = null;
+                    this._v_Custom = null;
+                    this._v_Overrides = null;
+                };
+                if( _pInit_Overrider){}/* CQT */
+                aPrototype._pInit_Overrider = _pInit_Overrider;
+                
+                
+                
+                
+                
+                
+                
+                var fFullTypeNameString = function() {
+                    
+                    var aFullTypeName = this._v_Module.ModuleFullName + "." + this._v_Type;
+                    if( aFullTypeName){}/* CQT */
+                    
+                    return aFullTypeName;
+                };
+                if( fFullTypeNameString){}/* CQT */
+                aPrototype.fFullTypeNameString = fFullTypeNameString;
+                
+                
+                
+                
+                
+                var fIdentifyingJSON = function() {
+                    
+                    var aIdentifiyingJSON = {
+                        "type": this._v_Type,
+                        "id": this._v_Id
+                    };
+                    if( aIdentifiyingJSON){}/* CQT */
+                    return aIdentifiyingJSON;
+                };
+                if( fIdentifyingJSON){}/* CQT */
+                aPrototype.fIdentifyingJSON = fIdentifyingJSON;
+                
+                
+                
+                
+                
+                
+                var fIdentifyingString = function() {
+                    
+                    var aIdentifyingJSON = this.fIdentifyingJSON();
+                    
+                    var aIdentifyingString = "?";
+                    try {
+                        aIdentifyingString = JSON.stringify( aIdentifyingJSON);
+                    }
+                    catch( anException){
+                        aIdentifyingString = "Error_while_fIdentifyingString_JSON_stringify"
+                    }
+                    if( aIdentifyingString){}/* CQT */
+                    
+                    return aIdentifyingString;
+                };
+                if( fIdentifyingString){}/* CQT */
+                aPrototype.fIdentifyingString = fIdentifyingString;
+                
+                
+                
+                
+                
+                
+                
+                var fIdentifyingWithTitleJSON = function() {
+                    
+                    var aIdentifyingJSON = this.fIdentifyingJSON();
+                    
+                    aIdentifyingJSON[ "title"] = this._v_Title;
+                    
+                    return aIdentifyingJSON;
+                };
+                if( fIdentifyingWithTitleJSON){}/* CQT */
+                aPrototype.fIdentifyingWithTitleJSON = fIdentifyingWithTitleJSON;
+                
+                
+                
+                
+                
+                
+                var fIdentifyingWithTitleString = function() {
+                    
+                    var aIdentifyingJSON = this.fIdentifyingWithTitleJSON();
+                    
+                    var aIdentifyingString = "?";
+                    try {
+                        aIdentifyingString = JSON.stringify( aIdentifyingJSON);
+                    }
+                    catch( anException){
+                        aIdentifyingString = "Error_while_fIdentifyingWithTitleString_JSON_stringify"
+                    }
+                    if( aIdentifyingString){}/* CQT */
+                    
+                    return aIdentifyingString;
+                };
+                if( fIdentifyingWithTitleString){}/* CQT */
+                aPrototype.fIdentifyingWithTitleString = fIdentifyingWithTitleString;
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                var fToResultJSON = function( theCommonObjects, theAlready) {
+                    if( !( theAlready == null)) {
+                        if( theAlready.fAlready( this)){
+                            return this.fIdentifyingJSON();
+                        }
+                    }
+                    
+                    var aResultJSON = this.fIdentifyingWithTitleJSON();
+                    if( aResultJSON){}/* CQT */
+                    
+                    return aResultJSON;
+                };
+                if( fToResultJSON){}/* CQT */
+                aPrototype.fToResultJSON = fToResultJSON;
+    
+    
+     
+    
+           
+                var pSetOverriderarguments = function( theOverriderarguments) {
+                    this._v_Overriderarguments = theOverriderarguments;
+                };
+                if( pSetOverriderarguments){}/* CQT */
+                aPrototype.pSetOverriderarguments = pSetOverriderarguments;
+    
+    
+                var pSetCustom = function( theCustom) {
+                    this._v_Custom = theCustom;
+                };
+                if( pSetCustom){}/* CQT */
+                aPrototype.pSetCustom = pSetCustom;
+    
+    
+                var pSetOverrides = function( theOverrides) {
+                    this._v_Overrides = theOverrides;
+                };
+                if( pSetOverrides){}/* CQT */
+                aPrototype.pSetOverrides = pSetOverrides;
+    
+    
+
+    
+    
+    
+    
+                var pOverrideModuleVariations = function( theModuleFullName, theModuleVariations) {
+                    if( !theModuleFullName) {
+                        return;
+                    }
+        
+                    if( !theModuleVariations) {
+                        return;
+                    }
+        
+        
+                    if( this._v_Custom && ( typeof this._v_Custom === 'object')) {
+                        this.pOverrideWithValuesFrom( theModuleFullName, theModuleVariations, this._v_Custom)
+                    }
+    
+    
+                    if( this._v_Overrides && ( typeof this._v_Overrides === 'object')) {
+                        this.pOverrideWithValuesFrom( theModuleFullName, theModuleVariations, this._v_Overrides)
+                    }
+    
+    
+                    this.pOverrideWithArguments( theModuleFullName, theModuleVariations)
+                };
+                if( pOverrideModuleVariations){}/* CQT */
+                aPrototype.pOverrideModuleVariations = pOverrideModuleVariations;
+    
+    
+    
+    
+    
+    
+    
+    
+                var pOverrideWithValuesFrom = function( theModuleFullName, theToOverrride, theOverrideSource) {
+                    if( !theModuleFullName) {
+                        return;
+                    }
+        
+                    if( !theToOverrride) {
+                        return;
+                    }
+        
+                    if( !theOverrideSource) {
+                        return;
+                    }
+        
+        
+                    var aIgnoreOverrideValue = theOverrideSource.cIgnoreValue;
+                    if( !aIgnoreOverrideValue) {
+                        aIgnoreOverrideValue = null;
+                    }
+        
+        
+                    var aCurrentOverrides = theOverrideSource;
+                    if( !aCurrentOverrides) {
+                        return;
+                    }
+        
+        
+        
+                    var someModuleNameSteps = theModuleFullName.split( this.MODULENAMESTEPSEPARATOR);
+                    if( !someModuleNameSteps) {
+                        return;
+                    }
+        
+                    var aNumModuleNameSteps = someModuleNameSteps.length;
+                    if( !aNumModuleNameSteps) {
+                        return;
+                    }
+        
+                    for( var aModuleNameStepIdx=0; aModuleNameStepIdx < aNumModuleNameSteps; aModuleNameStepIdx++) {
+            
+                        var aModuleNameStep = someModuleNameSteps[ aModuleNameStepIdx];
+                        if( !aModuleNameStep) {
+                            return;
+                        }
+            
+                        if( !aCurrentOverrides.hasOwnProperty( aModuleNameStep)) {
+                            return;
+                        }
+            
+                        aCurrentOverrides = aCurrentOverrides[ aModuleNameStep];
+                        if( aCurrentOverrides == null) {
+                            return;
+                        }
+            
+                        if( !( typeof aCurrentOverrides === "object")) {
+                            return;
+                        }
+                    }
+        
+        
+        
+                    if( !( typeof aCurrentOverrides === "object")) {
+                        return;
+                    }
+        
+        
+        
+                    for( var aGlobalName in theToOverrride) {
+                        if( theToOverrride.hasOwnProperty( aGlobalName)) {
+                
+                            if( aCurrentOverrides.hasOwnProperty( aGlobalName)) {
+                    
+                                var anOverrideValue = aCurrentOverrides[ aGlobalName];
+                    
+                                if( !aIgnoreOverrideValue || !( anOverrideValue === aIgnoreOverrideValue)) {
+                        
+                                    theToOverrride[ aGlobalName] = anOverrideValue;
+                                }
+                            }
+                        }
+                    }
+                };
+                if( pOverrideWithValuesFrom){}/* CQT */
+                aPrototype.pOverrideWithValuesFrom = pOverrideWithValuesFrom;
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+                var pOverrideWithArguments = function( theModuleFullName, theToOverrride) {
+                    if( !theModuleFullName) {
+                        return;
+                    }
+        
+                    if( !theToOverrride) {
+                        return;
+                    }
+        
+                    if( !this._v_Overriderarguments) {
+                        return;
+                    }
+        
+                    if( !this._v_Overriderarguments) {
+                        return;
+                    }
+        
+        
+                    var aNumOverrides = this._v_Overriderarguments.length;
+                    if( !aNumOverrides) {
+                        return;
+                    }
+        
+                    var aModuleFullNameWithFinalSeparator = theModuleFullName + this.MODULENAMESTEPSEPARATOR;
+        
+                    for( var anOverrideIdx= 0; anOverrideIdx < aNumOverrides; anOverrideIdx++) {
+            
+                        var anOverride = this._v_Overriderarguments[ anOverrideIdx];
+                        if( anOverride) {
+                
+                            var anOverridenVariationFullNameWithSeparators = anOverride[ "name"];
+                            if( !anOverridenVariationFullNameWithSeparators) {
+                                continue;
+                            }
+                
+                            if( !( typeof anOverridenVariationFullNameWithSeparators === "string")) {
+                                continue;
+                            }
+                
+                            var anOverridenValue = anOverride[ "value"];
+                            if( !anOverridenValue) {
+                                continue;
+                            }
+                
+                            var aRegexp = new RegExp( this.PARMKEYS_OVERRIDERARGUMENTSVARIATIONPATHSEPARATOR_REGEXP, 'g');
+                
+                            var anOverridenVariationFullName = anOverridenVariationFullNameWithSeparators.replace( aRegexp, this.MODULENAMESTEPSEPARATOR);
+                
+                            if( !( anOverridenVariationFullName.indexOf( aModuleFullNameWithFinalSeparator) === 0)) {
+                                continue;
+                            }
+                
+                            if( !( anOverridenVariationFullName.length > aModuleFullNameWithFinalSeparator.length)) {
+                                continue;
+                            }
+                
+                            var anOverridenVariationName = anOverridenVariationFullName.substring( aModuleFullNameWithFinalSeparator.length);
+                            if( !anOverridenVariationName) {
+                                continue;
+                            }
+                
+                            theToOverrride[ anOverridenVariationName] = anOverridenValue;
+                
+                            if( this.LOGOVERRIDESFROMCOMMANDLINE) {
+                                console.log( "OVERRIDEFROMCOMMANDLINE " + aModuleFullNameWithFinalSeparator + anOverridenVariationName + "=" + anOverridenValue);
+                            }
+                        }
+                    }
+                };
+                if( pOverrideWithArguments){}/* CQT */
+                aPrototype.pOverrideWithArguments = pOverrideWithArguments;
+    
+    
+    
+    
+    
+    
+    
+    
+                return aPrototype;
+                
+            })();
+            
+            
+            
+            
+            var Overrider_Constructor = function( theTitle) {
+                this._v_Prototype = null;
+                this._v_SuperPrototype = null;
+                this._v_Type = null;
+                this._v_Module = null;
+                
+                this._v_Title = null;
+    
+                this._v_Overriderarguments = null;
+                this._v_Custom = null;
+                this._v_Overrides = null;
+                
+                this._pInit_Overrider( theTitle);
+            };
+            Overrider_Constructor.prototype = aOverrider_Prototype;
+            
+            
+            
+            
+            
+            var Overrider_SuperPrototypeConstructor = function() {
+                this._v_Prototype = aOverrider_Prototype;
+                this._v_SuperPrototype = null;
+                this._v_Type      = null;
+                this._v_Module    = null;
+                
+                this._v_Title     = null;
+    
+                this._v_Overriderarguments = null;
+                this._v_Custom = null;
+                this._v_Overrides = null;
+            };
+            Overrider_SuperPrototypeConstructor.prototype = aOverrider_Prototype;
+            
+            
+            
+            var aModule = {
+                "Overrider_Prototype": aOverrider_Prototype,
+                "Overrider_Constructor": Overrider_Constructor,
+                "Overrider_SuperPrototypeConstructor": Overrider_SuperPrototypeConstructor,
+                "Prototype": aOverrider_Prototype,
+                "Constructor": Overrider_Constructor,
+                "SuperPrototypeConstructor": Overrider_SuperPrototypeConstructor
+            };
+            pgInitFromModuleConstants( aModule);
+            aModule._v_Type = "module";
+            aModule.ComponentName     = ComponentName;
+            aModule.ModuleName     = ModuleName;
+            aModule.ModulePackages = ModulePackages;
+            aModule.ModuleFullName = ModuleFullName;
+            aModule.ModuleConstants = ModuleConstants;
+            aModule.ModuleGlobals   = ModuleGlobals;
+            aModule.ModuleConstants = ModuleConstants;
+            aModule.pgInitFromModuleConstants  = pgInitFromModuleConstants;
+            aModule.pgInitModuleGlobalsOn      = pgInitModuleGlobalsOn;
+            
+            aOverrider_Prototype._v_Module = aModule;
+            
+            
+            
+            return aModule;
+        };
+        
+        
+        
+        var anExistingModule = null;
+        if(    !( typeof theSS_typesregistry === 'undefined')
+            && ( typeof theSS_typesregistry.fRegisteredModule === 'function')) {
+            anExistingModule = theSS_typesregistry.fRegisteredModule( ModuleFullName);
+        }
+        if( !anExistingModule) {
+            
+            var aModule = aMod_builder();
+    
+            aModule.ModuleBuilder = aMod_builder;
+            aModule.ModuleSource  = aMod_builder.toString();
+    
+            anExistingModule = aModule;
+    
+            if(    !( typeof theSS_typesregistry === 'undefined')
+                && ( typeof theSS_typesregistry.fRegisterModule === 'function')) {
+                theSS_typesregistry.fRegisterModule( ModuleFullName, aModule);
+            }
+        }
+        
+        
+        return anExistingModule;
+        
+    });
+    
+    
+    if( !( typeof angular === 'undefined') && angular.module) {
+        // Angular (1.x)
+        
+        angular.module("modbootTypes").factory("OverriderType",[
+            "TypesRegistrySvce",
+            aMod_definer
+        ]);
+        
+    }
+    else if ( !(typeof module === 'undefined') && module.exports) {
+        // Node.js
+        
+        module.exports = (function() {
+            
+            var aM_typesregistry = require('./typesregistry');
+            
+            return aMod_definer(
+                aM_typesregistry
+            );
+        })();
+        
+    }
+    else if ( !(typeof define === 'undefined') && define.amd) {
+        // AMD / RequireJS
+        
+        define( "m_overrider_type",
+            [
+                "m_typesregistry"
+            ],
+            aMod_definer);
+        
+    }
+    
+})();
+
+
+
+
+;/*
+ * overider_svce.js
+ *
+ * Created @author Antonio Carrasco Valero 201610051556
+ *
+ *
+ ***************************************************************************
+
+ Copyright 2014 2015 2016 2017 2018 Antonio Carrasco Valero
+ Javascript for core modules including a base prototype and prototypes hierarchy, intended to be reused on the Browser with AngularJS or RequireJS modules, or in the server as node modules. Licensed under EUPL  http://www.uiwire.org
+
+ Licensed under the EUPL, Version 1.1 only (the "Licence");
+ You may not use this work except in compliance with the
+ Licence.
+ You may obtain a copy of the Licence at:
+ https://joinup.ec.europa.eu/software/page/eupl/licence-eupl
+ Unless required by applicable law or agreed to in
+ writing, software distributed under the Licence is
+ distributed on an "AS IS" basis,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+ express or implied.
+ See the Licence for the specific language governing
+ permissions and limitations under the Licence.
+ {{License2}}
+
+ {{Licensed1}}
+ {{Licensed2}}
+
+ ***************************************************************************
+ *
+ */
+
+
+'use strict';
+
+
+(function () {
+    
+    var aMod_definer = ( function( theSS_typesregistry,
+                                   theSS_OverriderType){
+    
+        var ComponentName    = "prettytype";
+        var ModuleName     = "overrider_svce";
+        var ModulePackages = "modboot";
+        var ModuleFullName = ModulePackages + "/" + ModuleName;
+    
+        
+        var aMod_builder = function( theS_OverriderType) {
+    
+            if( typeof FG_logModLoads === 'function') { FG_logModLoads(ModuleFullName);}
+    
+            return new theS_OverriderType.Overrider_Constructor( "Overrider_Service");
+        };
+    
+        
+
+        var anExistingModule = null;
+        if(    !( typeof theSS_typesregistry === 'undefined')
+            && ( typeof theSS_typesregistry.fRegisteredModule === 'function')) {
+            anExistingModule = theSS_typesregistry.fRegisteredModule( ModuleFullName);
+        }
+        if( !anExistingModule) {
+        
+            var aModule = aMod_builder(
+                theSS_OverriderType
+            );
+
+            anExistingModule = aModule;
+        
+            if(    !( typeof theSS_typesregistry === 'undefined')
+                && ( typeof theSS_typesregistry.fRegisterModule === 'function')) {
+                theSS_typesregistry.fRegisterModule( ModuleFullName, aModule);
+            }
+        }
+    
+    
+        return anExistingModule;
+    });
+    
+    
+
+    
+    
+    if( !( typeof angular === 'undefined') && angular.module) {
+        // Angular (1.x)
+    
+        angular.module("modbootTypes").factory("OverriderSvce",[
+            "TypesRegistrySvce",
+            "OverriderType",
+            aMod_definer
+        ]);
+        
+    }
+    else if ( !(typeof module === 'undefined') && module.exports) {
+        // Node.js
+        
+        module.exports = (function() {
+    
+            var aM_typesregistry = require('./typesregistry');
+            var aM_overrider     = require('./overrider_type');
+    
+            return aMod_definer(
+                aM_typesregistry,
+                aM_overrider
+            );
+        })();
+        
+    }
+    else if ( !(typeof define === 'undefined') && define.amd) {
+        // AMD / RequireJS
+    
+        define("m_overrider_svce",
+            [
+                "m_typesregistry",
+                "m_overrider_type"
+            ],
+            aMod_definer
+        );
+        
+    }
     
 })();
 
@@ -528,629 +1452,249 @@ permissions and limitations under the Licence.
  */
 
 
-
-
-
-function ModuleFactory_DecoratesystemprototypesSvce() {
-
-    'use strict';
-
-    return ( function(){
-
-
-
-        var aMod_definer = function() {
-
-
-            var ModuleName     = "decoratesystemprototypes_svce";
-            var ModulePackages = "utils";
-            var ModuleFullName = ModulePackages + "/" + ModuleName;
-
-
-            if( !( typeof FG_logModLoads == "undefined") && ( typeof FG_logModLoads == "function") && FG_logModLoads()) { FG_logModLoads(ModuleFullName);}
-
-
-
-
-
-
-            var pgInitWithModuleConstants = function( theToInit) {
-
+(function() {
+    
+    var aMod_definer = ( function(theSS_typesregistry,
+                                  theSS_Overrider){
+    
+    
+        var ComponentName    = "prettytype";
+        var ModuleName     = "decoratesystemprototypes_svce";
+        var ModulePackages = "utils";
+        var ModuleFullName = ModulePackages + "/" + ModuleName;
+    
+        
+        var aMod_builder = function( theS_Overrider) {
+    
+            
+            if( typeof FG_logModLoads === 'function') { FG_logModLoads(ModuleFullName);}
+    
+    
+    
+    
+            var pgInitWithModuleVariations = function( theToInit) {
+        
                 if( !theToInit) {
                 }
             };
-
-
-
-
+    
+    
+    
+            var pgInitFromModuleVariations = function( theToInit) {
+                if( !theToInit) {
+                    return;
+                }
+        
+                for( var aGlobalName in ModuleVariations) {
+                    if( ModuleVariations.hasOwnProperty( aGlobalName)) {
+                        theToInit[ aGlobalName] = ModuleVariations[ aGlobalName];
+                    }
+                }
+            };
+    
+    
+    
+            var ModuleVariations = { };
+            pgInitWithModuleVariations( ModuleVariations);
+            theS_Overrider.pOverrideModuleVariations( ModuleFullName, ModuleVariations);
+    
+    
+            
+    
+            var pgInitWithModuleConstants = function( theToInit) {
+                
+                if( !theToInit) {
+                }
+            };
+            
+            
+            
             var ModuleConstants = {};
+            pgInitFromModuleVariations( ModuleConstants);
             pgInitWithModuleConstants( ModuleConstants);
-
-
-
-
+    
+    
+    
             var pgInitFromModuleConstants = function( theToInit) {
                 if( !theToInit) {
                     return;
                 }
-
+        
                 for( var aGlobalName in ModuleConstants) {
                     if( ModuleConstants.hasOwnProperty( aGlobalName)) {
                         theToInit[ aGlobalName] = ModuleConstants[ aGlobalName];
                     }
                 }
             };
-
-
-
-
+    
+    
+    
+    
+            var pgInitModuleGlobalsOn = function( theToInit) {
+        
+                if( !theToInit) {
+                }
+            };
+    
+    
+    
+            var ModuleGlobals = { };
+            pgInitModuleGlobalsOn( ModuleGlobals);
+    
+    
+    
+    
+            
+            
+            
             var aModule = { };
             pgInitFromModuleConstants( aModule);
+            aModule._v_Type = "module";
+            aModule.ComponentName     = ComponentName;
             aModule.ModuleName     = ModuleName;
             aModule.ModulePackages = ModulePackages;
             aModule.ModuleFullName = ModuleFullName;
-
-
-
-
-
-
+            aModule.ModuleVariations= ModuleVariations;
+            aModule.ModuleConstants = ModuleConstants;
+            aModule.ModuleGlobals   = ModuleGlobals;
+            aModule.pgInitFromModuleConstants  = pgInitFromModuleConstants;
+            aModule.pgInitFromModuleVariations = pgInitFromModuleVariations;
+            aModule.pgInitModuleGlobalsOn      = pgInitModuleGlobalsOn;
+            
+            
+            
+            
             var fStringExtend = function( theString, theLen) {
-
+                
                 if( !theLen) {
                     return "";
                 }
-
+                
                 var aThisLen = theString.length;
                 if( !aThisLen) {
                     return "";
                 }
-
+                
                 var aSource = theString;
                 var aNumRepeats = Math.floor( theLen / aThisLen);
                 aNumRepeats += 1;
                 if( aNumRepeats > 1) {
-
+                    
                     if( aNumRepeats > 10000) {
                         aNumRepeats = 10000;
                     }
                     aSource = Array.apply(null, new Array( aNumRepeats)).map(String.prototype.valueOf, theString).join( "");
                 }
-
+                
                 var aExtended = aSource.slice( 0, theLen);
                 if( aExtended){}/* CQT */
-
+                
                 return aExtended;
             };
             if( fStringExtend){}/* CQT */
             aModule.fStringExtend = fStringExtend;
-
-
-
-
-
+            
+            
+            
+            
+            
             if( !String.prototype.Xtnd) {
                 String.prototype.Xtnd = function( theLen) {
-
+                    
                     return aModule.fStringExtend( this, theLen);
                 };
             }
-
-
-
-
-
+    
+            
+            
+            
             return aModule;
         };
-
-
-
-
-
-
-        var aService = aMod_definer();
-        if( aService){}/* CQT */
-
-        return aService;
-
-    });
-}
-
-
-if( ModuleFactory_DecoratesystemprototypesSvce){}/* CQT */
-
-
-
-
-;// Domain Public by Eric Wendelin http://www.eriwen.com/ (2008)
-//                  Luke Smith http://lucassmith.name/ (2008)
-//                  Loic Dachary <loic@dachary.org> (2008)
-//                  Johan Euphrosine <proppy@aminche.com> (2008)
-//                  Oyvind Sean Kinsey http://kinsey.no/blog (2010)
-//                  Victor Homyakov <victor-homyakov@users.sourceforge.net> (2010)
-/*global module, exports, define, ActiveXObject*/
-(function(global, factory) {
-    if (typeof exports === 'object') {
-        // Node
-        module.exports = factory();
-    } else if (typeof define === 'function' && define.amd) {
-        // AMD
-        define(factory);
-    } else {
-        // Browser globals
-        global.printStackTrace = factory();
-    }
-}(this, function() {
-    /**
-     * Main function giving a function stack trace with a forced or passed in Error
-     *
-     * @cfg {Error} e The error to create a stacktrace from (optional)
-     * @cfg {Boolean} guess If we should try to resolve the names of anonymous functions
-     * @return {Array} of Strings with functions, lines, files, and arguments where possible
-     */
-    function printStackTrace(options) {
-        options = options || {guess: true};
-        var ex = options.e || null, guess = !!options.guess, mode = options.mode || null;
-        var p = new printStackTrace.implementation(), result = p.run(ex, mode);
-        return (guess) ? p.guessAnonymousFunctions(result) : result;
-    }
-
-    printStackTrace.implementation = function() {
-    };
-
-    printStackTrace.implementation.prototype = {
-        /**
-         * @param {Error} [ex] The error to create a stacktrace from (optional)
-         * @param {String} [mode] Forced mode (optional, mostly for unit tests)
-         */
-        run: function(ex, mode) {
-            ex = ex || this.createException();
-            mode = mode || this.mode(ex);
-            if (mode === 'other') {
-                return this.other(arguments.callee);
-            } else {
-                return this[mode](ex);
-            }
-        },
-
-        createException: function() {
-            try {
-                this.undef();
-            } catch (e) {
-                return e;
-            }
-        },
-
-        /**
-         * Mode could differ for different exception, e.g.
-         * exceptions in Chrome may or may not have arguments or stack.
-         *
-         * @return {String} mode of operation for the exception
-         */
-        mode: function(e) {
-            if (e['arguments'] && e.stack) {
-                return 'chrome';
-            }
-
-            if (e.stack && e.sourceURL) {
-                return 'safari';
-            }
-
-            if (e.stack && e.number) {
-                return 'ie';
-            }
-
-            if (e.stack && e.fileName) {
-                return 'firefox';
-            }
-
-            if (e.message && e['opera#sourceloc']) {
-                // e.message.indexOf("Backtrace:") > -1 -> opera9
-                // 'opera#sourceloc' in e -> opera9, opera10a
-                // !e.stacktrace -> opera9
-                if (!e.stacktrace) {
-                    return 'opera9'; // use e.message
-                }
-                if (e.message.indexOf('\n') > -1 && e.message.split('\n').length > e.stacktrace.split('\n').length) {
-                    // e.message may have more stack entries than e.stacktrace
-                    return 'opera9'; // use e.message
-                }
-                return 'opera10a'; // use e.stacktrace
-            }
-
-            if (e.message && e.stack && e.stacktrace) {
-                // e.stacktrace && e.stack -> opera10b
-                if (e.stacktrace.indexOf("called from line") < 0) {
-                    return 'opera10b'; // use e.stacktrace, format differs from 'opera10a'
-                }
-                // e.stacktrace && e.stack -> opera11
-                return 'opera11'; // use e.stacktrace, format differs from 'opera10a', 'opera10b'
-            }
-
-            if (e.stack && !e.fileName) {
-                // Chrome 27 does not have e.arguments as earlier versions,
-                // but still does not have e.fileName as Firefox
-                return 'chrome';
-            }
-
-            return 'other';
-        },
-
-        /**
-         * Given a context, function name, and callback function, overwrite it so that it calls
-         * printStackTrace() first with a callback and then runs the rest of the body.
-         *
-         * @param {Object} context of execution (e.g. window)
-         * @param {String} functionName to instrument
-         * @param {Function} callback function to call with a stack trace on invocation
-         */
-        instrumentFunction: function(context, functionName, callback) {
-            context = context || window;
-            var original = context[functionName];
-            context[functionName] = function instrumented() {
-                callback.call(this, printStackTrace().slice(4));
-                return context[functionName]._instrumented.apply(this, arguments);
-            };
-            context[functionName]._instrumented = original;
-        },
-
-        /**
-         * Given a context and function name of a function that has been
-         * instrumented, revert the function to it's original (non-instrumented)
-         * state.
-         *
-         * @param {Object} context of execution (e.g. window)
-         * @param {String} functionName to de-instrument
-         */
-        deinstrumentFunction: function(context, functionName) {
-            if (context[functionName].constructor === Function &&
-                context[functionName]._instrumented &&
-                context[functionName]._instrumented.constructor === Function) {
-                context[functionName] = context[functionName]._instrumented;
-            }
-        },
-
-        /**
-         * Given an Error object, return a formatted Array based on Chrome's stack string.
-         *
-         * @param e - Error object to inspect
-         * @return Array<String> of function calls, files and line numbers
-         */
-        chrome: function(e) {
-            return (e.stack + '\n')
-                .replace(/^[\s\S]+?\s+at\s+/, ' at ') // remove message
-                .replace(/^\s+(at eval )?at\s+/gm, '') // remove 'at' and indentation
-                .replace(/^([^\(]+?)([\n$])/gm, '{anonymous}() ($1)$2')
-                .replace(/^Object.<anonymous>\s*\(([^\)]+)\)/gm, '{anonymous}() ($1)')
-                .replace(/^(.+) \((.+)\)$/gm, '$1@$2')
-                .split('\n')
-                .slice(0, -1);
-        },
-
-        /**
-         * Given an Error object, return a formatted Array based on Safari's stack string.
-         *
-         * @param e - Error object to inspect
-         * @return Array<String> of function calls, files and line numbers
-         */
-        safari: function(e) {
-            return e.stack.replace(/\[native code\]\n/m, '')
-                .replace(/^(?=\w+Error\:).*$\n/m, '')
-                .replace(/^@/gm, '{anonymous}()@')
-                .split('\n');
-        },
-
-        /**
-         * Given an Error object, return a formatted Array based on IE's stack string.
-         *
-         * @param e - Error object to inspect
-         * @return Array<String> of function calls, files and line numbers
-         */
-        ie: function(e) {
-            return e.stack
-                .replace(/^\s*at\s+(.*)$/gm, '$1')
-                .replace(/^Anonymous function\s+/gm, '{anonymous}() ')
-                .replace(/^(.+)\s+\((.+)\)$/gm, '$1@$2')
-                .split('\n')
-                .slice(1);
-        },
-
-        /**
-         * Given an Error object, return a formatted Array based on Firefox's stack string.
-         *
-         * @param e - Error object to inspect
-         * @return Array<String> of function calls, files and line numbers
-         */
-        firefox: function(e) {
-            return e.stack.replace(/(?:\n@:0)?\s+$/m, '')
-                .replace(/^(?:\((\S*)\))?@/gm, '{anonymous}($1)@')
-                .split('\n');
-        },
-
-        opera11: function(e) {
-            var ANON = '{anonymous}', lineRE = /^.*line (\d+), column (\d+)(?: in (.+))? in (\S+):$/;
-            var lines = e.stacktrace.split('\n'), result = [];
-
-            for (var i = 0, len = lines.length; i < len; i += 2) {
-                var match = lineRE.exec(lines[i]);
-                if (match) {
-                    var location = match[4] + ':' + match[1] + ':' + match[2];
-                    var fnName = match[3] || "global code";
-                    fnName = fnName.replace(/<anonymous function: (\S+)>/, "$1").replace(/<anonymous function>/, ANON);
-                    result.push(fnName + '@' + location + ' -- ' + lines[i + 1].replace(/^\s+/, ''));
-                }
-            }
-
-            return result;
-        },
-
-        opera10b: function(e) {
-            // "<anonymous function: run>([arguments not available])@file://localhost/G:/js/stacktrace.js:27\n" +
-            // "printStackTrace([arguments not available])@file://localhost/G:/js/stacktrace.js:18\n" +
-            // "@file://localhost/G:/js/test/functional/testcase1.html:15"
-            var lineRE = /^(.*)@(.+):(\d+)$/;
-            var lines = e.stacktrace.split('\n'), result = [];
-
-            for (var i = 0, len = lines.length; i < len; i++) {
-                var match = lineRE.exec(lines[i]);
-                if (match) {
-                    var fnName = match[1] ? (match[1] + '()') : "global code";
-                    result.push(fnName + '@' + match[2] + ':' + match[3]);
-                }
-            }
-
-            return result;
-        },
-
-        /**
-         * Given an Error object, return a formatted Array based on Opera 10's stacktrace string.
-         *
-         * @param e - Error object to inspect
-         * @return Array<String> of function calls, files and line numbers
-         */
-        opera10a: function(e) {
-            // "  Line 27 of linked script file://localhost/G:/js/stacktrace.js\n"
-            // "  Line 11 of inline#1 script in file://localhost/G:/js/test/functional/testcase1.html: In function foo\n"
-            var ANON = '{anonymous}', lineRE = /Line (\d+).*script (?:in )?(\S+)(?:: In function (\S+))?$/i;
-            var lines = e.stacktrace.split('\n'), result = [];
-
-            for (var i = 0, len = lines.length; i < len; i += 2) {
-                var match = lineRE.exec(lines[i]);
-                if (match) {
-                    var fnName = match[3] || ANON;
-                    result.push(fnName + '()@' + match[2] + ':' + match[1] + ' -- ' + lines[i + 1].replace(/^\s+/, ''));
-                }
-            }
-
-            return result;
-        },
-
-        // Opera 7.x-9.2x only!
-        opera9: function(e) {
-            // "  Line 43 of linked script file://localhost/G:/js/stacktrace.js\n"
-            // "  Line 7 of inline#1 script in file://localhost/G:/js/test/functional/testcase1.html\n"
-            var ANON = '{anonymous}', lineRE = /Line (\d+).*script (?:in )?(\S+)/i;
-            var lines = e.message.split('\n'), result = [];
-
-            for (var i = 2, len = lines.length; i < len; i += 2) {
-                var match = lineRE.exec(lines[i]);
-                if (match) {
-                    result.push(ANON + '()@' + match[2] + ':' + match[1] + ' -- ' + lines[i + 1].replace(/^\s+/, ''));
-                }
-            }
-
-            return result;
-        },
-
-        // Safari 5-, IE 9-, and others
-        other: function(curr) {
-            var ANON = '{anonymous}', fnRE = /function(?:\s+([\w$]+))?\s*\(/, stack = [], fn, args, maxStackSize = 10;
-            var slice = Array.prototype.slice;
-            while (curr && stack.length < maxStackSize) {
-                fn = fnRE.test(curr.toString()) ? RegExp.$1 || ANON : ANON;
-                try {
-                    args = slice.call(curr['arguments'] || []);
-                } catch (e) {
-                    args = ['Cannot access arguments: ' + e];
-                }
-                stack[stack.length] = fn + '(' + this.stringifyArguments(args) + ')';
-                try {
-                    curr = curr.caller;
-                } catch (e) {
-                    stack[stack.length] = 'Cannot access caller: ' + e;
-                    break;
-                }
-            }
-            return stack;
-        },
-
-        /**
-         * Given arguments array as a String, substituting type names for non-string types.
-         *
-         * @param {Arguments,Array} args
-         * @return {String} stringified arguments
-         */
-        stringifyArguments: function(args) {
-            var result = [];
-            var slice = Array.prototype.slice;
-            for (var i = 0; i < args.length; ++i) {
-                var arg = args[i];
-                if (arg === undefined) {
-                    result[i] = 'undefined';
-                } else if (arg === null) {
-                    result[i] = 'null';
-                } else if (arg.constructor) {
-                    // TODO constructor comparison does not work for iframes
-                    if (arg.constructor === Array) {
-                        if (arg.length < 3) {
-                            result[i] = '[' + this.stringifyArguments(arg) + ']';
-                        } else {
-                            result[i] = '[' + this.stringifyArguments(slice.call(arg, 0, 1)) + '...' + this.stringifyArguments(slice.call(arg, -1)) + ']';
-                        }
-                    } else if (arg.constructor === Object) {
-                        result[i] = '#object';
-                    } else if (arg.constructor === Function) {
-                        result[i] = '#function';
-                    } else if (arg.constructor === String) {
-                        result[i] = '"' + arg + '"';
-                    } else if (arg.constructor === Number) {
-                        result[i] = arg;
-                    } else {
-                        result[i] = '?';
-                    }
-                }
-            }
-            return result.join(',');
-        },
-
-        sourceCache: {},
-
-        /**
-         * @return {String} the text from a given URL
-         */
-        ajax: function(url) {
-            var req = this.createXMLHTTPObject();
-            if (req) {
-                try {
-                    req.open('GET', url, false);
-                    //req.overrideMimeType('text/plain');
-                    //req.overrideMimeType('text/javascript');
-                    req.send(null);
-                    //return req.status == 200 ? req.responseText : '';
-                    return req.responseText;
-                } catch (e) {
-                }
-            }
-            return '';
-        },
-
-        /**
-         * Try XHR methods in order and store XHR factory.
-         *
-         * @return {XMLHttpRequest} XHR function or equivalent
-         */
-        createXMLHTTPObject: function() {
-            var xmlhttp, XMLHttpFactories = [
-                function() {
-                    return new XMLHttpRequest();
-                }, function() {
-                    return new ActiveXObject('Msxml2.XMLHTTP');
-                }, function() {
-                    return new ActiveXObject('Msxml3.XMLHTTP');
-                }, function() {
-                    return new ActiveXObject('Microsoft.XMLHTTP');
-                }
-            ];
-            for (var i = 0; i < XMLHttpFactories.length; i++) {
-                try {
-                    xmlhttp = XMLHttpFactories[i]();
-                    // Use memoization to cache the factory
-                    this.createXMLHTTPObject = XMLHttpFactories[i];
-                    return xmlhttp;
-                } catch (e) {
-                }
-            }
-        },
-
-        /**
-         * Given a URL, check if it is in the same domain (so we can get the source
-         * via Ajax).
-         *
-         * @param url {String} source url
-         * @return {Boolean} False if we need a cross-domain request
-         */
-        isSameDomain: function(url) {
-            return typeof location !== "undefined" && url.indexOf(location.hostname) !== -1; // location may not be defined, e.g. when running from nodejs.
-        },
-
-        /**
-         * Get source code from given URL if in the same domain.
-         *
-         * @param url {String} JS source URL
-         * @return {Array} Array of source code lines
-         */
-        getSource: function(url) {
-            // TODO reuse source from script tags?
-            if (!(url in this.sourceCache)) {
-                this.sourceCache[url] = this.ajax(url).split('\n');
-            }
-            return this.sourceCache[url];
-        },
-
-        guessAnonymousFunctions: function(stack) {
-            for (var i = 0; i < stack.length; ++i) {
-                var reStack = /\{anonymous\}\(.*\)@(.*)/,
-                    reRef = /^(.*?)(?::(\d+))(?::(\d+))?(?: -- .+)?$/,
-                    frame = stack[i], ref = reStack.exec(frame);
-
-                if (ref) {
-                    var m = reRef.exec(ref[1]);
-                    if (m) { // If falsey, we did not get any file/line information
-                        var file = m[1], lineno = m[2], charno = m[3] || 0;
-                        if (file && this.isSameDomain(file) && lineno) {
-                            var functionName = this.guessAnonymousFunction(file, lineno, charno);
-                            stack[i] = frame.replace('{anonymous}', functionName);
-                        }
-                    }
-                }
-            }
-            return stack;
-        },
-
-        guessAnonymousFunction: function(url, lineNo, charNo) {
-            var ret;
-            try {
-                ret = this.findFunctionName(this.getSource(url), lineNo);
-            } catch (e) {
-                ret = 'getSource failed with url: ' + url + ', exception: ' + e.toString();
-            }
-            return ret;
-        },
-
-        findFunctionName: function(source, lineNo) {
-            // FIXME findFunctionName fails for compressed source
-            // (more than one function on the same line)
-            // function {name}({args}) m[1]=name m[2]=args
-            var reFunctionDeclaration = /function\s+([^(]*?)\s*\(([^)]*)\)/;
-            // {name} = function ({args}) TODO args capture
-            // /['"]?([0-9A-Za-z_]+)['"]?\s*[:=]\s*function(?:[^(]*)/
-            var reFunctionExpression = /['"]?([$_A-Za-z][$_A-Za-z0-9]*)['"]?\s*[:=]\s*function\b/;
-            // {name} = eval()
-            var reFunctionEvaluation = /['"]?([$_A-Za-z][$_A-Za-z0-9]*)['"]?\s*[:=]\s*(?:eval|new Function)\b/;
-            // Walk backwards in the source lines until we find
-            // the line which matches one of the patterns above
-            var code = "", line, maxLines = Math.min(lineNo, 20), m, commentPos;
-            for (var i = 0; i < maxLines; ++i) {
-                // lineNo is 1-based, source[] is 0-based
-                line = source[lineNo - i - 1];
-                commentPos = line.indexOf('//');
-                if (commentPos >= 0) {
-                    line = line.substr(0, commentPos);
-                }
-                // TODO check other types of comments? Commented code may lead to false positive
-                if (line) {
-                    code = line + code;
-                    m = reFunctionExpression.exec(code);
-                    if (m && m[1]) {
-                        return m[1];
-                    }
-                    m = reFunctionDeclaration.exec(code);
-                    if (m && m[1]) {
-                        //return m[1] + "(" + (m[2] || "") + ")";
-                        return m[1];
-                    }
-                    m = reFunctionEvaluation.exec(code);
-                    if (m && m[1]) {
-                        return m[1];
-                    }
-                }
-            }
-            return '(?)';
+    
+    
+    
+    
+    
+    
+        var anExistingModule = null;
+        if(    !( typeof theSS_typesregistry === 'undefined')
+            && ( typeof theSS_typesregistry.fRegisteredModule === 'function')) {
+            anExistingModule = theSS_typesregistry.fRegisteredModule( ModuleFullName);
         }
-    };
+        if( !anExistingModule) {
+        
+            var aModule = aMod_builder(
+                theSS_Overrider
+            );
+        
+            aModule.ModuleBuilder = aMod_builder;
+            aModule.ModuleSource  = aMod_builder.toString();
+        
+            anExistingModule = aModule;
+        
+            if(    !( typeof theSS_typesregistry === 'undefined')
+                && ( typeof theSS_typesregistry.fRegisterModule === 'function')) {
+                theSS_typesregistry.fRegisterModule( ModuleFullName, aModule);
+            }
+        }
+    
+        var aService = anExistingModule;
+        if( aService){}/* CQT */
+    
+        return aService;
+        
+    });
+    
+    
+    
+    
+    if( !( typeof angular === 'undefined') && angular.module) {
+        // Angular (1.x)
+        
+        
+        angular.module("decoratesystemprototypes", [
+            "typesRegistry",
+            "modbootTypes"
+        ]).factory("DecorateSystemPrototypesSvce",[
+            "TypesRegistrySvce",
+            "OverriderSvce",
+            aMod_definer
+        ]);
+    }
+    else if ( !(typeof module === 'undefined') && module.exports) {
+        // Node.js
+        
+        module.exports = (function() {
+            
+            var aM_typesregistry   = require('../modboot/typesregistry');
+            var aM_overrider       = require('../modboot/overrider_svce');
+            
+            return aMod_definer(
+                aM_typesregistry,
+                aM_overrider
+            );
+        })();
+        
+    }
+    else if ( !(typeof define === 'undefined') && define.amd) {
+        // AMD / RequireJS
+        
+        define( "m_decoratesystemprototypes_svce",
+            [
+                "m_typesregistry",
+                "m_overrider_svce"
+            ],
+            aMod_definer
+        );
+    }
+    
+    
+})();
 
-    return printStackTrace;
-}));
+
+
+
+
 ;
 /*
  * exceptiondetails_svce.js
@@ -1185,104 +1729,143 @@ permissions and limitations under the Licence.
  */
 
 
-
-
-
-function ModuleFactory_ExceptionDetailsSvce() {
-
-    'use strict';
-
-
-    return ( function(){
-
-
-
-
-
-        var aMod_definer = function( theM_stacktrace) {
-
-
-            var ModuleName     = "exceptiondetails_svce";
-            var ModulePackages = "utils";
-            var ModuleFullName = ModulePackages + "/" + ModuleName;
-
-
-            if( !( typeof FG_logModLoads == "undefined") && ( typeof FG_logModLoads == "function") && FG_logModLoads()) { FG_logModLoads(ModuleFullName);}
-
-
-
-
-
-
-
-
-
-
-
-            var pgInitWithModuleConstants = function( theToInit) {
-
+(function() {
+    var aMod_definer = ( function( theSS_typesregistry,
+                                   theSS_Overrider,
+                                   theSS_stacktraceSvce){
+    
+    
+        var ComponentName    = "prettytype";
+        var ModuleName     = "exceptiondetails_svce";
+        var ModulePackages = "utils";
+        var ModuleFullName = ModulePackages + "/" + ModuleName;
+        
+        
+        var aMod_builder = function( theS_Overrider,
+                                     theS_stacktraceSvce) {
+    
+            
+            if( typeof FG_logModLoads === 'function') { FG_logModLoads(ModuleFullName);}
+    
+    
+    
+    
+            var pgInitWithModuleVariations = function( theToInit) {
+        
+                if( !theToInit) {
+                }
+            };
+    
+    
+    
+            var pgInitFromModuleVariations = function( theToInit) {
                 if( !theToInit) {
                     return;
                 }
+        
+                for( var aGlobalName in ModuleVariations) {
+                    if( ModuleVariations.hasOwnProperty( aGlobalName)) {
+                        theToInit[ aGlobalName] = ModuleVariations[ aGlobalName];
+                    }
+                }
+            };
+        
 
+    
+            var ModuleVariations = { };
+            pgInitWithModuleVariations( ModuleVariations);
+            theS_Overrider.pOverrideModuleVariations( ModuleFullName, ModuleVariations);
+    
+            
+            
+    
+            var pgInitWithModuleConstants = function( theToInit) {
+                
+                if( !theToInit) {
+                    return;
+                }
+                
                 theToInit.LOGEXCEPTIONDETAILS = false;
             };
-
-
-
-
-
+            
+            
+            
+            
+            
             var ModuleConstants = {};
+            pgInitFromModuleVariations( ModuleConstants);
             pgInitWithModuleConstants( ModuleConstants);
-
-
-
-
+            
+            
+            
+            
             var pgInitFromModuleConstants = function( theToInit) {
                 if( !theToInit) {
                     return;
                 }
-
+                
                 for( var aGlobalName in ModuleConstants) {
                     if( ModuleConstants.hasOwnProperty( aGlobalName)) {
                         theToInit[ aGlobalName] = ModuleConstants[ aGlobalName];
                     }
                 }
             };
-
-
-
-
-
-
-
+    
+    
+    
+    
+    
+    
+    
+            var pgInitModuleGlobalsOn = function( theToInit) {
+        
+                if( !theToInit) {
+                }
+            };
+    
+    
+    
+            var ModuleGlobals = { };
+            pgInitModuleGlobalsOn( ModuleGlobals);
+    
+    
+            
+            
+    
             var aModule = { };
             pgInitFromModuleConstants( aModule);
+            aModule._v_Type = "module";
+            aModule.ComponentName     = ComponentName;
             aModule.ModuleName     = ModuleName;
             aModule.ModulePackages = ModulePackages;
             aModule.ModuleFullName = ModuleFullName;
-
-
-
-
-
-
-            var fExceptionDetail = function( theException) {
+            aModule.ModuleVariations= ModuleVariations;
+            aModule.ModuleConstants = ModuleConstants;
+            aModule.ModuleGlobals   = ModuleGlobals;
+            aModule.pgInitFromModuleConstants  = pgInitFromModuleConstants;
+            aModule.pgInitFromModuleVariations = pgInitFromModuleVariations;
+            aModule.pgInitModuleGlobalsOn      = pgInitModuleGlobalsOn;
+            
+            
+            
+            
+            
+            var fgExceptionDetail = function( theException) {
                 if( !theException) {
                     return null;
                 }
-
-
+                
+                
                 var anExceptionDetail = {
                     exception: theException.toString()
                 };
-
-
-                var anExceptionTrace = theM_stacktrace( { e: theException});
+                
+                
+                var anExceptionTrace = theS_stacktraceSvce( { e: theException});
                 if( anExceptionTrace) {
                     anExceptionDetail.trace = anExceptionTrace;
                 }
-
+                
                 var aRecord = theException._v_Record;
                 if( aRecord) {
                     if( aRecord.fIdentifyingJSON) {
@@ -1297,44 +1880,113 @@ function ModuleFactory_ExceptionDetailsSvce() {
                         anExceptionDetail.recex = aRecord;
                     }
                 }
-
+                
                 if( this.LOGEXCEPTIONDETAILS) {
                     console.log( "exception:" + anExceptionDetail.exception);
                     console.log( anExceptionDetail.recex);
                     console.log( anExceptionDetail.trace);
                 }
-
+                
                 anExceptionDetail.fIdentifyingJSON = function() {
                     return anExceptionDetail;
                 };
-
+                
                 return anExceptionDetail;
             };
-            if( fExceptionDetail){}/* CQT */
-            aModule.fExceptionDetail = fExceptionDetail;
-
-
-
-
-
-
+            if( fgExceptionDetail){}/* CQT */
+            aModule.fgExceptionDetail = fgExceptionDetail;
+    
+    
+    
+    
+    
             return aModule;
         };
-
-
-
-
-
-
-        var aService = aMod_definer();
-        if( aService){}/* CQT */
-
-        return aService;
-
+    
+    
+    
+    
+        var anExistingModule = null;
+        if(    !( typeof theSS_typesregistry === 'undefined')
+            && ( typeof theSS_typesregistry.fRegisteredModule === 'function')) {
+            anExistingModule = theSS_typesregistry.fRegisteredModule( ModuleFullName);
+        }
+        if( !anExistingModule) {
+        
+            var aModule = aMod_builder(
+                theSS_Overrider,
+                theSS_stacktraceSvce
+            );
+    
+            aModule.ModuleBuilder = aMod_builder;
+            aModule.ModuleSource  = aMod_builder.toString();
+            
+            anExistingModule = aModule;
+        
+            if(    !( typeof theSS_typesregistry === 'undefined')
+                && ( typeof theSS_typesregistry.fRegisterModule === 'function')) {
+                theSS_typesregistry.fRegisterModule( ModuleFullName, aModule);
+            }
+        }
+        
+    
+        return anExistingModule;
     });
-}
+    
+    
+    
+    
+    
+    if( !( typeof angular === 'undefined') && angular.module) {
+        // Angular (1.x)
+        
+        
+        angular.module("exceptiondetails", [
+            "typesRegistry",
+            "modbootTypes",
+            "stacktrace"
+        ]).factory("ExceptionDetailsSvce",[
+            "TypesRegistrySvce",
+            "OverriderSvce",
+            "StacktraceSvce",
+            aMod_definer
+        ]);
+    }
+    else if ( !(typeof module === 'undefined') && module.exports) {
+        // Node.js
+        
+        module.exports = (function() {
+            
+            var aM_typesregistry   = require('../modboot/typesregistry');
+            var aM_overrider       = require('../modboot/overrider_svce');
+            var aM_stacktrace_svce = require('./stacktrace_svce');
+    
+            return aMod_definer(
+                aM_typesregistry,
+                aM_overrider,
+                aM_stacktrace_svce
+            );
+        })();
+        
+    }
+    else if ( !(typeof define === 'undefined') && define.amd) {
+        // AMD / RequireJS
+        
+        define( "m_exceptiondetails_svce",
+            [
+                "m_typesregistry",
+                "m_overrider_svce",
+                "m_stacktrace_svce"
+            ],
+            aMod_definer
+            );
+    }
+    
+    
+})();
 
-if( ModuleFactory_ExceptionDetailsSvce){}/* CQT */
+
+
 
 
 
@@ -1377,9 +2029,10 @@ if( ModuleFactory_ExceptionDetailsSvce){}/* CQT */
 (function () {
     
     var aMod_definer = ( function( theSS_typesregistry,
-                       theSS_Overrider) {
-        
-        
+                                   theSS_Overrider) {
+    
+    
+        var ComponentName    = "prettytype";
         var ModuleName     = "console_svce";
         var ModulePackages = "utils";
         var ModuleFullName = ModulePackages + "/" + ModuleName;
@@ -1388,7 +2041,7 @@ if( ModuleFactory_ExceptionDetailsSvce){}/* CQT */
         
         var aMod_builder = function( theS_Overrider) {
             
-            if( !( typeof FG_logModLoads == "undefined") && ( typeof FG_logModLoads == "function") && FG_logModLoads()) { FG_logModLoads(ModuleFullName);}
+            if( typeof FG_logModLoads === 'function') { FG_logModLoads(ModuleFullName);}
             
             
             
@@ -1469,9 +2122,9 @@ if( ModuleFactory_ExceptionDetailsSvce){}/* CQT */
                     return;
                 }
     
-                theToInit._g_WriteToConsole          = aModule.WRITETOCONSOLE;
-                theToInit._g_CollectLogs             = aModule.COLLECTLOGS;
-                theToInit._g_MaxCollectedLogsLength  = aModule.MAXCOLLECTEDLOGSLENGTH;
+                theToInit._g_WriteToConsole          = ModuleConstants.WRITETOCONSOLE;
+                theToInit._g_CollectLogs             = ModuleConstants.COLLECTLOGS;
+                theToInit._g_MaxCollectedLogsLength  = ModuleConstants.MAXCOLLECTEDLOGSLENGTH;
     
                 theToInit._g_CollectedLogs           = [ ];
                 theToInit._g_CollectedLogsSize       = 0;
@@ -1488,9 +2141,11 @@ if( ModuleFactory_ExceptionDetailsSvce){}/* CQT */
             var aModule = { };
             pgInitFromModuleConstants( aModule);
             aModule._v_Type = "module";
+            aModule.ComponentName     = ComponentName;
             aModule.ModuleName     = ModuleName;
             aModule.ModulePackages = ModulePackages;
             aModule.ModuleFullName = ModuleFullName;
+            aModule.ModuleVariations= ModuleVariations;
             aModule.ModuleConstants = ModuleConstants;
             aModule.ModuleGlobals   = ModuleGlobals;
             aModule.pgInitFromModuleConstants  = pgInitFromModuleConstants;
@@ -1706,8 +2361,9 @@ if( ModuleFactory_ExceptionDetailsSvce){}/* CQT */
                     return;
                 }
                 
-                var aMessageLen = ( ( typeof theMessage == "string") ? theMessage.length : 0);
-                
+                var aMessageLen = ( ( typeof theMessage === "string") ? theMessage.length : 0);
+                if( aMessageLen){}/* CQT */
+    
                 aModule.ModuleGlobals._g_CollectedLogsSize += aMessageLen;
                 
                 if( aModule.ModuleGlobals._g_MaxCollectedLogsLength <= 0) {
@@ -1728,8 +2384,9 @@ if( ModuleFactory_ExceptionDetailsSvce){}/* CQT */
                     var aRemovedKindAndMessage = aModule.ModuleGlobals._g_CollectedLogs.shift();
                     
                     var aRemovedMessage = aRemovedKindAndMessage[ 1];
-                    var aRemovedMessageLen = ( ( typeof aRemovedMessage == "string") ? aRemovedMessage.length : 0);
-                    
+                    var aRemovedMessageLen = ( ( typeof aRemovedMessage === "string") ? aRemovedMessage.length : 0);
+                    if( aRemovedMessageLen){}/* CQT */
+    
                     aModule.ModuleGlobals._g_CollectedLogsSize -= aRemovedMessageLen;
                 }
                 
@@ -1751,21 +2408,23 @@ if( ModuleFactory_ExceptionDetailsSvce){}/* CQT */
     
     
         var anExistingModule = null;
-        if(    ( typeof theSS_typesregistry !== 'undefined')
-            && ( typeof theSS_typesregistry.fRegisteredModule == 'function')) {
+        if(    !( typeof theSS_typesregistry === 'undefined')
+            && ( typeof theSS_typesregistry.fRegisteredModule === 'function')) {
             anExistingModule = theSS_typesregistry.fRegisteredModule( ModuleFullName);
         }
         if( !anExistingModule) {
         
-            var aModule = aMod_builder();
+            var aModule = aMod_builder(
+                theSS_Overrider
+            );
         
             aModule.ModuleBuilder = aMod_builder;
             aModule.ModuleSource  = aMod_builder.toString();
         
             anExistingModule = aModule;
         
-            if(    ( typeof theSS_typesregistry !== 'undefined')
-                && ( typeof theSS_typesregistry.fRegisterModule   == 'function')) {
+            if(    !( typeof theSS_typesregistry === 'undefined')
+                && ( typeof theSS_typesregistry.fRegisterModule === 'function')) {
                 theSS_typesregistry.fRegisterModule( ModuleFullName, aModule);
             }
         }
@@ -1781,47 +2440,43 @@ if( ModuleFactory_ExceptionDetailsSvce){}/* CQT */
     
     
     
-    if( typeof angular !== 'undefined' && angular.module) {
+    if( !( typeof angular === 'undefined') && angular.module) {
         // Angular (1.x)
         
-        angular.module("consoleSvce").factory("ConsoleSvce",[
+        angular.module("consoleSvce", [
+            "typesRegistry",
+            "modbootTypes"
+        ]).factory("ConsoleSvce",[
             "TypesRegistrySvce",
             "OverriderSvce",
             aMod_definer
         ]);
         
     }
-    else if (typeof module !== 'undefined' && module.exports) {
+    else if ( !(typeof module === 'undefined') && module.exports) {
         // Node.js
         
         module.exports = (function() {
             
-            var aM_typesregistry = require('./typesregistry');
-            var aM_overrider     = require('./overrider_type');
+            var aM_typesregistry  = require('../modboot/typesregistry');
+            var aM_overrider_svce = require('../modboot/overrider_svce');
             
             return aMod_definer(
                 aM_typesregistry,
-                aM_overrider
+                aM_overrider_svce
             );
         })();
         
     }
-    else if (typeof define !== 'undefined' && define.amd) {
+    else if ( !(typeof define === 'undefined') && define.amd) {
         // AMD / RequireJS
         
-        define([
-            "../typesregistry",
-            "../roots/overrider_type"
-        
-        ], function (
-            theM_typesregistry,
-            theM_overrider
-        ) {
-            return aMod_definer(
-                theM_typesregistry,
-                theM_overrider
-            );
-        });
+        define( "m_console_svce",
+            [
+                "m_typesregistry",
+                "m_overrider_svce"
+            ],
+            aMod_definer);
         
     }
     
@@ -1832,421 +2487,17 @@ if( ModuleFactory_ExceptionDetailsSvce){}/* CQT */
 
 
 
-;/*
- * overrider_type.js
- *
- * Created @author Antonio Carrasco Valero 201410030300
- *
- *
- ***************************************************************************
-
- Copyright 2014 2015 2016 2017 2018 Antonio Carrasco Valero
- Javascript for core modules including a base prototype and prototypes hierarchy, intended to be reused on the Browser with AngularJS or RequireJS modules, or in the server as node modules. Licensed under EUPL  http://www.uiwire.org
-
-Licensed under the EUPL, Version 1.1 only (the "Licence");
-You may not use this work except in compliance with the
-Licence.
-You may obtain a copy of the Licence at:
-https://joinup.ec.europa.eu/software/page/eupl/licence-eupl
-Unless required by applicable law or agreed to in
-writing, software distributed under the Licence is
-distributed on an "AS IS" basis,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
-express or implied.
-See the Licence for the specific language governing
-permissions and limitations under the Licence.
- {{License2}}
-
- {{Licensed1}}
- {{Licensed2}}
-
- ***************************************************************************
- *
+;
+/*
+ te2est-traversals-type.js refactoring of tes2est-traversals.js  to be Angular-agnostic , originally copy of traversals.js in te2est asyncshell project
+ Creado 201505182205
  */
 
-
-(function () {
-    
-    var aMod_definer =  ( function( theSS_typesregistry) {
-        
-        var ModuleName     = "overrider_type";
-        var ModulePackages = "roots";
-        var ModuleFullName = ModulePackages + "/" + ModuleName;
-        
-        
-        
-        var aMod_builder = function() {
-            
-            if( !( typeof FG_logModLoads == "undefined") && ( typeof FG_logModLoads == "function") && FG_logModLoads()) { FG_logModLoads(ModuleFullName);}
-            
-            
-            
-            var pgInitWithModuleConstants = function( theToInit) {
-                
-                if( !theToInit) {
-                    return;
-                }
-                theToInit.OVERRIDER_DEFAULTTITLE = "OverriderDefaultName";
-            };
-            
-            
-            
-            var ModuleConstants = {};
-            pgInitWithModuleConstants( ModuleConstants);
-            
-            
-            
-            
-            var pgInitFromModuleConstants = function( theToInit) {
-                if( !theToInit) {
-                    return;
-                }
-                
-                for( var aGlobalName in ModuleConstants) {
-                    if( ModuleConstants.hasOwnProperty( aGlobalName)) {
-                        theToInit[ aGlobalName] = ModuleConstants[ aGlobalName];
-                    }
-                }
-            };
-    
-    
-            
-            var pgInitModuleGlobalsOn = function( theToInit) {
-        
-                if( !theToInit) {
-                }
-            };
-    
-    
-    
-            var ModuleGlobals = { };
-            pgInitModuleGlobalsOn( ModuleGlobals);
-    
-    
-    
-    
-    
-    
-            var aOverrider_Prototype = (function() {
-                
-                
-                var aPrototype = {};
-                
-                pgInitFromModuleConstants( aPrototype);
-        
-
-                aPrototype._v_SuperPrototype = null;
-    
-                aPrototype._v_Type = "Overrider";
-                
-                aPrototype._v_Prototype_Overrider = aPrototype;
-                
-                aPrototype._v_Module = null;
-                
-                
-                
-                
-                
-                var _pInit = function( theTitle) {
-                    
-                    this._pInit_Overrider( theTitle);
-                };
-                if( _pInit){}/* CQT */
-                aPrototype._pInit = _pInit;
-                
-                
-                
-                
-                
-                
-                
-                var _pInit_Overrider = function( theTitle) {
-                    
-                    this._v_Prototype = aPrototype;
-                    this._v_Type      = this._v_Prototype._v_Type;
-                    this._v_Module    = aPrototype._v_Module;
-                    
-                    this._v_Title = theTitle;
-                    if( !this._v_Title) {
-                        this._v_Title = this.OVERRIDER_DEFAULTTITLE;
-                    }
-                };
-                if( _pInit_Overrider){}/* CQT */
-                aPrototype._pInit_Overrider = _pInit_Overrider;
-                
-                
-                
-                
-                
-                
-                
-                var fFullTypeNameString = function() {
-                    
-                    var aFullTypeName = this._v_Module.ModuleFullName + "." + this._v_Type;
-                    if( aFullTypeName){}/* CQT */
-                    
-                    return aFullTypeName;
-                };
-                if( fFullTypeNameString){}/* CQT */
-                aPrototype.fFullTypeNameString = fFullTypeNameString;
-                
-                
-                
-                
-                
-                var fIdentifyingJSON = function() {
-                    
-                    var aIdentifiyingJSON = {
-                        "type": this._v_Type,
-                        "id": this._v_Id
-                    };
-                    if( aIdentifiyingJSON){}/* CQT */
-                    return aIdentifiyingJSON;
-                };
-                if( fIdentifyingJSON){}/* CQT */
-                aPrototype.fIdentifyingJSON = fIdentifyingJSON;
-                
-                
-                
-                
-                
-                
-                var fIdentifyingString = function() {
-                    
-                    var aIdentifyingJSON = this.fIdentifyingJSON();
-                    
-                    var aIdentifyingString = "?";
-                    try {
-                        aIdentifyingString = JSON.stringify( aIdentifyingJSON);
-                    }
-                    catch( anException){
-                        aIdentifyingString = "Error_while_fIdentifyingString_JSON_stringify"
-                    }
-                    if( aIdentifyingString){}/* CQT */
-                    
-                    return aIdentifyingString;
-                };
-                if( fIdentifyingString){}/* CQT */
-                aPrototype.fIdentifyingString = fIdentifyingString;
-                
-                
-                
-                
-                
-                
-                
-                var fIdentifyingWithTitleJSON = function() {
-                    
-                    var aIdentifyingJSON = this.fIdentifyingJSON();
-                    
-                    aIdentifyingJSON[ "title"] = this._v_Title;
-                    
-                    return aIdentifyingJSON;
-                };
-                if( fIdentifyingWithTitleJSON){}/* CQT */
-                aPrototype.fIdentifyingWithTitleJSON = fIdentifyingWithTitleJSON;
-                
-                
-                
-                
-                
-                
-                var fIdentifyingWithTitleString = function() {
-                    
-                    var aIdentifyingJSON = this.fIdentifyingWithTitleJSON();
-                    
-                    var aIdentifyingString = "?";
-                    try {
-                        aIdentifyingString = JSON.stringify( aIdentifyingJSON);
-                    }
-                    catch( anException){
-                        aIdentifyingString = "Error_while_fIdentifyingWithTitleString_JSON_stringify"
-                    }
-                    if( aIdentifyingString){}/* CQT */
-                    
-                    return aIdentifyingString;
-                };
-                if( fIdentifyingWithTitleString){}/* CQT */
-                aPrototype.fIdentifyingWithTitleString = fIdentifyingWithTitleString;
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                var fToResultJSON = function( theCommonObjects, theAlready) {
-                    if( !( theAlready == null)) {
-                        if( theAlready.fAlready( this)){
-                            return this.fIdentifyingJSON();
-                        }
-                    }
-                    
-                    var aResultJSON = this.fIdentifyingWithTitleJSON();
-                    if( aResultJSON){}/* CQT */
-                    
-                    return aResultJSON;
-                };
-                if( fToResultJSON){}/* CQT */
-                aPrototype.fToResultJSON = fToResultJSON;
-                
-                
-                
-                
-                
-                
-                
-                var pOverrideModuleVariations = function( theModuleFullName, theModuleVariations) {
-                };
-                if( pOverrideModuleVariations){}/* CQT */
-                aPrototype.pOverrideModuleVariations = pOverrideModuleVariations;
-                
-                
-                
-                
-                
-                
-                
-                return aPrototype;
-                
-            })();
-            
-            
-            
-            
-            var Overrider_Constructor = function( theTitle) {
-                this._v_Prototype = null;
-                this._v_SuperPrototype = null;
-                this._v_Type = null;
-                this._v_Module = null;
-                
-                this._v_Title = null;
-                
-                this._pInit_Overrider( theTitle);
-            };
-            Overrider_Constructor.prototype = aOverrider_Prototype;
-            
-            
-            
-            
-            
-            var Overrider_SuperPrototypeConstructor = function() {
-                this._v_Prototype = aOverrider_Prototype;
-                this._v_SuperPrototype = null;
-                this._v_Type      = null;
-                this._v_Module    = null;
-                
-                this._v_Title     = null;
-            };
-            Overrider_SuperPrototypeConstructor.prototype = aOverrider_Prototype;
-            
-            
-            
-            var aModule = {
-                "Overrider_Prototype": aOverrider_Prototype,
-                "Overrider_Constructor": Overrider_Constructor,
-                "Overrider_SuperPrototypeConstructor": Overrider_SuperPrototypeConstructor
-            };
-            pgInitFromModuleConstants( aModule);
-            aModule._v_Type = "module";
-            aModule.ModuleName     = ModuleName;
-            aModule.ModulePackages = ModulePackages;
-            aModule.ModuleFullName = ModuleFullName;
-            aModule.ModuleConstants = ModuleConstants;
-            aModule.ModuleGlobals   = ModuleGlobals;
-            aModule.pgInitFromModuleConstants  = pgInitFromModuleConstants;
-            aModule.pgInitModuleGlobalsOn      = pgInitModuleGlobalsOn;
-            
-            aOverrider_Prototype._v_Module = aModule;
-            
-            
-            
-            return aModule;
-        };
-        
-        
-        
-        var anExistingModule = null;
-        if(    ( typeof theSS_typesregistry !== 'undefined')
-            && ( typeof theSS_typesregistry.fRegisteredModule == 'function')) {
-            anExistingModule = theSS_typesregistry.fRegisteredModule( ModuleFullName);
-        }
-        if( !anExistingModule) {
-            
-            var aModule = aMod_builder();
-    
-            aModule.ModuleBuilder = aMod_builder;
-            aModule.ModuleSource  = aMod_builder.toString();
-    
-            anExistingModule = aModule;
-    
-            if(    ( typeof theSS_typesregistry !== 'undefined')
-                && ( typeof theSS_typesregistry.fRegisterModule   == 'function')) {
-                theSS_typesregistry.fRegisterModule( ModuleFullName, aModule);
-            }
-        }
-        
-        
-        return anExistingModule;
-        
-    });
-    
-    
-    if( typeof angular !== 'undefined' && angular.module) {
-        // Angular (1.x)
-        
-        angular.module("commonEventKinds", [ "typesRegistry"]).factory("CommonEventKinds",[
-            "TypesRegistrySvce",
-            aMod_definer
-        ]);
-        
-    }
-    else if (typeof module !== 'undefined' && module.exports) {
-        // Node.js
-        
-        module.exports = (function() {
-            
-            var aM_typesregistry = require('./typesregistry');
-            
-            return aMod_definer(
-                aM_typesregistry
-            );
-        })();
-        
-    }
-    else if (typeof define !== 'undefined' && define.amd) {
-        // AMD / RequireJS
-        
-        define([
-            "../typesregistry"
-        ], function (
-            theM_typesregistry
-        ) {
-            return aMod_definer(
-                theM_typesregistry
-            );
-        });
-        
-    }
-    
-})();
-
-
-
-
-;/*
- * commoneventkinds.js
- *
- * Created @author Antonio Carrasco Valero 201610051556
- *
- *
+/*
  ***************************************************************************
 
- Copyright 2014 2015 2016 2017 2018 Antonio Carrasco Valero
- Javascript for core modules including a base prototype and prototypes hierarchy, intended to be reused on the Browser with AngularJS or RequireJS modules, or in the server as node modules. Licensed under EUPL  http://www.uiwire.org
+ Copyright 2014 2015 2016 Antonio Carrasco Valero
+ te2est asyncshell written in Javascript http://www.te2est.org http://www.asyncshell.org
 
  Licensed under the EUPL, Version 1.1 only (the "Licence");
  You may not use this work except in compliance with the
@@ -2266,22 +2517,63 @@ permissions and limitations under the Licence.
  {{Licensed2}}
 
  ***************************************************************************
- *
  */
 
 (function () {
     
-    var aMod_definer = ( function( theSS_typesregistry){
+    var aMod_definer = ( function( theSS_typesregistry,
+                                   theSS_Overrider){
+        
     
-        var ModuleName     = "commoneventkinds";
-        var ModulePackages = "base";
+        var ComponentName    = "prettytype";
+        var ModuleName     = "traversals";
+        var ModulePackages = "utils";
         var ModuleFullName = ModulePackages + "/" + ModuleName;
     
     
-        
-        var aMod_builder = function() {
     
-            if( !( typeof FG_logModLoads == "undefined") && ( typeof FG_logModLoads == "function") && FG_logModLoads()) { FG_logModLoads(ModuleFullName);}
+        var aMod_builder = function( theS_Overrider) {
+    
+            if( typeof FG_logModLoads === 'function') { FG_logModLoads(ModuleFullName);}
+        
+        
+        
+        
+        
+            var pgInitWithModuleVariations = function( theToInit) {
+            
+                if( !theToInit) {
+                }
+            
+            };
+        
+        
+        
+        
+        
+            var pgInitFromModuleVariations = function( theToInit) {
+                if( !theToInit) {
+                    return;
+                }
+            
+                for( var aGlobalName in ModuleVariations) {
+                    if( ModuleVariations.hasOwnProperty( aGlobalName)) {
+                        theToInit[ aGlobalName] = ModuleVariations[ aGlobalName];
+                    }
+                }
+            };
+        
+        
+            var ModuleVariations = { };
+            pgInitWithModuleVariations( ModuleVariations);
+            if( theS_Overrider) {
+                theS_Overrider.pOverrideModuleVariations( ModuleFullName, ModuleVariations);
+            }
+        
+        
+        
+        
+        
         
         
         
@@ -2291,92 +2583,54 @@ permissions and limitations under the Licence.
                     return;
                 }
             
-                theToInit.EVENTKIND_NEWOBJECTCREATED        = "EVT_NEWOBJECTCREATED";
-                theToInit.EVENTKIND_NEWOBJECTFAILED         = "EVT_NEWOBJECTFAILED";
             
             
-                theToInit.EVENTKINDS_NOPROMISE_FAILURES = [
-                    theToInit.EVENTKIND_NEWOBJECTFAILED
-                ];
+                theToInit.ROOTPATHSTEPSYMBOL = "#root";
             
             
-            
-                theToInit.EVENTKINDS_NOPROMISE_NOTFAILURES = [
-                    theToInit.EVENTKIND_NEWOBJECTCREATED
-                ];
+                theToInit.SPECPATHROOTPATHSTEPSYMBOL = "#testsroot";
             
             
-            
-                theToInit.EVENTKINDS_NOPROMISE = [];
-                Array.prototype.push.apply( theToInit.EVENTKINDS_NOPROMISE, theToInit.EVENTKINDS_NOPROMISE_NOTFAILURES);
-                Array.prototype.push.apply( theToInit.EVENTKINDS_NOPROMISE, theToInit.EVENTKINDS_NOPROMISE_FAILURES);
+                theToInit.PATHSREPLACEABLESYMBOL = "#";
             
             
+                theToInit.DONOTCOMPAREVALUESYMBOL = "@DONOTCOMPARE699@";
             
             
-                theToInit.EVENTKINDS_FAILURES = [ ];
-                Array.prototype.push.apply( theToInit.EVENTKINDS_FAILURES, theToInit.EVENTKINDS_NOPROMISE_FAILURES);
+                theToInit.TRAVERSAL_WHOLE = "*";
+            
+                theToInit.TRAVERSALSTEPSSEPARATOR = ".";
+            
+                theToInit.TRAVERSALSTEP_LENGTH = "length";
+                theToInit.TRAVERSALSTEP_LAST   = "last";
+                theToInit.TRAVERSALSTEP_FIRST  = "first";
+                theToInit.TRAVERSALSTEP_ALL    = "all";
             
             
+                theToInit.TRAVERSALSTEP_KEYEDSEPARATOR  = "=";
             
+                theToInit.REPLACEPARMVALUEWITHPARMPREFIX = "~";
             
-                theToInit.EVENTKINDS_NOTFAILURES = [ ];
-                Array.prototype.push.apply( theToInit.EVENTKINDS_NOTFAILURES, theToInit.EVENTKINDS_NOPROMISE_NOTFAILURES);
-            
+                theToInit.REPLACEPARMVALUEDOT = ".";
             
             
             
+                theToInit.ANYEXCEPTION = "*";
             
             
-            
-                theToInit.EVENTKINDS = theToInit.EVENTKINDS_NOPROMISE.slice();
-            
+                theToInit.VALUEDIFFATTOP = "/";
             
             
-                theToInit.EVENTKINDS_NOTFORCONSOLE_RESTRICTIVE = [
-                    theToInit.EVENTKIND_NEWOBJECTCREATED
-                ];
+                theToInit.SYMBOLICSTEPREGEXPSTR = "^\\?(\\w+)\\=(\\-?[0-9]+)$";
+                theToInit.SYMBOLICSTEPREGEXP    = new RegExp( theToInit.SYMBOLICSTEPREGEXPSTR);
             
-            
-            
-                theToInit.EVENTKINDS_NOTFORCONSOLE_RESTRICTIVE_NOPROMISE = theToInit.EVENTKINDS_NOTFORCONSOLE_RESTRICTIVE.slice();
-                Array.prototype.push.apply( theToInit.EVENTKINDS_NOTFORCONSOLE_RESTRICTIVE_NOPROMISE, theToInit.EVENTKINDS_PROMISE_NOTFAILURES);
-            
-                theToInit.EVENTKINDS_NOTFORCONSOLE_NOPROMISE = theToInit.EVENTKINDS_NOPROMISE_NOTFAILURES.slice();
-            
-            
-                theToInit.EVENTKINDS_NOTFORCONSOLE_NONE = [];
-                theToInit.EVENTKINDS_NOTFORCONSOLE_ALL = theToInit.EVENTKINDS.slice();
-            
-                theToInit.EVENTKINDS_NOTFORCONSOLE_DEFAULT = theToInit.EVENTKINDS_NOTFORCONSOLE_RESTRICTIVE_NOPROMISE.slice();
-            
-                theToInit.EVENTKINDS_NOTFORCONSOLE_DEFAULT = theToInit.EVENTKINDS_NOTFORCONSOLE_NONE;
-            
-                theToInit.EVENTKINDS_NOTFORCONSOLE_DEFAULT = theToInit.EVENTKINDS_NOTFORCONSOLE_NOPROMISE;
-            
-            
-            
-            
-            
-            
-                theToInit.EVENTKINDS_ERRORS = [
-                    theToInit.EVENTKIND_NEWOBJECTFAILED
-                ];
-            
-            
-                theToInit.EVENTKINDS_TRIGGERDUMP_ERRORS  = theToInit.EVENTKINDS_ERRORS.slice();
-            
-                theToInit.EVENTKINDS_TRIGGERDUMP_ALL     = theToInit.EVENTKINDS.slice();
-            
-                theToInit.EVENTKINDS_TRIGGERDUMP_DEFAULT = theToInit.EVENTKINDS_TRIGGERDUMP_ERRORS;
-            
-            
-            
+                theToInit.KEYEDSTEPREGEXPSTR = "^\\#(\\-?[0-9]+)$";
+                theToInit.KEYEDSTEPREGEXP    = new RegExp( theToInit.KEYEDSTEPREGEXPSTR);
             };
         
         
-        
             var ModuleConstants = {};
+            pgInitFromModuleVariations( ModuleConstants);
             pgInitWithModuleConstants( ModuleConstants);
         
         
@@ -2411,105 +2665,3319 @@ permissions and limitations under the Licence.
     
     
     
-    
-            var aModule = { };
+            var aModule = {};
             pgInitFromModuleConstants( aModule);
             aModule._v_Type = "module";
+            aModule.ComponentName     = ComponentName;
             aModule.ModuleName      = ModuleName;
             aModule.ModulePackages  = ModulePackages;
             aModule.ModuleFullName  = ModuleFullName;
+            aModule.ModuleVariations= ModuleVariations;
             aModule.ModuleConstants = ModuleConstants;
             aModule.ModuleGlobals   = ModuleGlobals;
             aModule.pgInitFromModuleConstants  = pgInitFromModuleConstants;
+            aModule.pgInitFromModuleVariations = pgInitFromModuleVariations;
             aModule.pgInitModuleGlobalsOn      = pgInitModuleGlobalsOn;
+        
+        
+        
+        
+        
+        
+        
+        
+        
+            var fgParmValueReplacement= function( theConfiguration, theParmValue, theMapForStepsWithParmPrefix) {
+            
+                if( !theParmValue) {
+                    return theParmValue;
+                }
+            
+                if( !( typeof theParmValue === "string")) {
+                    return theParmValue;
+                }
+            
+                var aParmValueLen = theParmValue.length;
+                if( !aParmValueLen) {
+                    return theParmValue;
+                }
+            
+                if( !( theParmValue.indexOf( aModule.REPLACEPARMVALUEWITHPARMPREFIX) === 0)) {
+                    return theParmValue;
+                }
+            
+                if( aParmValueLen < 2) {
+                    return theParmValue;
+                }
+            
+                if( theParmValue.indexOf( aModule.REPLACEPARMVALUEDOT) > 0) {
+                    return fgParmValueReplacement_DotNotation( theConfiguration, theParmValue, theMapForStepsWithParmPrefix);
+                }
+            
+                if( !theConfiguration) {
+                    return theParmValue;
+                }
+            
+                var aReplacementValue = theParmValue;
+            
+                var otherReplacementParmName = theParmValue.substring( 1);
+            
+                var otherParmsToResolve = [ otherReplacementParmName];
+            
+                var otherParmResolutionsDict = theConfiguration.fParmResolutionsByName( otherParmsToResolve, theMapForStepsWithParmPrefix);
+                if( otherParmResolutionsDict) {
+                
+                    var otherReplacementResolution = otherParmResolutionsDict[ otherReplacementParmName];
+                    if( otherReplacementResolution && otherReplacementResolution._v_Success) {
+                        aReplacementValue = otherReplacementResolution._v_ParmValue;
+                    }
+                }
+            
+                return aReplacementValue;
+            };
+            if( fgParmValueReplacement){}/* CQT */
+            aModule.fgParmValueReplacement = fgParmValueReplacement;
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+            var fgParmValueReplacement_DotNotation= function( theConfiguration, theParmValue, theMapForStepsWithParmPrefix) {
+            
+                if( !theParmValue) {
+                    return theParmValue;
+                }
+            
+                if( !( typeof theParmValue === "string")) {
+                    return theParmValue;
+                }
+            
+            
+                var aParmValueLen = theParmValue.length;
+                if( aParmValueLen < 4) { /* expresion minima es ~x.y  */
+                    return theParmValue;
+                }
+            
+                if( !( theParmValue.indexOf( aModule.REPLACEPARMVALUEWITHPARMPREFIX) === 0)) {
+                    return theParmValue;
+                }
+            
+                var aDotIndex = theParmValue.indexOf( aModule.REPLACEPARMVALUEDOT);
+                if( aDotIndex < 0) {
+                    return fgParmValueReplacement( theConfiguration, theParmValue, theMapForStepsWithParmPrefix);
+                }
+            
+                if( aDotIndex < 2) {
+                    return theParmValue;
+                }
+            
+            
+            
+                var aReplacementParmNameWOdot = theParmValue.substring( 0, aDotIndex);
+                var aParmValueAfterDot        = theParmValue.substring( aDotIndex + 1);
+            
+                /* Unused 201805122138
+                var aReplacementParmNameWOdotWoPrefix = aReplacementParmNameWOdot.substring( 1);
+                 */
+            
+                var aParmValueReplacementWoDot = fgParmValueReplacement( theConfiguration, aReplacementParmNameWOdot, theMapForStepsWithParmPrefix);
+            
+                if( ( typeof aParmValueReplacementWoDot === "undefined")
+                    || ( aParmValueReplacementWoDot == null)
+                    || !( typeof aParmValueReplacementWoDot === "object") ) {
+                
+                    return aParmValueReplacementWoDot;
+                }
+            
+                if( aDotIndex >= ( aParmValueLen - 1)) {
+                    return aParmValueReplacementWoDot;
+                }
+            
+                if( !aParmValueAfterDot) {
+                    return aParmValueReplacementWoDot;
+                }
+            
+            
+                var aTraversalResult = fgTraverseToFromValue( aParmValueAfterDot, aParmValueReplacementWoDot, theMapForStepsWithParmPrefix);
+                if( !( typeof aTraversalResult === "object") || ( aTraversalResult == null)) {
+                    return aTraversalResult;
+                }
+            
+                var aReplacementResult = aTraversalResult[ "value"];
+                if( aReplacementResult){}/* CQT */
+                return aReplacementResult;
+            };
+            if( fgParmValueReplacement_DotNotation){}/* CQT */
+            aModule.fgParmValueReplacement_DotNotation = fgParmValueReplacement_DotNotation;
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+            var fgTraverseToFromValue = function( theSourceSteps, theValue, theMapForStepsWithParmPrefix) {
+                if( !theSourceSteps) {
+                    return null;
+                }
+            
+                if( theSourceSteps === aModule.TRAVERSAL_WHOLE) {
+                    return { "name": theSourceSteps, "value": theValue};
+                }
+            
+                if( !theValue) {
+                    return null;
+                }
+            
+                var someCheckSourceSteps = theSourceSteps;
+            
+                if( typeof someCheckSourceSteps === "string") {
+                
+                    if( someCheckSourceSteps.indexOf( aModule.TRAVERSALSTEPSSEPARATOR) >= 0) {
+                        someCheckSourceSteps = someCheckSourceSteps.split( aModule.TRAVERSALSTEPSSEPARATOR);
+                    }
+                    else {
+                        someCheckSourceSteps = [ someCheckSourceSteps];
+                    }
+                }
+                if( !someCheckSourceSteps) {
+                    return null;
+                }
+            
+                var aNumCheckSourceSteps = someCheckSourceSteps.length;
+                if( !aNumCheckSourceSteps) {
+                    return null;
+                }
+            
+            
+            
+            
+            
+            
+                var aStepName = someCheckSourceSteps[ 0].trim();
+            
+            
+            
+                if( aNumCheckSourceSteps === 1) {
+                
+                    if( aStepName === aModule.TRAVERSALSTEP_LENGTH) {
+                        return { "value": theValue.length};
+                    }
+                
+                
+                    if( aStepName === aModule.TRAVERSALSTEP_FIRST) {
+                        if( !theValue.length) {
+                            return null;
+                        }
+                        return { "value": theValue[ 0]};
+                    }
+                
+                
+                    if( aStepName === aModule.TRAVERSALSTEP_LAST) {
+                        if( !theValue.length) {
+                            return null;
+                        }
+                        return { "value": theValue[ theValue.length - 1]};
+                    }
+                
+                
+                    if( aStepName === aModule.TRAVERSALSTEP_ALL) {
+                        if( !theValue.length) {
+                            return { "value": []};
+                        }
+                        return { "value": theValue};
+                    }
+                
+                
+                
+                
+                    var aKeyedSeparatorIndex = aStepName.indexOf( aModule.TRAVERSALSTEP_KEYEDSEPARATOR);
+                    if ( ( aKeyedSeparatorIndex > 0) && ( aKeyedSeparatorIndex < ( aStepName.length - 1))) {
+                        var aValueLen = theValue.length;
+                        if( !aValueLen) {
+                            return null;
+                        }
+                        var aKeyName  = aStepName.slice( 0, aKeyedSeparatorIndex);
+                        var aKeyValue = aStepName.slice( aKeyedSeparatorIndex);
+                        if( !aKeyName || !aKeyValue) {
+                            return null;
+                        }
+                        var aMatchingParmValueElem = null;
+                        for( var aValueElemIdx=0; aValueElemIdx < aValueLen; aValueElemIdx++) {
+                            var aValueElem = theValue[ aValueElemIdx];
+                            if( !aValueElem) {
+                                continue;
+                            }
+                            if( !( typeof aValueElem === "object")) {
+                                continue;
+                            }
+                            if( !aValueElem.hasOwnProperty( aKeyName)) {
+                                continue;
+                            }
+                            var aValueElemKeyedValue    = aValueElem[ aKeyName];
+                            if( !aValueElemKeyedValue) {
+                                continue;
+                            }
+                            var aValueElemKeyedValueStr = aValueElemKeyedValue;
+                            if( !( typeof aValueElemKeyedValueStr === "string")) {
+                                aValueElemKeyedValueStr = new String( aValueElemKeyedValue);
+                            }
+                            if( !( aValueElemKeyedValueStr === aKeyValue)) {
+                                continue;
+                            }
+                            aMatchingParmValueElem = aValueElem;
+                            break;
+                        }
+                    
+                        if( typeof aMatchingParmValueElem === "undefined") {
+                            return  null;
+                        }
+                        if( aMatchingParmValueElem == null) {
+                            return null;
+                        }
+                    
+                        return { "value": aMatchingParmValueElem};
+                    }
+                
+                
+                
+                
+                
+                    var aReplacedSingleStepName = aStepName;
+                    if( aStepName.indexOf( aModule.REPLACEPARMVALUEWITHPARMPREFIX) === 0) {
+                    
+                        var aSingleStepNameWoPrefix = aStepName.slice( 1);
+                        if( aSingleStepNameWoPrefix) {
+                        
+                            var aSingleParmResolutionForStepWithParmPrefix = theMapForStepsWithParmPrefix[ aSingleStepNameWoPrefix];
+                        
+                            if( typeof aSingleParmResolutionForStepWithParmPrefix === "undefined") {
+                                return null;
+                            }
+                        
+                            aReplacedSingleStepName = aSingleParmResolutionForStepWithParmPrefix;
+                        }
+                    }
+                
+                
+                
+                    var aOneStepTestValue = theValue[ aReplacedSingleStepName];
+                
+                    if( typeof aOneStepTestValue === "undefined") {
+                        return  null;
+                    }
+                
+                    return { "value": aOneStepTestValue};
+                }
+            
+            
+            
+            
+            
+            
+            
+            
+                var aReplacedStepName = aStepName;
+                if( aStepName.indexOf( aModule.REPLACEPARMVALUEWITHPARMPREFIX) === 0) {
+                
+                    var aStepNameWoPrefix = aStepName.slice( 1);
+                    if( aStepNameWoPrefix) {
+                    
+                        var aParmResolutionForStepWithParmPrefix = theMapForStepsWithParmPrefix[ aStepNameWoPrefix];
+                    
+                        if( typeof aParmResolutionForStepWithParmPrefix === "undefined") {
+                            return null;
+                        }
+                    
+                        aReplacedStepName = aParmResolutionForStepWithParmPrefix;
+                    }
+                }
+            
+            
+                var aTestValue = theValue[ aReplacedStepName];
+                if( typeof aTestValue === "undefined") {
+                    return  null;
+                }
+            
+                if( aTestValue == null) {
+                    return  null;
+                }
+            
+            
+            
+            
+                var aNumStepsToTraverse = aNumCheckSourceSteps - 1;
+            
+                var aSubStepValue = aTestValue;
+                for( var aSubStepIdx=1; aSubStepIdx < aNumStepsToTraverse; aSubStepIdx++) {
+                    var aSubStepName = someCheckSourceSteps[ aSubStepIdx];
+                    if( aSubStepName) {
+                        aSubStepName = aSubStepName.trim();
+                    
+                        if( aSubStepName === aModule.TRAVERSALSTEP_LENGTH) {
+                            return { "value": aSubStepValue.length};
+                        }
+                        else {
+                            if( aSubStepName === aModule.TRAVERSALSTEP_FIRST) {
+                                if( (typeof aSubStepValue === "undefined") || ( aSubStepValue == null) || (typeof aSubStepValue.length === "undefined") || !aSubStepValue.length) {
+                                    return null;
+                                }
+                                aSubStepValue = aSubStepValue[ 0];
+                            }
+                            else {
+                                if( aSubStepName === aModule.TRAVERSALSTEP_LAST) {
+                                    if( (typeof aSubStepValue === "undefined") || ( aSubStepValue == null) || (typeof aSubStepValue.length === "undefined") || !aSubStepValue.length) {
+                                        return null;
+                                    }
+                                    aSubStepValue = aSubStepValue[ aSubStepValue.length - 1];
+                                }
+                                else {
+                                
+                                    if( aSubStepName === aModule.TRAVERSALSTEP_ALL) {
+                                        if( (typeof aSubStepValue === "undefined") || ( aSubStepValue == null) || (typeof aSubStepValue.length === "undefined") || !aSubStepValue.length) {
+                                            return { "value": []};
+                                        }
+                                    
+                                        var someStepsToCollect = someCheckSourceSteps.slice( aSubStepIdx + 1);
+                                    
+                                        var someCollected = [ ];
+                                    
+                                        var someToCollect = aSubStepValue.slice();
+                                        var aNumToCollect = someToCollect.length;
+                                        for( var aToCollectIdx=0; aToCollectIdx < aNumToCollect; aToCollectIdx++) {
+                                        
+                                            var aToCollect = someToCollect[ aToCollectIdx];
+                                        
+                                            var aCollectedTraversalResult = fgTraverseToFromValue( someStepsToCollect, aToCollect);
+                                        
+                                            if( aCollectedTraversalResult) {
+                                                var aCollectedTraversalValue = aCollectedTraversalResult[ "value"];
+                                                someCollected.push( aCollectedTraversalValue);
+                                            }
+                                        }
+                                    
+                                        return { "value": someCollected};
+                                    }
+                                    else {
+                                    
+                                        var aSubStepKeyedSeparatorIndex = aSubStepName.indexOf( aModule.TRAVERSALSTEP_KEYEDSEPARATOR);
+                                        if ( ( aSubStepKeyedSeparatorIndex > 0) && ( aSubStepKeyedSeparatorIndex < ( aSubStepName.length - 1))) {
+                                            var aSubStepParmValueLen = aSubStepValue.length;
+                                            if( !aSubStepParmValueLen) {
+                                                return null;
+                                            }
+                                            var aSubStepKeyName  = aSubStepName.slice( 0, aSubStepKeyedSeparatorIndex);
+                                            var aSubStepKeyValue = aSubStepName.slice( aSubStepKeyedSeparatorIndex + 1);
+                                            if( !aSubStepKeyName || !aSubStepKeyValue) {
+                                                return null;
+                                            }
+                                            var aSubStepMatchingParmValueElem = null;
+                                            for( var aSubStepParmValueElemIdx=0; aSubStepParmValueElemIdx < aSubStepParmValueLen; aSubStepParmValueElemIdx++) {
+                                                var aSubStepParmValueElem = aSubStepValue[ aSubStepParmValueElemIdx];
+                                                if( !aSubStepParmValueElem) {
+                                                    continue;
+                                                }
+                                                if( !( typeof aSubStepParmValueElem === "object")) {
+                                                    continue;
+                                                }
+                                                if( !aSubStepParmValueElem.hasOwnProperty( aSubStepKeyName)) {
+                                                    continue;
+                                                }
+                                                var aSubStepParmValueElemKeyedValue    = aSubStepParmValueElem[ aSubStepKeyName];
+                                                if( !aSubStepParmValueElemKeyedValue) {
+                                                    continue;
+                                                }
+                                                var aSubStepParmValueElemKeyedValueStr = aSubStepParmValueElemKeyedValue;
+                                                if( !( typeof aSubStepParmValueElemKeyedValueStr === "string")) {
+                                                    aSubStepParmValueElemKeyedValueStr = new String( aSubStepParmValueElemKeyedValue);
+                                                }
+                                                if( !( aSubStepParmValueElemKeyedValueStr === aSubStepKeyValue)) {
+                                                    continue;
+                                                }
+                                                aSubStepMatchingParmValueElem = aSubStepParmValueElem;
+                                                break;
+                                            }
+                                        
+                                            if( typeof aSubStepMatchingParmValueElem === "undefined") {
+                                                return null;
+                                            }
+                                        
+                                            if( aSubStepMatchingParmValueElem == null) {
+                                                return null;
+                                            }
+                                        
+                                            aSubStepValue = aSubStepMatchingParmValueElem;
+                                        }
+                                    
+                                    
+                                    
+                                    
+                                        else {
+                                            var aReplacedSubStepName = aSubStepName;
+                                        
+                                            if( aSubStepName.indexOf( aModule.REPLACEPARMVALUEWITHPARMPREFIX) === 0) {
+                                            
+                                                var aSubStepNameWoPrefix = aSubStepName.slice( 1);
+                                            
+                                                var aParmResolutionForSubStepWithParmPrefix = theMapForStepsWithParmPrefix[ aSubStepNameWoPrefix];
+                                                if( typeof aParmResolutionForSubStepWithParmPrefix === "undefined") {
+                                                    return null;
+                                                }
+                                            
+                                                aReplacedSubStepName = aParmResolutionForSubStepWithParmPrefix;
+                                            }
+                                        
+                                            aSubStepValue = aSubStepValue[ aReplacedSubStepName];
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    
+                    
+                        if( typeof aSubStepValue === "undefined") {
+                            return null;
+                        }
+                    
+                    
+                        if( aSubStepValue == null) {
+                            return { "value": null};
+                        }
+                    
+                    }
+                }
+            
+            
+                if( aSubStepValue == null) {
+                    return { "value": null};
+                }
+            
+            
+                var aLastStepName = someCheckSourceSteps[ aNumCheckSourceSteps - 1];
+                if( !aLastStepName) {
+                    return null;
+                }
+                aLastStepName = aLastStepName.trim();
+                if( !aLastStepName) {
+                    return null;
+                }
+            
+                if( aLastStepName === aModule.TRAVERSALSTEP_LENGTH) {
+                    return { "value": aSubStepValue.length};
+                }
+            
+                if( aLastStepName === aModule.TRAVERSALSTEP_FIRST) {
+                    if( !aSubStepValue.length) {
+                        return null;
+                    }
+                    return { "value": aSubStepValue[ 0]};
+                }
+            
+                if( aLastStepName === aModule.TRAVERSALSTEP_LAST) {
+                    if( !aSubStepValue.length) {
+                        return null;
+                    }
+                    return { "value": aSubStepValue[ aSubStepValue.length - 1]};
+                }
+            
+                if( aLastStepName === aModule.TRAVERSALSTEP_ALL) {
+                    if( !aSubStepValue.length) {
+                        return { "value": []};
+                    }
+                    return { "value": aSubStepValue};
+                }
+            
+            
+            
+                var aLastKeyedSeparatorIndex = aLastStepName.indexOf( aModule.TRAVERSALSTEP_KEYEDSEPARATOR);
+                if ( ( aLastKeyedSeparatorIndex > 0) && ( aLastKeyedSeparatorIndex < ( aLastStepName.length - 1))) {
+                    var aLastValueLen = aSubStepValue.length;
+                    if( !aLastValueLen) {
+                        return null;
+                    }
+                    var aLastKeyName  = aLastStepName.slice( 0, aLastKeyedSeparatorIndex);
+                    var aLastKeyValue = aLastStepName.slice( aLastKeyedSeparatorIndex);
+                    if( !aKeyName || !aKeyValue) {
+                        return null;
+                    }
+                    var aLastMatchingParmValueElem = null;
+                    for( var aLastValueElemIdx=0; aLastValueElemIdx < aLastValueLen; aLastValueElemIdx++) {
+                        var aLastValueElem = aSubStepValue[ aLastValueElemIdx];
+                        if( !aLastValueElem) {
+                            continue;
+                        }
+                        if( !( typeof aLastValueElem === "object")) {
+                            continue;
+                        }
+                        if( !aLastValueElem.hasOwnProperty( aLastKeyName)) {
+                            continue;
+                        }
+                        var aLastValueElemKeyedValue    = aLastValueElem[ aLastKeyName];
+                        if( !aLastValueElemKeyedValue) {
+                            continue;
+                        }
+                        var aLastValueElemKeyedValueStr = aLastValueElemKeyedValue;
+                        if( !( typeof aLastValueElemKeyedValueStr === "string")) {
+                            aLastValueElemKeyedValueStr = new String( aLastValueElemKeyedValue);
+                        }
+                        if( !( aLastValueElemKeyedValueStr === aLastKeyValue)) {
+                            continue;
+                        }
+                        aLastMatchingParmValueElem = aLastValueElem;
+                        break;
+                    }
+                
+                    if( typeof aLastMatchingParmValueElem === "undefined") {
+                        return null;
+                    }
+                
+                    if( aLastMatchingParmValueElem == null) {
+                        return null;
+                    }
+                
+                    return { "value": aLastMatchingParmValueElem};
+                }
+            
+            
+            
+            
+                var aReplacedLastStepName = aLastStepName;
+            
+                if( aLastStepName.indexOf( aModule.REPLACEPARMVALUEWITHPARMPREFIX) === 0) {
+                
+                    var aLastStepNameWoPrefix = aLastStepName.slice( 1);
+                
+                    var aParmResolutionForLastStepWithParmPrefix = theMapForStepsWithParmPrefix[ aLastStepNameWoPrefix];
+                    if( typeof aParmResolutionForLastStepWithParmPrefix === "undefined") {
+                        return null;
+                    }
+                
+                    aReplacedLastStepName = aParmResolutionForLastStepWithParmPrefix;
+                }
+            
+            
+                var aLastStepTestValue = aSubStepValue[ aReplacedLastStepName];
+                if( typeof aLastStepTestValue === "undefined") {
+                    return  null;
+                }
+            
+                return { "value": aLastStepTestValue};
+            };
+            if( fgTraverseToFromValue){}/* CQT */
+            aModule.fgTraverseToFromValue = fgTraverseToFromValue;
+        
+        
+        
+        
+        
+        
+        
+        
+        
+            var fgTraverseToFromValueReturnValueOrNull = function( theSourceSteps, theValue, theMapForStepsWithParmPrefix) {
+            
+                var aTraversalResult = fgTraverseToFromValue( theSourceSteps, theValue, theMapForStepsWithParmPrefix);
+                if( !aTraversalResult) {
+                    return null;
+                }
+            
+                var aTraversalValue = aTraversalResult[ "value"];
+                if( aTraversalValue){}/* CQT */
+            
+                return aTraversalValue;
+            
+            };
+            if( fgTraverseToFromValueReturnValueOrNull){}/* CQT */
+            aModule.fgTraverseToFromValueReturnValueOrNull = fgTraverseToFromValueReturnValueOrNull;
+        
+        
+        
+        
+        
+        
+        
+        
+        
+            var fgHasAnyStepsWithParmPrefix = function( theSourceSteps) {
+            
+                if( !theSourceSteps) {
+                    return false;
+                }
+            
+                if( theSourceSteps === aModule.TRAVERSAL_WHOLE) {
+                    return false;
+                }
+            
+                if( theSourceSteps.indexOf( aModule.REPLACEPARMVALUEWITHPARMPREFIX) < 0) {
+                    return false;
+                }
+            
+                var someCheckSourceSteps = theSourceSteps;
+            
+                if( typeof someCheckSourceSteps === "string") {
+                
+                    if( someCheckSourceSteps.indexOf( aModule.TRAVERSALSTEPSSEPARATOR) >= 0) {
+                        someCheckSourceSteps = someCheckSourceSteps.split( aModule.TRAVERSALSTEPSSEPARATOR);
+                    }
+                    else {
+                        someCheckSourceSteps = [ someCheckSourceSteps];
+                    }
+                }
+                if( !someCheckSourceSteps) {
+                    return false;
+                }
+            
+                var aNumCheckSourceSteps = someCheckSourceSteps.length;
+                if( !aNumCheckSourceSteps) {
+                    return false;
+                }
+            
+                for( var aStepForWithParmPrefixIdx=0; aStepForWithParmPrefixIdx < aNumCheckSourceSteps; aStepForWithParmPrefixIdx++) {
+                
+                    var aStepForWithParmPrefix = someCheckSourceSteps[ aStepForWithParmPrefixIdx];
+                    if( aStepForWithParmPrefix && ( aStepForWithParmPrefix.length > 1))  {
+                    
+                        if( aStepForWithParmPrefix.indexOf( aModule.REPLACEPARMVALUEWITHPARMPREFIX) === 0) {
+                            return true;
+                        }
+                    }
+                }
+            
+                return false;
+            };
+            if( fgHasAnyStepsWithParmPrefix){}/* CQT */
+            aModule.fgHasAnyStepsWithParmPrefix = fgHasAnyStepsWithParmPrefix;
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+            var fgStepsWithParmPrefix = function( theSourceSteps, theStepsWithParmPrefix) {
+                if( !theSourceSteps) {
+                    return null;
+                }
+            
+                if( theSourceSteps === aModule.TRAVERSAL_WHOLE) {
+                    return null;
+                }
+            
+                var someCheckSourceSteps = theSourceSteps;
+            
+                if( typeof someCheckSourceSteps === "string") {
+                
+                    if( someCheckSourceSteps.indexOf( aModule.TRAVERSALSTEPSSEPARATOR) >= 0) {
+                        someCheckSourceSteps = someCheckSourceSteps.split( aModule.TRAVERSALSTEPSSEPARATOR);
+                    }
+                    else {
+                        someCheckSourceSteps = [ someCheckSourceSteps];
+                    }
+                }
+                if( !someCheckSourceSteps) {
+                    return null;
+                }
+            
+                var aNumCheckSourceSteps = someCheckSourceSteps.length;
+                if( !aNumCheckSourceSteps) {
+                    return null;
+                }
+            
+                var someStepsWithParmPrefix = theStepsWithParmPrefix;
+                if( ( someStepsWithParmPrefix == null) || !( typeof someStepsWithParmPrefix === "object") || !( typeof someStepsWithParmPrefix.length === "number")) {
+                    someStepsWithParmPrefix = [ ];
+                }
+            
+                for( var aStepForWithParmPrefixIdx=0; aStepForWithParmPrefixIdx < aNumCheckSourceSteps; aStepForWithParmPrefixIdx++) {
+                
+                    var aStepForWithParmPrefix = someCheckSourceSteps[ aStepForWithParmPrefixIdx];
+                    if( aStepForWithParmPrefix && ( aStepForWithParmPrefix.length > 1))  {
+                    
+                        if( aStepForWithParmPrefix.indexOf( aModule.REPLACEPARMVALUEWITHPARMPREFIX) === 0) {
+                        
+                            var aStepForWithParmPrefixWoPrefix = aStepForWithParmPrefix.substring( 1);
+                            if( aStepForWithParmPrefixWoPrefix) {
+                                if( someStepsWithParmPrefix.indexOf( aStepForWithParmPrefixWoPrefix) < 0) {
+                                    someStepsWithParmPrefix.push( aStepForWithParmPrefixWoPrefix);
+                                }
+                            }
+                        }
+                    }
+                }
+            
+                var aNumStepsWithParmPrefix = someStepsWithParmPrefix.length;
+                if( !aNumStepsWithParmPrefix) {
+                    return null;
+                }
+            
+            
+                return someStepsWithParmPrefix;
+            };
+            if( fgStepsWithParmPrefix){}/* CQT */
+            aModule.fgStepsWithParmPrefix = fgStepsWithParmPrefix;
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+            var fgFirstDiff = function( theActualValue, theCheckValue) {
+            
+                var aDiff = fgFirstDiff_inner( theActualValue, theCheckValue);
+                if( !aDiff) {
+                    return null;
+                }
+    
+                if( aDiff === aModule.VALUEDIFFATTOP) {
+                    return aModule.VALUEDIFFATTOP;
+                }
+                
+                if( !aDiff.length) {
+                    /* Unexpected: results should e either null, VALUEDIFFATTOP, or a list of diffs, even a size 1 list.
+                    */
+                    return aModule.VALUEDIFFATTOP;
+                }
+                
+                var aReverseDiff = aDiff.reverse();
+                if( aReverseDiff){}/* CQT */
+                return aReverseDiff;
+            };
+            if( fgFirstDiff){}/* CQT */
+            aModule.fgFirstDiff = fgFirstDiff;
+    
+    
+    
+    
+            var fgFirstDiff_inner = function( theActualValue, theCheckValue) {
+        
+                if( !( typeof theCheckValue === "undefined") &&  ( theCheckValue === aModule.DONOTCOMPAREVALUESYMBOL)) {
+                    return null;
+                }
+        
+                if( ( typeof theActualValue === "undefined") && ( typeof theCheckValue === "undefined") ) {
+                    return null;
+                }
+        
+                if( ( typeof theActualValue === "undefined") || ( typeof theCheckValue === "undefined") ) {
+                    return aModule.VALUEDIFFATTOP;
+                }
+        
+                if( ( theActualValue == null) && ( theCheckValue == null)) {
+                    return null;
+                }
+        
+                if( ( theActualValue == null) || ( theCheckValue == null)) {
+                    return aModule.VALUEDIFFATTOP;
+                }
+        
+        
+                if( !( ( typeof theActualValue) === ( typeof theCheckValue))) {
+                    return aModule.VALUEDIFFATTOP;
+                }
+        
+        
+        
+        
+        
+                if( typeof theActualValue === "string" ) {
+                    if( theCheckValue === aModule.DONOTCOMPAREVALUESYMBOL) {
+                        return null;
+                    }
+                    if( !( theActualValue === theCheckValue)) {
+                        return aModule.VALUEDIFFATTOP;
+                    }
+                    return null;
+                }
+        
+        
+                if( typeof theActualValue === "number" ) {
+                    if( !( theActualValue === theCheckValue)) {
+                        return aModule.VALUEDIFFATTOP;
+                    }
+                    return null;
+                }
+        
+        
+                if( typeof theActualValue === "boolean" ) {
+                    if( !( theActualValue === theCheckValue)) {
+                        return aModule.VALUEDIFFATTOP;
+                    }
+                    return null;
+                }
+        
+        
+                if( typeof theActualValue === "function" ) {
+                    if( !( theActualValue === theCheckValue)) {
+                        return aModule.VALUEDIFFATTOP;
+                    }
+                    return null;
+                }
+        
+        
+                if( !( typeof theActualValue === "object" )) {
+                    /* All other valid type options should have been already processed above.
+                    Just remains to drill down into an object list elements or keyed properties
+                     */
+                    return aModule.VALUEDIFFATTOP;
+                }
+        
+        
+        
+                var aOneLen   = theActualValue.length;
+                var aOtherLen = theCheckValue.length;
+        
+                if( ( typeof aOneLen === "number") || ( typeof aOtherLen === "number"))  {
+            
+                    if( !( ( typeof aOneLen === "number") && ( typeof aOtherLen === "number"))) {
+                        /* One is a list object the other is not a list object: difference can not compare deeper down
+                        */
+                        return aModule.VALUEDIFFATTOP;
+                    }
+            
+            
+                    /* It is a list, theCheckValue is also a list*/
+            
+                    if( !( aOneLen === aOtherLen)) {
+                        return aModule.VALUEDIFFATTOP;
+                    }
+            
+                    for( var aSubIdx=0; aSubIdx < aOneLen; aSubIdx++) {
+                        var aOneListSub   = theActualValue[ aSubIdx];
+                        var aOtherListSub = theCheckValue[ aSubIdx];
+                
+                        var aSubsListDiff = fgFirstDiff_inner( aOneListSub, aOtherListSub);
+                        if( aSubsListDiff) {
+                    
+                            if( aSubsListDiff === aModule.VALUEDIFFATTOP) {
+                                return [ aSubIdx];
+                            }
+    
+                            if( !( aSubsListDiff.length)) {
+                                /* Unexpected: results should e either null, VALUEDIFFATTOP, or a list of diffs, even a size 1 list.
+                                 */
+                                return [ aSubIdx];
+                            }
+                    
+                            aSubsListDiff.push( aSubIdx);
+                    
+                            return aSubsListDiff;
+                        }
+                    }
+            
+                    return null;
+                }
+        
+        
+        
+                /* None of the two objects is a list. Drill down into the object keyed properties.
+                 */
+                var someOneKeys   = Object.keys( theActualValue);
+                var someOtherKeys = Object.keys( theCheckValue);
+        
+        
+                var allKeys = someOneKeys.slice();
+                var aNumOtherKeys = someOtherKeys.length;
+        
+                for( var aOtherKeyIdx=0; aOtherKeyIdx < aNumOtherKeys; aOtherKeyIdx++) {
+                    var aOtherKey = someOtherKeys[ aOtherKeyIdx];
+                    if( allKeys.indexOf( aOtherKey) < 0) {
+                        allKeys.push( aOtherKey);
+                    }
+                }
+                allKeys.sort();
+        
+        
+                var aNumKeys = allKeys.length;
+        
+                for( var aKeyIdx=0; aKeyIdx < aNumKeys; aKeyIdx++) {
+                    var aKey = allKeys[ aKeyIdx];
+            
+                    if( !theActualValue.hasOwnProperty( aKey)) {
+                        return [ aKey];
+                    }
+            
+                    if( !theCheckValue.hasOwnProperty( aKey)) {
+                        return [ aKey];
+                    }
+            
+            
+                    var aOneSub   = theActualValue[ aKey];
+                    var aOtherSub = theCheckValue[ aKey];
+            
+                    var aSubsDiff = fgFirstDiff_inner( aOneSub, aOtherSub);
+                    if( aSubsDiff) {
+                
+                        if( aSubsDiff === aModule.VALUEDIFFATTOP) {
+                            return [ aKey];
+                        }
+                
+                        if( !( aSubsDiff.length)) {
+                            /* Unexpected: results should e either null, VALUEDIFFATTOP, or a list of diffs, even a size 1 list.
+                             */
+                            return [ aKey];
+                        }
+                        
+                        aSubsDiff.push( aKey);
+                
+                        return aSubsDiff;
+                    }
+                }
+        
+        
+                return null;
+            };
+            if( fgFirstDiff_inner){}/* CQT */
+            aModule.fgFirstDiff_inner = fgFirstDiff_inner;
+    
+    
+    
+    
+    
+    
+    
+    
+            var fgFirstDiffFromLeft = function( theActualValue, theCheckValue) {
+        
+                var aDiff = fgFirstDiffFromLeft_inner( theActualValue, theCheckValue);
+                if( !aDiff) {
+                    return null;
+                }
+        
+                if( aDiff === aModule.VALUEDIFFATTOP) {
+                    return aModule.VALUEDIFFATTOP;
+                }
+        
+                if( !aDiff.length) {
+                    /* Unexpected: results should e either null, VALUEDIFFATTOP, or a list of diffs, even a size 1 list.
+                    */
+                    return aModule.VALUEDIFFATTOP;
+                }
+        
+                var aReverseDiff = aDiff.reverse();
+                if( aReverseDiff){}/* CQT */
+                return aReverseDiff;
+            };
+            if( fgFirstDiffFromLeft){}/* CQT */
+            aModule.fgFirstDiffFromLeft = fgFirstDiffFromLeft;
+    
+    
+    
+    
+    
+            var fgFirstDiffFromLeft_inner = function( theActualValue, theCheckValue) {
+            
+                if( !( typeof theCheckValue === "undefined") &&  ( theCheckValue === aModule.DONOTCOMPAREVALUESYMBOL)) {
+                    return null;
+                }
+            
+                if( ( typeof theActualValue === "undefined") && ( typeof theCheckValue === "undefined") ) {
+                    return null;
+                }
+            
+                if( ( typeof theActualValue === "undefined") || ( typeof theCheckValue === "undefined") ) {
+                    return aModule.VALUEDIFFATTOP;
+                }
+            
+                if( ( theActualValue == null) && ( theCheckValue == null)) {
+                    return null;
+                }
+            
+                if( ( theActualValue == null) || ( theCheckValue == null)) {
+                    return aModule.VALUEDIFFATTOP;
+                }
+            
+            
+                if( !( ( typeof theActualValue) === ( typeof theCheckValue))) {
+                    return aModule.VALUEDIFFATTOP;
+                }
+            
+            
+            
+            
+            
+                if( typeof theActualValue === "string" ) {
+                    if( theCheckValue === aModule.DONOTCOMPAREVALUESYMBOL) {
+                        return null;
+                    }
+                    if( !( theActualValue === theCheckValue)) {
+                        return aModule.VALUEDIFFATTOP;
+                    }
+                    return null;
+                }
+            
+            
+                if( typeof theActualValue === "number" ) {
+                    if( !( theActualValue === theCheckValue)) {
+                        return aModule.VALUEDIFFATTOP;
+                    }
+                    return null;
+                }
+            
+            
+                if( typeof theActualValue === "boolean" ) {
+                    if( !( theActualValue === theCheckValue)) {
+                        return aModule.VALUEDIFFATTOP;
+                    }
+                    return null;
+                }
+    
+    
+                if( typeof theActualValue === "function" ) {
+                    if( !( theActualValue === theCheckValue)) {
+                        return aModule.VALUEDIFFATTOP;
+                    }
+                    return null;
+                }
+    
+    
+                if( !( typeof theActualValue === "object" )) {
+                    /* All other valid type options should have been already processed above.
+                       Just remains to drill down into an object list elements or keyed properties
+                    */
+                    return aModule.VALUEDIFFATTOP;
+                }
+    
+    
+    
+    
+    
+    
+    
+                var aOneLen   = theActualValue.length;
+                var aOtherLen = theCheckValue.length;
+    
+                if( ( typeof aOneLen === "number") || ( typeof aOtherLen === "number"))  {
+        
+                    if( !( ( typeof aOneLen === "number") && ( typeof aOtherLen === "number"))) {
+                        /* One is a list object the other is not a list object: difference can not compare deeper down
+                        */
+                        return aModule.VALUEDIFFATTOP;
+                    }
+        
+        
+                    /* It is a list, theCheckValue is also a list*/
+        
+                    if( !( aOneLen === aOtherLen)) {
+                        return aModule.VALUEDIFFATTOP;
+                    }
+        
+                    for( var aSubIdx=0; aSubIdx < aOneLen; aSubIdx++) {
+                        var aOneListSub   = theActualValue[ aSubIdx];
+                        var aOtherListSub = theCheckValue[ aSubIdx];
+            
+                        var aSubsListDiff = fgFirstDiffFromLeft_inner( aOneListSub, aOtherListSub);
+                        if( aSubsListDiff) {
+                
+                            if( aSubsListDiff === aModule.VALUEDIFFATTOP) {
+                                return [ aSubIdx];
+                            }
+                
+                            if( !( aSubsListDiff.length)) {
+                                /* Unexpected: results should e either null, VALUEDIFFATTOP, or a list of diffs, even a size 1 list.
+                                 */
+                                return [ aSubIdx];
+                            }
+                
+                            aSubsListDiff.push( aSubIdx);
+                
+                            return aSubsListDiff;
+                        }
+                    }
+        
+                    return null;
+                }
+    
+    
+    
+    
+    
+    
+                /* None of the two objects is a list. Drill down into the object keyed properties.
+                 */
+    
+                var someKeys   = Object.keys( theCheckValue);
+            
+                var aNumKeys = someKeys.length;
+            
+                for( var aKeyIdx=0; aKeyIdx < aNumKeys; aKeyIdx++) {
+                    var aKey = someKeys[ aKeyIdx];
+                
+                    if( !theActualValue.hasOwnProperty( aKey)) {
+                        return [ aKey];
+                    }
+                
+                    if( !theCheckValue.hasOwnProperty( aKey)) {
+                        return [ aKey];
+                    }
+                
+                
+                    var aOneSub   = theActualValue[ aKey];
+                    var aOtherSub = theCheckValue[ aKey];
+                
+                    var aSubsDiff = fgFirstDiffFromLeft( aOneSub, aOtherSub);
+                    if( aSubsDiff) {
+                    
+                        if( aSubsDiff === aModule.VALUEDIFFATTOP) {
+                            return [ aKey];
+                        }
+    
+    
+                        if( !( aSubsDiff.length)) {
+                            /* Unexpected: results should e either null, VALUEDIFFATTOP, or a list of diffs, even a size 1 list.
+                             */
+                            return [ aKey];
+                        }
+                        
+                        aSubsDiff.push( aKey);
+                    
+                        return aSubsDiff;
+                    }
+                }
+            
+                return null;
+            };
+            if( fgFirstDiffFromLeft_inner){}/* CQT */
+            aModule.fgFirstDiffFromLeft_inner = fgFirstDiffFromLeft_inner;
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+            var fgAllDiffs = function( theActualValue, theCheckValue, theIgnoreKeys, theIgnorePaths) {
+            
+                if( !( typeof theCheckValue === "undefined") &&  ( theCheckValue === aModule.DONOTCOMPAREVALUESYMBOL)) {
+                    return null;
+                }
+            
+                if( ( typeof theActualValue === "undefined") && ( typeof theCheckValue === "undefined") ) {
+                    return null;
+                }
+            
+                if( typeof theActualValue === "undefined") {
+                    return [ fNewVoidDiff( "undefined", "UNCHECKED", "undefined", "UNCHECKED")];
+                }
+            
+                if( typeof theCheckValue === "undefined") {
+                    return [ fNewVoidDiff( theActualValue, "undefined", "something", "undefined")];
+                }
+            
+            
+                if( ( theActualValue == null) && ( theCheckValue == null)) {
+                    return null;
+                }
+            
+                if( theActualValue == null) {
+                    return [ fNewVoidDiff( theActualValue, theCheckValue, "null", "something")];
+                }
+            
+                if( theCheckValue == null) {
+                    return [ fNewVoidDiff( theActualValue, theCheckValue, "something", "null")];
+                }
+            
+            
+                if( !( ( typeof theActualValue) === ( typeof theCheckValue))) {
+                    return [ fNewVoidDiff( theActualValue, theCheckValue, typeof theActualValue, typeof theCheckValue)];
+                }
+            
+            
+            
+            
+            
+                if( typeof theActualValue === "string" ) {
+                    if( theCheckValue === aModule.DONOTCOMPAREVALUESYMBOL) {
+                        return null;
+                    }
+                
+                    if( !( typeof theCheckValue === "string")) {
+                        return [ fNewVoidDiff( theActualValue, theCheckValue, theActualValue, "not a string")];
+                    }
+                
+                    if( !( theActualValue === theCheckValue)) {
+                        return [ fNewVoidDiff( theActualValue, theCheckValue, theActualValue, theCheckValue)];
+                    }
+                
+                    return null;
+                }
+            
+            
+                if( typeof theActualValue === "number" ) {
+                
+                    if( !( typeof theCheckValue === "number")) {
+                        return [ fNewVoidDiff( theActualValue, theCheckValue, theActualValue, "not a number")];
+                    }
+                
+                    if( !( theActualValue === theCheckValue)) {
+                        return [ fNewVoidDiff( theActualValue, theCheckValue, theActualValue, theCheckValue)];
+                    }
+                    return null;
+                }
+            
+            
+                if( typeof theActualValue === "boolean" ) {
+                
+                    if( !( typeof theCheckValue === "boolean")) {
+                        return [ fNewVoidDiff( theActualValue, theCheckValue, theActualValue, "not a boolean")];
+                    }
+                
+                    if( !( theActualValue === theCheckValue)) {
+                        return [ fNewVoidDiff( theActualValue, theCheckValue, theActualValue, theCheckValue)];
+                    }
+                    return null;
+                }
+    
+    
+    
+                if( typeof theActualValue === "function" ) {
+        
+                    if( !( typeof theCheckValue === "function")) {
+                        return [ fNewVoidDiff( theActualValue, theCheckValue, theActualValue, "not a function")];
+                    }
+        
+                    if( !( theActualValue === theCheckValue)) {
+                        return [ fNewVoidDiff( theActualValue, theCheckValue, theActualValue, theCheckValue)];
+                    }
+                    return null;
+                }
+    
+                
+    
+                if( !( typeof theActualValue === "object" )) {
+                    return [ fNewVoidDiff( "an object", "UNCHECKED")];
+                }
+            
+            
+                if( !( typeof theCheckValue === "object" )) {
+                    return [ fNewVoidDiff( "an object'", "not an object")];
+                }
+            
+            
+            
+            
+            
+            
+                var allDiffs = [ ];
+            
+            
+            
+                var aOneLen   = theActualValue.length;
+                var aOtherLen = theCheckValue.length;
+            
+                if( ( typeof aOneLen === "number") || ( typeof aOtherLen === "number")) {
+                
+                    if( !( typeof aOneLen === "number")) {
+                        return [ fNewVoidDiff( theActualValue, theCheckValue, "not an array", "UNCHECKED")];
+                    }
+                
+                    if( !( typeof aOtherLen === "number")) {
+                        return [ fNewVoidDiff( theActualValue, theCheckValue, "an array", "not an array")];
+                    }
+                
+                    if( !( aOneLen === aOtherLen)) {
+                        allDiffs.push( fNewVoidDiff( theActualValue, theCheckValue, "LEN=" + aOneLen, "LEN=" + aOtherLen));
+                    }
+                
+                    var aMaxLen = Math.max( aOneLen, aOtherLen);
+                
+                    if( aMaxLen) {
+                    
+                        for( var aSubIdx=0; aSubIdx < aMaxLen; aSubIdx++) {
+                        
+                            var aOneListSub   = undefined;
+                            var aOtherListSub = undefined;
+                        
+                            if( aSubIdx < aOneLen) {
+                                aOneListSub   = theActualValue[ aSubIdx];
+                            }
+                        
+                            if( aSubIdx < aOtherLen) {
+                                aOtherListSub   = theCheckValue[ aSubIdx];
+                            }
+                        
+                        
+                            var someSubsListDiffs = fgAllDiffs( aOneListSub, aOtherListSub, theIgnoreKeys, theIgnorePaths);
+                            if( someSubsListDiffs) {
+                            
+                                pUnshiftDiffsPath( someSubsListDiffs, aSubIdx);
+                            
+                                Array.prototype.push.apply( allDiffs, someSubsListDiffs);
+                            }
+                        }
+                    }
+                }
+            
+            
+            
+            
+            
+            
+                var someOneKeysPossiblyWithNumbers   = Object.keys( theActualValue);
+                var someOtherKeyPossiblyWithNumbers = Object.keys( theCheckValue);
+            
+                if( !( typeof someOneKeysPossiblyWithNumbers === "undefined") && !( typeof someOtherKeyPossiblyWithNumbers === "undefined")) {
+                
+                    var someOneKeys   = aModule.fgExcludeNumberStrings( someOneKeysPossiblyWithNumbers);
+                    var someOtherKeys = aModule.fgExcludeNumberStrings( someOtherKeyPossiblyWithNumbers);
+                
+                
+                    var allKeys = someOneKeys.slice();
+                    var aNumOtherKeys = someOtherKeys.length;
+                
+                    for( var aOtherKeyIdx=0; aOtherKeyIdx < aNumOtherKeys; aOtherKeyIdx++) {
+                        var aOtherKey = someOtherKeys[ aOtherKeyIdx];
+                        if( allKeys.indexOf( aOtherKey) < 0) {
+                            allKeys.push( aOtherKey);
+                        }
+                    }
+                    allKeys.sort();
+                
+                
+                    var aNumKeys = allKeys.length;
+                
+                    if( aNumKeys) {
+                        for( var aKeyIdx=0; aKeyIdx < aNumKeys; aKeyIdx++) {
+                            var aKey = allKeys[ aKeyIdx];
+                        
+                            if( theIgnoreKeys && ( theIgnoreKeys.indexOf( aKey) >=0)) {
+                                continue;
+                            }
+                        
+                            var aOneSub   = undefined;
+                            var aOtherSub = undefined;
+                        
+                            if( theActualValue.hasOwnProperty( aKey)) {
+                                aOneSub   = theActualValue[ aKey];
+                            }
+                        
+                            if( theCheckValue.hasOwnProperty( aKey)) {
+                                aOtherSub = theCheckValue[ aKey];
+                            }
+                        
+                            var someSubsDiffs = fgAllDiffs( aOneSub, aOtherSub, theIgnoreKeys, theIgnorePaths);
+                            if( someSubsDiffs) {
+                            
+                                pUnshiftDiffsPath( someSubsDiffs, aKey);
+                            
+                                Array.prototype.push.apply( allDiffs, someSubsDiffs);
+                            }
+                        }
+                    }
+                }
+            
+            
+                var aNumAllDiffs = allDiffs.length;
+                if( !aNumAllDiffs) {
+                    return null;
+                }
+            
+                return allDiffs;
+            };
+            if( fgAllDiffs){}/* CQT */
+            aModule.fgAllDiffs = fgAllDiffs;
+        
+        
+        
+        
+        
+        
+        
+            var fNewVoidDiff = function( theOneValue, theOtherValue, theOneDisplay, theOtherDisplay) {
+            
+                var aDiff = {
+                    "oneValue":     theOneValue,
+                    "otherValue":   theOtherValue,
+                    "oneDisplay":   theOneDisplay,
+                    "otherDisplay": theOtherDisplay,
+                    "path":         undefined,
+                    "diffKind":     null
+                };
+                if( aDiff){}/* CQT */
+            
+                return aDiff;
+            };
+        
+        
+        
+        
+        
+        
+        
+        
+        
+            var fgExcludeNumberStrings = function( theStrings) {
+            
+                if( !theStrings) {
+                    return theStrings;
+                }
+            
+                var aNumStrings   = theStrings.length;
+                if( !aNumStrings) {
+                    return theStrings;
+                }
+            
+                var someNotNumberStrings = [ ];
+            
+                for( var aOneStringIdx=0; aOneStringIdx < aNumStrings; aOneStringIdx++) {
+                
+                    var aOneString = theStrings[ aOneStringIdx];
+                    if( aOneString) {
+                    
+                        var aIsNumber = false;
+                        try {
+                            var aNumber = parseInt( aOneString);
+                            aIsNumber = !isNaN( aNumber);
+                        }
+                        catch( anException) {}
+                        if( !aIsNumber) {
+                            someNotNumberStrings.push( aOneString);
+                        }
+                    }
+                }
+            
+                return someNotNumberStrings;
+            
+            };
+            if( fgExcludeNumberStrings){}/* CQT */
+            aModule.fgExcludeNumberStrings = fgExcludeNumberStrings;
+        
+        
+        
+        
+        
+        
+        
+            var pUnshiftDiffsPath = function( theDiffs, theToUnshift) {
+            
+                if( !theDiffs) {
+                    return;
+                }
+            
+                var aNumDiffs = theDiffs.length;
+                if( !aNumDiffs) {
+                    return;
+                }
+            
+                if( typeof theToUnshift === "undefined") {
+                    return;
+                }
+            
+                if( theToUnshift == null) {
+                    return;
+                }
+            
+            
+                for( var aDiffIdx=0; aDiffIdx < aNumDiffs; aDiffIdx++) {
+                    var aDiff = theDiffs[ aDiffIdx];
+                    if( aDiff) {
+                    
+                        var aPath = aDiff[ "path"];
+                        if( !( typeof aPath === "object")) {
+                            aDiff[ "path"] = [ theToUnshift];
+                        }
+                        else {
+                            aPath.unshift( theToUnshift);
+                        
+                        }
+                    }
+                }
+            };
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+            var fgSetValueAtPath = function( theTarget, thePath, theValue) {
+            
+                if( !theTarget) {
+                    return null;
+                }
+            
+                if( !thePath) {
+                    return null;
+                }
+            
+                var someParmSteps = thePath;
+            
+                if( typeof someParmSteps === "string") {
+                    if( someParmSteps.indexOf( aModule.TRAVERSALSTEPSSEPARATOR) >= 0) {
+                        someParmSteps = someParmSteps.split( aModule.TRAVERSALSTEPSSEPARATOR);
+                    }
+                    else {
+                        someParmSteps = [ someParmSteps];
+                    }
+                }
+                if( !someParmSteps) {
+                    return false;
+                }
+            
+                var aNumParmSteps = someParmSteps.length;
+                if( !aNumParmSteps) {
+                    return false;
+                }
+            
+            
+                var aStepName = someParmSteps[ 0].trim();
+            
+                if( aNumParmSteps === 1) {
+                    theTarget[ aStepName] = theValue;
+                    return true;
+                }
+            
+                var aModified = false;
+            
+                var aParmValue = theTarget[ aStepName];
+                if( ( typeof aParmValue === "undefined") || ( aParmValue == null) || !( typeof aParmValue === "object")) {
+                    aParmValue = { };
+                    theTarget[ aStepName] = aParmValue;
+                    aModified = true;
+                }
+            
+            
+                var aNumStepsToTraverse = aNumParmSteps - 1;
+            
+                var aSubStepValue = aParmValue;
+                var aPrevSubStepValue = aSubStepValue;
+            
+                for( var aSubStepIdx=1; aSubStepIdx < aNumStepsToTraverse; aSubStepIdx++) {
+                
+                    var aSubStepName = someParmSteps[ aSubStepIdx];
+                    if( aSubStepName) {
+                    
+                        aSubStepName = aSubStepName.trim();
+                        aSubStepValue = aSubStepValue[ aSubStepName];
+                    
+                        if( ( typeof aSubStepValue === "undefined") || ( aSubStepValue == null) || !( typeof aSubStepValue === "object")) {
+                        
+                            aSubStepValue = { };
+                            aPrevSubStepValue[ aSubStepName] = aSubStepValue;
+                            aPrevSubStepValue = aSubStepValue;
+                        }
+                    }
+                }
+            
+            
+                if( !( aSubStepValue == null)) {
+                
+                    var aLastStepName = someParmSteps[ aNumParmSteps - 1];
+                    if( aLastStepName) {
+                    
+                        aLastStepName = aLastStepName.trim();
+                        aSubStepValue[ aLastStepName] = theValue;
+                    
+                        aModified = true;
+                    }
+                }
+            
+                return aModified;
+            };
+            if( fgSetValueAtPath){}/* CQT */
+            aModule.fgSetValueAtPath = fgSetValueAtPath;
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+            var fgSetValueAtPathSymbolic = function( theTarget, thePath, theValue) {
+            
+                if( !theTarget) {
+                    return null;
+                }
+            
+                if( !thePath) {
+                    return null;
+                }
+            
+                var someParmSteps = thePath;
+            
+                if( typeof someParmSteps === "string") {
+                    if( someParmSteps.indexOf( aModule.TRAVERSALSTEPSSEPARATOR) >= 0) {
+                        someParmSteps = someParmSteps.split( aModule.TRAVERSALSTEPSSEPARATOR);
+                    }
+                    else {
+                        someParmSteps = [ someParmSteps];
+                    }
+                }
+                if( !someParmSteps) {
+                    return false;
+                }
+            
+                var aNumParmSteps = someParmSteps.length;
+                if( !aNumParmSteps) {
+                    return false;
+                }
+            
+            
+                var aStepName = someParmSteps[ 0].trim();
+            
+                if( aNumParmSteps === 1) {
+                    theTarget[ aStepName] = theValue;
+                    return true;
+                }
+            
+                var aModified = false;
+            
+                var aParmValue = theTarget[ aStepName];
+                if( ( typeof aParmValue === "undefined") || ( aParmValue == null) || !( typeof aParmValue === "object")) {
+                    aParmValue = { };
+                    theTarget[ aStepName] = aParmValue;
+                    aModified = true;
+                }
+            
+            
+                var aNumStepsToTraverse = aNumParmSteps - 1;
+            
+                var aSubStepValue = aParmValue;
+                var aPrevSubStepValue = aSubStepValue;
+            
+                for( var aSubStepIdx=1; aSubStepIdx < aNumStepsToTraverse; aSubStepIdx++) {
+                
+                    var aSubStepName = someParmSteps[ aSubStepIdx];
+                    if( aSubStepName) {
+                    
+                        aSubStepName = aSubStepName.trim();
+                    
+                        aSubStepValue = aModule.fgSymbolicGet( aSubStepValue, aSubStepName);
+                    
+                        if( ( typeof aSubStepValue === "undefined") || ( aSubStepValue == null) || !( typeof aSubStepValue === "object")) {
+                        
+                            aSubStepValue = { };
+                            aPrevSubStepValue[ aSubStepName] = aSubStepValue;
+                            aPrevSubStepValue = aSubStepValue;
+                        }
+                    }
+                }
+            
+            
+                if( !( aSubStepValue == null)) {
+                
+                    var aLastStepName = someParmSteps[ aNumParmSteps - 1];
+                    if( aLastStepName) {
+                    
+                        aLastStepName = aLastStepName.trim();
+                        aSubStepValue[ aLastStepName] = theValue;
+                    
+                        aModified = true;
+                    }
+                }
+            
+                return aModified;
+            };
+            if( fgSetValueAtPathSymbolic){}/* CQT */
+            aModule.fgSetValueAtPathSymbolic = fgSetValueAtPathSymbolic;
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+            var fgSymbolicGet = function( theTarget, theStep) {
+            
+                var aSymbolicStepMatch = aModule.SYMBOLICSTEPREGEXP.exec( theStep);
+            
+                if( !aSymbolicStepMatch) {
+                
+                    var aGetValue = theTarget[ theStep];
+                    if( aGetValue){}/* CQT */
+                    return aGetValue;
+                }
+            
+            
+                var aSymbolicKey   = aSymbolicStepMatch[ 1];
+                var aSymbolicValue = aSymbolicStepMatch[ 2];
+            
+                if( !aSymbolicKey) {
+                    return undefined;
+                }
+            
+                if( typeof aSymbolicValue === "undefined") {
+                    return undefined;
+                }
+            
+            
+                var aTargetLength = theTarget.length;
+                if( !( typeof aTargetLength === "number")) {
+                    return undefined;
+                }
+            
+            
+                for( var aTargetIdx=0; aTargetIdx < aTargetLength; aTargetIdx++) {
+                
+                    var aTarget = theTarget[ aTargetIdx];
+                    if( aTarget && ( typeof aTarget === "object")) {
+                    
+                        var aTargetSearch = aTarget[ aSymbolicKey];
+                        if( !( typeof aTargetSearch === "undefined")) {
+                        
+                            if( aTargetSearch === aSymbolicValue) {
+                            
+                                return aTarget;
+                            }
+                        }
+                    }
+                }
+            
+                return undefined;
+            
+            };
+            if( fgSymbolicGet){}/* CQT */
+            aModule.fgSymbolicGet = fgSymbolicGet;
+        
+        
+        
+        
+        
+        
+        
+        
+            var fgDeepCopy = function( theSource) {
+            
+                if( ( typeof theSource === "undefined") || ( theSource == null) || ( typeof theSource === "number") || ( typeof theSource === "string") || ( typeof theSource === "boolean")) {
+                    return theSource;
+                }
+            
+            
+                if( typeof theSource.length === "number") {
+                    return aModule.fgDeepCopy_List( theSource)
+                }
+            
+            
+                return aModule.fgDeepCopy_Object( theSource)
+            
+            };
+            if( fgDeepCopy){}/* CQT */
+            aModule.fgDeepCopy = fgDeepCopy;
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+            var fgDeepCopy_List = function( theSource) {
+            
+                if( ( typeof theSource === "undefined") || ( theSource == null) || ( typeof theSource === "number") || ( typeof theSource === "string") || ( typeof theSource === "boolean")) {
+                    return theSource;
+                }
+            
+                if( !( typeof theSource === "object")) {
+                    return undefined;
+                }
+            
+                var aNumElements = theSource.length;
+            
+                if( !( typeof aNumElements === "number")) {
+                    return undefined;
+                }
+            
+            
+                var aDeepCopy = [ ];
+            
+                for( var anElementIdx=0; anElementIdx < aNumElements; anElementIdx++) {
+                
+                    var anElement = theSource[ anElementIdx];
+                
+                    if( ( typeof anElement === "undefined") || ( anElement == null) || ( typeof anElement === "number") || ( typeof anElement === "string") || ( typeof anElement === "boolean")) {
+                        aDeepCopy.push( anElement);
+                        continue;
+                    }
+                
+                    var aDeepCopiedElement = aModule.fgDeepCopy( anElement);
+                    if( aDeepCopiedElement){}/* CQT */
+                
+                    aDeepCopy.push( aDeepCopiedElement);
+                }
+            
+            
+                return aDeepCopy;
+            
+            };
+            if( fgDeepCopy_List){}/* CQT */
+            aModule.fgDeepCopy_List = fgDeepCopy_List;
+        
+        
+        
+        
+        
+        
+        
+        
+        
+            var fgDeepCopy_Object = function( theSource) {
+            
+                if( ( typeof theSource === "undefined") || ( theSource == null) || ( typeof theSource === "number") || ( typeof theSource === "string") || ( typeof theSource === "boolean")) {
+                    return theSource;
+                }
+            
+                if( !( typeof theSource === "object")) {
+                    return undefined;
+                }
+            
+                var aDeepCopy = { };
+            
+                var someKeys = Object.keys( theSource);
+                if( !someKeys) {
+                    return aDeepCopy;
+                }
+            
+                var aNumKeys = someKeys.length;
+                if( !aNumKeys) {
+                    return theSource;
+                }
+            
+            
+                for( var aKeyIdx=0; aKeyIdx < aNumKeys; aKeyIdx++) {
+                
+                    var aKey = someKeys[ aKeyIdx];
+                
+                    var aKeyInt = undefined;
+                    try {
+                        aKeyInt = parseInt( aKey);
+                    }
+                    catch( anException) {
+                    }
+                    if( ( typeof aKeyInt === "number") && !isNaN( aKeyInt)) {
+                        continue;
+                    }
+                
+                
+                    if( theSource.hasOwnProperty( aKey)) {
+                    
+                        var anElement = theSource[ aKey];
+                    
+                        if( ( typeof anElement === "undefined") || ( anElement == null) || ( typeof anElement === "number") || ( typeof anElement === "string") || ( typeof anElement === "boolean")) {
+                            aDeepCopy[ aKey] = anElement;
+                            continue;
+                        }
+                    
+                        var aDeepCopiedElement = aModule.fgDeepCopy( anElement);
+                        if( aDeepCopiedElement){}/* CQT */
+                    
+                        aDeepCopy[ aKey] = aDeepCopiedElement;
+                    }
+                }
+            
+            
+                return aDeepCopy;
+            
+            };
+            if( fgDeepCopy_Object){}/* CQT */
+            aModule.fgDeepCopy_Object = fgDeepCopy_Object;
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+            var fgDictFromListByKey = function( theList, theKeyPropertyName) {
+            
+                if( !theList) {
+                    return {};
+                }
+            
+                if( !theKeyPropertyName) {
+                    return {};
+                }
+            
+                var aDict = { };
+            
+                var aNumElems = theList.length;
+                if( !aNumElems) {
+                    return {};
+                }
+            
+                for( var anElemIdx=0; anElemIdx < aNumElems; anElemIdx++) {
+                
+                    var anElem = theList[ anElemIdx];
+                    if( ( typeof anElem === "object") && !( anElem == null)) {
+                    
+                        var aKey = anElem[ theKeyPropertyName];
+                        if( ( typeof aKey === "number") || ( typeof aKey === "string") || ( typeof aKey === "boolean")) {
+                        
+                            aDict[ aKey] = anElem;
+                        }
+                    }
+                }
+            
+                return aDict;
+            
+            };
+            if( fgDictFromListByKey){}/* CQT */
+            aModule.fDictFromListByKey = fgDictFromListByKey;
+        
+        
+        
+        
+        
+        
+        
+        
+        
+            var fgDictFromListByKey_AsLists = function( theList, theKeyPptyName) {
+            
+                if( !theList) {
+                    return null;
+                }
+            
+                var aNumElems = theList.length;
+                if( !aNumElems) {
+                    return {};
+                }
+            
+                if( !theKeyPptyName) {
+                    return {};
+                }
+            
+            
+                var aDict = { };
+            
+                for( var anElemIdx=0; anElemIdx < aNumElems; anElemIdx++) {
+                
+                    var anElem = theList[ anElemIdx];
+                    if( anElem) {
+                    
+                        var aKey = anElem[ theKeyPptyName];
+                        if( !( typeof aKey === "undefined") && !( aKey == null)) {
+                        
+                        
+                            var someForKey = aDict[ aKey];
+                            if( !someForKey) {
+                                someForKey = [ ];
+                                aDict[ aKey] = someForKey;
+                            }
+                        
+                            if( someForKey.indexOf( anElem) < 0) {
+                                someForKey.push( anElem);
+                            }
+                        }
+                    }
+                }
+            
+                return aDict;
+            };
+            if( fgDictFromListByKey_AsLists){}/* CQT */
+            aModule.fgDictFromListByKey_AsLists = fgDictFromListByKey_AsLists;
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+            var fgDictFromListByKeyPath = function( theList, theKeyPath) {
+            
+                if( !theList) {
+                    return null;
+                }
+            
+                var aNumElems = theList.length;
+                if( !aNumElems) {
+                    return {};
+                }
+            
+                if( !theKeyPath) {
+                    return {};
+                }
+            
+                if( theKeyPath.indexOf( ".") < 0) {
+                    return fgDictFromListByKey_AsLists( theList, theKeyPath);
+                }
+            
+                var aDict = { };
+            
+                for( var anElemIdx=0; anElemIdx < aNumElems; anElemIdx++) {
+                
+                    var anElem = theList[ anElemIdx];
+                    if( anElem) {
+                    
+                    
+                        var aTraversalResult = theSS_Te2estTraversals.fgTraverseToFromValue( theKeyPath, anElem);
+                        if( aTraversalResult) {
+                        
+                            var aKey = aTraversalResult[ "value"];
+                            if( !( typeof aKey === "undefined") && !( aKey == null)) {
+                            
+                                aDict[ aKey] = anElem;
+                            }
+                        }
+                    }
+                }
+            
+                return aDict;
+            };
+            if( fgDictFromListByKeyPath){}/* CQT */
+            aModule.fgDictFromListByKeyPath = fgDictFromListByKeyPath;
+        
+        
+        
+        
+        
+        
+        
+        
+        
+            var fgCollectProperty = function( theList, thePptyName) {
+            
+                if( !theList) {
+                    return null;
+                }
+            
+                if( !thePptyName) {
+                    return null;
+                }
+            
+                var aNumElems = theList.length;
+                if( !aNumElems) {
+                    return [ ];
+                }
+            
+                if( !thePptyName) {
+                    return [ ];
+                }
+            
+            
+                var aList = [ ];
+            
+                for( var anElemIdx=0; anElemIdx < aNumElems; anElemIdx++) {
+                
+                    var anElem = theList[ anElemIdx];
+                    if( anElem) {
+                    
+                        var aValue = anElem[ thePptyName];
+                        if( !( typeof aValue === "undefined") && !( aValue == null)) {
+                        
+                            if( aList.indexOf( aValue) < 0) {
+                                aList.push( aValue);
+                            }
+                        }
+                    }
+                }
+            
+                return aList;
+            };
+            if( fgCollectProperty){}/* CQT */
+            aModule.fgCollectProperty = fgCollectProperty;
+        
+        
+        
+        
+        
+        
+        
+        
+            var pgPushIntoIfNotAlready = function( theTargetList, theSourceList) {
+            
+                if( !theTargetList) {
+                    return;
+                }
+            
+                if( !theSourceList) {
+                    return;
+                }
+            
+                var aNumElems = theSourceList.length;
+                if( !aNumElems) {
+                    return;
+                }
+            
+                for( var anElemIdx=0; anElemIdx < aNumElems; anElemIdx++) {
+                
+                    var anElem = theSourceList[ anElemIdx];
+                    if( !(typeof anElem === "undefined")) {
+                    
+                        if( theTargetList.indexOf( anElem) < 0) {
+                            theTargetList.push( anElem);
+                        }
+                    }
+                
+                }
+            };
+            if( pgPushIntoIfNotAlready){}/* CQT */
+            aModule.pgPushIntoIfNotAlready = pgPushIntoIfNotAlready;
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+            var fgCollectPath = function( theList, thePath) {
+            
+                if( !theList) {
+                    return null;
+                }
+            
+                if( !thePath) {
+                    return null;
+                }
+            
+                var aNumElems = theList.length;
+                if( !aNumElems) {
+                    return [ ];
+                }
+            
+                if( !thePath) {
+                    return [ ];
+                }
+            
+            
+                var aList = [ ];
+            
+                for( var anElemIdx=0; anElemIdx < aNumElems; anElemIdx++) {
+                
+                    var anElem = theList[ anElemIdx];
+                    if( anElem) {
+                    
+                        var aTraversalResult = theS_Te2estTraversals.fgTraverseToFromValue( thePath, anElem);
+                        if( aTraversalResult) {
+                            var aValue = aTraversalResult[ "value"];
+                        
+                            if( !( typeof aValue === "undefined") && !( aValue == null)) {
+                            
+                                if( aList.indexOf( aValue) < 0) {
+                                    aList.push( aValue);
+                                }
+                            }
+                        }
+                    }
+                }
+            
+                return aList;
+            };
+            if( fgCollectPath){}/* CQT */
+            aModule.fgCollectPath = fgCollectPath;
+        
+        
+        
+        
+        
         
         
             return aModule;
         };
     
-        
-
+    
+    
+    
+    
         var anExistingModule = null;
-        if(    ( typeof theSS_typesregistry !== 'undefined')
-            && ( typeof theSS_typesregistry.fRegisteredModule == 'function')) {
+        if(    !( typeof theSS_typesregistry === 'undefined')
+            && ( typeof theSS_typesregistry.fRegisteredModule === 'function')) {
             anExistingModule = theSS_typesregistry.fRegisteredModule( ModuleFullName);
         }
         if( !anExistingModule) {
         
-            var aModule = aMod_builder();
+            var aModule = aMod_builder(
+                theSS_Overrider
+            );
         
             aModule.ModuleBuilder = aMod_builder;
             aModule.ModuleSource  = aMod_builder.toString();
         
             anExistingModule = aModule;
         
-            if(    ( typeof theSS_typesregistry !== 'undefined')
-                && ( typeof theSS_typesregistry.fRegisterModule   == 'function')) {
+            if(    !( typeof theSS_typesregistry === 'undefined')
+                && ( typeof theSS_typesregistry.fRegisterModule === 'function')) {
                 theSS_typesregistry.fRegisterModule( ModuleFullName, aModule);
             }
         }
     
     
+    
+    
         return anExistingModule;
+    
     });
     
     
-    if( typeof angular !== 'undefined' && angular.module) {
-        // Angular (1.x)
     
-        angular.module("commonEventKinds", [ "typesRegistry"]).factory("CommonEventKinds",[
+    if( !( typeof angular === 'undefined') && angular.module) {
+        // Angular (1.x)
+        
+        angular.module("traversals", [ 'typesRegistry', 'modbootTypes']).factory("Traversals",[
             "TypesRegistrySvce",
+            "OverriderSvce",
             aMod_definer
         ]);
         
     }
-    else if (typeof module !== 'undefined' && module.exports) {
+    else if ( !(typeof module === 'undefined') && module.exports) {
         // Node.js
         
         module.exports = (function() {
             
-            var aM_typesregistry = require('./typesregistry');
+            var aM_typesregistry  = require('../modboot/typesregistry');
+            var aM_overrider      = require('../modboot/overrider_svce');
             
             return aMod_definer(
-                aM_typesregistry
+                aM_typesregistry,
+                aM_overrider
             );
         })();
         
     }
-    else if (typeof define !== 'undefined' && define.amd) {
+    else if ( !(typeof define === 'undefined') && define.amd) {
         // AMD / RequireJS
-    
-        define([
-            "./typesregistry"
-        ], function (
-            theM_typesregistry
-        ) {
-            return aMod_definer(
-                theM_typesregistry
-            );
-        });
         
+        define("m_traversals", [
+                "m_typesregistry",
+                "m_overrider_svce"
+            ],
+            aMod_definer
+           );
     }
-    
-    
     
 })();
 
 
 
+;'use strict';
+
+/*
+ checks.js
+ Creado 201504010326
+ */
+
+/*
+ ***************************************************************************
+
+ Copyright 2014 2015 2016 Antonio Carrasco Valero
+ te2est asyncshell written in Javascript http://www.te2est.org http://www.asyncshell.org
+
+ Licensed under the EUPL, Version 1.1 only (the "Licence");
+ You may not use this work except in compliance with the
+ Licence.
+ You may obtain a copy of the Licence at:
+ https://joinup.ec.europa.eu/software/page/eupl/licence-eupl
+ Unless required by applicable law or agreed to in
+ writing, software distributed under the Licence is
+ distributed on an "AS IS" basis,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+ express or implied.
+ See the Licence for the specific language governing
+ permissions and limitations under the Licence.
+ {{License2}}
+
+ {{Licensed1}}
+ {{Licensed2}}
+
+ ***************************************************************************
+ */
 
 
+(function () {
+    
+    var aMod_definer = function( theSS_typesregistry,
+                                 theSS_Overrider){
+    
+    
+        var ComponentName    = "prettytype";
+        var ModuleName     = "checks";
+        var ModulePackages = "utils";
+        var ModuleFullName = ModulePackages + "/" + ModuleName;
+    
+    
+    
+        var aMod_builder = function( theS_Overrider) {
+    
+            if( typeof FG_logModLoads === 'function') { FG_logModLoads(ModuleFullName);}
+        
+        
+        
+        
+            var pgInitWithModuleVariations = function( theToInit) {
+            
+                if( !theToInit) {
+                }
+            
+            };
+        
+        
+        
+        
+        
+            var pgInitFromModuleVariations = function( theToInit) {
+                if( !theToInit) {
+                    return;
+                }
+            
+                for( var aGlobalName in ModuleVariations) {
+                    if( ModuleVariations.hasOwnProperty( aGlobalName)) {
+                        theToInit[ aGlobalName] = ModuleVariations[ aGlobalName];
+                    }
+                }
+            };
+        
+        
+            var ModuleVariations = { };
+            pgInitWithModuleVariations( ModuleVariations);
+            theS_Overrider.pOverrideModuleVariations( ModuleFullName, ModuleVariations);
+        
+        
+        
+        
+        
+        
+        
+        
+            var pgInitWithModuleConstants = function( theToInit) {
+            
+                if( !theToInit) {
+                    return;
+                }
+            
+                theToInit.JSONNAME_CHECKWHEN   = "checkWhen";
+                theToInit.JSONNAME_CHECKNEGATE = "checkNegate";
+                theToInit.JSONNAME_CHECKKIND   = "checkKind";
+                theToInit.JSONNAME_CHECKORIGIN = "checkOrigin";
+                theToInit.JSONNAME_CHECKSOURCE = "checkSource";
+                theToInit.JSONNAME_CHECKVALUE  = "checkValue";
+            
+            
+                theToInit.JSONNAMES_CHECKPARM = [
+                    theToInit.JSONNAME_CHECKWHEN,
+                    theToInit.JSONNAME_CHECKNEGATE,
+                    theToInit.JSONNAME_CHECKKIND,
+                    theToInit.JSONNAME_CHECKORIGIN,
+                    theToInit.JSONNAME_CHECKSOURCE,
+                    theToInit.JSONNAME_CHECKVALUE
+                ];
+            
+            
+            
+                theToInit.REQUIREDJSONNAMES = [
+                    theToInit.JSONNAME_CHECKWHEN,
+                    theToInit.JSONNAME_CHECKKIND,
+                    theToInit.JSONNAME_CHECKORIGIN,
+                    theToInit.JSONNAME_CHECKSOURCE,
+                    theToInit.JSONNAME_CHECKVALUE
+                ];
+            
+            
+            
+                theToInit.CHECKKIND_TYPE_BOOL      = "TYPE_BOOL";
+                theToInit.CHECKKIND_TYPE_STRING    = "TYPE_STRING";
+                theToInit.CHECKKIND_TYPE_NUMBER    = "TYPE_NUMBER";
+                theToInit.CHECKKIND_TYPE_OBJECT    = "TYPE_OBJECT";
+                theToInit.CHECKKIND_TYPE_LIST      = "TYPE_LIST";
+                theToInit.CHECKKIND_TYPE_FUNCTION  = "TYPE_FUNCTION";
+                theToInit.CHECKKIND_NULL           = "NULL";
+                theToInit.CHECKKIND_NOTNULL        = "NOTNULL";
+                theToInit.CHECKKIND_EMPTYSTRING    = "EMPTYSTRING";
+                theToInit.CHECKKIND_NOTEMPTYSTRING = "NOTEMPTYSTRING";
+                theToInit.CHECKKIND_STRINGLEN      = "STRINGLEN";
+                theToInit.CHECKKIND_EMPTYLIST      = "EMPTYLIST";
+                theToInit.CHECKKIND_NOTEMPTYLIST   = "NOTEMPTYLIST";
+                theToInit.CHECKKIND_LISTSIZE       = "LISTSIZE";
+                theToInit.CHECKKIND_EMPTYDICT      = "EMPTYDICT";
+                theToInit.CHECKKIND_NOTEMPTYDICT   = "NOTEMPTYDICT";
+                theToInit.CHECKKIND_DICTSIZE       = "DICTSIZE";
+                theToInit.CHECKKIND_EQ             = "EQ";
+                theToInit.CHECKKIND_NEQ            = "NEQ";
+                theToInit.CHECKKIND_GT             = "GT";
+                theToInit.CHECKKIND_GTE            = "GTE";
+                theToInit.CHECKKIND_LT             = "LT";
+                theToInit.CHECKKIND_LTE            = "LTE";
+                theToInit.CHECKKIND_INLIST         = "INLIST";
+                theToInit.CHECKKIND_NOTINLIST      = "NOTINLIST";
+                theToInit.CHECKKIND_LISTCONTAINS   = "LISTCONTAINS";
+                theToInit.CHECKKIND_LISTNOTCONTAINS= "LISTNOTCONTAINS";
+                theToInit.CHECKKIND_INKEYS         = "INKEYS";
+                theToInit.CHECKKIND_NOTINKEYS      = "NOTINKEYS";
+                theToInit.CHECKKIND_INVALUES       = "INVALUES";
+                theToInit.CHECKKIND_NOTINVALUES    = "NOTINVALUES";
+                theToInit.CHECKKIND_DICTCONTAINSKEY= "DICTCONTAINSKEY";
+                theToInit.CHECKKIND_DICTNOTCONTAINSKEY= "DICTNOTCONTAINSKEY";
+                theToInit.CHECKKIND_DICTCONTAINSVALUE= "DICTCONTAINSVALUE";
+                theToInit.CHECKKIND_DICTNOTCONTAINSVALUE= "DICTNOTCONTAINSVALUE";
+            
+            
+                theToInit.CHECKKINDS = [
+                    theToInit.CHECKKIND_TYPE_BOOL,
+                    theToInit.CHECKKIND_TYPE_STRING,
+                    theToInit.CHECKKIND_TYPE_NUMBER,
+                    theToInit.CHECKKIND_TYPE_OBJECT,
+                    theToInit.CHECKKIND_TYPE_LIST,
+                    theToInit.CHECKKIND_TYPE_FUNCTION,
+                    theToInit.CHECKKIND_NULL,
+                    theToInit.CHECKKIND_NOTNULL,
+                    theToInit.CHECKKIND_EMPTYSTRING,
+                    theToInit.CHECKKIND_NOTEMPTYSTRING,
+                    theToInit.CHECKKIND_STRINGLEN,
+                    theToInit.CHECKKIND_EMPTYLIST,
+                    theToInit.CHECKKIND_NOTEMPTYLIST,
+                    theToInit.CHECKKIND_LISTSIZE,
+                    theToInit.CHECKKIND_EMPTYDICT,
+                    theToInit.CHECKKIND_NOTEMPTYDICT,
+                    theToInit.CHECKKIND_DICTSIZE,
+                    theToInit.CHECKKIND_EQ,
+                    theToInit.CHECKKIND_NEQ,
+                    theToInit.CHECKKIND_GT,
+                    theToInit.CHECKKIND_GTE,
+                    theToInit.CHECKKIND_LT,
+                    theToInit.CHECKKIND_LTE,
+                    theToInit.CHECKKIND_INLIST,
+                    theToInit.CHECKKIND_NOTINLIST,
+                    theToInit.CHECKKIND_LISTCONTAINS,
+                    theToInit.CHECKKIND_LISTNOTCONTAINS,
+                    theToInit.CHECKKIND_INKEYS,
+                    theToInit.CHECKKIND_NOTINKEYS,
+                    theToInit.CHECKKIND_INVALUES,
+                    theToInit.CHECKKIND_NOTINVALUES,
+                    theToInit.CHECKKIND_DICTCONTAINSKEY,
+                    theToInit.CHECKKIND_DICTNOTCONTAINSKEY,
+                    theToInit.CHECKKIND_DICTCONTAINSVALUE,
+                    theToInit.CHECKKIND_DICTNOTCONTAINSVALUE
+                ];
+            
+            
+            
+            };
+        
+        
+            var ModuleConstants = {};
+            pgInitFromModuleVariations( ModuleConstants);
+            pgInitWithModuleConstants( ModuleConstants);
+        
+        
+        
+        
+            var pgInitFromModuleConstants = function( theToInit) {
+                if( !theToInit) {
+                    return;
+                }
+            
+                for( var aGlobalName in ModuleConstants) {
+                    if( ModuleConstants.hasOwnProperty( aGlobalName)) {
+                        theToInit[ aGlobalName] = ModuleConstants[ aGlobalName];
+                    }
+                }
+            };
+    
+    
+    
+    
+    
+            var pgInitModuleGlobalsOn = function( theToInit) {
+        
+                if( !theToInit) {
+                }
+            };
+    
+    
+    
+            var ModuleGlobals = { };
+            pgInitModuleGlobalsOn( ModuleGlobals);
+    
+    
+    
+    
+            var aModule = {};
+            pgInitFromModuleConstants( aModule);
+            aModule._v_Type = "module";
+            aModule.ComponentName     = ComponentName;
+            aModule.ModuleName      = ModuleName;
+            aModule.ModulePackages  = ModulePackages;
+            aModule.ModuleFullName  = ModuleFullName;
+            aModule.ModuleVariations= ModuleVariations;
+            aModule.ModuleConstants = ModuleConstants;
+            aModule.ModuleGlobals   = ModuleGlobals;
+            aModule.pgInitFromModuleConstants  = pgInitFromModuleConstants;
+            aModule.pgInitFromModuleVariations = pgInitFromModuleVariations;
+            aModule.pgInitModuleGlobalsOn      = pgInitModuleGlobalsOn;
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+            var fgNewVoidCheckSpec = function() {
+            
+                var aCheckSpec = {
+                    "checkNegate":     null,
+                    "checkKind":       null,
+                    "checkSource":     null,
+                    "valueConversion": null,
+                    "checkValue":      null
+                
+                };
+                if( fgNewVoidCheckSpec){}/* CQT */
+            
+                return aCheckSpec;
+            };
+            if( fgNewVoidCheckSpec){}/* CQT */
+            aModule.fgNewVoidCheckSpec = fgNewVoidCheckSpec;
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+            var fgCheckCheck = function( theCheckKind, theCheckNegate, theActualValue, theCheckValue) {
+            
+                var aCheckResult = aModule.fgCheckCheck_inner( theCheckKind, theActualValue, theCheckValue);
+                if( typeof aCheckResult === "undefined") {
+                    return undefined;
+                }
+            
+                var aFinalCheckResult = aCheckResult;
+                if( aFinalCheckResult){}/* CQT */
+                if( theCheckNegate) {
+                    if( aFinalCheckResult) {
+                        if( aFinalCheckResult){}/* CQT */
+                        aFinalCheckResult = false;
+                    }
+                    else {
+                        aFinalCheckResult = true;
+                    }
+                }
+            
+                return aFinalCheckResult;
+            };
+            if( fgCheckCheck){}/* CQT */
+            aModule.fgCheckCheck = fgCheckCheck;
+        
+        
+        
+        
+        
+        
+        
+        
+        
+            var fgCheckCheck_inner = function( theCheckKind, theActualValue, theCheckValue) {
+            
+                if( !theCheckKind) {
+                    return undefined;
+                }
+            
+            
+                var aCheckedCheckResult = undefined;
+                var someKeys            = undefined;
+                var aNumKeys            = undefined;
+                var aValue              = undefined;
+            
+                try {
+                
+                    switch( theCheckKind) {
+                    
+                    
+                        case aModule.CHECKKIND_TYPE_BOOL:
+                        
+                            aCheckedCheckResult = typeof theActualValue === typeof true;
+                            return aCheckedCheckResult;
+                    
+                    
+                    
+                        case aModule.CHECKKIND_TYPE_STRING:
+                        
+                            aCheckedCheckResult = typeof theActualValue === typeof "";
+                            return aCheckedCheckResult;
+                    
+                    
+                    
+                        case aModule.CHECKKIND_TYPE_NUMBER:
+                        
+                            aCheckedCheckResult = typeof theActualValue === typeof (1);
+                            return aCheckedCheckResult;
+                    
+                    
+                    
+                        case aModule.CHECKKIND_TYPE_OBJECT:
+                        
+                            aCheckedCheckResult = typeof theActualValue === typeof {};
+                            return aCheckedCheckResult;
+                    
+                    
+                    
+                        case aModule.CHECKKIND_TYPE_LIST:
+                        
+                            aCheckedCheckResult = ( typeof theActualValue === typeof []) && ( typeof theActualValue.length === typeof (0));
+                            return aCheckedCheckResult;
+                    
+                    
+                    
+                        case aModule.CHECKKIND_TYPE_FUNCTION:
+                        
+                            aCheckedCheckResult = typeof theActualValue === "function";
+                            return aCheckedCheckResult;
+                    
+                    
+                    
+                        case aModule.CHECKKIND_NULL:
+                        
+                            aCheckedCheckResult = theActualValue === null;
+                            return aCheckedCheckResult;
+                    
+                    
+                    
+                        case aModule.CHECKKIND_NOTNULL:
+                        
+                            aCheckedCheckResult = !( theActualValue === null);
+                            return aCheckedCheckResult;
+                    
+                    
+                    
+                        case aModule.CHECKKIND_EMPTYSTRING:
+                        
+                            aCheckedCheckResult = ( typeof theActualValue === typeof "") && ( theActualValue === "");
+                            return aCheckedCheckResult;
+                    
+                    
+                    
+                        case aModule.CHECKKIND_NOTEMPTYSTRING:
+                        
+                            aCheckedCheckResult = ( typeof theActualValue === typeof "") && !( theActualValue === "");
+                            return aCheckedCheckResult;
+                    
+                    
+                    
+                        case aModule.CHECKKIND_STRINGLEN:
+                        
+                            if( !( typeof theActualValue === typeof "")) {
+                                return undefined;
+                            }
+                        
+                            if( !( typeof theCheckValue === typeof (0))) {
+                                return undefined;
+                            }
+                        
+                            aCheckedCheckResult = theActualValue.length === theCheckValue;
+                            return aCheckedCheckResult;
+                    
+                    
+                    
+                        case aModule.CHECKKIND_EMPTYLIST:
+                        
+                            aCheckedCheckResult = ( typeof theActualValue === typeof []) && ( typeof theActualValue.length === typeof (0)) && ( theActualValue.length === 0);
+                            return aCheckedCheckResult;
+                    
+                    
+                    
+                        case aModule.CHECKKIND_NOTEMPTYLIST:
+                        
+                            aCheckedCheckResult = ( typeof theActualValue === typeof []) && ( typeof theActualValue.length === typeof (0)) && ( theActualValue.length > 0);
+                            return aCheckedCheckResult;
+                    
+                    
+                    
+                        case aModule.CHECKKIND_LISTSIZE:
+                        
+                            if( !( typeof theActualValue === typeof []) || !( typeof theActualValue.length === typeof (0))) {
+                                return undefined;
+                            }
+                        
+                            if( !( typeof theCheckValue === typeof (0))) {
+                                return undefined;
+                            }
+                        
+                            aCheckedCheckResult = theActualValue.length === theCheckValue;
+                            return aCheckedCheckResult;
+                    
+                    
+                    
+                        case aModule.CHECKKIND_EMPTYDICT:
+                        
+                            if( !theActualValue || !( typeof theActualValue === typeof {})) {
+                                return undefined;
+                            }
+                        
+                            someKeys = Object.keys( theActualValue);
+                            aCheckedCheckResult = ( typeof someKeys === typeof []) && ( typeof someKeys.length === typeof (0)) && ( someKeys.length === 0);
+                            return aCheckedCheckResult;
+                    
+                    
+                    
+                        case aModule.CHECKKIND_NOTEMPTYDICT:
+                        
+                            if( !theActualValue || !( typeof theActualValue === typeof {})) {
+                                return undefined;
+                            }
+                        
+                            someKeys = Object.keys( theActualValue);
+                            aCheckedCheckResult = ( typeof someKeys === typeof []) && ( typeof someKeys.length === typeof (0)) && ( someKeys.length > 0);
+                            return aCheckedCheckResult;
+                    
+                    
+                    
+                        case aModule.CHECKKIND_DICTSIZE:
+                        
+                            if( !( typeof theActualValue === typeof {})) {
+                                return undefined;
+                            }
+                        
+                            someKeys = Object.keys( theActualValue);
+                            if( !( typeof someKeys === typeof []) || !( typeof someKeys.length === typeof (0))) {
+                                return undefined;
+                            }
+                        
+                            aCheckedCheckResult = someKeys.length === theCheckValue;
+                            return aCheckedCheckResult;
+                    
+                    
+                    
+                        case aModule.CHECKKIND_EQ:
+                            aCheckedCheckResult = aModule.fgIsSameAsValueFromTest( theCheckValue, theActualValue);
+                            return aCheckedCheckResult;
+                    
+                    
+                    
+                        case aModule.CHECKKIND_NEQ:
+                        
+                            aCheckedCheckResult = !aModule.fgIsSameAsValueFromTest( theCheckValue, theActualValue);
+                            return aCheckedCheckResult;
+                    
+                    
+                    
+                        case aModule.CHECKKIND_GT:
+                        
+                            aCheckedCheckResult = theActualValue > theCheckValue;
+                            return aCheckedCheckResult;
+                    
+                    
+                    
+                        case aModule.CHECKKIND_GTE:
+                        
+                            aCheckedCheckResult = theActualValue >= theCheckValue;
+                            return aCheckedCheckResult;
+                    
+                    
+                    
+                        case aModule.CHECKKIND_LT:
+                        
+                            aCheckedCheckResult = theActualValue < theCheckValue;
+                            return aCheckedCheckResult;
+                    
+                    
+                    
+                        case aModule.CHECKKIND_LTE:
+                        
+                            aCheckedCheckResult = theActualValue <= theCheckValue;
+                            return aCheckedCheckResult;
+                    
+                    
+                    
+                        case aModule.CHECKKIND_INLIST:
+                        
+                            if( !theCheckValue || !( typeof theCheckValue === typeof []) || !( typeof theCheckValue.length === typeof (0))) {
+                                return undefined;
+                            }
+                        
+                            if( !theCheckValue.indexOf || !( typeof theCheckValue.indexOf === "function")) {
+                                return undefined;
+                            }
+                        
+                            aCheckedCheckResult = theCheckValue.indexOf( theActualValue) >= 0;
+                            return aCheckedCheckResult;
+                    
+                    
+                    
+                        case aModule.CHECKKIND_NOTINLIST:
+                        
+                            if( !theCheckValue || !( typeof theCheckValue === typeof []) || !( typeof theCheckValue.length === typeof (0))) {
+                                return undefined;
+                            }
+                        
+                            if( !theCheckValue.indexOf || !( typeof theCheckValue.indexOf === "function")) {
+                                return undefined;
+                            }
+                        
+                            aCheckedCheckResult = theCheckValue.indexOf( theActualValue) < 0;
+                            return aCheckedCheckResult;
+                    
+                    
+                    
+                    
+                        case aModule.CHECKKIND_LISTCONTAINS:
+                        
+                            if( !theActualValue || !( typeof theActualValue === typeof []) || !( typeof theActualValue.length === typeof (0))) {
+                                return undefined;
+                            }
+                        
+                            if( !theActualValue.indexOf || !( typeof theActualValue.indexOf === "function")) {
+                                return undefined;
+                            }
+                        
+                            aCheckedCheckResult = theActualValue.indexOf( theCheckValue) >= 0;
+                            return aCheckedCheckResult;
+                    
+                    
+                    
+                        case aModule.CHECKKIND_LISTNOTCONTAINS:
+                        
+                            if( !theActualValue || !( typeof theActualValue === typeof []) || !( typeof theActualValue.length === typeof (0))) {
+                                return undefined;
+                            }
+                        
+                            if( !theActualValue.indexOf || !( typeof theActualValue.indexOf === "function")) {
+                                return undefined;
+                            }
+                        
+                            aCheckedCheckResult = theActualValue.indexOf( theCheckValue) < 0;
+                            return aCheckedCheckResult;
+                    
+                    
+                    
+                        case aModule.CHECKKIND_DICTCONTAINSKEY:
+                        
+                            if( !theCheckValue || !( typeof theCheckValue === typeof {})) {
+                                return undefined;
+                            }
+                        
+                            aCheckedCheckResult = theCheckValue.hasOwnProperty( theActualValue);
+                            return aCheckedCheckResult;
+                    
+                    
+                    
+                        case aModule.CHECKKIND_DICTNOTCONTAINSKEY:
+                        
+                            if( typeof theActualValue === typeof undefined) {
+                                return true;
+                            }
+                        
+                            if( !theCheckValue || !( typeof theCheckValue === typeof {})) {
+                                return undefined;
+                            }
+                        
+                            aCheckedCheckResult = !theCheckValue.hasOwnProperty( theActualValue);
+                            return aCheckedCheckResult;
+                    
+                    
+                    
+                        case aModule.CHECKKIND_INKEYS:
+                        
+                            if( !theActualValue || !( typeof theActualValue === typeof {})) {
+                                return undefined;
+                            }
+                        
+                            aCheckedCheckResult = theActualValue.hasOwnProperty( theCheckValue);
+                            return aCheckedCheckResult;
+                    
+                    
+                    
+                        case aModule.CHECKKIND_NOTINKEYS:
+                        
+                            if( !theActualValue || !( typeof theActualValue === typeof {})) {
+                                return undefined;
+                            }
+                        
+                            aCheckedCheckResult = !theActualValue.hasOwnProperty( theCheckValue);
+                            return aCheckedCheckResult;
+                    
+                    
+                    
+                        case aModule.CHECKKIND_DICTCONTAINSVALUE:
+                        
+                            if( !theActualValue || !( typeof theActualValue === typeof {})) {
+                                return undefined;
+                            }
+                        
+                            someKeys = Object.keys( theActualValue);
+                            aNumKeys = someKeys.length;
+                        
+                            for( var aKeyIdx=0; aKeyIdx < aNumKeys; aKeyIdx++) {
+                                var aKey = someKeys[ aKeyIdx];
+                                if( theActualValue.hasOwnProperty( aKey)) {
+                                    aValue = theActualValue[ aKey];
+                                
+                                    if( aModule.fgIsSameAsValueFromTest( theCheckValue, aValue)) {
+                                        return true;
+                                    }
+                                }
+                            }
+                        
+                            return false;
+                    
+                    
+                    
+                        case aModule.CHECKKIND_DICTNOTCONTAINSVALUE:
+                        
+                            if( !theActualValue || !( typeof theActualValue === typeof {})) {
+                                return undefined;
+                            }
+                        
+                            someKeys = Object.keys( theActualValue);
+                            aNumKeys = someKeys.length;
+                        
+                            for( var otherKeyIdx=0; otherKeyIdx < aNumKeys; otherKeyIdx++) {
+                                var otherKey = someKeys[ otherKeyIdx];
+                                if( theActualValue.hasOwnProperty( otherKey)) {
+                                    aValue = theActualValue[ otherKey];
+                                
+                                    if( aModule.fgIsSameAsValueFromTest( theCheckValue, aValue)) {
+                                        return false;
+                                    }
+                                }
+                            }
+                        
+                            return true;
+                    
+                    
+                    
+                    
+                        case aModule.CHECKKIND_INVALUES:
+                        
+                            if( !theCheckValue || !( typeof theCheckValue === typeof {})) {
+                                return undefined;
+                            }
+                        
+                            someKeys = Object.keys( theCheckValue);
+                            aNumKeys = someKeys.length;
+                        
+                            for( var anotherKeyIdx=0; anotherKeyIdx < aNumKeys; anotherKeyIdx++) {
+                                var anotherKey = someKeys[ anotherKeyIdx];
+                                if( theCheckValue.hasOwnProperty( anotherKey)) {
+                                    aValue = theCheckValue[ anotherKey];
+                                
+                                    if( aModule.fgIsSameAsValueFromTest( aValue, theActualValue)) {
+                                        return true;
+                                    }
+                                }
+                            }
+                        
+                            return false;
+                    
+                    
+                    
+                    
+                        case aModule.CHECKKIND_NOTINVALUES:
+                        
+                            if( !theCheckValue || !( typeof theCheckValue === typeof {})) {
+                                return undefined;
+                            }
+                        
+                            someKeys = Object.keys( theCheckValue);
+                            aNumKeys = someKeys.length;
+                        
+                            for( var yetanotherKeyIdx=0; yetanotherKeyIdx < aNumKeys; yetanotherKeyIdx++) {
+                                var yetanotherKey = someKeys[ yetanotherKeyIdx];
+                                if( theCheckValue.hasOwnProperty( yetanotherKey)) {
+                                    aValue = theCheckValue[ yetanotherKey];
+                                
+                                    if( aModule.fgIsSameAsValueFromTest( aValue, theActualValue)) {
+                                        return false;
+                                    }
+                                }
+                            }
+                        
+                            return true;
+                    
+                    
+                    
+                    
+                        default:
+                    }
+                }
+                catch( anException) {}
+            
+            
+                return undefined;
+            };
+            if( fgCheckCheck_inner){}/* CQT */
+            aModule.fgCheckCheck_inner = fgCheckCheck_inner;
+        
+        
+        
+        
+        
+        
+        
+            var fgIsSameAsValueFromTest = function( theCheckValue, theActualValue) {
+            
+            
+                if( ( typeof theActualValue === "undefined") && ( typeof theCheckValue === "undefined") ) {
+                    return false;
+                }
+            
+                if( ( typeof theActualValue === "undefined") || ( typeof theCheckValue === "undefined") ) {
+                    return false;
+                }
+            
+            
+                if( ( theActualValue == null) && ( theCheckValue == null)) {
+                    return true;
+                }
+            
+                if( ( theActualValue == null) || ( theCheckValue == null)) {
+                    return false;
+                }
+            
+            
+                if( !( ( typeof theActualValue) === ( typeof theCheckValue))) {
+                    return false;
+                }
+            
+            
+            
+            
+            
+                if( typeof theActualValue === "string" ) {
+                    return  theActualValue === theCheckValue;
+                }
+            
+            
+                if( typeof theActualValue === "number" ) {
+                    return  theActualValue === theCheckValue;
+                }
+            
+            
+                if( typeof theActualValue === "boolean" ) {
+                    return  theActualValue === theCheckValue;
+                }
+            
+            
+            
+                if( !( typeof theActualValue === "object" )) {
+                    return false;
+                }
+            
+            
+            
+            
+            
+                var someCheckValueKeys   = Object.keys( theCheckValue);
+                var aNumCheckValueKeys = someCheckValueKeys.length;
+            
+                var someActualValueKeys = Object.keys( theActualValue);
+                var aNumActualValueKeys = someActualValueKeys.length;
+            
+                if( !( aNumActualValueKeys === aNumCheckValueKeys)) {
+                    return false;
+                }
+            
+                for( var aKeyIdx=0; aKeyIdx < aNumCheckValueKeys; aKeyIdx++) {
+                    var aKey = someCheckValueKeys[ aKeyIdx];
+                
+                    if( !theActualValue.hasOwnProperty( aKey)) {
+                        return false;
+                    }
+                
+                    var aCheckValueSub = theCheckValue[ aKey];
+                    var anActualSub   = theActualValue[ aKey];
+                
+                
+                    if( !aModule.fgIsSameAsValueFromTest( aCheckValueSub, anActualSub)) {
+                        return false;
+                    }
+                }
+            
+            
+            
+            
+            
+                var anActualLen    = theActualValue.length;
+                var aCheckValueLen = theCheckValue.length;
+            
+                if( ( typeof anActualLen === "undefined") && ( typeof aCheckValueLen === "undefined")) {
+                    return true;
+                }
+            
+                if( ( typeof anActualLen === "undefined") || ( typeof aCheckValueLen === "undefined")) {
+                    return false;
+                }
+            
+                if( !( anActualLen === aCheckValueLen)) {
+                    return false;
+                }
+            
+                for( var aSubIdx=0; aSubIdx < anActualLen; aSubIdx++) {
+                    var anActualListSub    = theActualValue[ aSubIdx];
+                    var aCheckValueListSub = theCheckValue[ aSubIdx];
+                
+                    if( !aModule.fgIsSameAsValueFromTest( aCheckValueListSub, anActualListSub)) {
+                        return false;
+                    }
+                
+                }
+            
+                return true;
+            };
+            if( fgIsSameAsValueFromTest){}/* CQT */
+            aModule.fgIsSameAsValueFromTest = fgIsSameAsValueFromTest;
+        
+        
+        
+        
+        
+            return aModule;
+        };
+    
+    
+    
+    
+    
+    
+    
+      
+    
+    
+        var anExistingModule = null;
+        if(    !( typeof theSS_typesregistry === 'undefined')
+            && ( typeof theSS_typesregistry.fRegisteredModule === 'function')) {
+            anExistingModule = theSS_typesregistry.fRegisteredModule( ModuleFullName);
+        }
+        if( !anExistingModule) {
+        
+            var aModule = aMod_builder(
+                theSS_Overrider
+            );
+        
+            aModule.ModuleBuilder = aMod_builder;
+            aModule.ModuleSource  = aMod_builder.toString();
+        
+            anExistingModule = aModule;
+        
+            if(    !( typeof theSS_typesregistry === 'undefined')
+                && ( typeof theSS_typesregistry.fRegisterModule === 'function')) {
+                theSS_typesregistry.fRegisterModule( ModuleFullName, aModule);
+            }
+        }
+    
+    
+    
+        return anExistingModule;
+    
+    };
+    
 
-;/*
- * common_type.js
+ 
+    if( !( typeof angular === 'undefined') && angular.module) {
+        // Angular (1.x)
+        
+        angular.module("checks", [ 'typesRegistry', 'modbootTypes']).factory("Checks",[
+            "TypesRegistrySvce",
+            "OverriderSvce",
+            aMod_definer
+        ]);
+        
+    }
+    else if ( !(typeof module === 'undefined') && module.exports) {
+        // Node.js
+        
+        module.exports = (function() {
+            
+            var aM_typesregistry  = require('../modboot/typesregistry');
+            var aM_overrider      = require('../modboot/overrider_svce');
+            
+            return aMod_definer(
+                aM_typesregistry,
+                aM_overrider
+            );
+        })();
+        
+    }
+    else if ( !(typeof define === 'undefined') && define.amd) {
+        // AMD / RequireJS
+        
+        define("m_checks", [
+                "m_typesregistry",
+                "m_overrider_svce"
+            ],
+            aMod_definer
+           );
+    }
+
+})();
+
+;'use strict';
+
+/*
+ * identifying_types.js
  *
- * Created @author Antonio Carrasco Valero 201410030426
+ * Created @author Antonio Carrasco Valero 201409301544
  *
  *
  ***************************************************************************
 
- Copyright 2014 2015 2016 2017 2018 Antonio Carrasco Valero
- Javascript for core modules including a base prototype and prototypes hierarchy, intended to be reused on the Browser with AngularJS or RequireJS modules, or in the server as node modules. Licensed under EUPL  http://www.uiwire.org
+ Copyright 2014 2015 2016 Antonio Carrasco Valero
+ Angular Wrappers as Controllers and Services on prettytype Javascript skeletons for modules including a base prototype and prototypes hierarchy, intended to be reused.  licensed under EUPL  http://www.uiwire.org
 
 Licensed under the EUPL, Version 1.1 only (the "Licence");
 You may not use this work except in compliance with the
@@ -2532,844 +6000,19 @@ permissions and limitations under the Licence.
  *
  */
 
-(function () {
+'use strict';
+
+if( !( typeof angular === 'undefined') && angular.module) {
+    // Angular (1.x)
     
-    var aMod_definer = ( function( theSS_typesregistry,
-                                   theSS_Overrider,
-                                   theSS_IdentifierSvce,
-                                   theSS_RecorderSvce,
-                                   theSS_CommonEventTypes){
-                    
-        
-        var ModuleName     = "common_type";
-        var ModulePackages = "common";
-        var ModuleFullName = ModulePackages + "/" + ModuleName;
-        
-        
-        
-        var aMod_builder = function( theS_Overrider,
-                                     theS_IdentifierSvce,
-                                     theS_RecorderSvce,
-                                     theS_CommonEventTypes) {
-            
-            
-            if( !( typeof FG_logModLoads == "undefined") && ( typeof FG_logModLoads == "function") && FG_logModLoads()) { FG_logModLoads(ModuleFullName);}
-            
-            
-            
-            
-            
-            
-            var pgInitWithModuleVariations = function( theToInit) {
-                
-                if( !theToInit) {
-                    return;
-                }
-                
-                
-                /* BeWare: keeping references to record instances shall prevent reclamation of their memory by the garbage collector
-                   Note that when a recordingpolicy_keepall is plugged into the recorder, all records shall be kept in memory in the _v_Records slot property of the recorder instance
-                   */
-                theToInit.KEEPOWNRECORDS = false;
-                
-                
-            };
-            
-            
-            
-            
-            
-            var pgInitFromModuleVariations = function( theToInit) {
-                if( !theToInit) {
-                    return;
-                }
-                
-                for( var aGlobalName in ModuleVariations) {
-                    if( ModuleVariations.hasOwnProperty( aGlobalName)) {
-                        theToInit[ aGlobalName] = ModuleVariations[ aGlobalName];
-                    }
-                }
-            };
-            
-            
-            var ModuleVariations = { };
-            pgInitWithModuleVariations( ModuleVariations);
-            theS_Overrider.pOverrideModuleVariations( ModuleFullName, ModuleVariations);
-            
-            
-            
-            
-            
-            
-            
-            
-            var pgInitWithModuleConstants = function( theToInit) {
-                
-                if( !theToInit) {
-                    return;
-                }
-                
-                if( theS_CommonEventTypes && theS_CommonEventTypes.pgInitFromModuleConstants) {
-                    theS_CommonEventTypes.pgInitFromModuleConstants( theToInit);
-                }
-                
-                theToInit.COMMON_DEFAULTTITLE = "CommonDefaultName";
-                
-                theToInit.UNKNOWNID = "?i?";
-                
-                theToInit.VALUEDIFFATTOP = "/";
-                theToInit.DONOTCOMPAREVALUESYMBOL = "@DONOTCOMPARE699@";
-                
-                
-                
-                
-                
-                
-                
-                
-                theToInit.HITSVRFAILURE_NOTSENTMISSINGPARMS = "SERVERNOTSENT_MISSINGPARMS";
-                theToInit.HITSVRFAILURE_AJAX                = "SERVERFAILURE_AJAX";
-                theToInit.HITSVRFAILURE_TIMEOUT             = "SERVERFAILURE_TIMEOUT";
-                theToInit.HITSVRFAILURE_REPORTEDEXCEPTION   = "SERVERFAILURE_REPORTEDEXCEPTION";
-                theToInit.HITSVRFAILURE_REMOTEEXCEPTION     = "SERVERFAILURE_REMOTEEXCEPTION";
-                theToInit.HITSVRFAILURE_NORESPONSE          = "SERVERFAILURE_NORESPONSE";
-                theToInit.HITSVRFAILURE_SESSION             = "SERVERFAILURE_SESSION";
-                theToInit.HITSVRFAILURE_UNAUTHORIZED        = "SERVERFAILURE_UNAUTHORIZED";
-                theToInit.HITSVRFAILURE_NOSUCCESS           = "SERVERFAILURE_NOSUCCESS";
-                theToInit.HITSVRFAILURE_WRONGTYPE           = "SERVERFAILURE_WRONGTYPE";
-                theToInit.HITSVRFAILURE_NORESPONSEFIELD     = "SERVERFAILURE_NORESPONSEFIELD";
-                
-                theToInit.HITSVRFAILURES = [
-                    theToInit.HITSVRFAILURE_NOTSENTMISSINGPARMS,
-                    theToInit.HITSVRFAILURE_AJAX,
-                    theToInit.HITSVRFAILURE_TIMEOUT,
-                    theToInit.HITSVRFAILURE_REMOTEEXCEPTION,
-                    theToInit.HITSVRFAILURE_NORESPONSE,
-                    theToInit.HITSVRFAILURE_SESSION,
-                    theToInit.HITSVRFAILURE_UNAUTHORIZED,
-                    theToInit.HITSVRFAILURE_NOSUCCESS,
-                    theToInit.HITSVRFAILURE_WRONGTYPE,
-                    theToInit.HITSVRFAILURE_NORESPONSEFIELD
-                ];
-                
-                
-                
-                
-                
-                theToInit.OPERATIONSTATUS_ERROR          = "ERROR";
-                theToInit.OPERATIONSTATUS_FALTAPARAMETRO = "FALTAPARAMETRO";
-                theToInit.OPERATIONSTATUS_YAEXISTE       = "YAEXISTE";
-                theToInit.OPERATIONSTATUS_NOEXISTE       = "NOEXISTE";
-                theToInit.OPERATIONSTATUS_NOCREADO       = "NOCREADO";
-                
-                
-                
-                
-                theToInit.OPERATIONMESSAGE_ERROR          = "ERROR";
-                theToInit.OPERATIONMESSAGE_FALTAPARAMETRO = "FALTAPARAMETRO";
-                theToInit.OPERATIONMESSAGE_YAEXISTE       = "YAEXISTE";
-                theToInit.OPERATIONMESSAGE_NOEXISTE       = "NOEXISTE";
-                theToInit.OPERATIONMESSAGE_NOCREADO       = "NOCREADO";
-                
-                
-                theToInit.OPERATIONMESSAGESBYSTATUS = {};
-                theToInit.OPERATIONMESSAGESBYSTATUS[ theToInit.OPERATIONSTATUS_ERROR         ] = theToInit.OPERATIONMESSAGE_ERROR;
-                theToInit.OPERATIONMESSAGESBYSTATUS[ theToInit.OPERATIONSTATUS_FALTAPARAMETRO] = theToInit.OPERATIONMESSAGE_FALTAPARAMETRO;
-                theToInit.OPERATIONMESSAGESBYSTATUS[ theToInit.OPERATIONSTATUS_YAEXISTE      ] = theToInit.OPERATIONMESSAGE_YAEXISTE;
-                theToInit.OPERATIONMESSAGESBYSTATUS[ theToInit.OPERATIONSTATUS_NOEXISTE      ] = theToInit.OPERATIONMESSAGE_NOEXISTE;
-                theToInit.OPERATIONMESSAGESBYSTATUS[ theToInit.OPERATIONSTATUS_NOCREADO      ] = theToInit.OPERATIONMESSAGE_NOCREADO;
-                
-                
-                
-                
-                theToInit.FIELDNAMEDOT = ".";
-                
-                theToInit.URLPATHSEPARATOR   = "/";
-                theToInit.HTTPQUERYCHAR      = "?";
-                theToInit.HTTPPARMASSIGN     = "=";
-                theToInit.HTTPEXTRAPARMCHAR  = "&";
-                
-                
-                theToInit.DATATYPE_FILE = "File";
-                
-            };
-            
-            
-            
-            var ModuleConstants = {};
-            pgInitFromModuleVariations( ModuleConstants);
-            pgInitWithModuleConstants( ModuleConstants);
-            
-            
-            
-            
-            var pgInitFromModuleConstants = function( theToInit) {
-                if( !theToInit) {
-                    return;
-                }
-                
-                for( var aGlobalName in ModuleConstants) {
-                    if( ModuleConstants.hasOwnProperty( aGlobalName)) {
-                        theToInit[ aGlobalName] = ModuleConstants[ aGlobalName];
-                    }
-                }
-            };
-            
-            
-            
-            
-            
-            
-            var aCommon_Prototype = (function() {
-                
-                
-                var aPrototype = {};
-                
-                pgInitFromModuleConstants( aPrototype);
-                
-                
-                
-                aPrototype._v_Type = "Common";
-                
-                aPrototype._v_Prototype_Common = aPrototype;
-                
-                aPrototype._v_Module = null;
-                
-                aPrototype._v_Identifier = null;
-                aPrototype._v_Recorder   = null;
-                
-                aPrototype._v_Id    = null;
-                aPrototype._v_Title = null;
-                
-                aPrototype._v_OwnRecords = null;
-                
-                
-                
-                
-                
-                
-                var _pInit = function( theTitle, theIdentifier, theRecorder) {
-                    
-                    this._pInit_Common( theTitle, theIdentifier, theRecorder);
-                };
-                if( _pInit){}/* CQT */
-                aPrototype._pInit = _pInit;
-                
-                
-                
-                
-                
-                
-                
-                var _fTitleDefault = function( ) {
-                    
-                    return this.COMMON_DEFAULTTITLE;
-                };
-                if( _fTitleDefault){}/* CQT */
-                aPrototype._fTitleDefault = _fTitleDefault;
-                
-                
-                
-                
-                
-                
-                
-                
-                var _pInit_Common = function( theTitle, theIdentifier, theRecorder) {
-                    
-                    this._v_Prototype = aPrototype;
-                    this._v_Type      = this._v_Prototype._v_Type;
-                    this._v_Module    = aPrototype._v_Module;
-                    
-                    this._v_Identifier = theIdentifier;
-                    if( !this._v_Identifier) {
-                        this._v_Identifier = theS_IdentifierSvce;
-                    }
-                    
-                    this._v_Recorder   = theRecorder;
-                    if( !this._v_Recorder) {
-                        this._v_Recorder = theS_RecorderSvce;
-                    }
-                    
-                    if( this._v_Identifier) {
-                        this._v_Id = this._v_Identifier.fReserveId();
-                    }
-                    
-                    if( !this._v_Id) {
-                        this._v_Id = this.UNKNOWNID;
-                    }
-                    
-                    this._v_Title = theTitle;
-                    if( !this._v_Title) {
-                        this._v_Title = this._fTitleDefault();
-                    }
-                    
-                    this._v_OwnRecords = [ ];
-                };
-                if( _pInit_Common){}/* CQT */
-                aPrototype._pInit_Common = _pInit_Common;
-                
-                
-                
-                
-                
-                
-                var fFullTypeNameString = function() {
-                    
-                    var aFullTypeName = this._v_Module.ModuleFullName + "." + this._v_Type;
-                    if( aFullTypeName){}/* CQT */
-                    
-                    return aFullTypeName;
-                };
-                if( fFullTypeNameString){}/* CQT */
-                aPrototype.fFullTypeNameString = fFullTypeNameString;
-                
-                
-                
-                
-                
-                
-                
-                
-                var fIdentifyingJSON = function() {
-                    
-                    var aIdentifiyingJSON = {
-                        "module": this._v_Module.ModuleFullName,
-                        "type": this._v_Type,
-                        "id":   this._v_Id
-                    };
-                    if( aIdentifiyingJSON){}/* CQT */
-                    return aIdentifiyingJSON;
-                };
-                if( fIdentifyingJSON){}/* CQT */
-                aPrototype.fIdentifyingJSON = fIdentifyingJSON;
-                
-                
-                
-                
-                
-                
-                var fIdentifyingString = function() {
-                    
-                    var aIdentifyingJSON = this.fIdentifyingJSON();
-                    
-                    var aIdentifyingString = "?";
-                    try {
-                        aIdentifyingString = JSON.stringify( aIdentifyingJSON);
-                    }
-                    catch( anException){
-                        aIdentifyingString = "Error_whileJSON_stringify"
-                    }
-                    
-                    return aIdentifyingString;
-                };
-                if( fIdentifyingString){}/* CQT */
-                aPrototype.fIdentifyingString = fIdentifyingString;
-                
-                
-                
-                
-                
-                
-                
-                var fIdentifyingWithTitleJSON = function() {
-                    
-                    var aIdentifyingJSON = this.fIdentifyingJSON();
-                    
-                    aIdentifyingJSON[ "title"] = this._v_Title;
-                    
-                    return aIdentifyingJSON;
-                };
-                if( fIdentifyingWithTitleJSON){}/* CQT */
-                aPrototype.fIdentifyingWithTitleJSON = fIdentifyingWithTitleJSON;
-                
-                
-                
-                
-                
-                
-                var fIdentifyingWithTitleString = function() {
-                    
-                    var aIdentifyingJSON = this.fIdentifyingWithTitleJSON();
-                    
-                    var aIdentifyingString = "?";
-                    try {
-                        aIdentifyingString = JSON.stringify( aIdentifyingJSON);
-                    }
-                    catch( anException){
-                        aIdentifyingString = "Error_whileJSON_stringify"
-                    }
-                    if( aIdentifyingString){}/* CQT */
-                    
-                    return aIdentifyingString;
-                };
-                if( fIdentifyingWithTitleString){}/* CQT */
-                aPrototype.fIdentifyingWithTitleString = fIdentifyingWithTitleString;
-                
-                
-                
-                
-                
-                
-                
-                var fToResultJSON = function( theCommonObjects, theAlready) {
-                    if( !( theAlready == null)) {
-                        if( theAlready.fAlready( this)){
-                            return this.fIdentifyingJSON();
-                        }
-                    }
-                    
-                    var aResultJSON = this.fIdentifyingWithTitleJSON();
-                    if( aResultJSON){}/* CQT */
-                    
-                    return aResultJSON;
-                };
-                if( fToResultJSON){}/* CQT */
-                aPrototype.fToResultJSON = fToResultJSON;
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                var fAsLogObject = function() {
-                    
-                    var aLog = this.fIdentifyingWithTitleJSON();
-                    if( aLog){}/* CQT */
-                    
-                    return aLog;
-                };
-                if( fAsLogObject){}/* CQT */
-                aPrototype.fAsLogObject = fAsLogObject;
-                
-                
-                
-                
-                
-                
-                var fLogString = function() {
-                    
-                    var aLog = this.fAsLogObject();
-                    if( aLog == null) {
-                        return "";
-                    }
-                    
-                    var aLogString = "";
-                    try {
-                        aLogString = JSON.stringify( aLog);
-                    }
-                    catch( anException) {
-                        aLogString = "Error_while_fLogString_JSON_stringify"
-                    }
-                    
-                    return aLogString;
-                };
-                if( fLogString){}/* CQT */
-                aPrototype.fLogString = fLogString;
-                
-                
-                
-                
-                /*
-                var toString = function() {
-                    return this.fLogString();
-                };
-                aPrototype.toString = toString;
-                */
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                var fRecord = function( theMethodName, theEventKind, theData, theReason, theDetail) {
-                    
-                    if( this._v_Recorder == null) {
-                        return null;
-                    }
-                    
-                    var aRecord = this._v_Recorder.fCreateAndRegisterRecord( this, theMethodName, theEventKind, theData, theReason, theDetail);
-                    
-                    if( this.KEEPOWNRECORDS) {
-                        this._v_OwnRecords.push( aRecord);
-                    }
-                    
-                    return aRecord;
-                };
-                if( fRecord){}/* CQT */
-                aPrototype.fRecord = fRecord;
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                /* Deprecated. Kept in support of common type pLogRecord . Use fRecord which shall invoke recorder fCreateAndRegisterRecord and take care of delegating for the record to be recorded and dumped to console */
-                var pLogRecord = function( theRecord) {
-                    
-                    if( !theRecord) {
-                        return;
-                    }
-                    
-                    if( !this._v_Recorder) {
-                        return;
-                    }
-                    
-                    
-                    this._v_Recorder.pLogRecord( theRecord);
-                    
-                };
-                if( pLogRecord){}/* CQT */
-                aPrototype.pLogRecord = pLogRecord;
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                var fFirstDiff = function( theActualValue, theCheckValue) {
-                    
-                    if( !( typeof theCheckValue == "undefined") &&  ( theCheckValue === this.DONOTCOMPAREVALUESYMBOL)) {
-                        return null;
-                    }
-                    
-                    if( ( typeof theActualValue == "undefined") && ( typeof theCheckValue == "undefined") ) {
-                        return null;
-                    }
-                    
-                    if( ( typeof theActualValue == "undefined") || ( typeof theCheckValue == "undefined") ) {
-                        return this.VALUEDIFFATTOP;
-                    }
-                    
-                    if( ( theActualValue == null) && ( theCheckValue == null)) {
-                        return null;
-                    }
-                    
-                    if( ( theActualValue == null) || ( theCheckValue == null)) {
-                        return this.VALUEDIFFATTOP;
-                    }
-                    
-                    
-                    if( !( ( typeof theActualValue) == ( typeof theCheckValue))) {
-                        return this.VALUEDIFFATTOP;
-                    }
-                    
-                    
-                    
-                    
-                    
-                    if( typeof theActualValue == "string" ) {
-                        if( theCheckValue === this.DONOTCOMPAREVALUESYMBOL) {
-                            return null;
-                        }
-                        if( !( theActualValue == theCheckValue)) {
-                            return this.VALUEDIFFATTOP;
-                        }
-                        return null;
-                    }
-                    
-                    
-                    if( typeof theActualValue == "number" ) {
-                        if( !( theActualValue == theCheckValue)) {
-                            return this.VALUEDIFFATTOP;
-                        }
-                        return null;
-                    }
-                    
-                    
-                    if( typeof theActualValue == "boolean" ) {
-                        if( !( theActualValue == theCheckValue)) {
-                            return this.VALUEDIFFATTOP;
-                        }
-                        return null;
-                    }
-                    
-                    
-                    
-                    if( !( typeof theActualValue == "object" )) {
-                        return this.VALUEDIFFATTOP;
-                    }
-                    
-                    
-                    
-                    
-                    
-                    var aOneLen   = theActualValue.length;
-                    var aOtherLen = theCheckValue.length;
-                    
-                    if( ( typeof aOneLen == "number") || ( typeof aOneLen == "number")) {
-                        
-                        if( ( typeof aOneLen == "undefined") || ( typeof aOneLen == "undefined")) {
-                            return this.VALUEDIFFATTOP;
-                        }
-                        
-                        if( !( aOneLen == aOtherLen)) {
-                            return this.VALUEDIFFATTOP;
-                        }
-                        
-                        if( aOneLen) {
-                            for( var aSubIdx=0; aSubIdx < aOneLen; aSubIdx++) {
-                                var aOneListSub   = theActualValue[ aSubIdx];
-                                var aOtherListSub = theCheckValue[ aSubIdx];
-                                
-                                var aSubsListDiff = this.fFirstDiff( aOneListSub, aOtherListSub);
-                                if( aSubsListDiff) {
-                                    
-                                    if( aSubsListDiff == this.VALUEDIFFATTOP) {
-                                        return [ aSubIdx];
-                                    }
-                                    
-                                    aSubsListDiff.unshift( aSubIdx);
-                                    
-                                    return aSubsListDiff;
-                                }
-                            }
-                        }
-                    }
-                    
-                    
-                    
-                    
-                    var someOneKeys   = Object.keys( theActualValue);
-                    var someOtherKeys = Object.keys( theCheckValue);
-                    
-                    if( ( typeof someOneKeys == "undefined") || ( typeof someOtherKeys == "undefined")) {
-                        return this.VALUEDIFFATTOP;
-                    }
-                    
-                    var allKeys = someOneKeys.slice();
-                    var aNumOtherKeys = someOtherKeys.length;
-                    
-                    for( var aOtherKeyIdx=0; aOtherKeyIdx < aNumOtherKeys; aOtherKeyIdx++) {
-                        var aOtherKey = someOtherKeys[ aOtherKeyIdx];
-                        if( allKeys.indexOf( aOtherKey) < 0) {
-                            allKeys.push( aOtherKey);
-                        }
-                    }
-                    allKeys.sort();
-                    
-                    
-                    var aNumKeys = allKeys.length;
-                    
-                    if( aNumKeys) {
-                        for( var aKeyIdx=0; aKeyIdx < aNumKeys; aKeyIdx++) {
-                            var aKey = allKeys[ aKeyIdx];
-                            
-                            if( !theActualValue.hasOwnProperty( aKey)) {
-                                return [ aKey];
-                            }
-                            
-                            if( !theCheckValue.hasOwnProperty( aKey)) {
-                                return [ aKey];
-                            }
-                            
-                            
-                            var aOneSub   = theActualValue[ aKey];
-                            var aOtherSub = theCheckValue[ aKey];
-                            
-                            var aSubsDiff = this.fFirstDiff( aOneSub, aOtherSub);
-                            if( aSubsDiff) {
-                                
-                                if( aSubsDiff == this.VALUEDIFFATTOP) {
-                                    return [ aKey];
-                                }
-                                
-                                aSubsDiff.unshift( aKey);
-                                
-                                return aSubsDiff;
-                            }
-                        }
-                    }
-                    
-                    
-                    return null;
-                };
-                if( fFirstDiff){}/* CQT */
-                aPrototype.fFirstDiff = fFirstDiff;
-                
-                
-                
-                
-                
-                
-                
-                
-                return aPrototype;
-                
-            })();
-            
-            
-            
-            
-            var Common_Constructor = function( theTitle, theIdentifier, theRecorder) {
-                this._v_Prototype = null;
-                this._v_Type      = null;
-                this._v_Module    = null;
-                
-                this._v_Title = null;
-                
-                this._pInit_Common( theTitle, theIdentifier, theRecorder);
-            };
-            Common_Constructor.prototype = aCommon_Prototype;
-            
-            
-            
-            
-            
-            var Common_SuperPrototypeConstructor = function() {
-                this._v_Prototype = aCommon_Prototype;
-                this._v_Type      = null;
-                this._v_Module    = null;
-                
-                this._v_Title     = null;
-            };
-            Common_SuperPrototypeConstructor.prototype = aCommon_Prototype;
-            
-            
-            
-            var aModule = {
-                "Common_Prototype": aCommon_Prototype,
-                "Common_Constructor": Common_Constructor,
-                "Common_SuperPrototypeConstructor": Common_SuperPrototypeConstructor
-            };
-            pgInitFromModuleConstants( aModule);
-            aModule.ModuleName      = ModuleName;
-            aModule.ModulePackages  = ModulePackages;
-            aModule.ModuleFullName  = ModuleFullName;
-            aModule.ModuleConstants = ModuleConstants;
-            
-            aCommon_Prototype._v_Module = aModule;
-            
-            
-            
-            
-            return aModule;
-        };
-        
-        
-        
-        
-        
-      
+    angular.module("identifyingTypes", [
+        "typesRegistry",
+        "modbootTypes",
+        "consoleSvce",
+        "eventKinds_Common"
+    ]);
     
-        var anExistingModule = null;
-        if(    ( typeof theSS_typesregistry !== 'undefined')
-            && ( typeof theSS_typesregistry.fRegisteredModule == 'function')) {
-            anExistingModule = theSS_typesregistry.fRegisteredModule( ModuleFullName);
-        }
-        if( !anExistingModule) {
-        
-            var aModule = aMod_builder(
-                theSS_Overrider,
-                theSS_IdentifierSvce,
-                theSS_RecorderSvce,
-                theSS_CommonEventTypes
-            );
-        
-            aModule.ModuleBuilder = aMod_builder;
-            aModule.ModuleSource  = aMod_builder.toString();
-        
-            anExistingModule = aModule;
-        
-            if(    ( typeof theSS_typesregistry !== 'undefined')
-                && ( typeof theSS_typesregistry.fRegisterModule   == 'function')) {
-                theSS_typesregistry.fRegisterModule( ModuleFullName, aModule);
-            }
-        }
-    
-    
-        
-    
-        return anExistingModule;
-        
-        
-    });
-    
-    
-    
-    if( typeof angular !== 'undefined' && angular.module) {
-        // Angular (1.x)
-        
-        angular.module("identifyingTypes").factory("CommonType",[
-            "TypesRegistrySvce",
-            "OverriderSvce",
-            "IdentifierSvce",
-            "RecorderSvce",
-            "CommonEventKinds",
-            aMod_definer
-        ]);
-        
-    }
-    else if (typeof module !== 'undefined' && module.exports) {
-        // Node.js
-        
-        module.exports = (function() {
-            
-            var aM_typesregistry  = require('../typesregistry');
-            var aM_overrider      = require('../roots/overrider_type');
-            var aM_identifierSvce = require('./identifier_svce');
-            var aM_recorderSvce   = require('./recorder_svce');
-            var aM_commoneventkinds  = require('../commoneventkinds');
-            
-            return aMod_definer(
-                aM_typesregistry,
-                aM_overrider,
-                aM_identifierSvce,
-                aM_recorderSvce,
-                aM_commoneventkinds
-            );
-        })();
-        
-    }
-    else if (typeof define !== 'undefined' && define.amd) {
-        // AMD / RequireJS
-        
-        define([
-                "../typesregistry",
-                "../roots/overrider_type",
-                "./identifier_svce",
-                "./recorder_svce",
-                "../commoneventkinds"
-            ],
-            aMod_definer
-            /* function (
-                theM_typesregistry,
-                theM_overrider,
-                theM_identifierSvce,
-                theM_recorderSvce,
-                theM_commoneventkinds
-            ) {
-                return aMod_definer(
-                    theM_typesregistry,
-                    theM_overrider,
-                    theM_identifierSvce,
-                theM_recorderSvce,
-                theM_commoneventkinds
-                );
-            }
-            */);
-    }
-    
-})();
+}
 
 
 
@@ -3407,12 +6050,14 @@ permissions and limitations under the Licence.
  *
  */
 
+'use strict';
 
 (function () {
     var aMod_definer = ( function( theSS_typesregistry,
                                    theSS_Overrider) {
-        
-        
+    
+    
+        var ComponentName    = "prettytype";
         var ModuleName     = "identifier_type";
         var ModulePackages = "identifying";
         var ModuleFullName = ModulePackages + "/" + ModuleName;
@@ -3421,7 +6066,7 @@ permissions and limitations under the Licence.
         
         var aMod_builder = function( theS_Overrider) {
             
-            if( !( typeof FG_logModLoads == "undefined") && ( typeof FG_logModLoads == "function") && FG_logModLoads()) { FG_logModLoads(ModuleFullName);}
+            if( typeof FG_logModLoads === 'function') { FG_logModLoads(ModuleFullName);}
             
             
             
@@ -3777,14 +6422,18 @@ permissions and limitations under the Licence.
             var aModule = {
                 "Identifier_Prototype": aIdentifier_Prototype,
                 "Identifier_Constructor": Identifier_Constructor,
-                "Identifier_SuperPrototypeConstructor": Identifier_SuperPrototypeConstructor
+                "Identifier_SuperPrototypeConstructor": Identifier_SuperPrototypeConstructor,
+                "Prototype": aIdentifier_Prototype,
+                "Constructor": Identifier_Constructor,
+                "SuperPrototypeConstructor": Identifier_SuperPrototypeConstructor
             };
             pgInitFromModuleConstants( aModule);
             aModule._v_Type = "module";
+            aModule.ComponentName     = ComponentName;
             aModule.ModuleName     = ModuleName;
             aModule.ModulePackages = ModulePackages;
             aModule.ModuleFullName = ModuleFullName;
-            aModule.ModuleConstants = ModuleConstants;
+            aModule.ModuleVariations= ModuleVariations;             aModule.ModuleConstants = ModuleConstants;
             aModule.ModuleGlobals   = ModuleGlobals;
             aModule.pgInitFromModuleConstants  = pgInitFromModuleConstants;
             aModule.pgInitFromModuleVariations = pgInitFromModuleVariations;
@@ -3800,8 +6449,8 @@ permissions and limitations under the Licence.
     
     
         var anExistingModule = null;
-        if(    ( typeof theSS_typesregistry !== 'undefined')
-            && ( typeof theSS_typesregistry.fRegisteredModule == 'function')) {
+        if(    !( typeof theSS_typesregistry === 'undefined')
+            && ( typeof theSS_typesregistry.fRegisteredModule === 'function')) {
             anExistingModule = theSS_typesregistry.fRegisteredModule( ModuleFullName);
         }
         if( !anExistingModule) {
@@ -3815,8 +6464,8 @@ permissions and limitations under the Licence.
         
             anExistingModule = aModule;
         
-            if(    ( typeof theSS_typesregistry !== 'undefined')
-                && ( typeof theSS_typesregistry.fRegisterModule   == 'function')) {
+            if(    !( typeof theSS_typesregistry === 'undefined')
+                && ( typeof theSS_typesregistry.fRegisterModule === 'function')) {
                 theSS_typesregistry.fRegisterModule( ModuleFullName, aModule);
             }
         }
@@ -3828,7 +6477,7 @@ permissions and limitations under the Licence.
     
     
     
-    if( typeof angular !== 'undefined' && angular.module) {
+    if( !( typeof angular === 'undefined') && angular.module) {
         // Angular (1.x)
         
         angular.module("identifyingTypes").factory("IdentifierType",[
@@ -3838,13 +6487,13 @@ permissions and limitations under the Licence.
         ]);
         
     }
-    else if (typeof module !== 'undefined' && module.exports) {
+    else if ( !(typeof module === 'undefined') && module.exports) {
         // Node.js
         
         module.exports = (function() {
             
-            var aM_typesregistry = require('./typesregistry');
-            var aM_overrider     = require('./overrider_type');
+            var aM_typesregistry = require('../modboot/typesregistry');
+            var aM_overrider     = require('../modboot/overrider_svce');
             
             return aMod_definer(
                 aM_typesregistry,
@@ -3853,26 +6502,147 @@ permissions and limitations under the Licence.
         })();
         
     }
-    else if (typeof define !== 'undefined' && define.amd) {
+    else if ( !(typeof define === 'undefined') && define.amd) {
         // AMD / RequireJS
         
-        define([
-            "../typesregistry",
-            "../roots/overrider_type"
-        
-        ], function (
-            theM_typesregistry,
-            theM_overrider
-        ) {
-            return aMod_definer(
-                theM_typesregistry,
-                theM_overrider
-            );
-        });
+        define( "m_identifier_type",
+            [
+                "m_typesregistry",
+                "m_overrider_svce"
+            ],
+            aMod_definer
+        );
     }
     
 })();
 
+
+
+
+
+
+
+;/*
+ * commoneventkinds.js
+ *
+ * Created @author Antonio Carrasco Valero 201610051556
+ *
+ *
+ ***************************************************************************
+
+ Copyright 2014 2015 2016 2017 2018 Antonio Carrasco Valero
+ Javascript for core modules including a base prototype and prototypes hierarchy, intended to be reused on the Browser with AngularJS or RequireJS modules, or in the server as node modules. Licensed under EUPL  http://www.uiwire.org
+
+ Licensed under the EUPL, Version 1.1 only (the "Licence");
+ You may not use this work except in compliance with the
+ Licence.
+ You may obtain a copy of the Licence at:
+ https://joinup.ec.europa.eu/software/page/eupl/licence-eupl
+ Unless required by applicable law or agreed to in
+ writing, software distributed under the Licence is
+ distributed on an "AS IS" basis,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+ express or implied.
+ See the Licence for the specific language governing
+ permissions and limitations under the Licence.
+ {{License2}}
+
+ {{Licensed1}}
+ {{Licensed2}}
+
+ ***************************************************************************
+ *
+ */
+
+
+'use strict';
+
+
+(function () {
+    
+    var aMod_definer = ( function( theSS_typesregistry,
+                                   theSS_IdentifierType){
+    
+        var ModuleName     = "identifier_svce";
+        var ModulePackages = "identifying";
+        var ModuleFullName = ModulePackages + "/" + ModuleName;
+    
+        
+        var aMod_builder = function( theS_IdentifierType) {
+        
+            return new theS_IdentifierType.Identifier_Constructor( "Service_Identifier");
+        };
+    
+        
+
+        var anExistingModule = null;
+        if(    !( typeof theSS_typesregistry === 'undefined')
+            && ( typeof theSS_typesregistry.fRegisteredModule === 'function')) {
+            anExistingModule = theSS_typesregistry.fRegisteredModule( ModuleFullName);
+        }
+        if( !anExistingModule) {
+        
+            var aModule = aMod_builder(
+                theSS_IdentifierType
+            );
+
+            anExistingModule = aModule;
+        
+            if(    !( typeof theSS_typesregistry === 'undefined')
+                && ( typeof theSS_typesregistry.fRegisterModule === 'function')) {
+                theSS_typesregistry.fRegisterModule( ModuleFullName, aModule);
+            }
+        }
+    
+    
+        return anExistingModule;
+    });
+    
+    
+
+    
+    
+    if( !( typeof angular === 'undefined') && angular.module) {
+        // Angular (1.x)
+    
+        angular.module("identifyingTypes").factory("IdentifierSvce",[
+            "TypesRegistrySvce",
+            "IdentifierType",
+            aMod_definer
+        ]);
+        
+    }
+    else if ( !(typeof module === 'undefined') && module.exports) {
+        // Node.js
+        
+        module.exports = (function() {
+    
+            var aM_typesregistry = require('../modboot/typesregistry');
+            var aM_identifier    = require('./identifier_type');
+            
+            return aMod_definer(
+                aM_typesregistry,
+                aM_identifier
+            );
+        })();
+        
+    }
+    else if ( !(typeof define === 'undefined') && define.amd) {
+        // AMD / RequireJS
+    
+        define( "m_identifier_svce",
+            [
+                "m_typesregistry",
+                "m_identifier_type"
+            ],
+            aMod_definer
+        );
+        
+    }
+    
+    
+    
+})();
 
 
 
@@ -3911,13 +6681,15 @@ permissions and limitations under the Licence.
  *
  */
 
+'use strict';
 
 (function () {
     
     var aMod_definer = ( function( theSS_typesregistry,
                                    theSS_Overrider) {
-        
-        
+    
+    
+        var ComponentName    = "prettytype";
         var ModuleName     = "record_type";
         var ModulePackages = "identifying";
         var ModuleFullName = ModulePackages + "/" + ModuleName;
@@ -3926,7 +6698,7 @@ permissions and limitations under the Licence.
         
         var aMod_builder = function( theS_Overrider) {
             
-            if( !( typeof FG_logModLoads == "undefined") && ( typeof FG_logModLoads == "function") && FG_logModLoads()) { FG_logModLoads(ModuleFullName);}
+            if( typeof FG_logModLoads === 'function') { FG_logModLoads(ModuleFullName);}
             
             
             
@@ -5330,13 +8102,18 @@ permissions and limitations under the Licence.
             var aModule = {
                 "Record_Prototype": aRecord_Prototype,
                 "Record_Constructor": Record_Constructor,
-                "Record_SuperPrototypeConstructor": Record_SuperPrototypeConstructor
+                "Record_SuperPrototypeConstructor": Record_SuperPrototypeConstructor,
+                "Prototype": aRecord_Prototype,
+                "Constructor": Record_Constructor,
+                "SuperPrototypeConstructor": Record_SuperPrototypeConstructor
             };
             pgInitFromModuleConstants( aModule);
             aModule._v_Type = "module";
+            aModule.ComponentName     = ComponentName;
             aModule.ModuleName     = ModuleName;
             aModule.ModulePackages = ModulePackages;
             aModule.ModuleFullName = ModuleFullName;
+            aModule.ModuleVariations= ModuleVariations;
             aModule.ModuleConstants = ModuleConstants;
             aModule.ModuleGlobals   = ModuleGlobals;
             aModule.pgInitFromModuleConstants  = pgInitFromModuleConstants;
@@ -5357,8 +8134,8 @@ permissions and limitations under the Licence.
     
     
         var anExistingModule = null;
-        if(    ( typeof theSS_typesregistry !== 'undefined')
-            && ( typeof theSS_typesregistry.fRegisteredModule == 'function')) {
+        if(    !( typeof theSS_typesregistry === 'undefined')
+            && ( typeof theSS_typesregistry.fRegisteredModule === 'function')) {
             anExistingModule = theSS_typesregistry.fRegisteredModule( ModuleFullName);
         }
         if( !anExistingModule) {
@@ -5372,8 +8149,8 @@ permissions and limitations under the Licence.
         
             anExistingModule = aModule;
         
-            if(    ( typeof theSS_typesregistry !== 'undefined')
-                && ( typeof theSS_typesregistry.fRegisterModule   == 'function')) {
+            if(    !( typeof theSS_typesregistry === 'undefined')
+                && ( typeof theSS_typesregistry.fRegisterModule === 'function')) {
                 theSS_typesregistry.fRegisterModule( ModuleFullName, aModule);
             }
         }
@@ -5386,7 +8163,7 @@ permissions and limitations under the Licence.
     
     
     
-    if( typeof angular !== 'undefined' && angular.module) {
+    if( !( typeof angular === 'undefined') && angular.module) {
         // Angular (1.x)
         
         angular.module("identifyingTypes").factory("RecordType",[
@@ -5396,13 +8173,13 @@ permissions and limitations under the Licence.
         ]);
         
     }
-    else if (typeof module !== 'undefined' && module.exports) {
+    else if ( !(typeof module === 'undefined') && module.exports) {
         // Node.js
         
         module.exports = (function() {
             
-            var aM_typesregistry = require('./typesregistry');
-            var aM_overrider     = require('./overrider_type');
+            var aM_typesregistry = require('../modboot/typesregistry');
+            var aM_overrider     = require('../modboot/overrider_svce');
     
             return aMod_definer(
                 aM_typesregistry,
@@ -5411,22 +8188,15 @@ permissions and limitations under the Licence.
         })();
         
     }
-    else if (typeof define !== 'undefined' && define.amd) {
+    else if ( !(typeof define === 'undefined') && define.amd) {
         // AMD / RequireJS
         
-        define([
-            "../typesregistry",
-            "../roots/overrider_type"
-        
-        ], function (
-            theM_typesregistry,
-            theM_overrider
-        ) {
-            return aMod_definer(
-                theM_typesregistry,
-                theM_overrider
-            );
-        });
+        define( "m_record_type",
+            [
+                "m_typesregistry",
+                "m_overrider_svce"
+            ],
+            aMod_definer);
         
     }
     
@@ -5467,6 +8237,7 @@ permissions and limitations under the Licence.
  *
  */
 
+'use strict';
 
 
 (function () {
@@ -5474,8 +8245,9 @@ permissions and limitations under the Licence.
     var aMod_definer =  ( function( theSS_typesregistry,
                                     theSS_Overrider,
                                     theSS_IdentifierSvce) {
-        
-        
+    
+    
+        var ComponentName    = "prettytype";
         var ModuleName     = "recordingpolicy_type";
         var ModulePackages = "identifying";
         var ModuleFullName = ModulePackages + "/" + ModuleName;
@@ -5486,11 +8258,7 @@ permissions and limitations under the Licence.
                                      theS_IdentifierSvce) {
             
             
-            if( !( typeof FG_logModLoads == "undefined") && ( typeof FG_logModLoads == "function") && FG_logModLoads()) { FG_logModLoads(ModuleFullName);}
-            
-            
-            
-            
+            if( typeof FG_logModLoads === 'function') { FG_logModLoads(ModuleFullName);}
             
             
             
@@ -5595,6 +8363,7 @@ permissions and limitations under the Licence.
                 
                 aPrototype._v_Prototype_RecordingPolicy = aPrototype;
                 
+
                 aPrototype._v_Identifier = null;
                 
                 aPrototype._v_Id         = null;
@@ -5911,13 +8680,18 @@ permissions and limitations under the Licence.
             var aModule = {
                 "RecordingPolicy_Prototype": aRecordingPolicy_Prototype,
                 "RecordingPolicy_Constructor": RecordingPolicy_Constructor,
-                "RecordingPolicy_SuperPrototypeConstructor": RecordingPolicy_SuperPrototypeConstructor
+                "RecordingPolicy_SuperPrototypeConstructor": RecordingPolicy_SuperPrototypeConstructor,
+                "Prototype": aRecordingPolicy_Prototype,
+                "Constructor": RecordingPolicy_Constructor,
+                "SuperPrototypeConstructor": RecordingPolicy_SuperPrototypeConstructor
             };
             pgInitFromModuleConstants( aModule);
             aModule._v_Type = "module";
+            aModule.ComponentName     = ComponentName;
             aModule.ModuleName     = ModuleName;
             aModule.ModulePackages = ModulePackages;
             aModule.ModuleFullName = ModuleFullName;
+            aModule.ModuleVariations= ModuleVariations;
             aModule.ModuleConstants = ModuleConstants;
             aModule.ModuleGlobals   = ModuleGlobals;
             aModule.pgInitFromModuleConstants  = pgInitFromModuleConstants;
@@ -5937,8 +8711,8 @@ permissions and limitations under the Licence.
     
     
         var anExistingModule = null;
-        if(    ( typeof theSS_typesregistry !== 'undefined')
-            && ( typeof theSS_typesregistry.fRegisteredModule == 'function')) {
+        if(    !( typeof theSS_typesregistry === 'undefined')
+            && ( typeof theSS_typesregistry.fRegisteredModule === 'function')) {
             anExistingModule = theSS_typesregistry.fRegisteredModule( ModuleFullName);
         }
         if( !anExistingModule) {
@@ -5953,8 +8727,8 @@ permissions and limitations under the Licence.
         
             anExistingModule = aModule;
         
-            if(    ( typeof theSS_typesregistry !== 'undefined')
-                && ( typeof theSS_typesregistry.fRegisterModule   == 'function')) {
+            if(    !( typeof theSS_typesregistry === 'undefined')
+                && ( typeof theSS_typesregistry.fRegisterModule === 'function')) {
                 theSS_typesregistry.fRegisterModule( ModuleFullName, aModule);
             }
         }
@@ -5965,7 +8739,7 @@ permissions and limitations under the Licence.
     });
     
     
-    if( typeof angular !== 'undefined' && angular.module) {
+    if( !( typeof angular === 'undefined') && angular.module) {
         // Angular (1.x)
         
         angular.module("identifyingTypes").factory("RecordingPolicyType",[
@@ -5976,13 +8750,13 @@ permissions and limitations under the Licence.
         ]);
         
     }
-    else if (typeof module !== 'undefined' && module.exports) {
+    else if ( !(typeof module === 'undefined') && module.exports) {
         // Node.js
         
         module.exports = (function() {
             
-            var aM_typesregistry = require('../typesregistry');
-            var aM_overrider     = require('../roots/overrider_type');
+            var aM_typesregistry = require('../modboot/typesregistry');
+            var aM_overrider     = require('../modboot/overrider_svce');
             var aM_identifier    = require('./identifier_type');
             
             return aMod_definer(
@@ -5993,26 +8767,16 @@ permissions and limitations under the Licence.
         })();
         
     }
-    else if (typeof define !== 'undefined' && define.amd) {
+    else if ( !(typeof define === 'undefined') && define.amd) {
         // AMD / RequireJS
         
-        define([
-            "../typesregistry",
-            "../roots/overrider_type",
-            "./identifier_type"
-        ],
-        aMod_definer
-        /* function (
-            theM_typesregistry,
-            theM_overrider,
-            theM_identifier
-        ) {
-            return aMod_definer(
-                theM_typesregistry,
-                theM_overrider,
-                theM_identifier
-            );
-        } */
+        define("m_recordingpolicy_type",
+            [
+                "m_typesregistry",
+                "m_overrider_svce",
+                "m_identifier_type"
+            ],
+            aMod_definer
         );
     }
     
@@ -6054,6 +8818,7 @@ permissions and limitations under the Licence.
  */
 
 
+'use strict';
 
 
 
@@ -6066,10 +8831,11 @@ permissions and limitations under the Licence.
 (function () {
     
     var aMod_definer = ( function( theSS_typesregistry,
-                       theSS_Overrider,
-                       theSS_RecordingPolicyType) {
-        
-        
+                                   theSS_Overrider,
+                                   theSS_RecordingPolicyType) {
+    
+    
+        var ComponentName    = "prettytype";
         var ModuleName     = "recordingpolicy_keepall_type";
         var ModulePackages = "identifying";
         var ModuleFullName = ModulePackages + "/" + ModuleName;
@@ -6080,8 +8846,7 @@ permissions and limitations under the Licence.
                                      theS_RecordingPolicyType) {
             
             
-            if( !( typeof FG_logModLoads == "undefined") && ( typeof FG_logModLoads == "function") && FG_logModLoads()) { FG_logModLoads(ModuleFullName);}
-            
+            if( typeof FG_logModLoads === 'function') { FG_logModLoads(ModuleFullName);}
             
             
             
@@ -6192,8 +8957,8 @@ permissions and limitations under the Licence.
                 
                 aPrototype._v_Prototype_RecordingPolicyKeepAll = aPrototype;
                 
-                
                 aPrototype._v_Module = null;
+                
                 
                 
                 aPrototype._v_MustKeepRecords = null;
@@ -6366,22 +9131,26 @@ permissions and limitations under the Licence.
                 "RecordingPolicyKeepAll_Prototype":   aRecordingPolicyKeepAll_Prototype,
                 "RecordingPolicyKeepAll_Constructor": RecordingPolicyKeepAll_Constructor,
                 "RecordingPolicy_Constructor":        RecordingPolicyKeepAll_Constructor,
-                "RecordingPolicyKeepAll_SuperPrototypeConstructor": RecordingPolicyKeepAll_SuperPrototypeConstructor
+                "RecordingPolicyKeepAll_SuperPrototypeConstructor": RecordingPolicyKeepAll_SuperPrototypeConstructor,
+                "Prototype": aRecordingPolicyKeepAll_Prototype,
+                "Constructor": RecordingPolicyKeepAll_Constructor,
+                "SuperPrototypeConstructor": RecordingPolicyKeepAll_SuperPrototypeConstructor
             };
             pgInitFromModuleConstants( aModule);
             aModule._v_Type = "module";
+            aModule.ComponentName     = ComponentName;
             aModule.ModuleName     = ModuleName;
             aModule.ModulePackages = ModulePackages;
             aModule.ModuleFullName = ModuleFullName;
+            aModule.ModuleVariations= ModuleVariations;
+            aModule.ModuleConstants = ModuleConstants;
             aModule.ModuleGlobals   = ModuleGlobals;
             aModule.pgInitFromModuleConstants  = pgInitFromModuleConstants;
             aModule.pgInitFromModuleVariations = pgInitFromModuleVariations;
             aModule.pgInitModuleGlobalsOn      = pgInitModuleGlobalsOn;
     
+    
             aRecordingPolicyKeepAll_Prototype._v_Module = aModule;
-            
-            
-            
             
             
             return aModule;
@@ -6396,8 +9165,8 @@ permissions and limitations under the Licence.
     
     
         var anExistingModule = null;
-        if(    ( typeof theSS_typesregistry !== 'undefined')
-            && ( typeof theSS_typesregistry.fRegisteredModule == 'function')) {
+        if(    !( typeof theSS_typesregistry === 'undefined')
+            && ( typeof theSS_typesregistry.fRegisteredModule === 'function')) {
             anExistingModule = theSS_typesregistry.fRegisteredModule( ModuleFullName);
         }
         if( !anExistingModule) {
@@ -6405,7 +9174,6 @@ permissions and limitations under the Licence.
             var aModule = aMod_builder(
                 theSS_Overrider,
                 theSS_RecordingPolicyType
-
             );
         
             aModule.ModuleBuilder = aMod_builder;
@@ -6413,8 +9181,8 @@ permissions and limitations under the Licence.
         
             anExistingModule = aModule;
         
-            if(    ( typeof theSS_typesregistry !== 'undefined')
-                && ( typeof theSS_typesregistry.fRegisterModule   == 'function')) {
+            if(    !( typeof theSS_typesregistry === 'undefined')
+                && ( typeof theSS_typesregistry.fRegisterModule === 'function')) {
                 theSS_typesregistry.fRegisterModule( ModuleFullName, aModule);
             }
         }
@@ -6431,7 +9199,7 @@ permissions and limitations under the Licence.
     
     
     
-    if( typeof angular !== 'undefined' && angular.module) {
+    if( !( typeof angular === 'undefined') && angular.module) {
         // Angular (1.x)
         
         angular.module("identifyingTypes").factory("RecordingPolicyKeepAllType",[
@@ -6442,13 +9210,13 @@ permissions and limitations under the Licence.
         ]);
         
     }
-    else if (typeof module !== 'undefined' && module.exports) {
+    else if ( !(typeof module === 'undefined') && module.exports) {
         // Node.js
         
         module.exports = (function() {
             
-            var aM_typesregistry = require('../typesregistry');
-            var aM_overrider     = require('../roots/overrider_svce');
+            var aM_typesregistry   = require('../modboot/typesregistry');
+            var aM_overrider       = require('../modboot/overrider_svce');
             var aM_recordingpolicy = require('./recordingpolicy_type');
             
             return aMod_definer(
@@ -6459,26 +9227,16 @@ permissions and limitations under the Licence.
         })();
         
     }
-    else if (typeof define !== 'undefined' && define.amd) {
+    else if ( !(typeof define === 'undefined') && define.amd) {
         // AMD / RequireJS
         
-        define([
-                "../typesregistry",
-                "../roots/overrider_type",
-                "./recordingpolicy_type"
+        define( "m_recordingpolicy_keepall_type",
+            [
+                "m_typesregistry",
+                "m_overrider_svce",
+                "m_recordingpolicy_type"
             ],
             aMod_definer
-            /* function (
-                theM_typesregistry,
-                theM_overrider,
-                theM_recordingpolicy
-            ) {
-                return aMod_definer(
-                    theM_typesregistry,
-                    theM_overrider,
-                    theM_recordingpolicy
-                );
-            } */
         );
     }
     
@@ -6519,15 +9277,17 @@ permissions and limitations under the Licence.
  */
 
 
+'use strict';
 
 
 (function () {
     
     var aMod_definer = ( function( theSS_typesregistry,
-                       theSS_Overrider,
-                       theSS_RecordingPolicyKeepAllType) {
-        
-        
+                                   theSS_Overrider,
+                                   theSS_RecordingPolicyKeepAllType) {
+    
+    
+        var ComponentName    = "prettytype";
         var ModuleName     = "recordingpolicy_keepsome_type";
         var ModulePackages = "identifying";
         var ModuleFullName = ModulePackages + "/" + ModuleName;
@@ -6538,11 +9298,7 @@ permissions and limitations under the Licence.
                                      theS_RecordingPolicyKeepAllType) {
             
             
-            if( !( typeof FG_logModLoads == "undefined") && ( typeof FG_logModLoads == "function") && FG_logModLoads()) { FG_logModLoads(ModuleFullName);}
-            
-            
-            
-            
+            if( typeof FG_logModLoads === 'function') { FG_logModLoads(ModuleFullName);}
             
             
             
@@ -6648,13 +9404,12 @@ permissions and limitations under the Licence.
                 
                 aPrototype._v_SuperPrototype = theS_RecordingPolicyKeepAllType.RecordingPolicyKeepAll_Prototype;
                 
-                
                 aPrototype._v_Type = "RecordingPolicyKeepSome";
                 
                 aPrototype._v_Prototype_RecordingPolicyKeepSome = aPrototype;
                 
-                
                 aPrototype._v_Module = null;
+                
                 
                 
                 aPrototype._v_MustKeepRecordsMaxNumber = null;
@@ -6812,13 +9567,19 @@ permissions and limitations under the Licence.
                 "RecordingPolicyKeepSome_Prototype":   aRecordingPolicyKeepSome_Prototype,
                 "RecordingPolicyKeepSome_Constructor": RecordingPolicyKeepSome_Constructor,
                 "RecordingPolicy_Constructor":         RecordingPolicyKeepSome_Constructor,
-                "RecordingPolicyKeepSome_SuperPrototypeConstructor": RecordingPolicyKeepSome_SuperPrototypeConstructor
+                "RecordingPolicyKeepSome_SuperPrototypeConstructor": RecordingPolicyKeepSome_SuperPrototypeConstructor,
+                "Prototype": aRecordingPolicyKeepSome_Prototype,
+                "Constructor": RecordingPolicyKeepSome_Constructor,
+                "SuperPrototypeConstructor": RecordingPolicyKeepSome_SuperPrototypeConstructor
             };
             pgInitFromModuleConstants( aModule);
             aModule._v_Type = "module";
+            aModule.ComponentName     = ComponentName;
             aModule.ModuleName     = ModuleName;
             aModule.ModulePackages = ModulePackages;
             aModule.ModuleFullName = ModuleFullName;
+            aModule.ModuleVariations= ModuleVariations;
+            aModule.ModuleConstants = ModuleConstants;
             aModule.ModuleGlobals   = ModuleGlobals;
             aModule.pgInitFromModuleConstants  = pgInitFromModuleConstants;
             aModule.pgInitFromModuleVariations = pgInitFromModuleVariations;
@@ -6840,8 +9601,8 @@ permissions and limitations under the Licence.
         
     
         var anExistingModule = null;
-        if(    ( typeof theSS_typesregistry !== 'undefined')
-            && ( typeof theSS_typesregistry.fRegisteredModule == 'function')) {
+        if(    !( typeof theSS_typesregistry === 'undefined')
+            && ( typeof theSS_typesregistry.fRegisteredModule === 'function')) {
             anExistingModule = theSS_typesregistry.fRegisteredModule( ModuleFullName);
         }
         if( !anExistingModule) {
@@ -6857,12 +9618,11 @@ permissions and limitations under the Licence.
         
             anExistingModule = aModule;
         
-            if(    ( typeof theSS_typesregistry !== 'undefined')
-                && ( typeof theSS_typesregistry.fRegisterModule   == 'function')) {
+            if(    !( typeof theSS_typesregistry === 'undefined')
+                && ( typeof theSS_typesregistry.fRegisterModule === 'function')) {
                 theSS_typesregistry.fRegisterModule( ModuleFullName, aModule);
             }
         }
-    
     
     
     
@@ -6873,7 +9633,7 @@ permissions and limitations under the Licence.
     
     
     
-    if( typeof angular !== 'undefined' && angular.module) {
+    if( !( typeof angular === 'undefined') && angular.module) {
         // Angular (1.x)
         
         angular.module("identifyingTypes").factory("RecordingPolicyKeepSomeType",[
@@ -6884,13 +9644,13 @@ permissions and limitations under the Licence.
         ]);
         
     }
-    else if (typeof module !== 'undefined' && module.exports) {
+    else if ( !(typeof module === 'undefined') && module.exports) {
         // Node.js
         
         module.exports = (function() {
             
-            var aM_typesregistry   = require('../typesregistry');
-            var aM_overrider       = require('../roots/overrider_svce');
+            var aM_typesregistry   = require('../modboot/typesregistry');
+            var aM_overrider       = require('../modboot/overrider_svce');
             var aM_recordingpolicy = require('./recordingpolicy_keepall_type');
             
             return aMod_definer(
@@ -6901,26 +9661,16 @@ permissions and limitations under the Licence.
         })();
         
     }
-    else if (typeof define !== 'undefined' && define.amd) {
+    else if ( !(typeof define === 'undefined') && define.amd) {
         // AMD / RequireJS
         
-        define([
-                "../typesregistry",
-                "../roots/overrider_type",
-                "./recordingpolicy_keepall_type"
+        define( "m_recordingpolicy_keepsome_type",
+            [
+                "m_typesregistry",
+                "m_overrider_svce",
+                "m_recordingpolicy_keepall_type"
             ],
             aMod_definer
-            /* function (
-                theM_typesregistry,
-                theM_overrider,
-                theM_recordingpolicy
-            ) {
-                return aMod_definer(
-                    theM_typesregistry,
-                    theM_overrider,
-                    theM_recordingpolicy
-                );
-            } */
         );
     }
     
@@ -6963,6 +9713,7 @@ permissions and limitations under the Licence.
  *
  */
 
+'use strict';
 
 
 (function () {
@@ -6971,8 +9722,9 @@ permissions and limitations under the Licence.
     var aMod_definer = ( function( theSS_typesregistry,
                                    theSS_Overrider,
                                    theSS_RecordingPolicyKeepSomeType) {
-                    
-        
+    
+    
+        var ComponentName    = "prettytype";
         var ModuleName     = "recordingpolicy_keeprecent_type";
         var ModulePackages = "identifying";
         var ModuleFullName = ModulePackages + "/" + ModuleName;
@@ -6983,12 +9735,7 @@ permissions and limitations under the Licence.
                                      theS_RecordingPolicyKeepSomeType) {
             
             
-            if( !( typeof FG_logModLoads == "undefined") && ( typeof FG_logModLoads == "function") && FG_logModLoads()) { FG_logModLoads(ModuleFullName);}
-            
-            
-            
-            
-            
+            if( typeof FG_logModLoads === 'function') { FG_logModLoads(ModuleFullName);}
             
             
             
@@ -7065,8 +9812,6 @@ permissions and limitations under the Licence.
     
     
     
-    
-    
             var pgInitModuleGlobalsOn = function( theToInit) {
         
                 if( !theToInit) {
@@ -7094,13 +9839,12 @@ permissions and limitations under the Licence.
                 
                 aPrototype._v_SuperPrototype = theS_RecordingPolicyKeepSomeType.RecordingPolicyKeepSome_Prototype;
                 
-                
                 aPrototype._v_Type = "RecordingPolicyKeepRecent";
                 
                 aPrototype._v_Prototype_RecordingPolicyKeepRecent = aPrototype;
                 
-                
                 aPrototype._v_Module = null;
+                
                 
                 
                 aPrototype._v_MustKeepRecordsRecentMillis = null;
@@ -7257,13 +10001,19 @@ permissions and limitations under the Licence.
                 "RecordingPolicyKeepRecent_Prototype":   aRecordingPolicyKeepRecent_Prototype,
                 "RecordingPolicyKeepRecent_Constructor": RecordingPolicyKeepRecent_Constructor,
                 "RecordingPolicy_Constructor":           RecordingPolicyKeepRecent_Constructor,
-                "RecordingPolicyKeepRecent_SuperPrototypeConstructor": RecordingPolicyKeepRecent_SuperPrototypeConstructor
+                "RecordingPolicyKeepRecent_SuperPrototypeConstructor": RecordingPolicyKeepRecent_SuperPrototypeConstructor,
+                "Prototype": aRecordingPolicyKeepRecent_Prototype,
+                "Constructor": RecordingPolicyKeepRecent_Constructor,
+                "SuperPrototypeConstructor": RecordingPolicyKeepRecent_SuperPrototypeConstructor
             };
             pgInitFromModuleConstants( aModule);
             aModule._v_Type = "module";
+            aModule.ComponentName     = ComponentName;
             aModule.ModuleName     = ModuleName;
             aModule.ModulePackages = ModulePackages;
             aModule.ModuleFullName = ModuleFullName;
+            aModule.ModuleVariations= ModuleVariations;
+            aModule.ModuleConstants = ModuleConstants;
             aModule.ModuleGlobals   = ModuleGlobals;
             aModule.pgInitFromModuleConstants  = pgInitFromModuleConstants;
             aModule.pgInitFromModuleVariations = pgInitFromModuleVariations;
@@ -7287,8 +10037,8 @@ permissions and limitations under the Licence.
     
     
         var anExistingModule = null;
-        if(    ( typeof theSS_typesregistry !== 'undefined')
-            && ( typeof theSS_typesregistry.fRegisteredModule == 'function')) {
+        if(    !( typeof theSS_typesregistry === 'undefined')
+            && ( typeof theSS_typesregistry.fRegisteredModule === 'function')) {
             anExistingModule = theSS_typesregistry.fRegisteredModule( ModuleFullName);
         }
         if( !anExistingModule) {
@@ -7304,8 +10054,8 @@ permissions and limitations under the Licence.
         
             anExistingModule = aModule;
         
-            if(    ( typeof theSS_typesregistry !== 'undefined')
-                && ( typeof theSS_typesregistry.fRegisterModule   == 'function')) {
+            if(    !( typeof theSS_typesregistry === 'undefined')
+                && ( typeof theSS_typesregistry.fRegisterModule === 'function')) {
                 theSS_typesregistry.fRegisterModule( ModuleFullName, aModule);
             }
         }
@@ -7321,7 +10071,7 @@ permissions and limitations under the Licence.
     
     
     
-    if( typeof angular !== 'undefined' && angular.module) {
+    if( !( typeof angular === 'undefined') && angular.module) {
         // Angular (1.x)
         
         angular.module("identifyingTypes").factory("RecordingPolicyKeepRecentType",[
@@ -7332,13 +10082,13 @@ permissions and limitations under the Licence.
         ]);
         
     }
-    else if (typeof module !== 'undefined' && module.exports) {
+    else if ( !(typeof module === 'undefined') && module.exports) {
         // Node.js
         
         module.exports = (function() {
             
-            var aM_typesregistry = require('../typesregistry');
-            var aM_overrider     = require('../roots/overrider_svce');
+            var aM_typesregistry = require('../modboot/typesregistry');
+            var aM_overrider     = require('../modboot/overrider_svce');
             var aM_recordingpolicy = require('./recordingpolicy_keepsome_type');
             
             return aMod_definer(
@@ -7349,26 +10099,16 @@ permissions and limitations under the Licence.
         })();
         
     }
-    else if (typeof define !== 'undefined' && define.amd) {
+    else if ( !(typeof define === 'undefined') && define.amd) {
         // AMD / RequireJS
         
-        define([
-                "../typesregistry",
-                "../roots/overrider_type",
-                "./recordingpolicy_keepsome_type"
+        define( "m_recordingpolicy_keeprecent_type",
+            [
+                "m_typesregistry",
+                "m_overrider_svce",
+                "m_recordingpolicy_keepsome_type"
             ],
             aMod_definer
-            /* function (
-                theM_typesregistry,
-                theM_overrider,
-                theM_recordingpolicy
-            ) {
-                return aMod_definer(
-                    theM_typesregistry,
-                    theM_overrider,
-                    theM_recordingpolicy
-                );
-            } */
         );
     }
     
@@ -7408,6 +10148,7 @@ permissions and limitations under the Licence.
  *
  */
 
+'use strict';
 
 (function () {
     
@@ -7415,8 +10156,9 @@ permissions and limitations under the Licence.
                                     theSS_Overrider,
                                     theSS_IdentifierSvce,
                                     theSS_ConsoleSvce) {
-        
-        
+    
+    
+        var ComponentName    = "prettytype";
         var ModuleName     = "dumpingpolicy_type";
         var ModulePackages = "identifying";
         var ModuleFullName = ModulePackages + "/" + ModuleName;
@@ -7428,7 +10170,7 @@ permissions and limitations under the Licence.
                                      theS_ConsoleSvce) {
             
             
-            if( !( typeof FG_logModLoads == "undefined") && ( typeof FG_logModLoads == "function") && FG_logModLoads()) { FG_logModLoads(ModuleFullName);}
+            if( typeof FG_logModLoads === 'function') { FG_logModLoads(ModuleFullName);}
             
             
             
@@ -7479,8 +10221,6 @@ permissions and limitations under the Licence.
                 
                 theToInit.DUMPINGPOLICY_DEFAULTTITLE = "DumpingPolicyDefaultName";
                 
-                
-                
                 theToInit.RECORDPOINTERNAME_LASTDUMPED = "RECORDPOINTERNAME_LASTDUMPED";
                 
             };
@@ -7529,15 +10269,15 @@ permissions and limitations under the Licence.
                 var aPrototype = {};
                 
                 pgInitFromModuleConstants( aPrototype);
-                
-                
-                
-                
+    
+                aPrototype._v_SuperPrototype = null;
+    
                 aPrototype._v_Type = "DumpingPolicy";
                 
                 aPrototype._v_Module = null;
                 
                 aPrototype._v_Prototype_DumpingPolicy = aPrototype;
+                
                 
                 aPrototype._v_Identifier = null;
                 
@@ -7777,7 +10517,7 @@ permissions and limitations under the Licence.
                 
                 var pSetMayDumpRecords = function( theMayDumpRecords) {
                     
-                    this._v_MayDumpRecords = theMayDumpRecords ? true : false;
+                    this._v_MayDumpRecords = !!theMayDumpRecords;
                     
                 };
                 if( pSetMayDumpRecords){}/* CQT */
@@ -7941,13 +10681,18 @@ permissions and limitations under the Licence.
             var aModule = {
                 "DumpingPolicy_Prototype": aDumpingPolicy_Prototype,
                 "DumpingPolicy_Constructor": DumpingPolicy_Constructor,
-                "DumpingPolicy_SuperPrototypeConstructor": DumpingPolicy_SuperPrototypeConstructor
+                "DumpingPolicy_SuperPrototypeConstructor": DumpingPolicy_SuperPrototypeConstructor,
+                "Prototype": aDumpingPolicy_Prototype,
+                "Constructor": DumpingPolicy_Constructor,
+                "SuperPrototypeConstructor": DumpingPolicy_SuperPrototypeConstructor
             };
             pgInitFromModuleConstants( aModule);
             aModule._v_Type = "module";
+            aModule.ComponentName     = ComponentName;
             aModule.ModuleName     = ModuleName;
             aModule.ModulePackages = ModulePackages;
             aModule.ModuleFullName = ModuleFullName;
+            aModule.ModuleVariations= ModuleVariations;
             aModule.ModuleConstants = ModuleConstants;
             aModule.ModuleGlobals   = ModuleGlobals;
             aModule.pgInitFromModuleConstants  = pgInitFromModuleConstants;
@@ -7958,11 +10703,8 @@ permissions and limitations under the Licence.
             
             
             
-            
             return aModule;
         };
-        
-        
         
         
         
@@ -7970,8 +10712,8 @@ permissions and limitations under the Licence.
     
     
         var anExistingModule = null;
-        if(    ( typeof theSS_typesregistry !== 'undefined')
-            && ( typeof theSS_typesregistry.fRegisteredModule == 'function')) {
+        if(    !( typeof theSS_typesregistry === 'undefined')
+            && ( typeof theSS_typesregistry.fRegisteredModule === 'function')) {
             anExistingModule = theSS_typesregistry.fRegisteredModule( ModuleFullName);
         }
         if( !anExistingModule) {
@@ -7987,8 +10729,8 @@ permissions and limitations under the Licence.
         
             anExistingModule = aModule;
         
-            if(    ( typeof theSS_typesregistry !== 'undefined')
-                && ( typeof theSS_typesregistry.fRegisterModule   == 'function')) {
+            if(    !( typeof theSS_typesregistry === 'undefined')
+                && ( typeof theSS_typesregistry.fRegisterModule === 'function')) {
                 theSS_typesregistry.fRegisterModule( ModuleFullName, aModule);
             }
         }
@@ -8003,7 +10745,7 @@ permissions and limitations under the Licence.
     
     
     
-    if( typeof angular !== 'undefined' && angular.module) {
+    if( !( typeof angular === 'undefined') && angular.module) {
         // Angular (1.x)
         
         angular.module("identifyingTypes").factory("DumpingPolicyType",[
@@ -8015,13 +10757,13 @@ permissions and limitations under the Licence.
         ]);
         
     }
-    else if (typeof module !== 'undefined' && module.exports) {
+    else if ( !(typeof module === 'undefined') && module.exports) {
         // Node.js
         
         module.exports = (function() {
             
-            var aM_typesregistry = require('../typesregistry');
-            var aM_overrider     = require('../roots/overrider_type');
+            var aM_typesregistry = require('../modboot/typesregistry');
+            var aM_overrider     = require('../modboot/overrider_svce');
             var aM_identifier    = require('./identifier_type');
             var aM_console       = require('../utils/console_svce');
     
@@ -8034,30 +10776,18 @@ permissions and limitations under the Licence.
         })();
         
     }
-    else if (typeof define !== 'undefined' && define.amd) {
+    else if ( !(typeof define === 'undefined') && define.amd) {
         // AMD / RequireJS
         
-        define([
-            "../typesregistry",
-            "../roots/overrider_type",
-            "./identifier_type",
-            "../utils/console_svce"
-        ],
-            aMod_definer
-        /* function (
-            theM_typesregistry,
-            theM_overrider,
-            theM_identifier,
-            theM_console
-        ) {
-            return aMod_definer(
-                theM_typesregistry,
-                theM_overrider,
-                theM_identifier,
-                theM_console
-            );
-        }
-        */);
+        define( "m_dumpingpolicy_type",
+            [
+                "m_typesregistry",
+                "m_overrider_svce",
+                "m_identifier_type",
+                "m_console_svce"
+            ],
+                aMod_definer
+        );
     }
     
 })();
@@ -8100,15 +10830,17 @@ permissions and limitations under the Licence.
  *
  */
 
+'use strict';
 
 (function () {
     
     var aMod_definer = ( function( theSS_typesregistry,
                                    theSS_Overrider,
                                    theSS_DumpingPolicyType,
-                                   theSS_CommonEventKinds) {
-        
-        
+                                   theSS_EventKinds_Common) {
+    
+    
+        var ComponentName    = "prettytype";
         var ModuleName     = "dumpingpolicy_filterkinds_type";
         var ModulePackages = "identifying";
         var ModuleFullName = ModulePackages + "/" + ModuleName;
@@ -8117,12 +10849,10 @@ permissions and limitations under the Licence.
         
         var aMod_builder = function( theS_Overrider,
                                      theS_DumpingPolicyType,
-                                     theS_CommonEventKinds) {
+                                     theS_EventKinds_Common) {
             
             
-            if( !( typeof FG_logModLoads == "undefined") && ( typeof FG_logModLoads == "function") && FG_logModLoads()) { FG_logModLoads(ModuleFullName);}
-            
-            
+            if( typeof FG_logModLoads === 'function') { FG_logModLoads(ModuleFullName);}
             
             
             
@@ -8133,7 +10863,6 @@ permissions and limitations under the Licence.
                 }
                 
                 theToInit.LOGCHANGESTOEVENTKINDSNOTFORCONSOLE = true;
-                
                 
                 
                 theToInit.EVENTSSETNOTFORCONSOLE = "EVENTKINDS_NOTFORCONSOLE_NONE";
@@ -8187,8 +10916,8 @@ permissions and limitations under the Licence.
                 
                 if( theToInit.EVENTSSETNOTFORCONSOLE) {
                     
-                    if( typeof theToInit.EVENTSSETNOTFORCONSOLE == "string") {
-                        var anEventsSetNotForConsole = theS_CommonEventKinds[ theToInit.EVENTSSETNOTFORCONSOLE];
+                    if( typeof theToInit.EVENTSSETNOTFORCONSOLE === "string") {
+                        var anEventsSetNotForConsole = theS_EventKinds_Common[ theToInit.EVENTSSETNOTFORCONSOLE];
                         if( anEventsSetNotForConsole) {
                             theToInit.EVENTKINDS_NOTFORCONSOLE = anEventsSetNotForConsole.slice();
                         }
@@ -8201,10 +10930,10 @@ permissions and limitations under the Licence.
                     }
                 }
                 else {
-                    theToInit.EVENTKINDS_NOTFORCONSOLE = theS_CommonEventKinds.EVENTKINDS_NOTFORCONSOLE_DEFAULT.slice();
+                    theToInit.EVENTKINDS_NOTFORCONSOLE = theS_EventKinds_Common.EVENTKINDS_NOTFORCONSOLE_DEFAULT.slice();
                 }
                 if( !theToInit.EVENTKINDS_NOTFORCONSOLE) {
-                    theToInit.EVENTKINDS_NOTFORCONSOLE = theS_CommonEventKinds.EVENTKINDS_NOTFORCONSOLE_DEFAULT.slice();
+                    theToInit.EVENTKINDS_NOTFORCONSOLE = theS_EventKinds_Common.EVENTKINDS_NOTFORCONSOLE_DEFAULT.slice();
                 }
                 
             };
@@ -8254,7 +10983,6 @@ permissions and limitations under the Licence.
             var aDumpingPolicyFilterKinds_Prototype = (function() {
                 
                 
-                
                 var aPrototype = new theS_DumpingPolicyType.DumpingPolicy_SuperPrototypeConstructor();
                 
                 pgInitFromModuleConstants( aPrototype);
@@ -8262,15 +10990,13 @@ permissions and limitations under the Licence.
                 aPrototype._v_SuperPrototype = theS_DumpingPolicyType.DumpingPolicy_Prototype;
                 
                 aPrototype._v_Type = "DumpingPolicyFilterKinds";
-                
+    
+                aPrototype._v_Module = null;
+    
                 aPrototype._v_Prototype_DumpingPolicyFilterKinds = aPrototype;
                 
                 
-                aPrototype._v_Module = null;
-                
-                
                 aPrototype._v_EventKindsNotForConsole = null;
-                
                 
                 /* Slot property named _v_EventKindsNotForConsole only initialized in the prototype. May be overriden by individual instantes setting their own value */
                 if( aPrototype.EVENTKINDS_NOTFORCONSOLE) {
@@ -8319,9 +11045,6 @@ permissions and limitations under the Licence.
                 };
                 if( _pInit_DumpingPolicyFilterKinds){}/* CQT */
                 aPrototype._pInit_DumpingPolicyFilterKinds = _pInit_DumpingPolicyFilterKinds;
-                
-                
-                
                 
                 
                 
@@ -8621,7 +11344,8 @@ permissions and limitations under the Licence.
                     if( someEventKindsNotForConsole.indexOf( anEventKind) < 0) {
                         return true;
                     }
-                    
+                    if( null){}/* CQT */
+    
                     return false;
                     
                 };
@@ -8726,20 +11450,25 @@ permissions and limitations under the Licence.
                 "DumpingPolicyFilterKinds_Prototype":                 aDumpingPolicyFilterKinds_Prototype,
                 "DumpingPolicyFilterKinds_Constructor":               DumpingPolicyFilterKinds_Constructor,
                 "DumpingPolicy_Constructor":                          DumpingPolicyFilterKinds_Constructor,
-                "DumpingPolicyFilterKinds_SuperPrototypeConstructor": DumpingPolicyFilterKinds_SuperPrototypeConstructor
+                "DumpingPolicyFilterKinds_SuperPrototypeConstructor": DumpingPolicyFilterKinds_SuperPrototypeConstructor,
+                "Prototype": aDumpingPolicyFilterKinds_Prototype,
+                "Constructor": DumpingPolicyFilterKinds_Constructor,
+                "SuperPrototypeConstructor": DumpingPolicyFilterKinds_SuperPrototypeConstructor
             };
             pgInitFromModuleConstants( aModule);
             aModule._v_Type = "module";
+            aModule.ComponentName     = ComponentName;
             aModule.ModuleName     = ModuleName;
             aModule.ModulePackages = ModulePackages;
             aModule.ModuleFullName = ModuleFullName;
+            aModule.ModuleVariations= ModuleVariations;
+            aModule.ModuleConstants = ModuleConstants;
             aModule.ModuleGlobals   = ModuleGlobals;
             aModule.pgInitFromModuleConstants  = pgInitFromModuleConstants;
             aModule.pgInitFromModuleVariations = pgInitFromModuleVariations;
             aModule.pgInitModuleGlobalsOn      = pgInitModuleGlobalsOn;
-    
+        
             aDumpingPolicyFilterKinds_Prototype._v_Module = aModule;
-            
             
             
             
@@ -8753,8 +11482,8 @@ permissions and limitations under the Licence.
     
     
         var anExistingModule = null;
-        if(    ( typeof theSS_typesregistry !== 'undefined')
-            && ( typeof theSS_typesregistry.fRegisteredModule == 'function')) {
+        if(    !( typeof theSS_typesregistry === 'undefined')
+            && ( typeof theSS_typesregistry.fRegisteredModule === 'function')) {
             anExistingModule = theSS_typesregistry.fRegisteredModule( ModuleFullName);
         }
         if( !anExistingModule) {
@@ -8762,7 +11491,7 @@ permissions and limitations under the Licence.
             var aModule = aMod_builder(
                 theSS_Overrider,
                 theSS_DumpingPolicyType,
-                theSS_CommonEventKinds
+                theSS_EventKinds_Common
             );
         
             aModule.ModuleBuilder = aMod_builder;
@@ -8770,8 +11499,8 @@ permissions and limitations under the Licence.
         
             anExistingModule = aModule;
         
-            if(    ( typeof theSS_typesregistry !== 'undefined')
-                && ( typeof theSS_typesregistry.fRegisterModule   == 'function')) {
+            if(    !( typeof theSS_typesregistry === 'undefined')
+                && ( typeof theSS_typesregistry.fRegisterModule === 'function')) {
                 theSS_typesregistry.fRegisterModule( ModuleFullName, aModule);
             }
         }
@@ -8785,60 +11514,49 @@ permissions and limitations under the Licence.
     
     
     
-    if( typeof angular !== 'undefined' && angular.module) {
+    if( !( typeof angular === 'undefined') && angular.module) {
         // Angular (1.x)
         
         angular.module("identifyingTypes").factory("DumpingPolicyFilterKindsType",[
             "TypesRegistrySvce",
             "OverriderSvce",
             "DumpingPolicyType",
-            "CommonEventKinds",
+            "EventKinds_Common",
             aMod_definer
         ]);
         
     }
-    else if (typeof module !== 'undefined' && module.exports) {
+    else if ( !(typeof module === 'undefined') && module.exports) {
         // Node.js
         
         module.exports = (function() {
             
-            var aM_typesregistry = require('../typesregistry');
-            var aM_overrider     = require('../roots/overrider_svce');
+            var aM_typesregistry = require('../modboot/typesregistry');
+            var aM_overrider     = require('../modboot/overrider_svce');
             var aM_dumpingpolicy = require('./dumpingpolicy_type');
-            var aM_commoneventkinds = require('../commoneventkinds');
+            var aM_eventkinds_common = require('../eventkinds/eventkinds_common');
     
             return aMod_definer(
                 aM_typesregistry,
                 aM_overrider,
                 aM_dumpingpolicy,
-                aM_commoneventkinds
+                aM_eventkinds_common
             );
         })();
         
     }
-    else if (typeof define !== 'undefined' && define.amd) {
+    else if ( !(typeof define === 'undefined') && define.amd) {
         // AMD / RequireJS
         
-        define([
-                "../typesregistry",
-                "../roots/overrider_type",
-                "./dumpingpolicy_type",
-                "../commoneventkinds"
+        define( "m_dumpingpolicy_filterkinds_type",
+            [
+                "m_typesregistry",
+                "m_overrider_svce",
+                "m_dumpingpolicy_type",
+                "m_eventkinds_common"
             ],
             aMod_definer
-            /* function (
-                theM_typesregistry,
-                theM_overrider,
-                theM_dumpingpolicy,
-                theM_commoneventkinds
-            ) {
-                return aMod_definer(
-                    theM_typesregistry,
-                    theM_overrider,
-                    theM_dumpingpolicy,
-                    theM_commoneventkinds
-                );
-            } */
+            
         );
     }
     
@@ -8878,15 +11596,17 @@ permissions and limitations under the Licence.
  *
  */
 
+'use strict';
 
 (function () {
     
     var aMod_definer = ( function( theSS_typesregistry,
-                       theSS_Overrider,
-                       theSS_DumpingPolicyFilterKindsType,
-                       theSS_CommonEventKinds) {
-        
-        
+                                   theSS_Overrider,
+                                   theSS_DumpingPolicyFilterKindsType,
+                                   theSS_EventKinds_Common) {
+                
+    
+        var ComponentName    = "prettytype";
         var ModuleName     = "dumpingpolicy_triggerkinds_type";
         var ModulePackages = "identifying";
         var ModuleFullName = ModulePackages + "/" + ModuleName;
@@ -8895,15 +11615,10 @@ permissions and limitations under the Licence.
         
         var aMod_builder = function( theS_Overrider,
                                      theS_DumpingPolicyFilterKindsType,
-                                     theS_CommonEventKinds) {
+                                     theS_EventKinds_Common) {
             
             
-            if( !( typeof FG_logModLoads == "undefined") && ( typeof FG_logModLoads == "function") && FG_logModLoads()) { FG_logModLoads(ModuleFullName);}
-            
-            
-            
-            
-            
+            if( typeof FG_logModLoads === 'function') { FG_logModLoads(ModuleFullName);}
             
             
             
@@ -8915,11 +11630,7 @@ permissions and limitations under the Licence.
                 
                 theToInit.LOGCHANGESTOEVENTKINDSTRIGGERINGDUMP = true;
                 
-                
-                
-                
                 theToInit.EVENTSSETTRIGGERINGDUMP = "EVENTKINDS_TRIGGERINGDUMP_ALL";
-                
                 theToInit.EVENTSSETTRIGGERINGDUMP = "EVENTKINDS_TRIGGERINGDUMP_ERRORS";
                 
             };
@@ -8966,12 +11677,10 @@ permissions and limitations under the Licence.
                 
                 
                 
-                
-                
                 if( theToInit.EVENTSSETTRIGGERINGDUMP) {
                     
-                    if( typeof theToInit.EVENTSSETTRIGGERINGDUMP == "string") {
-                        var anEventsSetTriggeringDump = theS_CommonEventKinds[ theToInit.EVENTSSETTRIGGERINGDUMP];
+                    if( typeof theToInit.EVENTSSETTRIGGERINGDUMP === "string") {
+                        var anEventsSetTriggeringDump = theS_EventKinds_Common[ theToInit.EVENTSSETTRIGGERINGDUMP];
                         if( anEventsSetTriggeringDump) {
                             theToInit.EVENTKINDS_TRIGGERINGDUMP = anEventsSetTriggeringDump.slice();
                         }
@@ -8984,10 +11693,10 @@ permissions and limitations under the Licence.
                     }
                 }
                 else {
-                    theToInit.EVENTKINDS_TRIGGERINGDUMP = theS_CommonEventKinds.EVENTKINDS_TRIGGERINGDUMP_DEFAULT.slice();
+                    theToInit.EVENTKINDS_TRIGGERINGDUMP = theS_EventKinds_Common.EVENTKINDS_TRIGGERINGDUMP_DEFAULT.slice();
                 }
                 if( !theToInit.EVENTKINDS_TRIGGERINGDUMP) {
-                    theToInit.EVENTKINDS_TRIGGERINGDUMP = theS_CommonEventKinds.EVENTKINDS_TRIGGERINGDUMP_DEFAULT.slice();
+                    theToInit.EVENTKINDS_TRIGGERINGDUMP = theS_EventKinds_Common.EVENTKINDS_TRIGGERINGDUMP_DEFAULT.slice();
                 }
                 
             };
@@ -9037,25 +11746,20 @@ permissions and limitations under the Licence.
             var aDumpingPolicyTriggerKinds_Prototype = (function() {
                 
                 
-                
                 var aPrototype = new theS_DumpingPolicyFilterKindsType.DumpingPolicyFilterKinds_SuperPrototypeConstructor();
                 
                 pgInitFromModuleConstants( aPrototype);
                 
-                
                 aPrototype._v_SuperPrototype = theS_DumpingPolicyFilterKindsType.DumpingPolicyFilterKinds_Prototype;
                 
-                
                 aPrototype._v_Type = "DumpingPolicyTriggerKinds";
-                
+    
+                aPrototype._v_Module = null;
+
                 aPrototype._v_Prototype_DumpingPolicyTriggerKinds = aPrototype;
                 
                 
-                aPrototype._v_Module = null;
-                
-                
                 aPrototype._v_EventKindsTriggeringDump = null;
-                
                 
                 /* Slot property named _v_EventKindsTriggeringDump only initialized in the prototype. May be overriden by individual instantes setting their own value */
                 if( aPrototype.EVENTKINDS_TRIGGERINGDUMP) {
@@ -9406,7 +12110,7 @@ permissions and limitations under the Licence.
                     
                     var aRecordPointerLastDumpedValue = aRecorder.fGetRecordPointerNamed( this.RECORDPOINTERNAME_LASTDUMPED);
                     
-                    if( typeof aRecordPointerLastDumpedValue == "number") {
+                    if( typeof aRecordPointerLastDumpedValue === "number") {
                         
                         if( !isNaN( aRecordPointerLastDumpedValue)) {
                             
@@ -9493,7 +12197,8 @@ permissions and limitations under the Licence.
                     if( someEventKindsTriggeringDump.indexOf( anEventKind) < 0) {
                         return false;
                     }
-                    
+                    if( 0){}/* CQT */
+    
                     return true;
                     
                 };
@@ -9598,21 +12303,25 @@ permissions and limitations under the Licence.
                 "DumpingPolicyTriggerKinds_Prototype":                 aDumpingPolicyTriggerKinds_Prototype,
                 "DumpingPolicyTriggerKinds_Constructor":               DumpingPolicyTriggerKinds_Constructor,
                 "DumpingPolicy_Constructor":                           DumpingPolicyTriggerKinds_Constructor,
-                "DumpingPolicyTriggerKinds_SuperPrototypeConstructor": DumpingPolicyTriggerKinds_SuperPrototypeConstructor
+                "DumpingPolicyTriggerKinds_SuperPrototypeConstructor": DumpingPolicyTriggerKinds_SuperPrototypeConstructor,
+                "Prototype": aDumpingPolicyTriggerKinds_Prototype,
+                "Constructor": DumpingPolicyTriggerKinds_Constructor,
+                "SuperPrototypeConstructor": DumpingPolicyTriggerKinds_SuperPrototypeConstructor
             };
             pgInitFromModuleConstants( aModule);
             aModule._v_Type = "module";
+            aModule.ComponentName     = ComponentName;
             aModule.ModuleName     = ModuleName;
             aModule.ModulePackages = ModulePackages;
             aModule.ModuleFullName = ModuleFullName;
+            aModule.ModuleVariations= ModuleVariations;
+            aModule.ModuleConstants = ModuleConstants;
             aModule.ModuleGlobals   = ModuleGlobals;
             aModule.pgInitFromModuleConstants  = pgInitFromModuleConstants;
             aModule.pgInitFromModuleVariations = pgInitFromModuleVariations;
             aModule.pgInitModuleGlobalsOn      = pgInitModuleGlobalsOn;
-    
+            
             aDumpingPolicyTriggerKinds_Prototype._v_Module = aModule;
-            
-            
             
             
             
@@ -9625,16 +12334,16 @@ permissions and limitations under the Licence.
     
     
         var anExistingModule = null;
-        if(    ( typeof theSS_typesregistry !== 'undefined')
-            && ( typeof theSS_typesregistry.fRegisteredModule == 'function')) {
+        if(    !( typeof theSS_typesregistry === 'undefined')
+            && ( typeof theSS_typesregistry.fRegisteredModule === 'function')) {
             anExistingModule = theSS_typesregistry.fRegisteredModule( ModuleFullName);
         }
         if( !anExistingModule) {
         
             var aModule = aMod_builder(
                 theSS_Overrider,
-                theSS_DumpingPolicyType,
-                theSS_CommonEventKinds
+                theSS_DumpingPolicyFilterKindsType,
+                theSS_EventKinds_Common
             );
         
             aModule.ModuleBuilder = aMod_builder;
@@ -9642,8 +12351,8 @@ permissions and limitations under the Licence.
         
             anExistingModule = aModule;
         
-            if(    ( typeof theSS_typesregistry !== 'undefined')
-                && ( typeof theSS_typesregistry.fRegisterModule   == 'function')) {
+            if(    !( typeof theSS_typesregistry === 'undefined')
+                && ( typeof theSS_typesregistry.fRegisterModule === 'function')) {
                 theSS_typesregistry.fRegisterModule( ModuleFullName, aModule);
             }
         }
@@ -9656,60 +12365,48 @@ permissions and limitations under the Licence.
     
     
     
-    if( typeof angular !== 'undefined' && angular.module) {
+    if( !( typeof angular === 'undefined') && angular.module) {
         // Angular (1.x)
         
         angular.module("identifyingTypes").factory("DumpingPolicyTriggerKindsType",[
             "TypesRegistrySvce",
             "OverriderSvce",
-            "DumpingPolicyType",
-            "CommonEventKinds",
+            "DumpingPolicyFilterKindsType",
+            "EventKinds_Common",
             aMod_definer
         ]);
         
     }
-    else if (typeof module !== 'undefined' && module.exports) {
+    else if ( !(typeof module === 'undefined') && module.exports) {
         // Node.js
         
         module.exports = (function() {
             
-            var aM_typesregistry = require('../typesregistry');
-            var aM_overrider     = require('../roots/overrider_svce');
-            var aM_dumpingpolicy = require('./dumpingpolicy_type');
-            var aM_commoneventkinds = require('../commoneventkinds');
+            var aM_typesregistry = require('../modboot/typesregistry');
+            var aM_overrider     = require('../modboot/overrider_svce');
+            var aM_dumpingpolicy = require('./dumpingpolicy_filterkinds_type');
+            var aM_eventkinds_common = require('../eventkinds/eventkinds_common');
             
             return aMod_definer(
                 aM_typesregistry,
                 aM_overrider,
                 aM_dumpingpolicy,
-                aM_commoneventkinds
+                aM_eventkinds_common
             );
         })();
         
     }
-    else if (typeof define !== 'undefined' && define.amd) {
+    else if ( !(typeof define === 'undefined') && define.amd) {
         // AMD / RequireJS
         
-        define([
-                "../typesregistry",
-                "../roots/overrider_type",
-                "./dumpingpolicy_type",
-                "../commoneventkinds"
+        define( "m_dumpingpolicy_triggerkinds_type",
+            [
+                "m_typesregistry",
+                "m_overrider_svce",
+                "m_dumpingpolicy_filterkinds_type",
+                "m_eventkinds_common"
             ],
             aMod_definer
-            /* function (
-                theM_typesregistry,
-                theM_overrider,
-                theM_dumpingpolicy,
-                theM_commoneventkinds
-            ) {
-                return aMod_definer(
-                    theM_typesregistry,
-                    theM_overrider,
-                    theM_dumpingpolicy,
-                    theM_commoneventkinds
-                );
-            } */
         );
     }
     
@@ -9747,6 +12444,7 @@ permissions and limitations under the Licence.
  *
  */
 
+'use strict';
 
 
 (function () {
@@ -9758,8 +12456,9 @@ permissions and limitations under the Licence.
                                    theSS_RecordType,
                                    theSS_RecordingPolicyType,
                                    theSS_DumpingPolicyType) {
-        
-        
+    
+    
+        var ComponentName    = "prettytype";
         var ModuleName     = "recorder_type";
         var ModulePackages = "identifying";
         var ModuleFullName = ModulePackages + "/" + ModuleName;
@@ -9774,7 +12473,7 @@ permissions and limitations under the Licence.
                                      theS_DumpingPolicyType) {
             
             
-            if( !( typeof FG_logModLoads == "undefined") && ( typeof FG_logModLoads == "function") && FG_logModLoads()) { FG_logModLoads(ModuleFullName);}
+            if( typeof FG_logModLoads === 'function') { FG_logModLoads(ModuleFullName);}
             
             
             
@@ -9877,6 +12576,7 @@ permissions and limitations under the Licence.
                 
                 aPrototype._v_Prototype_Recorder = aPrototype;
                 
+                
                 aPrototype._v_Identifier = null;
                 
                 aPrototype._v_Id         = null;
@@ -9941,7 +12641,6 @@ permissions and limitations under the Licence.
                     this._v_RecordsIdentifier = new theS_IdentifierType.Identifier_Constructor( "(For-" + this._v_Title + ")");
                     
                     
-                    
                     this._v_Records    = [ ];
                     this._v_RecordPointersByName = { };
                     
@@ -9953,7 +12652,6 @@ permissions and limitations under the Licence.
                      which when true shall keep references to record instances and shall also prevent reclamation of their memory by the garbage collector.
                      */
                     this._v_RecordingPolicy = new theS_RecordingPolicyType.RecordingPolicy_Constructor(     "(For-" + this._v_Title + ")", this._v_Identifier, this);
-                    
                     
                     this._v_DumpingPolicy   = new theS_DumpingPolicyType.DumpingPolicy_Constructor( "(For-" + this._v_Title + ")", this._v_Identifier, this);
                     
@@ -10140,7 +12838,11 @@ permissions and limitations under the Licence.
                 var pSetRecordingPolicy = function( theRecordingPolicy) {
                     
                     if( this._v_RecordingPolicy) {
-                        if( this._v_RecordingPolicy.pRelease && ( typeof this._v_RecordingPolicy.pRelease == "function")) {
+                        if( this._v_RecordingPolicy === theRecordingPolicy) {
+                            return;
+                        }
+                        
+                        if( this._v_RecordingPolicy.pRelease && ( typeof this._v_RecordingPolicy.pRelease === "function")) {
                             this._v_RecordingPolicy.pRelease();
                         }
                     }
@@ -10148,7 +12850,7 @@ permissions and limitations under the Licence.
                     this._v_RecordingPolicy = theRecordingPolicy;
                     
                     var aRecordingPolicy_recorder = null;
-                    if( theRecordingPolicy.fRecorder && ( typeof theRecordingPolicy.fRecorder == "function")) {
+                    if( theRecordingPolicy.fRecorder && ( typeof theRecordingPolicy.fRecorder === "function")) {
                         aRecordingPolicy_recorder = theRecordingPolicy.fRecorder();
                     }
                     
@@ -10189,7 +12891,7 @@ permissions and limitations under the Licence.
                 var pSetDumpingPolicy = function( theDumpingPolicy) {
                     
                     if( this._v_DumpingPolicy) {
-                        if( this._v_DumpingPolicy.pRelease && ( typeof this._v_DumpingPolicy.pRelease == "function")) {
+                        if( this._v_DumpingPolicy.pRelease && ( typeof this._v_DumpingPolicy.pRelease === "function")) {
                             this._v_DumpingPolicy.pRelease();
                         }
                     }
@@ -10197,7 +12899,7 @@ permissions and limitations under the Licence.
                     this._v_DumpingPolicy = theDumpingPolicy;
                     
                     var aDumpingPolicy_recorder = null;
-                    if( theDumpingPolicy.fRecorder && ( typeof theDumpingPolicy.fRecorder == "function")) {
+                    if( theDumpingPolicy.fRecorder && ( typeof theDumpingPolicy.fRecorder === "function")) {
                         aDumpingPolicy_recorder = theDumpingPolicy.fRecorder();
                     }
                     
@@ -10316,7 +13018,7 @@ permissions and limitations under the Licence.
                         return null;
                     }
                     
-                    if( !( typeof this._v_Records.slice == "function")) {
+                    if( !( typeof this._v_Records.slice === "function")) {
                         return null;
                     }
                     
@@ -10341,7 +13043,7 @@ permissions and limitations under the Licence.
                         return [];
                     }
                     
-                    if( !( typeof this._v_Records.slice == "function")) {
+                    if( !( typeof this._v_Records.slice === "function")) {
                         return [];
                     }
                     
@@ -10407,7 +13109,7 @@ permissions and limitations under the Licence.
                     
                     var aRecordPointer = -1;
                     
-                    if( typeof theRecordPointer == "number") {
+                    if( typeof theRecordPointer === "number") {
                         
                         if( !isNaN( theRecordPointer)) {
                             
@@ -10432,10 +13134,10 @@ permissions and limitations under the Licence.
                     if( aRecordPointer < 0) {
                         if( this._v_Records) {
                             
-                            var aNumRecords = this._v_Records.length;
-                            if( aNumRecords) {
+                            var otherNumRecords = this._v_Records.length;
+                            if( otherNumRecords) {
                                 
-                                aRecordPointer = aNumRecords - 1;
+                                aRecordPointer = otherNumRecords - 1;
                             }
                         }
                     }
@@ -10519,10 +13221,11 @@ permissions and limitations under the Licence.
                             if( this._v_RecordPointersByName.hasOwnProperty( aRecordPointerByNameKey)) {
                                 
                                 var aRecordPointerValue = this._v_RecordPointersByName[ aRecordPointerByNameKey];
-                                if( typeof aRecordPointerValue == "number") {
+                                if( typeof aRecordPointerValue === "number") {
                                     if( !isNaN( aRecordPointerValue)) {
                                         
                                         var anUpdatedRecordPointerValue = aRecordPointerValue - theAmountToSubstract;
+                                        if( anUpdatedRecordPointerValue){}/* CQT */
                                         this._v_RecordPointersByName[ aRecordPointerByNameKey] = anUpdatedRecordPointerValue;
                                     }
                                 }
@@ -10711,19 +13414,23 @@ permissions and limitations under the Licence.
             var aModule = {
                 "Recorder_Prototype": aRecorder_Prototype,
                 "Recorder_Constructor": Recorder_Constructor,
-                "Recorder_SuperPrototypeConstructor": Recorder_SuperPrototypeConstructor
+                "Recorder_SuperPrototypeConstructor": Recorder_SuperPrototypeConstructor,
+                "Prototype": aRecorder_Prototype,
+                "Constructor": Recorder_Constructor,
+                "SuperPrototypeConstructor": Recorder_SuperPrototypeConstructor
             };
             pgInitFromModuleConstants( aModule);
             aModule._v_Type = "module";
+            aModule.ComponentName     = ComponentName;
             aModule.ModuleName     = ModuleName;
             aModule.ModulePackages = ModulePackages;
             aModule.ModuleFullName = ModuleFullName;
+            aModule.ModuleVariations= ModuleVariations;
             aModule.ModuleConstants = ModuleConstants;
             aModule.ModuleGlobals   = ModuleGlobals;
             aModule.pgInitFromModuleConstants  = pgInitFromModuleConstants;
             aModule.pgInitFromModuleVariations = pgInitFromModuleVariations;
             aModule.pgInitModuleGlobalsOn      = pgInitModuleGlobalsOn;
-    
     
             aRecorder_Prototype._v_Module = aModule;
             
@@ -10739,8 +13446,8 @@ permissions and limitations under the Licence.
     
     
         var anExistingModule = null;
-        if(    ( typeof theSS_typesregistry !== 'undefined')
-            && ( typeof theSS_typesregistry.fRegisteredModule == 'function')) {
+        if(    !( typeof theSS_typesregistry === 'undefined')
+            && ( typeof theSS_typesregistry.fRegisteredModule === 'function')) {
             anExistingModule = theSS_typesregistry.fRegisteredModule( ModuleFullName);
         }
         if( !anExistingModule) {
@@ -10759,8 +13466,8 @@ permissions and limitations under the Licence.
         
             anExistingModule = aModule;
         
-            if(    ( typeof theSS_typesregistry !== 'undefined')
-                && ( typeof theSS_typesregistry.fRegisterModule   == 'function')) {
+            if(    !( typeof theSS_typesregistry === 'undefined')
+                && ( typeof theSS_typesregistry.fRegisterModule === 'function')) {
                 theSS_typesregistry.fRegisterModule( ModuleFullName, aModule);
             }
         }
@@ -10774,7 +13481,7 @@ permissions and limitations under the Licence.
     
     
     
-    if( typeof angular !== 'undefined' && angular.module) {
+    if( !( typeof angular === 'undefined') && angular.module) {
         // Angular (1.x)
         
         angular.module("identifyingTypes").factory("RecorderType",[
@@ -10789,13 +13496,13 @@ permissions and limitations under the Licence.
         ]);
         
     }
-    else if (typeof module !== 'undefined' && module.exports) {
+    else if ( !(typeof module === 'undefined') && module.exports) {
         // Node.js
         
         module.exports = (function() {
             
-            var aM_typesregistry  = require('../typesregistry');
-            var aM_overrider      = require('../roots/overrider_type');
+            var aM_typesregistry  = require('../modboot/typesregistry');
+            var aM_overrider      = require('../modboot/overrider_svce');
             var aM_identifierSvce = require('./identifier_svce');
             var aM_identifier     = require('./identifier_type');
             var aM_record         = require('./record_type');
@@ -10814,45 +13521,1213 @@ permissions and limitations under the Licence.
         })();
         
     }
-    else if (typeof define !== 'undefined' && define.amd) {
+    else if ( !(typeof define === 'undefined') && define.amd) {
         // AMD / RequireJS
         
-        define([
-            "../typesregistry",
-            "../roots/overrider_type",
-            "./identifier_svce",
-            "./identifier_type",
-            "./record_type",
-            "./recordingpolicy_keepall_type",
-            "./dumpingpolicy_filterkinds_type"
-        ],
-        aMod_definer
-        /* function (
-            theM_typesregistry,
-            theM_overrider,
-            theM_identifierSvce,
-            theM_identifier,
-            theM_record,
-            theM_recordingpolicy,
-            theM_dumpingpolicy
-        ) {
-            return aMod_definer(
-                theM_typesregistry,
-                theM_overrider,
-                theM_identifierSvce,
-                theM_identifier,
-                theM_record,
-                theM_recordingpolicy,
-                theM_dumpingpolicy
-            );
-        }
-        */);
+        define( "m_recorder_type",
+            [
+                "m_typesregistry",
+                "m_overrider_svce",
+                "m_identifier_svce",
+                "m_identifier_type",
+                "m_record_type",
+                "m_recordingpolicy_keepall_type",
+                "m_dumpingpolicy_filterkinds_type"
+            ],
+            aMod_definer);
     }
     
     
 })();
 
 
+
+
+
+
+
+;/*
+ * recorder_svce.js
+ *
+ * Created @author Antonio Carrasco Valero 201610051556
+ *
+ *
+ ***************************************************************************
+
+ Copyright 2014 2015 2016 2017 2018 Antonio Carrasco Valero
+ Javascript for core modules including a base prototype and prototypes hierarchy, intended to be reused on the Browser with AngularJS or RequireJS modules, or in the server as node modules. Licensed under EUPL  http://www.uiwire.org
+
+ Licensed under the EUPL, Version 1.1 only (the "Licence");
+ You may not use this work except in compliance with the
+ Licence.
+ You may obtain a copy of the Licence at:
+ https://joinup.ec.europa.eu/software/page/eupl/licence-eupl
+ Unless required by applicable law or agreed to in
+ writing, software distributed under the Licence is
+ distributed on an "AS IS" basis,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+ express or implied.
+ See the Licence for the specific language governing
+ permissions and limitations under the Licence.
+ {{License2}}
+
+ {{Licensed1}}
+ {{Licensed2}}
+
+ ***************************************************************************
+ *
+ */
+
+
+'use strict';
+
+
+(function () {
+    
+    var aMod_definer = ( function( theSS_typesregistry,
+                                   theSS_IdentifierSvce,
+                                   theSS_RecorderType){
+    
+        var ComponentName    = "prettytype";
+        var ModuleName     = "recorder_svce";
+        var ModulePackages = "identifying";
+        var ModuleFullName = ModulePackages + "/" + ModuleName;
+    
+        
+        var aMod_builder = function( theS_IdentifierSvce,
+                                     theS_RecorderType) {
+        
+            return new theS_RecorderType.Recorder_Constructor( "Service_Recorder", theS_IdentifierSvce);
+        };
+    
+        
+
+        var anExistingModule = null;
+        if(    !( typeof theSS_typesregistry === 'undefined')
+            && ( typeof theSS_typesregistry.fRegisteredModule === 'function')) {
+            anExistingModule = theSS_typesregistry.fRegisteredModule( ModuleFullName);
+        }
+        if( !anExistingModule) {
+        
+            var aModule = aMod_builder(
+                theSS_IdentifierSvce,
+                theSS_RecorderType
+            );
+
+            anExistingModule = aModule;
+        
+            if(    !( typeof theSS_typesregistry === 'undefined')
+                && ( typeof theSS_typesregistry.fRegisterModule === 'function')) {
+                theSS_typesregistry.fRegisterModule( ModuleFullName, aModule);
+            }
+        }
+    
+    
+        return anExistingModule;
+    });
+    
+    
+
+    
+    
+    if( !( typeof angular === 'undefined') && angular.module) {
+        // Angular (1.x)
+    
+        angular.module("identifyingTypes").factory("RecorderSvce",[
+            "TypesRegistrySvce",
+            "IdentifierSvce",
+            "RecorderType",
+            aMod_definer
+        ]);
+        
+    }
+    else if ( !(typeof module === 'undefined') && module.exports) {
+        // Node.js
+        
+        module.exports = (function() {
+    
+            var aM_typesregistry = require('../modboot/typesregistry');
+            var aM_identifier_svce = require('./identifier_svce');
+            var aM_recorder        = require('./recorder_type');
+    
+            return aMod_definer(
+                aM_typesregistry,
+                aM_identifier_svce,
+                aM_recorder
+            );
+        })();
+        
+    }
+    else if ( !(typeof define === 'undefined') && define.amd) {
+        // AMD / RequireJS
+    
+        define( "m_recorder_svce",
+            [
+                "m_typesregistry",
+                "m_identifier_svce",
+                "m_recorder_type"
+            ],
+            aMod_definer
+        );
+        
+    }
+    
+    
+    
+})();
+
+
+
+
+
+
+;/*
+ * commoneventkinds.js
+ *
+ * Created @author Antonio Carrasco Valero 201610051556
+ *
+ *
+ ***************************************************************************
+
+ Copyright 2014 2015 2016 2017 2018 Antonio Carrasco Valero
+ Javascript for core modules including a base prototype and prototypes hierarchy, intended to be reused on the Browser with AngularJS or RequireJS modules, or in the server as node modules. Licensed under EUPL  http://www.uiwire.org
+
+ Licensed under the EUPL, Version 1.1 only (the "Licence");
+ You may not use this work except in compliance with the
+ Licence.
+ You may obtain a copy of the Licence at:
+ https://joinup.ec.europa.eu/software/page/eupl/licence-eupl
+ Unless required by applicable law or agreed to in
+ writing, software distributed under the Licence is
+ distributed on an "AS IS" basis,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+ express or implied.
+ See the Licence for the specific language governing
+ permissions and limitations under the Licence.
+ {{License2}}
+
+ {{Licensed1}}
+ {{Licensed2}}
+
+ ***************************************************************************
+ *
+ */
+
+'use strict';
+
+
+
+(function () {
+    
+    var aMod_definer = ( function( theSS_typesregistry,
+                                   theSS_Overrider){
+    
+        var ComponentName    = "prettytype";
+        var ModuleName     = "eventkinds_common";
+        var ModulePackages = "eventkinds";
+        var ModuleFullName = ModulePackages + "/" + ModuleName;
+    
+    
+        
+        var aMod_builder = function( theS_Overrider) {
+    
+            if( typeof FG_logModLoads === 'function') { FG_logModLoads(ModuleFullName);}
+    
+    
+            var pgInitWithModuleVariations = function( theToInit) {
+        
+                if( !theToInit) {
+                }
+            };
+    
+    
+    
+            var pgInitFromModuleVariations = function( theToInit) {
+                if( !theToInit) {
+                    return;
+                }
+        
+                for( var aGlobalName in ModuleVariations) {
+                    if( ModuleVariations.hasOwnProperty( aGlobalName)) {
+                        theToInit[ aGlobalName] = ModuleVariations[ aGlobalName];
+                    }
+                }
+            };
+    
+    
+    
+    
+            var ModuleVariations = { };
+            pgInitWithModuleVariations( ModuleVariations);
+            theS_Overrider.pOverrideModuleVariations( ModuleFullName, ModuleVariations);
+    
+    
+    
+            var pgInitWithModuleConstants = function( theToInit) {
+            
+                if( !theToInit) {
+                    return;
+                }
+            
+                theToInit.EVENTKIND_NEWOBJECTCREATED        = "EVT_NEWOBJECTCREATED";
+                theToInit.EVENTKIND_NEWOBJECTFAILED         = "EVT_NEWOBJECTFAILED";
+            
+            
+                theToInit.EVENTKINDS_NOPROMISE_FAILURES = [
+                    theToInit.EVENTKIND_NEWOBJECTFAILED
+                ];
+            
+            
+            
+                theToInit.EVENTKINDS_NOPROMISE_NOTFAILURES = [
+                    theToInit.EVENTKIND_NEWOBJECTCREATED
+                ];
+            
+            
+            
+                theToInit.EVENTKINDS_NOPROMISE = [];
+                Array.prototype.push.apply( theToInit.EVENTKINDS_NOPROMISE, theToInit.EVENTKINDS_NOPROMISE_NOTFAILURES);
+                Array.prototype.push.apply( theToInit.EVENTKINDS_NOPROMISE, theToInit.EVENTKINDS_NOPROMISE_FAILURES);
+            
+            
+            
+            
+                theToInit.EVENTKINDS_FAILURES = [ ];
+                Array.prototype.push.apply( theToInit.EVENTKINDS_FAILURES, theToInit.EVENTKINDS_NOPROMISE_FAILURES);
+            
+            
+            
+            
+                theToInit.EVENTKINDS_NOTFAILURES = [ ];
+                Array.prototype.push.apply( theToInit.EVENTKINDS_NOTFAILURES, theToInit.EVENTKINDS_NOPROMISE_NOTFAILURES);
+            
+            
+            
+            
+            
+            
+            
+                theToInit.EVENTKINDS = theToInit.EVENTKINDS_NOPROMISE.slice();
+            
+            
+            
+                theToInit.EVENTKINDS_NOTFORCONSOLE_RESTRICTIVE = [
+                    theToInit.EVENTKIND_NEWOBJECTCREATED
+                ];
+            
+            
+            
+                theToInit.EVENTKINDS_NOTFORCONSOLE_RESTRICTIVE_NOPROMISE = theToInit.EVENTKINDS_NOTFORCONSOLE_RESTRICTIVE.slice();
+                Array.prototype.push.apply( theToInit.EVENTKINDS_NOTFORCONSOLE_RESTRICTIVE_NOPROMISE, theToInit.EVENTKINDS_PROMISE_NOTFAILURES);
+            
+                theToInit.EVENTKINDS_NOTFORCONSOLE_NOPROMISE = theToInit.EVENTKINDS_NOPROMISE_NOTFAILURES.slice();
+            
+            
+                theToInit.EVENTKINDS_NOTFORCONSOLE_NONE = [];
+                theToInit.EVENTKINDS_NOTFORCONSOLE_ALL = theToInit.EVENTKINDS.slice();
+            
+                theToInit.EVENTKINDS_NOTFORCONSOLE_DEFAULT = theToInit.EVENTKINDS_NOTFORCONSOLE_RESTRICTIVE_NOPROMISE.slice();
+            
+                theToInit.EVENTKINDS_NOTFORCONSOLE_DEFAULT = theToInit.EVENTKINDS_NOTFORCONSOLE_NONE;
+            
+                theToInit.EVENTKINDS_NOTFORCONSOLE_DEFAULT = theToInit.EVENTKINDS_NOTFORCONSOLE_NOPROMISE;
+            
+            
+            
+            
+            
+            
+                theToInit.EVENTKINDS_ERRORS = [
+                    theToInit.EVENTKIND_NEWOBJECTFAILED
+                ];
+            
+            
+                theToInit.EVENTKINDS_TRIGGERDUMP_ERRORS  = theToInit.EVENTKINDS_ERRORS.slice();
+            
+                theToInit.EVENTKINDS_TRIGGERDUMP_ALL     = theToInit.EVENTKINDS.slice();
+            
+                theToInit.EVENTKINDS_TRIGGERDUMP_DEFAULT = theToInit.EVENTKINDS_TRIGGERDUMP_ERRORS;
+            
+            
+            
+            };
+        
+        
+        
+            var ModuleConstants = {};
+            pgInitFromModuleVariations( ModuleConstants);
+            pgInitWithModuleConstants( ModuleConstants);
+        
+        
+        
+        
+            var pgInitFromModuleConstants = function( theToInit) {
+                if( !theToInit) {
+                    return;
+                }
+            
+                for( var aGlobalName in ModuleConstants) {
+                    if( ModuleConstants.hasOwnProperty( aGlobalName)) {
+                        theToInit[ aGlobalName] = ModuleConstants[ aGlobalName];
+                    }
+                }
+            };
+    
+    
+    
+    
+            var pgInitModuleGlobalsOn = function( theToInit) {
+        
+                if( !theToInit) {
+                }
+            };
+    
+    
+    
+            var ModuleGlobals = { };
+            pgInitModuleGlobalsOn( ModuleGlobals);
+    
+    
+    
+    
+    
+            var aModule = { };
+            pgInitFromModuleConstants( aModule);
+            aModule._v_Type = "module";
+            aModule.ComponentName     = ComponentName;
+            aModule.ModuleName      = ModuleName;
+            aModule.ModulePackages  = ModulePackages;
+            aModule.ModuleFullName  = ModuleFullName;
+            aModule.ModuleVariations= ModuleVariations;
+            aModule.ModuleConstants = ModuleConstants;
+            aModule.ModuleGlobals   = ModuleGlobals;
+            aModule.pgInitFromModuleConstants  = pgInitFromModuleConstants;
+            aModule.pgInitFromModuleVariations = pgInitFromModuleVariations;
+            aModule.pgInitModuleGlobalsOn      = pgInitModuleGlobalsOn;
+        
+        
+            return aModule;
+        };
+    
+        
+
+        var anExistingModule = null;
+        if(    !( typeof theSS_typesregistry === 'undefined')
+            && ( typeof theSS_typesregistry.fRegisteredModule === 'function')) {
+            anExistingModule = theSS_typesregistry.fRegisteredModule( ModuleFullName);
+        }
+        if( !anExistingModule) {
+        
+            var aModule = aMod_builder(
+                theSS_Overrider
+            );
+        
+            aModule.ModuleBuilder = aMod_builder;
+            aModule.ModuleSource  = aMod_builder.toString();
+        
+            anExistingModule = aModule;
+        
+            if(    !( typeof theSS_typesregistry === 'undefined')
+                && ( typeof theSS_typesregistry.fRegisterModule === 'function')) {
+                theSS_typesregistry.fRegisterModule( ModuleFullName, aModule);
+            }
+        }
+    
+    
+        return anExistingModule;
+    });
+    
+    
+    if( !( typeof angular === 'undefined') && angular.module) {
+        // Angular (1.x)
+    
+        angular.module("eventKinds_Common", [ "typesRegistry", "modbootTypes"]).factory("EventKinds_Common",[
+            "TypesRegistrySvce",
+            "OverriderSvce",
+            aMod_definer
+        ]);
+        
+    }
+    else if ( !(typeof module === 'undefined') && module.exports) {
+        // Node.js
+        
+        module.exports = (function() {
+            
+            var aM_typesregistry = require('../modboot/typesregistry');
+            var aM_overrider     = require('../modboot/overrider_svce');
+    
+            return aMod_definer(
+                aM_typesregistry,
+                aM_overrider
+            );
+        })();
+        
+    }
+    else if ( !(typeof define === 'undefined') && define.amd) {
+        // AMD / RequireJS
+    
+        define( "m_eventkinds_common",
+            [
+                "m_typesregistry",
+                "m_overrider_svce"
+            ],
+            aMod_definer
+        );
+        
+    }
+    
+    
+})();
+
+
+
+
+
+
+;'use strict';
+
+/*
+ * common_types.js
+ *
+ * Created @author Antonio Carrasco Valero 201409301544
+ *
+ *
+ ***************************************************************************
+
+ Copyright 2014 2015 2016 Antonio Carrasco Valero
+ Angular Wrappers as Controllers and Services on prettytype Javascript skeletons for modules including a base prototype and prototypes hierarchy, intended to be reused.  licensed under EUPL  http://www.uiwire.org
+
+Licensed under the EUPL, Version 1.1 only (the "Licence");
+You may not use this work except in compliance with the
+Licence.
+You may obtain a copy of the Licence at:
+https://joinup.ec.europa.eu/software/page/eupl/licence-eupl
+Unless required by applicable law or agreed to in
+writing, software distributed under the Licence is
+distributed on an "AS IS" basis,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+express or implied.
+See the Licence for the specific language governing
+permissions and limitations under the Licence.
+ {{License2}}
+
+ {{Licensed1}}
+ {{Licensed2}}
+
+ ***************************************************************************
+ *
+ */
+
+
+'use strict';
+
+
+
+if( !( typeof angular === 'undefined') && angular.module) {
+    // Angular (1.x)
+    
+    angular.module("commonTypes", [
+        "typesRegistry",
+        "modbootTypes",
+        "eventKinds_Common",
+        "identifyingTypes",
+        "traversals"
+    ]);
+    
+    
+}
+
+
+
+;/*
+ * common_type.js
+ *
+ * Created @author Antonio Carrasco Valero 201410030426
+ *
+ *
+ ***************************************************************************
+
+ Copyright 2014 2015 2016 2017 2018 Antonio Carrasco Valero
+ Javascript for core modules including a base prototype and prototypes hierarchy, intended to be reused on the Browser with AngularJS or RequireJS modules, or in the server as node modules. Licensed under EUPL  http://www.uiwire.org
+
+Licensed under the EUPL, Version 1.1 only (the "Licence");
+You may not use this work except in compliance with the
+Licence.
+You may obtain a copy of the Licence at:
+https://joinup.ec.europa.eu/software/page/eupl/licence-eupl
+Unless required by applicable law or agreed to in
+writing, software distributed under the Licence is
+distributed on an "AS IS" basis,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+express or implied.
+See the Licence for the specific language governing
+permissions and limitations under the Licence.
+ {{License2}}
+
+ {{Licensed1}}
+ {{Licensed2}}
+
+ ***************************************************************************
+ *
+ */
+
+'use strict';
+
+(function () {
+    
+    var aMod_definer = ( function( theSS_typesregistry,
+                                   theSS_Overrider,
+                                   theSS_IdentifierSvce,
+                                   theSS_RecorderSvce,
+                                   theSS_EventTypes_Common,
+                                   theSS_Travesals){
+    
+    
+        var ComponentName    = "prettytype";
+        var ModuleName     = "common_type";
+        var ModulePackages = "common";
+        var ModuleFullName = ModulePackages + "/" + ModuleName;
+        
+        
+        
+        var aMod_builder = function( theS_Overrider,
+                                     theS_IdentifierSvce,
+                                     theS_RecorderSvce,
+                                     theS_EventTypes_Common,
+                                     theS_Travesals) {
+            
+            
+            if( typeof FG_logModLoads === 'function') { FG_logModLoads(ModuleFullName);}
+            
+            
+            
+            
+            var pgInitWithModuleVariations = function( theToInit) {
+                
+                if( !theToInit) {
+                    return;
+                }
+                
+                
+                /* BeWare: keeping references to record instances shall prevent reclamation of their memory by the garbage collector
+                   Note that when a recordingpolicy_keepall is plugged into the recorder, all records shall be kept in memory in the _v_Records slot property of the recorder instance
+                   */
+                theToInit.KEEPOWNRECORDS = false;
+            };
+            
+            
+            
+            
+            
+            var pgInitFromModuleVariations = function( theToInit) {
+                if( !theToInit) {
+                    return;
+                }
+                
+                for( var aGlobalName in ModuleVariations) {
+                    if( ModuleVariations.hasOwnProperty( aGlobalName)) {
+                        theToInit[ aGlobalName] = ModuleVariations[ aGlobalName];
+                    }
+                }
+            };
+            
+            
+            var ModuleVariations = { };
+            pgInitWithModuleVariations( ModuleVariations);
+            theS_Overrider.pOverrideModuleVariations( ModuleFullName, ModuleVariations);
+            
+            
+            
+            
+            
+            
+            
+            
+            var pgInitWithModuleConstants = function( theToInit) {
+                
+                if( !theToInit) {
+                    return;
+                }
+                
+                if( theS_EventTypes_Common && theS_EventTypes_Common.pgInitFromModuleConstants) {
+                    theS_EventTypes_Common.pgInitFromModuleConstants( theToInit);
+                }
+                
+                theToInit.COMMON_DEFAULTTITLE = "CommonDefaultName";
+                
+                theToInit.UNKNOWNID = "?i?";
+                
+                theToInit.VALUEDIFFATTOP = "/";
+                theToInit.DONOTCOMPAREVALUESYMBOL = "@DONOTCOMPARE699@";
+                
+                
+                
+                
+                
+                theToInit.FIELDNAMEDOT = ".";
+                
+                theToInit.URLPATHSEPARATOR   = "/";
+                theToInit.HTTPQUERYCHAR      = "?";
+                theToInit.HTTPPARMASSIGN     = "=";
+                theToInit.HTTPEXTRAPARMCHAR  = "&";
+                
+                
+                theToInit.DATATYPE_FILE = "File";
+                
+            };
+            
+            
+            
+            var ModuleConstants = {};
+            pgInitFromModuleVariations( ModuleConstants);
+            pgInitWithModuleConstants( ModuleConstants);
+            
+            
+            
+            
+            var pgInitFromModuleConstants = function( theToInit) {
+                if( !theToInit) {
+                    return;
+                }
+                
+                for( var aGlobalName in ModuleConstants) {
+                    if( ModuleConstants.hasOwnProperty( aGlobalName)) {
+                        theToInit[ aGlobalName] = ModuleConstants[ aGlobalName];
+                    }
+                }
+            };
+    
+    
+    
+    
+            var pgInitModuleGlobalsOn = function( theToInit) {
+        
+                if( !theToInit) {
+                }
+            };
+    
+    
+    
+            var ModuleGlobals = { };
+            pgInitModuleGlobalsOn( ModuleGlobals);
+    
+    
+    
+    
+    
+            var aCommon_Prototype = (function() {
+                
+                
+                var aPrototype = {};
+                
+                pgInitFromModuleConstants( aPrototype);
+    
+                aPrototype._v_SuperPrototype = null;
+                
+                aPrototype._v_Type = "Common";
+                
+                aPrototype._v_Module = null;
+    
+                aPrototype._v_Prototype_Common = aPrototype;
+    
+                
+                aPrototype._v_Identifier = null;
+                aPrototype._v_Recorder   = null;
+                
+                aPrototype._v_Id    = null;
+                aPrototype._v_Title = null;
+                
+                aPrototype._v_OwnRecords = null;
+                
+                
+                
+                
+                
+                
+                var _pInit = function( theTitle, theIdentifier, theRecorder) {
+                    
+                    this._pInit_Common( theTitle, theIdentifier, theRecorder);
+                };
+                if( _pInit){}/* CQT */
+                aPrototype._pInit = _pInit;
+                
+                
+                
+                
+                
+                
+                
+                var _fTitleDefault = function( ) {
+                    
+                    return this.COMMON_DEFAULTTITLE;
+                };
+                if( _fTitleDefault){}/* CQT */
+                aPrototype._fTitleDefault = _fTitleDefault;
+                
+                
+                
+                
+                
+                
+                
+                
+                var _pInit_Common = function( theTitle, theIdentifier, theRecorder) {
+                    
+                    this._v_Prototype = aPrototype;
+                    this._v_Type      = this._v_Prototype._v_Type;
+                    this._v_Module    = aPrototype._v_Module;
+                    
+                    this._v_Identifier = theIdentifier;
+                    if( !this._v_Identifier) {
+                        this._v_Identifier = theS_IdentifierSvce;
+                    }
+                    
+                    this._v_Recorder   = theRecorder;
+                    if( !this._v_Recorder) {
+                        this._v_Recorder = theS_RecorderSvce;
+                    }
+                    
+                    if( this._v_Identifier) {
+                        this._v_Id = this._v_Identifier.fReserveId();
+                    }
+                    
+                    if( !this._v_Id) {
+                        this._v_Id = this.UNKNOWNID;
+                    }
+                    
+                    this._v_Title = theTitle;
+                    if( !this._v_Title) {
+                        this._v_Title = this._fTitleDefault();
+                    }
+                    
+                    this._v_OwnRecords = [ ];
+                };
+                if( _pInit_Common){}/* CQT */
+                aPrototype._pInit_Common = _pInit_Common;
+                
+                
+                
+                
+                
+                
+                var fFullTypeNameString = function() {
+                    
+                    var aFullTypeName = this._v_Module.ModuleFullName + "." + this._v_Type;
+                    if( aFullTypeName){}/* CQT */
+                    
+                    return aFullTypeName;
+                };
+                if( fFullTypeNameString){}/* CQT */
+                aPrototype.fFullTypeNameString = fFullTypeNameString;
+                
+                
+                
+                
+                
+                
+                
+                
+                var fIdentifyingJSON = function() {
+                    
+                    var aIdentifiyingJSON = {
+                        "module": this._v_Module.ModuleFullName,
+                        "type": this._v_Type,
+                        "id":   this._v_Id
+                    };
+                    if( aIdentifiyingJSON){}/* CQT */
+                    return aIdentifiyingJSON;
+                };
+                if( fIdentifyingJSON){}/* CQT */
+                aPrototype.fIdentifyingJSON = fIdentifyingJSON;
+                
+                
+                
+                
+                
+                
+                var fIdentifyingString = function() {
+                    
+                    var aIdentifyingJSON = this.fIdentifyingJSON();
+                    
+                    var aIdentifyingString = "?";
+                    try {
+                        aIdentifyingString = JSON.stringify( aIdentifyingJSON);
+                    }
+                    catch( anException){
+                        aIdentifyingString = "Error_whileJSON_stringify"
+                    }
+                    
+                    return aIdentifyingString;
+                };
+                if( fIdentifyingString){}/* CQT */
+                aPrototype.fIdentifyingString = fIdentifyingString;
+                
+                
+                
+                
+                
+                
+                
+                var fIdentifyingWithTitleJSON = function() {
+                    
+                    var aIdentifyingJSON = this.fIdentifyingJSON();
+                    
+                    aIdentifyingJSON[ "title"] = this._v_Title;
+                    
+                    return aIdentifyingJSON;
+                };
+                if( fIdentifyingWithTitleJSON){}/* CQT */
+                aPrototype.fIdentifyingWithTitleJSON = fIdentifyingWithTitleJSON;
+                
+                
+                
+                
+                
+                
+                var fIdentifyingWithTitleString = function() {
+                    
+                    var aIdentifyingJSON = this.fIdentifyingWithTitleJSON();
+                    
+                    var aIdentifyingString = "?";
+                    try {
+                        aIdentifyingString = JSON.stringify( aIdentifyingJSON);
+                    }
+                    catch( anException){
+                        aIdentifyingString = "Error_whileJSON_stringify"
+                    }
+                    if( aIdentifyingString){}/* CQT */
+                    
+                    return aIdentifyingString;
+                };
+                if( fIdentifyingWithTitleString){}/* CQT */
+                aPrototype.fIdentifyingWithTitleString = fIdentifyingWithTitleString;
+                
+                
+                
+                
+                
+                
+                
+                var fToResultJSON = function( theCommonObjects, theAlready) {
+                    if( !( theAlready == null)) {
+                        if( theAlready.fAlready( this)){
+                            return this.fIdentifyingJSON();
+                        }
+                    }
+                    
+                    var aResultJSON = this.fIdentifyingWithTitleJSON();
+                    if( aResultJSON){}/* CQT */
+                    
+                    return aResultJSON;
+                };
+                if( fToResultJSON){}/* CQT */
+                aPrototype.fToResultJSON = fToResultJSON;
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                var fAsLogObject = function() {
+                    
+                    var aLog = this.fIdentifyingWithTitleJSON();
+                    if( aLog){}/* CQT */
+                    
+                    return aLog;
+                };
+                if( fAsLogObject){}/* CQT */
+                aPrototype.fAsLogObject = fAsLogObject;
+                
+                
+                
+                
+                
+                
+                var fLogString = function() {
+                    
+                    var aLog = this.fAsLogObject();
+                    if( aLog == null) {
+                        return "";
+                    }
+                    
+                    var aLogString = "";
+                    try {
+                        aLogString = JSON.stringify( aLog);
+                    }
+                    catch( anException) {
+                        aLogString = "Error_while_fLogString_JSON_stringify"
+                    }
+                    
+                    return aLogString;
+                };
+                if( fLogString){}/* CQT */
+                aPrototype.fLogString = fLogString;
+                
+                
+                
+                
+                /*
+                var toString = function() {
+                    return this.fLogString();
+                };
+                aPrototype.toString = toString;
+                */
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                var fRecord = function( theMethodName, theEventKind, theData, theReason, theDetail) {
+                    
+                    if( this._v_Recorder == null) {
+                        return null;
+                    }
+                    
+                    var aRecord = this._v_Recorder.fCreateAndRegisterRecord( this, theMethodName, theEventKind, theData, theReason, theDetail);
+                    
+                    if( this.KEEPOWNRECORDS) {
+                        this._v_OwnRecords.push( aRecord);
+                    }
+                    
+                    return aRecord;
+                };
+                if( fRecord){}/* CQT */
+                aPrototype.fRecord = fRecord;
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                /* Deprecated. Kept in support of common type pLogRecord . Use fRecord which shall invoke recorder fCreateAndRegisterRecord and take care of delegating for the record to be recorded and dumped to console */
+                var pLogRecord = function( theRecord) {
+                    
+                    if( !theRecord) {
+                        return;
+                    }
+                    
+                    if( !this._v_Recorder) {
+                        return;
+                    }
+                    
+                    
+                    this._v_Recorder.pLogRecord( theRecord);
+                    
+                };
+                if( pLogRecord){}/* CQT */
+                aPrototype.pLogRecord = pLogRecord;
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                var fFirstDiff = function( theActualValue, theCheckValue) {
+                    
+                    return theS_Travesals.fFirstDiff( theActualValue, theCheckValue);
+                };
+                if( fFirstDiff){}/* CQT */
+                aPrototype.fFirstDiff = fFirstDiff;
+                
+                
+                
+                
+                
+                
+                
+                
+                return aPrototype;
+                
+            })();
+            
+            
+            
+            
+            var Common_Constructor = function( theTitle, theIdentifier, theRecorder) {
+                this._v_Prototype = null;
+                this._v_SuperPrototype = null;
+                this._v_Type      = null;
+                this._v_Module    = null;
+                
+                this._v_Identifier = null;
+                this._v_Recorder   = null;
+    
+                this._v_Id    = null;
+                this._v_Title = null;
+    
+                this._v_OwnRecords = null;
+                
+                this._pInit_Common( theTitle, theIdentifier, theRecorder);
+            };
+            Common_Constructor.prototype = aCommon_Prototype;
+            
+            
+            
+            
+            
+            var Common_SuperPrototypeConstructor = function() {
+                this._v_Prototype = aCommon_Prototype;
+                this._v_SuperPrototype = null;
+                this._v_Type      = null;
+                this._v_Module    = null;
+    
+                this._v_Identifier = null;
+                this._v_Recorder   = null;
+    
+                this._v_Id    = null;
+                this._v_Title = null;
+    
+                this._v_OwnRecords = null;
+            };
+            Common_SuperPrototypeConstructor.prototype = aCommon_Prototype;
+            
+            
+            
+            var aModule = {
+                "Common_Prototype": aCommon_Prototype,
+                "Common_Constructor": Common_Constructor,
+                "Common_SuperPrototypeConstructor": Common_SuperPrototypeConstructor,
+                "Prototype": aCommon_Prototype,
+                "Constructor": Common_Constructor,
+                "SuperPrototypeConstructor": Common_SuperPrototypeConstructor
+            };
+            pgInitFromModuleConstants( aModule);
+            aModule._v_Type = "module";
+            aModule.ComponentName     = ComponentName;
+            aModule.ModuleName      = ModuleName;
+            aModule.ModulePackages  = ModulePackages;
+            aModule.ModuleFullName  = ModuleFullName;
+            aModule.ModuleVariations= ModuleVariations;
+            aModule.ModuleConstants = ModuleConstants;
+            aModule.ModuleGlobals   = ModuleGlobals;
+            aModule.pgInitFromModuleConstants  = pgInitFromModuleConstants;
+            aModule.pgInitFromModuleVariations = pgInitFromModuleVariations;
+            aModule.pgInitModuleGlobalsOn      = pgInitModuleGlobalsOn;
+    
+            aCommon_Prototype._v_Module = aModule;
+            
+            
+            
+            
+            return aModule;
+        };
+        
+        
+        
+        
+        
+      
+    
+        var anExistingModule = null;
+        if(    !( typeof theSS_typesregistry === 'undefined')
+            && ( typeof theSS_typesregistry.fRegisteredModule === 'function')) {
+            anExistingModule = theSS_typesregistry.fRegisteredModule( ModuleFullName);
+        }
+        if( !anExistingModule) {
+        
+            var aModule = aMod_builder(
+                theSS_Overrider,
+                theSS_IdentifierSvce,
+                theSS_RecorderSvce,
+                theSS_EventTypes_Common,
+                theSS_Travesals
+            );
+        
+            aModule.ModuleBuilder = aMod_builder;
+            aModule.ModuleSource  = aMod_builder.toString();
+        
+            anExistingModule = aModule;
+        
+            if(    !( typeof theSS_typesregistry === 'undefined')
+                && ( typeof theSS_typesregistry.fRegisterModule === 'function')) {
+                theSS_typesregistry.fRegisterModule( ModuleFullName, aModule);
+            }
+        }
+    
+    
+        
+    
+        return anExistingModule;
+        
+        
+    });
+    
+    
+    
+    if( !( typeof angular === 'undefined') && angular.module) {
+        // Angular (1.x)
+        
+        angular.module("commonTypes").factory("CommonType",[
+            "TypesRegistrySvce",
+            "OverriderSvce",
+            "IdentifierSvce",
+            "RecorderSvce",
+            "EventKinds_Common",
+            "Traversals",
+            aMod_definer
+        ]);
+        
+    }
+    else if ( !(typeof module === 'undefined') && module.exports) {
+        // Node.js
+        
+        module.exports = (function() {
+            
+            var aM_typesregistry     = require('../modboot/typesregistry');
+            var aM_overrider         = require('../modboot/overrider_svce');
+            var aM_identifierSvce    = require('../identifying/identifier_svce');
+            var aM_recorderSvce      = require('../identifying/recorder_svce');
+            var aM_eventkinds_common = require('../eventkinds/eventkinds_common');
+            var aM_traversals        = require('../utils/traversals');
+    
+            return aMod_definer(
+                aM_typesregistry,
+                aM_overrider,
+                aM_identifierSvce,
+                aM_recorderSvce,
+                aM_eventkinds_common,
+                aM_traversals
+            );
+        })();
+        
+    }
+    else if ( !(typeof define === 'undefined') && define.amd) {
+        // AMD / RequireJS
+        
+        define( "m_common_type",
+            [
+                "m_typesregistry",
+                "m_overrider_svce",
+                "m_identifier_svce",
+                "m_recorder_svce",
+                "m_eventkinds_common",
+                "m_traversals"
+            ],
+            aMod_definer
+           );
+    }
+    
+})();
 
 
 

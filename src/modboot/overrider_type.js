@@ -36,7 +36,8 @@ permissions and limitations under the Licence.
 (function () {
     
     var aMod_definer =  ( function( theSS_typesregistry) {
-        
+    
+        var ComponentName    = "prettytype";
         var ModuleName     = "overrider_type";
         var ModulePackages = "modboot";
         var ModuleFullName = ModulePackages + "/" + ModuleName;
@@ -107,7 +108,6 @@ permissions and limitations under the Licence.
                 var aPrototype = {};
                 
                 pgInitFromModuleConstants( aPrototype);
-        
 
                 aPrototype._v_SuperPrototype = null;
     
@@ -355,7 +355,7 @@ permissions and limitations under the Licence.
                     }
         
         
-                    var aCurrentOverrides = theOverrideSource.Settings;
+                    var aCurrentOverrides = theOverrideSource;
                     if( !aCurrentOverrides) {
                         return;
                     }
@@ -561,11 +561,13 @@ permissions and limitations under the Licence.
             };
             pgInitFromModuleConstants( aModule);
             aModule._v_Type = "module";
+            aModule.ComponentName     = ComponentName;
             aModule.ModuleName     = ModuleName;
             aModule.ModulePackages = ModulePackages;
             aModule.ModuleFullName = ModuleFullName;
             aModule.ModuleConstants = ModuleConstants;
             aModule.ModuleGlobals   = ModuleGlobals;
+            aModule.ModuleConstants = ModuleConstants;
             aModule.pgInitFromModuleConstants  = pgInitFromModuleConstants;
             aModule.pgInitModuleGlobalsOn      = pgInitModuleGlobalsOn;
             
@@ -629,18 +631,11 @@ permissions and limitations under the Licence.
     else if ( !(typeof define === 'undefined') && define.amd) {
         // AMD / RequireJS
         
-        define([
-            "./typesregistry"
-        ],
-            aMod_definer
-        /* function (
-            theM_typesregistry
-        ) {
-            return aMod_definer(
-                theM_typesregistry
-            );
-        }
-        */);
+        define( "m_overrider_type",
+            [
+                "m_typesregistry"
+            ],
+            aMod_definer);
         
     }
     

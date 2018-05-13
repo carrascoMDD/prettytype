@@ -37,7 +37,8 @@
     
     var aMod_definer = ( function( theSS_typesregistry,
                                    theSS_Overrider){
-        
+    
+        var ComponentName    = "prettytype";
         var ModuleName     = "stacktrace_svce";
         var ModulePackages = "utils";
         var ModuleFullName = ModulePackages + "/" + ModuleName;
@@ -640,7 +641,6 @@
         if( !anExistingModule) {
             
             var aModule = aMod_builder(
-                theSS_typesregistry,
                 theSS_Overrider
             );
     
@@ -666,7 +666,10 @@
     if( !( typeof angular === 'undefined') && angular.module) {
         // Angular (1.x)
     
-        angular.module("stacktrace").factory("StacktraceSvce",[
+        angular.module("stacktrace", [
+            "typesRegistry",
+            "modbootTypes"
+        ]).factory("StacktraceSvce",[
             "TypesRegistrySvce",
             "OverriderSvce",
             aMod_definer
@@ -678,7 +681,7 @@
         module.exports = (function() {
     
             var aM_typesregistry = require('../modboot/typesregistry');
-            var aM_overrider     = require('../modboot/overrider_type');
+            var aM_overrider     = require('../modboot/overrider_svce');
     
             return aMod_definer(
                 aM_typesregistry,
@@ -691,21 +694,13 @@
         // AMD / RequireJS
     
     
-        define([
-                "../modboot/typesregistry",
-                "../modboot/overrider_type"
+        define( "m_stacktrace_svce",
+            [
+                "m_typesregistry",
+                "m_overrider_svce"
             ],
             aMod_definer
-            /* function (
-                theM_typesregistry,
-                theM_overrider
-            ) {
-                return aMod_definer(
-                    theM_typesregistry,
-                    theM_overrider
-                );
-            }
-            */);
+            );
     }
     
     

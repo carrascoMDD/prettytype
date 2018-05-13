@@ -38,6 +38,7 @@
                                  theSS_Overrider){
     
     
+        var ComponentName    = "prettytype";
         var ModuleName     = "checks";
         var ModulePackages = "utils";
         var ModuleFullName = ModulePackages + "/" + ModuleName;
@@ -241,6 +242,7 @@
             var aModule = {};
             pgInitFromModuleConstants( aModule);
             aModule._v_Type = "module";
+            aModule.ComponentName     = ComponentName;
             aModule.ModuleName      = ModuleName;
             aModule.ModulePackages  = ModulePackages;
             aModule.ModuleFullName  = ModuleFullName;
@@ -919,7 +921,7 @@
     if( !( typeof angular === 'undefined') && angular.module) {
         // Angular (1.x)
         
-        angular.module("checks", [ 'modbootTypes']).factory("Checks",[
+        angular.module("checks", [ 'typesRegistry', 'modbootTypes']).factory("Checks",[
             "TypesRegistrySvce",
             "OverriderSvce",
             aMod_definer
@@ -932,7 +934,7 @@
         module.exports = (function() {
             
             var aM_typesregistry  = require('../modboot/typesregistry');
-            var aM_overrider      = require('../modboot/overrider_type');
+            var aM_overrider      = require('../modboot/overrider_svce');
             
             return aMod_definer(
                 aM_typesregistry,
@@ -944,21 +946,12 @@
     else if ( !(typeof define === 'undefined') && define.amd) {
         // AMD / RequireJS
         
-        define([
-                "../modboot/typesregistry",
-                "../modboot/overrider_type"
+        define("m_checks", [
+                "m_typesregistry",
+                "m_overrider_svce"
             ],
             aMod_definer
-            /* function (
-                theM_typesregistry,
-                theM_overrider
-            ) {
-                return aMod_definer(
-                    theM_typesregistry,
-                    theM_overrider,
-                );
-            }
-            */);
+           );
     }
 
 })();

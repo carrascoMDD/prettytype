@@ -1,7 +1,11 @@
 #! /bin/bash
 
+source ./test-node.sh
 
-grunt karma:unit
+source ./test-browser-karma-angularjs.sh
 
+source ./test-browser-karma-requirejs.sh
+
+echo "All tests done"
 
 

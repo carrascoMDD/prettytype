@@ -35,11 +35,12 @@
 (function () {
     
     var aMod_definer = ( function( theSS_typesregistry,
-                       theSS_Overrider,
-                       theSS_DumpingPolicyFilterKindsType,
-                       theSS_CommonEventKinds) {
-        
-        
+                                   theSS_Overrider,
+                                   theSS_DumpingPolicyFilterKindsType,
+                                   theSS_EventKinds_Common) {
+                
+    
+        var ComponentName    = "prettytype";
         var ModuleName     = "dumpingpolicy_triggerkinds_type";
         var ModulePackages = "identifying";
         var ModuleFullName = ModulePackages + "/" + ModuleName;
@@ -48,15 +49,10 @@
         
         var aMod_builder = function( theS_Overrider,
                                      theS_DumpingPolicyFilterKindsType,
-                                     theS_CommonEventKinds) {
+                                     theS_EventKinds_Common) {
             
             
             if( typeof FG_logModLoads === 'function') { FG_logModLoads(ModuleFullName);}
-            
-            
-            
-            
-            
             
             
             
@@ -68,11 +64,7 @@
                 
                 theToInit.LOGCHANGESTOEVENTKINDSTRIGGERINGDUMP = true;
                 
-                
-                
-                
                 theToInit.EVENTSSETTRIGGERINGDUMP = "EVENTKINDS_TRIGGERINGDUMP_ALL";
-                
                 theToInit.EVENTSSETTRIGGERINGDUMP = "EVENTKINDS_TRIGGERINGDUMP_ERRORS";
                 
             };
@@ -119,12 +111,10 @@
                 
                 
                 
-                
-                
                 if( theToInit.EVENTSSETTRIGGERINGDUMP) {
                     
-                    if( typeof theToInit.EVENTSSETTRIGGERINGDUMP == "string") {
-                        var anEventsSetTriggeringDump = theS_CommonEventKinds[ theToInit.EVENTSSETTRIGGERINGDUMP];
+                    if( typeof theToInit.EVENTSSETTRIGGERINGDUMP === "string") {
+                        var anEventsSetTriggeringDump = theS_EventKinds_Common[ theToInit.EVENTSSETTRIGGERINGDUMP];
                         if( anEventsSetTriggeringDump) {
                             theToInit.EVENTKINDS_TRIGGERINGDUMP = anEventsSetTriggeringDump.slice();
                         }
@@ -137,10 +127,10 @@
                     }
                 }
                 else {
-                    theToInit.EVENTKINDS_TRIGGERINGDUMP = theS_CommonEventKinds.EVENTKINDS_TRIGGERINGDUMP_DEFAULT.slice();
+                    theToInit.EVENTKINDS_TRIGGERINGDUMP = theS_EventKinds_Common.EVENTKINDS_TRIGGERINGDUMP_DEFAULT.slice();
                 }
                 if( !theToInit.EVENTKINDS_TRIGGERINGDUMP) {
-                    theToInit.EVENTKINDS_TRIGGERINGDUMP = theS_CommonEventKinds.EVENTKINDS_TRIGGERINGDUMP_DEFAULT.slice();
+                    theToInit.EVENTKINDS_TRIGGERINGDUMP = theS_EventKinds_Common.EVENTKINDS_TRIGGERINGDUMP_DEFAULT.slice();
                 }
                 
             };
@@ -190,25 +180,20 @@
             var aDumpingPolicyTriggerKinds_Prototype = (function() {
                 
                 
-                
                 var aPrototype = new theS_DumpingPolicyFilterKindsType.DumpingPolicyFilterKinds_SuperPrototypeConstructor();
                 
                 pgInitFromModuleConstants( aPrototype);
                 
-                
                 aPrototype._v_SuperPrototype = theS_DumpingPolicyFilterKindsType.DumpingPolicyFilterKinds_Prototype;
                 
-                
                 aPrototype._v_Type = "DumpingPolicyTriggerKinds";
-                
+    
+                aPrototype._v_Module = null;
+
                 aPrototype._v_Prototype_DumpingPolicyTriggerKinds = aPrototype;
                 
                 
-                aPrototype._v_Module = null;
-                
-                
                 aPrototype._v_EventKindsTriggeringDump = null;
-                
                 
                 /* Slot property named _v_EventKindsTriggeringDump only initialized in the prototype. May be overriden by individual instantes setting their own value */
                 if( aPrototype.EVENTKINDS_TRIGGERINGDUMP) {
@@ -559,7 +544,7 @@
                     
                     var aRecordPointerLastDumpedValue = aRecorder.fGetRecordPointerNamed( this.RECORDPOINTERNAME_LASTDUMPED);
                     
-                    if( typeof aRecordPointerLastDumpedValue == "number") {
+                    if( typeof aRecordPointerLastDumpedValue === "number") {
                         
                         if( !isNaN( aRecordPointerLastDumpedValue)) {
                             
@@ -646,7 +631,8 @@
                     if( someEventKindsTriggeringDump.indexOf( anEventKind) < 0) {
                         return false;
                     }
-                    
+                    if( 0){}/* CQT */
+    
                     return true;
                     
                 };
@@ -751,21 +737,25 @@
                 "DumpingPolicyTriggerKinds_Prototype":                 aDumpingPolicyTriggerKinds_Prototype,
                 "DumpingPolicyTriggerKinds_Constructor":               DumpingPolicyTriggerKinds_Constructor,
                 "DumpingPolicy_Constructor":                           DumpingPolicyTriggerKinds_Constructor,
-                "DumpingPolicyTriggerKinds_SuperPrototypeConstructor": DumpingPolicyTriggerKinds_SuperPrototypeConstructor
+                "DumpingPolicyTriggerKinds_SuperPrototypeConstructor": DumpingPolicyTriggerKinds_SuperPrototypeConstructor,
+                "Prototype": aDumpingPolicyTriggerKinds_Prototype,
+                "Constructor": DumpingPolicyTriggerKinds_Constructor,
+                "SuperPrototypeConstructor": DumpingPolicyTriggerKinds_SuperPrototypeConstructor
             };
             pgInitFromModuleConstants( aModule);
             aModule._v_Type = "module";
+            aModule.ComponentName     = ComponentName;
             aModule.ModuleName     = ModuleName;
             aModule.ModulePackages = ModulePackages;
             aModule.ModuleFullName = ModuleFullName;
+            aModule.ModuleVariations= ModuleVariations;
+            aModule.ModuleConstants = ModuleConstants;
             aModule.ModuleGlobals   = ModuleGlobals;
             aModule.pgInitFromModuleConstants  = pgInitFromModuleConstants;
             aModule.pgInitFromModuleVariations = pgInitFromModuleVariations;
             aModule.pgInitModuleGlobalsOn      = pgInitModuleGlobalsOn;
-    
+            
             aDumpingPolicyTriggerKinds_Prototype._v_Module = aModule;
-            
-            
             
             
             
@@ -786,8 +776,8 @@
         
             var aModule = aMod_builder(
                 theSS_Overrider,
-                theSS_DumpingPolicyType,
-                theSS_CommonEventKinds
+                theSS_DumpingPolicyFilterKindsType,
+                theSS_EventKinds_Common
             );
         
             aModule.ModuleBuilder = aMod_builder;
@@ -815,8 +805,8 @@
         angular.module("identifyingTypes").factory("DumpingPolicyTriggerKindsType",[
             "TypesRegistrySvce",
             "OverriderSvce",
-            "DumpingPolicyType",
-            "CommonEventKinds",
+            "DumpingPolicyFilterKindsType",
+            "EventKinds_Common",
             aMod_definer
         ]);
         
@@ -826,16 +816,16 @@
         
         module.exports = (function() {
             
-            var aM_typesregistry = require('../typesregistry');
+            var aM_typesregistry = require('../modboot/typesregistry');
             var aM_overrider     = require('../modboot/overrider_svce');
-            var aM_dumpingpolicy = require('./dumpingpolicy_type');
-            var aM_commoneventkinds = require('../commoneventkinds');
+            var aM_dumpingpolicy = require('./dumpingpolicy_filterkinds_type');
+            var aM_eventkinds_common = require('../eventkinds/eventkinds_common');
             
             return aMod_definer(
                 aM_typesregistry,
                 aM_overrider,
                 aM_dumpingpolicy,
-                aM_commoneventkinds
+                aM_eventkinds_common
             );
         })();
         
@@ -843,26 +833,14 @@
     else if ( !(typeof define === 'undefined') && define.amd) {
         // AMD / RequireJS
         
-        define([
-                "../typesregistry",
-                "../modboot/overrider_type",
-                "./dumpingpolicy_type",
-                "../commoneventkinds"
+        define( "m_dumpingpolicy_triggerkinds_type",
+            [
+                "m_typesregistry",
+                "m_overrider_svce",
+                "m_dumpingpolicy_filterkinds_type",
+                "m_eventkinds_common"
             ],
             aMod_definer
-            /* function (
-                theM_typesregistry,
-                theM_overrider,
-                theM_dumpingpolicy,
-                theM_commoneventkinds
-            ) {
-                return aMod_definer(
-                    theM_typesregistry,
-                    theM_overrider,
-                    theM_dumpingpolicy,
-                    theM_commoneventkinds
-                );
-            } */
         );
     }
     

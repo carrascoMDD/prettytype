@@ -32,12 +32,11 @@
 
 (function () {
     
-    var aMod_definer = ( function(
-        theSS_typesregistry,
-        theSS_Overrider){
+    var aMod_definer = ( function( theSS_typesregistry,
+                                   theSS_Overrider){
+        
     
-    
-    
+        var ComponentName    = "prettytype";
         var ModuleName     = "traversals";
         var ModulePackages = "utils";
         var ModuleFullName = ModulePackages + "/" + ModuleName;
@@ -180,6 +179,7 @@
             var aModule = {};
             pgInitFromModuleConstants( aModule);
             aModule._v_Type = "module";
+            aModule.ComponentName     = ComponentName;
             aModule.ModuleName      = ModuleName;
             aModule.ModulePackages  = ModulePackages;
             aModule.ModuleFullName  = ModuleFullName;
@@ -204,7 +204,7 @@
                     return theParmValue;
                 }
             
-                if( !( typeof theParmValue == "string")) {
+                if( !( typeof theParmValue === "string")) {
                     return theParmValue;
                 }
             
@@ -213,7 +213,7 @@
                     return theParmValue;
                 }
             
-                if( !( theParmValue.indexOf( aModule.REPLACEPARMVALUEWITHPARMPREFIX) == 0)) {
+                if( !( theParmValue.indexOf( aModule.REPLACEPARMVALUEWITHPARMPREFIX) === 0)) {
                     return theParmValue;
                 }
             
@@ -265,7 +265,7 @@
                     return theParmValue;
                 }
             
-                if( !( typeof theParmValue == "string")) {
+                if( !( typeof theParmValue === "string")) {
                     return theParmValue;
                 }
             
@@ -275,7 +275,7 @@
                     return theParmValue;
                 }
             
-                if( !( theParmValue.indexOf( aModule.REPLACEPARMVALUEWITHPARMPREFIX) == 0)) {
+                if( !( theParmValue.indexOf( aModule.REPLACEPARMVALUEWITHPARMPREFIX) === 0)) {
                     return theParmValue;
                 }
             
@@ -293,13 +293,15 @@
                 var aReplacementParmNameWOdot = theParmValue.substring( 0, aDotIndex);
                 var aParmValueAfterDot        = theParmValue.substring( aDotIndex + 1);
             
+                /* Unused 201805122138
                 var aReplacementParmNameWOdotWoPrefix = aReplacementParmNameWOdot.substring( 1);
+                 */
             
                 var aParmValueReplacementWoDot = fgParmValueReplacement( theConfiguration, aReplacementParmNameWOdot, theMapForStepsWithParmPrefix);
             
-                if( ( typeof aParmValueReplacementWoDot == "undefined")
+                if( ( typeof aParmValueReplacementWoDot === "undefined")
                     || ( aParmValueReplacementWoDot == null)
-                    || !( typeof aParmValueReplacementWoDot == "object") ) {
+                    || !( typeof aParmValueReplacementWoDot === "object") ) {
                 
                     return aParmValueReplacementWoDot;
                 }
@@ -314,7 +316,7 @@
             
             
                 var aTraversalResult = fgTraverseToFromValue( aParmValueAfterDot, aParmValueReplacementWoDot, theMapForStepsWithParmPrefix);
-                if( !( typeof aTraversalResult == "object") || ( aTraversalResult == null)) {
+                if( !( typeof aTraversalResult === "object") || ( aTraversalResult == null)) {
                     return aTraversalResult;
                 }
             
@@ -350,7 +352,7 @@
             
                 var someCheckSourceSteps = theSourceSteps;
             
-                if( typeof someCheckSourceSteps == "string") {
+                if( typeof someCheckSourceSteps === "string") {
                 
                     if( someCheckSourceSteps.indexOf( aModule.TRAVERSALSTEPSSEPARATOR) >= 0) {
                         someCheckSourceSteps = someCheckSourceSteps.split( aModule.TRAVERSALSTEPSSEPARATOR);
@@ -377,14 +379,14 @@
             
             
             
-                if( aNumCheckSourceSteps == 1) {
+                if( aNumCheckSourceSteps === 1) {
                 
-                    if( aStepName == aModule.TRAVERSALSTEP_LENGTH) {
+                    if( aStepName === aModule.TRAVERSALSTEP_LENGTH) {
                         return { "value": theValue.length};
                     }
                 
                 
-                    if( aStepName == aModule.TRAVERSALSTEP_FIRST) {
+                    if( aStepName === aModule.TRAVERSALSTEP_FIRST) {
                         if( !theValue.length) {
                             return null;
                         }
@@ -392,7 +394,7 @@
                     }
                 
                 
-                    if( aStepName == aModule.TRAVERSALSTEP_LAST) {
+                    if( aStepName === aModule.TRAVERSALSTEP_LAST) {
                         if( !theValue.length) {
                             return null;
                         }
@@ -400,7 +402,7 @@
                     }
                 
                 
-                    if( aStepName == aModule.TRAVERSALSTEP_ALL) {
+                    if( aStepName === aModule.TRAVERSALSTEP_ALL) {
                         if( !theValue.length) {
                             return { "value": []};
                         }
@@ -427,7 +429,7 @@
                             if( !aValueElem) {
                                 continue;
                             }
-                            if( !( typeof aValueElem == "object")) {
+                            if( !( typeof aValueElem === "object")) {
                                 continue;
                             }
                             if( !aValueElem.hasOwnProperty( aKeyName)) {
@@ -438,17 +440,17 @@
                                 continue;
                             }
                             var aValueElemKeyedValueStr = aValueElemKeyedValue;
-                            if( !( typeof aValueElemKeyedValueStr == "string")) {
+                            if( !( typeof aValueElemKeyedValueStr === "string")) {
                                 aValueElemKeyedValueStr = new String( aValueElemKeyedValue);
                             }
-                            if( !( aValueElemKeyedValueStr == aKeyValue)) {
+                            if( !( aValueElemKeyedValueStr === aKeyValue)) {
                                 continue;
                             }
                             aMatchingParmValueElem = aValueElem;
                             break;
                         }
                     
-                        if( typeof aMatchingParmValueElem == "undefined") {
+                        if( typeof aMatchingParmValueElem === "undefined") {
                             return  null;
                         }
                         if( aMatchingParmValueElem == null) {
@@ -463,14 +465,14 @@
                 
                 
                     var aReplacedSingleStepName = aStepName;
-                    if( aStepName.indexOf( aModule.REPLACEPARMVALUEWITHPARMPREFIX) == 0) {
+                    if( aStepName.indexOf( aModule.REPLACEPARMVALUEWITHPARMPREFIX) === 0) {
                     
                         var aSingleStepNameWoPrefix = aStepName.slice( 1);
                         if( aSingleStepNameWoPrefix) {
                         
                             var aSingleParmResolutionForStepWithParmPrefix = theMapForStepsWithParmPrefix[ aSingleStepNameWoPrefix];
                         
-                            if( typeof aSingleParmResolutionForStepWithParmPrefix == "undefined") {
+                            if( typeof aSingleParmResolutionForStepWithParmPrefix === "undefined") {
                                 return null;
                             }
                         
@@ -482,7 +484,7 @@
                 
                     var aOneStepTestValue = theValue[ aReplacedSingleStepName];
                 
-                    if( typeof aOneStepTestValue == "undefined") {
+                    if( typeof aOneStepTestValue === "undefined") {
                         return  null;
                     }
                 
@@ -497,14 +499,14 @@
             
             
                 var aReplacedStepName = aStepName;
-                if( aStepName.indexOf( aModule.REPLACEPARMVALUEWITHPARMPREFIX) == 0) {
+                if( aStepName.indexOf( aModule.REPLACEPARMVALUEWITHPARMPREFIX) === 0) {
                 
                     var aStepNameWoPrefix = aStepName.slice( 1);
                     if( aStepNameWoPrefix) {
                     
                         var aParmResolutionForStepWithParmPrefix = theMapForStepsWithParmPrefix[ aStepNameWoPrefix];
                     
-                        if( typeof aParmResolutionForStepWithParmPrefix == "undefined") {
+                        if( typeof aParmResolutionForStepWithParmPrefix === "undefined") {
                             return null;
                         }
                     
@@ -514,7 +516,7 @@
             
             
                 var aTestValue = theValue[ aReplacedStepName];
-                if( typeof aTestValue == "undefined") {
+                if( typeof aTestValue === "undefined") {
                     return  null;
                 }
             
@@ -533,27 +535,27 @@
                     if( aSubStepName) {
                         aSubStepName = aSubStepName.trim();
                     
-                        if( aSubStepName == aModule.TRAVERSALSTEP_LENGTH) {
+                        if( aSubStepName === aModule.TRAVERSALSTEP_LENGTH) {
                             return { "value": aSubStepValue.length};
                         }
                         else {
-                            if( aSubStepName == aModule.TRAVERSALSTEP_FIRST) {
-                                if( (typeof aSubStepValue == "undefined") || ( aSubStepValue == null) || (typeof aSubStepValue.length == "undefined") || !aSubStepValue.length) {
+                            if( aSubStepName === aModule.TRAVERSALSTEP_FIRST) {
+                                if( (typeof aSubStepValue === "undefined") || ( aSubStepValue == null) || (typeof aSubStepValue.length === "undefined") || !aSubStepValue.length) {
                                     return null;
                                 }
                                 aSubStepValue = aSubStepValue[ 0];
                             }
                             else {
-                                if( aSubStepName == aModule.TRAVERSALSTEP_LAST) {
-                                    if( (typeof aSubStepValue == "undefined") || ( aSubStepValue == null) || (typeof aSubStepValue.length == "undefined") || !aSubStepValue.length) {
+                                if( aSubStepName === aModule.TRAVERSALSTEP_LAST) {
+                                    if( (typeof aSubStepValue === "undefined") || ( aSubStepValue == null) || (typeof aSubStepValue.length === "undefined") || !aSubStepValue.length) {
                                         return null;
                                     }
                                     aSubStepValue = aSubStepValue[ aSubStepValue.length - 1];
                                 }
                                 else {
                                 
-                                    if( aSubStepName == aModule.TRAVERSALSTEP_ALL) {
-                                        if( (typeof aSubStepValue == "undefined") || ( aSubStepValue == null) || (typeof aSubStepValue.length == "undefined") || !aSubStepValue.length) {
+                                    if( aSubStepName === aModule.TRAVERSALSTEP_ALL) {
+                                        if( (typeof aSubStepValue === "undefined") || ( aSubStepValue == null) || (typeof aSubStepValue.length === "undefined") || !aSubStepValue.length) {
                                             return { "value": []};
                                         }
                                     
@@ -596,7 +598,7 @@
                                                 if( !aSubStepParmValueElem) {
                                                     continue;
                                                 }
-                                                if( !( typeof aSubStepParmValueElem == "object")) {
+                                                if( !( typeof aSubStepParmValueElem === "object")) {
                                                     continue;
                                                 }
                                                 if( !aSubStepParmValueElem.hasOwnProperty( aSubStepKeyName)) {
@@ -607,17 +609,17 @@
                                                     continue;
                                                 }
                                                 var aSubStepParmValueElemKeyedValueStr = aSubStepParmValueElemKeyedValue;
-                                                if( !( typeof aSubStepParmValueElemKeyedValueStr == "string")) {
+                                                if( !( typeof aSubStepParmValueElemKeyedValueStr === "string")) {
                                                     aSubStepParmValueElemKeyedValueStr = new String( aSubStepParmValueElemKeyedValue);
                                                 }
-                                                if( !( aSubStepParmValueElemKeyedValueStr == aSubStepKeyValue)) {
+                                                if( !( aSubStepParmValueElemKeyedValueStr === aSubStepKeyValue)) {
                                                     continue;
                                                 }
                                                 aSubStepMatchingParmValueElem = aSubStepParmValueElem;
                                                 break;
                                             }
                                         
-                                            if( typeof aSubStepMatchingParmValueElem == "undefined") {
+                                            if( typeof aSubStepMatchingParmValueElem === "undefined") {
                                                 return null;
                                             }
                                         
@@ -634,16 +636,16 @@
                                         else {
                                             var aReplacedSubStepName = aSubStepName;
                                         
-                                            if( aSubStepName.indexOf( aModule.REPLACEPARMVALUEWITHPARMPREFIX) == 0) {
+                                            if( aSubStepName.indexOf( aModule.REPLACEPARMVALUEWITHPARMPREFIX) === 0) {
                                             
                                                 var aSubStepNameWoPrefix = aSubStepName.slice( 1);
                                             
-                                                var aParmResolutionForStepWithParmPrefix = theMapForStepsWithParmPrefix[ aSubStepNameWoPrefix];
-                                                if( typeof aParmResolutionForStepWithParmPrefix == "undefined") {
+                                                var aParmResolutionForSubStepWithParmPrefix = theMapForStepsWithParmPrefix[ aSubStepNameWoPrefix];
+                                                if( typeof aParmResolutionForSubStepWithParmPrefix === "undefined") {
                                                     return null;
                                                 }
                                             
-                                                aReplacedSubStepName = aParmResolutionForStepWithParmPrefix;
+                                                aReplacedSubStepName = aParmResolutionForSubStepWithParmPrefix;
                                             }
                                         
                                             aSubStepValue = aSubStepValue[ aReplacedSubStepName];
@@ -654,7 +656,7 @@
                         }
                     
                     
-                        if( typeof aSubStepValue == "undefined") {
+                        if( typeof aSubStepValue === "undefined") {
                             return null;
                         }
                     
@@ -681,25 +683,25 @@
                     return null;
                 }
             
-                if( aLastStepName == aModule.TRAVERSALSTEP_LENGTH) {
+                if( aLastStepName === aModule.TRAVERSALSTEP_LENGTH) {
                     return { "value": aSubStepValue.length};
                 }
             
-                if( aLastStepName == aModule.TRAVERSALSTEP_FIRST) {
+                if( aLastStepName === aModule.TRAVERSALSTEP_FIRST) {
                     if( !aSubStepValue.length) {
                         return null;
                     }
                     return { "value": aSubStepValue[ 0]};
                 }
             
-                if( aLastStepName == aModule.TRAVERSALSTEP_LAST) {
+                if( aLastStepName === aModule.TRAVERSALSTEP_LAST) {
                     if( !aSubStepValue.length) {
                         return null;
                     }
                     return { "value": aSubStepValue[ aSubStepValue.length - 1]};
                 }
             
-                if( aLastStepName == aModule.TRAVERSALSTEP_ALL) {
+                if( aLastStepName === aModule.TRAVERSALSTEP_ALL) {
                     if( !aSubStepValue.length) {
                         return { "value": []};
                     }
@@ -725,7 +727,7 @@
                         if( !aLastValueElem) {
                             continue;
                         }
-                        if( !( typeof aLastValueElem == "object")) {
+                        if( !( typeof aLastValueElem === "object")) {
                             continue;
                         }
                         if( !aLastValueElem.hasOwnProperty( aLastKeyName)) {
@@ -736,17 +738,17 @@
                             continue;
                         }
                         var aLastValueElemKeyedValueStr = aLastValueElemKeyedValue;
-                        if( !( typeof aLastValueElemKeyedValueStr == "string")) {
+                        if( !( typeof aLastValueElemKeyedValueStr === "string")) {
                             aLastValueElemKeyedValueStr = new String( aLastValueElemKeyedValue);
                         }
-                        if( !( aLastValueElemKeyedValueStr == aLastKeyValue)) {
+                        if( !( aLastValueElemKeyedValueStr === aLastKeyValue)) {
                             continue;
                         }
                         aLastMatchingParmValueElem = aLastValueElem;
                         break;
                     }
                 
-                    if( typeof aLastMatchingParmValueElem == "undefined") {
+                    if( typeof aLastMatchingParmValueElem === "undefined") {
                         return null;
                     }
                 
@@ -762,21 +764,21 @@
             
                 var aReplacedLastStepName = aLastStepName;
             
-                if( aLastStepName.indexOf( aModule.REPLACEPARMVALUEWITHPARMPREFIX) == 0) {
+                if( aLastStepName.indexOf( aModule.REPLACEPARMVALUEWITHPARMPREFIX) === 0) {
                 
                     var aLastStepNameWoPrefix = aLastStepName.slice( 1);
                 
-                    var aParmResolutionForStepWithParmPrefix = theMapForStepsWithParmPrefix[ aLastStepNameWoPrefix];
-                    if( typeof aParmResolutionForStepWithParmPrefix == "undefined") {
+                    var aParmResolutionForLastStepWithParmPrefix = theMapForStepsWithParmPrefix[ aLastStepNameWoPrefix];
+                    if( typeof aParmResolutionForLastStepWithParmPrefix === "undefined") {
                         return null;
                     }
                 
-                    aReplacedLastStepName = aParmResolutionForStepWithParmPrefix;
+                    aReplacedLastStepName = aParmResolutionForLastStepWithParmPrefix;
                 }
             
             
                 var aLastStepTestValue = aSubStepValue[ aReplacedLastStepName];
-                if( typeof aLastStepTestValue == "undefined") {
+                if( typeof aLastStepTestValue === "undefined") {
                     return  null;
                 }
             
@@ -833,7 +835,7 @@
             
                 var someCheckSourceSteps = theSourceSteps;
             
-                if( typeof someCheckSourceSteps == "string") {
+                if( typeof someCheckSourceSteps === "string") {
                 
                     if( someCheckSourceSteps.indexOf( aModule.TRAVERSALSTEPSSEPARATOR) >= 0) {
                         someCheckSourceSteps = someCheckSourceSteps.split( aModule.TRAVERSALSTEPSSEPARATOR);
@@ -856,7 +858,7 @@
                     var aStepForWithParmPrefix = someCheckSourceSteps[ aStepForWithParmPrefixIdx];
                     if( aStepForWithParmPrefix && ( aStepForWithParmPrefix.length > 1))  {
                     
-                        if( aStepForWithParmPrefix.indexOf( aModule.REPLACEPARMVALUEWITHPARMPREFIX) == 0) {
+                        if( aStepForWithParmPrefix.indexOf( aModule.REPLACEPARMVALUEWITHPARMPREFIX) === 0) {
                             return true;
                         }
                     }
@@ -892,7 +894,7 @@
             
                 var someCheckSourceSteps = theSourceSteps;
             
-                if( typeof someCheckSourceSteps == "string") {
+                if( typeof someCheckSourceSteps === "string") {
                 
                     if( someCheckSourceSteps.indexOf( aModule.TRAVERSALSTEPSSEPARATOR) >= 0) {
                         someCheckSourceSteps = someCheckSourceSteps.split( aModule.TRAVERSALSTEPSSEPARATOR);
@@ -911,7 +913,7 @@
                 }
             
                 var someStepsWithParmPrefix = theStepsWithParmPrefix;
-                if( ( someStepsWithParmPrefix == null) || !( typeof someStepsWithParmPrefix == "object") || !( typeof someStepsWithParmPrefix.length == "number")) {
+                if( ( someStepsWithParmPrefix == null) || !( typeof someStepsWithParmPrefix === "object") || !( typeof someStepsWithParmPrefix.length === "number")) {
                     someStepsWithParmPrefix = [ ];
                 }
             
@@ -920,7 +922,7 @@
                     var aStepForWithParmPrefix = someCheckSourceSteps[ aStepForWithParmPrefixIdx];
                     if( aStepForWithParmPrefix && ( aStepForWithParmPrefix.length > 1))  {
                     
-                        if( aStepForWithParmPrefix.indexOf( aModule.REPLACEPARMVALUEWITHPARMPREFIX) == 0) {
+                        if( aStepForWithParmPrefix.indexOf( aModule.REPLACEPARMVALUEWITHPARMPREFIX) === 0) {
                         
                             var aStepForWithParmPrefixWoPrefix = aStepForWithParmPrefix.substring( 1);
                             if( aStepForWithParmPrefixWoPrefix) {
@@ -968,78 +970,161 @@
         
             var fgFirstDiff = function( theActualValue, theCheckValue) {
             
-                if( !( typeof theCheckValue == "undefined") &&  ( theCheckValue === aModule.DONOTCOMPAREVALUESYMBOL)) {
+                var aDiff = fgFirstDiff_inner( theActualValue, theCheckValue);
+                if( !aDiff) {
                     return null;
                 }
-            
-                if( ( typeof theActualValue == "undefined") && ( typeof theCheckValue == "undefined") ) {
-                    return null;
-                }
-            
-                if( ( typeof theActualValue == "undefined") || ( typeof theCheckValue == "undefined") ) {
+    
+                if( aDiff === aModule.VALUEDIFFATTOP) {
                     return aModule.VALUEDIFFATTOP;
                 }
-            
+                
+                if( !aDiff.length) {
+                    /* Unexpected: results should e either null, VALUEDIFFATTOP, or a list of diffs, even a size 1 list.
+                    */
+                    return aModule.VALUEDIFFATTOP;
+                }
+                
+                var aReverseDiff = aDiff.reverse();
+                if( aReverseDiff){}/* CQT */
+                return aReverseDiff;
+            };
+            if( fgFirstDiff){}/* CQT */
+            aModule.fgFirstDiff = fgFirstDiff;
+    
+    
+    
+    
+            var fgFirstDiff_inner = function( theActualValue, theCheckValue) {
+        
+                if( !( typeof theCheckValue === "undefined") &&  ( theCheckValue === aModule.DONOTCOMPAREVALUESYMBOL)) {
+                    return null;
+                }
+        
+                if( ( typeof theActualValue === "undefined") && ( typeof theCheckValue === "undefined") ) {
+                    return null;
+                }
+        
+                if( ( typeof theActualValue === "undefined") || ( typeof theCheckValue === "undefined") ) {
+                    return aModule.VALUEDIFFATTOP;
+                }
+        
                 if( ( theActualValue == null) && ( theCheckValue == null)) {
                     return null;
                 }
-            
+        
                 if( ( theActualValue == null) || ( theCheckValue == null)) {
                     return aModule.VALUEDIFFATTOP;
                 }
-            
-            
-                if( !( ( typeof theActualValue) == ( typeof theCheckValue))) {
+        
+        
+                if( !( ( typeof theActualValue) === ( typeof theCheckValue))) {
                     return aModule.VALUEDIFFATTOP;
                 }
-            
-            
-            
-            
-            
-                if( typeof theActualValue == "string" ) {
+        
+        
+        
+        
+        
+                if( typeof theActualValue === "string" ) {
                     if( theCheckValue === aModule.DONOTCOMPAREVALUESYMBOL) {
                         return null;
                     }
-                    if( !( theActualValue == theCheckValue)) {
+                    if( !( theActualValue === theCheckValue)) {
                         return aModule.VALUEDIFFATTOP;
                     }
                     return null;
                 }
-            
-            
-                if( typeof theActualValue == "number" ) {
-                    if( !( theActualValue == theCheckValue)) {
+        
+        
+                if( typeof theActualValue === "number" ) {
+                    if( !( theActualValue === theCheckValue)) {
                         return aModule.VALUEDIFFATTOP;
                     }
                     return null;
                 }
-            
-            
-                if( typeof theActualValue == "boolean" ) {
-                    if( !( theActualValue == theCheckValue)) {
+        
+        
+                if( typeof theActualValue === "boolean" ) {
+                    if( !( theActualValue === theCheckValue)) {
                         return aModule.VALUEDIFFATTOP;
                     }
                     return null;
                 }
-            
-            
-            
-                if( !( typeof theActualValue == "object" )) {
+        
+        
+                if( typeof theActualValue === "function" ) {
+                    if( !( theActualValue === theCheckValue)) {
+                        return aModule.VALUEDIFFATTOP;
+                    }
+                    return null;
+                }
+        
+        
+                if( !( typeof theActualValue === "object" )) {
+                    /* All other valid type options should have been already processed above.
+                    Just remains to drill down into an object list elements or keyed properties
+                     */
                     return aModule.VALUEDIFFATTOP;
                 }
+        
+        
+        
+                var aOneLen   = theActualValue.length;
+                var aOtherLen = theCheckValue.length;
+        
+                if( ( typeof aOneLen === "number") || ( typeof aOtherLen === "number"))  {
+            
+                    if( !( ( typeof aOneLen === "number") && ( typeof aOtherLen === "number"))) {
+                        /* One is a list object the other is not a list object: difference can not compare deeper down
+                        */
+                        return aModule.VALUEDIFFATTOP;
+                    }
             
             
+                    /* It is a list, theCheckValue is also a list*/
             
+                    if( !( aOneLen === aOtherLen)) {
+                        return aModule.VALUEDIFFATTOP;
+                    }
             
+                    for( var aSubIdx=0; aSubIdx < aOneLen; aSubIdx++) {
+                        var aOneListSub   = theActualValue[ aSubIdx];
+                        var aOtherListSub = theCheckValue[ aSubIdx];
+                
+                        var aSubsListDiff = fgFirstDiff_inner( aOneListSub, aOtherListSub);
+                        if( aSubsListDiff) {
+                    
+                            if( aSubsListDiff === aModule.VALUEDIFFATTOP) {
+                                return [ aSubIdx];
+                            }
+    
+                            if( !( aSubsListDiff.length)) {
+                                /* Unexpected: results should e either null, VALUEDIFFATTOP, or a list of diffs, even a size 1 list.
+                                 */
+                                return [ aSubIdx];
+                            }
+                    
+                            aSubsListDiff.push( aSubIdx);
+                    
+                            return aSubsListDiff;
+                        }
+                    }
             
+                    return null;
+                }
+        
+        
+        
+                /* None of the two objects is a list. Drill down into the object keyed properties.
+                 */
                 var someOneKeys   = Object.keys( theActualValue);
                 var someOtherKeys = Object.keys( theCheckValue);
-            
-            
+        
+        
                 var allKeys = someOneKeys.slice();
                 var aNumOtherKeys = someOtherKeys.length;
-            
+        
                 for( var aOtherKeyIdx=0; aOtherKeyIdx < aNumOtherKeys; aOtherKeyIdx++) {
                     var aOtherKey = someOtherKeys[ aOtherKeyIdx];
                     if( allKeys.indexOf( aOtherKey) < 0) {
@@ -1047,103 +1132,96 @@
                     }
                 }
                 allKeys.sort();
-            
-            
+        
+        
                 var aNumKeys = allKeys.length;
-            
+        
                 for( var aKeyIdx=0; aKeyIdx < aNumKeys; aKeyIdx++) {
                     var aKey = allKeys[ aKeyIdx];
-                
+            
                     if( !theActualValue.hasOwnProperty( aKey)) {
                         return [ aKey];
                     }
-                
+            
                     if( !theCheckValue.hasOwnProperty( aKey)) {
                         return [ aKey];
                     }
-                
-                
+            
+            
                     var aOneSub   = theActualValue[ aKey];
                     var aOtherSub = theCheckValue[ aKey];
-                
-                    var aSubsDiff = fgFirstDiff( aOneSub, aOtherSub);
+            
+                    var aSubsDiff = fgFirstDiff_inner( aOneSub, aOtherSub);
                     if( aSubsDiff) {
-                    
-                        if( aSubsDiff == aModule.VALUEDIFFATTOP) {
+                
+                        if( aSubsDiff === aModule.VALUEDIFFATTOP) {
                             return [ aKey];
                         }
-                    
+                
+                        if( !( aSubsDiff.length)) {
+                            /* Unexpected: results should e either null, VALUEDIFFATTOP, or a list of diffs, even a size 1 list.
+                             */
+                            return [ aKey];
+                        }
+                        
                         aSubsDiff.push( aKey);
-                        aSubsDiff.reverse();
-                    
+                
                         return aSubsDiff;
                     }
                 }
-            
-            
-            
-            
-            
-                var aOneLen   = theActualValue.length;
-                var aOtherLen = theCheckValue.length;
-            
-                if( ( typeof aOneLen == "undefined") && ( typeof aOneLen == "undefined")) {
-                    return null;
-                }
-            
-                if( ( typeof aOneLen == "undefined") || ( typeof aOneLen == "undefined")) {
-                    return aModule.VALUEDIFFATTOP;
-                }
-            
-                if( !( aOneLen == aOtherLen)) {
-                    return aModule.VALUEDIFFATTOP;
-                }
-            
-                for( var aSubIdx=0; aSubIdx < aOneLen; aSubIdx++) {
-                    var aOneListSub   = theActualValue[ aSubIdx];
-                    var aOtherListSub = theCheckValue[ aSubIdx];
-                
-                    var aSubsListDiff = fgFirstDiff( aOneListSub, aOtherListSub);
-                    if( aSubsListDiff) {
-                    
-                        if( aSubsListDiff == aModule.VALUEDIFFATTOP) {
-                            return [ aKey];
-                        }
-                    
-                        aSubsListDiff.push( aKey);
-                        aSubsListDiff.reverse();
-                    
-                        return aSubsListDiff;
-                    }
-                }
-            
-            
+        
+        
                 return null;
             };
-            if( fgFirstDiff){}/* CQT */
-            aModule.fgFirstDiff = fgFirstDiff
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
+            if( fgFirstDiff_inner){}/* CQT */
+            aModule.fgFirstDiff_inner = fgFirstDiff_inner;
+    
+    
+    
+    
+    
+    
+    
+    
             var fgFirstDiffFromLeft = function( theActualValue, theCheckValue) {
+        
+                var aDiff = fgFirstDiffFromLeft_inner( theActualValue, theCheckValue);
+                if( !aDiff) {
+                    return null;
+                }
+        
+                if( aDiff === aModule.VALUEDIFFATTOP) {
+                    return aModule.VALUEDIFFATTOP;
+                }
+        
+                if( !aDiff.length) {
+                    /* Unexpected: results should e either null, VALUEDIFFATTOP, or a list of diffs, even a size 1 list.
+                    */
+                    return aModule.VALUEDIFFATTOP;
+                }
+        
+                var aReverseDiff = aDiff.reverse();
+                if( aReverseDiff){}/* CQT */
+                return aReverseDiff;
+            };
+            if( fgFirstDiffFromLeft){}/* CQT */
+            aModule.fgFirstDiffFromLeft = fgFirstDiffFromLeft;
+    
+    
+    
+    
+    
+            var fgFirstDiffFromLeft_inner = function( theActualValue, theCheckValue) {
             
-                if( !( typeof theCheckValue == "undefined") &&  ( theCheckValue === aModule.DONOTCOMPAREVALUESYMBOL)) {
+                if( !( typeof theCheckValue === "undefined") &&  ( theCheckValue === aModule.DONOTCOMPAREVALUESYMBOL)) {
                     return null;
                 }
             
-                if( ( typeof theActualValue == "undefined") && ( typeof theCheckValue == "undefined") ) {
+                if( ( typeof theActualValue === "undefined") && ( typeof theCheckValue === "undefined") ) {
                     return null;
                 }
             
-                if( ( typeof theActualValue == "undefined") || ( typeof theCheckValue == "undefined") ) {
+                if( ( typeof theActualValue === "undefined") || ( typeof theCheckValue === "undefined") ) {
                     return aModule.VALUEDIFFATTOP;
                 }
             
@@ -1156,7 +1234,7 @@
                 }
             
             
-                if( !( ( typeof theActualValue) == ( typeof theCheckValue))) {
+                if( !( ( typeof theActualValue) === ( typeof theCheckValue))) {
                     return aModule.VALUEDIFFATTOP;
                 }
             
@@ -1164,42 +1242,106 @@
             
             
             
-                if( typeof theActualValue == "string" ) {
+                if( typeof theActualValue === "string" ) {
                     if( theCheckValue === aModule.DONOTCOMPAREVALUESYMBOL) {
                         return null;
                     }
-                    if( !( theActualValue == theCheckValue)) {
+                    if( !( theActualValue === theCheckValue)) {
                         return aModule.VALUEDIFFATTOP;
                     }
                     return null;
                 }
             
             
-                if( typeof theActualValue == "number" ) {
-                    if( !( theActualValue == theCheckValue)) {
+                if( typeof theActualValue === "number" ) {
+                    if( !( theActualValue === theCheckValue)) {
                         return aModule.VALUEDIFFATTOP;
                     }
                     return null;
                 }
             
             
-                if( typeof theActualValue == "boolean" ) {
-                    if( !( theActualValue == theCheckValue)) {
+                if( typeof theActualValue === "boolean" ) {
+                    if( !( theActualValue === theCheckValue)) {
                         return aModule.VALUEDIFFATTOP;
                     }
                     return null;
                 }
-            
-            
-            
-                if( !( typeof theActualValue == "object" )) {
+    
+    
+                if( typeof theActualValue === "function" ) {
+                    if( !( theActualValue === theCheckValue)) {
+                        return aModule.VALUEDIFFATTOP;
+                    }
+                    return null;
+                }
+    
+    
+                if( !( typeof theActualValue === "object" )) {
+                    /* All other valid type options should have been already processed above.
+                       Just remains to drill down into an object list elements or keyed properties
+                    */
                     return aModule.VALUEDIFFATTOP;
                 }
+    
+    
+    
+    
+    
+    
+    
+                var aOneLen   = theActualValue.length;
+                var aOtherLen = theCheckValue.length;
+    
+                if( ( typeof aOneLen === "number") || ( typeof aOtherLen === "number"))  {
+        
+                    if( !( ( typeof aOneLen === "number") && ( typeof aOtherLen === "number"))) {
+                        /* One is a list object the other is not a list object: difference can not compare deeper down
+                        */
+                        return aModule.VALUEDIFFATTOP;
+                    }
+        
+        
+                    /* It is a list, theCheckValue is also a list*/
+        
+                    if( !( aOneLen === aOtherLen)) {
+                        return aModule.VALUEDIFFATTOP;
+                    }
+        
+                    for( var aSubIdx=0; aSubIdx < aOneLen; aSubIdx++) {
+                        var aOneListSub   = theActualValue[ aSubIdx];
+                        var aOtherListSub = theCheckValue[ aSubIdx];
             
-            
-            
-            
-            
+                        var aSubsListDiff = fgFirstDiffFromLeft_inner( aOneListSub, aOtherListSub);
+                        if( aSubsListDiff) {
+                
+                            if( aSubsListDiff === aModule.VALUEDIFFATTOP) {
+                                return [ aSubIdx];
+                            }
+                
+                            if( !( aSubsListDiff.length)) {
+                                /* Unexpected: results should e either null, VALUEDIFFATTOP, or a list of diffs, even a size 1 list.
+                                 */
+                                return [ aSubIdx];
+                            }
+                
+                            aSubsListDiff.push( aSubIdx);
+                
+                            return aSubsListDiff;
+                        }
+                    }
+        
+                    return null;
+                }
+    
+    
+    
+    
+    
+    
+                /* None of the two objects is a list. Drill down into the object keyed properties.
+                 */
+    
                 var someKeys   = Object.keys( theCheckValue);
             
                 var aNumKeys = someKeys.length;
@@ -1222,59 +1364,27 @@
                     var aSubsDiff = fgFirstDiffFromLeft( aOneSub, aOtherSub);
                     if( aSubsDiff) {
                     
-                        if( aSubsDiff == aModule.VALUEDIFFATTOP) {
+                        if( aSubsDiff === aModule.VALUEDIFFATTOP) {
                             return [ aKey];
                         }
-                    
+    
+    
+                        if( !( aSubsDiff.length)) {
+                            /* Unexpected: results should e either null, VALUEDIFFATTOP, or a list of diffs, even a size 1 list.
+                             */
+                            return [ aKey];
+                        }
+                        
                         aSubsDiff.push( aKey);
-                        aSubsDiff.reverse();
                     
                         return aSubsDiff;
                     }
                 }
             
-            
-            
-            
-            
-                var aOneLen   = theActualValue.length;
-                var aOtherLen = theCheckValue.length;
-            
-                if( ( typeof aOneLen == "undefined") && ( typeof aOneLen == "undefined")) {
-                    return null;
-                }
-            
-                if( ( typeof aOneLen == "undefined") || ( typeof aOneLen == "undefined")) {
-                    return aModule.VALUEDIFFATTOP;
-                }
-            
-                if( !( aOneLen == aOtherLen)) {
-                    return aModule.VALUEDIFFATTOP;
-                }
-            
-                for( var aSubIdx=0; aSubIdx < aOneLen; aSubIdx++) {
-                    var aOneListSub   = theActualValue[ aSubIdx];
-                    var aOtherListSub = theCheckValue[ aSubIdx];
-                
-                    var aSubsListDiff = fgFirstDiffFromLeft( aOneListSub, aOtherListSub);
-                    if( aSubsListDiff) {
-                    
-                        if( aSubsListDiff == aModule.VALUEDIFFATTOP) {
-                            return [ aKey];
-                        }
-                    
-                        aSubsListDiff.push( aKey);
-                        aSubsListDiff.reverse();
-                    
-                        return aSubsListDiff;
-                    }
-                }
-            
-            
                 return null;
             };
-            if( fgFirstDiffFromLeft){}/* CQT */
-            aModule.fgFirstDiffFromLeft = fgFirstDiffFromLeft
+            if( fgFirstDiffFromLeft_inner){}/* CQT */
+            aModule.fgFirstDiffFromLeft_inner = fgFirstDiffFromLeft_inner;
         
         
         
@@ -1289,19 +1399,19 @@
         
             var fgAllDiffs = function( theActualValue, theCheckValue, theIgnoreKeys, theIgnorePaths) {
             
-                if( !( typeof theCheckValue == "undefined") &&  ( theCheckValue === aModule.DONOTCOMPAREVALUESYMBOL)) {
+                if( !( typeof theCheckValue === "undefined") &&  ( theCheckValue === aModule.DONOTCOMPAREVALUESYMBOL)) {
                     return null;
                 }
             
-                if( ( typeof theActualValue == "undefined") && ( typeof theCheckValue == "undefined") ) {
+                if( ( typeof theActualValue === "undefined") && ( typeof theCheckValue === "undefined") ) {
                     return null;
                 }
             
-                if( typeof theActualValue == "undefined") {
+                if( typeof theActualValue === "undefined") {
                     return [ fNewVoidDiff( "undefined", "UNCHECKED", "undefined", "UNCHECKED")];
                 }
             
-                if( typeof theCheckValue == "undefined") {
+                if( typeof theCheckValue === "undefined") {
                     return [ fNewVoidDiff( theActualValue, "undefined", "something", "undefined")];
                 }
             
@@ -1319,7 +1429,7 @@
                 }
             
             
-                if( !( ( typeof theActualValue) == ( typeof theCheckValue))) {
+                if( !( ( typeof theActualValue) === ( typeof theCheckValue))) {
                     return [ fNewVoidDiff( theActualValue, theCheckValue, typeof theActualValue, typeof theCheckValue)];
                 }
             
@@ -1327,16 +1437,16 @@
             
             
             
-                if( typeof theActualValue == "string" ) {
+                if( typeof theActualValue === "string" ) {
                     if( theCheckValue === aModule.DONOTCOMPAREVALUESYMBOL) {
                         return null;
                     }
                 
-                    if( !( typeof theCheckValue == "string")) {
+                    if( !( typeof theCheckValue === "string")) {
                         return [ fNewVoidDiff( theActualValue, theCheckValue, theActualValue, "not a string")];
                     }
                 
-                    if( !( theActualValue == theCheckValue)) {
+                    if( !( theActualValue === theCheckValue)) {
                         return [ fNewVoidDiff( theActualValue, theCheckValue, theActualValue, theCheckValue)];
                     }
                 
@@ -1344,39 +1454,53 @@
                 }
             
             
-                if( typeof theActualValue == "number" ) {
+                if( typeof theActualValue === "number" ) {
                 
-                    if( !( typeof theCheckValue == "number")) {
+                    if( !( typeof theCheckValue === "number")) {
                         return [ fNewVoidDiff( theActualValue, theCheckValue, theActualValue, "not a number")];
                     }
                 
-                    if( !( theActualValue == theCheckValue)) {
+                    if( !( theActualValue === theCheckValue)) {
                         return [ fNewVoidDiff( theActualValue, theCheckValue, theActualValue, theCheckValue)];
                     }
                     return null;
                 }
             
             
-                if( typeof theActualValue == "boolean" ) {
+                if( typeof theActualValue === "boolean" ) {
                 
-                    if( !( typeof theCheckValue == "boolean")) {
+                    if( !( typeof theCheckValue === "boolean")) {
                         return [ fNewVoidDiff( theActualValue, theCheckValue, theActualValue, "not a boolean")];
                     }
                 
-                    if( !( theActualValue == theCheckValue)) {
+                    if( !( theActualValue === theCheckValue)) {
                         return [ fNewVoidDiff( theActualValue, theCheckValue, theActualValue, theCheckValue)];
                     }
                     return null;
                 }
-            
-            
-            
-                if( !( typeof theActualValue == "object" )) {
+    
+    
+    
+                if( typeof theActualValue === "function" ) {
+        
+                    if( !( typeof theCheckValue === "function")) {
+                        return [ fNewVoidDiff( theActualValue, theCheckValue, theActualValue, "not a function")];
+                    }
+        
+                    if( !( theActualValue === theCheckValue)) {
+                        return [ fNewVoidDiff( theActualValue, theCheckValue, theActualValue, theCheckValue)];
+                    }
+                    return null;
+                }
+    
+                
+    
+                if( !( typeof theActualValue === "object" )) {
                     return [ fNewVoidDiff( "an object", "UNCHECKED")];
                 }
             
             
-                if( !( typeof theCheckValue == "object" )) {
+                if( !( typeof theCheckValue === "object" )) {
                     return [ fNewVoidDiff( "an object'", "not an object")];
                 }
             
@@ -1392,17 +1516,17 @@
                 var aOneLen   = theActualValue.length;
                 var aOtherLen = theCheckValue.length;
             
-                if( ( typeof aOneLen == "number") || ( typeof aOtherLen == "number")) {
+                if( ( typeof aOneLen === "number") || ( typeof aOtherLen === "number")) {
                 
-                    if( !( typeof aOneLen == "number")) {
+                    if( !( typeof aOneLen === "number")) {
                         return [ fNewVoidDiff( theActualValue, theCheckValue, "not an array", "UNCHECKED")];
                     }
                 
-                    if( !( typeof aOtherLen == "number")) {
+                    if( !( typeof aOtherLen === "number")) {
                         return [ fNewVoidDiff( theActualValue, theCheckValue, "an array", "not an array")];
                     }
                 
-                    if( !( aOneLen == aOtherLen)) {
+                    if( !( aOneLen === aOtherLen)) {
                         allDiffs.push( fNewVoidDiff( theActualValue, theCheckValue, "LEN=" + aOneLen, "LEN=" + aOtherLen));
                     }
                 
@@ -1443,10 +1567,10 @@
                 var someOneKeysPossiblyWithNumbers   = Object.keys( theActualValue);
                 var someOtherKeyPossiblyWithNumbers = Object.keys( theCheckValue);
             
-                if( !( typeof someOneKeysPossiblyWithNumbers == "undefined") && !( typeof someOtherKeyPossiblyWithNumbers == "undefined")) {
+                if( !( typeof someOneKeysPossiblyWithNumbers === "undefined") && !( typeof someOtherKeyPossiblyWithNumbers === "undefined")) {
                 
-                    var someOneKeys   = fExcludeNumberStrings( someOneKeysPossiblyWithNumbers);
-                    var someOtherKeys = fExcludeNumberStrings( someOtherKeyPossiblyWithNumbers);
+                    var someOneKeys   = aModule.fgExcludeNumberStrings( someOneKeysPossiblyWithNumbers);
+                    var someOtherKeys = aModule.fgExcludeNumberStrings( someOtherKeyPossiblyWithNumbers);
                 
                 
                     var allKeys = someOneKeys.slice();
@@ -1502,7 +1626,7 @@
                 return allDiffs;
             };
             if( fgAllDiffs){}/* CQT */
-            aModule.fgAllDiffs = fgAllDiffs
+            aModule.fgAllDiffs = fgAllDiffs;
         
         
         
@@ -1533,7 +1657,7 @@
         
         
         
-            var fExcludeNumberStrings = function( theStrings) {
+            var fgExcludeNumberStrings = function( theStrings) {
             
                 if( !theStrings) {
                     return theStrings;
@@ -1566,7 +1690,8 @@
                 return someNotNumberStrings;
             
             };
-        
+            if( fgExcludeNumberStrings){}/* CQT */
+            aModule.fgExcludeNumberStrings = fgExcludeNumberStrings;
         
         
         
@@ -1583,14 +1708,9 @@
                 var aNumDiffs = theDiffs.length;
                 if( !aNumDiffs) {
                     return;
-                
-                
-                
-                
-                
                 }
             
-                if( typeof theToUnshift == "undefined") {
+                if( typeof theToUnshift === "undefined") {
                     return;
                 }
             
@@ -1604,7 +1724,7 @@
                     if( aDiff) {
                     
                         var aPath = aDiff[ "path"];
-                        if( !( typeof aPath == "object")) {
+                        if( !( typeof aPath === "object")) {
                             aDiff[ "path"] = [ theToUnshift];
                         }
                         else {
@@ -1614,11 +1734,6 @@
                     }
                 }
             };
-        
-        
-        
-        
-        
         
         
         
@@ -1643,7 +1758,7 @@
             
                 var someParmSteps = thePath;
             
-                if( typeof someParmSteps == "string") {
+                if( typeof someParmSteps === "string") {
                     if( someParmSteps.indexOf( aModule.TRAVERSALSTEPSSEPARATOR) >= 0) {
                         someParmSteps = someParmSteps.split( aModule.TRAVERSALSTEPSSEPARATOR);
                     }
@@ -1663,7 +1778,7 @@
             
                 var aStepName = someParmSteps[ 0].trim();
             
-                if( aNumParmSteps == 1) {
+                if( aNumParmSteps === 1) {
                     theTarget[ aStepName] = theValue;
                     return true;
                 }
@@ -1671,7 +1786,7 @@
                 var aModified = false;
             
                 var aParmValue = theTarget[ aStepName];
-                if( ( typeof aParmValue == "undefined") || ( aParmValue == null) || !( typeof aParmValue == "object")) {
+                if( ( typeof aParmValue === "undefined") || ( aParmValue == null) || !( typeof aParmValue === "object")) {
                     aParmValue = { };
                     theTarget[ aStepName] = aParmValue;
                     aModified = true;
@@ -1691,7 +1806,7 @@
                         aSubStepName = aSubStepName.trim();
                         aSubStepValue = aSubStepValue[ aSubStepName];
                     
-                        if( ( typeof aSubStepValue == "undefined") || ( aSubStepValue == null) || !( typeof aSubStepValue == "object")) {
+                        if( ( typeof aSubStepValue === "undefined") || ( aSubStepValue == null) || !( typeof aSubStepValue === "object")) {
                         
                             aSubStepValue = { };
                             aPrevSubStepValue[ aSubStepName] = aSubStepValue;
@@ -1716,7 +1831,7 @@
                 return aModified;
             };
             if( fgSetValueAtPath){}/* CQT */
-            aModule.fgSetValueAtPath = fgSetValueAtPath
+            aModule.fgSetValueAtPath = fgSetValueAtPath;
         
         
         
@@ -1740,7 +1855,7 @@
             
                 var someParmSteps = thePath;
             
-                if( typeof someParmSteps == "string") {
+                if( typeof someParmSteps === "string") {
                     if( someParmSteps.indexOf( aModule.TRAVERSALSTEPSSEPARATOR) >= 0) {
                         someParmSteps = someParmSteps.split( aModule.TRAVERSALSTEPSSEPARATOR);
                     }
@@ -1760,7 +1875,7 @@
             
                 var aStepName = someParmSteps[ 0].trim();
             
-                if( aNumParmSteps == 1) {
+                if( aNumParmSteps === 1) {
                     theTarget[ aStepName] = theValue;
                     return true;
                 }
@@ -1768,7 +1883,7 @@
                 var aModified = false;
             
                 var aParmValue = theTarget[ aStepName];
-                if( ( typeof aParmValue == "undefined") || ( aParmValue == null) || !( typeof aParmValue == "object")) {
+                if( ( typeof aParmValue === "undefined") || ( aParmValue == null) || !( typeof aParmValue === "object")) {
                     aParmValue = { };
                     theTarget[ aStepName] = aParmValue;
                     aModified = true;
@@ -1787,9 +1902,9 @@
                     
                         aSubStepName = aSubStepName.trim();
                     
-                        aSubStepValue = aModule.fgSymbolicGet( aSubStepValue, aSubStepName)
+                        aSubStepValue = aModule.fgSymbolicGet( aSubStepValue, aSubStepName);
                     
-                        if( ( typeof aSubStepValue == "undefined") || ( aSubStepValue == null) || !( typeof aSubStepValue == "object")) {
+                        if( ( typeof aSubStepValue === "undefined") || ( aSubStepValue == null) || !( typeof aSubStepValue === "object")) {
                         
                             aSubStepValue = { };
                             aPrevSubStepValue[ aSubStepName] = aSubStepValue;
@@ -1814,7 +1929,7 @@
                 return aModified;
             };
             if( fgSetValueAtPathSymbolic){}/* CQT */
-            aModule.fgSetValueAtPathSymbolic = fgSetValueAtPathSymbolic
+            aModule.fgSetValueAtPathSymbolic = fgSetValueAtPathSymbolic;
         
         
         
@@ -1834,6 +1949,7 @@
                 if( !aSymbolicStepMatch) {
                 
                     var aGetValue = theTarget[ theStep];
+                    if( aGetValue){}/* CQT */
                     return aGetValue;
                 }
             
@@ -1845,13 +1961,13 @@
                     return undefined;
                 }
             
-                if( typeof aSymbolicValue == "undefined") {
+                if( typeof aSymbolicValue === "undefined") {
                     return undefined;
                 }
             
             
                 var aTargetLength = theTarget.length;
-                if( !( typeof aTargetLength == "number")) {
+                if( !( typeof aTargetLength === "number")) {
                     return undefined;
                 }
             
@@ -1859,12 +1975,12 @@
                 for( var aTargetIdx=0; aTargetIdx < aTargetLength; aTargetIdx++) {
                 
                     var aTarget = theTarget[ aTargetIdx];
-                    if( aTarget && ( typeof aTarget == "object")) {
+                    if( aTarget && ( typeof aTarget === "object")) {
                     
                         var aTargetSearch = aTarget[ aSymbolicKey];
-                        if( !( typeof aTargetSearch == "undefined")) {
+                        if( !( typeof aTargetSearch === "undefined")) {
                         
-                            if( aTargetSearch == aSymbolicValue) {
+                            if( aTargetSearch === aSymbolicValue) {
                             
                                 return aTarget;
                             }
@@ -1876,7 +1992,7 @@
             
             };
             if( fgSymbolicGet){}/* CQT */
-            aModule.fgSymbolicGet = fgSymbolicGet
+            aModule.fgSymbolicGet = fgSymbolicGet;
         
         
         
@@ -1887,12 +2003,12 @@
         
             var fgDeepCopy = function( theSource) {
             
-                if( ( typeof theSource == "undefined") || ( theSource == null) || ( typeof theSource == "number") || ( typeof theSource == "string") || ( typeof theSource == "boolean")) {
+                if( ( typeof theSource === "undefined") || ( theSource == null) || ( typeof theSource === "number") || ( typeof theSource === "string") || ( typeof theSource === "boolean")) {
                     return theSource;
                 }
             
             
-                if( typeof theSource.length == "number") {
+                if( typeof theSource.length === "number") {
                     return aModule.fgDeepCopy_List( theSource)
                 }
             
@@ -1914,17 +2030,17 @@
         
             var fgDeepCopy_List = function( theSource) {
             
-                if( ( typeof theSource == "undefined") || ( theSource == null) || ( typeof theSource == "number") || ( typeof theSource == "string") || ( typeof theSource == "boolean")) {
+                if( ( typeof theSource === "undefined") || ( theSource == null) || ( typeof theSource === "number") || ( typeof theSource === "string") || ( typeof theSource === "boolean")) {
                     return theSource;
                 }
             
-                if( !( typeof theSource == "object")) {
+                if( !( typeof theSource === "object")) {
                     return undefined;
                 }
             
                 var aNumElements = theSource.length;
             
-                if( !( typeof aNumElements == "number")) {
+                if( !( typeof aNumElements === "number")) {
                     return undefined;
                 }
             
@@ -1935,7 +2051,7 @@
                 
                     var anElement = theSource[ anElementIdx];
                 
-                    if( ( typeof anElement == "undefined") || ( anElement == null) || ( typeof anElement == "number") || ( typeof anElement == "string") || ( typeof anElement == "boolean")) {
+                    if( ( typeof anElement === "undefined") || ( anElement == null) || ( typeof anElement === "number") || ( typeof anElement === "string") || ( typeof anElement === "boolean")) {
                         aDeepCopy.push( anElement);
                         continue;
                     }
@@ -1963,11 +2079,11 @@
         
             var fgDeepCopy_Object = function( theSource) {
             
-                if( ( typeof theSource == "undefined") || ( theSource == null) || ( typeof theSource == "number") || ( typeof theSource == "string") || ( typeof theSource == "boolean")) {
+                if( ( typeof theSource === "undefined") || ( theSource == null) || ( typeof theSource === "number") || ( typeof theSource === "string") || ( typeof theSource === "boolean")) {
                     return theSource;
                 }
             
-                if( !( typeof theSource == "object")) {
+                if( !( typeof theSource === "object")) {
                     return undefined;
                 }
             
@@ -1994,7 +2110,7 @@
                     }
                     catch( anException) {
                     }
-                    if( ( typeof aKeyInt == "number") && !isNaN( aKeyInt)) {
+                    if( ( typeof aKeyInt === "number") && !isNaN( aKeyInt)) {
                         continue;
                     }
                 
@@ -2003,7 +2119,7 @@
                     
                         var anElement = theSource[ aKey];
                     
-                        if( ( typeof anElement == "undefined") || ( anElement == null) || ( typeof anElement == "number") || ( typeof anElement == "string") || ( typeof anElement == "boolean")) {
+                        if( ( typeof anElement === "undefined") || ( anElement == null) || ( typeof anElement === "number") || ( typeof anElement === "string") || ( typeof anElement === "boolean")) {
                             aDeepCopy[ aKey] = anElement;
                             continue;
                         }
@@ -2055,10 +2171,10 @@
                 for( var anElemIdx=0; anElemIdx < aNumElems; anElemIdx++) {
                 
                     var anElem = theList[ anElemIdx];
-                    if( ( typeof anElem == "object") && !( anElem == null)) {
+                    if( ( typeof anElem === "object") && !( anElem == null)) {
                     
                         var aKey = anElem[ theKeyPropertyName];
-                        if( ( typeof aKey == "number") || ( typeof aKey == "string") || ( typeof aKey == "boolean")) {
+                        if( ( typeof aKey === "number") || ( typeof aKey === "string") || ( typeof aKey === "boolean")) {
                         
                             aDict[ aKey] = anElem;
                         }
@@ -2079,7 +2195,7 @@
         
         
         
-            function fgDictFromListByKey_AsLists( theList, theKeyPptyName) {
+            var fgDictFromListByKey_AsLists = function( theList, theKeyPptyName) {
             
                 if( !theList) {
                     return null;
@@ -2103,7 +2219,7 @@
                     if( anElem) {
                     
                         var aKey = anElem[ theKeyPptyName];
-                        if( !( typeof aKey == "undefined") && !( aKey == null)) {
+                        if( !( typeof aKey === "undefined") && !( aKey == null)) {
                         
                         
                             var someForKey = aDict[ aKey];
@@ -2133,7 +2249,7 @@
         
         
         
-            function fgDictFromListByKeyPath( theList, theKeyPath) {
+            var fgDictFromListByKeyPath = function( theList, theKeyPath) {
             
                 if( !theList) {
                     return null;
@@ -2149,7 +2265,7 @@
                 }
             
                 if( theKeyPath.indexOf( ".") < 0) {
-                    return FgTestHelper_DictFromListByKey_AsLists( theList, theKeyPath);
+                    return fgDictFromListByKey_AsLists( theList, theKeyPath);
                 }
             
                 var aDict = { };
@@ -2164,7 +2280,7 @@
                         if( aTraversalResult) {
                         
                             var aKey = aTraversalResult[ "value"];
-                            if( !( typeof aKey == "undefined") && !( aKey == null)) {
+                            if( !( typeof aKey === "undefined") && !( aKey == null)) {
                             
                                 aDict[ aKey] = anElem;
                             }
@@ -2213,7 +2329,7 @@
                     if( anElem) {
                     
                         var aValue = anElem[ thePptyName];
-                        if( !( typeof aValue == "undefined") && !( aValue == null)) {
+                        if( !( typeof aValue === "undefined") && !( aValue == null)) {
                         
                             if( aList.indexOf( aValue) < 0) {
                                 aList.push( aValue);
@@ -2252,7 +2368,7 @@
                 for( var anElemIdx=0; anElemIdx < aNumElems; anElemIdx++) {
                 
                     var anElem = theSourceList[ anElemIdx];
-                    if( !(typeof anElem == "undefined")) {
+                    if( !(typeof anElem === "undefined")) {
                     
                         if( theTargetList.indexOf( anElem) < 0) {
                             theTargetList.push( anElem);
@@ -2304,7 +2420,7 @@
                         if( aTraversalResult) {
                             var aValue = aTraversalResult[ "value"];
                         
-                            if( !( typeof aValue == "undefined") && !( aValue == null)) {
+                            if( !( typeof aValue === "undefined") && !( aValue == null)) {
                             
                                 if( aList.indexOf( aValue) < 0) {
                                     aList.push( aValue);
@@ -2366,7 +2482,7 @@
     if( !( typeof angular === 'undefined') && angular.module) {
         // Angular (1.x)
         
-        angular.module("traversals", [ 'modbootTypes']).factory("Traversals",[
+        angular.module("traversals", [ 'typesRegistry', 'modbootTypes']).factory("Traversals",[
             "TypesRegistrySvce",
             "OverriderSvce",
             aMod_definer
@@ -2379,7 +2495,7 @@
         module.exports = (function() {
             
             var aM_typesregistry  = require('../modboot/typesregistry');
-            var aM_overrider      = require('../modboot/overrider_type');
+            var aM_overrider      = require('../modboot/overrider_svce');
             
             return aMod_definer(
                 aM_typesregistry,
@@ -2391,21 +2507,12 @@
     else if ( !(typeof define === 'undefined') && define.amd) {
         // AMD / RequireJS
         
-        define([
-                "../modboot/typesregistry",
-                "../modboot/overrider_type"
+        define("m_traversals", [
+                "m_typesregistry",
+                "m_overrider_svce"
             ],
             aMod_definer
-            /* function (
-                theM_typesregistry,
-                theM_overrider
-            ) {
-                return aMod_definer(
-                    theM_typesregistry,
-                    theM_overrider,
-                );
-            }
-            */);
+           );
     }
     
 })();

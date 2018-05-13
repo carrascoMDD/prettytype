@@ -38,8 +38,9 @@ permissions and limitations under the Licence.
                                     theSS_Overrider,
                                     theSS_IdentifierSvce,
                                     theSS_ConsoleSvce) {
-        
-        
+    
+    
+        var ComponentName    = "prettytype";
         var ModuleName     = "dumpingpolicy_type";
         var ModulePackages = "identifying";
         var ModuleFullName = ModulePackages + "/" + ModuleName;
@@ -102,8 +103,6 @@ permissions and limitations under the Licence.
                 
                 theToInit.DUMPINGPOLICY_DEFAULTTITLE = "DumpingPolicyDefaultName";
                 
-                
-                
                 theToInit.RECORDPOINTERNAME_LASTDUMPED = "RECORDPOINTERNAME_LASTDUMPED";
                 
             };
@@ -152,15 +151,15 @@ permissions and limitations under the Licence.
                 var aPrototype = {};
                 
                 pgInitFromModuleConstants( aPrototype);
-                
-                
-                
-                
+    
+                aPrototype._v_SuperPrototype = null;
+    
                 aPrototype._v_Type = "DumpingPolicy";
                 
                 aPrototype._v_Module = null;
                 
                 aPrototype._v_Prototype_DumpingPolicy = aPrototype;
+                
                 
                 aPrototype._v_Identifier = null;
                 
@@ -400,7 +399,7 @@ permissions and limitations under the Licence.
                 
                 var pSetMayDumpRecords = function( theMayDumpRecords) {
                     
-                    this._v_MayDumpRecords = theMayDumpRecords ? true : false;
+                    this._v_MayDumpRecords = !!theMayDumpRecords;
                     
                 };
                 if( pSetMayDumpRecords){}/* CQT */
@@ -564,14 +563,19 @@ permissions and limitations under the Licence.
             var aModule = {
                 "DumpingPolicy_Prototype": aDumpingPolicy_Prototype,
                 "DumpingPolicy_Constructor": DumpingPolicy_Constructor,
-                "DumpingPolicy_SuperPrototypeConstructor": DumpingPolicy_SuperPrototypeConstructor
+                "DumpingPolicy_SuperPrototypeConstructor": DumpingPolicy_SuperPrototypeConstructor,
+                "Prototype": aDumpingPolicy_Prototype,
+                "Constructor": DumpingPolicy_Constructor,
+                "SuperPrototypeConstructor": DumpingPolicy_SuperPrototypeConstructor
             };
             pgInitFromModuleConstants( aModule);
             aModule._v_Type = "module";
+            aModule.ComponentName     = ComponentName;
             aModule.ModuleName     = ModuleName;
             aModule.ModulePackages = ModulePackages;
             aModule.ModuleFullName = ModuleFullName;
-            aModule.ModuleVariations= ModuleVariations;             aModule.ModuleConstants = ModuleConstants;
+            aModule.ModuleVariations= ModuleVariations;
+            aModule.ModuleConstants = ModuleConstants;
             aModule.ModuleGlobals   = ModuleGlobals;
             aModule.pgInitFromModuleConstants  = pgInitFromModuleConstants;
             aModule.pgInitFromModuleVariations = pgInitFromModuleVariations;
@@ -581,11 +585,8 @@ permissions and limitations under the Licence.
             
             
             
-            
             return aModule;
         };
-        
-        
         
         
         
@@ -643,8 +644,8 @@ permissions and limitations under the Licence.
         
         module.exports = (function() {
             
-            var aM_typesregistry = require('../typesregistry');
-            var aM_overrider     = require('../modboot/overrider_type');
+            var aM_typesregistry = require('../modboot/typesregistry');
+            var aM_overrider     = require('../modboot/overrider_svce');
             var aM_identifier    = require('./identifier_type');
             var aM_console       = require('../utils/console_svce');
     
@@ -660,27 +661,15 @@ permissions and limitations under the Licence.
     else if ( !(typeof define === 'undefined') && define.amd) {
         // AMD / RequireJS
         
-        define([
-            "../typesregistry",
-            "../modboot/overrider_type",
-            "./identifier_type",
-            "../utils/console_svce"
-        ],
-            aMod_definer
-        /* function (
-            theM_typesregistry,
-            theM_overrider,
-            theM_identifier,
-            theM_console
-        ) {
-            return aMod_definer(
-                theM_typesregistry,
-                theM_overrider,
-                theM_identifier,
-                theM_console
-            );
-        }
-        */);
+        define( "m_dumpingpolicy_type",
+            [
+                "m_typesregistry",
+                "m_overrider_svce",
+                "m_identifier_type",
+                "m_console_svce"
+            ],
+                aMod_definer
+        );
     }
     
 })();

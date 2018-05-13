@@ -39,9 +39,9 @@ if( !( typeof angular === 'undefined') && angular.module) {
     
     angular.module("identifyingTypes", [
         "typesRegistry",
-        "rootsTypes",
+        "modbootTypes",
         "consoleSvce",
-        "commonEventKinds"
+        "eventKinds_Common"
     ]);
     
 }
