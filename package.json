@@ -24,7 +24,7 @@
     "karma.conf.js",
     "Gruntfile.js"
   ],
-  "main": null,
+  "main": "src/index.js",
   "bin": {},
   "man": null,
   "repository": {

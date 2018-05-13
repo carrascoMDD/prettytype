@@ -65,7 +65,6 @@ permissions and limitations under the Licence.
     var ModuleName     = "typesregistry";
     var ModulePackages = "modboot";
     var ModuleFullName = ModulePackages + "/" + ModuleName;
-    var ModuleSymbolicName /* for RequireJS */ = "m_" + ModuleName.replace( /-/, "_");
     
     var aMod_definer = ( function(){
     
@@ -516,7 +515,7 @@ permissions and limitations under the Licence.
     else if ( !(typeof define === 'undefined') && define.amd) {
         // AMD / RequireJS
         
-        define( ModuleSymbolicName,
+        define( "m_typesregistry",
             aMod_definer
         );
         

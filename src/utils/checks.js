@@ -921,11 +921,17 @@
     if( !( typeof angular === 'undefined') && angular.module) {
         // Angular (1.x)
         
-        angular.module("checks", [ 'typesRegistry', 'modbootTypes']).factory("Checks",[
-            "TypesRegistrySvce",
-            "OverriderSvce",
-            aMod_definer
-        ]);
+        angular.module("checks",
+            [
+                'typesRegistry',
+                'modbootTypes'
+            ]).factory(
+                "Checks",
+            [
+                "TypesRegistrySvce",
+                "OverriderSvce",
+                aMod_definer
+            ]);
         
     }
     else if ( !(typeof module === 'undefined') && module.exports) {

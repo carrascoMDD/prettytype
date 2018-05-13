@@ -2482,11 +2482,17 @@
     if( !( typeof angular === 'undefined') && angular.module) {
         // Angular (1.x)
         
-        angular.module("traversals", [ 'typesRegistry', 'modbootTypes']).factory("Traversals",[
-            "TypesRegistrySvce",
-            "OverriderSvce",
-            aMod_definer
-        ]);
+        angular.module("traversals",
+            [
+                'typesRegistry',
+                'modbootTypes'
+            ]).factory(
+                "Traversals",
+            [
+                "TypesRegistrySvce",
+                "OverriderSvce",
+                aMod_definer
+            ]);
         
     }
     else if ( !(typeof module === 'undefined') && module.exports) {
