@@ -180,7 +180,6 @@ permissions and limitations under the Licence.
     var ModuleName     = "typesregistry";
     var ModulePackages = "modboot";
     var ModuleFullName = ModulePackages + "/" + ModuleName;
-    var ModuleSymbolicName /* for RequireJS */ = "m_" + ModuleName.replace( /-/, "_");
     
     var aMod_definer = ( function(){
     
@@ -631,7 +630,7 @@ permissions and limitations under the Licence.
     else if ( !(typeof define === 'undefined') && define.amd) {
         // AMD / RequireJS
         
-        define( ModuleSymbolicName,
+        define( "m_typesregistry",
             aMod_definer
         );
         
@@ -4971,11 +4970,17 @@ permissions and limitations under the Licence.
     if( !( typeof angular === 'undefined') && angular.module) {
         // Angular (1.x)
         
-        angular.module("traversals", [ 'typesRegistry', 'modbootTypes']).factory("Traversals",[
-            "TypesRegistrySvce",
-            "OverriderSvce",
-            aMod_definer
-        ]);
+        angular.module("traversals",
+            [
+                'typesRegistry',
+                'modbootTypes'
+            ]).factory(
+                "Traversals",
+            [
+                "TypesRegistrySvce",
+                "OverriderSvce",
+                aMod_definer
+            ]);
         
     }
     else if ( !(typeof module === 'undefined') && module.exports) {
@@ -5931,11 +5936,17 @@ permissions and limitations under the Licence.
     if( !( typeof angular === 'undefined') && angular.module) {
         // Angular (1.x)
         
-        angular.module("checks", [ 'typesRegistry', 'modbootTypes']).factory("Checks",[
-            "TypesRegistrySvce",
-            "OverriderSvce",
-            aMod_definer
-        ]);
+        angular.module("checks",
+            [
+                'typesRegistry',
+                'modbootTypes'
+            ]).factory(
+                "Checks",
+            [
+                "TypesRegistrySvce",
+                "OverriderSvce",
+                aMod_definer
+            ]);
         
     }
     else if ( !(typeof module === 'undefined') && module.exports) {

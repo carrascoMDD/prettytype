@@ -69,7 +69,7 @@ var aTest_spec = (function( theSS_identifier_svce,
                 aM_identifier_svce = _IdentifierSvce_;
                 aM_recordersvce    = _RecorderSvce_;
                 aM_common_type     = _CommonType_;
-                aCommon = new aM_common_type.Common_Constructor( aCommon_title, aM_identifier_svce, null /* theRecorder its absence should not affect this structure test */);
+                aCommon = new aM_common_type.Common_Constructor( aCommon_title, aM_identifier_svce, aM_recordersvce);
             }));
         }
         else if ( !(typeof module === 'undefined') && module.exports) {
@@ -77,14 +77,14 @@ var aTest_spec = (function( theSS_identifier_svce,
             aM_identifier_svce     = require('../../../src/identifying/identifier_svce');
             aM_recordersvce     = require('../../../src/identifying/recorder_svce');
             aM_common_type         = require('../../../src/common/common_type');
-            aCommon = new aM_common_type.Common_Constructor( aCommon_title, aM_identifier_svce, null /* theRecorder its absence should not affect this structure test */);
+            aCommon = new aM_common_type.Common_Constructor( aCommon_title, aM_identifier_svce, aM_recordersvce);
         }
         else if ( !(typeof define === 'undefined') && define.amd) {
             // AMD / RequireJS
             aM_identifier_svce = theSS_identifier_svce;
             aM_recordersvce    = theSS_recorder_svce;
             aM_common_type     = theSS_common_type;
-            aCommon = new aM_common_type.Common_Constructor( aCommon_title, aM_identifier_svce, null /* theRecorder its absence should not affect this structure test */);
+            aCommon = new aM_common_type.Common_Constructor( aCommon_title, aM_identifier_svce, aM_recordersvce);
         }
         
        

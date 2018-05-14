@@ -1,5 +1,5 @@
 /*
- * common_svce-dumpingpolicy_filterkinds_maynotdump-behavioral-test.js
+ * common-dumpingpolicy_filterkinds_maynotdump-behavioral-test.js
  *
  * Created @author Antonio Carrasco Valero 201610132029
  *

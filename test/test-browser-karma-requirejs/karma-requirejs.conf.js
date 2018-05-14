@@ -82,8 +82,6 @@ var someKarmaConfFiles = [
     
     './test/structural-test/eventkinds-structural-test/eventkinds_common-structural-test.js',
     
-    './test/structural-test/index-structural-test.js',
-    
     './test/structural-test/identifying-structural-test/identifier_type-structural-test.js',
     './test/structural-test/identifying-structural-test/identifier_svce-structural-test.js',
     './test/structural-test/identifying-structural-test/record_type-structural-test.js',
@@ -100,10 +98,26 @@ var someKarmaConfFiles = [
     './test/structural-test/common-structural-test/common_type-structural-test.js',
     './test/structural-test/common-structural-test/common_type-eventkinds_common-structural-test.js',
     
+    './test/structural-test/index-structural-test.js',
+
+    
     './test/behavioral-test/modboot-behavioral-test/typesregistry-behavioral-test.js',
     './test/behavioral-test/modboot-behavioral-test/overrider_svce-behavioral-test.js',
+    
     './test/behavioral-test/utils-behavioral-test/traversals-fgFirstDiff-behavioral-test.js',
-    './test/behavioral-test/identifying-behavioral-test/identifier_svce-behavioral-test.js'
+    './test/behavioral-test/utils-behavioral-test/console_svce-behavioral-test.js',
+    
+    './test/behavioral-test/identifying-behavioral-test/identifier_svce-behavioral-test.js',
+    
+    './test/behavioral-test/common-behavioral-test/common-record-behavioral-test.js',
+    './test/behavioral-test/common-behavioral-test/common-recordingpolicy_keepall-behavioral-test.js',
+    './test/behavioral-test/common-behavioral-test/common-recordingpolicy_keepall_donotkeep-behavioral-test.js',
+    './test/behavioral-test/common-behavioral-test/common-recordingpolicy_keepsome-behavioral-test.js',
+    './test/behavioral-test/common-behavioral-test/common-recordingpolicy_keeprecent-behavioral-test.js'
+    
+    
+
+
 
 ];
 

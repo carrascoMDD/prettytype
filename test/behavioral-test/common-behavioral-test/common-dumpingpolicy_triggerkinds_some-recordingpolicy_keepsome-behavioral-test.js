@@ -1,5 +1,5 @@
 /*
- * common_svce-dumpingpolicy_triggerkinds_some-recordingpolicy_keepsome-behavioral-test.js
+ * common-dumpingpolicy_triggerkinds_some-recordingpolicy_keepsome-behavioral-test.js
  *
  * Created @author Antonio Carrasco Valero 201611031335
  *

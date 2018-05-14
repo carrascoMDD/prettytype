@@ -1,7 +1,7 @@
 /*
- * common_svce-dumpingpolicy_triggerkinds_all-behavioral-test.js
+ * common-dumpingpolicy_triggerkinds_some-behavioral-test.js
  *
- * Created @author Antonio Carrasco Valero 201611021325
+ * Created @author Antonio Carrasco Valero 201611031210
  *
  *
  ***************************************************************************
@@ -42,7 +42,7 @@ permissions and limitations under the Licence.
 
 
 
-describe("prettytypes-ng CommonSvce dumping policy triggerkinds all behavioral tests", function () {
+describe("prettytypes-ng CommonSvce dumping policy triggerkinds some behavioral tests", function () {
 
 
 
@@ -143,11 +143,11 @@ describe("prettytypes-ng CommonSvce dumping policy triggerkinds all behavioral t
 
 
 
-        aDumpingPolicyTriggerKinds = new _DumpingPolicyTriggerKindsType_.DumpingPolicyTriggerKinds_Constructor( "DumpingPolicy-for-common_svce-dumpingpolicy_triggerkinds_all-behavioral-test.js", aCommon_Identifier, aCommon_Recorder);
+        aDumpingPolicyTriggerKinds = new _DumpingPolicyTriggerKindsType_.DumpingPolicyTriggerKinds_Constructor( "DumpingPolicy-for-common_svce-dumpingpolicy_triggerkinds_some-behavioral-test.js", aCommon_Identifier, aCommon_Recorder);
 
         aDumpingPolicyTriggerKinds.pSetMayDumpRecords( true);
         aDumpingPolicyTriggerKinds.fSetEventKindsNotForConsole( [ ]);
-        aDumpingPolicyTriggerKinds.fSetEventKindsTriggeringDump( [ anEventKind, anEventKind2, anEventKind3]);
+        aDumpingPolicyTriggerKinds.fSetEventKindsTriggeringDump( [ anEventKind, anEventKind3]);
 
 
         aCommon_Recorder.pSetDumpingPolicy( aDumpingPolicyTriggerKinds);
@@ -309,10 +309,11 @@ describe("prettytypes-ng CommonSvce dumping policy triggerkinds all behavioral t
         expect( aCommon_Recorder_SetDumpingPolicy).toBe( aDumpingPolicyTriggerKinds);
         expect( aCommon_Recorder_SetDumpingPolicy_MayDumpRecords).toBe( true);
         expect( aCommon_Recorder_SetDumpingPolicy_EventKindsNotForConsole.length).toBe( 0);
-        expect( aCommon_Recorder_SetDumpingPolicy_EventKindsTriggeringDump.length).toBe( 3);
+        expect( aCommon_Recorder_SetDumpingPolicy_EventKindsTriggeringDump.length).toBe( 2);
         expect( aCommon_Recorder_SetDumpingPolicy_EventKindsTriggeringDump[ 0]).toBe( anEventKind);
-        expect( aCommon_Recorder_SetDumpingPolicy_EventKindsTriggeringDump[ 1]).toBe( anEventKind2);
-        expect( aCommon_Recorder_SetDumpingPolicy_EventKindsTriggeringDump[ 2]).toBe( anEventKind3);
+        expect( aCommon_Recorder_SetDumpingPolicy_EventKindsTriggeringDump[ 1]).toBe( anEventKind3);
+
+
 
 
 
@@ -330,17 +331,9 @@ describe("prettytypes-ng CommonSvce dumping policy triggerkinds all behavioral t
         expect( aLastCollectedLogAfter1_message).toBe( "," + aRecord.fLogString());
 
 
-        expect( aNumCollectedLogsAfter2).toBe( 2);
+        expect( aNumCollectedLogsAfter2).toBe( 1);
 
-        var aLastCollectedLogAfter2 = someCollectedLogsAfter2[ 1];
 
-        expect( aLastCollectedLogAfter2).toBeTruthy();
-
-        var aLastCollectedLogAfter2_kind    = aLastCollectedLogAfter2[ 0];
-        var aLastCollectedLogAfter2_message = aLastCollectedLogAfter2[ 1];
-
-        expect( aLastCollectedLogAfter2_kind).toBe( "log");
-        expect( aLastCollectedLogAfter2_message).toBe( "," + otherRecord.fLogString());
 
 
 
@@ -352,9 +345,14 @@ describe("prettytypes-ng CommonSvce dumping policy triggerkinds all behavioral t
         expect( aCommon_Recorder_SetRecordingPointer_01_afterSecondRecord).toBe( -1);
         expect( aCommon_Recorder_SetRecordingPointer_02_afterSecondRecord).toBe( 0);
         expect( aCommon_Recorder_SetRecordingPointer_03_afterSecondRecord).toBe( 1);
+        expect( aCommon_Recorder_SetRecordingPointer_01_afterThirdRecord).toBe( -1);
+        expect( aCommon_Recorder_SetRecordingPointer_02_afterThirdRecord).toBe( 0);
+        expect( aCommon_Recorder_SetRecordingPointer_03_afterThirdRecord).toBe( 1);
+        expect( aCommon_Recorder_SetRecordingPointer_04_afterThirdRecord).toBe( 2);
+
         expect( aCommon_Recorder_SetRecordingPointer_LastDumpedRecord_beforeAnyRecords).toBe( undefined);
         expect( aCommon_Recorder_SetRecordingPointer_LastDumpedRecord_afterFirstRecord).toBe( 0);
-        expect( aCommon_Recorder_SetRecordingPointer_LastDumpedRecord_afterSecondRecord).toBe( 1);
+        expect( aCommon_Recorder_SetRecordingPointer_LastDumpedRecord_afterSecondRecord).toBe( 0);
         expect( aCommon_Recorder_SetRecordingPointer_LastDumpedRecord_afterThirdRecord).toBe( 2);
 
     });

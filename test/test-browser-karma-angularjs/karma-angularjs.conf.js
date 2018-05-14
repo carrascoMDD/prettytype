@@ -115,12 +115,20 @@ var someKarmaConfFiles = [
     
     '../structural-test/index-structural-test.js',
     
+    
     '../behavioral-test/modboot-behavioral-test/typesregistry-behavioral-test.js',
     '../behavioral-test/modboot-behavioral-test/overrider_svce-behavioral-test.js',
     
     '../behavioral-test/utils-behavioral-test/traversals-fgFirstDiff-behavioral-test.js',
+    '../behavioral-test/utils-behavioral-test/console_svce-behavioral-test.js',
     
-    '../behavioral-test/identifying-behavioral-test/identifier_svce-behavioral-test.js'
+    '../behavioral-test/identifying-behavioral-test/identifier_svce-behavioral-test.js',
+    
+    '../behavioral-test/common-behavioral-test/common-record-behavioral-test.js',
+    '../behavioral-test/common-behavioral-test/common-recordingpolicy_keepall-behavioral-test.js',
+    '../behavioral-test/common-behavioral-test/common-recordingpolicy_keepall_donotkeep-behavioral-test.js',
+    '../behavioral-test/common-behavioral-test/common-recordingpolicy_keepsome-behavioral-test.js',
+    '../behavioral-test/common-behavioral-test/common-recordingpolicy_keeprecent-behavioral-test.js'
 ];
 
 

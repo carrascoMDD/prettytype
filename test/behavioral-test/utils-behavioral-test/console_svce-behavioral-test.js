@@ -36,324 +36,352 @@ permissions and limitations under the Licence.
 /// <reference path="src/utils/console_ng_svce.js"/>
 "use strict";
 
-
-
-
-describe("prettytypes-ng console_svce behavioral tests", function () {
-
-
-    beforeEach( module( "typesRegistry", "rootsTypes", "consoleSvce"));
-
-    var aConsoleSvce           = null;
-
-
-    beforeEach( inject(function( _ConsoleSvce_){
-
-        aConsoleSvce = _ConsoleSvce_;
-        // console.log( "typeof anOverrider= " + typeof anOverrider);
-        // console.log( "anOverrider keys = " + Object.keys( anOverrider));
-    }));
-
-
-
-
-
-    function strRepeat(str, qty) {
-        if (qty < 1) return '';
-        var result = '';
-        while (qty > 0) {
-            if (qty & 1) result += str;
-            qty >>= 1, str += str;
+var aTest_spec = (function( theSS_ConsoleSvce) {
+    
+    var ComponentName    = "prettytype-test";
+    var ModuleName     = "console_svce-behavioral-test";
+    var ModulePackages = "test/behavioral-test/utils-behavioral-test";
+    var ModuleFullName = ModulePackages + "/" + ModuleName;
+    
+    if( typeof FG_logModLoads === 'function') { FG_logModLoads(ModuleFullName);}
+    
+    describe( ModuleName + " " + ModulePackages + " " + ComponentName, function () {
+        
+        
+        var aConsoleSvce = null;
+        
+        if( ( typeof beforeEach === 'function') && ( typeof module === 'function')  && ( typeof inject === 'function')) {
+            // Karma for Angular (1.x)
+            beforeEach( module( 'typesRegistry', 'modbootTypes', 'consoleSvce'));
+            
+            beforeEach( inject( function( _ConsoleSvce_) {
+                aConsoleSvce =  _ConsoleSvce_;
+            }));
         }
-        return result;
-    }
+        else if ( !(typeof module === 'undefined') && module.exports) {
+            // Node.js
+            aConsoleSvce = require('../../../src/utils/console_svce');
+        }
+        else if ( !(typeof define === 'undefined') && define.amd) {
+            // AMD / RequireJS
+            aConsoleSvce = theSS_ConsoleSvce;
+        }
+        
 
+    
+    
+        function strRepeat(str, qty) {
+            if (qty < 1) return '';
+            var result = '';
+            while (qty > 0) {
+                if (qty & 1) result += str;
+                qty >>= 1, str += str;
+            }
+            return result;
+        }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+        it("Does not Collect log error info", function () {
+    
+            aConsoleSvce.clear();
+    
+    
+            aConsoleSvce.pSetWriteToConsole(          true);
+            aConsoleSvce.pSetCollectLogs(             false);
+    
+            var aMessage = "MessageOne";
+    
+            var someCollectedLogsBefore = aConsoleSvce.fCollectedLogsCopy();
+            var aNumCollectedLogsBefore = someCollectedLogsBefore.length;
+            expect( aNumCollectedLogsBefore).toBe( 0);
+    
+            aConsoleSvce.log( aMessage);
+    
+            aConsoleSvce.error( aMessage);
+    
+            aConsoleSvce.info( aMessage);
+    
+            var someCollectedLogsAfter = aConsoleSvce.fCollectedLogsCopy();
+            var aNumCollectedLogsAfter = someCollectedLogsAfter ? someCollectedLogsAfter.length : 0;
+            expect( aNumCollectedLogsAfter).toBe( 0);
+    
+            aConsoleSvce.pSetCollectLogs(    false);
+    
+            aConsoleSvce.clear();
+        });
+    
+    
+    
+    
+    
+    
+        it("Collects log MessageOne", function () {
+    
+            aConsoleSvce.clear();
+    
+    
+            aConsoleSvce.pSetWriteToConsole(          true);
+            aConsoleSvce.pSetCollectLogs(             true);
+            aConsoleSvce.pSetMaxCollectedLogsLength(  1000);
+    
+            var aMessage = "MessageOne";
+    
+            var someCollectedLogsBefore = aConsoleSvce.fCollectedLogsCopy();
+            var aNumCollectedLogsBefore = someCollectedLogsBefore.length;
+            expect( aNumCollectedLogsBefore).toBe( 0);
+    
+            aConsoleSvce.log( aMessage);
+    
+            var someCollectedLogsAfter = aConsoleSvce.fCollectedLogsCopy();
+            var aNumCollectedLogsAfter = someCollectedLogsAfter.length;
+            expect( aNumCollectedLogsAfter).toBe( 1);
+    
+    
+            var aLastLog = someCollectedLogsAfter[ someCollectedLogsAfter.length - 1];
+            expect( aLastLog).not.toBeNull();
+    
+            var aLastLogKind = aLastLog[ 0];
+            expect( aLastLogKind).toBe( "log");
+    
+            var aLastLogMessage = aLastLog[ 1];
+            expect( aLastLogMessage).toBe( aMessage);
+    
+            aConsoleSvce.pSetCollectLogs(    false);
+    
+            aConsoleSvce.clear();
+        });
+    
+    
+    
+    
+    
+    
+        it("Collects error MessageOne", function () {
+    
+            aConsoleSvce.clear();
+    
+    
+            aConsoleSvce.pSetWriteToConsole(          true);
+            aConsoleSvce.pSetCollectLogs(             true);
+            aConsoleSvce.pSetMaxCollectedLogsLength(  1000);
+    
+            var aMessage = "MessageOne";
+    
+            var someCollectedLogsBefore = aConsoleSvce.fCollectedLogsCopy();
+            var aNumCollectedLogsBefore = someCollectedLogsBefore.length;
+            expect( aNumCollectedLogsBefore).toBe( 0);
+    
+            aConsoleSvce.error( aMessage);
+    
+            var someCollectedLogsAfter = aConsoleSvce.fCollectedLogsCopy();
+            var aNumCollectedLogsAfter = someCollectedLogsAfter.length;
+            expect( aNumCollectedLogsAfter).toBe( 1);
+    
+    
+            var aLastLog = someCollectedLogsAfter[ someCollectedLogsAfter.length - 1];
+            expect( aLastLog).not.toBeNull();
+    
+            var aLastLogKind = aLastLog[ 0];
+            expect( aLastLogKind).toBe( "error");
+    
+            var aLastLogMessage = aLastLog[ 1];
+            expect( aLastLogMessage).toBe( aMessage);
+    
+            aConsoleSvce.pSetCollectLogs(    false);
+    
+            aConsoleSvce.clear();
+        });
+    
+    
+    
+    
+    
+    
+    
+    
+        it("Collects info MessageOne", function () {
+    
+            aConsoleSvce.clear();
+    
+    
+            aConsoleSvce.pSetWriteToConsole(          true);
+            aConsoleSvce.pSetCollectLogs(             true);
+            aConsoleSvce.pSetMaxCollectedLogsLength(  1000);
+    
+            var aMessage = "MessageOne";
+    
+            var someCollectedLogsBefore = aConsoleSvce.fCollectedLogsCopy();
+            var aNumCollectedLogsBefore = someCollectedLogsBefore.length;
+            expect( aNumCollectedLogsBefore).toBe( 0);
+    
+            aConsoleSvce.info( aMessage);
+    
+            var someCollectedLogsAfter = aConsoleSvce.fCollectedLogsCopy();
+            var aNumCollectedLogsAfter = someCollectedLogsAfter.length;
+            expect( aNumCollectedLogsAfter).toBe( 1);
+    
+    
+            var aLastLog = someCollectedLogsAfter[ someCollectedLogsAfter.length - 1];
+            expect( aLastLog).not.toBeNull();
+    
+            var aLastLogKind = aLastLog[ 0];
+            expect( aLastLogKind).toBe( "info");
+    
+            var aLastLogMessage = aLastLog[ 1];
+            expect( aLastLogMessage).toBe( aMessage);
+    
+            aConsoleSvce.pSetCollectLogs(    false);
+    
+            aConsoleSvce.clear();
+        });
+    
+    
+    
+    
+    
+    
+    
+    
+        it("Collects log upto size 1000", function () {
+    
+            aConsoleSvce.clear();
+    
+    
+            aConsoleSvce.pSetWriteToConsole(          true);
+            aConsoleSvce.pSetCollectLogs(             true);
+            aConsoleSvce.pSetMaxCollectedLogsLength(  1000);
+    
+    
+            var someCollectedLogsBefore = aConsoleSvce.fCollectedLogsCopy();
+            var aNumCollectedLogsBefore = someCollectedLogsBefore.length;
+            expect( aNumCollectedLogsBefore).toBe( 0);
+    
+    
+    
+            /* First log of 500 chars, which fit the 1000 limit */
+    
+            var aMessage500 = strRepeat( "x", 500);
+            aConsoleSvce.log( aMessage500);
+    
+            var someCollectedLogsAfter = aConsoleSvce.fCollectedLogsCopy();
+            var aNumCollectedLogsAfter = someCollectedLogsAfter.length;
+            expect( aNumCollectedLogsAfter).toBe( 1);
+    
+    
+            var aLastLog = someCollectedLogsAfter[ 0];
+            expect( aLastLog).not.toBeNull();
+    
+            var aLastLogKind = aLastLog[ 0];
+            expect( aLastLogKind).toBe( "log");
+    
+            var aLastLogMessage = aLastLog[ 1];
+            expect( aLastLogMessage).toBe( aMessage500);
+    
+    
+    
+    
+    
+            /* Second log of 499 chars, which added to the previous 500 chars for a total of 999 still fit the 1000 limit */
+    
+            var aMessage499 = strRepeat( "x", 499);
+            aConsoleSvce.log( aMessage499);
+    
+            someCollectedLogsAfter = aConsoleSvce.fCollectedLogsCopy();
+            aNumCollectedLogsAfter = someCollectedLogsAfter.length;
+            expect( aNumCollectedLogsAfter).toBe( 2);
+    
+    
+            aLastLog = someCollectedLogsAfter[ 0];
+            expect( aLastLog).not.toBeNull();
+    
+            aLastLogKind = aLastLog[ 0];
+            expect( aLastLogKind).toBe( "log");
+    
+            aLastLogMessage = aLastLog[ 1];
+            expect( aLastLogMessage).toBe( aMessage500);
+    
+    
+    
+            aLastLog = someCollectedLogsAfter[ 1];
+            expect( aLastLog).not.toBeNull();
+    
+            aLastLogKind = aLastLog[ 0];
+            expect( aLastLogKind).toBe( "log");
+    
+            aLastLogMessage = aLastLog[ 1];
+            expect( aLastLogMessage).toBe( aMessage499);
+    
+    
+    
+    
+            /* Third log of 2 chars, which added to the previous 500 + 499 chars = 999 for a total of 1001 do not fit the 1000 limit so the first log is discarded */
+    
+            var aMessage2 = strRepeat( "x", 2);
+            aConsoleSvce.log( aMessage2);
+    
+            someCollectedLogsAfter = aConsoleSvce.fCollectedLogsCopy();
+            aNumCollectedLogsAfter = someCollectedLogsAfter.length;
+            expect( aNumCollectedLogsAfter).toBe( 2);
+    
+    
+            aLastLog = someCollectedLogsAfter[ 0];
+            expect( aLastLog).not.toBeNull();
+    
+            aLastLogKind = aLastLog[ 0];
+            expect( aLastLogKind).toBe( "log");
+    
+            aLastLogMessage = aLastLog[ 1];
+            expect( aLastLogMessage).toBe( aMessage499);
+    
+    
+    
+            aLastLog = someCollectedLogsAfter[ 1];
+            expect( aLastLog).not.toBeNull();
+    
+            aLastLogKind = aLastLog[ 0];
+            expect( aLastLogKind).toBe( "log");
+    
+            aLastLogMessage = aLastLog[ 1];
+            expect( aLastLogMessage).toBe( aMessage2);
+    
+    
+    
+    
+            aConsoleSvce.pSetCollectLogs(    false);
+    
+            aConsoleSvce.clear();
+        });
+    
 
-
-
-
-
-
-
-
-
-
-    it("Does not Collect log error info", function () {
-
-        aConsoleSvce.clear();
-
-
-        aConsoleSvce.pSetWriteToConsole(          true);
-        aConsoleSvce.pSetCollectLogs(             false);
-
-        var aMessage = "MessageOne";
-
-        var someCollectedLogsBefore = aConsoleSvce.fCollectedLogsCopy();
-        var aNumCollectedLogsBefore = someCollectedLogsBefore.length;
-        expect( aNumCollectedLogsBefore).toBe( 0);
-
-        aConsoleSvce.log( aMessage);
-
-        aConsoleSvce.error( aMessage);
-
-        aConsoleSvce.info( aMessage);
-
-        var someCollectedLogsAfter = aConsoleSvce.fCollectedLogsCopy();
-        var aNumCollectedLogsAfter = someCollectedLogsAfter ? someCollectedLogsAfter.length : 0;
-        expect( aNumCollectedLogsAfter).toBe( 0);
-
-        aConsoleSvce.pSetCollectLogs(    false);
-
-        aConsoleSvce.clear();
     });
-
-
-
-
-
-
-    it("Collects log MessageOne", function () {
-
-        aConsoleSvce.clear();
-
-
-        aConsoleSvce.pSetWriteToConsole(          true);
-        aConsoleSvce.pSetCollectLogs(             true);
-        aConsoleSvce.pSetMaxCollectedLogsLength(  1000);
-
-        var aMessage = "MessageOne";
-
-        var someCollectedLogsBefore = aConsoleSvce.fCollectedLogsCopy();
-        var aNumCollectedLogsBefore = someCollectedLogsBefore.length;
-        expect( aNumCollectedLogsBefore).toBe( 0);
-
-        aConsoleSvce.log( aMessage);
-
-        var someCollectedLogsAfter = aConsoleSvce.fCollectedLogsCopy();
-        var aNumCollectedLogsAfter = someCollectedLogsAfter.length;
-        expect( aNumCollectedLogsAfter).toBe( 1);
-
-
-        var aLastLog = someCollectedLogsAfter[ someCollectedLogsAfter.length - 1];
-        expect( aLastLog).not.toBeNull();
-
-        var aLastLogKind = aLastLog[ 0];
-        expect( aLastLogKind).toBe( "log");
-
-        var aLastLogMessage = aLastLog[ 1];
-        expect( aLastLogMessage).toBe( aMessage);
-
-        aConsoleSvce.pSetCollectLogs(    false);
-
-        aConsoleSvce.clear();
-    });
-
-
-
-
-
-
-    it("Collects error MessageOne", function () {
-
-        aConsoleSvce.clear();
-
-
-        aConsoleSvce.pSetWriteToConsole(          true);
-        aConsoleSvce.pSetCollectLogs(             true);
-        aConsoleSvce.pSetMaxCollectedLogsLength(  1000);
-
-        var aMessage = "MessageOne";
-
-        var someCollectedLogsBefore = aConsoleSvce.fCollectedLogsCopy();
-        var aNumCollectedLogsBefore = someCollectedLogsBefore.length;
-        expect( aNumCollectedLogsBefore).toBe( 0);
-
-        aConsoleSvce.error( aMessage);
-
-        var someCollectedLogsAfter = aConsoleSvce.fCollectedLogsCopy();
-        var aNumCollectedLogsAfter = someCollectedLogsAfter.length;
-        expect( aNumCollectedLogsAfter).toBe( 1);
-
-
-        var aLastLog = someCollectedLogsAfter[ someCollectedLogsAfter.length - 1];
-        expect( aLastLog).not.toBeNull();
-
-        var aLastLogKind = aLastLog[ 0];
-        expect( aLastLogKind).toBe( "error");
-
-        var aLastLogMessage = aLastLog[ 1];
-        expect( aLastLogMessage).toBe( aMessage);
-
-        aConsoleSvce.pSetCollectLogs(    false);
-
-        aConsoleSvce.clear();
-    });
-
-
-
-
-
-
-
-
-    it("Collects info MessageOne", function () {
-
-        aConsoleSvce.clear();
-
-
-        aConsoleSvce.pSetWriteToConsole(          true);
-        aConsoleSvce.pSetCollectLogs(             true);
-        aConsoleSvce.pSetMaxCollectedLogsLength(  1000);
-
-        var aMessage = "MessageOne";
-
-        var someCollectedLogsBefore = aConsoleSvce.fCollectedLogsCopy();
-        var aNumCollectedLogsBefore = someCollectedLogsBefore.length;
-        expect( aNumCollectedLogsBefore).toBe( 0);
-
-        aConsoleSvce.info( aMessage);
-
-        var someCollectedLogsAfter = aConsoleSvce.fCollectedLogsCopy();
-        var aNumCollectedLogsAfter = someCollectedLogsAfter.length;
-        expect( aNumCollectedLogsAfter).toBe( 1);
-
-
-        var aLastLog = someCollectedLogsAfter[ someCollectedLogsAfter.length - 1];
-        expect( aLastLog).not.toBeNull();
-
-        var aLastLogKind = aLastLog[ 0];
-        expect( aLastLogKind).toBe( "info");
-
-        var aLastLogMessage = aLastLog[ 1];
-        expect( aLastLogMessage).toBe( aMessage);
-
-        aConsoleSvce.pSetCollectLogs(    false);
-
-        aConsoleSvce.clear();
-    });
-
-
-
-
-
-
-
-
-    it("Collects log upto size 1000", function () {
-
-        aConsoleSvce.clear();
-
-
-        aConsoleSvce.pSetWriteToConsole(          true);
-        aConsoleSvce.pSetCollectLogs(             true);
-        aConsoleSvce.pSetMaxCollectedLogsLength(  1000);
-
-
-        var someCollectedLogsBefore = aConsoleSvce.fCollectedLogsCopy();
-        var aNumCollectedLogsBefore = someCollectedLogsBefore.length;
-        expect( aNumCollectedLogsBefore).toBe( 0);
-
-
-
-        /* First log of 500 chars, which fit the 1000 limit */
-
-        var aMessage500 = strRepeat( "x", 500);
-        aConsoleSvce.log( aMessage500);
-
-        var someCollectedLogsAfter = aConsoleSvce.fCollectedLogsCopy();
-        var aNumCollectedLogsAfter = someCollectedLogsAfter.length;
-        expect( aNumCollectedLogsAfter).toBe( 1);
-
-
-        var aLastLog = someCollectedLogsAfter[ 0];
-        expect( aLastLog).not.toBeNull();
-
-        var aLastLogKind = aLastLog[ 0];
-        expect( aLastLogKind).toBe( "log");
-
-        var aLastLogMessage = aLastLog[ 1];
-        expect( aLastLogMessage).toBe( aMessage500);
-
-
-
-
-
-        /* Second log of 499 chars, which added to the previous 500 chars for a total of 999 still fit the 1000 limit */
-
-        var aMessage499 = strRepeat( "x", 499);
-        aConsoleSvce.log( aMessage499);
-
-        someCollectedLogsAfter = aConsoleSvce.fCollectedLogsCopy();
-        aNumCollectedLogsAfter = someCollectedLogsAfter.length;
-        expect( aNumCollectedLogsAfter).toBe( 2);
-
-
-        aLastLog = someCollectedLogsAfter[ 0];
-        expect( aLastLog).not.toBeNull();
-
-        aLastLogKind = aLastLog[ 0];
-        expect( aLastLogKind).toBe( "log");
-
-        aLastLogMessage = aLastLog[ 1];
-        expect( aLastLogMessage).toBe( aMessage500);
-
-
-
-        aLastLog = someCollectedLogsAfter[ 1];
-        expect( aLastLog).not.toBeNull();
-
-        aLastLogKind = aLastLog[ 0];
-        expect( aLastLogKind).toBe( "log");
-
-        aLastLogMessage = aLastLog[ 1];
-        expect( aLastLogMessage).toBe( aMessage499);
-
-
-
-
-        /* Third log of 2 chars, which added to the previous 500 + 499 chars = 999 for a total of 1001 do not fit the 1000 limit so the first log is discarded */
-
-        var aMessage2 = strRepeat( "x", 2);
-        aConsoleSvce.log( aMessage2);
-
-        someCollectedLogsAfter = aConsoleSvce.fCollectedLogsCopy();
-        aNumCollectedLogsAfter = someCollectedLogsAfter.length;
-        expect( aNumCollectedLogsAfter).toBe( 2);
-
-
-        aLastLog = someCollectedLogsAfter[ 0];
-        expect( aLastLog).not.toBeNull();
-
-        aLastLogKind = aLastLog[ 0];
-        expect( aLastLogKind).toBe( "log");
-
-        aLastLogMessage = aLastLog[ 1];
-        expect( aLastLogMessage).toBe( aMessage499);
-
-
-
-        aLastLog = someCollectedLogsAfter[ 1];
-        expect( aLastLog).not.toBeNull();
-
-        aLastLogKind = aLastLog[ 0];
-        expect( aLastLogKind).toBe( "log");
-
-        aLastLogMessage = aLastLog[ 1];
-        expect( aLastLogMessage).toBe( aMessage2);
-
-
-
-
-        aConsoleSvce.pSetCollectLogs(    false);
-
-        aConsoleSvce.clear();
-    });
-
-
-
-
-
+    
 });
+
+
+if ( (typeof define === 'function') && define.amd) {
+    // AMD / RequireJS
+    /* Module name MUST BE A LITERAL STRING, I.E. "m_typesregistry_structural_test" not  a variable like ModuleSymbolicName.
+    * If it is a variable, no test specs shall be registered (i.e., it does not invoke the test spec function */
+    define( "m_console_svce_behavioral_test",
+        [
+            "m_console_svce"
+        ],
+        aTest_spec
+    );
+}
+else {
+    aTest_spec();
+}
+
 
 
 

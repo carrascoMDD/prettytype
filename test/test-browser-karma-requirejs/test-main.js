@@ -73,10 +73,21 @@ requirejs.config({
     
         "m_index_structural_test",
     
+        
         "m_typesregistry_behavioral_test",
         "m_overrider_svce_behavioral_test",
+        
         "m_traversals_fgFirstDiff_behavioral_test",
-        "m_identifier_svce_behavioral_test"
+        "m_console_svce_behavioral_test",
+        
+        "m_identifier_svce_behavioral_test",
+        
+        "m_common_record_behavioral_test",
+        "m_common_recordingpolicy_keepall_behavioral_test",
+        "m_common_recordingpolicy_keepall_donotkeep_behavioral_test",
+        "m_common_recordingpolicy_keepsome_behavioral_test",
+        "m_common_recordingpolicy_keeprecent_behavioral_test"
+
     ],
     
     /* map test modules from symbolic name to a file system path WITHOUT THE .js FILE EXTENSION relative to base ... baseURL?
@@ -112,11 +123,20 @@ requirejs.config({
     
         'm_index_structural_test':                            './test/structural-test/index-structural-test',
         
-        'm_typesregistry_behavioral_test':  './test/behavioral-test/modboot-behavioral-test/typesregistry-behavioral-test',
-        'm_overrider_svce_behavioral_test': './test/behavioral-test/modboot-behavioral-test/overrider_svce-behavioral-test',
-        'm_traversals_fgFirstDiff_behavioral_test': './test/behavioral-test/utils-behavioral-test/traversals-fgFirstDiff-behavioral-test',
-        'm_identifier_svce_behavioral_test': './test/behavioral-test/identifying-behavioral-test/identifier_svce-behavioral-test'
+        
+        'm_typesregistry_behavioral_test':                    './test/behavioral-test/modboot-behavioral-test/typesregistry-behavioral-test',
+        'm_overrider_svce_behavioral_test':                   './test/behavioral-test/modboot-behavioral-test/overrider_svce-behavioral-test',
+        
+        'm_traversals_fgFirstDiff_behavioral_test':           './test/behavioral-test/utils-behavioral-test/traversals-fgFirstDiff-behavioral-test',
+        'm_console_svce_behavioral_test':                     './test/behavioral-test/utils-behavioral-test/console_svce-behavioral-test',
     
+        'm_identifier_svce_behavioral_test':                  './test/behavioral-test/identifying-behavioral-test/identifier_svce-behavioral-test',
+    
+        'm_common_record_behavioral_test':                    './test/behavioral-test/common-behavioral-test/common-record-behavioral-test',
+        'm_common_recordingpolicy_keepall_behavioral_test':   './test/behavioral-test/common-behavioral-test/common-recordingpolicy_keepall-behavioral-test',
+        'm_common_recordingpolicy_keepall_donotkeep_behavioral_test':   './test/behavioral-test/common-behavioral-test/common-recordingpolicy_keepall_donotkeep-behavioral-test',
+        'm_common_recordingpolicy_keepsome_behavioral_test':  './test/behavioral-test/common-behavioral-test/common-recordingpolicy_keepsome-behavioral-test',
+        'm_common_recordingpolicy_keeprecent_behavioral_test':  './test/behavioral-test/common-behavioral-test/common-recordingpolicy_keeprecent-behavioral-test'
     },
 
     // start test run, once Require.js is done loading scripts
