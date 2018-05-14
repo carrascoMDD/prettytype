@@ -34,6 +34,9 @@
   "scripts": {
     "bower": "bower",
     "grunt": "grunt",
+    "testnode": "jasmine --config=test/test-node/jasmine.json",
+    "testangularjs": "grunt karma:angularjs",
+    "testrequirejs": "grunt karma:requirejs",
     "test": "jasmine --config=test/test-node/jasmine.json; grunt karma:angularjs; grunt karma:requirejs",
     "start": ""
   },
