@@ -103,7 +103,7 @@ var aTest_spec = (function( theSS_identifier_svce,
     
     
     
-        var aBeforeEach_allPlatforms = function() {
+        var pBeforeEach = function() {
     
             aCommon = new aM_common_type.Common_Constructor( aCommon_title, aM_identifier_svce, aM_recorder_svce);
     
@@ -125,7 +125,7 @@ var aTest_spec = (function( theSS_identifier_svce,
         
         
         
-        var aBeforeEach_async = function( done) {
+        var pBeforeEach_async = function( done) {
     
             aCommon_Recorder.pClearKeptRecords();
             someKeptRecordsBefore = aCommon_Recorder.fKeptRecords();
@@ -184,10 +184,10 @@ var aTest_spec = (function( theSS_identifier_svce,
                 aM_common_type     = _CommonType_;
                 aM_recordingpolicy_keeprecent_type = _RecordingPolicyKeepRecentType_;
                 
-                aBeforeEach_allPlatforms();
+                pBeforeEach();
             }));
     
-            beforeEach( function( done) { return aBeforeEach_async( done);});
+            beforeEach( function( done) { return pBeforeEach_async( done);});
             
         }
         else if ( !(typeof module === 'undefined') && module.exports) {
@@ -197,9 +197,9 @@ var aTest_spec = (function( theSS_identifier_svce,
             aM_common_type       = require('../../../src/common/common_type');
             aM_recordingpolicy_keeprecent_type = require('../../../src/identifying/recordingpolicy_keeprecent_type');
     
-            beforeEach( aBeforeEach_allPlatforms);
+            beforeEach( pBeforeEach);
     
-            beforeEach( function( done) { return aBeforeEach_async( done);});
+            beforeEach( function( done) { return pBeforeEach_async( done);});
         }
         else if ( !(typeof define === 'undefined') && define.amd) {
             // AMD / RequireJS
@@ -208,9 +208,9 @@ var aTest_spec = (function( theSS_identifier_svce,
             aM_common_type     = theSS_common_type;
             aM_recordingpolicy_keeprecent_type = theSS_recordingpolicy_keeprecent_type;
     
-            beforeEach( aBeforeEach_allPlatforms);
+            beforeEach( pBeforeEach);
     
-            beforeEach( function( done) { return aBeforeEach_async( done);});
+            beforeEach( function( done) { return pBeforeEach_async( done);});
         }
     
     

@@ -216,8 +216,121 @@ var aTest_spec = (function( theSS_traversals) {
         it("First Diff {x:['a','b', { 'c': 1,  'd': 3}]}, {x:['a','b',{ 'c': 1,  'd': 4}]}", function () {
             expect( JSON.stringify( aM_traversals.fgFirstDiff( {x:['a','b', { 'c': 1,  'd': 3}]}, {x:['a','b',{ 'c': 1,  'd': 4}]}))).toBe( JSON.stringify(['x', 2, 'd' ]));
         });
-        
-        
+    
+    
+    
+    
+        it("Has fgFirstDiff defined", function () {
+            expect( aM_traversals.fgFirstDiff).not.toBeUndefined();
+        });
+    
+        it("Has fgFirstDiff typeof function", function () {
+            expect( typeof aM_traversals.fgFirstDiff).toBe( "function");
+        });
+    
+    
+        it("fgFirstDiff('','') null", function () {
+            expect( aM_traversals.fgFirstDiff( "", "")).toBeNull();
+        });
+    
+        it("fgFirstDiff('a','a') null", function () {
+            expect( aM_traversals.fgFirstDiff( "a", "a")).toBeNull();
+        });
+    
+        it("fgFirstDiff(1,1) null", function () {
+            expect( aM_traversals.fgFirstDiff( 1, 1)).toBeNull();
+        });
+    
+        it("fgFirstDiff(true,true) null", function () {
+            expect( aM_traversals.fgFirstDiff( true, true)).toBeNull();
+        });
+    
+        it("fgFirstDiff({},{}) null", function () {
+            expect( aM_traversals.fgFirstDiff( {}, {})).toBeNull();
+        });
+    
+        it("fgFirstDiff([],[]) null", function () {
+            expect( aM_traversals.fgFirstDiff( [], [])).toBeNull();
+        });
+    
+    
+    
+        it("fgFirstDiff('a','') null", function () {
+            expect( aM_traversals.fgFirstDiff( "a", "")).toBe( "/");
+        });
+    
+        it("fgFirstDiff('a','b') null", function () {
+            expect( aM_traversals.fgFirstDiff( "a", "b")).toBe( "/");
+        });
+    
+        it("fgFirstDiff(1,2) null", function () {
+            expect( aM_traversals.fgFirstDiff( 1, 2)).toBe( "/");
+        });
+    
+        it("fgFirstDiff(true,true) null", function () {
+            expect( aM_traversals.fgFirstDiff( true, false)).toBe( "/");
+        });
+    
+        it("fgFirstDiff({},'') null", function () {
+            expect( aM_traversals.fgFirstDiff( {}, '')).toBe( "/");
+        });
+    
+        it("fgFirstDiff([],'') null", function () {
+            expect( aM_traversals.fgFirstDiff( [], '')).toBe( "/");
+        });
+    
+    
+    
+    
+        it("fgFirstDiff({'a': 'a'},{'a': 'a'}) null", function () {
+            expect( aM_traversals.fgFirstDiff( {'a': 'a'},{'a': 'a'})).toBeNull();
+        });
+    
+        it("fgFirstDiff({'a': 'a','b':'b'},{'a': 'a','b':'b'}) null", function () {
+            expect( aM_traversals.fgFirstDiff( {'a': 'a','b':'b'},{'a': 'a','b':'b'})).toBeNull();
+        });
+    
+        it("fgFirstDiff({'a': 'a','b':'b'},{'a': 'a','b':'b'}) null", function () {
+            expect( aM_traversals.fgFirstDiff( {'a': 'a','b':'b'},{'a': 'a','b':'b'})).toBeNull();
+        });
+    
+        it("fgFirstDiff({'a': 'a','b':'b', c: {'d': 'd','e':'e'}},{'a': 'a','b':'b', c: {'d': 'd','e':'e'}}) null", function () {
+            expect( aM_traversals.fgFirstDiff( {'a': 'a','b':'b', c: {'d': 'd','e':'e'}},{'a': 'a','b':'b', c: {'d': 'd','e':'e'}})).toBeNull();
+        });
+    
+        it("fgFirstDiff({'a': 'a','b':'b', c: {'d': 'd','e':'e', 'f': {'g': 'g','h':'h', i: {'j': 'j','k':'k'}}}},{'a': 'a','b':'b', c: {'d': 'd','e':'e', 'f': {'g': 'g','h':'h', i: {'j': 'j','k':'k'}}}}) null", function () {
+            expect( aM_traversals.fgFirstDiff( {'a': 'a','b':'b', c: {'d': 'd','e':'e', 'f': {'g': 'g','h':'h', i: {'j': 'j','k':'k'}}}},{'a': 'a','b':'b', c: {'d': 'd','e':'e', 'f': {'g': 'g','h':'h', i: {'j': 'j','k':'k'}}}})).toBeNull();
+        });
+    
+    
+    
+    
+        it("fgFirstDiff({'a': 'a'},{'a': 'b'}) null", function () {
+            expect( JSON.stringify( aM_traversals.fgFirstDiff( {'a': 'a'},{'a': 'b'}))).toBe( JSON.stringify( ["a"]));
+        });
+    
+    
+        it("fgFirstDiff({'a': 'a'},{'b': 'a'}) null", function () {
+            expect( JSON.stringify( aM_traversals.fgFirstDiff( {'a': 'a'},{'a': 'b'}))).toBe( JSON.stringify( ["a"]));
+        });
+    
+        it("fgFirstDiff({'a': 'a','b':'b'},{'a': 'a','b':'c'}) null", function () {
+            expect( JSON.stringify( aM_traversals.fgFirstDiff( {'a': 'a','b':'b'},{'a': 'a','b':'c'}))).toBe( JSON.stringify( ["b"]));
+        });
+    
+        it("fgFirstDiff({'a': 'a','b':'b'},{'a': 'a','c':'b'}) null", function () {
+            expect( JSON.stringify( aM_traversals.fgFirstDiff( {'a': 'a','b':'b'},{'a': 'a','b':'c'}))).toBe( JSON.stringify( ["b"]));
+        });
+    
+        it("fgFirstDiff({'a': 'a','b':'b', c: {'d': 'd','e':'e'}},{'a': 'a','b':'b', c: {'d': 'x','e':'e'}}) null", function () {
+            expect( JSON.stringify( aM_traversals.fgFirstDiff( {'a': 'a','b':'b', c: {'d': 'd','e':'e'}},{'a': 'a','b':'b', c: {'d': 'x','e':'e'}}))).toBe( JSON.stringify( ["c", "d"]));
+        });
+    
+        it("fgFirstDiff({'a': 'a','b':'b', c: {'d': 'd','e':'e', 'f': {'g': 'g','h':'h', i: {'j': 'j','k':'k'}}}},{'a': 'a','b':'b', c: {'d': 'd','e':'e', 'f': {'g': 'g','h':'h', i: {'j': 'j','k':'k'}}}}) null", function () {
+            expect( JSON.stringify( aM_traversals.fgFirstDiff( {'a': 'a','b':'b', c: {'d': 'd','e':'e', 'f': {'g': 'g','h':'h', i: {'j': 'j','k':'k'}}}},{'a': 'a','b':'b', c: {'d': 'd','e':'e', 'f': {'g': 'g','h':'h', i: {'j': 'j','k':'x'}}}}))).toBe( JSON.stringify( ["c","f","i","k"]));
+        });
+    
+    
     });
     
 });

@@ -128,7 +128,10 @@ var someKarmaConfFiles = [
     '../behavioral-test/common-behavioral-test/common-dumpingpolicy_filterkinds_maynotdump-behavioral-test.js',
     '../behavioral-test/common-behavioral-test/common-dumpingpolicy_filterkinds_some-behavioral-test.js',
     '../behavioral-test/common-behavioral-test/common-dumpingpolicy_triggerkinds_all-behavioral-test.js',
-    '../behavioral-test/common-behavioral-test/common-dumpingpolicy_triggerkinds_none-behavioral-test.js'
+    '../behavioral-test/common-behavioral-test/common-dumpingpolicy_triggerkinds_none-behavioral-test.js',
+    '../behavioral-test/common-behavioral-test/common-dumpingpolicy_triggerkinds_some-behavioral-test.js',
+    '../behavioral-test/common-behavioral-test/common-dumpingpolicy_triggerkinds_some-recordingpolicy_keeprecent-behavioral-test.js',
+    '../behavioral-test/common-behavioral-test/common-dumpingpolicy_triggerkinds_some-recordingpolicy_keepsome-behavioral-test.js'
 ];
 
 
