@@ -194,8 +194,14 @@ permissions and limitations under the Licence.
                 if( !theToInit) {
                     return;
                 }
-                
+    
+    
+                theToInit.REGISTERMODULES = true;
+                theToInit.RESOLVEMODULES  = true;
+    
+    
                 theToInit.TYPESREGISTRYDEFAULTNAME = "TypesRegistry_DefaultName";
+                
             };
             
             
@@ -421,6 +427,11 @@ permissions and limitations under the Licence.
                 
                 
                 var fRegisterModule = function( theModuleFullName, theModule) {
+                    
+                    if( !this.REGISTERMODULES) {
+                        return false;
+                    }
+                    
                     if( !theModule) {
                         return false;
                     }
@@ -458,6 +469,11 @@ permissions and limitations under the Licence.
                 
                 
                 var fRegisteredModule = function( theModuleFullName) {
+    
+                    if( !this.RESOLVEMODULES) {
+                        return null;
+                    }
+    
                     if( !theModuleFullName) {
                         return null;
                     }
@@ -474,9 +490,14 @@ permissions and limitations under the Licence.
                 aPrototype.fRegisteredModule = fRegisteredModule;
     
     
-    
+
+                
                 var fUnregisterModule = function( theModuleFullName, theModule) {
-        
+    
+                    if( !this.REGISTERMODULES) {
+                        return false;
+                    }
+                    
                     var aModuleFullName = theModuleFullName;
                     if( !aModuleFullName) {
                         if( theModule) {
@@ -2262,7 +2283,7 @@ permissions and limitations under the Licence.
                 
                 if( aModule.ModuleGlobals._g_WriteToConsole) {
                     
-                    console.log( theMessage);
+                    // console.log( theMessage);
                 }
                 
             };
@@ -2291,7 +2312,7 @@ permissions and limitations under the Licence.
                 
                 if( aModule.ModuleGlobals._g_WriteToConsole) {
                     
-                    console.error( theMessage);
+                    // console.error( theMessage);
                 }
                 
             };
@@ -2321,7 +2342,7 @@ permissions and limitations under the Licence.
                 
                 if( aModule.ModuleGlobals._g_WriteToConsole) {
                     
-                    console.log( theMessage);
+                    // console.log( theMessage);
                 }
                 
             };
@@ -2340,7 +2361,7 @@ permissions and limitations under the Licence.
                 
                 if( aModule.ModuleGlobals._g_WriteToConsole) {
                     
-                    console.clear();
+                    // console.clear();
                 }
                 
             };
@@ -10588,22 +10609,19 @@ permissions and limitations under the Licence.
                     if( !aConsoleService) {
                         return;
                     }
-                    
-                    
-                    var aRecorder = this.fRecorder();
-                    if( !aRecorder) {
-                        return;
-                    }
-                    
-                    
+
                     var aLogString = theRecord.fLogString();
                     if( !aLogString) {
                         return;
                     }
                     
                     aConsoleService.log(  "," + aLogString);
-                    
-                    
+    
+                    var aRecorder = this.fRecorder();
+                    if( !aRecorder) {
+                        return;
+                    }
+    
                     aRecorder.pSetRecordPointer( this.RECORDPOINTERNAME_LASTDUMPED, theRecordedRecordPointer);
                     
                 };
@@ -10873,7 +10891,7 @@ permissions and limitations under the Licence.
                     return;
                 }
                 
-                theToInit.LOGCHANGESTOEVENTKINDSNOTFORCONSOLE = true;
+                theToInit.LOGCHANGESTOEVENTKINDSNOTFORCONSOLE = false;
                 
                 
                 theToInit.EVENTSSETNOTFORCONSOLE = "EVENTKINDS_NOTFORCONSOLE_NONE";
@@ -11639,7 +11657,7 @@ permissions and limitations under the Licence.
                     return;
                 }
                 
-                theToInit.LOGCHANGESTOEVENTKINDSTRIGGERINGDUMP = true;
+                theToInit.LOGCHANGESTOEVENTKINDSTRIGGERINGDUMP = false;
                 
                 theToInit.EVENTSSETTRIGGERINGDUMP = "EVENTKINDS_TRIGGERINGDUMP_ALL";
                 theToInit.EVENTSSETTRIGGERINGDUMP = "EVENTKINDS_TRIGGERINGDUMP_ERRORS";
@@ -13093,7 +13111,7 @@ permissions and limitations under the Licence.
                         return null;
                     }
                     
-                    return this._v_Records.length;
+                    return this._v_Records.length -1;
                     
                 };
                 if( fLastKeptRecordPointer){}/* CQT */
