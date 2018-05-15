@@ -204,7 +204,7 @@ permissions and limitations under the Licence.
                     
                     this._v_Prototype = aPrototype;
                     this._v_Type      = this._v_Prototype._v_Type;
-                    this._v_Module    = aPrototype._v_Module;
+                    this._v_Module    = this._v_Prototype._v_Module;
                     
                     this._v_MustKeepRecordsMaxNumber = this.MUSTKEEPRECORDSMAXNUMBER;
                     
@@ -314,17 +314,32 @@ permissions and limitations under the Licence.
                 
             };
             RecordingPolicyKeepSome_SuperPrototypeConstructor.prototype = aRecordingPolicyKeepSome_Prototype;
+    
             
             
-            
+            var RecordingPolicyKeepSome_SuperPrototypeSingleton = function() {
+                if( aModule.SuperPrototypeSingletonInstance) {
+                    return aModule.SuperPrototypeSingletonInstance;
+                }
+        
+                aModule.SuperPrototypeSingletonInstance = new RecordingPolicyKeepSome_SuperPrototypeConstructor();
+                return aModule.SuperPrototypeSingletonInstance;
+            };
+    
+    
+    
             var aModule = {
                 "RecordingPolicyKeepSome_Prototype":   aRecordingPolicyKeepSome_Prototype,
                 "RecordingPolicyKeepSome_Constructor": RecordingPolicyKeepSome_Constructor,
-                "RecordingPolicy_Constructor":         RecordingPolicyKeepSome_Constructor,
                 "RecordingPolicyKeepSome_SuperPrototypeConstructor": RecordingPolicyKeepSome_SuperPrototypeConstructor,
+                "RecordingPolicyKeepSome_SuperPrototypeSingleton": RecordingPolicyKeepSome_SuperPrototypeSingleton,
+                "RecordingPolicy_Constructor":         RecordingPolicyKeepSome_Constructor,
+                "RecordingPolicy_SuperPrototypeConstructor": RecordingPolicyKeepSome_SuperPrototypeConstructor,
+                "RecordingPolicy_SuperPrototypeSingleton": RecordingPolicyKeepSome_SuperPrototypeSingleton,
                 "Prototype": aRecordingPolicyKeepSome_Prototype,
                 "Constructor": RecordingPolicyKeepSome_Constructor,
-                "SuperPrototypeConstructor": RecordingPolicyKeepSome_SuperPrototypeConstructor
+                "SuperPrototypeConstructor": RecordingPolicyKeepSome_SuperPrototypeConstructor,
+                "SuperPrototypeSingleton": RecordingPolicyKeepSome_SuperPrototypeSingleton
             };
             pgInitFromModuleConstants( aModule);
             aModule._v_Type = "module";

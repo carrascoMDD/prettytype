@@ -195,7 +195,7 @@ permissions and limitations under the Licence.
                     
                     this._v_Prototype = aPrototype;
                     this._v_Type = aPrototype._v_Type;
-                    this._v_Module    = aPrototype._v_Module;
+                    this._v_Module    = this._v_Prototype._v_Module;
                     
                     this._v_Timestamp    = Date.now();
                     this._v_Recorder     = theRecorder;
@@ -1441,20 +1441,30 @@ permissions and limitations under the Licence.
                 this._v_Detail     = null;
             };
             Record_SuperPrototypeConstructor.prototype = aRecord_Prototype;
-            
-            
-            
-            
-            
-            
-            
+    
+    
+    
+    
+            var Record_SuperPrototypeSingleton = function() {
+                if( aModule.SuperPrototypeSingletonInstance) {
+                    return aModule.SuperPrototypeSingletonInstance;
+                }
+        
+                aModule.SuperPrototypeSingletonInstance = new Record_SuperPrototypeConstructor();
+                return aModule.SuperPrototypeSingletonInstance;
+            };
+    
+    
+    
             var aModule = {
                 "Record_Prototype": aRecord_Prototype,
                 "Record_Constructor": Record_Constructor,
                 "Record_SuperPrototypeConstructor": Record_SuperPrototypeConstructor,
+                "Record_SuperPrototypeSingleton": Record_SuperPrototypeSingleton,
                 "Prototype": aRecord_Prototype,
                 "Constructor": Record_Constructor,
-                "SuperPrototypeConstructor": Record_SuperPrototypeConstructor
+                "SuperPrototypeConstructor": Record_SuperPrototypeConstructor,
+                "SuperPrototypeSingleton": Record_SuperPrototypeSingleton
             };
             pgInitFromModuleConstants( aModule);
             aModule._v_Type = "module";

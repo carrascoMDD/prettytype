@@ -146,10 +146,10 @@ permissions and limitations under the Licence.
     
     
             var aRecordingPolicyKeepRecent_Prototype = (function() {
-                
-                
-                
-                var aPrototype = new theS_RecordingPolicyKeepSomeType.RecordingPolicyKeepSome_SuperPrototypeConstructor();
+    
+    
+                // var aPrototype = new theS_RecordingPolicyKeepSomeType.RecordingPolicyKeepSome_SuperPrototypeConstructor();
+                var aPrototype = theS_RecordingPolicyKeepSomeType.RecordingPolicyKeepSome_SuperPrototypeSingleton();
                 
                 pgInitFromModuleConstants( aPrototype);
                 
@@ -202,7 +202,7 @@ permissions and limitations under the Licence.
                     
                     this._v_Prototype = aPrototype;
                     this._v_Type      = this._v_Prototype._v_Type;
-                    this._v_Module    = aPrototype._v_Module;
+                    this._v_Module    = this._v_Prototype._v_Module;
                     
                     this._v_MustKeepRecordsRecentMillis = this.MUSTKEEPRECORDSRECENTMILLIS;
                     
@@ -311,17 +311,31 @@ permissions and limitations under the Licence.
                 
             };
             RecordingPolicyKeepRecent_SuperPrototypeConstructor.prototype = aRecordingPolicyKeepRecent_Prototype;
-            
-            
-            
+    
+    
+            var RecordingPolicyKeepRecent_SuperPrototypeSingleton = function() {
+                if( aModule.SuperPrototypeSingletonInstance) {
+                    return aModule.SuperPrototypeSingletonInstance;
+                }
+        
+                aModule.SuperPrototypeSingletonInstance = new RecordingPolicyKeepRecent_SuperPrototypeConstructor();
+                return aModule.SuperPrototypeSingletonInstance;
+            };
+    
+    
+    
             var aModule = {
                 "RecordingPolicyKeepRecent_Prototype":   aRecordingPolicyKeepRecent_Prototype,
                 "RecordingPolicyKeepRecent_Constructor": RecordingPolicyKeepRecent_Constructor,
-                "RecordingPolicy_Constructor":           RecordingPolicyKeepRecent_Constructor,
                 "RecordingPolicyKeepRecent_SuperPrototypeConstructor": RecordingPolicyKeepRecent_SuperPrototypeConstructor,
+                "RecordingPolicyKeepRecent_SuperPrototypeSingleton": RecordingPolicyKeepRecent_SuperPrototypeSingleton,
+                "RecordingPolicy_Constructor":           RecordingPolicyKeepRecent_Constructor,
+                "RecordingPolicy_SuperPrototypeConstructor": RecordingPolicyKeepRecent_SuperPrototypeConstructor,
+                "RecordingPolicy_SuperPrototypeSingleton": RecordingPolicyKeepRecent_SuperPrototypeSingleton,
                 "Prototype": aRecordingPolicyKeepRecent_Prototype,
                 "Constructor": RecordingPolicyKeepRecent_Constructor,
-                "SuperPrototypeConstructor": RecordingPolicyKeepRecent_SuperPrototypeConstructor
+                "SuperPrototypeConstructor": RecordingPolicyKeepRecent_SuperPrototypeConstructor,
+                "SuperPrototypeSingleton": RecordingPolicyKeepRecent_SuperPrototypeSingleton
             };
             pgInitFromModuleConstants( aModule);
             aModule._v_Type = "module";

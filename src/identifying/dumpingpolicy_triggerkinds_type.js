@@ -180,8 +180,9 @@
             var aDumpingPolicyTriggerKinds_Prototype = (function() {
                 
                 
-                var aPrototype = new theS_DumpingPolicyFilterKindsType.DumpingPolicyFilterKinds_SuperPrototypeConstructor();
-                
+                // var aPrototype = new theS_DumpingPolicyFilterKindsType.DumpingPolicyFilterKinds_SuperPrototypeConstructor();
+                var aPrototype = theS_DumpingPolicyFilterKindsType.DumpingPolicyFilterKinds_SuperPrototypeSingleton();
+    
                 pgInitFromModuleConstants( aPrototype);
                 
                 aPrototype._v_SuperPrototype = theS_DumpingPolicyFilterKindsType.DumpingPolicyFilterKinds_Prototype;
@@ -233,11 +234,11 @@
                 var _pInit_DumpingPolicyTriggerKinds = function( theTitle, theIdentifier, theRecorder) {
                     
                     /* Delegate on super prototype initialization */
-                    aPrototype._v_SuperPrototype._pInit_DumpingPolicy.apply( this, [ theTitle, theIdentifier, theRecorder]);
+                    aPrototype._v_SuperPrototype._pInit_DumpingPolicyFilterKinds.apply( this, [ theTitle, theIdentifier, theRecorder]);
                     
                     this._v_Prototype = aPrototype;
                     this._v_Type      = this._v_Prototype._v_Type;
-                    this._v_Module    = aPrototype._v_Module;
+                    this._v_Module    = this._v_Prototype._v_Module;
                     
                 };
                 if( _pInit_DumpingPolicyTriggerKinds){}/* CQT */
@@ -712,10 +713,8 @@
                 this._pInit_DumpingPolicyTriggerKinds( theTitle, theIdentifier, theRecorder);
             };
             DumpingPolicyTriggerKinds_Constructor.prototype = aDumpingPolicyTriggerKinds_Prototype;
-            
-            
-            
-            
+    
+    
             
             var DumpingPolicyTriggerKinds_SuperPrototypeConstructor = function() {
                 
@@ -730,17 +729,33 @@
                 
             };
             DumpingPolicyTriggerKinds_SuperPrototypeConstructor.prototype = aDumpingPolicyTriggerKinds_Prototype;
+    
+    
+    
+    
+            var DumpingPolicyTriggerKinds_SuperPrototypeSingleton = function() {
+                if( aModule.SuperPrototypeSingletonInstance) {
+                    return aModule.SuperPrototypeSingletonInstance;
+                }
+        
+                aModule.SuperPrototypeSingletonInstance = new DumpingPolicyTriggerKinds_SuperPrototypeConstructor();
+                return aModule.SuperPrototypeSingletonInstance;
+            };
+    
             
             
-            
+    
             var aModule = {
                 "DumpingPolicyTriggerKinds_Prototype":                 aDumpingPolicyTriggerKinds_Prototype,
                 "DumpingPolicyTriggerKinds_Constructor":               DumpingPolicyTriggerKinds_Constructor,
-                "DumpingPolicy_Constructor":                           DumpingPolicyTriggerKinds_Constructor,
                 "DumpingPolicyTriggerKinds_SuperPrototypeConstructor": DumpingPolicyTriggerKinds_SuperPrototypeConstructor,
+                "DumpingPolicyTriggerKinds_SuperPrototypeSingleton":   DumpingPolicyTriggerKinds_SuperPrototypeSingleton,
+                "DumpingPolicy_Constructor":                           DumpingPolicyTriggerKinds_Constructor,
+                "DumpingPolicy_SuperPrototypeConstructor": DumpingPolicyTriggerKinds_SuperPrototypeConstructor,
                 "Prototype": aDumpingPolicyTriggerKinds_Prototype,
                 "Constructor": DumpingPolicyTriggerKinds_Constructor,
-                "SuperPrototypeConstructor": DumpingPolicyTriggerKinds_SuperPrototypeConstructor
+                "SuperPrototypeConstructor": DumpingPolicyTriggerKinds_SuperPrototypeConstructor,
+                "SuperPrototypeSingleton": DumpingPolicyTriggerKinds_SuperPrototypeSingleton
             };
             pgInitFromModuleConstants( aModule);
             aModule._v_Type = "module";
