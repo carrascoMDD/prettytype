@@ -150,8 +150,7 @@ permissions and limitations under the Licence.
             var aRecordingPolicyKeepSome_Prototype = (function() {
                 
                 
-                
-                var aPrototype = new theS_RecordingPolicyKeepAllType.RecordingPolicyKeepAll_SuperPrototypeConstructor();
+                var aPrototype = theS_RecordingPolicyKeepAllType.RecordingPolicyKeepAll_SuperPrototypeSingleton();
                 
                 pgInitFromModuleConstants( aPrototype);
                 

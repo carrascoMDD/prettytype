@@ -180,7 +180,6 @@
             var aDumpingPolicyTriggerKinds_Prototype = (function() {
                 
                 
-                // var aPrototype = new theS_DumpingPolicyFilterKindsType.DumpingPolicyFilterKinds_SuperPrototypeConstructor();
                 var aPrototype = theS_DumpingPolicyFilterKindsType.DumpingPolicyFilterKinds_SuperPrototypeSingleton();
     
                 pgInitFromModuleConstants( aPrototype);

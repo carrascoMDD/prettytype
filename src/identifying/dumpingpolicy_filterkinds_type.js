@@ -182,8 +182,7 @@ permissions and limitations under the Licence.
     
             var aDumpingPolicyFilterKinds_Prototype = (function() {
                 
-                
-                // var aPrototype = new theS_DumpingPolicyType.DumpingPolicy_SuperPrototypeConstructor();
+
                 var aPrototype = theS_DumpingPolicyType.DumpingPolicy_SuperPrototypeSingleton();
     
                 pgInitFromModuleConstants( aPrototype);
