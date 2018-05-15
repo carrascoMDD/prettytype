@@ -81,8 +81,8 @@ permissions and limitations under the Licence.
                 }
     
     
-                theToInit.REGISTERMODULES = false;
-                theToInit.RESOLVEMODULES  = false;
+                theToInit.REGISTERMODULES = true;
+                theToInit.RESOLVEMODULES  = true;
     
     
                 theToInit.TYPESREGISTRYDEFAULTNAME = "TypesRegistry_DefaultName";
