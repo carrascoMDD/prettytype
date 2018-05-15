@@ -55,7 +55,7 @@ var aTest_spec = (function( theSS_identifier_svce,
         var aCommon_title = "CommonType-Title-test";
         
         var aM_identifier_svce = null;
-        var aM_recorder_svce   = null;
+        var aM_recorder_type   = null;
         var aM_common_type     = null;
         var aM_dumpingpolicy_filterkinds_type = null;
         var aM_console_svce = null;
@@ -80,6 +80,7 @@ var aTest_spec = (function( theSS_identifier_svce,
         var aRecordPointerName_filterkinds_03 = "recordPointerName_filterkinds_03";
         
         
+        var aLocalRecorder = null;
         var aCommon             = null;
         var aCommon_Recorder        = null;
         var aCommon_Identifier      = null;
@@ -112,9 +113,9 @@ var aTest_spec = (function( theSS_identifier_svce,
             // Karma for Angular (1.x)
             beforeEach( module( 'typesRegistry', 'modbootTypes', 'identifyingTypes', 'commonTypes', 'consoleSvce'));
             
-            beforeEach( inject(function( _IdentifierSvce_, _RecorderSvce_, _CommonType_, _DumpingPolicyFilterKindsType_, _ConsoleSvce_) {
+            beforeEach( inject(function( _IdentifierSvce_, _RecorderType_, _CommonType_, _DumpingPolicyFilterKindsType_, _ConsoleSvce_) {
                 aM_identifier_svce = _IdentifierSvce_;
-                aM_recorder_svce   = _RecorderSvce_;
+                aM_recorder_type   = _RecorderType_;
                 aM_common_type     = _CommonType_;
                 aM_dumpingpolicy_filterkinds_type = _DumpingPolicyFilterKindsType_;
                 aM_console_svce    = _ConsoleSvce_;
@@ -123,7 +124,7 @@ var aTest_spec = (function( theSS_identifier_svce,
         else if ( !(typeof module === 'undefined') && module.exports) {
             // Node.js
             aM_identifier_svce   = require('../../../src/identifying/identifier_svce');
-            aM_recorder_svce     = require('../../../src/identifying/recorder_svce');
+            aM_recorder_type     = require('../../../src/identifying/recorder_type');
             aM_common_type       = require('../../../src/common/common_type');
             aM_dumpingpolicy_filterkinds_type = require('../../../src/identifying/dumpingpolicy_filterkinds_type');
             aM_console_svce      = require('../../../src/utils/console_svce');
@@ -131,7 +132,7 @@ var aTest_spec = (function( theSS_identifier_svce,
         else if ( !(typeof define === 'undefined') && define.amd) {
             // AMD / RequireJS
             aM_identifier_svce = theSS_identifier_svce;
-            aM_recorder_svce   = theSS_recorder_svce;
+            aM_recorder_type   = theSS_recorder_svce;
             aM_common_type     = theSS_common_type;
             aM_dumpingpolicy_filterkinds_type = theSS_dumpingpolicy_filterkinds_type;
             aM_console_svce    = theSS_console_svce;
@@ -145,7 +146,8 @@ var aTest_spec = (function( theSS_identifier_svce,
         
         it("Dumps two recorded Records", function () {
     
-            aCommon = new aM_common_type.Common_Constructor( aCommon_title, aM_identifier_svce, aM_recorder_svce);
+            aLocalRecorder = new aM_recorder_type.Recorder_Constructor( aCommon_title, aM_identifier_svce);
+            aCommon = new aM_common_type.Common_Constructor( aCommon_title, aM_identifier_svce, aLocalRecorder);
     
             aCommon_Recorder   = aCommon._v_Recorder;
             aCommon_Identifier = aCommon._v_Identifier;
@@ -283,7 +285,7 @@ if ( (typeof define === 'function') && define.amd) {
     define( "m_common_dumpingpolicy_filterkinds_all_behavioral_test",
         [
             "m_identifier_svce",
-            "m_recorder_svce",
+            "m_recorder_type",
             "m_common_type",
             "m_dumpingpolicy_filterkinds_type",
             "m_console_svce"

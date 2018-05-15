@@ -1,6 +1,6 @@
 {
   "name": "prettytype",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Javascript for core modules including a base prototype and prototypes hierarchy, to be reused on the Browser or the server.",
   "keywords": [
     "core",
