@@ -668,7 +668,7 @@ permissions and limitations under the Licence.
                         return null;
                     }
                     
-                    return this._v_Records.length;
+                    return this._v_Records.length -1;
                     
                 };
                 if( fLastKeptRecordPointer){}/* CQT */

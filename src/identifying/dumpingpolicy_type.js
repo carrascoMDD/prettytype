@@ -459,22 +459,19 @@ permissions and limitations under the Licence.
                     if( !aConsoleService) {
                         return;
                     }
-                    
-                    
-                    var aRecorder = this.fRecorder();
-                    if( !aRecorder) {
-                        return;
-                    }
-                    
-                    
+
                     var aLogString = theRecord.fLogString();
                     if( !aLogString) {
                         return;
                     }
                     
                     aConsoleService.log(  "," + aLogString);
-                    
-                    
+    
+                    var aRecorder = this.fRecorder();
+                    if( !aRecorder) {
+                        return;
+                    }
+    
                     aRecorder.pSetRecordPointer( this.RECORDPOINTERNAME_LASTDUMPED, theRecordedRecordPointer);
                     
                 };

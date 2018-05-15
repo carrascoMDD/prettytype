@@ -59,17 +59,17 @@ var aTest_spec = (function( theSS_identifier_svce,
         var aM_common_type     = null;
         var aM_recordingpolicy_keepall_type = null;
     
-        var aMethodName = "common_svce_test_recordingpolicykeepall__theMethodName";
-        var anEventKind = "common_svce_test_recordingpolicykeepall__theEventKind";
-        var aData       = "common_svce_test_recordingpolicykeepall__theData";
-        var aReason     = "common_svce_test_recordingpolicykeepall__theReason";
-        var aDetail     = "common_svce_test_recordingpolicykeepall__theDetail";
+        var aMethodName = "common_recordingpolicykeepall__theMethodName";
+        var anEventKind = "common_recordingpolicykeepall__theEventKind";
+        var aData       = "common_recordingpolicykeepall__theData";
+        var aReason     = "common_recordingpolicykeepall__theReason";
+        var aDetail     = "common_recordingpolicykeepall__theDetail";
     
-        var aMethodName2 = "common_svce_test_recordingpolicykeepall__theMethodName2";
-        var anEventKind2 = "common_svce_test_recordingpolicykeepall__theEventKind2";
-        var aData2       = "common_svce_test_recordingpolicykeepall__theData2";
-        var aReason2     = "common_svce_test_recordingpolicykeepall__theReason2";
-        var aDetail2     = "common_svce_test_recordingpolicykeepall__theDetail2";
+        var aMethodName2 = "common_recordingpolicykeepall__theMethodName2";
+        var anEventKind2 = "common_recordingpolicykeepall__theEventKind2";
+        var aData2       = "common_recordingpolicykeepall__theData2";
+        var aReason2     = "common_recordingpolicykeepall__theReason2";
+        var aDetail2     = "common_recordingpolicykeepall__theDetail2";
     
         var aRecordPointerName_keepall_01         = "recordPointerName_keepall_01";
         var aRecordPointerName_keepall_02         = "recordPointerName_keepall_02";
@@ -96,54 +96,6 @@ var aTest_spec = (function( theSS_identifier_svce,
         var aCommon_Recorder_SetRecordingPointer_01_afterSecondRecord = null;
         var aCommon_Recorder_SetRecordingPointer_02_afterSecondRecord = null;
         var aCommon_Recorder_SetRecordingPointer_03_afterSecondRecord = null;
-    
-    
-    
-        var aBeforeEach_allPlatforms = function() {
-            aCommon = new aM_common_type.Common_Constructor( aCommon_title, aM_identifier_svce, aM_recorder_svce);
-        
-            aCommon_Recorder   = aCommon._v_Recorder;
-            aCommon_Identifier = aCommon._v_Identifier;
-        
-            aRecordingPolicyKeepAll = new aM_recordingpolicy_keepall_type.RecordingPolicyKeepAll_Constructor( "RecordingPolicy-for-common_svce-recordingpolicy_keepall-behavioral-test.js", aCommon_Identifier, aCommon_Recorder);
-            aRecordingPolicyKeepAll.pSetMustKeepRecords( true);
-            aCommon_Recorder.pSetRecordingPolicy( aRecordingPolicyKeepAll);
-        
-            aCommon_Recorder_SetRecordingPolicy = aCommon_Recorder.fRecordingPolicy();
-            aCommon_Recorder_SetRecordingPolicy_MustKeepRecords = aCommon_Recorder_SetRecordingPolicy.fMustKeepRecords();
-        
-        
-            aBeforeRecordMillis = new Date().getMilliseconds();
-        
-            aCommon_Recorder.pClearKeptRecords();
-            someKeptRecordsBefore = aCommon_Recorder.fKeptRecords();
-            aCommon_Recorder.pSetRecordPointer( aRecordPointerName_keepall_01, null /* point to last record */);
-            aCommon_Recorder_SetRecordingPointer_01_beforeAnyRecords = aCommon_Recorder.fGetRecordPointerNamed( aRecordPointerName_keepall_01);
-        
-            aRecord = aCommon.fRecord( aMethodName, anEventKind, aData, aReason, aDetail);
-        
-            aCommon_Recorder.pSetRecordPointer( aRecordPointerName_keepall_02, null /* point to last record */);
-        
-            aCommon_Recorder_SetRecordingPointer_01_afterFirstRecord = aCommon_Recorder.fGetRecordPointerNamed( aRecordPointerName_keepall_01);
-            aCommon_Recorder_SetRecordingPointer_02_afterFirstRecord = aCommon_Recorder.fGetRecordPointerNamed( aRecordPointerName_keepall_02);
-        
-        
-            otherRecord = aCommon.fRecord( aMethodName2, anEventKind2, aData2, aReason2, aDetail2);
-        
-            someKeptRecords = aCommon_Recorder.fKeptRecords();
-            aKeptRecord_1 = someKeptRecords[ 0];
-            aKeptRecord_2 = someKeptRecords[ 1];
-        
-            aCommon_Recorder.pSetRecordPointer( aRecordPointerName_keepall_03, null /* point to last record */);
-            aCommon_Recorder_SetRecordingPointer_01_afterSecondRecord = aCommon_Recorder.fGetRecordPointerNamed( aRecordPointerName_keepall_01);
-            aCommon_Recorder_SetRecordingPointer_02_afterSecondRecord = aCommon_Recorder.fGetRecordPointerNamed( aRecordPointerName_keepall_02);
-            aCommon_Recorder_SetRecordingPointer_03_afterSecondRecord = aCommon_Recorder.fGetRecordPointerNamed( aRecordPointerName_keepall_03);
-        
-        
-            aCommon_Recorder.pClearKeptRecords();
-            someKeptRecordsAfterFinalClear = aCommon_Recorder.fKeptRecords();
-        };
-
         
     
     
@@ -156,8 +108,6 @@ var aTest_spec = (function( theSS_identifier_svce,
                 aM_recorder_svce   = _RecorderSvce_;
                 aM_common_type     = _CommonType_;
                 aM_recordingpolicy_keepall_type = _RecordingPolicyKeepAllType_;
-    
-                aBeforeEach_allPlatforms();
             }));
         }
         else if ( !(typeof module === 'undefined') && module.exports) {
@@ -166,8 +116,6 @@ var aTest_spec = (function( theSS_identifier_svce,
             aM_recorder_svce     = require('../../../src/identifying/recorder_svce');
             aM_common_type       = require('../../../src/common/common_type');
             aM_recordingpolicy_keepall_type = require('../../../src/identifying/recordingpolicy_keepall_type');
-    
-            beforeEach( aBeforeEach_allPlatforms);
         }
         else if ( !(typeof define === 'undefined') && define.amd) {
             // AMD / RequireJS
@@ -175,8 +123,6 @@ var aTest_spec = (function( theSS_identifier_svce,
             aM_recorder_svce   = theSS_recorder_svce;
             aM_common_type     = theSS_common_type;
             aM_recordingpolicy_keepall_type = theSS_recordingpolicy_keepall_type;
-    
-            beforeEach( aBeforeEach_allPlatforms);
         }
     
         
@@ -184,6 +130,51 @@ var aTest_spec = (function( theSS_identifier_svce,
     
     
         it("Keeps two recorded Records", function () {
+    
+            aCommon = new aM_common_type.Common_Constructor( aCommon_title, aM_identifier_svce, aM_recorder_svce);
+    
+            aCommon_Recorder   = aCommon._v_Recorder;
+            aCommon_Identifier = aCommon._v_Identifier;
+    
+            aRecordingPolicyKeepAll = new aM_recordingpolicy_keepall_type.RecordingPolicyKeepAll_Constructor( "RecordingPolicy-for-common_svce-recordingpolicy_keepall-behavioral-test.js", aCommon_Identifier, aCommon_Recorder);
+            aRecordingPolicyKeepAll.pSetMustKeepRecords( true);
+            aCommon_Recorder.pSetRecordingPolicy( aRecordingPolicyKeepAll);
+    
+            aCommon_Recorder_SetRecordingPolicy = aCommon_Recorder.fRecordingPolicy();
+            aCommon_Recorder_SetRecordingPolicy_MustKeepRecords = aCommon_Recorder_SetRecordingPolicy.fMustKeepRecords();
+            aCommon_Recorder.pClearKeptRecords();
+    
+    
+            aBeforeRecordMillis = new Date().getMilliseconds();
+    
+            someKeptRecordsBefore = aCommon_Recorder.fKeptRecords();
+            aCommon_Recorder.pSetRecordPointer( aRecordPointerName_keepall_01, null /* point to last record */);
+            aCommon_Recorder_SetRecordingPointer_01_beforeAnyRecords = aCommon_Recorder.fGetRecordPointerNamed( aRecordPointerName_keepall_01);
+    
+            aRecord = aCommon.fRecord( aMethodName, anEventKind, aData, aReason, aDetail);
+    
+            aCommon_Recorder.pSetRecordPointer( aRecordPointerName_keepall_02, null /* point to last record */);
+    
+            aCommon_Recorder_SetRecordingPointer_01_afterFirstRecord = aCommon_Recorder.fGetRecordPointerNamed( aRecordPointerName_keepall_01);
+            aCommon_Recorder_SetRecordingPointer_02_afterFirstRecord = aCommon_Recorder.fGetRecordPointerNamed( aRecordPointerName_keepall_02);
+    
+    
+            otherRecord = aCommon.fRecord( aMethodName2, anEventKind2, aData2, aReason2, aDetail2);
+    
+            someKeptRecords = aCommon_Recorder.fKeptRecords();
+            aKeptRecord_1 = someKeptRecords[ 0];
+            aKeptRecord_2 = someKeptRecords[ 1];
+    
+            aCommon_Recorder.pSetRecordPointer( aRecordPointerName_keepall_03, null /* point to last record */);
+            aCommon_Recorder_SetRecordingPointer_01_afterSecondRecord = aCommon_Recorder.fGetRecordPointerNamed( aRecordPointerName_keepall_01);
+            aCommon_Recorder_SetRecordingPointer_02_afterSecondRecord = aCommon_Recorder.fGetRecordPointerNamed( aRecordPointerName_keepall_02);
+            aCommon_Recorder_SetRecordingPointer_03_afterSecondRecord = aCommon_Recorder.fGetRecordPointerNamed( aRecordPointerName_keepall_03);
+    
+    
+            aCommon_Recorder.pClearKeptRecords();
+            someKeptRecordsAfterFinalClear = aCommon_Recorder.fKeptRecords();
+            
+            
     
             expect( aCommon_Recorder_SetRecordingPolicy).not.toBeUndefined();
             expect( typeof aCommon_Recorder_SetRecordingPolicy).toBe( "object");

@@ -86,7 +86,12 @@ requirejs.config({
         "m_common_recordingpolicy_keepall_behavioral_test",
         "m_common_recordingpolicy_keepall_donotkeep_behavioral_test",
         "m_common_recordingpolicy_keepsome_behavioral_test",
-        "m_common_recordingpolicy_keeprecent_behavioral_test"
+        "m_common_recordingpolicy_keeprecent_behavioral_test",
+        "m_common_dumpingpolicy_filterkinds_all_behavioral_test",
+        "m_common_dumpingpolicy_filterkinds_maynotdump_behavioral_test",
+        "m_common_dumpingpolicy_filterkinds_some_behavioral_test",
+        "m_common_dumpingpolicy_triggerkinds_all_behavioral_test",
+        "m_common_dumpingpolicy_triggerkinds_none_behavioral_test"
 
     ],
     
@@ -136,7 +141,14 @@ requirejs.config({
         'm_common_recordingpolicy_keepall_behavioral_test':   './test/behavioral-test/common-behavioral-test/common-recordingpolicy_keepall-behavioral-test',
         'm_common_recordingpolicy_keepall_donotkeep_behavioral_test':   './test/behavioral-test/common-behavioral-test/common-recordingpolicy_keepall_donotkeep-behavioral-test',
         'm_common_recordingpolicy_keepsome_behavioral_test':  './test/behavioral-test/common-behavioral-test/common-recordingpolicy_keepsome-behavioral-test',
-        'm_common_recordingpolicy_keeprecent_behavioral_test':  './test/behavioral-test/common-behavioral-test/common-recordingpolicy_keeprecent-behavioral-test'
+        'm_common_recordingpolicy_keeprecent_behavioral_test':  './test/behavioral-test/common-behavioral-test/common-recordingpolicy_keeprecent-behavioral-test',
+        'm_common_dumpingpolicy_filterkinds_all_behavioral_test': './test/behavioral-test/common-behavioral-test/common-dumpingpolicy_filterkinds_all-behavioral-test',
+        'm_common_dumpingpolicy_filterkinds_maynotdump_behavioral_test': './test/behavioral-test/common-behavioral-test/common-dumpingpolicy_filterkinds_maynotdump-behavioral-test',
+        'm_common_dumpingpolicy_filterkinds_some_behavioral_test': './test/behavioral-test/common-behavioral-test/common-dumpingpolicy_filterkinds_some-behavioral-test',
+        'm_common_dumpingpolicy_triggerkinds_all_behavioral_test': './test/behavioral-test/common-behavioral-test/common-dumpingpolicy_triggerkinds_all-behavioral-test',
+        'm_common_dumpingpolicy_triggerkinds_none_behavioral_test': './test/behavioral-test/common-behavioral-test/common-dumpingpolicy_triggerkinds_none-behavioral-test'
+    
+    
     },
 
     // start test run, once Require.js is done loading scripts

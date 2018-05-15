@@ -38,7 +38,6 @@ var someKarmaConfFiles = [
     
     './test/test-browser-karma-requirejs/test-main.js',
     
-    // './src/modboot/logmoduleloads.js',
     './src/modboot/typesregistry.js',
     './src/modboot/overrider_type.js',
     './src/modboot/overrider_svce.js',
@@ -113,9 +112,12 @@ var someKarmaConfFiles = [
     './test/behavioral-test/common-behavioral-test/common-recordingpolicy_keepall-behavioral-test.js',
     './test/behavioral-test/common-behavioral-test/common-recordingpolicy_keepall_donotkeep-behavioral-test.js',
     './test/behavioral-test/common-behavioral-test/common-recordingpolicy_keepsome-behavioral-test.js',
-    './test/behavioral-test/common-behavioral-test/common-recordingpolicy_keeprecent-behavioral-test.js'
-    
-    
+    './test/behavioral-test/common-behavioral-test/common-recordingpolicy_keeprecent-behavioral-test.js',
+    './test/behavioral-test/common-behavioral-test/common-dumpingpolicy_filterkinds_all-behavioral-test.js',
+    './test/behavioral-test/common-behavioral-test/common-dumpingpolicy_filterkinds_maynotdump-behavioral-test.js',
+    './test/behavioral-test/common-behavioral-test/common-dumpingpolicy_filterkinds_some-behavioral-test.js',
+    './test/behavioral-test/common-behavioral-test/common-dumpingpolicy_triggerkinds_all-behavioral-test.js',
+    './test/behavioral-test/common-behavioral-test/common-dumpingpolicy_triggerkinds_none-behavioral-test.js'
 
 
 

@@ -270,7 +270,7 @@
                 
                 if( aModule.ModuleGlobals._g_WriteToConsole) {
                     
-                    console.log( theMessage);
+                    // console.log( theMessage);
                 }
                 
             };
@@ -299,7 +299,7 @@
                 
                 if( aModule.ModuleGlobals._g_WriteToConsole) {
                     
-                    console.error( theMessage);
+                    // console.error( theMessage);
                 }
                 
             };
@@ -329,7 +329,7 @@
                 
                 if( aModule.ModuleGlobals._g_WriteToConsole) {
                     
-                    console.log( theMessage);
+                    // console.log( theMessage);
                 }
                 
             };
@@ -348,7 +348,7 @@
                 
                 if( aModule.ModuleGlobals._g_WriteToConsole) {
                     
-                    console.clear();
+                    // console.clear();
                 }
                 
             };

@@ -61,24 +61,21 @@ var aTest_spec = (function( theSS_identifier_svce,
     
     
     
-        var aMethodName = "common_svce_test_recordingpolicykeepall__theMethodName";
-        var anEventKind = "common_svce_test_recordingpolicykeepall__theEventKind";
-        var aData       = "common_svce_test_recordingpolicykeepall__theData";
-        var aReason     = "common_svce_test_recordingpolicykeepall__theReason";
-        var aDetail     = "common_svce_test_recordingpolicykeepall__theDetail";
+        var aMethodName = "common_recordingpolicykeepall_donotkeep__theMethodName";
+        var anEventKind = "common_recordingpolicykeepall_donotkeep__theEventKind";
+        var aData       = "common_recordingpolicykeepall_donotkeep__theData";
+        var aReason     = "common_recordingpolicykeepall_donotkeep__theReason";
+        var aDetail     = "common_recordingpolicykeepall_donotkeep__theDetail";
     
-        var aMethodName2 = "common_svce_test_recordingpolicykeepall__theMethodName2";
-        var anEventKind2 = "common_svce_test_recordingpolicykeepall__theEventKind2";
-        var aData2       = "common_svce_test_recordingpolicykeepall__theData2";
-        var aReason2     = "common_svce_test_recordingpolicykeepall__theReason2";
-        var aDetail2     = "common_svce_test_recordingpolicykeepall__theDetail2";
-    
-    
+        var aMethodName2 = "common_recordingpolicykeepall_donotkeep__theMethodName2";
+        var anEventKind2 = "common_recordingpolicykeepall_donotkeep__theEventKind2";
+        var aData2       = "common_recordingpolicykeepall_donotkeep__theData2";
+        var aReason2     = "common_recordingpolicykeepall_donotkeep__theReason2";
+        var aDetail2     = "common_recordingpolicykeepall_donotkeep__theDetail2";
     
         var aRecordPointerName_keepall_01         = "recordPointerName_keepall_01";
         var aRecordPointerName_keepall_02         = "recordPointerName_keepall_02";
         var aRecordPointerName_keepall_03         = "recordPointerName_keepall_03";
-    
     
     
         var aCommon             = null;
@@ -92,8 +89,6 @@ var aTest_spec = (function( theSS_identifier_svce,
         var aRecord = null;
         var otherRecord = null;
         var someKeptRecords = null;
-        var aKeptRecord_1 = null;
-        var aKeptRecord_2 = null;
         var someKeptRecordsAfterFinalClear = null;
     
         var aCommon_Recorder_SetRecordingPointer_01_beforeAnyRecords = null;
@@ -103,9 +98,38 @@ var aTest_spec = (function( theSS_identifier_svce,
         var aCommon_Recorder_SetRecordingPointer_02_afterSecondRecord = null;
         var aCommon_Recorder_SetRecordingPointer_03_afterSecondRecord = null;
 
+      
         
+        if( ( typeof beforeEach === 'function') && ( typeof module === 'function')  && ( typeof inject === 'function')) {
+            // Karma for Angular (1.x)
+            beforeEach( module( 'typesRegistry', 'modbootTypes', 'identifyingTypes', 'commonTypes'));
         
-        var aBeforeEach_allPlatforms = function() {
+            beforeEach( inject(function( _IdentifierSvce_, _RecorderSvce_, _CommonType_, _RecordingPolicyKeepAllType_) {
+                aM_identifier_svce = _IdentifierSvce_;
+                aM_recorder_svce   = _RecorderSvce_;
+                aM_common_type     = _CommonType_;
+                aM_recordingpolicy_keepall_type = _RecordingPolicyKeepAllType_;
+            }));
+        }
+        else if ( !(typeof module === 'undefined') && module.exports) {
+            // Node.js
+            aM_identifier_svce   = require('../../../src/identifying/identifier_svce');
+            aM_recorder_svce     = require('../../../src/identifying/recorder_svce');
+            aM_common_type       = require('../../../src/common/common_type');
+            aM_recordingpolicy_keepall_type = require('../../../src/identifying/recordingpolicy_keepall_type');
+        }
+        else if ( !(typeof define === 'undefined') && define.amd) {
+            // AMD / RequireJS
+            aM_identifier_svce = theSS_identifier_svce;
+            aM_recorder_svce   = theSS_recorder_svce;
+            aM_common_type     = theSS_common_type;
+            aM_recordingpolicy_keepall_type = theSS_recordingpolicy_keepall_type;
+        }
+    
+    
+    
+        it("Does not Keep any of two recorded Records", function () {
+    
             aCommon = new aM_common_type.Common_Constructor( aCommon_title, aM_identifier_svce, aM_recorder_svce);
     
             aCommon_Recorder   = aCommon._v_Recorder;
@@ -114,14 +138,13 @@ var aTest_spec = (function( theSS_identifier_svce,
             aRecordingPolicyKeepAll = new aM_recordingpolicy_keepall_type.RecordingPolicyKeepAll_Constructor( "RecordingPolicy-for-common_svce-recordingpolicy_keepall-donotkeep-behavioral-test.js", aCommon_Identifier, aCommon_Recorder);
             aRecordingPolicyKeepAll.pSetMustKeepRecords( false);
             aCommon_Recorder.pSetRecordingPolicy( aRecordingPolicyKeepAll);
-    
             aCommon_Recorder_SetRecordingPolicy = aCommon_Recorder.fRecordingPolicy();
             aCommon_Recorder_SetRecordingPolicy_MustKeepRecords = aCommon_Recorder_SetRecordingPolicy.fMustKeepRecords();
+            aCommon_Recorder.pClearKeptRecords();
     
     
             aBeforeRecordMillis = new Date().getMilliseconds();
     
-            aCommon_Recorder.pClearKeptRecords();
             someKeptRecordsBefore = aCommon_Recorder.fKeptRecords();
             aCommon_Recorder.pSetRecordPointer( aRecordPointerName_keepall_01, null /* point to last record */);
             aCommon_Recorder_SetRecordingPointer_01_beforeAnyRecords = aCommon_Recorder.fGetRecordPointerNamed( aRecordPointerName_keepall_01);
@@ -143,48 +166,9 @@ var aTest_spec = (function( theSS_identifier_svce,
     
             aCommon_Recorder.pClearKeptRecords();
             someKeptRecordsAfterFinalClear = aCommon_Recorder.fKeptRecords();
-        };
-    
-    
-    
-    
-    
-        if( ( typeof beforeEach === 'function') && ( typeof module === 'function')  && ( typeof inject === 'function')) {
-            // Karma for Angular (1.x)
-            beforeEach( module( 'typesRegistry', 'modbootTypes', 'identifyingTypes', 'commonTypes'));
-        
-            beforeEach( inject(function( _IdentifierSvce_, _RecorderSvce_, _CommonType_, _RecordingPolicyKeepAllType_) {
-                aM_identifier_svce = _IdentifierSvce_;
-                aM_recorder_svce   = _RecorderSvce_;
-                aM_common_type     = _CommonType_;
-                aM_recordingpolicy_keepall_type = _RecordingPolicyKeepAllType_;
             
-                aBeforeEach_allPlatforms();
-            }));
-        }
-        else if ( !(typeof module === 'undefined') && module.exports) {
-            // Node.js
-            aM_identifier_svce   = require('../../../src/identifying/identifier_svce');
-            aM_recorder_svce     = require('../../../src/identifying/recorder_svce');
-            aM_common_type       = require('../../../src/common/common_type');
-            aM_recordingpolicy_keepall_type = require('../../../src/identifying/recordingpolicy_keepall_type');
-    
-            beforeEach( aBeforeEach_allPlatforms);
-        }
-        else if ( !(typeof define === 'undefined') && define.amd) {
-            // AMD / RequireJS
-            aM_identifier_svce = theSS_identifier_svce;
-            aM_recorder_svce   = theSS_recorder_svce;
-            aM_common_type     = theSS_common_type;
-            aM_recordingpolicy_keepall_type = theSS_recordingpolicy_keepall_type;
-    
-            beforeEach( aBeforeEach_allPlatforms);
-        }
-    
-    
-    
-        it("Does not Keep any of two recorded Records", function () {
-        
+            
+            
             expect( aCommon_Recorder_SetRecordingPolicy).not.toBeUndefined();
             expect( typeof aCommon_Recorder_SetRecordingPolicy).toBe( "object");
             expect( aCommon_Recorder_SetRecordingPolicy).not.toBeNull();

@@ -79,8 +79,14 @@ permissions and limitations under the Licence.
                 if( !theToInit) {
                     return;
                 }
-                
+    
+    
+                theToInit.REGISTERMODULES = false;
+                theToInit.RESOLVEMODULES  = false;
+    
+    
                 theToInit.TYPESREGISTRYDEFAULTNAME = "TypesRegistry_DefaultName";
+                
             };
             
             
@@ -306,6 +312,11 @@ permissions and limitations under the Licence.
                 
                 
                 var fRegisterModule = function( theModuleFullName, theModule) {
+                    
+                    if( !this.REGISTERMODULES) {
+                        return false;
+                    }
+                    
                     if( !theModule) {
                         return false;
                     }
@@ -343,6 +354,11 @@ permissions and limitations under the Licence.
                 
                 
                 var fRegisteredModule = function( theModuleFullName) {
+    
+                    if( !this.RESOLVEMODULES) {
+                        return null;
+                    }
+    
                     if( !theModuleFullName) {
                         return null;
                     }
@@ -359,9 +375,14 @@ permissions and limitations under the Licence.
                 aPrototype.fRegisteredModule = fRegisteredModule;
     
     
-    
+
+                
                 var fUnregisterModule = function( theModuleFullName, theModule) {
-        
+    
+                    if( !this.REGISTERMODULES) {
+                        return false;
+                    }
+                    
                     var aModuleFullName = theModuleFullName;
                     if( !aModuleFullName) {
                         if( theModule) {

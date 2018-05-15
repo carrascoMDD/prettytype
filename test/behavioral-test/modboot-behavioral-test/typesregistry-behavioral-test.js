@@ -71,9 +71,28 @@ var aTest_spec = (function( theSS_typeregistry) {
             var aModuleName = "TestModuleName01";
             expect( aM_typesregistry.fRegisteredModule( aModuleName)).toBeNull();
             
+            var aREGISTERMODULESswitched = false;
+            if( !aM_typesregistry.REGISTERMODULES) {
+                aM_typesregistry.REGISTERMODULES = true;
+                aREGISTERMODULESswitched = true;
+            }
+            
+            var aRESOLVEMODULESswitched=false;
+            if( !aM_typesregistry.RESOLVEMODULES) {
+                aM_typesregistry.RESOLVEMODULES = true;
+                aRESOLVEMODULESswitched = true;
+            }
+            
             aM_typesregistry.fRegisterModule( aModuleName, { "ModuleName": aModuleName});
             expect( aM_typesregistry.fRegisteredModule( aModuleName)).not.toBeNull();
             expect( aM_typesregistry.fRegisteredModule( aModuleName)[ "TYPESREGISTRY"]).toBe( aM_typesregistry);
+    
+            if( aREGISTERMODULESswitched) {
+                delete aM_typesregistry.REGISTERMODULES;
+            }
+            if( aRESOLVEMODULESswitched) {
+                delete aM_typesregistry.RESOLVEMODULES;
+            }
         });
     
     });

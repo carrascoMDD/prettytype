@@ -78,12 +78,7 @@ var someKarmaConfFiles = [
     
     '../../src/index.js',
     
-    /*
-    '../../src/common/commoneventkinds.js',
-    '../../src/common/common_type.js',
-    '../../src/common/common_types.js',
-    */
-    
+
     '../structural-test/modboot-structural-test/typesregistry-structural-test.js',
     '../structural-test/modboot-structural-test/overrider_type-structural-test.js',
     '../structural-test/modboot-structural-test/overrider_svce-structural-test.js',
@@ -128,7 +123,12 @@ var someKarmaConfFiles = [
     '../behavioral-test/common-behavioral-test/common-recordingpolicy_keepall-behavioral-test.js',
     '../behavioral-test/common-behavioral-test/common-recordingpolicy_keepall_donotkeep-behavioral-test.js',
     '../behavioral-test/common-behavioral-test/common-recordingpolicy_keepsome-behavioral-test.js',
-    '../behavioral-test/common-behavioral-test/common-recordingpolicy_keeprecent-behavioral-test.js'
+    '../behavioral-test/common-behavioral-test/common-recordingpolicy_keeprecent-behavioral-test.js',
+    '../behavioral-test/common-behavioral-test/common-dumpingpolicy_filterkinds_all-behavioral-test.js',
+    '../behavioral-test/common-behavioral-test/common-dumpingpolicy_filterkinds_maynotdump-behavioral-test.js',
+    '../behavioral-test/common-behavioral-test/common-dumpingpolicy_filterkinds_some-behavioral-test.js',
+    '../behavioral-test/common-behavioral-test/common-dumpingpolicy_triggerkinds_all-behavioral-test.js',
+    '../behavioral-test/common-behavioral-test/common-dumpingpolicy_triggerkinds_none-behavioral-test.js'
 ];
 
 

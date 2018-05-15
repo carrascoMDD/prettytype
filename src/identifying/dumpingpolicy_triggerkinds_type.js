@@ -62,7 +62,7 @@
                     return;
                 }
                 
-                theToInit.LOGCHANGESTOEVENTKINDSTRIGGERINGDUMP = true;
+                theToInit.LOGCHANGESTOEVENTKINDSTRIGGERINGDUMP = false;
                 
                 theToInit.EVENTSSETTRIGGERINGDUMP = "EVENTKINDS_TRIGGERINGDUMP_ALL";
                 theToInit.EVENTSSETTRIGGERINGDUMP = "EVENTKINDS_TRIGGERINGDUMP_ERRORS";

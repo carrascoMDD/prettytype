@@ -64,42 +64,67 @@ var aTest_spec = (function( theSS_identifier_svce,
         var aMustKeepRecordsMaxNumber = 10;
         var aNumRecordsToSubmit = aMustKeepRecordsMaxNumber + 1;
     
-        var aMethodName = "common_svce_test_recordingpolicykeepall__theMethodName";
-        var anEventKind = "common_svce_test_recordingpolicykeepall__theEventKind";
-        var aData       = "common_svce_test_recordingpolicykeepall__theData";
-        var aReason     = "common_svce_test_recordingpolicykeepall__theReason";
-        var aDetail     = "common_svce_test_recordingpolicykeepall__theDetail";
+        var aMethodName = "common_recordingpolicykeepsome__theMethodName";
+        var anEventKind = "common_recordingpolicykeepsome__theEventKind";
+        var aData       = "common_recordingpolicykeepsome__theData";
+        var aReason     = "common_recordingpolicykeepsome__theReason";
+        var aDetail     = "common_recordingpolicykeepsome__theDetail";
     
         var aRecordPointerName_keepsome_01         = "recordPointerName_keepsome_01";
         var aRecordPointerName_keepsome_02         = "recordPointerName_keepsome_02";
     
     
-        var aCommon             = null;
-        var aCommon_Recorder        = null;
-        var aCommon_Identifier      = null;
-        var aRecordingPolicyKeepSome = null;
-        var aCommon_Recorder_SetRecordingPolicy = null;
-        var aCommon_Recorder_SetRecordingPolicy_MustKeepRecords = null;
-        var someKeptRecordsBefore = null;
-        var aRecord = null;
-        var otherRecord = null;
-        var someKeptRecords = null;
-        var aKeptRecord_1 = null;
-        var aKeptRecord_2 = null;
-        var someKeptRecordsAfterFinalClear = null;
     
-        var aCommon_Recorder_SetRecordingPointer_01_beforeAnyRecords = null;
-        var aCommon_Recorder_SetRecordingPointer_01_afterExactlyMaxRecords = null;
-        var aCommon_Recorder_SetRecordingPointer_02_afterExactlyMaxRecords = null;
+        if( ( typeof beforeEach === 'function') && ( typeof module === 'function')  && ( typeof inject === 'function')) {
+            // Karma for Angular (1.x)
+            beforeEach( module( 'typesRegistry', 'modbootTypes', 'identifyingTypes', 'commonTypes'));
+            
+            beforeEach( inject(function( _IdentifierSvce_, _RecorderSvce_, _CommonType_, _RecordingPolicyKeepSomeType_) {
+                aM_identifier_svce = _IdentifierSvce_;
+                aM_recorder_svce   = _RecorderSvce_;
+                aM_common_type     = _CommonType_;
+                aM_recordingpolicy_keepsome_type = _RecordingPolicyKeepSomeType_;
+            }));
+        }
+        else if ( !(typeof module === 'undefined') && module.exports) {
+            // Node.js
+            aM_identifier_svce   = require('../../../src/identifying/identifier_svce');
+            aM_recorder_svce     = require('../../../src/identifying/recorder_svce');
+            aM_common_type       = require('../../../src/common/common_type');
+            aM_recordingpolicy_keepsome_type = require('../../../src/identifying/recordingpolicy_keepsome_type');
+        }
+        else if ( !(typeof define === 'undefined') && define.amd) {
+            // AMD / RequireJS
+            aM_identifier_svce = theSS_identifier_svce;
+            aM_recorder_svce   = theSS_recorder_svce;
+            aM_common_type     = theSS_common_type;
+            aM_recordingpolicy_keepsome_type = theSS_recordingpolicy_keepsome_type;
+        }
     
     
     
+        it("Has main structural features defined, and kept submitted records up to a maximum number of records", function () {
     
+            var aCommon             = null;
+            var aCommon_Recorder        = null;
+            var aCommon_Identifier      = null;
+            var aRecordingPolicyKeepSome = null;
+            var aCommon_Recorder_SetRecordingPolicy = null;
+            var aCommon_Recorder_SetRecordingPolicy_MustKeepRecords = null;
+            var someKeptRecordsBefore = null;
+            var aRecord = null;
+            var otherRecord = null;
+            var someKeptRecords = null;
+            var aKeptRecord_1 = null;
+            var aKeptRecord_2 = null;
+            var someKeptRecordsAfterFinalClear = null;
     
+            var aCommon_Recorder_SetRecordingPointer_01_beforeAnyRecords = null;
+            var aCommon_Recorder_SetRecordingPointer_01_afterExactlyMaxRecords = null;
+            var aCommon_Recorder_SetRecordingPointer_02_afterExactlyMaxRecords = null;
     
-        var aBeforeEach_allPlatforms = function() {
             aCommon = new aM_common_type.Common_Constructor( aCommon_title, aM_identifier_svce, aM_recorder_svce);
-
+    
             aCommon_Recorder   = aCommon._v_Recorder;
             aCommon_Identifier = aCommon._v_Identifier;
     
@@ -107,10 +132,8 @@ var aTest_spec = (function( theSS_identifier_svce,
             aRecordingPolicyKeepSome.pSetMustKeepRecords( true);
             aRecordingPolicyKeepSome.pSetMustKeepRecordsMaxNumber( aMustKeepRecordsMaxNumber);
             aCommon_Recorder.pSetRecordingPolicy( aRecordingPolicyKeepSome);
-    
             aCommon_Recorder_SetRecordingPolicy = aCommon_Recorder.fRecordingPolicy();
             aCommon_Recorder_SetRecordingPolicy_MustKeepRecords = aCommon_Recorder_SetRecordingPolicy.fMustKeepRecords();
-    
             aCommon_Recorder.pClearKeptRecords();
             someKeptRecordsBefore = aCommon_Recorder.fKeptRecords();
     
@@ -132,47 +155,10 @@ var aTest_spec = (function( theSS_identifier_svce,
             someKeptRecords = aCommon_Recorder.fKeptRecords();
             aCommon_Recorder.pClearKeptRecords();
             someKeptRecordsAfterFinalClear = aCommon_Recorder.fKeptRecords();
-        };
-        
-        
-        
-        
-        if( ( typeof beforeEach === 'function') && ( typeof module === 'function')  && ( typeof inject === 'function')) {
-            // Karma for Angular (1.x)
-            beforeEach( module( 'typesRegistry', 'modbootTypes', 'identifyingTypes', 'commonTypes'));
             
-            beforeEach( inject(function( _IdentifierSvce_, _RecorderSvce_, _CommonType_, _RecordingPolicyKeepSomeType_) {
-                aM_identifier_svce = _IdentifierSvce_;
-                aM_recorder_svce   = _RecorderSvce_;
-                aM_common_type     = _CommonType_;
-                aM_recordingpolicy_keepsome_type = _RecordingPolicyKeepSomeType_;
-                
-                aBeforeEach_allPlatforms();
-            }));
-        }
-        else if ( !(typeof module === 'undefined') && module.exports) {
-            // Node.js
-            aM_identifier_svce   = require('../../../src/identifying/identifier_svce');
-            aM_recorder_svce     = require('../../../src/identifying/recorder_svce');
-            aM_common_type       = require('../../../src/common/common_type');
-            aM_recordingpolicy_keepsome_type = require('../../../src/identifying/recordingpolicy_keepsome_type');
             
-            aBeforeEach_allPlatforms();
-        }
-        else if ( !(typeof define === 'undefined') && define.amd) {
-            // AMD / RequireJS
-            aM_identifier_svce = theSS_identifier_svce;
-            aM_recorder_svce   = theSS_recorder_svce;
-            aM_common_type     = theSS_common_type;
-            aM_recordingpolicy_keepsome_type = theSS_recordingpolicy_keepsome_type;
             
-            aBeforeEach_allPlatforms();
-        }
-    
-    
-    
-        it("Has main structural features defined, and kept submitted records up to a maximum number of records", function () {
-        
+            
             expect( aCommon.fRecord).not.toBeUndefined();
             expect( typeof aCommon.fRecord).toBe( "function");
         

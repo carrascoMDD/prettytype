@@ -66,11 +66,11 @@ var aTest_spec = (function( theSS_identifier_svce,
         var aDelayBeforeSecondSubmissionMillis = aMustKeepRecordsRecentMillis * 3;
         var anExtraDelayForTestsMillis = 100; /* Avoid timing too tight to event expiration deadline. There is no need for fine precission on the test, and garbage collection or asynchronous testing machinery could sometimes introduce some extra milliseconds delay */
     
-        var aMethodName = "common_type_record_test_recordingpolicykeepall__theMethodName";
-        var anEventKind = "common_type_record_test_recordingpolicykeepall__theEventKind";
-        var aData       = "common_type_record_test_recordingpolicykeepall__theData";
-        var aReason     = "common_type_record_test_recordingpolicykeepall__theReason";
-        var aDetail     = "common_type_record_test_recordingpolicykeepall__theDetail";
+        var aMethodName = "common_recordingpolicykeeprecent__theMethodName";
+        var anEventKind = "common_recordingpolicykeeprecent__theEventKind";
+        var aData       = "common_recordingpolicykeeprecent__theData";
+        var aReason     = "common_recordingpolicykeeprecent__theReason";
+        var aDetail     = "common_recordingpolicykeeprecent__theDetail";
     
         var aRecordPointerName_keeprecent_01         = "recordPointerName_keeprecent_01";
         var aRecordPointerName_keeprecent_02         = "recordPointerName_keeprecent_02";
@@ -270,10 +270,7 @@ var aTest_spec = (function( theSS_identifier_svce,
             expect( aCommon_Recorder_SetRecordingPointer_03_afterDelay).toBe( aNumRecordsToSubmit - 1);
         });
     
-    
-    
     });
-    
     
 });
 

@@ -62,7 +62,7 @@ permissions and limitations under the Licence.
                     return;
                 }
                 
-                theToInit.LOGCHANGESTOEVENTKINDSNOTFORCONSOLE = true;
+                theToInit.LOGCHANGESTOEVENTKINDSNOTFORCONSOLE = false;
                 
                 
                 theToInit.EVENTSSETNOTFORCONSOLE = "EVENTKINDS_NOTFORCONSOLE_NONE";
