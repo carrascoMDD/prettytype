@@ -4,7 +4,7 @@
 
 [https://github.com/carrascoMDD/prettytype](https://github.com/carrascoMDD/prettytype)
 
-_&quot;Multi-platform Javascript EC5 coding patterns and base super-prototypes, for write-once, run and test everywhere (angularjs, requirejs, nodejs). Reused i.e. in the SpringNut.org example._ [_http://www.springnut.org/springnut_](http://www.springnut.org/springnut) , government projects like the administration and instrumentation UI, and the end-2-end testing of the Official REgistry of Causes of Death of the Valencia regional government. Reused also in the offline extension of iGEO ERP environmental health app. _&quot;_
+_&quot;Multi-platform Javascript ES5 coding patterns and base super-prototypes, for write-once, run and test everywhere (angularjs, requirejs, nodejs). Reused i.e. in the SpringNut.org example._ [_http://www.springnut.org/springnut_](http://www.springnut.org/springnut) , government projects like the administration and instrumentation UI, and the end-2-end testing of the Official REgistry of Causes of Death of the Valencia regional government. Reused also in the offline extension of iGEO ERP environmental health app. _&quot;_
 
 ## Motivation
 
@@ -12,9 +12,9 @@ _&quot;Multi-platform Javascript EC5 coding patterns and base super-prototypes, 
 
 Being able to write pieces of logic in Javascript, once, and for all platforms and module definition standards, such that the decision of where to deploy an specific assembly of functionality - whether in the server or the browser, and under which module definition standard, can be postponed forever, or changed upon a whim, or dynamically.
 
-### To help decide on EC6 and Typescript adoption
+### To help decide on ES6 and Typescript adoption
 
-By supplying a concrete implementation in EC5 to evaluate complexity, cost and risk of implementations in EC5 with i.e. the few simple patterns in prettytype, as compared with implementations in EC6 not fully supported in all platforms, or strongly mediated by libraries or transpilers.
+By supplying a concrete implementation in ES5 to evaluate complexity, cost and risk of implementations in ES5 with i.e. the few simple patterns in prettytype, as compared with implementations in ES6 not fully supported in all platforms, or strongly mediated by libraries or transpilers.
 
 ### To debunk arguments pro-browserify and pro-transpiler
 
@@ -26,7 +26,7 @@ To serve as base coding patterns for multi-platform JavaScript developments, and
 
 ### To showroom multi-platform module and prototype definitions
 
-Full, testable implementations on how to implement multi-platform modules, prototypes and inheritance with plain JavaScript (EC5).
+Full, testable implementations on how to implement multi-platform modules, prototypes and inheritance with plain JavaScript (ES5).
 
 ## Goals
 
