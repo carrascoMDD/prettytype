@@ -548,16 +548,29 @@ permissions and limitations under the Licence.
                 this._v_Overrides = null;
             };
             Overrider_SuperPrototypeConstructor.prototype = aOverrider_Prototype;
-            
-            
-            
+    
+    
+    
+            var Overrider_SuperPrototypeSingleton = function() {
+                if( aModule.SuperPrototypeSingletonInstance) {
+                    return aModule.SuperPrototypeSingletonInstance;
+                }
+        
+                aModule.SuperPrototypeSingletonInstance = new Overrider_SuperPrototypeConstructor();
+                return aModule.SuperPrototypeSingletonInstance;
+            };
+        
+    
+
             var aModule = {
                 "Overrider_Prototype": aOverrider_Prototype,
                 "Overrider_Constructor": Overrider_Constructor,
                 "Overrider_SuperPrototypeConstructor": Overrider_SuperPrototypeConstructor,
+                "Overrider_SuperPrototypeSingleton": Overrider_SuperPrototypeSingleton,
                 "Prototype": aOverrider_Prototype,
                 "Constructor": Overrider_Constructor,
-                "SuperPrototypeConstructor": Overrider_SuperPrototypeConstructor
+                "SuperPrototypeConstructor": Overrider_SuperPrototypeConstructor,
+                "SuperPrototypeSingleton": Overrider_SuperPrototypeSingleton,
             };
             pgInitFromModuleConstants( aModule);
             aModule._v_Type = "module";
