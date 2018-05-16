@@ -161,7 +161,13 @@ var aTest_spec = (function( theSS_identifier_svce,
             aM_dumpingpolicy_triggerkinds_type = theSS_dumpingpolicy_triggerkinds_type;
             aM_console_svce    = theSS_console_svce;
         }
-    
+        else if ( !(typeof nomod === 'undefined') && nomod.register) {
+            aM_identifier_svce = nomod.resolve( nomod.fComputeFullName( "prettytype", "identifying", "identifier_svce"));
+            aM_recorder_type = nomod.resolve( nomod.fComputeFullName( "prettytype", "identifying", "recorder_type"));
+            aM_common_type = nomod.resolve( nomod.fComputeFullName( "prettytype", "common", "common_type"));
+            aM_dumpingpolicy_triggerkinds_type = nomod.resolve( nomod.fComputeFullName( "prettytype", "identifying", "dumpingpolicy_triggerkinds_type"));
+            aM_console_svce = nomod.resolve( nomod.fComputeFullName( "prettytype", "utils", "console_svce"));
+        }
     
     
     

@@ -37,7 +37,7 @@ permissions and limitations under the Licence.
 
 
 var aTest_spec = (function( theSS_identifier_svce,
-                            theSS_recorder_svce,
+                            theSS_recorder_type,
                             theSS_common_type,
                             theSS_dumpingpolicy_filterkinds_type,
                             theSS_console_svce) {
@@ -132,18 +132,25 @@ var aTest_spec = (function( theSS_identifier_svce,
         else if ( !(typeof define === 'undefined') && define.amd) {
             // AMD / RequireJS
             aM_identifier_svce = theSS_identifier_svce;
-            aM_recorder_type   = theSS_recorder_svce;
+            aM_recorder_type   = theSS_recorder_type;
             aM_common_type     = theSS_common_type;
             aM_dumpingpolicy_filterkinds_type = theSS_dumpingpolicy_filterkinds_type;
             aM_console_svce    = theSS_console_svce;
         }
-        
-        
-        
-        
-        
-        
-        
+        else if ( !(typeof nomod === 'undefined') && nomod.register) {
+            aM_identifier_svce = nomod.resolve( nomod.fComputeFullName( "prettytype", "identifying", "identifier_svce"));
+            aM_recorder_type = nomod.resolve( nomod.fComputeFullName( "prettytype", "identifying", "recorder_type"));
+            aM_common_type = nomod.resolve( nomod.fComputeFullName( "prettytype", "common", "common_type"));
+            aM_dumpingpolicy_filterkinds_type = nomod.resolve( nomod.fComputeFullName( "prettytype", "identifying", "dumpingpolicy_filterkinds_type"));
+            aM_console_svce = nomod.resolve( nomod.fComputeFullName( "prettytype", "utils", "console_svce"));
+        }
+    
+    
+    
+    
+    
+    
+    
         it("Dumps two recorded Records", function () {
     
             aLocalRecorder = new aM_recorder_type.Recorder_Constructor( aCommon_title, aM_identifier_svce);

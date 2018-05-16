@@ -67,7 +67,9 @@ var aTest_spec = (function( theSS_identifier_svce) {
             // AMD / RequireJS
             aM_identifier_svce = theSS_identifier_svce;
         }
-        
+        else if ( !(typeof nomod === 'undefined') && nomod.register) {
+            aM_identifier_svce = nomod.resolve( nomod.fComputeFullName( "prettytype", "identifying", "identifier_svce"));
+        }
     
 
     

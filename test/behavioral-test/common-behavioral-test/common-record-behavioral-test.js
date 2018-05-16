@@ -118,7 +118,15 @@ var aTest_spec = (function( theSS_identifier_svce,
             aRecord     = aCommon.fRecord( aMethodName,  anEventKind,  aData,  aReason,  aDetail);
             otherRecord = aCommon.fRecord( aMethodName2, anEventKind2, aData2, aReason2, aDetail2);
         }
+        else if ( !(typeof nomod === 'undefined') && nomod.register) {
+            aM_identifier_svce = nomod.resolve( nomod.fComputeFullName( "prettytype", "identifying", "identifier_svce"));
+            aM_recorder_svce = nomod.resolve( nomod.fComputeFullName( "prettytype", "identifying", "recorder_svce"));
+            aM_common_type = nomod.resolve( nomod.fComputeFullName( "prettytype", "common", "common_type"));
+            aCommon = new aM_common_type.Common_Constructor( aCommon_title, aM_identifier_svce, aM_recorder_svce);
     
+            aRecord     = aCommon.fRecord( aMethodName,  anEventKind,  aData,  aReason,  aDetail);
+            otherRecord = aCommon.fRecord( aMethodName2, anEventKind2, aData2, aReason2, aDetail2);
+        }
     
     
     

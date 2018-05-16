@@ -100,7 +100,12 @@ var aTest_spec = (function( theSS_identifier_svce,
             aM_common_type     = theSS_common_type;
             aM_recordingpolicy_keepsome_type = theSS_recordingpolicy_keepsome_type;
         }
-    
+        else if ( !(typeof nomod === 'undefined') && nomod.register) {
+            aM_identifier_svce = nomod.resolve( nomod.fComputeFullName( "prettytype", "identifying", "identifier_svce"));
+            aM_recorder_svce = nomod.resolve( nomod.fComputeFullName( "prettytype", "identifying", "recorder_svce"));
+            aM_common_type = nomod.resolve( nomod.fComputeFullName( "prettytype", "common", "common_type"));
+            aM_recordingpolicy_keepsome_type = nomod.resolve( nomod.fComputeFullName( "prettytype", "identifying", "recordingpolicy_keepsome_type"));
+        }
     
     
         it("Has main structural features defined, and kept submitted records up to a maximum number of records", function () {

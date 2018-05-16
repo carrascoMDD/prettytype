@@ -66,7 +66,9 @@ var aTest_spec = (function( theSS_ConsoleSvce) {
             // AMD / RequireJS
             aConsoleSvce = theSS_ConsoleSvce;
         }
-        
+        else if ( !(typeof nomod === 'undefined') && nomod.register) {
+            aConsoleSvce = nomod.resolve( nomod.fComputeFullName( "prettytype", "utils", "console_svce"));
+        }
 
     
     
