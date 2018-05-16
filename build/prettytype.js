@@ -9,7 +9,7 @@
  ***************************************************************************
 
  Copyright 2014 2015 2016 2017 2018 Antonio Carrasco Valero
- Javascript for core modules including a base prototype and prototypes hierarchy, intended to be reused on the Browser with AngularJS or RequireJS modules, or in the server as node modules. Licensed under EUPL  http://www.uiwire.org
+ Multi-platform Javascript EC5 coding patterns and base super-prototypes, for write-once, run and test everywhere (angular, require, node).
 
 Licensed under the EUPL, Version 1.1 only (the "Licence");
 You may not use this work except in compliance with the
@@ -80,7 +80,7 @@ FG_logModLoads.ModuleSource   = FG_logModLoads.toString();;'use strict';
  ***************************************************************************
 
  Copyright 2014 2015 2016 Antonio Carrasco Valero
- Angular Wrappers as Controllers and Services on prettytype Javascript skeletons for modules including a base prototype and prototypes hierarchy, intended to be reused.  licensed under EUPL  http://www.uiwire.org
+ Multi-platform Javascript EC5 coding patterns and base super-prototypes, for write-once, run and test everywhere (angular, require, node).
 
 Licensed under the EUPL, Version 1.1 only (the "Licence");
 You may not use this work except in compliance with the
@@ -122,7 +122,7 @@ if( !( typeof angular === 'undefined') && angular.module) {
  ***************************************************************************
 
  Copyright 2014 2015 2016 2017 2018 Antonio Carrasco Valero
- Javascript for core modules including a base prototype and prototypes hierarchy, intended to be reused on the Browser with AngularJS or RequireJS modules, or in the server as node modules. Licensed under EUPL  http://www.uiwire.org
+ Multi-platform Javascript EC5 coding patterns and base super-prototypes, for write-once, run and test everywhere (angular, require, node).
 
 Licensed under the EUPL, Version 1.1 only (the "Licence");
 You may not use this work except in compliance with the
@@ -656,6 +656,15 @@ permissions and limitations under the Licence.
         );
         
     }
+    else if ( !(typeof nomod === 'undefined') && nomod.register) {
+        // nomod toy module definition, resolution and dependency injection
+    
+        nomod.register( ComponentName, ModulePackages, ModuleName,
+            null /* theDependencies */,
+            aMod_definer
+        );
+    
+    }
     
     
 })();
@@ -674,7 +683,7 @@ permissions and limitations under the Licence.
  ***************************************************************************
 
  Copyright 2014 2015 2016 2017 2018 Antonio Carrasco Valero
- Javascript for core modules including a base prototype and prototypes hierarchy, intended to be reused on the Browser with AngularJS or RequireJS modules, or in the server as node modules. Licensed under EUPL  http://www.uiwire.org
+ Multi-platform Javascript EC5 coding patterns and base super-prototypes, for write-once, run and test everywhere (angular, require, node).
 
 Licensed under the EUPL, Version 1.1 only (the "Licence");
 You may not use this work except in compliance with the
@@ -702,15 +711,14 @@ permissions and limitations under the Licence.
 
 (function () {
     
+    var ComponentName    = "prettytype";
+    var ModuleName     = "overrider_type";
+    var ModulePackages = "modboot";
+    var ModuleFullName = ModulePackages + "/" + ModuleName;
+    
     var aMod_definer =  ( function( theSS_typesregistry) {
     
-        var ComponentName    = "prettytype";
-        var ModuleName     = "overrider_type";
-        var ModulePackages = "modboot";
-        var ModuleFullName = ModulePackages + "/" + ModuleName;
-        
-        
-        
+
         var aMod_builder = function() {
             
             if( typeof FG_logModLoads === 'function') { FG_logModLoads(ModuleFullName);}
@@ -1215,16 +1223,29 @@ permissions and limitations under the Licence.
                 this._v_Overrides = null;
             };
             Overrider_SuperPrototypeConstructor.prototype = aOverrider_Prototype;
-            
-            
-            
+    
+    
+    
+            var Overrider_SuperPrototypeSingleton = function() {
+                if( aModule.SuperPrototypeSingletonInstance) {
+                    return aModule.SuperPrototypeSingletonInstance;
+                }
+        
+                aModule.SuperPrototypeSingletonInstance = new Overrider_SuperPrototypeConstructor();
+                return aModule.SuperPrototypeSingletonInstance;
+            };
+        
+    
+
             var aModule = {
                 "Overrider_Prototype": aOverrider_Prototype,
                 "Overrider_Constructor": Overrider_Constructor,
                 "Overrider_SuperPrototypeConstructor": Overrider_SuperPrototypeConstructor,
+                "Overrider_SuperPrototypeSingleton": Overrider_SuperPrototypeSingleton,
                 "Prototype": aOverrider_Prototype,
                 "Constructor": Overrider_Constructor,
-                "SuperPrototypeConstructor": Overrider_SuperPrototypeConstructor
+                "SuperPrototypeConstructor": Overrider_SuperPrototypeConstructor,
+                "SuperPrototypeSingleton": Overrider_SuperPrototypeSingleton,
             };
             pgInitFromModuleConstants( aModule);
             aModule._v_Type = "module";
@@ -1305,6 +1326,17 @@ permissions and limitations under the Licence.
             aMod_definer);
         
     }
+    else if ( !(typeof nomod === 'undefined') && nomod.register) {
+        // nomod toy module definition, resolution and dependency injection
+    
+        nomod.register( ComponentName, ModulePackages, ModuleName,
+            [ /* theDependencies */
+                nomod.fComputeFullName( "prettytype", "modboot", "typesregistry")
+            ],
+            aMod_definer
+        );
+    
+    }
     
 })();
 
@@ -1320,7 +1352,7 @@ permissions and limitations under the Licence.
  ***************************************************************************
 
  Copyright 2014 2015 2016 2017 2018 Antonio Carrasco Valero
- Javascript for core modules including a base prototype and prototypes hierarchy, intended to be reused on the Browser with AngularJS or RequireJS modules, or in the server as node modules. Licensed under EUPL  http://www.uiwire.org
+ Multi-platform Javascript EC5 coding patterns and base super-prototypes, for write-once, run and test everywhere (angular, require, node).
 
  Licensed under the EUPL, Version 1.1 only (the "Licence");
  You may not use this work except in compliance with the
@@ -1349,14 +1381,14 @@ permissions and limitations under the Licence.
 
 (function () {
     
+    var ComponentName    = "prettytype";
+    var ModuleName     = "overrider_svce";
+    var ModulePackages = "modboot";
+    var ModuleFullName = ModulePackages + "/" + ModuleName;
+    
     var aMod_definer = ( function( theSS_typesregistry,
                                    theSS_OverriderType){
-    
-        var ComponentName    = "prettytype";
-        var ModuleName     = "overrider_svce";
-        var ModulePackages = "modboot";
-        var ModuleFullName = ModulePackages + "/" + ModuleName;
-    
+
         
         var aMod_builder = function( theS_OverriderType) {
     
@@ -1431,6 +1463,19 @@ permissions and limitations under the Licence.
         );
         
     }
+    else if ( !(typeof nomod === 'undefined') && nomod.register) {
+        // nomod toy module definition, resolution and dependency injection
+    
+        nomod.register( ComponentName, ModulePackages, ModuleName,
+            [ /* theDependencies */
+                nomod.fComputeFullName( "prettytype", "modboot", "typesregistry"),
+                nomod.fComputeFullName( "prettytype", "modboot", "overrider_type")
+            ],
+            aMod_definer
+        );
+    
+    }
+    
     
 })();
 
@@ -1448,7 +1493,7 @@ permissions and limitations under the Licence.
  ***************************************************************************
 
  Copyright 2014 2015 2016 2017 2018 Antonio Carrasco Valero
- Javascript for core modules including a base prototype and prototypes hierarchy, intended to be reused on the Browser with AngularJS or RequireJS modules, or in the server as node modules. Licensed under EUPL  http://www.uiwire.org
+ Multi-platform Javascript EC5 coding patterns and base super-prototypes, for write-once, run and test everywhere (angular, require, node).
 
 Licensed under the EUPL, Version 1.1 only (the "Licence");
 You may not use this work except in compliance with the
@@ -1474,15 +1519,14 @@ permissions and limitations under the Licence.
 
 (function() {
     
+    
+    var ComponentName    = "prettytype";
+    var ModuleName     = "decoratesystemprototypes_svce";
+    var ModulePackages = "utils";
+    var ModuleFullName = ModulePackages + "/" + ModuleName;
+    
     var aMod_definer = ( function(theSS_typesregistry,
                                   theSS_Overrider){
-    
-    
-        var ComponentName    = "prettytype";
-        var ModuleName     = "decoratesystemprototypes_svce";
-        var ModulePackages = "utils";
-        var ModuleFullName = ModulePackages + "/" + ModuleName;
-    
         
         var aMod_builder = function( theS_Overrider) {
     
@@ -1707,7 +1751,18 @@ permissions and limitations under the Licence.
             aMod_definer
         );
     }
+    else if ( !(typeof nomod === 'undefined') && nomod.register) {
+        // nomod toy module definition, resolution and dependency injection
     
+        nomod.register( ComponentName, ModulePackages, ModuleName,
+            [ /* theDependencies */
+                nomod.fComputeFullName( "prettytype", "modboot", "typesregistry"),
+                nomod.fComputeFullName( "prettytype", "modboot", "overrider_svce")
+            ],
+            aMod_definer
+        );
+    
+    }
     
 })();
 
@@ -1725,7 +1780,7 @@ permissions and limitations under the Licence.
  ***************************************************************************
 
  Copyright 2014 2015 2016 2017 2018 Antonio Carrasco Valero
- Javascript for core modules including a base prototype and prototypes hierarchy, intended to be reused on the Browser with AngularJS or RequireJS modules, or in the server as node modules. Licensed under EUPL  http://www.uiwire.org
+ Multi-platform Javascript EC5 coding patterns and base super-prototypes, for write-once, run and test everywhere (angular, require, node).
 
 Licensed under the EUPL, Version 1.1 only (the "Licence");
 You may not use this work except in compliance with the
@@ -1750,17 +1805,17 @@ permissions and limitations under the Licence.
 
 
 (function() {
+    
+    
+    var ComponentName    = "prettytype";
+    var ModuleName     = "exceptiondetails_svce";
+    var ModulePackages = "utils";
+    var ModuleFullName = ModulePackages + "/" + ModuleName;
+    
     var aMod_definer = ( function( theSS_typesregistry,
                                    theSS_Overrider,
                                    theSS_stacktraceSvce){
     
-    
-        var ComponentName    = "prettytype";
-        var ModuleName     = "exceptiondetails_svce";
-        var ModulePackages = "utils";
-        var ModuleFullName = ModulePackages + "/" + ModuleName;
-        
-        
         var aMod_builder = function( theS_Overrider,
                                      theS_stacktraceSvce) {
     
@@ -2001,7 +2056,19 @@ permissions and limitations under the Licence.
             aMod_definer
             );
     }
+    else if ( !(typeof nomod === 'undefined') && nomod.register) {
+        // nomod toy module definition, resolution and dependency injection
     
+        nomod.register( ComponentName, ModulePackages, ModuleName,
+            [ /* theDependencies */
+                nomod.fComputeFullName( "prettytype", "modboot", "typesregistry"),
+                nomod.fComputeFullName( "prettytype", "modboot", "overrider_svce"),
+                nomod.fComputeFullName( "prettytype", "utils",   "stacktrace_svce")
+            ],
+            aMod_definer
+        );
+    
+    }
     
 })();
 
@@ -2020,7 +2087,7 @@ permissions and limitations under the Licence.
  ***************************************************************************
 
  Copyright 2014 2015 2016 2017 2018 Antonio Carrasco Valero
- Javascript for core modules including a base prototype and prototypes hierarchy, intended to be reused on the Browser with AngularJS or RequireJS modules, or in the server as node modules. Licensed under EUPL  http://www.uiwire.org
+ Multi-platform Javascript EC5 coding patterns and base super-prototypes, for write-once, run and test everywhere (angular, require, node).
 
  Licensed under the EUPL, Version 1.1 only (the "Licence");
  You may not use this work except in compliance with the
@@ -2048,17 +2115,14 @@ permissions and limitations under the Licence.
 
 (function () {
     
+    var ComponentName    = "prettytype";
+    var ModuleName     = "console_svce";
+    var ModulePackages = "utils";
+    var ModuleFullName = ModulePackages + "/" + ModuleName;
+    
     var aMod_definer = ( function( theSS_typesregistry,
                                    theSS_Overrider) {
     
-    
-        var ComponentName    = "prettytype";
-        var ModuleName     = "console_svce";
-        var ModulePackages = "utils";
-        var ModuleFullName = ModulePackages + "/" + ModuleName;
-        
-        
-        
         var aMod_builder = function( theS_Overrider) {
             
             if( typeof FG_logModLoads === 'function') { FG_logModLoads(ModuleFullName);}
@@ -2499,6 +2563,18 @@ permissions and limitations under the Licence.
             aMod_definer);
         
     }
+    else if ( !(typeof nomod === 'undefined') && nomod.register) {
+        // nomod toy module definition, resolution and dependency injection
+    
+        nomod.register( ComponentName, ModulePackages, ModuleName,
+            [ /* theDependencies */
+                nomod.fComputeFullName( "prettytype", "modboot", "typesregistry"),
+                nomod.fComputeFullName( "prettytype", "modboot", "overrider_svce")
+            ],
+            aMod_definer
+        );
+    
+    }
     
 })();
     
@@ -2541,16 +2617,14 @@ permissions and limitations under the Licence.
 
 (function () {
     
+    var ComponentName    = "prettytype";
+    var ModuleName     = "traversals";
+    var ModulePackages = "utils";
+    var ModuleFullName = ModulePackages + "/" + ModuleName;
+    
     var aMod_definer = ( function( theSS_typesregistry,
                                    theSS_Overrider){
         
-    
-        var ComponentName    = "prettytype";
-        var ModuleName     = "traversals";
-        var ModulePackages = "utils";
-        var ModuleFullName = ModulePackages + "/" + ModuleName;
-    
-    
     
         var aMod_builder = function( theS_Overrider) {
     
@@ -5029,6 +5103,18 @@ permissions and limitations under the Licence.
             aMod_definer
            );
     }
+    else if ( !(typeof nomod === 'undefined') && nomod.register) {
+        // nomod toy module definition, resolution and dependency injection
+    
+        nomod.register( ComponentName, ModulePackages, ModuleName,
+            [ /* theDependencies */
+                nomod.fComputeFullName( "prettytype", "modboot", "typesregistry"),
+                nomod.fComputeFullName( "prettytype", "modboot", "overrider_svce")
+            ],
+            aMod_definer
+        );
+    
+    }
     
 })();
 
@@ -5070,16 +5156,15 @@ permissions and limitations under the Licence.
 
 (function () {
     
+    
+    var ComponentName    = "prettytype";
+    var ModuleName     = "checks";
+    var ModulePackages = "utils";
+    var ModuleFullName = ModulePackages + "/" + ModuleName;
+    
+    
     var aMod_definer = function( theSS_typesregistry,
                                  theSS_Overrider){
-    
-    
-        var ComponentName    = "prettytype";
-        var ModuleName     = "checks";
-        var ModulePackages = "utils";
-        var ModuleFullName = ModulePackages + "/" + ModuleName;
-    
-    
     
         var aMod_builder = function( theS_Overrider) {
     
@@ -5995,7 +6080,19 @@ permissions and limitations under the Licence.
             aMod_definer
            );
     }
-
+    else if ( !(typeof nomod === 'undefined') && nomod.register) {
+        // nomod toy module definition, resolution and dependency injection
+    
+        nomod.register( ComponentName, ModulePackages, ModuleName,
+            [ /* theDependencies */
+                nomod.fComputeFullName( "prettytype", "modboot", "typesregistry"),
+                nomod.fComputeFullName( "prettytype", "modboot", "overrider_svce")
+            ],
+            aMod_definer
+        );
+    
+    }
+    
 })();
 
 ;'use strict';
@@ -6009,7 +6106,7 @@ permissions and limitations under the Licence.
  ***************************************************************************
 
  Copyright 2014 2015 2016 Antonio Carrasco Valero
- Angular Wrappers as Controllers and Services on prettytype Javascript skeletons for modules including a base prototype and prototypes hierarchy, intended to be reused.  licensed under EUPL  http://www.uiwire.org
+ Multi-platform Javascript EC5 coding patterns and base super-prototypes, for write-once, run and test everywhere (angular, require, node).
 
 Licensed under the EUPL, Version 1.1 only (the "Licence");
 You may not use this work except in compliance with the
@@ -6059,7 +6156,7 @@ if( !( typeof angular === 'undefined') && angular.module) {
  ***************************************************************************
 
  Copyright 2014 2015 2016 2017 2018 Antonio Carrasco Valero
- Javascript for core modules including a base prototype and prototypes hierarchy, intended to be reused on the Browser with AngularJS or RequireJS modules, or in the server as node modules. Licensed under EUPL  http://www.uiwire.org
+ Multi-platform Javascript EC5 coding patterns and base super-prototypes, for write-once, run and test everywhere (angular, require, node).
 
 Licensed under the EUPL, Version 1.1 only (the "Licence");
 You may not use this work except in compliance with the
@@ -6085,16 +6182,14 @@ permissions and limitations under the Licence.
 'use strict';
 
 (function () {
+    
+    var ComponentName    = "prettytype";
+    var ModuleName     = "identifier_type";
+    var ModulePackages = "identifying";
+    var ModuleFullName = ModulePackages + "/" + ModuleName;
+    
     var aMod_definer = ( function( theSS_typesregistry,
                                    theSS_Overrider) {
-    
-    
-        var ComponentName    = "prettytype";
-        var ModuleName     = "identifier_type";
-        var ModulePackages = "identifying";
-        var ModuleFullName = ModulePackages + "/" + ModuleName;
-        
-        
         
         var aMod_builder = function( theS_Overrider) {
             
@@ -6557,6 +6652,18 @@ permissions and limitations under the Licence.
             aMod_definer
         );
     }
+    else if ( !(typeof nomod === 'undefined') && nomod.register) {
+        // nomod toy module definition, resolution and dependency injection
+    
+        nomod.register( ComponentName, ModulePackages, ModuleName,
+            [ /* theDependencies */
+                nomod.fComputeFullName( "prettytype", "modboot", "typesregistry"),
+                nomod.fComputeFullName( "prettytype", "modboot", "overrider_svce")
+            ],
+            aMod_definer
+        );
+    
+    }
     
 })();
 
@@ -6575,7 +6682,7 @@ permissions and limitations under the Licence.
  ***************************************************************************
 
  Copyright 2014 2015 2016 2017 2018 Antonio Carrasco Valero
- Javascript for core modules including a base prototype and prototypes hierarchy, intended to be reused on the Browser with AngularJS or RequireJS modules, or in the server as node modules. Licensed under EUPL  http://www.uiwire.org
+ Multi-platform Javascript EC5 coding patterns and base super-prototypes, for write-once, run and test everywhere (angular, require, node).
 
  Licensed under the EUPL, Version 1.1 only (the "Licence");
  You may not use this work except in compliance with the
@@ -6604,13 +6711,15 @@ permissions and limitations under the Licence.
 
 (function () {
     
+    var ComponentName    = "prettytype";
+    var ModuleName     = "identifier_svce";
+    var ModulePackages = "identifying";
+    var ModuleFullName = ModulePackages + "/" + ModuleName;
+    
     var aMod_definer = ( function( theSS_typesregistry,
                                    theSS_IdentifierType){
     
-        var ModuleName     = "identifier_svce";
-        var ModulePackages = "identifying";
-        var ModuleFullName = ModulePackages + "/" + ModuleName;
-    
+
         
         var aMod_builder = function( theS_IdentifierType) {
         
@@ -6683,7 +6792,18 @@ permissions and limitations under the Licence.
         );
         
     }
+    else if ( !(typeof nomod === 'undefined') && nomod.register) {
+        // nomod toy module definition, resolution and dependency injection
     
+        nomod.register( ComponentName, ModulePackages, ModuleName,
+            [ /* theDependencies */
+                nomod.fComputeFullName( "prettytype", "modboot", "typesregistry"),
+                nomod.fComputeFullName( "prettytype", "identifying", "identifier_type")
+            ],
+            aMod_definer
+        );
+    
+    }
     
     
 })();
@@ -6702,7 +6822,7 @@ permissions and limitations under the Licence.
  ***************************************************************************
 
  Copyright 2014 2015 2016 2017 2018 Antonio Carrasco Valero
- Javascript for core modules including a base prototype and prototypes hierarchy, intended to be reused on the Browser with AngularJS or RequireJS modules, or in the server as node modules. Licensed under EUPL  http://www.uiwire.org
+ Multi-platform Javascript EC5 coding patterns and base super-prototypes, for write-once, run and test everywhere (angular, require, node).
 
 Licensed under the EUPL, Version 1.1 only (the "Licence");
 You may not use this work except in compliance with the
@@ -6729,17 +6849,14 @@ permissions and limitations under the Licence.
 
 (function () {
     
+    var ComponentName    = "prettytype";
+    var ModuleName     = "record_type";
+    var ModulePackages = "identifying";
+    var ModuleFullName = ModulePackages + "/" + ModuleName;
+    
     var aMod_definer = ( function( theSS_typesregistry,
                                    theSS_Overrider) {
     
-    
-        var ComponentName    = "prettytype";
-        var ModuleName     = "record_type";
-        var ModulePackages = "identifying";
-        var ModuleFullName = ModulePackages + "/" + ModuleName;
-        
-        
-        
         var aMod_builder = function( theS_Overrider) {
             
             if( typeof FG_logModLoads === 'function') { FG_logModLoads(ModuleFullName);}
@@ -8253,6 +8370,18 @@ permissions and limitations under the Licence.
             aMod_definer);
         
     }
+    else if ( !(typeof nomod === 'undefined') && nomod.register) {
+        // nomod toy module definition, resolution and dependency injection
+    
+        nomod.register( ComponentName, ModulePackages, ModuleName,
+            [ /* theDependencies */
+                nomod.fComputeFullName( "prettytype", "modboot", "typesregistry"),
+                nomod.fComputeFullName( "prettytype", "modboot", "overrider_svce")
+            ],
+            aMod_definer
+        );
+    
+    }
     
 })();
 
@@ -8268,7 +8397,7 @@ permissions and limitations under the Licence.
  ***************************************************************************
 
  Copyright 2014 2015 2016 2017 2018 Antonio Carrasco Valero
- Javascript for core modules including a base prototype and prototypes hierarchy, intended to be reused on the Browser with AngularJS or RequireJS modules, or in the server as node modules. Licensed under EUPL  http://www.uiwire.org
+ Multi-platform Javascript EC5 coding patterns and base super-prototypes, for write-once, run and test everywhere (angular, require, node).
 
 Licensed under the EUPL, Version 1.1 only (the "Licence");
 You may not use this work except in compliance with the
@@ -8296,17 +8425,14 @@ permissions and limitations under the Licence.
 
 (function () {
     
+    var ComponentName    = "prettytype";
+    var ModuleName     = "recordingpolicy_type";
+    var ModulePackages = "identifying";
+    var ModuleFullName = ModulePackages + "/" + ModuleName;
+    
     var aMod_definer =  ( function( theSS_typesregistry,
                                     theSS_Overrider,
                                     theSS_IdentifierSvce) {
-    
-    
-        var ComponentName    = "prettytype";
-        var ModuleName     = "recordingpolicy_type";
-        var ModulePackages = "identifying";
-        var ModuleFullName = ModulePackages + "/" + ModuleName;
-        
-        
         
         var aMod_builder = function( theS_Overrider,
                                      theS_IdentifierSvce) {
@@ -8846,7 +8972,19 @@ permissions and limitations under the Licence.
             aMod_definer
         );
     }
+    else if ( !(typeof nomod === 'undefined') && nomod.register) {
+        // nomod toy module definition, resolution and dependency injection
     
+        nomod.register( ComponentName, ModulePackages, ModuleName,
+            [ /* theDependencies */
+                nomod.fComputeFullName( "prettytype", "modboot",     "typesregistry"),
+                nomod.fComputeFullName( "prettytype", "modboot",     "overrider_svce"),
+                nomod.fComputeFullName( "prettytype", "identifying", "identifier_type")
+            ],
+            aMod_definer
+        );
+    
+    }
     
     
 })();
@@ -8861,7 +8999,7 @@ permissions and limitations under the Licence.
  ***************************************************************************
 
  Copyright 2014 2015 2016 2017 2018 Antonio Carrasco Valero
- Javascript for core modules including a base prototype and prototypes hierarchy, intended to be reused on the Browser with AngularJS or RequireJS modules, or in the server as node modules. Licensed under EUPL  http://www.uiwire.org
+ Multi-platform Javascript EC5 coding patterns and base super-prototypes, for write-once, run and test everywhere (angular, require, node).
 
 Licensed under the EUPL, Version 1.1 only (the "Licence");
 You may not use this work except in compliance with the
@@ -8897,17 +9035,14 @@ permissions and limitations under the Licence.
 
 (function () {
     
+    var ComponentName    = "prettytype";
+    var ModuleName     = "recordingpolicy_keepall_type";
+    var ModulePackages = "identifying";
+    var ModuleFullName = ModulePackages + "/" + ModuleName;
+    
     var aMod_definer = ( function( theSS_typesregistry,
                                    theSS_Overrider,
                                    theSS_RecordingPolicyType) {
-    
-    
-        var ComponentName    = "prettytype";
-        var ModuleName     = "recordingpolicy_keepall_type";
-        var ModulePackages = "identifying";
-        var ModuleFullName = ModulePackages + "/" + ModuleName;
-        
-        
         
         var aMod_builder = function( theS_Overrider,
                                      theS_RecordingPolicyType) {
@@ -9011,7 +9146,6 @@ permissions and limitations under the Licence.
             var aRecordingPolicyKeepAll_Prototype = (function() {
     
     
-                // var aPrototype = new theS_RecordingPolicyType.RecordingPolicy_SuperPrototypeConstructor();
                 var aPrototype = theS_RecordingPolicyType.RecordingPolicy_SuperPrototypeSingleton();
                 
                 pgInitFromModuleConstants( aPrototype);
@@ -9321,7 +9455,19 @@ permissions and limitations under the Licence.
             aMod_definer
         );
     }
+    else if ( !(typeof nomod === 'undefined') && nomod.register) {
+        // nomod toy module definition, resolution and dependency injection
     
+        nomod.register( ComponentName, ModulePackages, ModuleName,
+            [ /* theDependencies */
+                nomod.fComputeFullName( "prettytype", "modboot",     "typesregistry"),
+                nomod.fComputeFullName( "prettytype", "modboot",     "overrider_svce"),
+                nomod.fComputeFullName( "prettytype", "identifying", "recordingpolicy_type")
+            ],
+            aMod_definer
+        );
+    
+    }
     
 })();
 
@@ -9335,7 +9481,7 @@ permissions and limitations under the Licence.
  ***************************************************************************
 
  Copyright 2014 2015 2016 2017 2018 Antonio Carrasco Valero
- Javascript for core modules including a base prototype and prototypes hierarchy, intended to be reused on the Browser with AngularJS or RequireJS modules, or in the server as node modules. Licensed under EUPL  http://www.uiwire.org
+ Multi-platform Javascript EC5 coding patterns and base super-prototypes, for write-once, run and test everywhere (angular, require, node).
 
 Licensed under the EUPL, Version 1.1 only (the "Licence");
 You may not use this work except in compliance with the
@@ -9364,17 +9510,14 @@ permissions and limitations under the Licence.
 
 (function () {
     
+    var ComponentName    = "prettytype";
+    var ModuleName     = "recordingpolicy_keepsome_type";
+    var ModulePackages = "identifying";
+    var ModuleFullName = ModulePackages + "/" + ModuleName;
+    
     var aMod_definer = ( function( theSS_typesregistry,
                                    theSS_Overrider,
                                    theSS_RecordingPolicyKeepAllType) {
-    
-    
-        var ComponentName    = "prettytype";
-        var ModuleName     = "recordingpolicy_keepsome_type";
-        var ModulePackages = "identifying";
-        var ModuleFullName = ModulePackages + "/" + ModuleName;
-        
-        
         
         var aMod_builder = function( theS_Overrider,
                                      theS_RecordingPolicyKeepAllType) {
@@ -9478,8 +9621,7 @@ permissions and limitations under the Licence.
             var aRecordingPolicyKeepSome_Prototype = (function() {
                 
                 
-                
-                var aPrototype = new theS_RecordingPolicyKeepAllType.RecordingPolicyKeepAll_SuperPrototypeConstructor();
+                var aPrototype = theS_RecordingPolicyKeepAllType.RecordingPolicyKeepAll_SuperPrototypeSingleton();
                 
                 pgInitFromModuleConstants( aPrototype);
                 
@@ -9770,7 +9912,19 @@ permissions and limitations under the Licence.
             aMod_definer
         );
     }
+    else if ( !(typeof nomod === 'undefined') && nomod.register) {
+        // nomod toy module definition, resolution and dependency injection
     
+        nomod.register( ComponentName, ModulePackages, ModuleName,
+            [ /* theDependencies */
+                nomod.fComputeFullName( "prettytype", "modboot",     "typesregistry"),
+                nomod.fComputeFullName( "prettytype", "modboot",     "overrider_svce"),
+                nomod.fComputeFullName( "prettytype", "identifying", "recordingpolicy_keepall_type")
+            ],
+            aMod_definer
+        );
+    
+    }
     
 })();
 
@@ -9787,7 +9941,7 @@ permissions and limitations under the Licence.
  ***************************************************************************
 
  Copyright 2014 2015 2016 2017 2018 Antonio Carrasco Valero
- Javascript for core modules including a base prototype and prototypes hierarchy, intended to be reused on the Browser with AngularJS or RequireJS modules, or in the server as node modules. Licensed under EUPL  http://www.uiwire.org
+ Multi-platform Javascript EC5 coding patterns and base super-prototypes, for write-once, run and test everywhere (angular, require, node).
 
 Licensed under the EUPL, Version 1.1 only (the "Licence");
 You may not use this work except in compliance with the
@@ -9815,19 +9969,15 @@ permissions and limitations under the Licence.
 
 (function () {
     
+    var ComponentName    = "prettytype";
+    var ModuleName     = "recordingpolicy_keeprecent_type";
+    var ModulePackages = "identifying";
+    var ModuleFullName = ModulePackages + "/" + ModuleName;
     
     var aMod_definer = ( function( theSS_typesregistry,
                                    theSS_Overrider,
                                    theSS_RecordingPolicyKeepSomeType) {
     
-    
-        var ComponentName    = "prettytype";
-        var ModuleName     = "recordingpolicy_keeprecent_type";
-        var ModulePackages = "identifying";
-        var ModuleFullName = ModulePackages + "/" + ModuleName;
-        
-        
-        
         var aMod_builder = function( theS_Overrider,
                                      theS_RecordingPolicyKeepSomeType) {
             
@@ -9928,7 +10078,6 @@ permissions and limitations under the Licence.
             var aRecordingPolicyKeepRecent_Prototype = (function() {
     
     
-                // var aPrototype = new theS_RecordingPolicyKeepSomeType.RecordingPolicyKeepSome_SuperPrototypeConstructor();
                 var aPrototype = theS_RecordingPolicyKeepSomeType.RecordingPolicyKeepSome_SuperPrototypeSingleton();
                 
                 pgInitFromModuleConstants( aPrototype);
@@ -10222,7 +10371,19 @@ permissions and limitations under the Licence.
             aMod_definer
         );
     }
+    else if ( !(typeof nomod === 'undefined') && nomod.register) {
+        // nomod toy module definition, resolution and dependency injection
     
+        nomod.register( ComponentName, ModulePackages, ModuleName,
+            [ /* theDependencies */
+                nomod.fComputeFullName( "prettytype", "modboot",     "typesregistry"),
+                nomod.fComputeFullName( "prettytype", "modboot",     "overrider_svce"),
+                nomod.fComputeFullName( "prettytype", "identifying", "recordingpolicy_keepsome_type")
+            ],
+            aMod_definer
+        );
+    
+    }
     
 })();
 
@@ -10236,7 +10397,7 @@ permissions and limitations under the Licence.
  ***************************************************************************
 
  Copyright 2014 2015 2016 2017 2018 Antonio Carrasco Valero
- Javascript for core modules including a base prototype and prototypes hierarchy, intended to be reused on the Browser with AngularJS or RequireJS modules, or in the server as node modules. Licensed under EUPL  http://www.uiwire.org
+ Multi-platform Javascript EC5 coding patterns and base super-prototypes, for write-once, run and test everywhere (angular, require, node).
 
 Licensed under the EUPL, Version 1.1 only (the "Licence");
 You may not use this work except in compliance with the
@@ -10263,18 +10424,15 @@ permissions and limitations under the Licence.
 
 (function () {
     
+    var ComponentName    = "prettytype";
+    var ModuleName     = "dumpingpolicy_type";
+    var ModulePackages = "identifying";
+    var ModuleFullName = ModulePackages + "/" + ModuleName;
+    
     var aMod_definer =  ( function( theSS_typesregistry,
                                     theSS_Overrider,
                                     theSS_IdentifierSvce,
                                     theSS_ConsoleSvce) {
-    
-    
-        var ComponentName    = "prettytype";
-        var ModuleName     = "dumpingpolicy_type";
-        var ModulePackages = "identifying";
-        var ModuleFullName = ModulePackages + "/" + ModuleName;
-        
-        
         
         var aMod_builder = function( theS_Overrider,
                                      theS_IdentifierSvce,
@@ -10910,6 +11068,20 @@ permissions and limitations under the Licence.
                 aMod_definer
         );
     }
+    else if ( !(typeof nomod === 'undefined') && nomod.register) {
+        // nomod toy module definition, resolution and dependency injection
+    
+        nomod.register( ComponentName, ModulePackages, ModuleName,
+            [ /* theDependencies */
+                nomod.fComputeFullName( "prettytype", "modboot",     "typesregistry"),
+                nomod.fComputeFullName( "prettytype", "modboot",     "overrider_svce"),
+                nomod.fComputeFullName( "prettytype", "identifying", "identifier_type"),
+                nomod.fComputeFullName( "prettytype", "utils",       "console_svce")
+            ],
+            aMod_definer
+        );
+    
+    }
     
 })();
 
@@ -10928,7 +11100,7 @@ permissions and limitations under the Licence.
  ***************************************************************************
 
  Copyright 2014 2015 2016 2017 2018 Antonio Carrasco Valero
- Javascript for core modules including a base prototype and prototypes hierarchy, intended to be reused on the Browser with AngularJS or RequireJS modules, or in the server as node modules. Licensed under EUPL  http://www.uiwire.org
+ Multi-platform Javascript EC5 coding patterns and base super-prototypes, for write-once, run and test everywhere (angular, require, node).
 
 Licensed under the EUPL, Version 1.1 only (the "Licence");
 You may not use this work except in compliance with the
@@ -10955,18 +11127,15 @@ permissions and limitations under the Licence.
 
 (function () {
     
+    var ComponentName    = "prettytype";
+    var ModuleName     = "dumpingpolicy_filterkinds_type";
+    var ModulePackages = "identifying";
+    var ModuleFullName = ModulePackages + "/" + ModuleName;
+    
     var aMod_definer = ( function( theSS_typesregistry,
                                    theSS_Overrider,
                                    theSS_DumpingPolicyType,
                                    theSS_EventKinds_Common) {
-    
-    
-        var ComponentName    = "prettytype";
-        var ModuleName     = "dumpingpolicy_filterkinds_type";
-        var ModulePackages = "identifying";
-        var ModuleFullName = ModulePackages + "/" + ModuleName;
-        
-        
         
         var aMod_builder = function( theS_Overrider,
                                      theS_DumpingPolicyType,
@@ -11103,8 +11272,7 @@ permissions and limitations under the Licence.
     
             var aDumpingPolicyFilterKinds_Prototype = (function() {
                 
-                
-                // var aPrototype = new theS_DumpingPolicyType.DumpingPolicy_SuperPrototypeConstructor();
+
                 var aPrototype = theS_DumpingPolicyType.DumpingPolicy_SuperPrototypeSingleton();
     
                 pgInitFromModuleConstants( aPrototype);
@@ -11697,7 +11865,20 @@ permissions and limitations under the Licence.
             
         );
     }
+    else if ( !(typeof nomod === 'undefined') && nomod.register) {
+        // nomod toy module definition, resolution and dependency injection
     
+        nomod.register( ComponentName, ModulePackages, ModuleName,
+            [ /* theDependencies */
+                nomod.fComputeFullName( "prettytype", "modboot",     "typesregistry"),
+                nomod.fComputeFullName( "prettytype", "modboot",     "overrider_svce"),
+                nomod.fComputeFullName( "prettytype", "identifying", "dumpingpolicy_type"),
+                nomod.fComputeFullName( "prettytype", "eventkinds",  "eventkinds_common")
+            ],
+            aMod_definer
+        );
+    
+    }
     
     
 })();
@@ -11711,7 +11892,7 @@ permissions and limitations under the Licence.
  ***************************************************************************
 
  Copyright 2014 2015 2016 2017 2018 Antonio Carrasco Valero
- Javascript for core modules including a base prototype and prototypes hierarchy, intended to be reused on the Browser with AngularJS or RequireJS modules, or in the server as node modules. Licensed under EUPL  http://www.uiwire.org
+ Multi-platform Javascript EC5 coding patterns and base super-prototypes, for write-once, run and test everywhere (angular, require, node).
 
  Licensed under the EUPL, Version 1.1 only (the "Licence");
  You may not use this work except in compliance with the
@@ -11738,18 +11919,15 @@ permissions and limitations under the Licence.
 
 (function () {
     
+    var ComponentName    = "prettytype";
+    var ModuleName     = "dumpingpolicy_triggerkinds_type";
+    var ModulePackages = "identifying";
+    var ModuleFullName = ModulePackages + "/" + ModuleName;
+    
     var aMod_definer = ( function( theSS_typesregistry,
                                    theSS_Overrider,
                                    theSS_DumpingPolicyFilterKindsType,
                                    theSS_EventKinds_Common) {
-                
-    
-        var ComponentName    = "prettytype";
-        var ModuleName     = "dumpingpolicy_triggerkinds_type";
-        var ModulePackages = "identifying";
-        var ModuleFullName = ModulePackages + "/" + ModuleName;
-        
-        
         
         var aMod_builder = function( theS_Overrider,
                                      theS_DumpingPolicyFilterKindsType,
@@ -11884,7 +12062,6 @@ permissions and limitations under the Licence.
             var aDumpingPolicyTriggerKinds_Prototype = (function() {
                 
                 
-                // var aPrototype = new theS_DumpingPolicyFilterKindsType.DumpingPolicyFilterKinds_SuperPrototypeConstructor();
                 var aPrototype = theS_DumpingPolicyFilterKindsType.DumpingPolicyFilterKinds_SuperPrototypeSingleton();
     
                 pgInitFromModuleConstants( aPrototype);
@@ -12562,6 +12739,20 @@ permissions and limitations under the Licence.
             aMod_definer
         );
     }
+    else if ( !(typeof nomod === 'undefined') && nomod.register) {
+        // nomod toy module definition, resolution and dependency injection
+    
+        nomod.register( ComponentName, ModulePackages, ModuleName,
+            [ /* theDependencies */
+                nomod.fComputeFullName( "prettytype", "modboot",     "typesregistry"),
+                nomod.fComputeFullName( "prettytype", "modboot",     "overrider_svce"),
+                nomod.fComputeFullName( "prettytype", "identifying", "dumpingpolicy_filterkinds_type"),
+                nomod.fComputeFullName( "prettytype", "eventkinds",  "eventkinds_common")
+            ],
+            aMod_definer
+        );
+    
+    }
     
 })();
 
@@ -12574,7 +12765,7 @@ permissions and limitations under the Licence.
  ***************************************************************************
 
  Copyright 2014 2015 2016 2017 2018 Antonio Carrasco Valero
- Javascript for core modules including a base prototype and prototypes hierarchy, intended to be reused on the Browser with AngularJS or RequireJS modules, or in the server as node modules. Licensed under EUPL  http://www.uiwire.org
+ Multi-platform Javascript EC5 coding patterns and base super-prototypes, for write-once, run and test everywhere (angular, require, node).
 
 Licensed under the EUPL, Version 1.1 only (the "Licence");
 You may not use this work except in compliance with the
@@ -12602,6 +12793,11 @@ permissions and limitations under the Licence.
 
 (function () {
     
+    var ComponentName    = "prettytype";
+    var ModuleName     = "recorder_type";
+    var ModulePackages = "identifying";
+    var ModuleFullName = ModulePackages + "/" + ModuleName;
+    
     var aMod_definer = ( function( theSS_typesregistry,
                                    theSS_Overrider,
                                    theSS_IdentifierSvce,
@@ -12609,14 +12805,6 @@ permissions and limitations under the Licence.
                                    theSS_RecordType,
                                    theSS_RecordingPolicyType,
                                    theSS_DumpingPolicyType) {
-    
-    
-        var ComponentName    = "prettytype";
-        var ModuleName     = "recorder_type";
-        var ModulePackages = "identifying";
-        var ModuleFullName = ModulePackages + "/" + ModuleName;
-        
-        
         
         var aMod_builder = function( theS_Overrider,
                                      theS_IdentifierSvce,
@@ -13700,7 +13888,23 @@ permissions and limitations under the Licence.
             ],
             aMod_definer);
     }
+    else if ( !(typeof nomod === 'undefined') && nomod.register) {
+        // nomod toy module definition, resolution and dependency injection
     
+        nomod.register( ComponentName, ModulePackages, ModuleName,
+            [ /* theDependencies */
+                nomod.fComputeFullName( "prettytype", "modboot",     "typesregistry"),
+                nomod.fComputeFullName( "prettytype", "modboot",     "overrider_svce"),
+                nomod.fComputeFullName( "prettytype", "identifying", "identifier_svce"),
+                nomod.fComputeFullName( "prettytype", "identifying", "identifier_type"),
+                nomod.fComputeFullName( "prettytype", "identifying", "record_type"),
+                nomod.fComputeFullName( "prettytype", "identifying", "recordingpolicy_keepall_type"),
+                nomod.fComputeFullName( "prettytype", "identifying", "dumpingpolicy_filterkinds_type")
+            ],
+            aMod_definer
+        );
+    
+    }
     
 })();
 
@@ -13719,7 +13923,7 @@ permissions and limitations under the Licence.
  ***************************************************************************
 
  Copyright 2014 2015 2016 2017 2018 Antonio Carrasco Valero
- Javascript for core modules including a base prototype and prototypes hierarchy, intended to be reused on the Browser with AngularJS or RequireJS modules, or in the server as node modules. Licensed under EUPL  http://www.uiwire.org
+ Multi-platform Javascript EC5 coding patterns and base super-prototypes, for write-once, run and test everywhere (angular, require, node).
 
  Licensed under the EUPL, Version 1.1 only (the "Licence");
  You may not use this work except in compliance with the
@@ -13748,15 +13952,14 @@ permissions and limitations under the Licence.
 
 (function () {
     
+    var ComponentName    = "prettytype";
+    var ModuleName     = "recorder_svce";
+    var ModulePackages = "identifying";
+    var ModuleFullName = ModulePackages + "/" + ModuleName;
+    
     var aMod_definer = ( function( theSS_typesregistry,
                                    theSS_IdentifierSvce,
                                    theSS_RecorderType){
-    
-        var ComponentName    = "prettytype";
-        var ModuleName     = "recorder_svce";
-        var ModulePackages = "identifying";
-        var ModuleFullName = ModulePackages + "/" + ModuleName;
-    
         
         var aMod_builder = function( theS_IdentifierSvce,
                                      theS_RecorderType) {
@@ -13835,7 +14038,19 @@ permissions and limitations under the Licence.
         );
         
     }
+    else if ( !(typeof nomod === 'undefined') && nomod.register) {
+        // nomod toy module definition, resolution and dependency injection
     
+        nomod.register( ComponentName, ModulePackages, ModuleName,
+            [ /* theDependencies */
+                nomod.fComputeFullName( "prettytype", "modboot",     "typesregistry"),
+                nomod.fComputeFullName( "prettytype", "identifying", "identifier_svce"),
+                nomod.fComputeFullName( "prettytype", "identifying", "recorder_type")
+            ],
+            aMod_definer
+        );
+    
+    }
     
     
 })();
@@ -13854,7 +14069,7 @@ permissions and limitations under the Licence.
  ***************************************************************************
 
  Copyright 2014 2015 2016 2017 2018 Antonio Carrasco Valero
- Javascript for core modules including a base prototype and prototypes hierarchy, intended to be reused on the Browser with AngularJS or RequireJS modules, or in the server as node modules. Licensed under EUPL  http://www.uiwire.org
+ Multi-platform Javascript EC5 coding patterns and base super-prototypes, for write-once, run and test everywhere (angular, require, node).
 
  Licensed under the EUPL, Version 1.1 only (the "Licence");
  You may not use this work except in compliance with the
@@ -13883,16 +14098,14 @@ permissions and limitations under the Licence.
 
 (function () {
     
+    var ComponentName    = "prettytype";
+    var ModuleName     = "eventkinds_common";
+    var ModulePackages = "eventkinds";
+    var ModuleFullName = ModulePackages + "/" + ModuleName;
+    
     var aMod_definer = ( function( theSS_typesregistry,
                                    theSS_Overrider){
     
-        var ComponentName    = "prettytype";
-        var ModuleName     = "eventkinds_common";
-        var ModulePackages = "eventkinds";
-        var ModuleFullName = ModulePackages + "/" + ModuleName;
-    
-    
-        
         var aMod_builder = function( theS_Overrider) {
     
             if( typeof FG_logModLoads === 'function') { FG_logModLoads(ModuleFullName);}
@@ -14139,7 +14352,18 @@ permissions and limitations under the Licence.
         );
         
     }
+    else if ( !(typeof nomod === 'undefined') && nomod.register) {
+        // nomod toy module definition, resolution and dependency injection
     
+        nomod.register( ComponentName, ModulePackages, ModuleName,
+            [ /* theDependencies */
+                nomod.fComputeFullName( "prettytype", "modboot", "typesregistry"),
+                nomod.fComputeFullName( "prettytype", "modboot", "overrider_svce")
+            ],
+            aMod_definer
+        )
+    
+    }
     
 })();
 
@@ -14159,7 +14383,7 @@ permissions and limitations under the Licence.
  ***************************************************************************
 
  Copyright 2014 2015 2016 Antonio Carrasco Valero
- Angular Wrappers as Controllers and Services on prettytype Javascript skeletons for modules including a base prototype and prototypes hierarchy, intended to be reused.  licensed under EUPL  http://www.uiwire.org
+ Multi-platform Javascript EC5 coding patterns and base super-prototypes, for write-once, run and test everywhere (angular, require, node).
 
 Licensed under the EUPL, Version 1.1 only (the "Licence");
 You may not use this work except in compliance with the
@@ -14212,7 +14436,7 @@ if( !( typeof angular === 'undefined') && angular.module) {
  ***************************************************************************
 
  Copyright 2014 2015 2016 2017 2018 Antonio Carrasco Valero
- Javascript for core modules including a base prototype and prototypes hierarchy, intended to be reused on the Browser with AngularJS or RequireJS modules, or in the server as node modules. Licensed under EUPL  http://www.uiwire.org
+ Multi-platform Javascript EC5 coding patterns and base super-prototypes, for write-once, run and test everywhere (angular, require, node).
 
 Licensed under the EUPL, Version 1.1 only (the "Licence");
 You may not use this work except in compliance with the
@@ -14239,20 +14463,17 @@ permissions and limitations under the Licence.
 
 (function () {
     
+    var ComponentName    = "prettytype";
+    var ModuleName     = "common_type";
+    var ModulePackages = "common";
+    var ModuleFullName = ModulePackages + "/" + ModuleName;
+    
     var aMod_definer = ( function( theSS_typesregistry,
                                    theSS_Overrider,
                                    theSS_IdentifierSvce,
                                    theSS_RecorderSvce,
                                    theSS_EventTypes_Common,
                                    theSS_Travesals){
-    
-    
-        var ComponentName    = "prettytype";
-        var ModuleName     = "common_type";
-        var ModulePackages = "common";
-        var ModuleFullName = ModulePackages + "/" + ModuleName;
-        
-        
         
         var aMod_builder = function( theS_Overrider,
                                      theS_IdentifierSvce,
@@ -14708,7 +14929,7 @@ permissions and limitations under the Licence.
                 
                 var fFirstDiff = function( theActualValue, theCheckValue) {
                     
-                    return theS_Travesals.fFirstDiff( theActualValue, theCheckValue);
+                    return theS_Travesals.fgFirstDiff( theActualValue, theCheckValue);
                 };
                 if( fFirstDiff){}/* CQT */
                 aPrototype.fFirstDiff = fFirstDiff;
@@ -14902,6 +15123,23 @@ permissions and limitations under the Licence.
             aMod_definer
            );
     }
+    else if ( !(typeof nomod === 'undefined') && nomod.register) {
+        // nomod toy module definition, resolution and dependency injection
+    
+        nomod.register( ComponentName, ModulePackages, ModuleName,
+            [ /* theDependencies */
+                nomod.fComputeFullName( "prettytype", "modboot",     "typesregistry"),
+                nomod.fComputeFullName( "prettytype", "modboot",     "overrider_svce"),
+                nomod.fComputeFullName( "prettytype", "identifying", "identifier_svce"),
+                nomod.fComputeFullName( "prettytype", "identifying", "recorder_svce"),
+                nomod.fComputeFullName( "prettytype", "eventkinds",  "eventkinds_common"),
+                nomod.fComputeFullName( "prettytype", "utils",       "traversals")
+            ],
+            aMod_definer
+        );
+    
+    }
+   
     
 })();
 
