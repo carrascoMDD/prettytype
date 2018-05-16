@@ -1,6 +1,6 @@
 {
   "name": "prettytype",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Multi-platform Javascript EC5 coding patterns and base super-prototypes, for write-once, run and test everywhere (angular, require, node).",
   "keywords": [
     "angularjs",
@@ -34,7 +34,6 @@
     "test-browser-karma-requirejs.sh",
     "test-node.sh",
     "uninstall.sh"
-
   ],
   "main": "src/index.js",
   "bin": {},
