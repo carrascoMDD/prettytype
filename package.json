@@ -48,7 +48,8 @@
     "testnode": "jasmine --config=test/test-node/jasmine.json",
     "testangularjs": "grunt karma:angularjs",
     "testrequirejs": "grunt karma:requirejs",
-    "test": "jasmine --config=test/test-node/jasmine.json; grunt karma:angularjs; grunt karma:requirejs",
+    "testnomod": "grunt karma:nomod",
+    "test": "jasmine --config=test/test-node/jasmine.json; grunt karma:angularjs; grunt karma:requirejs; grunt karma:nomod",
     "start": ""
   },
   "config": {},

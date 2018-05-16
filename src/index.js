@@ -498,34 +498,40 @@ permissions and limitations under the Licence.
             aMod_definer
         );
     }
-    nomod.register( ComponentName, ModulePackages, ModuleName,
-        [ /* theDependencies */
-            nomod.fComputeFullName( "prettytype", "modboot",     "typesregistry"),
-            nomod.fComputeFullName( "prettytype", "modboot",     "overrider_type"),
-            nomod.fComputeFullName( "prettytype", "modboot", "overrider_svce"),
-            nomod.fComputeFullName( "prettytype", "utils", "decoratesystemprototypes_svce"),
-            nomod.fComputeFullName( "prettytype", "utils", "stacktrace_svce"),
-            nomod.fComputeFullName( "prettytype", "utils", "exceptiondetails_svce"),
-            nomod.fComputeFullName( "prettytype", "utils", "console_svce"),
-            nomod.fComputeFullName( "prettytype", "utils",     "traversals"),
-            nomod.fComputeFullName( "prettytype", "utils",     "checks"),
-            nomod.fComputeFullName( "prettytype", "identifying", "identifier_type"),
-            nomod.fComputeFullName( "prettytype", "identifying", "identifier_svce"),
-            nomod.fComputeFullName( "prettytype", "identifying", "record_type"),
-            nomod.fComputeFullName( "prettytype", "identifying", "recordingpolicy_type"),
-            nomod.fComputeFullName( "prettytype", "identifying", "recordingpolicy_keepall_type"),
-            nomod.fComputeFullName( "prettytype", "identifying",     "recordingpolicy_keepsome_type"),
-            nomod.fComputeFullName( "prettytype", "identifying",     "recordingpolicy_keeprecent_type"),
-            nomod.fComputeFullName( "prettytype", "identifying", "dumpingpolicy_type"),
-            nomod.fComputeFullName( "prettytype", "identifying", "dumpingpolicy_filterkinds_type"),
-            nomod.fComputeFullName( "prettytype", "identifying", "dumpingpolicy_triggerkinds_type"),
-            nomod.fComputeFullName( "prettytype", "identifying", "recorder_type"),
-            nomod.fComputeFullName( "prettytype", "identifying", "recorder_svce"),
-            nomod.fComputeFullName( "prettytype", "eventkinds",     "eventkinds_common"),
-            nomod.fComputeFullName( "prettytype", "common",     "common_type")
-        ],
-        aMod_definer
-    );
+    else if ( !(typeof nomod === 'undefined') && nomod.register) {
+        // nomod toy module definition, resolution and dependency injection
+    
+        nomod.register( ComponentName, ModulePackages, ModuleName,
+            [ /* theDependencies */
+                nomod.fComputeFullName( "prettytype", "modboot",     "typesregistry"),
+                nomod.fComputeFullName( "prettytype", "modboot",     "overrider_type"),
+                nomod.fComputeFullName( "prettytype", "modboot", "overrider_svce"),
+                nomod.fComputeFullName( "prettytype", "utils", "decoratesystemprototypes_svce"),
+                nomod.fComputeFullName( "prettytype", "utils", "stacktrace_svce"),
+                nomod.fComputeFullName( "prettytype", "utils", "exceptiondetails_svce"),
+                nomod.fComputeFullName( "prettytype", "utils", "console_svce"),
+                nomod.fComputeFullName( "prettytype", "utils",     "traversals"),
+                nomod.fComputeFullName( "prettytype", "utils",     "checks"),
+                nomod.fComputeFullName( "prettytype", "identifying", "identifier_type"),
+                nomod.fComputeFullName( "prettytype", "identifying", "identifier_svce"),
+                nomod.fComputeFullName( "prettytype", "identifying", "record_type"),
+                nomod.fComputeFullName( "prettytype", "identifying", "recordingpolicy_type"),
+                nomod.fComputeFullName( "prettytype", "identifying", "recordingpolicy_keepall_type"),
+                nomod.fComputeFullName( "prettytype", "identifying",     "recordingpolicy_keepsome_type"),
+                nomod.fComputeFullName( "prettytype", "identifying",     "recordingpolicy_keeprecent_type"),
+                nomod.fComputeFullName( "prettytype", "identifying", "dumpingpolicy_type"),
+                nomod.fComputeFullName( "prettytype", "identifying", "dumpingpolicy_filterkinds_type"),
+                nomod.fComputeFullName( "prettytype", "identifying", "dumpingpolicy_triggerkinds_type"),
+                nomod.fComputeFullName( "prettytype", "identifying", "recorder_type"),
+                nomod.fComputeFullName( "prettytype", "identifying", "recorder_svce"),
+                nomod.fComputeFullName( "prettytype", "eventkinds",     "eventkinds_common"),
+                nomod.fComputeFullName( "prettytype", "common",     "common_type")
+            ],
+            aMod_definer
+        );
+        
+    }
+    
     
 })();
 
