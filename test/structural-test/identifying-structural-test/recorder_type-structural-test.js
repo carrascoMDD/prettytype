@@ -81,7 +81,11 @@ var aTest_spec = (function( theSS_identifier_svce,
             aM_recorder_type    = theSS_recorder_type;
             aRecorder = new aM_recorder_type.Recorder_Constructor( aRecorder_title, aM_identifier_svce);
         }
-        
+        else if ( !(typeof nomod === 'undefined') && nomod.register) {
+            aM_identifier_svce = nomod.resolve( nomod.fComputeFullName( "prettytype", "identifying", "identifier_svce"));
+            aM_recorder_type = nomod.resolve( nomod.fComputeFullName( "prettytype", "identifying", "recorder_type"));
+            aRecorder = new aM_recorder_type.Recorder_Constructor( aRecorder_title, aM_identifier_svce);
+        }
 
 
 

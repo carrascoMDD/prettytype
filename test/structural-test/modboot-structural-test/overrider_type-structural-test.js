@@ -69,7 +69,10 @@ var aTest_spec = (function( theSS_overrider_type) {
             aM_overrider_type = theSS_overrider_type;
             anOverrider       = new aM_overrider_type.Overrider_Constructor( aOverrider_title);
         }
-        
+        else if ( !(typeof nomod === 'undefined') && nomod.register) {
+            aM_overrider_type = nomod.resolve( nomod.fComputeFullName( "prettytype", "modboot", "overrider_type"));
+            anOverrider       = new aM_overrider_type.Overrider_Constructor( aOverrider_title);
+        }
         
         it("Has module defined", function () {
             expect( anOverrider._v_Module).not.toBeUndefined();

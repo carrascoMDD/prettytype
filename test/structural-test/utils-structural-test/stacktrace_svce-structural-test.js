@@ -70,7 +70,10 @@ var aTest_spec = (function( theSS_stacktrace_svce) {
             aStacktrace_svce = theSS_stacktrace_svce;
             aStacktrace = new aStacktrace_svce.implementation();
         }
-        
+        else if ( !(typeof nomod === 'undefined') && nomod.register) {
+            aStacktrace_svce = nomod.resolve( nomod.fComputeFullName( "prettytype", "utils", "stacktrace_svce"));
+            aStacktrace = new aStacktrace_svce.implementation();
+        }
         
         
         

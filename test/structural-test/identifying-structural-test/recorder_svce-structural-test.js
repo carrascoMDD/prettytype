@@ -77,7 +77,10 @@ var aTest_spec = (function( theSS_identifier_svce,
             aM_identifier_svce   = theSS_identifier_svce;
             aM_recorder_svce     = theSS_recorder_svce;
         }
-        
+        else if ( !(typeof nomod === 'undefined') && nomod.register) {
+            aM_identifier_svce = nomod.resolve( nomod.fComputeFullName( "prettytype", "identifying", "identifier_svce"));
+            aM_recorder_svce = nomod.resolve( nomod.fComputeFullName( "prettytype", "identifying", "recorder_svce"));
+        }
         
         
         

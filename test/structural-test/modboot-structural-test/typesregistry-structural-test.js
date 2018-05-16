@@ -65,6 +65,9 @@ var aTest_spec = (function( theSS_typeregistry) {
             // AMD / RequireJS
             aM_typesregistry = theSS_typeregistry;
         }
+        else if ( !(typeof nomod === 'undefined') && nomod.register) {
+            aM_typesregistry = nomod.resolve( nomod.fComputeFullName( "prettytype", "modboot", "typesregistry"));
+        }
         
         it("Has module defined", function () {
             expect( aM_typesregistry._v_Module).not.toBeUndefined();

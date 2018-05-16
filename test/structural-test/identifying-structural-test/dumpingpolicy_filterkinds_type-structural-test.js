@@ -81,7 +81,11 @@ var aTest_spec = (function( theSS_identifier_svce,
             aM_dumpingpolicy_filterkinds_type = theSS_dumpingpolicy_filterkinds_type;
             aDumpingPolicyFilterKinds = new aM_dumpingpolicy_filterkinds_type.DumpingPolicyFilterKinds_Constructor( aDumpingPolicyFilterKinds_title, aM_identifier_svce, null /* theRecorder its absence should not affect this structure test */);
         }
-        
+        else if ( !(typeof nomod === 'undefined') && nomod.register) {
+            aM_identifier_svce = nomod.resolve( nomod.fComputeFullName( "prettytype", "identifying", "identifier_svce"));
+            aM_dumpingpolicy_filterkinds_type = nomod.resolve( nomod.fComputeFullName( "prettytype", "identifying", "dumpingpolicy_filterkinds_type"));
+            aDumpingPolicyFilterKinds = new aM_dumpingpolicy_filterkinds_type.DumpingPolicyFilterKinds_Constructor( aDumpingPolicyFilterKinds_title, aM_identifier_svce, null /* theRecorder its absence should not affect this structure test */);
+        }
         
         
         

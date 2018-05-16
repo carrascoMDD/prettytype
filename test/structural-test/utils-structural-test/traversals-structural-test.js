@@ -65,7 +65,9 @@ var aTest_spec = (function( theSS_traversals) {
             // AMD / RequireJS
             aM_traversals = theSS_traversals;
         }
-        
+        else if ( !(typeof nomod === 'undefined') && nomod.register) {
+            aM_traversals = nomod.resolve( nomod.fComputeFullName( "prettytype", "utils", "traversals"));
+        }
         
         
         

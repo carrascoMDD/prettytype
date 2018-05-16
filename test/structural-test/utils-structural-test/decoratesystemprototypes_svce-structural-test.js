@@ -65,7 +65,9 @@ var aTest_spec = (function( theSS_decoratesystemprototypes_svce) {
             // AMD / RequireJS
             aDecorateSystemPrototypes_svce = theSS_decoratesystemprototypes_svce;
         }
-        
+        else if ( !(typeof nomod === 'undefined') && nomod.register) {
+            aDecorateSystemPrototypes_svce = nomod.resolve( nomod.fComputeFullName( "prettytype", "utils", "decoratesystemprototypes_svce"));
+        }
         
         
         

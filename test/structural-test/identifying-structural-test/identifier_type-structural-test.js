@@ -72,7 +72,10 @@ var aTest_spec = (function( theSS_identifier_type) {
             aM_identifier_type = theSS_identifier_type;
             anIdentifier = new aM_identifier_type.Identifier_Constructor( aIdentifier_title);
         }
-        
+        else if ( !(typeof nomod === 'undefined') && nomod.register) {
+            aM_identifier_type = nomod.resolve( nomod.fComputeFullName( "prettytype", "identifying", "identifier_type"));
+            anIdentifier = new aM_identifier_type.Identifier_Constructor( aIdentifier_title);
+        }
         
         
     

@@ -65,7 +65,9 @@ var aTest_spec = (function( theSS_eventkinds_common) {
             // AMD / RequireJS
             aEventKinds_Common = theSS_eventkinds_common;
         }
-        
+        else if ( !(typeof nomod === 'undefined') && nomod.register) {
+            aEventKinds_Common = nomod.resolve( nomod.fComputeFullName( "prettytype", "eventkinds", "eventkinds_common"));
+        }
         
         
         

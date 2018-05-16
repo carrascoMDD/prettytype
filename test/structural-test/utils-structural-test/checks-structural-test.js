@@ -63,8 +63,11 @@ var aTest_spec = (function( theSS_checks) {
             // AMD / RequireJS
             aM_checks = theSS_checks;
         }
-        
-        
+        else if ( !(typeof nomod === 'undefined') && nomod.register) {
+            aM_checks = nomod.resolve( nomod.fComputeFullName( "prettytype", "utils", "checks"));
+        }
+    
+    
         it("Module is not null", function () {
             expect( aM_checks).not.toBeNull( null);
         });

@@ -36,17 +36,14 @@ permissions and limitations under the Licence.
 
 (function () {
     
+    var ComponentName    = "prettytype";
+    var ModuleName     = "recordingpolicy_keepsome_type";
+    var ModulePackages = "identifying";
+    var ModuleFullName = ModulePackages + "/" + ModuleName;
+    
     var aMod_definer = ( function( theSS_typesregistry,
                                    theSS_Overrider,
                                    theSS_RecordingPolicyKeepAllType) {
-    
-    
-        var ComponentName    = "prettytype";
-        var ModuleName     = "recordingpolicy_keepsome_type";
-        var ModulePackages = "identifying";
-        var ModuleFullName = ModulePackages + "/" + ModuleName;
-        
-        
         
         var aMod_builder = function( theS_Overrider,
                                      theS_RecordingPolicyKeepAllType) {
@@ -441,7 +438,19 @@ permissions and limitations under the Licence.
             aMod_definer
         );
     }
+    else if ( !(typeof nomod === 'undefined') && nomod.register) {
+        // nomod toy module definition, resolution and dependency injection
     
+        nomod.register( ComponentName, ModulePackages, ModuleName,
+            [ /* theDependencies */
+                nomod.fComputeFullName( "prettytype", "modboot",     "typesregistry"),
+                nomod.fComputeFullName( "prettytype", "modboot",     "overrider_svce"),
+                nomod.fComputeFullName( "prettytype", "identifying", "recordingpolicy_keepall_type")
+            ],
+            aMod_definer
+        );
+    
+    }
     
 })();
 

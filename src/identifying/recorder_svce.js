@@ -36,15 +36,14 @@
 
 (function () {
     
+    var ComponentName    = "prettytype";
+    var ModuleName     = "recorder_svce";
+    var ModulePackages = "identifying";
+    var ModuleFullName = ModulePackages + "/" + ModuleName;
+    
     var aMod_definer = ( function( theSS_typesregistry,
                                    theSS_IdentifierSvce,
                                    theSS_RecorderType){
-    
-        var ComponentName    = "prettytype";
-        var ModuleName     = "recorder_svce";
-        var ModulePackages = "identifying";
-        var ModuleFullName = ModulePackages + "/" + ModuleName;
-    
         
         var aMod_builder = function( theS_IdentifierSvce,
                                      theS_RecorderType) {
@@ -123,7 +122,19 @@
         );
         
     }
+    else if ( !(typeof nomod === 'undefined') && nomod.register) {
+        // nomod toy module definition, resolution and dependency injection
     
+        nomod.register( ComponentName, ModulePackages, ModuleName,
+            [ /* theDependencies */
+                nomod.fComputeFullName( "prettytype", "modboot",     "typesregistry"),
+                nomod.fComputeFullName( "prettytype", "identifying", "identifier_svce"),
+                nomod.fComputeFullName( "prettytype", "identifying", "recorder_type")
+            ],
+            aMod_definer
+        );
+    
+    }
     
     
 })();

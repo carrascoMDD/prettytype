@@ -34,6 +34,11 @@ permissions and limitations under the Licence.
 
 (function () {
     
+    var ComponentName    = "prettytype";
+    var ModuleName     = "index";
+    var ModulePackages = "";
+    var ModuleFullName = ModulePackages + "/" + ModuleName;
+    
     var aMod_definer = ( function(  theSS_typesregistry,
                                     theSS_overrider_type,
                                     theSS_overrider_svce,
@@ -57,14 +62,6 @@ permissions and limitations under the Licence.
                                     theSS_recorder_svce,
                                     theSS_eventkinds_common,
                                     theSS_common_type){
-        
-        
-        var ComponentName    = "prettytype";
-        var ModuleName     = "index";
-        var ModulePackages = "";
-        var ModuleFullName = ModulePackages + "/" + ModuleName;
-        
-        
         
         var aMod_builder = function( theS_typesregistry,
                                      theS_overrider_type,
@@ -501,6 +498,34 @@ permissions and limitations under the Licence.
             aMod_definer
         );
     }
+    nomod.register( ComponentName, ModulePackages, ModuleName,
+        [ /* theDependencies */
+            nomod.fComputeFullName( "prettytype", "modboot",     "typesregistry"),
+            nomod.fComputeFullName( "prettytype", "modboot",     "overrider_type"),
+            nomod.fComputeFullName( "prettytype", "modboot", "overrider_svce"),
+            nomod.fComputeFullName( "prettytype", "utils", "decoratesystemprototypes_svce"),
+            nomod.fComputeFullName( "prettytype", "utils", "stacktrace_svce"),
+            nomod.fComputeFullName( "prettytype", "utils", "exceptiondetails_svce"),
+            nomod.fComputeFullName( "prettytype", "utils", "console_svce"),
+            nomod.fComputeFullName( "prettytype", "utils",     "traversals"),
+            nomod.fComputeFullName( "prettytype", "utils",     "checks"),
+            nomod.fComputeFullName( "prettytype", "identifying", "identifier_type"),
+            nomod.fComputeFullName( "prettytype", "identifying", "identifier_svce"),
+            nomod.fComputeFullName( "prettytype", "identifying", "record_type"),
+            nomod.fComputeFullName( "prettytype", "identifying", "recordingpolicy_type"),
+            nomod.fComputeFullName( "prettytype", "identifying", "recordingpolicy_keepall_type"),
+            nomod.fComputeFullName( "prettytype", "identifying",     "recordingpolicy_keepsome_type"),
+            nomod.fComputeFullName( "prettytype", "identifying",     "recordingpolicy_keeprecent_type"),
+            nomod.fComputeFullName( "prettytype", "identifying", "dumpingpolicy_type"),
+            nomod.fComputeFullName( "prettytype", "identifying", "dumpingpolicy_filterkinds_type"),
+            nomod.fComputeFullName( "prettytype", "identifying", "dumpingpolicy_triggerkinds_type"),
+            nomod.fComputeFullName( "prettytype", "identifying", "recorder_type"),
+            nomod.fComputeFullName( "prettytype", "identifying", "recorder_svce"),
+            nomod.fComputeFullName( "prettytype", "eventkinds",     "eventkinds_common"),
+            nomod.fComputeFullName( "prettytype", "common",     "common_type")
+        ],
+        aMod_definer
+    );
     
 })();
 

@@ -36,16 +36,14 @@
 
 (function () {
     
+    var ComponentName    = "prettytype";
+    var ModuleName     = "eventkinds_common";
+    var ModulePackages = "eventkinds";
+    var ModuleFullName = ModulePackages + "/" + ModuleName;
+    
     var aMod_definer = ( function( theSS_typesregistry,
                                    theSS_Overrider){
     
-        var ComponentName    = "prettytype";
-        var ModuleName     = "eventkinds_common";
-        var ModulePackages = "eventkinds";
-        var ModuleFullName = ModulePackages + "/" + ModuleName;
-    
-    
-        
         var aMod_builder = function( theS_Overrider) {
     
             if( typeof FG_logModLoads === 'function') { FG_logModLoads(ModuleFullName);}
@@ -292,7 +290,18 @@
         );
         
     }
+    else if ( !(typeof nomod === 'undefined') && nomod.register) {
+        // nomod toy module definition, resolution and dependency injection
     
+        nomod.register( ComponentName, ModulePackages, ModuleName,
+            [ /* theDependencies */
+                nomod.fComputeFullName( "prettytype", "modboot", "typesregistry"),
+                nomod.fComputeFullName( "prettytype", "modboot", "overrider_svce")
+            ],
+            aMod_definer
+        )
+    
+    }
     
 })();
 

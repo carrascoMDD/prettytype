@@ -34,18 +34,15 @@
 
 (function () {
     
+    var ComponentName    = "prettytype";
+    var ModuleName     = "dumpingpolicy_triggerkinds_type";
+    var ModulePackages = "identifying";
+    var ModuleFullName = ModulePackages + "/" + ModuleName;
+    
     var aMod_definer = ( function( theSS_typesregistry,
                                    theSS_Overrider,
                                    theSS_DumpingPolicyFilterKindsType,
                                    theSS_EventKinds_Common) {
-                
-    
-        var ComponentName    = "prettytype";
-        var ModuleName     = "dumpingpolicy_triggerkinds_type";
-        var ModulePackages = "identifying";
-        var ModuleFullName = ModulePackages + "/" + ModuleName;
-        
-        
         
         var aMod_builder = function( theS_Overrider,
                                      theS_DumpingPolicyFilterKindsType,
@@ -856,6 +853,20 @@
             ],
             aMod_definer
         );
+    }
+    else if ( !(typeof nomod === 'undefined') && nomod.register) {
+        // nomod toy module definition, resolution and dependency injection
+    
+        nomod.register( ComponentName, ModulePackages, ModuleName,
+            [ /* theDependencies */
+                nomod.fComputeFullName( "prettytype", "modboot",     "typesregistry"),
+                nomod.fComputeFullName( "prettytype", "modboot",     "overrider_svce"),
+                nomod.fComputeFullName( "prettytype", "identifying", "dumpingpolicy_filterkinds_type"),
+                nomod.fComputeFullName( "prettytype", "eventkinds",  "eventkinds_common")
+            ],
+            aMod_definer
+        );
+    
     }
     
 })();

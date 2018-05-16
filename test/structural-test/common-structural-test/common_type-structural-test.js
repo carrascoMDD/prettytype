@@ -57,7 +57,7 @@ var aTest_spec = (function( theSS_identifier_svce,
         var aCommon_title = "CommonType-Title-test";
     
         var aM_identifier_svce = null;
-        var aM_recordersvce    = null;
+        var aM_recorder_svce    = null;
         var aM_common_type     = null;
         var aCommon            = null;
         
@@ -67,26 +67,31 @@ var aTest_spec = (function( theSS_identifier_svce,
             
             beforeEach( inject(function( _IdentifierSvce_, _RecorderSvce_, _CommonType_) {
                 aM_identifier_svce = _IdentifierSvce_;
-                aM_recordersvce    = _RecorderSvce_;
+                aM_recorder_svce    = _RecorderSvce_;
                 aM_common_type     = _CommonType_;
-                aCommon = new aM_common_type.Common_Constructor( aCommon_title, aM_identifier_svce, aM_recordersvce);
+                aCommon = new aM_common_type.Common_Constructor( aCommon_title, aM_identifier_svce, aM_recorder_svce);
             }));
         }
         else if ( !(typeof module === 'undefined') && module.exports) {
             // Node.js
             aM_identifier_svce     = require('../../../src/identifying/identifier_svce');
-            aM_recordersvce     = require('../../../src/identifying/recorder_svce');
+            aM_recorder_svce     = require('../../../src/identifying/recorder_svce');
             aM_common_type         = require('../../../src/common/common_type');
-            aCommon = new aM_common_type.Common_Constructor( aCommon_title, aM_identifier_svce, aM_recordersvce);
+            aCommon = new aM_common_type.Common_Constructor( aCommon_title, aM_identifier_svce, aM_recorder_svce);
         }
         else if ( !(typeof define === 'undefined') && define.amd) {
             // AMD / RequireJS
             aM_identifier_svce = theSS_identifier_svce;
-            aM_recordersvce    = theSS_recorder_svce;
+            aM_recorder_svce    = theSS_recorder_svce;
             aM_common_type     = theSS_common_type;
-            aCommon = new aM_common_type.Common_Constructor( aCommon_title, aM_identifier_svce, aM_recordersvce);
+            aCommon = new aM_common_type.Common_Constructor( aCommon_title, aM_identifier_svce, aM_recorder_svce);
         }
-        
+        else if ( !(typeof nomod === 'undefined') && nomod.register) {
+            aM_identifier_svce = nomod.resolve( nomod.fComputeFullName( "prettytype", "identifying", "identifier_svce"));
+            aM_recorder_svce = nomod.resolve( nomod.fComputeFullName( "prettytype", "identifying", "recorder_svce"));
+            aM_common_type = nomod.resolve( nomod.fComputeFullName( "prettytype", "common", "common_type"));
+            aCommon = new aM_common_type.Common_Constructor( aCommon_title, aM_identifier_svce, aM_recorder_svce);
+        }
        
 
         it("Has module defined", function () {

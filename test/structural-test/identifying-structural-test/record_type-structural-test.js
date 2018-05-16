@@ -114,7 +114,19 @@ var aTest_spec = (function( theSS_record_type) {
                 aDetail_Dummy
             );
         }
-  
+        else if ( !(typeof nomod === 'undefined') && nomod.register) {
+            aRecord_type = nomod.resolve( nomod.fComputeFullName( "prettytype", "identifying", "record_type"));
+            aRecord = new aRecord_type.Record_Constructor(
+                aRecorder_Dummy,
+                aRecordId_Dummy,
+                anInstance_Dummy,
+                aStep_Dummy,
+                anEventKind_Dummy,
+                aData_Dummy,
+                aReason_Dummy,
+                aDetail_Dummy
+            );
+        }
 
 
 

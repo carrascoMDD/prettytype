@@ -76,7 +76,9 @@ var aTest_spec = (function( theSS_index) {
             // AMD / RequireJS
             aM_index = theSS_index;
         }
-        
+        else if ( !(typeof nomod === 'undefined') && nomod.register) {
+            aM_index = nomod.resolve( nomod.fComputeFullName( "prettytype", "", "index"));
+        }
         
         
         

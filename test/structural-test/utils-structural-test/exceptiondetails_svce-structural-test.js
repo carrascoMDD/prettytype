@@ -65,7 +65,9 @@ var aTest_spec = (function( theSS_exceptiondetails_svce) {
             // AMD / RequireJS
             aExceptionDetails_svce = theSS_exceptiondetails_svce;
         }
-        
+        else if ( !(typeof nomod === 'undefined') && nomod.register) {
+            aExceptionDetails_svce = nomod.resolve( nomod.fComputeFullName( "prettytype", "utils", "exceptiondetails_svce"));
+        }
         
         
         

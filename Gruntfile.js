@@ -123,6 +123,11 @@ module.exports = function(grunt) {
                 configFile: 'test/test-browser-karma-requirejs/karma-requirejs.conf.js',
                 // configFile: 'karma-requirejs.conf.js',
                 singleRun: true
+            },
+    
+            nomod: {
+                configFile: 'test/test-browser-karma-nomod/karma-nomod.conf.js',
+                singleRun: true
             }
         }
     });

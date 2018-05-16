@@ -547,7 +547,7 @@ permissions and limitations under the Licence.
         nomod.register( ComponentName, ModulePackages, ModuleName,
             null /* theDependencies */,
             aMod_definer
-        )
+        );
     
     }
     

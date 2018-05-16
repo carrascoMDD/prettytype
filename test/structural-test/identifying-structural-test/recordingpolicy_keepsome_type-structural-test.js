@@ -79,7 +79,11 @@ var aTest_spec = (function( theSS_identifier_svce,
             aM_recordingpolicy_keepsome_type = theSS_recordingpolicy_keepsome_type;
             aRecordingPolicyKeepSome = new aM_recordingpolicy_keepsome_type.RecordingPolicyKeepSome_Constructor( aRecordingPolicyKeepSome_title, aM_identifier_svce, null /* theRecorder its absence should not affect this structure test */);
         }
-        
+        else if ( !(typeof nomod === 'undefined') && nomod.register) {
+            aM_identifier_svce = nomod.resolve( nomod.fComputeFullName( "prettytype", "identifying", "identifier_svce"));
+            aM_recordingpolicy_keepsome_type = nomod.resolve( nomod.fComputeFullName( "prettytype", "identifying", "recordingpolicy_keepsome_type"));
+            aRecordingPolicyKeepSome = new aM_recordingpolicy_keepsome_type.RecordingPolicyKeepSome_Constructor( aRecordingPolicyKeepSome_title, aM_identifier_svce, null /* theRecorder its absence should not affect this structure test */);
+        }
             
             
             

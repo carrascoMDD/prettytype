@@ -34,17 +34,14 @@ permissions and limitations under the Licence.
 
 (function () {
     
+    var ComponentName    = "prettytype";
+    var ModuleName     = "record_type";
+    var ModulePackages = "identifying";
+    var ModuleFullName = ModulePackages + "/" + ModuleName;
+    
     var aMod_definer = ( function( theSS_typesregistry,
                                    theSS_Overrider) {
     
-    
-        var ComponentName    = "prettytype";
-        var ModuleName     = "record_type";
-        var ModulePackages = "identifying";
-        var ModuleFullName = ModulePackages + "/" + ModuleName;
-        
-        
-        
         var aMod_builder = function( theS_Overrider) {
             
             if( typeof FG_logModLoads === 'function') { FG_logModLoads(ModuleFullName);}
@@ -1557,6 +1554,18 @@ permissions and limitations under the Licence.
             ],
             aMod_definer);
         
+    }
+    else if ( !(typeof nomod === 'undefined') && nomod.register) {
+        // nomod toy module definition, resolution and dependency injection
+    
+        nomod.register( ComponentName, ModulePackages, ModuleName,
+            [ /* theDependencies */
+                nomod.fComputeFullName( "prettytype", "modboot", "typesregistry"),
+                nomod.fComputeFullName( "prettytype", "modboot", "overrider_svce")
+            ],
+            aMod_definer
+        );
+    
     }
     
 })();

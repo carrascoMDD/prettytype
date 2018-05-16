@@ -66,7 +66,9 @@ var aTest_spec = (function( theSS_overrider_svce) {
             // AMD / RequireJS
             aM_overrider_svce = theSS_overrider_svce;
         }
-        
+        else if ( !(typeof nomod === 'undefined') && nomod.register) {
+            aM_overrider_svce = nomod.resolve( nomod.fComputeFullName( "prettytype", "modboot", "overrider_svce"));
+        }
         
         it("Has module defined", function () {
             expect( aM_overrider_svce._v_Module).not.toBeUndefined();

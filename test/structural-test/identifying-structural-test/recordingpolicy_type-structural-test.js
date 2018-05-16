@@ -80,7 +80,11 @@ var aTest_spec = (function( theSS_identifier_svce,
             aM_recordingpolicy_type = theSS_recordingpolicy_type;
             aRecordingPolicy = new aM_recordingpolicy_type.RecordingPolicy_Constructor( aRecordingPolicy_title, aM_identifier_svce, null /* theRecorder its absence should not affect this structure test */);
         }
-        
+        else if ( !(typeof nomod === 'undefined') && nomod.register) {
+            aM_identifier_svce = nomod.resolve( nomod.fComputeFullName( "prettytype", "identifying", "identifier_svce"));
+            aM_recordingpolicy_type = nomod.resolve( nomod.fComputeFullName( "prettytype", "identifying", "recordingpolicy_type"));
+            aRecordingPolicy = new aM_recordingpolicy_type.RecordingPolicy_Constructor( aRecordingPolicy_title, aM_identifier_svce, null /* theRecorder its absence should not affect this structure test */);
+        }
         
        
         it("Has module defined", function () {
