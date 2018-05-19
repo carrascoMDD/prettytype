@@ -35,6 +35,8 @@ var LOGMODULELOADS = false;
 
 FG_logModLoads = function( theBoolOrMessage) {
     
+    'use strict';
+    
     if(    ( typeof theBoolOrMessage === 'undefined')
         || ( ( typeof theBoolOrMessage === 'object') && ( theBoolOrMessage === null))) {
         
