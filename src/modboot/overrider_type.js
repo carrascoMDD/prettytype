@@ -137,9 +137,9 @@ permissions and limitations under the Licence.
                 
                 var _pInit_Overrider = function( theTitle) {
                     
-                    this._v_Prototype = aPrototype;
-                    this._v_Type      = this._v_Prototype._v_Type;
-                    this._v_Module    = this._v_Prototype._v_Module;
+                    // this._v_Prototype = aPrototype;
+                    // this._v_Type      = this._v_Prototype._v_Type;
+                    // this._v_Module    = this._v_Prototype._v_Module;
                     
                     this._v_Title = theTitle;
                     if( !this._v_Title) {
@@ -515,10 +515,11 @@ permissions and limitations under the Licence.
             
             
             var Overrider_Constructor = function( theTitle) {
-                this._v_Prototype = null;
-                this._v_SuperPrototype = null;
-                this._v_Type = null;
-                this._v_Module = null;
+                this._v_Prototype = aOverrider_Prototype;
+                // this._v_Prototype = null;
+                // this._v_SuperPrototype = null;
+                // this._v_Type = null;
+                // this._v_Module = null;
                 
                 this._v_Title = null;
     
@@ -535,10 +536,11 @@ permissions and limitations under the Licence.
             
             
             var Overrider_SuperPrototypeConstructor = function() {
+                this._v_IsPrototype = true;
                 this._v_Prototype = aOverrider_Prototype;
-                this._v_SuperPrototype = null;
-                this._v_Type      = null;
-                this._v_Module    = null;
+                // this._v_SuperPrototype = null;
+                // this._v_Type      = null;
+                // this._v_Module    = null;
                 
                 this._v_Title     = null;
     

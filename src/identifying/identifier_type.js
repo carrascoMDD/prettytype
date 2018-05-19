@@ -191,9 +191,9 @@ permissions and limitations under the Licence.
                 
                 var _pInit_Identifier = function( theTitle) {
                     
-                    this._v_Prototype = aPrototype;
-                    this._v_Type      = this._v_Prototype._v_Type;
-                    this._v_Module    = this._v_Prototype._v_Module;
+                    // this._v_Prototype = aPrototype;
+                    // this._v_Type      = this._v_Prototype._v_Type;
+                    // this._v_Module    = this._v_Prototype._v_Module;
                     
                     this._v_Id    = null;
                     
@@ -363,10 +363,12 @@ permissions and limitations under the Licence.
             
             
             var Identifier_Constructor = function( theTitle) {
-                this._v_Prototype = null;
-                this._v_SuperPrototype = null;
-                this._v_Type = null;
-                this._v_Module = null;
+                this._v_IsPrototype = false;
+                this._v_Prototype = aIdentifier_Prototype;
+                // this._v_Prototype = null;
+                // this._v_SuperPrototype = null;
+                // this._v_Type = null;
+                // this._v_Module = null;
                 
                 
                 this._v_Id    = null;
@@ -383,10 +385,11 @@ permissions and limitations under the Licence.
             
             
             var Identifier_SuperPrototypeConstructor = function() {
+                this._v_IsPrototype = true;
                 this._v_Prototype = aIdentifier_Prototype;
-                this._v_SuperPrototype = null;
-                this._v_Type      = null;
-                this._v_Module    = null;
+                // this._v_SuperPrototype = null;
+                // this._v_Type      = null;
+                // this._v_Module    = null;
                 
                 this._v_Id    = null;
                 this._v_Title = null;

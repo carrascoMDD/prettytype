@@ -196,9 +196,9 @@ permissions and limitations under the Licence.
                 
                 var _pInit_DumpingPolicy = function( theTitle, theIdentifier, theRecorder) {
                     
-                    this._v_Prototype = aPrototype;
-                    this._v_Type      = this._v_Prototype._v_Type;
-                    this._v_Module    = this._v_Prototype._v_Module;
+                    // this._v_Prototype = aPrototype;
+                    // this._v_Type      = this._v_Prototype._v_Type;
+                    // this._v_Module    = this._v_Prototype._v_Module;
                     
                     this._v_Identifier = theIdentifier;
                     
@@ -512,10 +512,12 @@ permissions and limitations under the Licence.
             
             
             var DumpingPolicy_Constructor = function( theTitle, theIdentifier, theRecorder) {
-                this._v_Prototype = null;
-                this._v_SuperPrototype = null;
-                this._v_Type = null;
-                this._v_Module = null;
+                this._v_IsPrototype = false;
+                this._v_Prototype = aDumpingPolicy_Prototype;
+                // this._v_Prototype = null;
+                // this._v_SuperPrototype = null;
+                // this._v_Type = null;
+                // this._v_Module = null;
                 
                 this._v_Identifier       = null;
                 
@@ -535,10 +537,11 @@ permissions and limitations under the Licence.
             
             
             var DumpingPolicy_SuperPrototypeConstructor = function() {
+                this._v_IsPrototype = true;
                 this._v_Prototype = aDumpingPolicy_Prototype;
-                this._v_SuperPrototype = null;
-                this._v_Type      = null;
-                this._v_Module    = null;
+                // this._v_SuperPrototype = null;
+                // this._v_Type      = null;
+                // this._v_Module    = null;
                 
                 this._v_Identifier       = null;
                 

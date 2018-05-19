@@ -945,10 +945,12 @@ permissions and limitations under the Licence.
             
             
             var Recorder_Constructor = function( theTitle, theIdentifier) {
-                this._v_Prototype = null;
-                this._v_SuperPrototype = null;
-                this._v_Type = null;
-                this._v_Module = null;
+                this._v_IsPrototype = false;
+                this._v_Prototype = aRecorder_Prototype;
+                // this._v_Prototype = null;
+                // this._v_SuperPrototype = null;
+                // this._v_Type = null;
+                // this._v_Module = null;
                 
                 this._v_Identifier = null;
                 
@@ -973,9 +975,9 @@ permissions and limitations under the Licence.
             
             var Recorder_SuperPrototypeConstructor = function() {
                 this._v_Prototype = aRecorder_Prototype;
-                this._v_SuperPrototype = null;
-                this._v_Type      = null;
-                this._v_Module    = null;
+                // this._v_SuperPrototype = null;
+                // this._v_Type      = null;
+                // this._v_Module    = null;
                 
                 this._v_Identifier = null;
                 

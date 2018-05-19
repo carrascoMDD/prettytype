@@ -1,6 +1,6 @@
 {
   "name": "prettytype",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "Multi-platform Javascript EC5 coding patterns and base super-prototypes, for write-once, run and test everywhere (angular, require, node).",
   "keywords": [
     "angularjs",

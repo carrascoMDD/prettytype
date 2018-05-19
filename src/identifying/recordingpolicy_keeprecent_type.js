@@ -195,9 +195,9 @@ permissions and limitations under the Licence.
                     /* Delegate on super prototype initialization */
                     aPrototype._v_SuperPrototype._pInit_RecordingPolicy.apply( this, [ theTitle, theIdentifier, theRecorder]);
                     
-                    this._v_Prototype = aPrototype;
-                    this._v_Type      = this._v_Prototype._v_Type;
-                    this._v_Module    = this._v_Prototype._v_Module;
+                    // this._v_Prototype = aPrototype;
+                    // this._v_Type      = this._v_Prototype._v_Type;
+                    // this._v_Module    = this._v_Prototype._v_Module;
                     
                     this._v_MustKeepRecordsRecentMillis = this.MUSTKEEPRECORDSRECENTMILLIS;
                     
@@ -275,13 +275,12 @@ permissions and limitations under the Licence.
             
             
             var RecordingPolicyKeepRecent_Constructor = function( theTitle, theIdentifier, theRecorder) {
-                
-                /* Keep handy reference to super-prototype for super method invocation */
-                this._v_SuperPrototype = theS_RecordingPolicyKeepSomeType.RecordingPolicyKeepSome_Prototype;
-                
-                this._v_Prototype = null;
-                this._v_Type = null;
-                this._v_Module = null;
+    
+                this._v_IsPrototype = false;
+                // this._v_SuperPrototype = theS_RecordingPolicyKeepSomeType.RecordingPolicyKeepSome_Prototype;
+                this._v_Prototype = aRecordingPolicyKeepRecent_Prototype;
+                // this._v_Type = null;
+                // this._v_Module = null;
                 
                 this._v_MustKeepRecordsRecentMillis = null;
                 
@@ -294,13 +293,12 @@ permissions and limitations under the Licence.
             
             
             var RecordingPolicyKeepRecent_SuperPrototypeConstructor = function() {
-                
-                /* Keep handy reference to super-prototype for super method invocation */
-                this._v_SuperPrototype = theS_RecordingPolicyKeepSomeType.RecordingPolicyKeepSome_Prototype;
-                
+    
+                this._v_IsPrototype = true;
+                // this._v_SuperPrototype = theS_RecordingPolicyKeepSomeType.RecordingPolicyKeepSome_Prototype;
                 this._v_Prototype = aRecordingPolicyKeepRecent_Prototype;
-                this._v_Type      = null;
-                this._v_Module    = null;
+                // this._v_Type      = null;
+                // this._v_Module    = null;
                 
                 this._v_MustKeepRecordsRecentMillis = null;
                 

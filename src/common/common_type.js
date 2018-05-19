@@ -520,10 +520,12 @@ permissions and limitations under the Licence.
             
             
             var Common_Constructor = function( theTitle, theIdentifier, theRecorder) {
-                this._v_Prototype = null;
-                this._v_SuperPrototype = null;
-                this._v_Type      = null;
-                this._v_Module    = null;
+                this._v_IsPrototype = false;
+                this._v_Prototype = aCommon_Prototype;
+                // this._v_Prototype = null;
+                // this._v_SuperPrototype = null;
+                // this._v_Type      = null;
+                // this._v_Module    = null;
                 
                 this._v_Identifier = null;
                 this._v_Recorder   = null;
@@ -542,10 +544,11 @@ permissions and limitations under the Licence.
             
             
             var Common_SuperPrototypeConstructor = function() {
+                this._v_IsPrototype = true;
                 this._v_Prototype = aCommon_Prototype;
-                this._v_SuperPrototype = null;
-                this._v_Type      = null;
-                this._v_Module    = null;
+                // this._v_SuperPrototype = null;
+                // this._v_Type      = null;
+                // this._v_Module    = null;
     
                 this._v_Identifier = null;
                 this._v_Recorder   = null;

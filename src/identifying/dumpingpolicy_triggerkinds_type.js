@@ -232,9 +232,9 @@
                     /* Delegate on super prototype initialization */
                     aPrototype._v_SuperPrototype._pInit_DumpingPolicyFilterKinds.apply( this, [ theTitle, theIdentifier, theRecorder]);
                     
-                    this._v_Prototype = aPrototype;
-                    this._v_Type      = this._v_Prototype._v_Type;
-                    this._v_Module    = this._v_Prototype._v_Module;
+                    // this._v_Prototype = aPrototype;
+                    // this._v_Type      = this._v_Prototype._v_Type;
+                    // this._v_Module    = this._v_Prototype._v_Module;
                     
                 };
                 if( _pInit_DumpingPolicyTriggerKinds){}/* CQT */
@@ -696,13 +696,14 @@
             
             
             var DumpingPolicyTriggerKinds_Constructor = function( theTitle, theIdentifier, theRecorder) {
-                
-                /* Keep handy reference to super-prototype for super method invocation */
-                this._v_SuperPrototype = theS_DumpingPolicyFilterKindsType.DumpingPolicyTriggerKinds_Prototype;
-                
-                this._v_Prototype = null;
-                this._v_Type = null;
-                this._v_Module = null;
+    
+                this._v_IsPrototype = false;
+                this._v_Prototype = aDumpingPolicyTriggerKinds_Prototype;
+                this._v_SuperPrototype = theS_DumpingPolicyFilterKindsType.DumpingPolicyFilterKinds_Prototype;
+    
+                // this._v_Prototype = null;
+                // this._v_Type = null;
+                // this._v_Module = null;
                 
                 /* Slot property named _v_EventKindsTriggeringDump only initialized in the prototype. May be overriden by individual instantes setting their own value */
                 
@@ -713,11 +714,11 @@
     
             
             var DumpingPolicyTriggerKinds_SuperPrototypeConstructor = function() {
-                
-                /* Keep handy reference to super-prototype for super method invocation */
-                this._v_SuperPrototype = theS_DumpingPolicyFilterKindsType.DumpingPolicyTriggerKinds_Prototype;
-                
+    
+                this._v_IsPrototype = true;
                 this._v_Prototype = aDumpingPolicyTriggerKinds_Prototype;
+                this._v_SuperPrototype = theS_DumpingPolicyFilterKindsType.DumpingPolicyFilterKinds_Prototype;
+                
                 this._v_Type      = null;
                 this._v_Module    = null;
                 

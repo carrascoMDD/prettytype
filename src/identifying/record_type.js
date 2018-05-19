@@ -190,9 +190,9 @@ permissions and limitations under the Licence.
                 
                 var _pInit_Record = function( theRecorder, theRecordId, theInstance, theStep, theEventKind, theData, theReason, theDetail) {
                     
-                    this._v_Prototype = aPrototype;
-                    this._v_Type = aPrototype._v_Type;
-                    this._v_Module    = this._v_Prototype._v_Module;
+                    // this._v_Prototype = aPrototype;
+                    // this._v_Type = aPrototype._v_Type;
+                    // this._v_Module    = this._v_Prototype._v_Module;
                     
                     this._v_Timestamp    = Date.now();
                     this._v_Recorder     = theRecorder;
@@ -1400,10 +1400,12 @@ permissions and limitations under the Licence.
             
             
             var Record_Constructor = function( theRecorder, theRecordId, theInstance, theStep, theEventKind, theData, theReason, theDetail) {
-                this._v_Prototype = null;
-                this._v_SuperPrototype = null;
-                this._v_Type = null;
-                this._v_Module    = null;
+                this._v_IsPrototype = false;
+                this._v_Prototype = aRecord_Prototype;
+                // this._v_Prototype = null;
+                // this._v_SuperPrototype = null;
+                // this._v_Type = null;
+                // this._v_Module    = null;
                 
                 this._v_Recorder   = null;
                 this._v_RecordId   = null;
@@ -1423,10 +1425,11 @@ permissions and limitations under the Licence.
             
             
             var Record_SuperPrototypeConstructor = function() {
+                this._v_IsPrototype = true;
                 this._v_Prototype = aRecord_Prototype;
-                this._v_SuperPrototype = null;
-                this._v_Type = null;
-                this._v_Module    = null;
+                // this._v_SuperPrototype = null;
+                // this._v_Type = null;
+                // this._v_Module    = null;
                 
                 this._v_Recorder   = null;
                 this._v_RecordId   = null;

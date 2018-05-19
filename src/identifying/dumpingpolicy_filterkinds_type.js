@@ -235,9 +235,9 @@ permissions and limitations under the Licence.
                     /* Delegate on super prototype initialization */
                     aPrototype._v_SuperPrototype._pInit_DumpingPolicy.apply( this, [ theTitle, theIdentifier, theRecorder]);
                     
-                    this._v_Prototype = aPrototype;
-                    this._v_Type      = this._v_Prototype._v_Type;
-                    this._v_Module    = this._v_Prototype._v_Module;
+                    // this._v_Prototype = aPrototype;
+                    // this._v_Type      = this._v_Prototype._v_Type;
+                    // this._v_Module    = this._v_Prototype._v_Module;
                     
                 };
                 if( _pInit_DumpingPolicyFilterKinds){}/* CQT */
@@ -609,13 +609,13 @@ permissions and limitations under the Licence.
             
             
             var DumpingPolicyFilterKinds_Constructor = function( theTitle, theIdentifier, theRecorder) {
-                
-                /* Keep handy reference to super-prototype for super method invocation */
-                this._v_SuperPrototype = theS_DumpingPolicyType.DumpingPolicy_Prototype;
-                
-                this._v_Prototype = null;
-                this._v_Type = null;
-                this._v_Module = null;
+    
+                this._v_IsPrototype = false;
+                // this._v_SuperPrototype = theS_DumpingPolicyType.DumpingPolicy_Prototype;
+                this._v_Prototype = aDumpingPolicyFilterKinds_Prototype;
+                // this._v_Prototype = null;
+                // this._v_Type = null;
+                // this._v_Module = null;
                 
                 /* Slot property named _v_EventKindsNotForConsole only initialized in the prototype. May be overriden by individual instantes setting their own value */
                 
@@ -628,13 +628,12 @@ permissions and limitations under the Licence.
             
             
             var DumpingPolicyFilterKinds_SuperPrototypeConstructor = function() {
-                
-                /* Keep handy reference to super-prototype for super method invocation */
-                this._v_SuperPrototype = theS_DumpingPolicyType.DumpingPolicy_Prototype;
-                
+    
+                this._v_IsPrototype = true;
+                // this._v_SuperPrototype = theS_DumpingPolicyType.DumpingPolicy_Prototype;
                 this._v_Prototype = aDumpingPolicyFilterKinds_Prototype;
-                this._v_Type      = null;
-                this._v_Module    = null;
+                // this._v_Type      = null;
+                // this._v_Module    = null;
                 
                 /* Slot property named _v_EventKindsNotForConsole only initialized in the prototype. May be overriden by individual instantes setting their own value */
                 
