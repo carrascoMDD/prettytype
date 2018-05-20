@@ -91,22 +91,52 @@ permissions and limitations under the Licence.
             var ModuleVariations = { };
             pgInitWithModuleVariations( ModuleVariations);
             theS_Overrider.pOverrideModuleVariations( ModuleFullName, ModuleVariations);
-            
-            
-            
-            
-            
-            
-            
-            
+    
+    
+    
+    
+    
+    
+    
+    
+    
+            /* ***************************************************************
+               Init here key-value pairs, considered constants - and therefore with an expected read-only life-cycle.
+               Constants can be accessed through the Module .ModuleConstants.
+               
+               If the Module defines a prototype:
+              
+                   Instances of the prototype also have same access this._v_Module.ModuleConstants.
+                   Instances of the prototype are those created with new <prototypename>_Constructor.
+                   
+                   Any sub-prototypes defined in other modules and their instances shall have a different _v_Module and therefore different constants,
+                   
+                   Any sub-prototype in other module and their instances may traverse upwards the prototype chain
+                   through the prototype _v_SuperPrototype property until reaching the prototype of the desired Module,
+                   or directly access the desired module through the property _v_Prototype_<prototypename>.
+                   From the chosen prototype it is possible to access aModule.ModuleConstants
+                   (Sub-prototypes are prototypes based on objects created with this module's
+                   new <prototypename>_SuperPrototypeConstructor) and transitively all their sub-prototypes.
+                   
+                   
+                   The key-values in a prototype's module ModuleConstants shall be copied onto the prototype object
+                   which then hold key-value pairs for all keys in ModuleConstants, with the initial values same as in the ModuleConstants,
+                   but these values may be changed in the prototype object.
+                   The prototype may access each constant defined in ModuleConstants
+                   as this.<CONSTANT_NAME> or this["<CONSTANT_NAME>"] .
+                   
+                   All sub-prototypes defined in other modules and their instances
+                   may also access this.<CONSTANT_NAME> or this["<CONSTANT_NAME>"]
+                   the key-values defined in any prototype recursively upwards the prototype hierarchy
+                   and therefore to the key-values copied into each prototype object from their respective module ModuleConstants.
+            */
             var pgInitWithModuleConstants = function( theToInit) {
-                
                 if( !theToInit) {
                     return;
                 }
                 
-                if( theS_EventTypes_Common && theS_EventTypes_Common.pgInitFromModuleConstants) {
-                    theS_EventTypes_Common.pgInitFromModuleConstants( theToInit);
+                if( theS_EventTypes_Common && theS_EventTypes_Common.InitFromModuleConstants) {
+                    theS_EventTypes_Common.InitFromModuleConstants( theToInit);
                 }
                 
                 theToInit.COMMON_DEFAULTTITLE = "CommonDefaultName";
@@ -131,17 +161,24 @@ permissions and limitations under the Licence.
                 theToInit.DATATYPE_FILE = "File";
                 
             };
-            
-            
-            
+    
+    
+    
+            /* ***************************************************************
+               Holder of name-values in the Module, considered Constants.
+            */
             var ModuleConstants = {};
             pgInitFromModuleVariations( ModuleConstants);
             pgInitWithModuleConstants( ModuleConstants);
-            
-            
-            
-            
-            var pgInitFromModuleConstants = function( theToInit) {
+    
+    
+    
+    
+            /* ***************************************************************
+               Just copy each key-value in ModuleConstants onto the supplied object.
+               Used to fill the Module object and the Protoype object with the key-value pairs in Constants.
+             */
+            var InitFromModuleConstants = function( theToInit) {
                 if( !theToInit) {
                     return;
                 }
@@ -156,7 +193,25 @@ permissions and limitations under the Licence.
     
     
     
-            var pgInitModuleGlobalsOn = function( theToInit) {
+            /* ***************************************************************
+               Init here name-values, considered Globals - and therefore with an expected read-write life-cycle.
+               Globals can only be accessed through the Module .ModuleGlobals. Instances may access this._v_Module.ModuleGlobals
+               
+                If the Module defines a prototype:
+              
+                   Instances of the prototype also have same access this._v_Module.ModuleGlobals.
+                   Instances of the prototype are those created with new <prototypename>_Constructor.
+                   
+                   Any sub-prototypes defined in other modules and their instances shall have a different _v_Module and therefore different globals,
+                   
+                   Any sub-prototype in other module and their instances may traverse upwards the prototype chain
+                   through the prototype _v_SuperPrototype property until reaching the prototype of the desired Module,
+                   or directly access the desired module through the property _v_Prototype_<prototypename>.
+                   From the chosen prototype it is possible to access aModule.ModuleGlobals
+                   (Sub-prototypes are prototypes based on objects created with this module's
+                   new <prototypename>_SuperPrototypeConstructor) and transitively all their sub-prototypes.
+            */
+            var InitModuleGlobalsOn = function( theToInit) {
         
                 if( !theToInit) {
                 }
@@ -164,8 +219,11 @@ permissions and limitations under the Licence.
     
     
     
+            /* ***************************************************************
+              Holder of name-values in the Module, considered Globals.
+            */
             var ModuleGlobals = { };
-            pgInitModuleGlobalsOn( ModuleGlobals);
+            InitModuleGlobalsOn( ModuleGlobals);
     
     
     
@@ -176,8 +234,9 @@ permissions and limitations under the Licence.
                 
                 var aPrototype = {};
                 
-                pgInitFromModuleConstants( aPrototype);
+                InitFromModuleConstants( aPrototype);
     
+                aPrototype._v_IsPrototype = true;
                 aPrototype._v_SuperPrototype = null;
                 
                 aPrototype._v_Type = "Common";
@@ -366,7 +425,7 @@ permissions and limitations under the Licence.
                 
                 var fToResultJSON = function( theCommonObjects, theAlready) {
                     if( !( theAlready == null)) {
-                        if( theAlready.fAlready( this)){
+                        if( ( typeof theAlready.fAlready === "function") && theAlready.fAlready( this)){
                             return this.fIdentifyingJSON();
                         }
                     }
@@ -522,10 +581,6 @@ permissions and limitations under the Licence.
             var Common_Constructor = function( theTitle, theIdentifier, theRecorder) {
                 this._v_IsPrototype = false;
                 this._v_Prototype = aCommon_Prototype;
-                // this._v_Prototype = null;
-                // this._v_SuperPrototype = null;
-                // this._v_Type      = null;
-                // this._v_Module    = null;
                 
                 this._v_Identifier = null;
                 this._v_Recorder   = null;
@@ -546,9 +601,6 @@ permissions and limitations under the Licence.
             var Common_SuperPrototypeConstructor = function() {
                 this._v_IsPrototype = true;
                 this._v_Prototype = aCommon_Prototype;
-                // this._v_SuperPrototype = null;
-                // this._v_Type      = null;
-                // this._v_Module    = null;
     
                 this._v_Identifier = null;
                 this._v_Recorder   = null;
@@ -582,7 +634,7 @@ permissions and limitations under the Licence.
                 "SuperPrototypeConstructor": Common_SuperPrototypeConstructor,
                 "SuperPrototypeSingleton": Common_SuperPrototypeSingleton
             };
-            pgInitFromModuleConstants( aModule);
+            InitFromModuleConstants( aModule);
             aModule._v_Type = "module";
             aModule.ComponentName     = ComponentName;
             aModule.ModuleName      = ModuleName;
@@ -591,9 +643,9 @@ permissions and limitations under the Licence.
             aModule.ModuleVariations= ModuleVariations;
             aModule.ModuleConstants = ModuleConstants;
             aModule.ModuleGlobals   = ModuleGlobals;
-            aModule.pgInitFromModuleConstants  = pgInitFromModuleConstants;
+            aModule.InitFromModuleConstants  = InitFromModuleConstants;
             aModule.pgInitFromModuleVariations = pgInitFromModuleVariations;
-            aModule.pgInitModuleGlobalsOn      = pgInitModuleGlobalsOn;
+            aModule.InitModuleGlobalsOn      = InitModuleGlobalsOn;
     
             aCommon_Prototype._v_Module = aModule;
             
@@ -625,7 +677,7 @@ permissions and limitations under the Licence.
             );
         
             aModule.ModuleBuilder = aMod_builder;
-            aModule.ModuleSource  = aMod_builder.toString();
+            aModule.ModuleDecompiler  = function() { aModule.ModuleSource = aMod_builder.toString()};
         
             anExistingModule = aModule;
         

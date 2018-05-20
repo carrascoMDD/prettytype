@@ -39,16 +39,47 @@ permissions and limitations under the Licence.
     var ModuleName     = "overrider_type";
     var ModulePackages = "modboot";
     var ModuleFullName = ModulePackages + "/" + ModuleName;
+    var TypeName       = "Overrider";
     
     var aMod_definer =  ( function( theSS_typesregistry) {
-    
 
         var aMod_builder = function() {
             
             if( typeof FG_logModLoads === 'function') { FG_logModLoads(ModuleFullName);}
-            
-            
-            
+    
+    
+    
+    
+            /* ***************************************************************
+               Init here key-value pairs, considered constants - and therefore with an expected read-only life-cycle.
+               Constants can be accessed through the Module .ModuleConstants.
+               
+               If the Module defines a prototype:
+              
+                   Instances of the prototype also have same access this._v_Module.ModuleConstants.
+                   Instances of the prototype are those created with new <prototypename>_Constructor.
+                   
+                   Any sub-prototypes defined in other modules and their instances shall have a different _v_Module and therefore different constants,
+                   
+                   Any sub-prototype in other module and their instances may traverse upwards the prototype chain
+                   through the prototype _v_SuperPrototype property until reaching the prototype of the desired Module,
+                   or directly access the desired module through the property _v_Prototype_<prototypename>.
+                   From the chosen prototype it is possible to access aModule.ModuleConstants
+                   (Sub-prototypes are prototypes based on objects created with this module's
+                   new <prototypename>_SuperPrototypeConstructor) and transitively all their sub-prototypes.
+                   
+                   
+                   The key-values in a prototype's module ModuleConstants shall be copied onto the prototype object
+                   which then hold key-value pairs for all keys in ModuleConstants, with the initial values same as in the ModuleConstants,
+                   but these values may be changed in the prototype object.
+                   The prototype may access each constant defined in ModuleConstants
+                   as this.<CONSTANT_NAME> or this["<CONSTANT_NAME>"] .
+                   
+                   All sub-prototypes defined in other modules and their instances
+                   may also access this.<CONSTANT_NAME> or this["<CONSTANT_NAME>"]
+                   the key-values defined in any prototype recursively upwards the prototype hierarchy
+                   and therefore to the key-values copied into each prototype object from their respective module ModuleConstants.
+            */
             var pgInitWithModuleConstants = function( theToInit) {
                 
                 if( !theToInit) {
@@ -65,13 +96,23 @@ permissions and limitations under the Licence.
             
             
             
+            /* ***************************************************************
+               Holder of name-values in the Module, considered Constants.
+            */
+            /* ***************************************************************
+               Holder of name-values in the Module, considered Constants.
+            */
             var ModuleConstants = {};
             pgInitWithModuleConstants( ModuleConstants);
-            
-            
-            
-            
-            var pgInitFromModuleConstants = function( theToInit) {
+    
+    
+    
+    
+            /* ***************************************************************
+               Just copy each key-value in ModuleConstants onto the supplied object.
+               Used to fill the Module object and the Protoype object with the key-value pairs in Constants.
+             */
+            var InitFromModuleConstants = function( theToInit) {
                 if( !theToInit) {
                     return;
                 }
@@ -84,8 +125,27 @@ permissions and limitations under the Licence.
             };
     
     
-            
-            var pgInitModuleGlobalsOn = function( theToInit) {
+    
+    
+            /* ***************************************************************
+               Init here name-values, considered Globals - and therefore with an expected read-write life-cycle.
+               Globals can only be accessed through the Module .ModuleGlobals. Instances may access this._v_Module.ModuleGlobals
+               
+                If the Module defines a prototype:
+              
+                   Instances of the prototype also have same access this._v_Module.ModuleGlobals.
+                   Instances of the prototype are those created with new <prototypename>_Constructor.
+                   
+                   Any sub-prototypes defined in other modules and their instances shall have a different _v_Module and therefore different globals,
+                   
+                   Any sub-prototype in other module and their instances may traverse upwards the prototype chain
+                   through the prototype _v_SuperPrototype property until reaching the prototype of the desired Module,
+                   or directly access the desired module through the property _v_Prototype_<prototypename>.
+                   From the chosen prototype it is possible to access aModule.ModuleGlobals
+                   (Sub-prototypes are prototypes based on objects created with this module's
+                   new <prototypename>_SuperPrototypeConstructor) and transitively all their sub-prototypes.
+            */
+            var InitModuleGlobalsOn = function( theToInit) {
         
                 if( !theToInit) {
                 }
@@ -93,41 +153,81 @@ permissions and limitations under the Licence.
     
     
     
+    
+            /* ***************************************************************
+              Holder of name-values in the Module, considered Globals.
+            */
             var ModuleGlobals = { };
-            pgInitModuleGlobalsOn( ModuleGlobals);
+            InitModuleGlobalsOn( ModuleGlobals);
     
     
     
     
     
     
-            var aOverrider_Prototype = (function() {
+            /* ***************************************************************
+              Returns an object which shall be used as prototype in constructor functions
+              <TypeName>_Constructor and <TypeName>_SuperPrototypeConstructor
+              
+              When the new prototype shall have no super-prototype, the object is created as new Object() or literal {}.
+              
+              When the new prototype shall have a super-prototype, the object is created by invoking a constructor function
+                with the super-prototype as the function prototype.
                 
-                
-                var aPrototype = {};
-                
-                pgInitFromModuleConstants( aPrototype);
+              Initialise metatype variables in the prototype object.
+                When accessing the prototype or its instances, these values shall override same keys in the super-prototype, if any.
+            */
+            var Overrider_ProtoInstancer = function() {
+        
+                var aPrototype = {} /* Prototypical inheritance from NOTHING */;
+    
+                aPrototype._v_Kind                    = "prototype";
+                aPrototype._v_SuperPrototype          = null;
+                aPrototype._v_Type                    = TypeName;
+                aPrototype._v_Prototype_Overrider     = aPrototype;
+                /* Shall be filled below, at the end of the function enclosing this (aMod_builder), when aModule is defined */
+                aPrototype._v_Module                  = null;
+        
+                return aPrototype;
+            };
+    
+    
+    
+            var Overrider_CreatePrototypeSlotsOn = function( theFrame) {
+                if( !theFrame) {
+                }
+            };
+    
+    
+    
+            var Overrider_CreateInstanceSlotsOn = function( theFrame) {
+                if( !theFrame) {
+                    return;
+                }
+    
+                theFrame._v_Overriderarguments = null;
+                theFrame._v_Custom = null;
+                theFrame._v_Overrides = null;
+            };
+    
+    
+    
+    
+    
+            var Overrider_ProtoDefinerOn = function( thePrototype) {
+        
+                if( !thePrototype) {
+                    return;
+                }
+    
 
-                aPrototype._v_SuperPrototype = null;
-    
-                aPrototype._v_Type = "Overrider";
-                
-                aPrototype._v_Prototype_Overrider = aPrototype;
-                
-                aPrototype._v_Module = null;
-    
-                aPrototype._v_Overriderarguments = null;
-                aPrototype._v_Custom = null;
-                aPrototype._v_Overrides = null;
-                
-                
                 
                 var _pInit = function( theTitle) {
                     
                     this._pInit_Overrider( theTitle);
                 };
                 if( _pInit){}/* CQT */
-                aPrototype._pInit = _pInit;
+                thePrototype._pInit = _pInit;
                 
                 
                 
@@ -136,10 +236,6 @@ permissions and limitations under the Licence.
                 
                 
                 var _pInit_Overrider = function( theTitle) {
-                    
-                    // this._v_Prototype = aPrototype;
-                    // this._v_Type      = this._v_Prototype._v_Type;
-                    // this._v_Module    = this._v_Prototype._v_Module;
                     
                     this._v_Title = theTitle;
                     if( !this._v_Title) {
@@ -151,7 +247,7 @@ permissions and limitations under the Licence.
                     this._v_Overrides = null;
                 };
                 if( _pInit_Overrider){}/* CQT */
-                aPrototype._pInit_Overrider = _pInit_Overrider;
+                thePrototype._pInit_Overrider = _pInit_Overrider;
                 
                 
                 
@@ -167,7 +263,7 @@ permissions and limitations under the Licence.
                     return aFullTypeName;
                 };
                 if( fFullTypeNameString){}/* CQT */
-                aPrototype.fFullTypeNameString = fFullTypeNameString;
+                thePrototype.fFullTypeNameString = fFullTypeNameString;
                 
                 
                 
@@ -183,7 +279,7 @@ permissions and limitations under the Licence.
                     return aIdentifiyingJSON;
                 };
                 if( fIdentifyingJSON){}/* CQT */
-                aPrototype.fIdentifyingJSON = fIdentifyingJSON;
+                thePrototype.fIdentifyingJSON = fIdentifyingJSON;
                 
                 
                 
@@ -206,7 +302,7 @@ permissions and limitations under the Licence.
                     return aIdentifyingString;
                 };
                 if( fIdentifyingString){}/* CQT */
-                aPrototype.fIdentifyingString = fIdentifyingString;
+                thePrototype.fIdentifyingString = fIdentifyingString;
                 
                 
                 
@@ -223,7 +319,7 @@ permissions and limitations under the Licence.
                     return aIdentifyingJSON;
                 };
                 if( fIdentifyingWithTitleJSON){}/* CQT */
-                aPrototype.fIdentifyingWithTitleJSON = fIdentifyingWithTitleJSON;
+                thePrototype.fIdentifyingWithTitleJSON = fIdentifyingWithTitleJSON;
                 
                 
                 
@@ -246,7 +342,7 @@ permissions and limitations under the Licence.
                     return aIdentifyingString;
                 };
                 if( fIdentifyingWithTitleString){}/* CQT */
-                aPrototype.fIdentifyingWithTitleString = fIdentifyingWithTitleString;
+                thePrototype.fIdentifyingWithTitleString = fIdentifyingWithTitleString;
                 
                 
                 
@@ -259,7 +355,7 @@ permissions and limitations under the Licence.
                 
                 var fToResultJSON = function( theCommonObjects, theAlready) {
                     if( !( theAlready == null)) {
-                        if( theAlready.fAlready( this)){
+                        if( ( typeof theAlready.fAlready === "function") && theAlready.fAlready( this)){
                             return this.fIdentifyingJSON();
                         }
                     }
@@ -270,7 +366,7 @@ permissions and limitations under the Licence.
                     return aResultJSON;
                 };
                 if( fToResultJSON){}/* CQT */
-                aPrototype.fToResultJSON = fToResultJSON;
+                thePrototype.fToResultJSON = fToResultJSON;
     
     
      
@@ -280,21 +376,21 @@ permissions and limitations under the Licence.
                     this._v_Overriderarguments = theOverriderarguments;
                 };
                 if( pSetOverriderarguments){}/* CQT */
-                aPrototype.pSetOverriderarguments = pSetOverriderarguments;
+                thePrototype.pSetOverriderarguments = pSetOverriderarguments;
     
     
                 var pSetCustom = function( theCustom) {
                     this._v_Custom = theCustom;
                 };
                 if( pSetCustom){}/* CQT */
-                aPrototype.pSetCustom = pSetCustom;
+                thePrototype.pSetCustom = pSetCustom;
     
     
                 var pSetOverrides = function( theOverrides) {
                     this._v_Overrides = theOverrides;
                 };
                 if( pSetOverrides){}/* CQT */
-                aPrototype.pSetOverrides = pSetOverrides;
+                thePrototype.pSetOverrides = pSetOverrides;
     
     
 
@@ -325,7 +421,7 @@ permissions and limitations under the Licence.
                     this.pOverrideWithArguments( theModuleFullName, theModuleVariations)
                 };
                 if( pOverrideModuleVariations){}/* CQT */
-                aPrototype.pOverrideModuleVariations = pOverrideModuleVariations;
+                thePrototype.pOverrideModuleVariations = pOverrideModuleVariations;
     
     
     
@@ -416,7 +512,7 @@ permissions and limitations under the Licence.
                     }
                 };
                 if( pOverrideWithValuesFrom){}/* CQT */
-                aPrototype.pOverrideWithValuesFrom = pOverrideWithValuesFrom;
+                thePrototype.pOverrideWithValuesFrom = pOverrideWithValuesFrom;
     
     
     
@@ -498,94 +594,98 @@ permissions and limitations under the Licence.
                     }
                 };
                 if( pOverrideWithArguments){}/* CQT */
-                aPrototype.pOverrideWithArguments = pOverrideWithArguments;
+                thePrototype.pOverrideWithArguments = pOverrideWithArguments;
+    
+                
+            };
     
     
     
     
-    
-    
-    
-    
+            var Overrider_ProtoFactory = function() {
+        
+                var aPrototype = Overrider_ProtoInstancer();
+                InitFromModuleConstants( aPrototype);
+                Overrider_CreatePrototypeSlotsOn( aPrototype);
+                Overrider_ProtoDefinerOn( aPrototype);
+        
                 return aPrototype;
-                
-            })();
-            
-            
-            
-            
-            var Overrider_Constructor = function( theTitle) {
-                this._v_Prototype = aOverrider_Prototype;
-                // this._v_Prototype = null;
-                // this._v_SuperPrototype = null;
-                // this._v_Type = null;
-                // this._v_Module = null;
-                
-                this._v_Title = null;
+            };
     
-                this._v_Overriderarguments = null;
-                this._v_Custom = null;
-                this._v_Overrides = null;
-                
+    
+    
+    
+    
+    
+            var anOverrider_Prototype = Overrider_ProtoFactory();
+    
+    
+            var Overrider_Constructor = function( theTitle) {
+                this._v_Prototype = anOverrider_Prototype;
+        
+                Overrider_CreateInstanceSlotsOn( this);
+        
                 this._pInit_Overrider( theTitle);
             };
-            Overrider_Constructor.prototype = aOverrider_Prototype;
-            
-            
-            
-            
-            
+            Overrider_Constructor.prototype = anOverrider_Prototype;
+    
+    
+    
+    
+    
+    
+    
             var Overrider_SuperPrototypeConstructor = function() {
-                this._v_IsPrototype = true;
-                this._v_Prototype = aOverrider_Prototype;
-                // this._v_SuperPrototype = null;
-                // this._v_Type      = null;
-                // this._v_Module    = null;
-                
-                this._v_Title     = null;
-    
-                this._v_Overriderarguments = null;
-                this._v_Custom = null;
-                this._v_Overrides = null;
-            };
-            Overrider_SuperPrototypeConstructor.prototype = aOverrider_Prototype;
-    
-    
-    
-            var Overrider_SuperPrototypeSingleton = function() {
-                if( aModule.SuperPrototypeSingletonInstance) {
-                    return aModule.SuperPrototypeSingletonInstance;
-                }
+                this._v_Prototype = anOverrider_Prototype;
         
-                aModule.SuperPrototypeSingletonInstance = new Overrider_SuperPrototypeConstructor();
-                return aModule.SuperPrototypeSingletonInstance;
+                Overrider_CreateInstanceSlotsOn( this);
+                /* Does not invoke _pInit_Overrider on the newly created object,
+                   because initialisation of values by super-protypes _pInit_Xxx
+                   shall be invoked during the _pInit_Xxx of each instance of the subprototypes.
+                */
             };
-        
+            Overrider_SuperPrototypeConstructor.prototype = anOverrider_Prototype;
     
-
+    
+    
+    
+    
             var aModule = {
-                "Overrider_Prototype": aOverrider_Prototype,
-                "Overrider_Constructor": Overrider_Constructor,
-                "Overrider_SuperPrototypeConstructor": Overrider_SuperPrototypeConstructor,
-                "Overrider_SuperPrototypeSingleton": Overrider_SuperPrototypeSingleton,
-                "Prototype": aOverrider_Prototype,
-                "Constructor": Overrider_Constructor,
-                "SuperPrototypeConstructor": Overrider_SuperPrototypeConstructor,
-                "SuperPrototypeSingleton": Overrider_SuperPrototypeSingleton,
+                "_v_Type":                                 "module",
+                "ComponentName":                           ComponentName,
+                "ModuleName":                              ModuleName,
+                "ModulePackages":                          ModulePackages,
+                "ModuleFullName":                          ModuleFullName,
+                "ModuleConstants":                         ModuleConstants,
+                "ModuleGlobals":                           ModuleGlobals,
+        
+                "InitFromModuleConstants":               InitFromModuleConstants,
+                "InitModuleGlobalsOn":                   InitModuleGlobalsOn,
+        
+                "Overrider_ProtoInstancer":                Overrider_ProtoInstancer,
+                "Overrider_ProtoDefinerOn":                Overrider_ProtoDefinerOn,
+                "Overrider_ProtoFactory":                  Overrider_ProtoFactory,
+                "Overrider_Constructor":                   Overrider_Constructor,
+                "Overrider_SuperPrototypeConstructor":     Overrider_SuperPrototypeConstructor,
+                "Overrider_CreatePrototypeSlotsOn":        Overrider_CreatePrototypeSlotsOn,
+                "Overrider_CreateInstanceSlotsOn":         Overrider_CreateInstanceSlotsOn,
+        
+                "ProtoInstancer":                          Overrider_ProtoInstancer,
+                "ProtoDefinerOn":                          Overrider_ProtoDefinerOn,
+                "ProtoFactory":                            Overrider_ProtoFactory,
+                "Constructor":                             Overrider_Constructor,
+                "SuperPrototypeConstructor":               Overrider_SuperPrototypeConstructor,
+                "CreatePrototypeSlotsOn":                  Overrider_CreatePrototypeSlotsOn,
+                "CreateInstanceSlotsOn":                   Overrider_CreateInstanceSlotsOn,
+        
+                "Overrider_Prototype":                     anOverrider_Prototype,
+                "Prototype":                               anOverrider_Prototype
+        
             };
-            pgInitFromModuleConstants( aModule);
-            aModule._v_Type = "module";
-            aModule.ComponentName     = ComponentName;
-            aModule.ModuleName     = ModuleName;
-            aModule.ModulePackages = ModulePackages;
-            aModule.ModuleFullName = ModuleFullName;
-            aModule.ModuleConstants = ModuleConstants;
-            aModule.ModuleGlobals   = ModuleGlobals;
-            aModule.ModuleConstants = ModuleConstants;
-            aModule.pgInitFromModuleConstants  = pgInitFromModuleConstants;
-            aModule.pgInitModuleGlobalsOn      = pgInitModuleGlobalsOn;
+            InitFromModuleConstants( aModule);
+    
             
-            aOverrider_Prototype._v_Module = aModule;
+            anOverrider_Prototype._v_Module = aModule;
             
             
             
@@ -604,7 +704,7 @@ permissions and limitations under the Licence.
             var aModule = aMod_builder();
     
             aModule.ModuleBuilder = aMod_builder;
-            aModule.ModuleSource  = aMod_builder.toString();
+            aModule.ModuleDecompiler  = function() { aModule.ModuleSource = aMod_builder.toString()};
     
             anExistingModule = aModule;
     
@@ -664,7 +764,7 @@ permissions and limitations under the Licence.
     
     }
     
-})();
+})(); /* Self-executing function launches the module definition machinery upon load of the javascript file */
 
 
 

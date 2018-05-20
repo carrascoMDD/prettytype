@@ -80,6 +80,10 @@
     
     
     
+            /* ***************************************************************
+               Init here key-value pairs, considered constants - and therefore with an expected read-only life-cycle.
+               Constants can be accessed through the Module .ModuleConstants.
+            */
             var pgInitWithModuleConstants = function( theToInit) {
         
                 if( !theToInit) {
@@ -90,6 +94,9 @@
     
     
     
+            /* ***************************************************************
+               Holder of name-values in the Module, considered Constants.
+            */
             var ModuleConstants = {};
             pgInitFromModuleVariations( ModuleConstants);
             pgInitWithModuleConstants( ModuleConstants);
@@ -97,7 +104,11 @@
     
     
     
-            var pgInitFromModuleConstants = function( theToInit) {
+            /* ***************************************************************
+               Just copy each key-value in ModuleConstants onto the supplied object.
+               Used to fill the Module object and the Protoype object with the key-value pairs in Constants.
+             */
+            var InitFromModuleConstants = function( theToInit) {
                 if( !theToInit) {
                     return;
                 }
@@ -117,7 +128,12 @@
     
     
     
-            var pgInitModuleGlobalsOn = function( theToInit) {
+    
+            /* ***************************************************************
+               Init here name-values, considered Globals - and therefore with an expected read-write life-cycle.
+               Globals can only be accessed through the Module .ModuleGlobals. Instances may access this._v_Module.ModuleGlobals
+            */
+            var InitModuleGlobalsOn = function( theToInit) {
         
                 if( !theToInit) {
                 }
@@ -125,8 +141,12 @@
     
     
     
+    
+            /* ***************************************************************
+              Holder of name-values in the Module, considered Globals.
+            */
             var ModuleGlobals = { };
-            pgInitModuleGlobalsOn( ModuleGlobals);
+            InitModuleGlobalsOn( ModuleGlobals);
     
     
     
@@ -148,7 +168,7 @@
                 return (guess) ? p.guessAnonymousFunctions(result) : result;
             }
     
-            pgInitFromModuleConstants( printStackTrace);
+            InitFromModuleConstants( printStackTrace);
             
     
             printStackTrace.implementation = function() {
@@ -619,9 +639,9 @@
             printStackTrace.ModuleVariations= ModuleVariations;
             printStackTrace.ModuleConstants = ModuleConstants;
             printStackTrace.ModuleGlobals   = ModuleGlobals;
-            printStackTrace.pgInitFromModuleConstants  = pgInitFromModuleConstants;
+            printStackTrace.InitFromModuleConstants  = InitFromModuleConstants;
             printStackTrace.pgInitFromModuleVariations = pgInitFromModuleVariations;
-            printStackTrace.pgInitModuleGlobalsOn      = pgInitModuleGlobalsOn;
+            printStackTrace.InitModuleGlobalsOn      = InitModuleGlobalsOn;
     
             printStackTrace.implementation.prototype._v_Module = printStackTrace;
             
@@ -644,7 +664,7 @@
             );
     
             aModule.ModuleBuilder = aMod_builder;
-            aModule.ModuleSource  = aMod_builder.toString();
+            aModule.ModuleDecompiler  = function() { aModule.ModuleSource = aMod_builder.toString()};
             
             anExistingModule = aModule;
             

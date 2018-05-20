@@ -77,8 +77,12 @@ permissions and limitations under the Licence.
             theS_Overrider.pOverrideModuleVariations( ModuleFullName, ModuleVariations);
     
     
-            
     
+    
+            /* ***************************************************************
+               Init here key-value pairs, considered constants - and therefore with an expected read-only life-cycle.
+               Constants can be accessed through the Module .ModuleConstants.
+            */
             var pgInitWithModuleConstants = function( theToInit) {
                 
                 if( !theToInit) {
@@ -93,7 +97,11 @@ permissions and limitations under the Licence.
     
     
     
-            var pgInitFromModuleConstants = function( theToInit) {
+            /* ***************************************************************
+               Just copy each key-value in ModuleConstants onto the supplied object.
+               Used to fill the Module object and the Protoype object with the key-value pairs in Constants.
+             */
+            var InitFromModuleConstants = function( theToInit) {
                 if( !theToInit) {
                     return;
                 }
@@ -108,7 +116,12 @@ permissions and limitations under the Licence.
     
     
     
-            var pgInitModuleGlobalsOn = function( theToInit) {
+    
+            /* ***************************************************************
+               Init here name-values, considered Globals - and therefore with an expected read-write life-cycle.
+               Globals can only be accessed through the Module .ModuleGlobals. Instances may access this._v_Module.ModuleGlobals
+            */
+            var InitModuleGlobalsOn = function( theToInit) {
         
                 if( !theToInit) {
                 }
@@ -116,8 +129,12 @@ permissions and limitations under the Licence.
     
     
     
+    
+            /* ***************************************************************
+              Holder of name-values in the Module, considered Globals.
+            */
             var ModuleGlobals = { };
-            pgInitModuleGlobalsOn( ModuleGlobals);
+            InitModuleGlobalsOn( ModuleGlobals);
     
     
     
@@ -126,7 +143,7 @@ permissions and limitations under the Licence.
             
             
             var aModule = { };
-            pgInitFromModuleConstants( aModule);
+            InitFromModuleConstants( aModule);
             aModule._v_Type = "module";
             aModule.ComponentName     = ComponentName;
             aModule.ModuleName     = ModuleName;
@@ -135,9 +152,9 @@ permissions and limitations under the Licence.
             aModule.ModuleVariations= ModuleVariations;
             aModule.ModuleConstants = ModuleConstants;
             aModule.ModuleGlobals   = ModuleGlobals;
-            aModule.pgInitFromModuleConstants  = pgInitFromModuleConstants;
+            aModule.InitFromModuleConstants  = InitFromModuleConstants;
             aModule.pgInitFromModuleVariations = pgInitFromModuleVariations;
-            aModule.pgInitModuleGlobalsOn      = pgInitModuleGlobalsOn;
+            aModule.InitModuleGlobalsOn      = InitModuleGlobalsOn;
             
             
             
@@ -206,7 +223,7 @@ permissions and limitations under the Licence.
             );
         
             aModule.ModuleBuilder = aMod_builder;
-            aModule.ModuleSource  = aMod_builder.toString();
+            aModule.ModuleDecompiler  = function() { aModule.ModuleSource = aMod_builder.toString()};
         
             anExistingModule = aModule;
         

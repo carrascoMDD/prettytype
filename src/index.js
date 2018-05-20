@@ -119,30 +119,40 @@ permissions and limitations under the Licence.
             var ModuleVariations = { };
             pgInitWithModuleVariations( ModuleVariations);
             theS_overrider_svce.pOverrideModuleVariations( ModuleFullName, ModuleVariations);
-            
-            
-            
-            
-            
-            
-            
-            
+    
+    
+    
+    
+    
+    
+    
+    
+            /* ***************************************************************
+               Init here key-value pairs, considered constants - and therefore with an expected read-only life-cycle.
+               Constants can be accessed through the Module .ModuleConstants.
+            */
             var pgInitWithModuleConstants = function( theToInit) {
-                
                 if( !theToInit) {
                 }
             };
-            
-            
-            
+    
+    
+    
+            /* ***************************************************************
+               Holder of name-values in the Module, considered Constants.
+            */
             var ModuleConstants = {};
             pgInitFromModuleVariations( ModuleConstants);
             pgInitWithModuleConstants( ModuleConstants);
-            
-            
-            
-            
-            var pgInitFromModuleConstants = function( theToInit) {
+    
+    
+    
+    
+            /* ***************************************************************
+               Just copy each key-value in ModuleConstants onto the supplied object.
+               Used to fill the Module object and the Protoype object with the key-value pairs in Constants.
+             */
+            var InitFromModuleConstants = function( theToInit) {
                 if( !theToInit) {
                     return;
                 }
@@ -153,27 +163,34 @@ permissions and limitations under the Licence.
                     }
                 }
             };
-            
-            
-            
-            
-            var pgInitModuleGlobalsOn = function( theToInit) {
+    
+    
+    
+    
+            /* ***************************************************************
+               Init here name-values, considered Globals - and therefore with an expected read-write life-cycle.
+               Globals can only be accessed through the Module .ModuleGlobals. Instances may access this._v_Module.ModuleGlobals
+            */
+            var InitModuleGlobalsOn = function( theToInit) {
                 
                 if( !theToInit) {
                 }
             };
-            
-            
-            
+    
+    
+    
+            /* ***************************************************************
+              Holder of name-values in the Module, considered Globals.
+            */
             var ModuleGlobals = { };
-            pgInitModuleGlobalsOn( ModuleGlobals);
+            InitModuleGlobalsOn( ModuleGlobals);
             
             
             
         
             
             var aModule = {};
-            pgInitFromModuleConstants( aModule);
+            InitFromModuleConstants( aModule);
             aModule._v_Type = "module";
             aModule.ComponentName     = ComponentName;
             aModule.ModuleName      = ModuleName;
@@ -182,9 +199,9 @@ permissions and limitations under the Licence.
             aModule.ModuleVariations= ModuleVariations;
             aModule.ModuleConstants = ModuleConstants;
             aModule.ModuleGlobals   = ModuleGlobals;
-            aModule.pgInitFromModuleConstants  = pgInitFromModuleConstants;
+            aModule.InitFromModuleConstants  = InitFromModuleConstants;
             aModule.pgInitFromModuleVariations = pgInitFromModuleVariations;
-            aModule.pgInitModuleGlobalsOn      = pgInitModuleGlobalsOn;
+            aModule.InitModuleGlobalsOn      = InitModuleGlobalsOn;
     
     
             aModule[ "modboot"] = {
@@ -274,6 +291,31 @@ permissions and limitations under the Licence.
             aModule[ "EventKinds_Common"] =                theS_eventkinds_common;
             aModule[ "CommonType"] =                       theS_common_type;
     
+            aModule[ "Modules"] = { };
+            aModule[ "Modules"][ "TypesRegistrySvce"] =                theS_typesregistry;
+            aModule[ "Modules"][ "OverriderType"] =                    theS_overrider_type;
+            aModule[ "Modules"][ "OverriderSvce"] =                    theS_overrider_svce;
+            aModule[ "Modules"][ "DecorateSystemPrototypesSvce"] =     theS_decoratesystemprototypes_svce;
+            aModule[ "Modules"][ "StacktraceSvce"] =                   theS_stacktrace;
+            aModule[ "Modules"][ "ExceptionDetailsSvce"] =             theS_exceptiondetails_svce;
+            aModule[ "Modules"][ "ConsoleSvce"] =                      theS_console_svce;
+            aModule[ "Modules"][ "Traversals"] =                       theS_traversals;
+            aModule[ "Modules"][ "Checks"] =                           theS_checks;
+            aModule[ "Modules"][ "IdentifierType"] =                   theS_identifier_type;
+            aModule[ "Modules"][ "IdentifierSvce"] =                   theS_identifier_svce;
+            aModule[ "Modules"][ "RecordType"] =                       theS_record_type;
+            aModule[ "Modules"][ "RecordingPolicyType"] =              theS_recordingpolicy_type;
+            aModule[ "Modules"][ "RecordingPolicyKeepAllType"] =       theS_recordingpolicy_keepall_type;
+            aModule[ "Modules"][ "RecordingPolicyKeepSomeType"] =      theS_recordingpolicy_keepsome_type;
+            aModule[ "Modules"][ "RecordingPolicyKeepRecentType"] =    theS_recordingpolicy_keeprecent_type;
+            aModule[ "Modules"][ "DumpingPolicyType"] =                theS_dumpingpolicy_type;
+            aModule[ "Modules"][ "DumpingPolicyFilterKindsType"] =     theS_dumpingpolicy_filterkinds_type;
+            aModule[ "Modules"][ "DumpingPolicyTriggerKindsType"] =    theS_dumpingpolicy_triggerkinds_type;
+            aModule[ "Modules"][ "RecorderType"] =                     theS_recorder_type;
+            aModule[ "Modules"][ "RecorderSvce"] =                     theS_recorder_svce;
+            aModule[ "Modules"][ "EventKinds_Common"] =                theS_eventkinds_common;
+            aModule[ "Modules"][ "CommonType"] =                       theS_common_type;
+    
     
             theS_typesregistry.ModuleIndex = aModule;
             theS_overrider_type.ModuleIndex = aModule;
@@ -342,7 +384,7 @@ permissions and limitations under the Licence.
             );
             
             aModule.ModuleBuilder = aMod_builder;
-            aModule.ModuleSource  = aMod_builder.toString();
+            aModule.ModuleDecompiler  = function() { aModule.ModuleSource = aMod_builder.toString()};
             
             anExistingModule = aModule;
             
