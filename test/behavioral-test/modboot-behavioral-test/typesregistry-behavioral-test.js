@@ -46,7 +46,7 @@ var aTest_spec = (function( theSS_typeregistry) {
     
     describe( ModuleName + " " + ModulePackages + " " + ComponentName, function () {
         
-        var aM_typesregistry = null;
+        var aM_typesregistry_scve = null;
         
         if( ( typeof beforeEach === 'function') && ( typeof module === 'function')  && ( typeof inject === 'function')) {
             // Karma for Angular (1.x)
@@ -54,46 +54,46 @@ var aTest_spec = (function( theSS_typeregistry) {
             beforeEach( module( 'typesRegistry'));
         
             beforeEach( inject(function( _TypesRegistrySvce_) {
-                aM_typesregistry = _TypesRegistrySvce_;
+                aM_typesregistry_scve = _TypesRegistrySvce_;
             }));
         }
         else if ( !(typeof module === 'undefined') && module.exports) {
             // Node.js
-            aM_typesregistry = require('../../../src/modboot/typesregistry');
+            aM_typesregistry_scve = require('../../../src/modboot/typesregistry');
         }
         else if ( !(typeof define === 'undefined') && define.amd) {
             // AMD / RequireJS
-            aM_typesregistry = theSS_typeregistry;
+            aM_typesregistry_scve = theSS_typeregistry;
         }
         else if ( !(typeof nomod === 'undefined') && nomod.register) {
-            aM_typesregistry = nomod.resolve( nomod.fComputeFullName( "prettytype", "modboot", "typesregistry"));
+            aM_typesregistry_scve = nomod.resolve( nomod.fComputeFullName( "prettytype", "typesregistry", "typesregistry_type"));
         }
         
         it("Module gets registered", function () {
             var aModuleName = "TestModuleName01";
-            expect( aM_typesregistry.fRegisteredModule( aModuleName)).toBeNull();
+            expect( aM_typesregistry_scve.fRegisteredModule( aModuleName)).toBeNull();
             
             var aREGISTERMODULESswitched = false;
-            if( !aM_typesregistry.REGISTERMODULES) {
-                aM_typesregistry.REGISTERMODULES = true;
+            if( !aM_typesregistry_scve.REGISTERMODULES) {
+                aM_typesregistry_scve.REGISTERMODULES = true;
                 aREGISTERMODULESswitched = true;
             }
             
             var aRESOLVEMODULESswitched=false;
-            if( !aM_typesregistry.RESOLVEMODULES) {
-                aM_typesregistry.RESOLVEMODULES = true;
+            if( !aM_typesregistry_scve.RESOLVEMODULES) {
+                aM_typesregistry_scve.RESOLVEMODULES = true;
                 aRESOLVEMODULESswitched = true;
             }
             
-            aM_typesregistry.fRegisterModule( aModuleName, { "ModuleName": aModuleName});
-            expect( aM_typesregistry.fRegisteredModule( aModuleName)).not.toBeNull();
-            expect( aM_typesregistry.fRegisteredModule( aModuleName)[ "TYPESREGISTRY"]).toBe( aM_typesregistry);
+            aM_typesregistry_scve.fRegisterModule( aModuleName, { "ModuleName": aModuleName});
+            expect( aM_typesregistry_scve.fRegisteredModule( aModuleName)).not.toBeNull();
+            expect( aM_typesregistry_scve.fRegisteredModule( aModuleName)[ "TYPESREGISTRY"]).toBe( aM_typesregistry_scve);
     
             if( aREGISTERMODULESswitched) {
-                delete aM_typesregistry.REGISTERMODULES;
+                delete aM_typesregistry_scve.REGISTERMODULES;
             }
             if( aRESOLVEMODULESswitched) {
-                delete aM_typesregistry.RESOLVEMODULES;
+                delete aM_typesregistry_scve.RESOLVEMODULES;
             }
         });
     
@@ -106,7 +106,7 @@ if ( (typeof define === 'function') && define.amd) {
     * If it is a variable, no test specs shall be registered (i.e., it does not invoke the test spec function */
     define( "m_typesregistry_behavioral_test",
         [
-            "m_typesregistry"
+            "m_typesregistry_svce"
         ],
         aTest_spec
     );

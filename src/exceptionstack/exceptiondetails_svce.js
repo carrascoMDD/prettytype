@@ -1,7 +1,8 @@
+
 /*
- * decoratesystemprototypes_svce.js
+ * exceptiondetails_svce.js
  *
- * Created @author Antonio Carrasco Valero 201412070820
+ * Created @author Antonio Carrasco Valero 201409301309
  *
  *
  ***************************************************************************
@@ -35,14 +36,16 @@ permissions and limitations under the Licence.
     
     
     var ComponentName    = "prettytype";
-    var ModuleName     = "decoratesystemprototypes_svce";
+    var ModuleName     = "exceptiondetails_svce";
     var ModulePackages = "utils";
     var ModuleFullName = ModulePackages + "/" + ModuleName;
     
-    var aMod_definer = ( function(theSS_typesregistry,
-                                  theSS_Overrider){
-        
-        var aMod_builder = function( theS_Overrider) {
+    var aMod_definer = ( function( theSS_typesregistry_svce,
+                                   theSS_overrider_type,
+                                   theSS_stacktraceSvce){
+    
+        var aMod_builder = function( theS_overrider_type,
+                                     theS_stacktraceSvce) {
     
             
             if( typeof FG_logModLoads === 'function') { FG_logModLoads(ModuleFullName);}
@@ -58,7 +61,7 @@ permissions and limitations under the Licence.
     
     
     
-            var pgInitFromModuleVariations = function( theToInit) {
+            var InitFromModuleVariations = function( theToInit) {
                 if( !theToInit) {
                     return;
                 }
@@ -69,12 +72,12 @@ permissions and limitations under the Licence.
                     }
                 }
             };
-    
-    
+        
+
     
             var ModuleVariations = { };
             pgInitWithModuleVariations( ModuleVariations);
-            theS_Overrider.pOverrideModuleVariations( ModuleFullName, ModuleVariations);
+            theS_overrider_type.pOverrideModuleVariations( ModuleFullName, ModuleVariations);
     
     
     
@@ -86,14 +89,23 @@ permissions and limitations under the Licence.
             var pgInitWithModuleConstants = function( theToInit) {
                 
                 if( !theToInit) {
+                    return;
                 }
+                
+                theToInit.LOGEXCEPTIONDETAILS = false;
             };
-            
-            
-            
+    
+    
+    
+    
+    
+            /* ***************************************************************
+               Holder of name-values in the Module, considered Constants.
+            */
             var ModuleConstants = {};
-            pgInitFromModuleVariations( ModuleConstants);
+            InitFromModuleVariations( ModuleConstants);
             pgInitWithModuleConstants( ModuleConstants);
+    
     
     
     
@@ -105,13 +117,16 @@ permissions and limitations under the Licence.
                 if( !theToInit) {
                     return;
                 }
-        
+                
                 for( var aGlobalName in ModuleConstants) {
                     if( ModuleConstants.hasOwnProperty( aGlobalName)) {
                         theToInit[ aGlobalName] = ModuleConstants[ aGlobalName];
                     }
                 }
             };
+    
+    
+    
     
     
     
@@ -137,11 +152,9 @@ permissions and limitations under the Licence.
             InitModuleGlobalsOn( ModuleGlobals);
     
     
+            
+            
     
-    
-            
-            
-            
             var aModule = { };
             InitFromModuleConstants( aModule);
             aModule._v_Type = "module";
@@ -153,92 +166,96 @@ permissions and limitations under the Licence.
             aModule.ModuleConstants = ModuleConstants;
             aModule.ModuleGlobals   = ModuleGlobals;
             aModule.InitFromModuleConstants  = InitFromModuleConstants;
-            aModule.pgInitFromModuleVariations = pgInitFromModuleVariations;
+            aModule.InitFromModuleVariations = InitFromModuleVariations;
             aModule.InitModuleGlobalsOn      = InitModuleGlobalsOn;
             
             
             
             
-            var fStringExtend = function( theString, theLen) {
-                
-                if( !theLen) {
-                    return "";
+            
+            var fgExceptionDetail = function( theException) {
+                if( !theException) {
+                    return null;
                 }
                 
-                var aThisLen = theString.length;
-                if( !aThisLen) {
-                    return "";
-                }
                 
-                var aSource = theString;
-                var aNumRepeats = Math.floor( theLen / aThisLen);
-                aNumRepeats += 1;
-                if( aNumRepeats > 1) {
-                    
-                    if( aNumRepeats > 10000) {
-                        aNumRepeats = 10000;
-                    }
-                    aSource = Array.apply(null, new Array( aNumRepeats)).map(String.prototype.valueOf, theString).join( "");
-                }
-                
-                var aExtended = aSource.slice( 0, theLen);
-                if( aExtended){}/* CQT */
-                
-                return aExtended;
-            };
-            if( fStringExtend){}/* CQT */
-            aModule.fStringExtend = fStringExtend;
-            
-            
-            
-            
-            
-            if( !String.prototype.Xtnd) {
-                String.prototype.Xtnd = function( theLen) {
-                    
-                    return aModule.fStringExtend( this, theLen);
+                var anExceptionDetail = {
+                    exception: theException.toString()
                 };
-            }
+                
+                
+                var anExceptionTrace = theS_stacktraceSvce( { e: theException});
+                if( anExceptionTrace) {
+                    anExceptionDetail.trace = anExceptionTrace;
+                }
+                
+                var aRecord = theException._v_Record;
+                if( aRecord) {
+                    if( aRecord.fIdentifyingJSON) {
+                        aRecord = aRecord.fIdentifyingJSON();
+                    }
+                    else {
+                        if( aRecord.fAsLogObject) {
+                            aRecord = aRecord.fAsLogObject();
+                        }
+                    }
+                    if( aRecord) {
+                        anExceptionDetail.recex = aRecord;
+                    }
+                }
+                
+                if( this.LOGEXCEPTIONDETAILS) {
+                    console.log( "exception:" + anExceptionDetail.exception);
+                    console.log( anExceptionDetail.recex);
+                    console.log( anExceptionDetail.trace);
+                }
+                
+                anExceptionDetail.fIdentifyingJSON = function() {
+                    return anExceptionDetail;
+                };
+                
+                return anExceptionDetail;
+            };
+            if( fgExceptionDetail){}/* CQT */
+            aModule.fgExceptionDetail = fgExceptionDetail;
     
-            
-            
-            
+    
+    
+    
+    
             return aModule;
         };
     
     
     
     
-    
-    
         var anExistingModule = null;
-        if(    !( typeof theSS_typesregistry === 'undefined')
-            && ( typeof theSS_typesregistry.fRegisteredModule === 'function')) {
-            anExistingModule = theSS_typesregistry.fRegisteredModule( ModuleFullName);
+        if(    !( typeof theSS_typesregistry_svce === 'undefined')
+            && ( typeof theSS_typesregistry_svce.fRegisteredModule === 'function')) {
+            anExistingModule = theSS_typesregistry_svce.fRegisteredModule( ModuleFullName);
         }
         if( !anExistingModule) {
         
             var aModule = aMod_builder(
-                theSS_Overrider
+                theSS_overrider_type,
+                theSS_stacktraceSvce
             );
-        
+    
             aModule.ModuleBuilder = aMod_builder;
             aModule.ModuleDecompiler  = function() { aModule.ModuleSource = aMod_builder.toString()};
-        
+            
             anExistingModule = aModule;
         
-            if(    !( typeof theSS_typesregistry === 'undefined')
-                && ( typeof theSS_typesregistry.fRegisterModule === 'function')) {
-                theSS_typesregistry.fRegisterModule( ModuleFullName, aModule);
+            if(    !( typeof theSS_typesregistry_svce === 'undefined')
+                && ( typeof theSS_typesregistry_svce.fRegisterModule === 'function')) {
+                theSS_typesregistry_svce.fRegisterModule( ModuleFullName, aModule);
             }
         }
-    
-        var aService = anExistingModule;
-        if( aService){}/* CQT */
-    
-        return aService;
         
+    
+        return anExistingModule;
     });
+    
     
     
     
@@ -247,12 +264,14 @@ permissions and limitations under the Licence.
         // Angular (1.x)
         
         
-        angular.module("decoratesystemprototypes", [
+        angular.module("exceptiondetails", [
             "typesRegistry",
-            "modbootTypes"
-        ]).factory("DecorateSystemPrototypesSvce",[
+            "modbootTypes",
+            "stacktrace"
+        ]).factory("ExceptionDetailsSvce",[
             "TypesRegistrySvce",
             "OverriderSvce",
+            "StacktraceSvce",
             aMod_definer
         ]);
     }
@@ -263,10 +282,12 @@ permissions and limitations under the Licence.
             
             var aM_typesregistry   = require('../modboot/typesregistry');
             var aM_overrider       = require('../modboot/overrider_svce');
-            
+            var aM_stacktrace_svce = require('./stacktrace_svce');
+    
             return aMod_definer(
                 aM_typesregistry,
-                aM_overrider
+                aM_overrider,
+                aM_stacktrace_svce
             );
         })();
         
@@ -274,21 +295,23 @@ permissions and limitations under the Licence.
     else if ( !(typeof define === 'undefined') && define.amd) {
         // AMD / RequireJS
         
-        define( "m_decoratesystemprototypes_svce",
+        define( "m_exceptiondetails_svce",
             [
-                "m_typesregistry",
-                "m_overrider_svce"
+                "m_typesregistry_svce",
+                "m_overrider_svce",
+                "m_stacktrace_svce"
             ],
             aMod_definer
-        );
+            );
     }
     else if ( !(typeof nomod === 'undefined') && nomod.register) {
         // nomod toy module definition, resolution and dependency injection
     
         nomod.register( ComponentName, ModulePackages, ModuleName,
             [ /* theDependencies */
-                nomod.fComputeFullName( "prettytype", "modboot", "typesregistry"),
-                nomod.fComputeFullName( "prettytype", "modboot", "overrider_svce")
+                nomod.fComputeFullName( "prettytype", "typesregistry", "typesregistry_type"),
+                nomod.fComputeFullName( "prettytype", "modboot", "overrider_svce"),
+                nomod.fComputeFullName( "prettytype", "utils",   "stacktrace_svce")
             ],
             aMod_definer
         );
@@ -296,6 +319,8 @@ permissions and limitations under the Licence.
     }
     
 })();
+
+
 
 
 

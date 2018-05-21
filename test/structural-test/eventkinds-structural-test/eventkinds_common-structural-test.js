@@ -41,55 +41,75 @@ var aTest_spec = (function( theSS_eventkinds_common) {
     var ModuleName     = "eventkinds_common-structural-test";
     var ModulePackages = "test/structural-test/eventkinds-structural-test";
     var ModuleFullName = ModulePackages + "/" + ModuleName;
+    var TestName       = ModuleName + "_" + ModulePackages + "_" + ComponentName + "_test";
     
     if( typeof FG_logModLoads === 'function') { FG_logModLoads(ModuleFullName);}
     
-    describe( ModuleName + " " + ModulePackages + " " + ComponentName, function () {
+    describe( TestName, function () {
         
-        var aEventKinds_Common = null;
+        var aM_eventkinds_common = null;
         
         
         if( ( typeof beforeEach === 'function') && ( typeof module === 'function')  && ( typeof inject === 'function')) {
             // Karma for Angular (1.x)
-            beforeEach( module(  'typesRegistry', 'modbootTypes', 'eventKinds_Common'));
+            beforeEach( module( "typesregistry", "overrider", "eventkinds"));
             
-            beforeEach( inject(function( _EventKinds_Common_) {
-                aEventKinds_Common = _EventKinds_Common_;
+            beforeEach( inject(function( _eventkinds_common_) {
+                aM_eventkinds_common = _eventkinds_common_;
             }));
         }
         else if ( !(typeof module === 'undefined') && module.exports) {
             // Node.js
-            aEventKinds_Common = require('../../../src/eventkinds/eventkinds_common');
+            aM_eventkinds_common = require('../../../src/eventkinds/eventkinds_common');
         }
         else if ( !(typeof define === 'undefined') && define.amd) {
             // AMD / RequireJS
-            aEventKinds_Common = theSS_eventkinds_common;
+            aM_eventkinds_common = theSS_eventkinds_common;
         }
         else if ( !(typeof nomod === 'undefined') && nomod.register) {
-            aEventKinds_Common = nomod.resolve( nomod.fComputeFullName( "prettytype", "eventkinds", "eventkinds_common"));
+            aM_eventkinds_common = nomod.resolve( nomod.fComputeFullName( "prettytype", "eventkinds", "eventkinds_common"));
         }
-        
-        
-        
-        it("Module is not null", function () {
-            expect( aEventKinds_Common).not.toBeNull( null);
+    
+    
+    
+    
+    
+    
+        it("Module is defined", function () {
+            expect( aM_eventkinds_common).not.toBeUndefined();
         });
-        
-        it("Has ModuleName eventkinds_common", function () {
-            expect( aEventKinds_Common.ModuleName).toBe( "eventkinds_common");
+    
+    
+        it("Has module meta definitions", function () {
+            expect( aM_eventkinds_common._v_Kind).toBe( "module");
+            expect( aM_eventkinds_common.ComponentName).toBe( "prettytype");
+            expect( aM_eventkinds_common.ModuleName).toBe( "eventkinds_common");
+            expect( aM_eventkinds_common.ModulePackages).toBe( "eventkinds");
+            expect( aM_eventkinds_common.ModuleFullName).toBe( "eventkinds/eventkinds_common");
         });
-        
-        it("Has ModulePackages eventkinds", function () {
-            expect( aEventKinds_Common.ModulePackages).toBe( "eventkinds");
-        });
-        
-        it("Has ModuleFullName eventkinds.eventkinds_common", function () {
-            expect( aEventKinds_Common.ModuleFullName).toBe( "eventkinds/eventkinds_common");
-        });
-        
-        
-        
-        var someMemberNames = [
+    
+    
+        var someGeneralFunctionNames = [
+            "InitFromModuleVariations",
+            "InitFromModuleConstants",
+            "InitModuleGlobalsOn"
+        ];
+        var aNumGeneralFunctionNames = someGeneralFunctionNames.length;
+        for( var aGeneralFunctionNameIdx=0; aGeneralFunctionNameIdx < aNumGeneralFunctionNames; aGeneralFunctionNameIdx++) {
+            var aGeneralFunctionName = someGeneralFunctionNames[ aGeneralFunctionNameIdx];
+            if( aGeneralFunctionName) {
+                (function() {
+                    var aGeneralFunctionName_here = aGeneralFunctionName;
+                    it("Module exposes general definition function " + aGeneralFunctionName_here, function () {
+                        var aGeneralFunction = aM_eventkinds_common[ aGeneralFunctionName_here];
+                        expect( typeof aGeneralFunction).toBe( "function");
+                    });
+                })()
+            }
+        }
+    
+    
+        var someConstantNames = [
             "EVENTKINDS_ERRORS",
             "EVENTKINDS_NOTFORCONSOLE_DEFAULT",
             "EVENTKINDS",
@@ -102,22 +122,20 @@ var aTest_spec = (function( theSS_eventkinds_common) {
             "EVENTKINDS_TRIGGERDUMP_ALL",
             "EVENTKINDS_TRIGGERDUMP_DEFAULT"
         ];
-        
-        var aNumMemberNames = someMemberNames.length;
-        for( var aMemberNameIdx=0; aMemberNameIdx < aNumMemberNames; aMemberNameIdx++) {
-            var aMemberName = someMemberNames[ aMemberNameIdx];
-            if( aMemberName) {
+        var aNumConstantNames = someConstantNames.length;
+        for( var aModuleConstantNameIdx=0; aModuleConstantNameIdx < aNumConstantNames; aModuleConstantNameIdx++) {
+            var aModuleConstantName = someConstantNames[ aModuleConstantNameIdx];
+            if( aModuleConstantName) {
                 (function() {
-                    var aMemberName_here = aMemberName;
-                    
-                    it("Has member " + aMemberName_here + " defined as an object", function () {
-                        var aMember = aEventKinds_Common[ aMemberName_here];
-                        
-                        expect( typeof aMember).toBe( "object");
+                    var aModuleConstantName_here = aModuleConstantName;
+                    it("Module exposes constant " + aModuleConstantName_here, function () {
+                        var aModuleConstant = aM_eventkinds_common[ aModuleConstantName_here];
+                        expect( aModuleConstant).not.toBeUndefined();
                     });
                 })()
             }
         }
+    
         
     });
 });
@@ -127,9 +145,9 @@ if ( (typeof define === 'function') && define.amd) {
     // AMD / RequireJS
     /* Module name MUST BE A LITERAL STRING, I.E. "m_typesregistry_structural_test" not  a variable like ModuleSymbolicName.
     * If it is a variable, no test specs shall be registered (i.e., it does not invoke the test spec function */
-    define( "m_eventkinds_common_structural_test",
+    define( "eventkinds_common_structural_test",
         [
-            "m_eventkinds_common"
+            "eventkinds_common"
         ],
         aTest_spec
     );

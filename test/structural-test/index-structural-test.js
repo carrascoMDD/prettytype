@@ -110,7 +110,7 @@ var aTest_spec = (function( theSS_index) {
             "identifying",
             "eventkinds",
             "common",
-            "m_typesregistry",
+            "m_typesregistry_svce",
             "m_overrider_type",
             "m_overrider_svce",
             "m_decoratesystemprototypes_svce",

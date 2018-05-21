@@ -41,7 +41,7 @@
     var ModulePackages = "identifying";
     var ModuleFullName = ModulePackages + "/" + ModuleName;
     
-    var aMod_definer = ( function( theSS_typesregistry,
+    var aMod_definer = ( function( theSS_typesregistry_svce,
                                    theSS_IdentifierType){
     
 
@@ -54,9 +54,9 @@
         
 
         var anExistingModule = null;
-        if(    !( typeof theSS_typesregistry === 'undefined')
-            && ( typeof theSS_typesregistry.fRegisteredModule === 'function')) {
-            anExistingModule = theSS_typesregistry.fRegisteredModule( ModuleFullName);
+        if(    !( typeof theSS_typesregistry_svce === 'undefined')
+            && ( typeof theSS_typesregistry_svce.fRegisteredModule === 'function')) {
+            anExistingModule = theSS_typesregistry_svce.fRegisteredModule( ModuleFullName);
         }
         if( !anExistingModule) {
         
@@ -66,9 +66,9 @@
 
             anExistingModule = aModule;
         
-            if(    !( typeof theSS_typesregistry === 'undefined')
-                && ( typeof theSS_typesregistry.fRegisterModule === 'function')) {
-                theSS_typesregistry.fRegisterModule( ModuleFullName, aModule);
+            if(    !( typeof theSS_typesregistry_svce === 'undefined')
+                && ( typeof theSS_typesregistry_svce.fRegisterModule === 'function')) {
+                theSS_typesregistry_svce.fRegisterModule( ModuleFullName, aModule);
             }
         }
     
@@ -110,7 +110,7 @@
     
         define( "m_identifier_svce",
             [
-                "m_typesregistry",
+                "m_typesregistry_svce",
                 "m_identifier_type"
             ],
             aMod_definer
@@ -122,7 +122,7 @@
     
         nomod.register( ComponentName, ModulePackages, ModuleName,
             [ /* theDependencies */
-                nomod.fComputeFullName( "prettytype", "modboot", "typesregistry"),
+                nomod.fComputeFullName( "prettytype", "typesregistry", "typesregistry_type"),
                 nomod.fComputeFullName( "prettytype", "identifying", "identifier_type")
             ],
             aMod_definer

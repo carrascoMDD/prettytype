@@ -39,12 +39,12 @@ permissions and limitations under the Licence.
     var ModulePackages = "identifying";
     var ModuleFullName = ModulePackages + "/" + ModuleName;
     
-    var aMod_definer = ( function( theSS_typesregistry,
-                                   theSS_Overrider,
+    var aMod_definer = ( function( theSS_typesregistry_svce,
+                                   theSS_overrider_type,
                                    theSS_DumpingPolicyType,
                                    theSS_EventKinds_Common) {
         
-        var aMod_builder = function( theS_Overrider,
+        var aMod_builder = function( theS_overrider_type,
                                      theS_DumpingPolicyType,
                                      theS_EventKinds_Common) {
             
@@ -75,7 +75,7 @@ permissions and limitations under the Licence.
             
             
             
-            var pgInitFromModuleVariations = function( theToInit) {
+            var InitFromModuleVariations = function( theToInit) {
                 if( !theToInit) {
                     return;
                 }
@@ -90,7 +90,7 @@ permissions and limitations under the Licence.
             
             var ModuleVariations = { };
             pgInitWithModuleVariations( ModuleVariations);
-            theS_Overrider.pOverrideModuleVariations( ModuleFullName, ModuleVariations);
+            theS_overrider_type.pOverrideModuleVariations( ModuleFullName, ModuleVariations);
     
     
     
@@ -171,7 +171,7 @@ permissions and limitations under the Licence.
                Holder of name-values in the Module, considered Constants.
             */
             var ModuleConstants = {};
-            pgInitFromModuleVariations( ModuleConstants);
+            InitFromModuleVariations( ModuleConstants);
             pgInitWithModuleConstants( ModuleConstants);
     
     
@@ -736,7 +736,7 @@ permissions and limitations under the Licence.
             aModule.ModuleConstants = ModuleConstants;
             aModule.ModuleGlobals   = ModuleGlobals;
             aModule.InitFromModuleConstants  = InitFromModuleConstants;
-            aModule.pgInitFromModuleVariations = pgInitFromModuleVariations;
+            aModule.InitFromModuleVariations = InitFromModuleVariations;
             aModule.InitModuleGlobalsOn      = InitModuleGlobalsOn;
         
             aDumpingPolicyFilterKinds_Prototype._v_Module = aModule;
@@ -753,14 +753,14 @@ permissions and limitations under the Licence.
     
     
         var anExistingModule = null;
-        if(    !( typeof theSS_typesregistry === 'undefined')
-            && ( typeof theSS_typesregistry.fRegisteredModule === 'function')) {
-            anExistingModule = theSS_typesregistry.fRegisteredModule( ModuleFullName);
+        if(    !( typeof theSS_typesregistry_svce === 'undefined')
+            && ( typeof theSS_typesregistry_svce.fRegisteredModule === 'function')) {
+            anExistingModule = theSS_typesregistry_svce.fRegisteredModule( ModuleFullName);
         }
         if( !anExistingModule) {
         
             var aModule = aMod_builder(
-                theSS_Overrider,
+                theSS_overrider_type,
                 theSS_DumpingPolicyType,
                 theSS_EventKinds_Common
             );
@@ -770,9 +770,9 @@ permissions and limitations under the Licence.
         
             anExistingModule = aModule;
         
-            if(    !( typeof theSS_typesregistry === 'undefined')
-                && ( typeof theSS_typesregistry.fRegisterModule === 'function')) {
-                theSS_typesregistry.fRegisterModule( ModuleFullName, aModule);
+            if(    !( typeof theSS_typesregistry_svce === 'undefined')
+                && ( typeof theSS_typesregistry_svce.fRegisterModule === 'function')) {
+                theSS_typesregistry_svce.fRegisterModule( ModuleFullName, aModule);
             }
         }
     
@@ -821,7 +821,7 @@ permissions and limitations under the Licence.
         
         define( "m_dumpingpolicy_filterkinds_type",
             [
-                "m_typesregistry",
+                "m_typesregistry_svce",
                 "m_overrider_svce",
                 "m_dumpingpolicy_type",
                 "m_eventkinds_common"

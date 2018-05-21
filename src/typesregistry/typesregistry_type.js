@@ -35,36 +35,38 @@ permissions and limitations under the Licence.
 (function () {
     
     /* Only module-like (or actual module under Angular, or RequireJS, or nodejs, or ...) with no dependencies.
-    All other modules may want to make sure they are instantiated only once may get this typesregistry injected
+    All other modules use at least the typesregistry_type (i.e. by the typesregistry_svce singleton)
+    or usually the typesregistry_svce singleton
+    where the modules may want to make sure they are instantiated only once may get this typesregistry injected
     and check with it whether the module(-like) has already been instantiated.
     
     Sample code snippet to insert at the end of the module instantiation function.
     See examples in other javascript src in this prettytype package.
     
     var anExistingModule = null;
-    if(    !( typeof theSS_typesregistry === 'undefined')
-        && ( typeof theSS_typesregistry.fRegisteredModule === 'function')) {
-        anExistingModule = theSS_typesregistry.fRegisteredModule( ModuleFullName);
+    if(    !( typeof theSS_typesregistry_svce === 'undefined')
+        && ( typeof theSS_typesregistry_svce.fRegisteredModule === 'function')) {
+        anExistingModule = theSS_typesregistry_svce.fRegisteredModule( ModuleFullName);
     }
     if( !anExistingModule) {
         var aModule = aMod_builder(
-            theSS_typesregistry,
-            theSS_Overrider
+            theSS_typesregistry_svce,
+            theSS_overrider_type
         );
         
         anExistingModule = aModule;
         
-        if(    !( typeof theSS_typesregistry === 'undefined')
-            && ( typeof theSS_typesregistry.fRegisterModule === 'function')) {
-            theSS_typesregistry.fRegisterModule( ModuleFullName, aModule);
+        if(    !( typeof theSS_typesregistry_svce === 'undefined')
+            && ( typeof theSS_typesregistry_svce.fRegisterModule === 'function')) {
+            theSS_typesregistry_svce.fRegisterModule( ModuleFullName, aModule);
         }
     }
     */
     
     
     var ComponentName  = "prettytype";
-    var ModuleName     = "typesregistry";
-    var ModulePackages = "modboot";
+    var ModuleName     = "typesregistry_type";
+    var ModulePackages = "typesregistry";
     var ModuleFullName = ModulePackages + "/" + ModuleName;
     var TypeName       = "TypesRegistry";
     
@@ -200,7 +202,7 @@ permissions and limitations under the Licence.
               Initialise metatype variables in the prototype object.
                 When accessing the prototype or its instances, these values shall override same keys in the super-prototype, if any.
                 
-              Invoked by TypesRegistry_ProtoFactory as the first step to produce a object wholy able to serve as Prototype.
+              Invoked by ProtoFactory as the first step to produce an object fully able to serve as Prototype.
             */
             var TypesRegistry_ProtoInstancer = function() {
                 
@@ -252,16 +254,36 @@ permissions and limitations under the Licence.
                     Shall create a new, slot in the instance which is different from the one in the instance prototype,
                     and may hold whichever value or reference, similarly to the case "On instances of the prototype" above.
                     
-              Invoked by TypesRegistry_ProtoFactory as one of the steps to produce a object wholy able to serve as Prototype.
+              Invoked by ProtoFactory as one of the steps to produce an object fully able to serve as Prototype.
             */
             var TypesRegistry_CreatePrototypeSlotsOn = function( theFrame) {
                 if( !theFrame) {
                 }
             };
     
-            
     
-            
+    
+    
+            /* ***************************************************************
+              In modules defining a prototype: Initialise with null value the slots for all instance scoped properties
+                in the the supplied object.
+                  I.e. the value is owned exclusively by its instance.
+                  The supplied object is expected to be used as an instance
+                    as created by invocation of the Constructor or SuperPrototypeConstructor
+                    
+              Instances of the prototype shall be able to read and write each its own values on these slots.
+              
+              Instances of any sub-prototypes of this prototype (thus created with SuperPrototypeConstructor):
+                Shall be able to read these instance slots with exactly the same value held by the prototype object.
+              
+              If a property of same value is set in an instance of any sub-prototypes of this prototype:
+                Shall create a new slot in the instance with whichever value or reference,
+                  and the value held by the super-prototype object shall no longer be accessible
+                  unless navigating up the prototypical inheritance tree through the _v_SuperPrototype property.
+                
+              Invoked by Constructor and SuperPrototypeConstructor and as one of the steps to produce an object
+                fully able to serve as instance of this prototype, or as super-prototype for derived prototypes.
+            */
             var TypesRegistry_CreateInstanceSlotsOn = function( theFrame) {
                 if( !theFrame) {
                     return;
@@ -274,6 +296,29 @@ permissions and limitations under the Licence.
     
     
     
+            /* ***************************************************************
+              In modules defining a prototype: Initialise in the supplied object the methods in the prototype,
+                and possibly other private functions or variables.
+                
+              Must include a definition of _pInit_<TypeName> to be used from the Constructor to initialise instances.
+              
+              If the prototype has a super-prototype then the _pInit_<TypeName> method shall delegate
+                in the initialiser of the super-prototype_pInit_<SuperPrototype TypeName>
+                
+              Instances of the prototype shall be able to invoke these methods.
+
+              Instances of any sub-prototypes of this prototype (thus created with SuperPrototypeConstructor):
+                Shall be able to invoke these methods.
+              
+              If a sub-prototype defines a method with same name as one in any of its super-prototypes
+                recursively upwards the prototypical inheritance tree,
+                instances of the sub-prototype and their recursive sub-prototypes shall be able to access the
+                method as implemented by the prototype most immediately implementing the function,
+                and any methods of same name defined upwards the prototypical inheritance tree shall not be accesible
+                unless navigating up the prototypical inheritance tree through the _v_SuperPrototype property.
+                
+              Invoked by ProtoFactory as the last step to produce an object fully able to serve as Prototype.
+            */
             var TypesRegistry_ProtoDefinerOn = function( thePrototype) {
                 
                 if( !thePrototype) {
@@ -557,8 +602,6 @@ permissions and limitations under the Licence.
     
                 /* Fill the object to serve as prototype with key-values copied from ModuleConstants,
                     which also include those from ModuleVariations */
-                
-                /* Fill the object to serve as prototype with key-values copied from ModuleConstants */
                 InitFromModuleConstants( aPrototype);
     
                 /* Create in the object to serve as prototype the slots for properties scoped to the prototype.
@@ -631,7 +674,8 @@ permissions and limitations under the Licence.
                     if the author is following the patterns in this prettytype npm package, */
                 this._v_Kind      = "subprototype";
                 this._v_Prototype = aTypesRegistry_Prototype;
-                
+    
+                /* Create in the object to serve as super-prototype the slots for properties scoped uniquely to the instance being created (this), if any */
                 TypesRegistry_CreateInstanceSlotsOn( this);
             };
             TypesRegistry_SuperPrototypeConstructor.prototype = aTypesRegistry_Prototype;
@@ -659,6 +703,8 @@ permissions and limitations under the Licence.
                 
                 "InitFromModuleConstants":                 InitFromModuleConstants,
                 "InitModuleGlobalsOn":                     InitModuleGlobalsOn,
+    
+                "TypeName":                                TypeName,
     
                 "TypesRegistry_ProtoInstancer":            TypesRegistry_ProtoInstancer,
                 "TypesRegistry_ProtoDefinerOn":            TypesRegistry_ProtoDefinerOn,
@@ -694,8 +740,12 @@ permissions and limitations under the Licence.
               The sub-prototypes and their instances may also reach this module through the _v_SuperPrototype chain.
             */
             aTypesRegistry_Prototype._v_Module = aModule;
-            
-            
+    
+    
+    
+            /* ***************************************************************
+              Return defined module.
+            */
             return aModule;
         };
         
@@ -706,43 +756,13 @@ permissions and limitations under the Licence.
           Build the module object with the whole module definition, including prototypes and constructors, if any.
          */
         var aModule = aMod_builder();
+        if(aModule){}/* CQT */
     
     
         /* ***************************************************************
-          Keep some self-references in the module, useful for inspection, debugging and hacking.
+          Return the module as just built.
          */
-        aModule.ModuleBuilder = aMod_builder;
-        aModule.ModuleSource  = null;
-        aModule.ModuleDecompiler  = function() { aModule.ModuleSource = aMod_builder.toString()};
-    
-    
-        /* ***************************************************************
-          This Module is actually delivered as a singleton instance of the prototype defined in the module.
-          The module definition object itself is not actually returned as the module, but the singleton instance is,
-            which has a slot _v_Module through which it is possible to access the module definition object.
-         */
-        var aService = new aModule.TypesRegistry_Constructor( "Types_Registry_singleton");
-        
-        /* Register, just for completion of the types registry, this very same module, and the instance by its name*/
-        aService.fRegisterModule( ModuleFullName, aModule);
-        
-        /* ***************************************************************
-          Register, just for completion of the types registry, this very same service instance by its name
-          as supplied above in the TypesRegistry_Constructor() or defaulted to module constant TYPESREGISTRYDEFAULTNAME
-        */
-        aService.fRegisterModule( ModuleFullName + "." + aService._v_Title, aService);
-        
-        
-        /* ***************************************************************
-          Register, just for completion of the types registry implementation, the utility function to log module loads, if such exists
-        */
-        if( typeof FG_logModLoads === 'function') {
-            aService.fRegisterModule( FG_logModLoads.ModuleFullName ? FG_logModLoads.ModuleFullName : "FG_logModLoads", FG_logModLoads);
-        }
-        
-        
-        return aService;
-        
+        return aModule;
     };
     
     
@@ -752,22 +772,14 @@ permissions and limitations under the Licence.
     /* ***************************************************************
       Define the module under various module definition libraries, all delegating in the same module definer function,
       but each obtaining their own way any dependencies needed by this module.
-    */
-    
-    /* ***************************************************************
+
       This module has no dependencies.
       It is the only module without dependencies in this prettytype npm package, other than the function FG_logModLoads
     */
     if( !( typeof angular === 'undefined') && angular.module) {
         // Angular (1.x)
     
-        /* ***************************************************************
-          typesRegistry dependencies declared here (as none)
-            because there is no separate file defining the angular.module("typesRegistry"
-            other modules with multiple factories declare the module and its dependiencies in a separate file,
-            i.e. identifyingTypes, identifying_types.js
-        */
-        angular.module("typesRegistry", []).factory("TypesRegistrySvce",
+        angular.module( ModulePackages).factory( ModuleName,
             aMod_definer
         );
         
@@ -784,7 +796,7 @@ permissions and limitations under the Licence.
     else if ( !(typeof define === 'undefined') && define.amd) {
         // AMD / RequireJS
         
-        define( "m_typesregistry",
+        define( ModuleName,
             aMod_definer
         );
         

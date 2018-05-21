@@ -39,7 +39,7 @@ permissions and limitations under the Licence.
     var ModulePackages = "";
     var ModuleFullName = ModulePackages + "/" + ModuleName;
     
-    var aMod_definer = ( function(  theSS_typesregistry,
+    var aMod_definer = ( function(  theSS_typesregistry_svce,
                                     theSS_overrider_type,
                                     theSS_overrider_svce,
                                     theSS_decoratesystemprototypes_svce,
@@ -103,7 +103,7 @@ permissions and limitations under the Licence.
             
             
             
-            var pgInitFromModuleVariations = function( theToInit) {
+            var InitFromModuleVariations = function( theToInit) {
                 if( !theToInit) {
                     return;
                 }
@@ -142,7 +142,7 @@ permissions and limitations under the Licence.
                Holder of name-values in the Module, considered Constants.
             */
             var ModuleConstants = {};
-            pgInitFromModuleVariations( ModuleConstants);
+            InitFromModuleVariations( ModuleConstants);
             pgInitWithModuleConstants( ModuleConstants);
     
     
@@ -200,12 +200,12 @@ permissions and limitations under the Licence.
             aModule.ModuleConstants = ModuleConstants;
             aModule.ModuleGlobals   = ModuleGlobals;
             aModule.InitFromModuleConstants  = InitFromModuleConstants;
-            aModule.pgInitFromModuleVariations = pgInitFromModuleVariations;
+            aModule.InitFromModuleVariations = InitFromModuleVariations;
             aModule.InitModuleGlobalsOn      = InitModuleGlobalsOn;
     
     
             aModule[ "modboot"] = {
-                "m_typesregistry":                     theS_typesregistry,
+                "m_typesregistry_svce":                     theS_typesregistry,
                 "m_overrider_type":                    theS_overrider_type,
                 "m_overrider_svce":                    theS_overrider_svce
             };
@@ -242,7 +242,7 @@ permissions and limitations under the Licence.
     
             
     
-            aModule[ "m_typesregistry"] =                     theS_typesregistry;
+            aModule[ "m_typesregistry_svce"] =                     theS_typesregistry;
             aModule[ "m_overrider_type"] =                    theS_overrider_type;
             aModule[ "m_overrider_svce"] =                    theS_overrider_svce;
             aModule[ "m_decoratesystemprototypes_svce"] =     theS_decoratesystemprototypes_svce;
@@ -351,14 +351,14 @@ permissions and limitations under the Licence.
         
         
         var anExistingModule = null;
-        if(    !( typeof theSS_typesregistry === 'undefined')
-            && ( typeof theSS_typesregistry.fRegisteredModule === 'function')) {
-            anExistingModule = theSS_typesregistry.fRegisteredModule( ModuleFullName);
+        if(    !( typeof theSS_typesregistry_svce === 'undefined')
+            && ( typeof theSS_typesregistry_svce.fRegisteredModule === 'function')) {
+            anExistingModule = theSS_typesregistry_svce.fRegisteredModule( ModuleFullName);
         }
         if( !anExistingModule) {
             
             var aModule = aMod_builder(
-                theSS_typesregistry,
+                theSS_typesregistry_svce,
                 theSS_overrider_type,
                 theSS_overrider_svce,
                 theSS_decoratesystemprototypes_svce,
@@ -388,9 +388,9 @@ permissions and limitations under the Licence.
             
             anExistingModule = aModule;
             
-            if(    !( typeof theSS_typesregistry === 'undefined')
-                && ( typeof theSS_typesregistry.fRegisterModule === 'function')) {
-                theSS_typesregistry.fRegisterModule( ModuleFullName, aModule);
+            if(    !( typeof theSS_typesregistry_svce === 'undefined')
+                && ( typeof theSS_typesregistry_svce.fRegisterModule === 'function')) {
+                theSS_typesregistry_svce.fRegisterModule( ModuleFullName, aModule);
             }
         }
         
@@ -513,7 +513,7 @@ permissions and limitations under the Licence.
         
         define( "m_index",
             [
-                "m_typesregistry",
+                "m_typesregistry_svce",
                 "m_overrider_type",
                 "m_overrider_svce",
                 "m_decoratesystemprototypes_svce",

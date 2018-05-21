@@ -37,11 +37,11 @@ permissions and limitations under the Licence.
     
     var ComponentName    = "prettytype";
     var ModuleName     = "overrider_type";
-    var ModulePackages = "modboot";
+    var ModulePackages = "overrider";
     var ModuleFullName = ModulePackages + "/" + ModuleName;
     var TypeName       = "Overrider";
     
-    var aMod_definer =  ( function( theSS_typesregistry) {
+    var aMod_definer =  ( function( theSS_typesregistry_svce) {
 
         var aMod_builder = function() {
             
@@ -176,7 +176,9 @@ permissions and limitations under the Licence.
                 
               Initialise metatype variables in the prototype object.
                 When accessing the prototype or its instances, these values shall override same keys in the super-prototype, if any.
-            */
+          
+              Invoked by ProtoFactory as the first step to produce a object fully able to serve as Prototype.
+           */
             var Overrider_ProtoInstancer = function() {
         
                 var aPrototype = {} /* Prototypical inheritance from NOTHING */;
@@ -193,6 +195,43 @@ permissions and limitations under the Licence.
     
     
     
+    
+            /* ***************************************************************
+              In modules defining a prototype: Initialise with null value the slots for all prototype scoped properties,
+                  I.e. same read value shared among all the instances.
+                  The supplied object is expected to be used as prototype (assigned as prototype to constructor functions
+                  <TypeName>_Constructor and <TypeName>_SuperPrototypeConstructor)
+              
+              Read access:
+                this.<VariableName> or this["<VariableName>"]
+                These variables shall be accessible for read to the prototype, its instance, sub-prototypes and their instances,
+                    and the same identical value or object reference shall be obtained from all the accesses
+                    unless a value with same key has been set in intermediate prototypes or the accessed object.
+              
+              Write access:
+                On the prototype object which was supplied to this function TypesRegistry_CreatePrototypeSlotsOn
+                    this.<VariableName> = <new value> or this["<VariableName>"] = <new value>
+                    The same identical newly set value or object reference shall shall be obtained from all the accesses
+                    unless a value with same key has been set in intermediate prototypes or the accessed object.
+                
+                On instances of the prototype:
+                    this.<VariableName> = <new value> or this["<VariableName>"] = <new value>
+                    Shall create a new, slot in the instance which is different from the one in the instance prototype,
+                    and may hold whichever value or reference.
+                    From the moment the slot is set in the instance, the value or reference obtained by read access
+                        this.<VariableName> or this["<VariableName>"]
+                        shall not be the value or reference held by the prototype in a slot of same property name,
+                        but the value set in the instance.
+                    All other instance of the prottype still read the value in the prototype slot,
+                        or their own value for same property name slot, if any set.
+
+                On sub-prototypes and their instances:
+                    this.<VariableName> = <new value> or this["<VariableName>"] = <new value>
+                    Shall create a new, slot in the instance which is different from the one in the instance prototype,
+                    and may hold whichever value or reference, similarly to the case "On instances of the prototype" above.
+                    
+              Invoked by ProtoFactory as one of the steps to produce a object fully able to serve as Prototype.
+            */
             var Overrider_CreatePrototypeSlotsOn = function( theFrame) {
                 if( !theFrame) {
                 }
@@ -200,6 +239,27 @@ permissions and limitations under the Licence.
     
     
     
+    
+            /* ***************************************************************
+              In modules defining a prototype: Initialise with null value the slots for all instance scoped properties
+                in the the supplied object.
+                  I.e. the value is owned exclusively by its instance.
+                  The supplied object is expected to be used as an instance
+                    as created by invocation of the Constructor or SuperPrototypeConstructor
+                    
+              Instances of the prototype shall be able to read and write each its own values on these slots.
+              
+              Instances of any sub-prototypes of this prototype (thus created with SuperPrototypeConstructor):
+                Shall be able to read these instance slots with exactly the same value held by the prototype object.
+              
+              If a property of same value is set in an instance of any sub-prototypes of this prototype:
+                Shall create a new slot in the instance with whichever value or reference,
+                  and the value held by the super-prototype object shall no longer be accessible
+                  unless navigating up the prototypical inheritance tree through the _v_SuperPrototype property.
+                
+              Invoked by Constructor and SuperPrototypeConstructor and as one of the steps to produce an object
+                fully able to serve as instance of this prototype, or as super-prototype for derived prototypes.
+            */
             var Overrider_CreateInstanceSlotsOn = function( theFrame) {
                 if( !theFrame) {
                     return;
@@ -214,6 +274,31 @@ permissions and limitations under the Licence.
     
     
     
+    
+    
+            /* ***************************************************************
+              In modules defining a prototype: Initialise in the supplied object the methods in the prototype,
+                and possibly other private functions or variables.
+                
+              Must include a definition of _pInit_<TypeName> to be used from the Constructor to initialise instances.
+              
+              If the prototype has a super-prototype then the _pInit_<TypeName> method shall delegate
+                in the initialiser of the super-prototype_pInit_<SuperPrototype TypeName>
+                
+              Instances of the prototype shall be able to invoke these methods.
+
+              Instances of any sub-prototypes of this prototype (thus created with SuperPrototypeConstructor):
+                Shall be able to invoke these methods.
+              
+              If a sub-prototype defines a method with same name as one in any of its super-prototypes
+                recursively upwards the prototypical inheritance tree,
+                instances of the sub-prototype and their recursive sub-prototypes shall be able to access the
+                method as implemented by the prototype most immediately implementing the function,
+                and any methods of same name defined upwards the prototypical inheritance tree shall not be accesible
+                unless navigating up the prototypical inheritance tree through the _v_SuperPrototype property.
+                
+              Invoked by ProtoFactory as the last step to produce an object fully able to serve as Prototype.
+            */
             var Overrider_ProtoDefinerOn = function( thePrototype) {
         
                 if( !thePrototype) {
@@ -601,12 +686,28 @@ permissions and limitations under the Licence.
     
     
     
+   
     
+    
+            /* ***************************************************************
+              Create object to serve as prototype,
+                 with all slots for Constants (and Variations), prototype scoped properties and methods of the prototype.
+            */
             var Overrider_ProtoFactory = function() {
         
+                /* Create object to serve as prototype */
                 var aPrototype = Overrider_ProtoInstancer();
+        
+                /* Fill the object to serve as prototype with key-values copied from ModuleConstants,
+                    which also include those from ModuleVariations */
                 InitFromModuleConstants( aPrototype);
+        
+                /* Create in the object to serve as prototype the slots for properties scoped to the prototype.
+                    I.e. same read value shared among all the instances */
                 Overrider_CreatePrototypeSlotsOn( aPrototype);
+        
+                /* Create in the object to serve as prototype the methods implemented by the prototype.
+                   Nothing prevents, other than self-discipline, to create additional slots in the prototype during this ProtoDefinerOn function. */
                 Overrider_ProtoDefinerOn( aPrototype);
         
                 return aPrototype;
@@ -615,16 +716,32 @@ permissions and limitations under the Licence.
     
     
     
-    
-    
+            /* ***************************************************************
+              Object to serve as prototype
+            */
             var anOverrider_Prototype = Overrider_ProtoFactory();
     
     
+    
+            /* ***************************************************************
+              Constructor function. Create a new instance object of the prototype,
+                expected to be used as an object and not a super-prototype,
+                fully initialised by _pInit_Xxxx, including initialisers defined by super-prototypes.
+                by delegation into the super-prototype _pInit_Xxx,
+                and recursively upwards in the prototype inheritance tree
+                through the _v_SuperPrototype chain.
+                
+              See examples of recursive initialisation in modules
+                identifying / dumpingpolicy and recordingpolicy
+            */
             var Overrider_Constructor = function( theTitle) {
+                this._v_Kind      = "instance";
                 this._v_Prototype = anOverrider_Prototype;
-        
+    
+                /* Create in the object to serve as prototype the slots for properties scoped uniquely to the instance being created (this), if any */
                 Overrider_CreateInstanceSlotsOn( this);
-        
+    
+                /* Fully initialise the instance, delegating in initialisers defined by super-prototypes, if any */
                 this._pInit_Overrider( theTitle);
             };
             Overrider_Constructor.prototype = anOverrider_Prototype;
@@ -635,14 +752,27 @@ permissions and limitations under the Licence.
     
     
     
+            /* ***************************************************************
+              Create a new instance object of the prototype, expected to be used as a super-prototype,
+                but not fully initialised, just the instance slots with null values.
+                
+              Values for the slots shall be initialised during the _pInit_Xxxx of instances of sub-prototypes
+                  by delegation into the super-prototype _pInit_Xxx,
+                  and recursively upwards in the prototype inheritance tree
+                  through the _v_SuperPrototype chain.
+              
+              See examples of deep sub-prototypes and recursive initialisation in modules
+                identifying / dumpingpolicy and recordingpolicy
+            */
             var Overrider_SuperPrototypeConstructor = function() {
+                /* When actually used as prototype in the code in some other module,
+                _v_Kind shall be assigned the value "prototype" as in this module TypesRegistry_ProtoInstancer
+                if the author is following the patterns in this prettytype npm package, */
+                this._v_Kind      = "subprototype";
                 this._v_Prototype = anOverrider_Prototype;
-        
+    
+                /* Create in the object to serve as super-prototype the slots for properties scoped uniquely to the instance being created (this), if any */
                 Overrider_CreateInstanceSlotsOn( this);
-                /* Does not invoke _pInit_Overrider on the newly created object,
-                   because initialisation of values by super-protypes _pInit_Xxx
-                   shall be invoked during the _pInit_Xxx of each instance of the subprototypes.
-                */
             };
             Overrider_SuperPrototypeConstructor.prototype = anOverrider_Prototype;
     
@@ -650,8 +780,17 @@ permissions and limitations under the Licence.
     
     
     
+    
+            /* ***************************************************************
+              Object exposed as Module, with key-values for all members published in the module.
+              
+              Some entries are published to facilitate hacking access to portions of logic in the module,
+                  to be able to use for other purposes (mixins come into mind) i.e. constants initialiser,
+                  and if the module defines any prototype: full and partial prototype creators
+                  and initialisers of the slots structure of the prototype.
+            */
             var aModule = {
-                "_v_Type":                                 "module",
+                "_v_Kind":                                 "module",
                 "ComponentName":                           ComponentName,
                 "ModuleName":                              ModuleName,
                 "ModulePackages":                          ModulePackages,
@@ -659,8 +798,10 @@ permissions and limitations under the Licence.
                 "ModuleConstants":                         ModuleConstants,
                 "ModuleGlobals":                           ModuleGlobals,
         
-                "InitFromModuleConstants":               InitFromModuleConstants,
-                "InitModuleGlobalsOn":                   InitModuleGlobalsOn,
+                "InitFromModuleConstants":                 InitFromModuleConstants,
+                "InitModuleGlobalsOn":                     InitModuleGlobalsOn,
+                
+                "TypeName":                                TypeName,
         
                 "Overrider_ProtoInstancer":                Overrider_ProtoInstancer,
                 "Overrider_ProtoDefinerOn":                Overrider_ProtoDefinerOn,
@@ -680,24 +821,43 @@ permissions and limitations under the Licence.
         
                 "Overrider_Prototype":                     anOverrider_Prototype,
                 "Prototype":                               anOverrider_Prototype
-        
             };
+    
+            /* ***************************************************************
+              Add to the Module Key-Values from Constants (and Variations, if any) so they are exposed as published members.
+              Beware: The value for any key in Constants (and Variations, if any)
+                shall override any other slot value in the Module with same key, if such exists,
+                including any infrastructural or conventional entries.
+            */
             InitFromModuleConstants( aModule);
     
-            
+    
+            /* ***************************************************************
+              The prototype and its instances may access the module object and all its published members.
+              The sub-prototypes and their instances may also reach this module through the _v_SuperPrototype chain.
+            */
             anOverrider_Prototype._v_Module = aModule;
-            
-            
-            
+    
+    
+            /* ***************************************************************
+              Return defined module.
+            */
             return aModule;
         };
-        
-        
-        
+    
+    
+    
+    
+        /* ***************************************************************
+          Make sure that the module is built only once, and that the same instance is supplied anytime
+          the module is required, as i.e. to resolve a dependency for another module.
+          Attempt to retrieve a module with same name already registered in the typesregistry_svce singleton.
+          If no such module exists then build the module and register it in the typesregistry_svce singleton.
+        */
         var anExistingModule = null;
-        if(    !( typeof theSS_typesregistry === 'undefined')
-            && ( typeof theSS_typesregistry.fRegisteredModule === 'function')) {
-            anExistingModule = theSS_typesregistry.fRegisteredModule( ModuleFullName);
+        if(    !( typeof theSS_typesregistry_svce === 'undefined')
+            && ( typeof theSS_typesregistry_svce.fRegisteredModule === 'function')) {
+            anExistingModule = theSS_typesregistry_svce.fRegisteredModule( ModuleFullName);
         }
         if( !anExistingModule) {
             
@@ -708,23 +868,29 @@ permissions and limitations under the Licence.
     
             anExistingModule = aModule;
     
-            if(    !( typeof theSS_typesregistry === 'undefined')
-                && ( typeof theSS_typesregistry.fRegisterModule === 'function')) {
-                theSS_typesregistry.fRegisterModule( ModuleFullName, aModule);
+            if(    !( typeof theSS_typesregistry_svce === 'undefined')
+                && ( typeof theSS_typesregistry_svce.fRegisterModule === 'function')) {
+                theSS_typesregistry_svce.fRegisterModule( ModuleFullName, aModule);
             }
         }
-        
-        
+    
+    
+        /* ***************************************************************
+         Return the module which was already built and registered in typesregistry_svce singleton, or just built.
+        */
         return anExistingModule;
-        
     });
     
     
+    /* ***************************************************************
+      Define the module under various module definition libraries, all delegating in the same module definer function,
+      but each obtaining their own way any dependencies needed by this module.
+    */
     if( !( typeof angular === 'undefined') && angular.module) {
         // Angular (1.x)
-        
-        angular.module("modbootTypes").factory("OverriderType",[
-            "TypesRegistrySvce",
+    
+        angular.module( ModulePackages).factory( ModuleName, [
+            "typesregistry_svce",
             aMod_definer
         ]);
         
@@ -734,10 +900,10 @@ permissions and limitations under the Licence.
         
         module.exports = (function() {
             
-            var aM_typesregistry = require('./typesregistry');
+            var aM_typesregistry_svce = require('../typesregistry/typesregistry_svce');
             
             return aMod_definer(
-                aM_typesregistry
+                aM_typesregistry_svce
             );
         })();
         
@@ -745,9 +911,9 @@ permissions and limitations under the Licence.
     else if ( !(typeof define === 'undefined') && define.amd) {
         // AMD / RequireJS
         
-        define( "m_overrider_type",
+        define( ModuleName,
             [
-                "m_typesregistry"
+                "typesregistry_svce"
             ],
             aMod_definer);
         
@@ -757,7 +923,7 @@ permissions and limitations under the Licence.
     
         nomod.register( ComponentName, ModulePackages, ModuleName,
             [ /* theDependencies */
-                nomod.fComputeFullName( "prettytype", "modboot", "typesregistry")
+                nomod.fComputeFullName( "prettytype", "typesregistry", "typesregistry_svce")
             ],
             aMod_definer
         );
