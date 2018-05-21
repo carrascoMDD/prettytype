@@ -114,7 +114,7 @@ module.exports = function(config){
         proxies: {
         },
     
-        logLevel: config.LOG_DEBUG,
+        logLevel: config.LOG_INFO,
         /* logLevel: config.LOG_INFO,
            logLevel: config.LOG_DEBUG
          */
