@@ -53,7 +53,7 @@ var aTest_spec = (function( theSS_stacktrace_svce) {
         
         if( ( typeof beforeEach === 'function') && ( typeof module === 'function')  && ( typeof inject === 'function')) {
             // Karma for Angular (1.x)
-            beforeEach( module( "typesregistry", "stacktrace"));
+            beforeEach( module( "exceptionstack"));
             
             beforeEach( inject(function( _stacktrace_svce_) {
                 aM_stacktrace_svce = _stacktrace_svce_;

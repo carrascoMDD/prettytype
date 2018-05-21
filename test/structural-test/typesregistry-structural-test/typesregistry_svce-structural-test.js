@@ -52,7 +52,7 @@ var aTest_spec = (function( theSS_typeregistry_svce) {
         if( ( typeof beforeEach === 'function') && ( typeof module === 'function')  && ( typeof inject === 'function')) {
             // Karma for Angular (1.x)
             
-            beforeEach( module( 'typesregistry'));
+            beforeEach( module( "typesregistry"));
             
             beforeEach( inject(function( _typesregistry_svce_) {
                 aM_typesregistry_scve = _typesregistry_svce_;

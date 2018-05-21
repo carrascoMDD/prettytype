@@ -47,9 +47,9 @@
     var TypeName       = "Stacktrace";
     
     var aMod_definer = function( theSS_typesregistry_svce,
-                                 theSS_overrider_type){
+                                 theSS_overrider_svce){
         
-        var aMod_builder = function( theS_overrider_type) {
+        var aMod_builder = function( theS_overrider_svce) {
             
             if( typeof FG_logModLoads === 'function') { FG_logModLoads(ModuleFullName);}
             
@@ -113,7 +113,7 @@
                  with key values obtained from the command-line arguments or possibly Browser localStorage,
                  or by key-values in an "override" or a "custom" object .
             */
-            theS_overrider_type.pOverrideModuleVariations( ModuleFullName, ModuleVariations);
+            theS_overrider_svce.pOverrideModuleVariations( ModuleFullName, ModuleVariations);
             
             
             
@@ -1267,7 +1267,7 @@
         if( !anExistingModule) {
             
             var aModule = aMod_builder(
-                theSS_overrider_type
+                theSS_overrider_svce
             );
             
             aModule.ModuleBuilder = aMod_builder;

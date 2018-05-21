@@ -1,7 +1,7 @@
 /*
- * overrider_type-structural-test.js
+ * exceptiondetails_type-structural-test.js
  *
- * Created @author Antonio Carrasco Valero 201601261930
+ * Created @author Antonio Carrasco Valero 201805220103
  *
  *
  ***************************************************************************
@@ -31,15 +31,15 @@ permissions and limitations under the Licence.
  */
 
 
-/// <reference path="src/common/overrider_type.js"/>
+/// <reference path="src/common/exceptiondetails_type.js"/>
 "use strict";
 
 
-var aTest_spec = (function( theSS_overrider_type) {
+var aTest_spec = (function( theSS_exceptiondetails_type) {
     
     var ComponentName    = "prettytype-test";
-    var ModuleName     = "overrider_type-structural-test";
-    var ModulePackages = "test/structural-test/overrider-structural-test";
+    var ModuleName     = "exceptiondetails_type-structural-test";
+    var ModulePackages = "test/structural-test/exceptionstack-structural-test";
     var ModuleFullName = ModulePackages + "/" + ModuleName;
     var TestName       = ModuleName + "_" + ModulePackages + "_" + ComponentName + "_test";
     
@@ -47,54 +47,49 @@ var aTest_spec = (function( theSS_overrider_type) {
     
     describe( TestName, function () {
         
-        var aOverrider_title = "OverriderType-Title-test";
-        var aM_overrider_type = null;
-        var anOverrider       = null;
+        var aM_exceptiondetails_type = null;
         
         if( ( typeof beforeEach === 'function') && ( typeof module === 'function')  && ( typeof inject === 'function')) {
             // Karma for Angular (1.x)
-            beforeEach( module( "overrider"));
+            beforeEach( module( "exceptionstack"));
             
-            beforeEach( inject(function( _overrider_type_) {
-                aM_overrider_type = _overrider_type_;
-                anOverrider       = new aM_overrider_type.Overrider_Constructor( aOverrider_title);
+            beforeEach( inject(function( _exceptiondetails_type_) {
+                aM_exceptiondetails_type = _exceptiondetails_type_;
             }));
         }
         else if ( !(typeof module === 'undefined') && module.exports) {
             // Node.js
-            aM_overrider_type = require('../../../src/overrider/overrider_type');
-            anOverrider       = new aM_overrider_type.Overrider_Constructor( aOverrider_title);
+            aM_exceptiondetails_type = require('../../../src/exceptionstack/exceptiondetails_type');
         }
         else if ( !(typeof define === 'undefined') && define.amd) {
             // AMD / RequireJS
-            aM_overrider_type = theSS_overrider_type;
-            anOverrider       = new aM_overrider_type.Overrider_Constructor( aOverrider_title);
+            aM_exceptiondetails_type = theSS_exceptiondetails_type;
         }
         else if ( !(typeof nomod === 'undefined') && nomod.register) {
-            aM_overrider_type = nomod.resolve( nomod.fComputeFullName( "prettytype", "overrider", "overrider_type"));
-            anOverrider       = new aM_overrider_type.Overrider_Constructor( aOverrider_title);
+            aM_exceptiondetails_type = nomod.resolve( nomod.fComputeFullName( "prettytype", "exceptionstack", "exceptiondetails_type"));
         }
-    
-    
-    
-    
-    
-    
+        
+        
+        
+        
+        
+        
         it("Module is defined", function () {
-            expect( aM_overrider_type).not.toBeUndefined();
+            expect( aM_exceptiondetails_type).not.toBeUndefined();
         });
-    
-    
+        
+        
         it("Has module meta definitions", function () {
-            expect( aM_overrider_type._v_Kind).toBe( "module");
-            expect( aM_overrider_type.ComponentName).toBe( "prettytype");
-            expect( aM_overrider_type.ModuleName).toBe( "overrider_type");
-            expect( aM_overrider_type.ModulePackages).toBe( "overrider");
-            expect( aM_overrider_type.ModuleFullName).toBe( "overrider/overrider_type");
+            expect( aM_exceptiondetails_type._v_Kind).toBe( "module");
+            expect( aM_exceptiondetails_type.ComponentName).toBe( "prettytype");
+            expect( aM_exceptiondetails_type.ModuleName).toBe( "exceptiondetails_type");
+            expect( aM_exceptiondetails_type.ModulePackages).toBe( "exceptionstack");
+            expect( aM_exceptiondetails_type.ModuleFullName).toBe( "exceptionstack/exceptiondetails_type");
         });
-    
-    
+        
+        
         var someGeneralFunctionNames = [
+            "InitFromModuleVariations",
             "InitFromModuleConstants",
             "InitModuleGlobalsOn",
             "ProtoInstancer",
@@ -112,22 +107,22 @@ var aTest_spec = (function( theSS_overrider_type) {
                 (function() {
                     var aGeneralFunctionName_here = aGeneralFunctionName;
                     it("Module exposes general definition function " + aGeneralFunctionName_here, function () {
-                        var aGeneralFunction = aM_overrider_type[ aGeneralFunctionName_here];
+                        var aGeneralFunction = aM_exceptiondetails_type[ aGeneralFunctionName_here];
                         expect( typeof aGeneralFunction).toBe( "function");
                     });
                 })()
             }
         }
-    
-    
+        
+        
         var someSpecificFunctionNames = [
-            "Overrider_ProtoInstancer",
-            "Overrider_ProtoDefinerOn",
-            "Overrider_ProtoFactory",
-            "Overrider_Constructor",
-            "Overrider_SuperPrototypeConstructor",
-            "Overrider_CreatePrototypeSlotsOn",
-            "Overrider_CreateInstanceSlotsOn"
+            "Exceptiondetails_ProtoInstancer",
+            "Exceptiondetails_ProtoDefinerOn",
+            "Exceptiondetails_ProtoFactory",
+            "Exceptiondetails_Constructor",
+            "Exceptiondetails_SuperPrototypeConstructor",
+            "Exceptiondetails_CreatePrototypeSlotsOn",
+            "Exceptiondetails_CreateInstanceSlotsOn"
         ];
         var aNumSpecificFunctionNames = someSpecificFunctionNames.length;
         for( var aSpecificFunctionNameIdx=0; aSpecificFunctionNameIdx < aNumSpecificFunctionNames; aSpecificFunctionNameIdx++) {
@@ -136,19 +131,17 @@ var aTest_spec = (function( theSS_overrider_type) {
                 (function() {
                     var aSpecificFunctionName_here = aSpecificFunctionName;
                     it("Module exposes specific definition function " + aSpecificFunctionName_here, function () {
-                        var aSpecificFunction = aM_overrider_type[ aSpecificFunctionName_here];
+                        var aSpecificFunction = aM_exceptiondetails_type[ aSpecificFunctionName_here];
                         expect( typeof aSpecificFunction).toBe( "function");
                     });
                 })()
             }
         }
-    
-    
+        
+        
         var someConstantNames = [
-            "OVERRIDER_DEFAULTTITLE",
-            "MODULENAMESTEPSEPARATOR",
-            "PARMKEYS_OVERRIDERARGUMENTSVARIATIONPATHSEPARATOR_REGEXP",
-            "LOGOVERRIDESFROMCOMMANDLINE"
+            "EXCEPTIONDETAILSDEFAULTNAME",
+            "LOGEXCEPTIONDETAILS"
         ];
         var aNumConstantNames = someConstantNames.length;
         for( var aModuleConstantNameIdx=0; aModuleConstantNameIdx < aNumConstantNames; aModuleConstantNameIdx++) {
@@ -157,17 +150,17 @@ var aTest_spec = (function( theSS_overrider_type) {
                 (function() {
                     var aModuleConstantName_here = aModuleConstantName;
                     it("Module exposes constant " + aModuleConstantName_here, function () {
-                        var aModuleConstant = aM_overrider_type[ aModuleConstantName_here];
+                        var aModuleConstant = aM_exceptiondetails_type[ aModuleConstantName_here];
                         expect( aModuleConstant).not.toBeUndefined();
                     });
                 })()
             }
         }
-    
-    
+        
+        
         var somePrototypeNames = [
             "Prototype",
-            "Overrider_Prototype"
+            "Exceptiondetails_Prototype"
         ];
         var aNumPrototypeNames = somePrototypeNames.length;
         for( var aPrototypeNameIdx=0; aPrototypeNameIdx < aNumPrototypeNames; aPrototypeNameIdx++) {
@@ -176,47 +169,47 @@ var aTest_spec = (function( theSS_overrider_type) {
                 (function() {
                     var aPrototypeName_here = aPrototypeName;
                     it("Module exposes prototype object with name " + aPrototypeName_here, function () {
-                        var anPrototype = aM_overrider_type[ aPrototypeName_here];
+                        var anPrototype = aM_exceptiondetails_type[ aPrototypeName_here];
                         expect( anPrototype).not.toBeUndefined();
                         expect( anPrototype).not.toBeNull( null);
                     });
                 })()
             }
         }
-    
-    
-        it("Has same prototype object under generic and specific names", function () {
-            expect( aM_overrider_type.Prototype).toBe( aM_overrider_type.Overrider_Prototype);
-        });
-    
-    
-    
-        it("Prototype has meta definitions", function () {
-            var aPrototype = aM_overrider_type.Prototype;
         
+        
+        it("Has same prototype object under generic and specific names", function () {
+            expect( aM_exceptiondetails_type.Prototype).toBe( aM_exceptiondetails_type.Exceptiondetails_Prototype);
+        });
+        
+        
+        
+        it("Prototype has meta definitions", function () {
+            var aPrototype = aM_exceptiondetails_type.Prototype;
+            
             expect( aPrototype._v_Kind).toBe( "prototype");
             expect( aPrototype._v_SuperPrototype).toBe( null);
-            expect( aPrototype._v_Type).toBe( "Overrider");
-            expect( aPrototype._v_Prototype_Overrider).toBe( aPrototype);
-            expect( aPrototype._v_Module).toBe( aM_overrider_type);
+            expect( aPrototype._v_Type).toBe( "Exceptiondetails");
+            expect( aPrototype._v_Prototype_Exceptiondetails).toBe( aPrototype);
+            expect( aPrototype._v_Module).toBe( aM_exceptiondetails_type);
         });
-    
-    
+        
+        
         for( var aPrototypeConstantNameIdx=0; aPrototypeConstantNameIdx < aNumConstantNames; aPrototypeConstantNameIdx++) {
             var aPrototypeConstantName = someConstantNames[ aPrototypeConstantNameIdx];
             if( aPrototypeConstantName) {
                 (function() {
                     var aPrototypeConstantName_here = aPrototypeConstantName;
                     it("Prototype also has module constant named " + aPrototypeConstantName_here, function () {
-                        var aPrototype = aM_overrider_type.Prototype;
+                        var aPrototype = aM_exceptiondetails_type.Prototype;
                         var aPrototypeConstant = aPrototype[ aPrototypeConstantName_here];
                         expect( aPrototypeConstant).not.toBeUndefined();
                     });
                 })()
             }
         }
-    
-    
+        
+        
         var somePrototypeGeneralFunctionNames = [
             "_pInit",
             "fFullTypeNameString",
@@ -232,17 +225,17 @@ var aTest_spec = (function( theSS_overrider_type) {
             if( aPrototypeGeneralFunctionName) {
                 (function() {
                     var aPrototypeGeneralFunctionName_here = aPrototypeGeneralFunctionName;
-                
+                    
                     it("Prototype has general function " + aPrototypeGeneralFunctionName_here + " defined", function () {
-                        var aPrototype = aM_overrider_type.Prototype;
+                        var aPrototype = aM_exceptiondetails_type.Prototype;
                         var aPrototypeGeneralFunction = aPrototype[ aPrototypeGeneralFunctionName_here];
                         expect( typeof aPrototypeGeneralFunction).toBe( "function");
                     });
                 })()
             }
         }
-    
-    
+        
+        
         var somePrototypeSlotNames = [
             /* None */
         ];
@@ -253,21 +246,20 @@ var aTest_spec = (function( theSS_overrider_type) {
                 (function() {
                     var aPrototypeSlotName_here = aPrototypeSlotName;
                     it("Prototype has slot with name " + aPrototypeSlotName_here, function () {
-                        var aPrototype = aM_overrider_type.Prototype;
+                        var aPrototype = aM_exceptiondetails_type.Prototype;
                         var anPrototypeSlot = aPrototype[ aPrototypeSlotName_here];
                         expect( anPrototypeSlot).not.toBeUndefined();
                     });
                 })()
             }
         }
-    
-    
+        
+        
         var somePrototypeSpecificFunctionNames = [
-            "_pInit_Overrider",
-            "pSetOverriderarguments",
-            "pSetCustom",
-            "pSetOverrides",
-            "pOverrideModuleVariations"
+            "_pInit_Exceptiondetails",
+            "fLogExceptionDetails",
+            "pSetLogExceptionDetails",
+            "fExceptionDetail"
         ];
         var aNumPrototypeSpecificFunctionNames = somePrototypeSpecificFunctionNames.length;
         for( var aPrototypeSpecificFunctionNameIdx=0; aPrototypeSpecificFunctionNameIdx < aNumPrototypeSpecificFunctionNames; aPrototypeSpecificFunctionNameIdx++) {
@@ -276,20 +268,18 @@ var aTest_spec = (function( theSS_overrider_type) {
                 (function() {
                     var aPrototypeSpecificFunctionName_here = aPrototypeSpecificFunctionName;
                     it("Prototype has specific function " + aPrototypeSpecificFunctionName_here + " defined", function () {
-                        var aPrototype = aM_overrider_type.Prototype;
+                        var aPrototype = aM_exceptiondetails_type.Prototype;
                         var aPrototypeSpecificFunction = aPrototype[ aPrototypeSpecificFunctionName_here];
                         expect( typeof aPrototypeSpecificFunction).toBe( "function");
                     });
                 })()
             }
         }
-    
-    
+        
+        
         var someInstanceSlotNames = [
             "_v_Title",
-            "_v_Overriderarguments",
-            "_v_Custom",
-            "_v_Overrides"
+            "_v_LogExceptionDetails"
         ];
         var aNumInstanceSlotNames = someInstanceSlotNames.length;
         for( var aInstanceSlotNameIdx=0; aInstanceSlotNameIdx < aNumInstanceSlotNames; aInstanceSlotNameIdx++) {
@@ -298,7 +288,7 @@ var aTest_spec = (function( theSS_overrider_type) {
                 (function() {
                     var aInstanceSlotName_here = aInstanceSlotName;
                     it("Instance has slot with name " + aInstanceSlotName_here, function () {
-                        var anInstance = new aM_overrider_type.Overrider_Constructor( "test_instance__someInstanceSlotNames__" + TestName);
+                        var anInstance = new aM_exceptiondetails_type.Exceptiondetails_Constructor( "test_instance__someInstanceSlotNames__" + TestName);
                         var anInstanceSlot = anInstance[ aInstanceSlotName_here];
                         expect( anInstanceSlot).not.toBeUndefined();
                     });
@@ -307,18 +297,14 @@ var aTest_spec = (function( theSS_overrider_type) {
         }
         
         
-        
-        
-        
-     
     });
 });
 
 if ( (typeof define === 'function') && define.amd) {
     // AMD / RequireJS
-    define( "overrider_type_structural_test",
+    define( "exceptiondetails_type_structural_test",
         [
-            "overrider_type"
+            "exceptiondetails_type"
         ],
         aTest_spec
     );

@@ -1,7 +1,8 @@
+
 /*
- * console_type.js
+ * exceptiondetails_type.js
  *
- * Created @author Antonio Carrasco Valero 201805210457
+ * Created @author Antonio Carrasco Valero 201805220052
  *
  *
  ***************************************************************************
@@ -9,18 +10,18 @@
  Copyright 2014 2015 2016 2017 2018 Antonio Carrasco Valero
  Multi-platform Javascript EC5 coding patterns and base super-prototypes, for write-once, run and test everywhere (angular, require, node).
 
- Licensed under the EUPL, Version 1.1 only (the "Licence");
- You may not use this work except in compliance with the
- Licence.
- You may obtain a copy of the Licence at:
- https://joinup.ec.europa.eu/software/page/eupl/licence-eupl
- Unless required by applicable law or agreed to in
- writing, software distributed under the Licence is
- distributed on an "AS IS" basis,
- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
- express or implied.
- See the Licence for the specific language governing
- permissions and limitations under the Licence.
+Licensed under the EUPL, Version 1.1 only (the "Licence");
+You may not use this work except in compliance with the
+Licence.
+You may obtain a copy of the Licence at:
+https://joinup.ec.europa.eu/software/page/eupl/licence-eupl
+Unless required by applicable law or agreed to in
+writing, software distributed under the Licence is
+distributed on an "AS IS" basis,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+express or implied.
+See the Licence for the specific language governing
+permissions and limitations under the Licence.
  {{License2}}
 
  {{Licensed1}}
@@ -33,23 +34,25 @@
 
 'use strict';
 
+
 (function () {
     
     var ComponentName  = "prettytype";
-    var ModuleName     = "console_type";
-    var ModulePackages = "console";
+    var ModuleName     = "exceptiondetails_type";
+    var ModulePackages = "exceptionstack";
     var ModuleFullName = ModulePackages + "/" + ModuleName;
-    var TypeName       = "Console";
+    var TypeName       = "Exceptiondetails";
     
     var aMod_definer = function( theSS_typesregistry_svce,
-                                 theSS_overrider_svce){
+                                 theSS_overrider_svce,
+                                 theSS_stacktrace_svce){
         
         var aMod_builder = function( theS_overrider_svce) {
             
             if( typeof FG_logModLoads === 'function') { FG_logModLoads(ModuleFullName);}
-    
-    
-    
+            
+            
+            
             /* ***************************************************************
                Init here key-value pairs.
                The key values defined as Variations may be overriden by the overrider_svce singleton
@@ -68,13 +71,13 @@
                See about Constants in the coment of pgInitWithModuleConstants() below.
             */
             var pgInitWithModuleVariations = function( theToInit) {
-        
+                
                 if( !theToInit) {
                 }
             };
-    
-    
-    
+            
+            
+            
             /* ***************************************************************
                Just copy each key-value in ModuleVariations onto the supplied object.
                Used to fill the Module Constants object.
@@ -85,33 +88,33 @@
                 if( !theToInit) {
                     return;
                 }
-        
+                
                 for( var aGlobalName in ModuleVariations) {
                     if( ModuleVariations.hasOwnProperty( aGlobalName)) {
                         theToInit[ aGlobalName] = ModuleVariations[ aGlobalName];
                     }
                 }
             };
-    
-    
-    
-    
+            
+            
+            
+            
             /* ***************************************************************
                Holder of name-values in the Module which may be overriden by overrider_svce singleton,
                 and later copied into Constants.
             */
             var ModuleVariations = { };
             pgInitWithModuleVariations( ModuleVariations);
-    
+            
             /* ***************************************************************
                Override key-values in Variations by the overrider_svce singleton
                  with key values obtained from the command-line arguments or possibly Browser localStorage,
                  or by key-values in an "override" or a "custom" object .
             */
             theS_overrider_svce.pOverrideModuleVariations( ModuleFullName, ModuleVariations);
-    
-    
-    
+            
+            
+            
             
             /* ***************************************************************
                Init here key-value pairs, considered constants - and therefore with an expected read-only life-cycle.
@@ -148,13 +151,9 @@
                 if( !theToInit) {
                     return;
                 }
-    
-                theToInit.WRITETOCONSOLE          = true;
-                theToInit.COLLECTLOGS             = false;
-                theToInit.MAXCOLLECTEDLOGSLENGTH  = 16 * 1024 * 1024;
                 
-                theToInit.CONSOLEDEFAULTNAME = "Console_DefaultName";
-                
+                theToInit.EXCEPTIONDETAILSDEFAULTNAME = "Exceptiondetails_DefaultName";
+                theToInit.LOGEXCEPTIONDETAILS   = false;
             };
             
             
@@ -239,14 +238,14 @@
                 
               Invoked by ProtoFactory as the first step to produce an object fully able to serve as Prototype.
             */
-            var Console_ProtoInstancer = function() {
+            var Exceptiondetails_ProtoInstancer = function() {
                 
                 var aPrototype = {} /* Prototypical inheritance from NOTHING */;
                 
                 aPrototype._v_Kind                    = "prototype";
                 aPrototype._v_SuperPrototype          = null;
                 aPrototype._v_Type                    = TypeName;
-                aPrototype._v_Prototype_Console       = aPrototype;
+                aPrototype._v_Prototype_Exceptiondetails    = aPrototype;
                 /* Shall be filled below, at the end of the function enclosing this (aMod_builder), when aModule is defined */
                 aPrototype._v_Module                  = null;
                 
@@ -268,7 +267,7 @@
                     unless a value with same key has been set in intermediate prototypes or the accessed object.
               
               Write access:
-                On the prototype object which was supplied to this function Console_CreatePrototypeSlotsOn
+                On the prototype object which was supplied to this function Exceptiondetails_CreatePrototypeSlotsOn
                     this.<VariableName> = <new value> or this["<VariableName>"] = <new value>
                     The same identical newly set value or object reference shall shall be obtained from all the accesses
                     unless a value with same key has been set in intermediate prototypes or the accessed object.
@@ -291,7 +290,7 @@
                     
               Invoked by ProtoFactory as one of the steps to produce an object fully able to serve as Prototype.
             */
-            var Console_CreatePrototypeSlotsOn = function( theFrame) {
+            var Exceptiondetails_CreatePrototypeSlotsOn = function( theFrame) {
                 if( !theFrame) {
                 }
             };
@@ -319,17 +318,12 @@
               Invoked by Constructor and SuperPrototypeConstructor and as one of the steps to produce an object
                 fully able to serve as instance of this prototype, or as super-prototype for derived prototypes.
             */
-            var Console_CreateInstanceSlotsOn = function( theFrame) {
+            var Exceptiondetails_CreateInstanceSlotsOn = function( theFrame) {
                 if( !theFrame) {
                     return;
                 }
-                theFrame._v_Title                   = null;
-                theFrame._v_WriteToConsole          = null;
-                theFrame._v_CollectLogs             = null;
-                theFrame._v_MaxCollectedLogsLength  = null;
-                
-                theFrame._v_CollectedLogs           = null;
-                theFrame._v_CollectedLogsSize       = null;
+                theFrame._v_Title               = null;
+                theFrame._v_LogExceptionDetails = null;
             };
             
             
@@ -359,7 +353,7 @@
                 
               Invoked by ProtoFactory as the last step to produce an object fully able to serve as Prototype.
             */
-            var Console_ProtoDefinerOn = function( thePrototype) {
+            var Exceptiondetails_ProtoDefinerOn = function( thePrototype) {
                 
                 if( !thePrototype) {
                     return;
@@ -369,7 +363,7 @@
                 
                 var _pInit = function( theTitle) {
                     
-                    this._pInit_Console( theTitle);
+                    this._pInit_Exceptiondetails( theTitle);
                 };
                 if( _pInit){}/* CQT */
                 thePrototype._pInit = _pInit;
@@ -380,22 +374,18 @@
                 
                 
                 
-                var _pInit_Console = function( theTitle) {
+                var _pInit_Exceptiondetails = function( theTitle) {
                     
                     this._v_Title = theTitle;
                     if( !this._v_Title) {
-                        this._v_Title = this.CONSOLEDEFAULTNAME;
+                        this._v_Title = this.EXCEPTIONDETAILSDEFAULTNAME;
                     }
-    
-                    this._v_WriteToConsole          = this.WRITETOCONSOLE;
-                    this._v_CollectLogs             = this.COLLECTLOGS;
-                    this._v_MaxCollectedLogsLength  = this.MAXCOLLECTEDLOGSLENGTH;
-    
-                    this._v_CollectedLogs           = [ ];
-                    this._v_CollectedLogsSize       = 0;
+                    
+                    this._v_LogExceptionDetails = this.LOGEXCEPTIONDETAILS && true;
+                    
                 };
-                if( _pInit_Console){}/* CQT */
-                thePrototype._pInit_Console = _pInit_Console;
+                if( _pInit_Exceptiondetails){}/* CQT */
+                thePrototype._pInit_Exceptiondetails = _pInit_Exceptiondetails;
                 
                 
                 
@@ -520,247 +510,72 @@
     
     
     
-    
-    
-    
-    
-    
-                var pSetWriteToConsole = function( theWriteToConsole) {
-        
-                    this._v_WriteToConsole = ( theWriteToConsole? true : false);
-        
+                var fLogExceptionDetails = function() {
+                    return this._v_LogExceptionDetails;
                 };
-                if( pSetWriteToConsole){}/* CQT */
-                thePrototype.pSetWriteToConsole = pSetWriteToConsole;
+                if( fLogExceptionDetails){}/* CQT */
+                thePrototype.fLogExceptionDetails = fLogExceptionDetails;
     
     
     
     
     
-    
-    
-                var pSetCollectLogs = function( theCollectLogs) {
-        
-                    if( theCollectLogs) {
-            
-                        this._v_CollectLogs = true;
-            
-                        if( !this._v_CollectedLogs) {
-                            this._v_CollectedLogs      = [ ];
-                            this._v_CollectedLogsSize  = 0;
-                        }
-                    }
-                    else {
-                        this._v_CollectLogs        = false;
-                        this._v_CollectedLogs      = [ ];
-                        this._v_CollectedLogsSize  = 0;
-                    }
+                var pSetLogExceptionDetails = function( theLogExceptionDetails) {
+                   this._v_LogExceptionDetails = theLogExceptionDetails && true;
                 };
-                if( pSetCollectLogs){}/* CQT */
-                thePrototype.pSetCollectLogs = pSetCollectLogs;
-    
-    
-    
-    
-    
-                var pSetMaxCollectedLogsLength = function( theMaxCollectedLogsLength) {
-        
-                    this._v_MaxCollectedLogsLength = theMaxCollectedLogsLength;
-        
-                    this.pEnforceMaxCollectedLogsLength("");
-        
-                };
-                if( pSetMaxCollectedLogsLength){}/* CQT */
-                thePrototype.pSetMaxCollectedLogsLength = pSetMaxCollectedLogsLength;
+                if( pSetLogExceptionDetails){}/* CQT */
+                thePrototype.pSetLogExceptionDetails = pSetLogExceptionDetails;
     
     
     
     
     
     
-    
-    
-                var fCollectedLogs = function() {
-        
-                    return this._v_CollectedLogs;
-        
-                };
-                if( fCollectedLogs){}/* CQT */
-                thePrototype.fCollectedLogs = fCollectedLogs;
-    
-    
-    
-    
-    
-    
-                var fCollectedLogsCopy = function() {
-        
-                    if( !this._v_CollectedLogs) {
+                var fExceptionDetail = function( theException) {
+                    if( !theException) {
                         return null;
                     }
         
-                    return this._v_CollectedLogs.slice();
         
-                };
-                if( fCollectedLogsCopy){}/* CQT */
-                thePrototype.fCollectedLogsCopy = fCollectedLogsCopy;
-    
-    
-    
-    
-    
-    
-    
-                var log = function( theMessage) {
+                    var anExceptionDetail = {
+                        exception: theException.toString()
+                    };
         
-                    if( this._v_CollectLogs) {
-            
-                        if( !this._v_CollectedLogs) {
-                            this._v_CollectedLogs = [ ];
+        
+                    var anExceptionTrace = theS_stacktraceSvce( { e: theException});
+                    if( anExceptionTrace) {
+                        anExceptionDetail.trace = anExceptionTrace;
+                    }
+        
+                    var aRecord = theException._v_Record;
+                    if( aRecord) {
+                        if( aRecord.fIdentifyingJSON) {
+                            aRecord = aRecord.fIdentifyingJSON();
                         }
-            
-                        this._v_CollectedLogs.push( [ "log", theMessage]);
-    
-                        this.pEnforceMaxCollectedLogsLength( theMessage);
-                    }
-        
-        
-                    if( this._v_WriteToConsole) {
-            
-                        // console.log( theMessage);
-                    }
-        
-                };
-                if( log){}/* CQT */
-                thePrototype.log = log;
-    
-    
-    
-    
-    
-    
-    
-                var error = function( theMessage) {
-        
-                    if( this._v_CollectLogs) {
-            
-                        if( !this._v_CollectedLogs) {
-                            this._v_CollectedLogs = [ ];
+                        else {
+                            if( aRecord.fAsLogObject) {
+                                aRecord = aRecord.fAsLogObject();
+                            }
                         }
-            
-                        this._v_CollectedLogs.push( [ "error", theMessage]);
-    
-                        this.pEnforceMaxCollectedLogsLength( theMessage);
-                    }
-        
-        
-                    if( this._v_WriteToConsole) {
-            
-                        // console.error( theMessage);
-                    }
-        
-                };
-                if( error){}/* CQT */
-                thePrototype.error = error;
-    
-    
-    
-    
-    
-    
-    
-    
-                var info = function( theMessage) {
-        
-                    if( this._v_CollectLogs) {
-            
-                        if( !this._v_CollectedLogs) {
-                            this._v_CollectedLogs = [ ];
+                        if( aRecord) {
+                            anExceptionDetail.recex = aRecord;
                         }
-            
-                        this._v_CollectedLogs.push( [ "info", theMessage]);
-    
-                        this.pEnforceMaxCollectedLogsLength( theMessage);
                     }
         
-        
-                    if( this._v_WriteToConsole) {
-            
-                        // console.log( theMessage);
+                    if( this._v_LogExceptionDetails) {
+                        console.log( "exception:" + anExceptionDetail.exception);
+                        console.log( anExceptionDetail.recex);
+                        console.log( anExceptionDetail.trace);
                     }
         
+                    anExceptionDetail.fIdentifyingJSON = function() {
+                        return anExceptionDetail;
+                    };
+        
+                    return anExceptionDetail;
                 };
-                if( info){}/* CQT */
-                thePrototype.info = info;
-    
-    
-    
-    
-    
-    
-                var clear = function() {
-        
-                    this._v_CollectedLogs     = [ ];
-                    this._v_CollectedLogsSize = 0;
-        
-                    if( this._v_WriteToConsole) {
-                        console.clear();
-                    }
-        
-                };
-                if( clear){}/* CQT */
-                thePrototype.clear = clear;
-    
-    
-    
-    
-    
-    
-    
-    
-                var pEnforceMaxCollectedLogsLength = function( theMessage) {
-        
-                    if( !this._v_CollectLogs) {
-                        return;
-                    }
-        
-                    var aMessageLen = ( ( typeof theMessage === "string") ? theMessage.length : 0);
-                    if( aMessageLen){}/* CQT */
-        
-                    this._v_CollectedLogsSize += aMessageLen;
-        
-                    if( this._v_MaxCollectedLogsLength <= 0) {
-                        return;
-                    }
-        
-        
-                    while( true) {
-            
-                        if( this._v_CollectedLogsSize <= this._v_MaxCollectedLogsLength) {
-                            return;
-                        }
-            
-                        if( this._v_CollectLogs.length <= 1) {
-                            return;
-                        }
-            
-                        var aRemovedKindAndMessage = this._v_CollectedLogs.shift();
-            
-                        var aRemovedMessage = aRemovedKindAndMessage[ 1];
-                        var aRemovedMessageLen = ( ( typeof aRemovedMessage === "string") ? aRemovedMessage.length : 0);
-                        if( aRemovedMessageLen){}/* CQT */
-            
-                        this._v_CollectedLogsSize -= aRemovedMessageLen;
-                    }
-        
-        
-                };
-                if( pEnforceMaxCollectedLogsLength){}/* CQT */
-                thePrototype.pEnforceMaxCollectedLogsLength = pEnforceMaxCollectedLogsLength;
-    
-    
-    
-    
+                if( fExceptionDetail){}/* CQT */
+                thePrototype.fExceptionDetail = fExceptionDetail;
     
             };
             
@@ -774,10 +589,10 @@
               Create object to serve as prototype,
                  with all slots for Constants (and Variations), prototype scoped properties and methods of the prototype.
             */
-            var Console_ProtoFactory = function() {
+            var Exceptiondetails_ProtoFactory = function() {
                 
                 /* Create object to serve as prototype */
-                var aPrototype = Console_ProtoInstancer();
+                var aPrototype = Exceptiondetails_ProtoInstancer();
                 
                 /* Fill the object to serve as prototype with key-values copied from ModuleConstants,
                     which also include those from ModuleVariations */
@@ -785,11 +600,11 @@
                 
                 /* Create in the object to serve as prototype the slots for properties scoped to the prototype.
                     I.e. same read value shared among all the instances */
-                Console_CreatePrototypeSlotsOn( aPrototype);
+                Exceptiondetails_CreatePrototypeSlotsOn( aPrototype);
                 
                 /* Create in the object to serve as prototype the methods implemented by the prototype.
                    Nothing prevents, other than self-discipline, to create additional slots in the prototype during this ProtoDefinerOn function. */
-                Console_ProtoDefinerOn( aPrototype);
+                Exceptiondetails_ProtoDefinerOn( aPrototype);
                 
                 return aPrototype;
             };
@@ -801,7 +616,7 @@
             /* ***************************************************************
               Object to serve as prototype
             */
-            var aConsole_Prototype = Console_ProtoFactory();
+            var aExceptiondetails_Prototype = Exceptiondetails_ProtoFactory();
             
             
             
@@ -817,17 +632,17 @@
               See examples of recursive initialisation in modules
                 identifying / dumpingpolicy and recordingpolicy
             */
-            var Console_Constructor = function( theTitle) {
+            var Exceptiondetails_Constructor = function( theTitle) {
                 this._v_Kind      = "instance";
-                this._v_Prototype = aConsole_Prototype;
+                this._v_Prototype = aExceptiondetails_Prototype;
                 
                 /* Create in the object to serve as prototype the slots for properties scoped uniquely to the instance being created (this), if any */
-                Console_CreateInstanceSlotsOn( this);
+                Exceptiondetails_CreateInstanceSlotsOn( this);
                 
                 /* Fully initialise the instance, delegating in initialisers defined by super-prototypes, if any */
-                this._pInit_Console( theTitle);
+                this._pInit_Exceptiondetails( theTitle);
             };
-            Console_Constructor.prototype = aConsole_Prototype;
+            Exceptiondetails_Constructor.prototype = aExceptiondetails_Prototype;
             
             
             
@@ -847,17 +662,17 @@
               See examples of deep sub-prototypes and recursive initialisation in modules
                 identifying / dumpingpolicy and recordingpolicy
             */
-            var Console_SuperPrototypeConstructor = function() {
+            var Exceptiondetails_SuperPrototypeConstructor = function() {
                 /* When actually used as prototype in the code in some other module,
-                    _v_Kind shall be assigned the value "prototype" as in this module Console_ProtoInstancer
+                    _v_Kind shall be assigned the value "prototype" as in this module Exceptiondetails_ProtoInstancer
                     if the author is following the patterns in this prettytype npm package, */
                 this._v_Kind      = "subprototype";
-                this._v_Prototype = aConsole_Prototype;
+                this._v_Prototype = aExceptiondetails_Prototype;
                 
                 /* Create in the object to serve as super-prototype the slots for properties scoped uniquely to the instance being created (this), if any */
-                Console_CreateInstanceSlotsOn( this);
+                Exceptiondetails_CreateInstanceSlotsOn( this);
             };
-            Console_SuperPrototypeConstructor.prototype = aConsole_Prototype;
+            Exceptiondetails_SuperPrototypeConstructor.prototype = aExceptiondetails_Prototype;
             
             
             
@@ -879,31 +694,31 @@
                 "ModuleFullName":                          ModuleFullName,
                 "ModuleConstants":                         ModuleConstants,
                 "ModuleGlobals":                           ModuleGlobals,
-    
+                
                 "InitFromModuleVariations":                InitFromModuleVariations,
                 "InitFromModuleConstants":                 InitFromModuleConstants,
                 "InitModuleGlobalsOn":                     InitModuleGlobalsOn,
                 
                 "TypeName":                                TypeName,
                 
-                "Console_ProtoInstancer":                  Console_ProtoInstancer,
-                "Console_ProtoDefinerOn":                  Console_ProtoDefinerOn,
-                "Console_ProtoFactory":                    Console_ProtoFactory,
-                "Console_Constructor":                     Console_Constructor,
-                "Console_SuperPrototypeConstructor":       Console_SuperPrototypeConstructor,
-                "Console_CreatePrototypeSlotsOn":          Console_CreatePrototypeSlotsOn,
-                "Console_CreateInstanceSlotsOn":           Console_CreateInstanceSlotsOn,
+                "Exceptiondetails_ProtoInstancer":               Exceptiondetails_ProtoInstancer,
+                "Exceptiondetails_ProtoDefinerOn":               Exceptiondetails_ProtoDefinerOn,
+                "Exceptiondetails_ProtoFactory":                 Exceptiondetails_ProtoFactory,
+                "Exceptiondetails_Constructor":                  Exceptiondetails_Constructor,
+                "Exceptiondetails_SuperPrototypeConstructor":    Exceptiondetails_SuperPrototypeConstructor,
+                "Exceptiondetails_CreatePrototypeSlotsOn":       Exceptiondetails_CreatePrototypeSlotsOn,
+                "Exceptiondetails_CreateInstanceSlotsOn":        Exceptiondetails_CreateInstanceSlotsOn,
                 
-                "ProtoInstancer":                          Console_ProtoInstancer,
-                "ProtoDefinerOn":                          Console_ProtoDefinerOn,
-                "ProtoFactory":                            Console_ProtoFactory,
-                "Constructor":                             Console_Constructor,
-                "SuperPrototypeConstructor":               Console_SuperPrototypeConstructor,
-                "CreatePrototypeSlotsOn":                  Console_CreatePrototypeSlotsOn,
-                "CreateInstanceSlotsOn":                   Console_CreateInstanceSlotsOn,
+                "ProtoInstancer":                          Exceptiondetails_ProtoInstancer,
+                "ProtoDefinerOn":                          Exceptiondetails_ProtoDefinerOn,
+                "ProtoFactory":                            Exceptiondetails_ProtoFactory,
+                "Constructor":                             Exceptiondetails_Constructor,
+                "SuperPrototypeConstructor":               Exceptiondetails_SuperPrototypeConstructor,
+                "CreatePrototypeSlotsOn":                  Exceptiondetails_CreatePrototypeSlotsOn,
+                "CreateInstanceSlotsOn":                   Exceptiondetails_CreateInstanceSlotsOn,
                 
-                "Console_Prototype":                       aConsole_Prototype,
-                "Prototype":                               aConsole_Prototype
+                "Exceptiondetails_Prototype":              aExceptiondetails_Prototype,
+                "Prototype":                               aExceptiondetails_Prototype
             };
             
             /* ***************************************************************
@@ -919,7 +734,7 @@
               The prototype and its instances may access the module object and all its published members.
               The sub-prototypes and their instances may also reach this module through the _v_SuperPrototype chain.
             */
-            aConsole_Prototype._v_Module = aModule;
+            aExceptiondetails_Prototype._v_Module = aModule;
             
             
             
@@ -928,10 +743,10 @@
             */
             return aModule;
         };
-    
-    
-    
-    
+        
+        
+        
+        
         /* ***************************************************************
           Make sure that the module is built only once, and that the same instance is supplied anytime
           the module is required, as i.e. to resolve a dependency for another module.
@@ -944,23 +759,24 @@
             anExistingModule = theSS_typesregistry_svce.fRegisteredModule( ModuleFullName);
         }
         if( !anExistingModule) {
-        
+            
             var aModule = aMod_builder(
-                theSS_overrider_svce
+                theSS_overrider_svce,
+                theSS_stacktrace_svce
             );
-        
+            
             aModule.ModuleBuilder = aMod_builder;
             aModule.ModuleDecompiler  = function() { aModule.ModuleSource = aMod_builder.toString()};
-        
+            
             anExistingModule = aModule;
-        
+            
             if(    !( typeof theSS_typesregistry_svce === 'undefined')
                 && ( typeof theSS_typesregistry_svce.fRegisterModule === 'function')) {
                 theSS_typesregistry_svce.fRegisterModule( ModuleFullName, aModule);
             }
         }
-    
-    
+        
+        
         /* ***************************************************************
          Return the module which was already built and registered in typesregistry_svce singleton, or just built.
         */
@@ -982,6 +798,7 @@
         angular.module( ModulePackages).factory( ModuleName, [
             "typesregistry_svce",
             "overrider_svce",
+            "stacktrace_svce",
             aMod_definer
         ]);
         
@@ -991,12 +808,14 @@
         
         module.exports = (function() {
             
-            var aM_typesregistry = require('../typesregistry/typesregistry_svce');
-            var aM_overrider     = require('../overrider/overrider_svce');
-            
+            var aM_typesregistry   = require('../typesregistry/typesregistry_svce');
+            var aM_overrider_svce  = require('../overrider/overrider_svce');
+            var aM_stacktrace_svce = require('../exceptionstack/stacktrace_svce');
+    
             return aMod_definer(
                 aM_typesregistry,
-                aM_overrider
+                aM_overrider_svce,
+                aM_stacktrace_svce
             );
         })();
         
@@ -1007,7 +826,8 @@
         define( ModuleName,
             [
                 "typesregistry_svce",
-                "overrider_svce"
+                "overrider_svce",
+                "stacktrace_svce"
             ],
             aMod_definer
         );
@@ -1018,8 +838,9 @@
         
         nomod.register( ComponentName, ModulePackages, ModuleName,
             [ /* theDependencies */
-                nomod.fComputeFullName( "prettytype", "typesregistry", "typesregistry_type"),
-                nomod.fComputeFullName( "prettytype", "overrider", "overrider_svce")
+                nomod.fComputeFullName( "prettytype", "typesregistry", "typesregistry_svce"),
+                nomod.fComputeFullName( "prettytype", "overrider", "overrider_svce"),
+                nomod.fComputeFullName( "prettytype", "exceptionstack", "stacktrace_svce")
             ],
             aMod_definer
         )
@@ -1028,6 +849,7 @@
     
     
 })(); /* Self-executing function launches the module definition machinery upon load of the javascript file */
+
 
 
 

@@ -52,7 +52,7 @@ var aTest_spec = (function( theSS_eventkinds_common) {
         
         if( ( typeof beforeEach === 'function') && ( typeof module === 'function')  && ( typeof inject === 'function')) {
             // Karma for Angular (1.x)
-            beforeEach( module( "typesregistry", "overrider", "eventkinds"));
+            beforeEach( module( "eventkinds"));
             
             beforeEach( inject(function( _eventkinds_common_) {
                 aM_eventkinds_common = _eventkinds_common_;

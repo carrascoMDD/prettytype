@@ -53,7 +53,7 @@ var aTest_spec = (function( theSS_overrider_svce) {
         
         if( ( typeof beforeEach === 'function') && ( typeof module === 'function')  && ( typeof inject === 'function')) {
             // Karma for Angular (1.x)
-            beforeEach( module( "typesregistry", "overrider"));
+            beforeEach( module( "overrider"));
             
             beforeEach( inject(function( _overrider_svce_) {
                 aM_overrider_svce = _overrider_svce_;

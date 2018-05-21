@@ -68,7 +68,7 @@ FG_logModLoads = function( theBoolOrMessage) {
 
 
 FG_logModLoads._v_Type = "toplevelfunction";
+FG_logModLoads.ComponentName  = "prettytype";
 FG_logModLoads.ModuleName     = "FG_logModLoads";
-FG_logModLoads.ModulePackages = "modboot";
+FG_logModLoads.ModulePackages = "lowinstrument";
 FG_logModLoads.ModuleFullName = FG_logModLoads.ModulePackages + "/" + FG_logModLoads.ModuleName;
-FG_logModLoads.ModuleSource   = FG_logModLoads.toString();

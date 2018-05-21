@@ -32,8 +32,6 @@ permissions and limitations under the Licence.
 
 var someKarmaConfFiles = [
     
-    './src/modboot/logmoduleloads.js',
-    
     './test/test-browser-karma-requirejs/test-main.js',
     
     './src/typesregistry/typesregistry_type.js',
@@ -45,6 +43,8 @@ var someKarmaConfFiles = [
     './src/console/console_svce.js',
     "./src/exceptionstack/stacktrace_type.js",
     "./src/exceptionstack/stacktrace_svce.js",
+    "./src/exceptionstack/exceptiondetails_type.js",
+    "./src/exceptionstack/exceptiondetails_svce.js",
 
     
     './test/structural-test/typesregistry-structural-test/typesregistry_type-structural-test.js',
@@ -56,7 +56,9 @@ var someKarmaConfFiles = [
     './test/structural-test/console-structural-test/console_type-structural-test.js',
     './test/structural-test/console-structural-test/console_svce-structural-test.js',
     './test/structural-test/exceptionstack-structural-test/stacktrace_type-structural-test.js',
-    './test/structural-test/exceptionstack-structural-test/stacktrace_svce-structural-test.js'
+    './test/structural-test/exceptionstack-structural-test/stacktrace_svce-structural-test.js',
+    './test/structural-test/exceptionstack-structural-test/exceptiondetails_type-structural-test.js',
+    './test/structural-test/exceptionstack-structural-test/exceptiondetails_svce-structural-test.js'
 
 ];
 

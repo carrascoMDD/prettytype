@@ -31,228 +31,84 @@ permissions and limitations under the Licence.
  *
  */
 
+'use strict';
 
-(function() {
-    
+
+(function () {
     
     var ComponentName    = "prettytype";
     var ModuleName     = "exceptiondetails_svce";
-    var ModulePackages = "utils";
+    var ModulePackages = "exceptionstack";
     var ModuleFullName = ModulePackages + "/" + ModuleName;
+    var SingletonName  = "Exceptiondetails_Service";
     
     var aMod_definer = ( function( theSS_typesregistry_svce,
-                                   theSS_overrider_type,
-                                   theSS_stacktraceSvce){
-    
-        var aMod_builder = function( theS_overrider_type,
-                                     theS_stacktraceSvce) {
-    
+                                   theSS_overrider_svce,
+                                   theSS_exceptiondetails_type){
+        
+        
+        var aMod_builder = function( theS_OverriderType,
+                                     theSS_exceptiondetails_type) {
             
             if( typeof FG_logModLoads === 'function') { FG_logModLoads(ModuleFullName);}
     
     
-    
-    
-            var pgInitWithModuleVariations = function( theToInit) {
-        
-                if( !theToInit) {
-                }
-            };
-    
-    
-    
-            var InitFromModuleVariations = function( theToInit) {
-                if( !theToInit) {
-                    return;
-                }
-        
-                for( var aGlobalName in ModuleVariations) {
-                    if( ModuleVariations.hasOwnProperty( aGlobalName)) {
-                        theToInit[ aGlobalName] = ModuleVariations[ aGlobalName];
-                    }
-                }
-            };
-        
-
-    
-            var ModuleVariations = { };
-            pgInitWithModuleVariations( ModuleVariations);
-            theS_overrider_type.pOverrideModuleVariations( ModuleFullName, ModuleVariations);
-    
-    
-    
-    
             /* ***************************************************************
-               Init here key-value pairs, considered constants - and therefore with an expected read-only life-cycle.
-               Constants can be accessed through the Module .ModuleConstants.
+             This Module is actually delivered as a singleton instance of the prototype defined in the module.
+             The module definition object itself is not actually returned as the module, but the singleton instance is,
+               which has a slot _v_Module through which it is possible to access the module definition object.
             */
-            var pgInitWithModuleConstants = function( theToInit) {
-                
-                if( !theToInit) {
-                    return;
-                }
-                
-                theToInit.LOGEXCEPTIONDETAILS = false;
-            };
-    
-    
-    
-    
+            var aService = new theSS_exceptiondetails_type.Exceptiondetails_Constructor( SingletonName);
     
             /* ***************************************************************
-               Holder of name-values in the Module, considered Constants.
+               Because this singleton becomes a registered module, fill in metainformation usually found in modules
             */
-            var ModuleConstants = {};
-            InitFromModuleVariations( ModuleConstants);
-            pgInitWithModuleConstants( ModuleConstants);
-    
-    
-    
-    
-            /* ***************************************************************
-               Just copy each key-value in ModuleConstants onto the supplied object.
-               Used to fill the Module object and the Protoype object with the key-value pairs in Constants.
-             */
-            var InitFromModuleConstants = function( theToInit) {
-                if( !theToInit) {
-                    return;
-                }
-                
-                for( var aGlobalName in ModuleConstants) {
-                    if( ModuleConstants.hasOwnProperty( aGlobalName)) {
-                        theToInit[ aGlobalName] = ModuleConstants[ aGlobalName];
-                    }
-                }
-            };
-    
-    
-    
-    
-    
-    
-    
+            aService._v_Kind        = "singleton";
+            aService.ComponentName  = ComponentName;
+            aService.ModuleName     = ModuleName;
+            aService.ModulePackages = ModulePackages;
+            aService.ModuleFullName = ModuleFullName;
+            aService.SingletonName  = SingletonName;
     
             /* ***************************************************************
-               Init here name-values, considered Globals - and therefore with an expected read-write life-cycle.
-               Globals can only be accessed through the Module .ModuleGlobals. Instances may access this._v_Module.ModuleGlobals
+              Return the instantiated service singleton as the module object.
             */
-            var InitModuleGlobalsOn = function( theToInit) {
-        
-                if( !theToInit) {
-                }
-            };
-    
-    
-    
-    
-            /* ***************************************************************
-              Holder of name-values in the Module, considered Globals.
-            */
-            var ModuleGlobals = { };
-            InitModuleGlobalsOn( ModuleGlobals);
-    
-    
-            
-            
-    
-            var aModule = { };
-            InitFromModuleConstants( aModule);
-            aModule._v_Type = "module";
-            aModule.ComponentName     = ComponentName;
-            aModule.ModuleName     = ModuleName;
-            aModule.ModulePackages = ModulePackages;
-            aModule.ModuleFullName = ModuleFullName;
-            aModule.ModuleVariations= ModuleVariations;
-            aModule.ModuleConstants = ModuleConstants;
-            aModule.ModuleGlobals   = ModuleGlobals;
-            aModule.InitFromModuleConstants  = InitFromModuleConstants;
-            aModule.InitFromModuleVariations = InitFromModuleVariations;
-            aModule.InitModuleGlobalsOn      = InitModuleGlobalsOn;
-            
-            
-            
-            
-            
-            var fgExceptionDetail = function( theException) {
-                if( !theException) {
-                    return null;
-                }
-                
-                
-                var anExceptionDetail = {
-                    exception: theException.toString()
-                };
-                
-                
-                var anExceptionTrace = theS_stacktraceSvce( { e: theException});
-                if( anExceptionTrace) {
-                    anExceptionDetail.trace = anExceptionTrace;
-                }
-                
-                var aRecord = theException._v_Record;
-                if( aRecord) {
-                    if( aRecord.fIdentifyingJSON) {
-                        aRecord = aRecord.fIdentifyingJSON();
-                    }
-                    else {
-                        if( aRecord.fAsLogObject) {
-                            aRecord = aRecord.fAsLogObject();
-                        }
-                    }
-                    if( aRecord) {
-                        anExceptionDetail.recex = aRecord;
-                    }
-                }
-                
-                if( this.LOGEXCEPTIONDETAILS) {
-                    console.log( "exception:" + anExceptionDetail.exception);
-                    console.log( anExceptionDetail.recex);
-                    console.log( anExceptionDetail.trace);
-                }
-                
-                anExceptionDetail.fIdentifyingJSON = function() {
-                    return anExceptionDetail;
-                };
-                
-                return anExceptionDetail;
-            };
-            if( fgExceptionDetail){}/* CQT */
-            aModule.fgExceptionDetail = fgExceptionDetail;
-    
-    
-    
-    
-    
-            return aModule;
+            return aService;
         };
-    
-    
-    
-    
+        
+        
+        
+        
+        /* ***************************************************************
+          Make sure that the module is built only once, and that the same instance is supplied anytime
+          the module is required, as i.e. to resolve a dependency for another module.
+          Attempt to retrieve a module with same name already registered in the typesregistry_svce singleton.
+          If no such module exists then build the module and register it in the typesregistry_svce singleton.
+        */
         var anExistingModule = null;
         if(    !( typeof theSS_typesregistry_svce === 'undefined')
             && ( typeof theSS_typesregistry_svce.fRegisteredModule === 'function')) {
             anExistingModule = theSS_typesregistry_svce.fRegisteredModule( ModuleFullName);
         }
         if( !anExistingModule) {
-        
+            
             var aModule = aMod_builder(
-                theSS_overrider_type,
-                theSS_stacktraceSvce
+                theSS_overrider_svce,
+                theSS_exceptiondetails_type
             );
-    
-            aModule.ModuleBuilder = aMod_builder;
-            aModule.ModuleDecompiler  = function() { aModule.ModuleSource = aMod_builder.toString()};
             
             anExistingModule = aModule;
-        
+            
             if(    !( typeof theSS_typesregistry_svce === 'undefined')
                 && ( typeof theSS_typesregistry_svce.fRegisterModule === 'function')) {
                 theSS_typesregistry_svce.fRegisterModule( ModuleFullName, aModule);
             }
         }
         
-    
+        
+        /* ***************************************************************
+         Return the module which was already built and registered in typesregistry_svce singleton, or just built.
+        */
         return anExistingModule;
     });
     
@@ -260,34 +116,34 @@ permissions and limitations under the Licence.
     
     
     
+    /* ***************************************************************
+      Define the module under various module definition libraries, all delegating in the same module definer function,
+      but each obtaining their own way any dependencies needed by this module.
+    */
     if( !( typeof angular === 'undefined') && angular.module) {
         // Angular (1.x)
         
-        
-        angular.module("exceptiondetails", [
-            "typesRegistry",
-            "modbootTypes",
-            "stacktrace"
-        ]).factory("ExceptionDetailsSvce",[
-            "TypesRegistrySvce",
-            "OverriderSvce",
-            "StacktraceSvce",
+        angular.module( ModulePackages).factory( ModuleName, [
+            "typesregistry_svce",
+            "overrider_svce",
+            "exceptiondetails_type",
             aMod_definer
         ]);
+        
     }
     else if ( !(typeof module === 'undefined') && module.exports) {
         // Node.js
         
         module.exports = (function() {
             
-            var aM_typesregistry   = require('../modboot/typesregistry');
-            var aM_overrider       = require('../modboot/overrider_svce');
-            var aM_stacktrace_svce = require('./stacktrace_svce');
-    
+            var aM_typesregistry  = require('../typesregistry/typesregistry_svce');
+            var aM_overrider_svce = require('../overrider/overrider_svce');
+            var aM_exceptiondetails_type   = require('./exceptiondetails_type');
+            
             return aMod_definer(
                 aM_typesregistry,
-                aM_overrider,
-                aM_stacktrace_svce
+                aM_overrider_svce,
+                aM_exceptiondetails_type
             );
         })();
         
@@ -295,34 +151,31 @@ permissions and limitations under the Licence.
     else if ( !(typeof define === 'undefined') && define.amd) {
         // AMD / RequireJS
         
-        define( "m_exceptiondetails_svce",
+        define("exceptiondetails_svce",
             [
-                "m_typesregistry_svce",
-                "m_overrider_svce",
-                "m_stacktrace_svce"
-            ],
-            aMod_definer
-            );
-    }
-    else if ( !(typeof nomod === 'undefined') && nomod.register) {
-        // nomod toy module definition, resolution and dependency injection
-    
-        nomod.register( ComponentName, ModulePackages, ModuleName,
-            [ /* theDependencies */
-                nomod.fComputeFullName( "prettytype", "typesregistry", "typesregistry_type"),
-                nomod.fComputeFullName( "prettytype", "modboot", "overrider_svce"),
-                nomod.fComputeFullName( "prettytype", "utils",   "stacktrace_svce")
+                "typesregistry_svce",
+                "overrider_svce",
+                "exceptiondetails_type"
             ],
             aMod_definer
         );
-    
+        
+    }
+    else if ( !(typeof nomod === 'undefined') && nomod.register) {
+        // nomod toy module definition, resolution and dependency injection
+        
+        nomod.register( ComponentName, ModulePackages, ModuleName,
+            [ /* theDependencies */
+                nomod.fComputeFullName( "prettytype", "typesregistry", "typesregistry_type"),
+                nomod.fComputeFullName( "prettytype", "overrider", "overrider_svce"),
+                nomod.fComputeFullName( "prettytype", "exceptionstack", "exceptiondetails_type")
+            ],
+            aMod_definer
+        );
+        
     }
     
-})();
-
-
-
-
+})(); /* Self-executing function launches the module definition machinery upon load of the javascript file */
 
 
 
