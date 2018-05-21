@@ -1,5 +1,5 @@
 /*
- * console_type.js
+ * stacktrace_type.js
  *
  * Created @author Antonio Carrasco Valero 201805210457
  *
@@ -31,15 +31,20 @@
  */
 
 
-'use strict';
+/* can not 'use strict';
+   because of arguments.callee in method run below
+ */
+
+'donotuse strict';
+
 
 (function () {
     
     var ComponentName  = "prettytype";
-    var ModuleName     = "console_type";
-    var ModulePackages = "console";
+    var ModuleName     = "stacktrace_type";
+    var ModulePackages = "exceptionstack";
     var ModuleFullName = ModulePackages + "/" + ModuleName;
-    var TypeName       = "Console";
+    var TypeName       = "Stacktrace";
     
     var aMod_definer = function( theSS_typesregistry_svce,
                                  theSS_overrider_type){
@@ -47,9 +52,9 @@
         var aMod_builder = function( theS_overrider_type) {
             
             if( typeof FG_logModLoads === 'function') { FG_logModLoads(ModuleFullName);}
-    
-    
-    
+            
+            
+            
             /* ***************************************************************
                Init here key-value pairs.
                The key values defined as Variations may be overriden by the overrider_svce singleton
@@ -68,13 +73,13 @@
                See about Constants in the coment of pgInitWithModuleConstants() below.
             */
             var pgInitWithModuleVariations = function( theToInit) {
-        
+                
                 if( !theToInit) {
                 }
             };
-    
-    
-    
+            
+            
+            
             /* ***************************************************************
                Just copy each key-value in ModuleVariations onto the supplied object.
                Used to fill the Module Constants object.
@@ -85,33 +90,33 @@
                 if( !theToInit) {
                     return;
                 }
-        
+                
                 for( var aGlobalName in ModuleVariations) {
                     if( ModuleVariations.hasOwnProperty( aGlobalName)) {
                         theToInit[ aGlobalName] = ModuleVariations[ aGlobalName];
                     }
                 }
             };
-    
-    
-    
-    
+            
+            
+            
+            
             /* ***************************************************************
                Holder of name-values in the Module which may be overriden by overrider_svce singleton,
                 and later copied into Constants.
             */
             var ModuleVariations = { };
             pgInitWithModuleVariations( ModuleVariations);
-    
+            
             /* ***************************************************************
                Override key-values in Variations by the overrider_svce singleton
                  with key values obtained from the command-line arguments or possibly Browser localStorage,
                  or by key-values in an "override" or a "custom" object .
             */
             theS_overrider_type.pOverrideModuleVariations( ModuleFullName, ModuleVariations);
-    
-    
-    
+            
+            
+            
             
             /* ***************************************************************
                Init here key-value pairs, considered constants - and therefore with an expected read-only life-cycle.
@@ -149,12 +154,7 @@
                     return;
                 }
     
-                theToInit.WRITETOCONSOLE          = true;
-                theToInit.COLLECTLOGS             = false;
-                theToInit.MAXCOLLECTEDLOGSLENGTH  = 16 * 1024 * 1024;
-                
-                theToInit.CONSOLEDEFAULTNAME = "Console_DefaultName";
-                
+                theToInit.STACKTRACEDEFAULTNAME = "Console_DefaultName";
             };
             
             
@@ -239,14 +239,14 @@
                 
               Invoked by ProtoFactory as the first step to produce an object fully able to serve as Prototype.
             */
-            var Console_ProtoInstancer = function() {
+            var Stacktrace_ProtoInstancer = function() {
                 
                 var aPrototype = {} /* Prototypical inheritance from NOTHING */;
                 
                 aPrototype._v_Kind                    = "prototype";
                 aPrototype._v_SuperPrototype          = null;
                 aPrototype._v_Type                    = TypeName;
-                aPrototype._v_Prototype_Console       = aPrototype;
+                aPrototype._v_Prototype_Stacktrace    = aPrototype;
                 /* Shall be filled below, at the end of the function enclosing this (aMod_builder), when aModule is defined */
                 aPrototype._v_Module                  = null;
                 
@@ -268,7 +268,7 @@
                     unless a value with same key has been set in intermediate prototypes or the accessed object.
               
               Write access:
-                On the prototype object which was supplied to this function Console_CreatePrototypeSlotsOn
+                On the prototype object which was supplied to this function Stacktrace_CreatePrototypeSlotsOn
                     this.<VariableName> = <new value> or this["<VariableName>"] = <new value>
                     The same identical newly set value or object reference shall shall be obtained from all the accesses
                     unless a value with same key has been set in intermediate prototypes or the accessed object.
@@ -291,7 +291,7 @@
                     
               Invoked by ProtoFactory as one of the steps to produce an object fully able to serve as Prototype.
             */
-            var Console_CreatePrototypeSlotsOn = function( theFrame) {
+            var Stacktrace_CreatePrototypeSlotsOn = function( theFrame) {
                 if( !theFrame) {
                 }
             };
@@ -319,17 +319,12 @@
               Invoked by Constructor and SuperPrototypeConstructor and as one of the steps to produce an object
                 fully able to serve as instance of this prototype, or as super-prototype for derived prototypes.
             */
-            var Console_CreateInstanceSlotsOn = function( theFrame) {
+            var Stacktrace_CreateInstanceSlotsOn = function( theFrame) {
                 if( !theFrame) {
                     return;
                 }
-                theFrame._v_Title                   = null;
-                theFrame._v_WriteToConsole          = null;
-                theFrame._v_CollectLogs             = null;
-                theFrame._v_MaxCollectedLogsLength  = null;
-                
-                theFrame._v_CollectedLogs           = null;
-                theFrame._v_CollectedLogsSize       = null;
+                theFrame._v_Title    = null;
+                theFrame.sourceCache = { };
             };
             
             
@@ -359,7 +354,7 @@
                 
               Invoked by ProtoFactory as the last step to produce an object fully able to serve as Prototype.
             */
-            var Console_ProtoDefinerOn = function( thePrototype) {
+            var Stacktrace_ProtoDefinerOn = function( thePrototype) {
                 
                 if( !thePrototype) {
                     return;
@@ -369,7 +364,7 @@
                 
                 var _pInit = function( theTitle) {
                     
-                    this._pInit_Console( theTitle);
+                    this._pInit_Stacktrace( theTitle);
                 };
                 if( _pInit){}/* CQT */
                 thePrototype._pInit = _pInit;
@@ -380,22 +375,16 @@
                 
                 
                 
-                var _pInit_Console = function( theTitle) {
+                var _pInit_Stacktrace = function( theTitle) {
                     
                     this._v_Title = theTitle;
                     if( !this._v_Title) {
-                        this._v_Title = this.CONSOLEDEFAULTNAME;
+                        this._v_Title = this.STACKTRACEDEFAULTNAME;
                     }
-    
-                    this._v_WriteToConsole          = this.WRITETOCONSOLE;
-                    this._v_CollectLogs             = this.COLLECTLOGS;
-                    this._v_MaxCollectedLogsLength  = this.MAXCOLLECTEDLOGSLENGTH;
-    
-                    this._v_CollectedLogs           = [ ];
-                    this._v_CollectedLogsSize       = 0;
+                    
                 };
-                if( _pInit_Console){}/* CQT */
-                thePrototype._pInit_Console = _pInit_Console;
+                if( _pInit_Stacktrace){}/* CQT */
+                thePrototype._pInit_Stacktrace = _pInit_Stacktrace;
                 
                 
                 
@@ -515,251 +504,583 @@
                 };
                 if( fToResultJSON){}/* CQT */
                 thePrototype.fToResultJSON = fToResultJSON;
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+              
     
     
-    
-    
-    
-    
-    
-    
-    
-    
-                var pSetWriteToConsole = function( theWriteToConsole) {
-        
-                    this._v_WriteToConsole = ( theWriteToConsole? true : false);
-        
+                var run = function(ex, mode) {
+                    
+                    ex = ex || this.createException();
+                    mode = mode || this.mode(ex);
+                    if (mode === 'other') {
+                        return this.other(arguments.callee);
+                    } else {
+                        return this[mode](ex);
+                    }
                 };
-                if( pSetWriteToConsole){}/* CQT */
-                thePrototype.pSetWriteToConsole = pSetWriteToConsole;
+                if( run){}/* CQT */
+                thePrototype.run = run;
     
     
     
+                var createException = function() {
+                    try {
+                        this.undef();
+                    } catch (e) {
+                        return e;
+                    }
+                };
+                if( createException){}/* CQT */
+                thePrototype.createException = createException;
     
-    
-    
-    
-                var pSetCollectLogs = function( theCollectLogs) {
+                
+                
+                
+                /**
+                 * Mode could differ for different exception, e.g.
+                 * exceptions in Chrome may or may not have arguments or stack.
+                 *
+                 * @return {String} mode of operation for the exception
+                 */
+                var mode = function(e) {
+                    if (e['arguments'] && e.stack) {
+                        return 'chrome';
+                    }
         
-                    if( theCollectLogs) {
-            
-                        this._v_CollectLogs = true;
-            
-                        if( !this._v_CollectedLogs) {
-                            this._v_CollectedLogs      = [ ];
-                            this._v_CollectedLogsSize  = 0;
+                    if (e.stack && e.sourceURL) {
+                        return 'safari';
+                    }
+        
+                    if (e.stack && e.number) {
+                        return 'ie';
+                    }
+        
+                    if (e.stack && e.fileName) {
+                        return 'firefox';
+                    }
+        
+                    if (e.message && e['opera#sourceloc']) {
+                        // e.message.indexOf("Backtrace:") > -1 -> opera9
+                        // 'opera#sourceloc' in e -> opera9, opera10a
+                        // !e.stacktrace -> opera9
+                        if (!e.stacktrace) {
+                            return 'opera9'; // use e.message
+                        }
+                        if (e.message.indexOf('\n') > -1 && e.message.split('\n').length > e.stacktrace.split('\n').length) {
+                            // e.message may have more stack entries than e.stacktrace
+                            return 'opera9'; // use e.message
+                        }
+                        return 'opera10a'; // use e.stacktrace
+                    }
+        
+                    if (e.message && e.stack && e.stacktrace) {
+                        // e.stacktrace && e.stack -> opera10b
+                        if (e.stacktrace.indexOf("called from line") < 0) {
+                            return 'opera10b'; // use e.stacktrace, format differs from 'opera10a'
+                        }
+                        // e.stacktrace && e.stack -> opera11
+                        return 'opera11'; // use e.stacktrace, format differs from 'opera10a', 'opera10b'
+                    }
+        
+                    if (e.stack && !e.fileName) {
+                        // Chrome 27 does not have e.arguments as earlier versions,
+                        // but still does not have e.fileName as Firefox
+                        return 'chrome';
+                    }
+        
+                    return 'other';
+                };
+                if( mode){}/* CQT */
+                thePrototype.mode = mode;
+    
+    
+    
+                /**
+                 * Given a context, function name, and callback function, overwrite it so that it calls
+                 * printStackTrace() first with a callback and then runs the rest of the body.
+                 *
+                 * @param {Object} context of execution (e.g. window)
+                 * @param {String} functionName to instrument
+                 * @param {Function} callback function to call with a stack trace on invocation
+                 */
+                var instrumentFunction = function(context, functionName, callback) {
+                    context = context || window;
+                    var original = context[functionName];
+                    context[functionName] = function instrumented() {
+                        callback.call(this, printStackTrace().slice(4));
+                        return context[functionName]._instrumented.apply(this, arguments);
+                    };
+                    context[functionName]._instrumented = original;
+                };
+                if( instrumentFunction){}/* CQT */
+                thePrototype.instrumentFunction = instrumentFunction;
+    
+    
+    
+    
+    
+                /**
+                 * Given a context and function name of a function that has been
+                 * instrumented, revert the function to it's original (non-instrumented)
+                 * state.
+                 *
+                 * @param {Object} context of execution (e.g. window)
+                 * @param {String} functionName to de-instrument
+                 */
+                var  deinstrumentFunction = function(context, functionName) {
+                    if (context[functionName].constructor === Function &&
+                        context[functionName]._instrumented &&
+                        context[functionName]._instrumented.constructor === Function) {
+                        context[functionName] = context[functionName]._instrumented;
+                    }
+                };
+                if( deinstrumentFunction){}/* CQT */
+                thePrototype.deinstrumentFunction = deinstrumentFunction;
+                
+                
+                
+                
+                /**
+                 * Given an Error object, return a formatted Array based on Chrome's stack string.
+                 *
+                 * @param e - Error object to inspect
+                 * @return Array<String> of function calls, files and line numbers
+                 */
+                var chrome = function(e) {
+                    return (e.stack + '\n')
+                        .replace(/^[\s\S]+?\s+at\s+/, ' at ') // remove message
+                        .replace(/^\s+(at eval )?at\s+/gm, '') // remove 'at' and indentation
+                        .replace(/^([^\(]+?)([\n$])/gm, '{anonymous}() ($1)$2')
+                        .replace(/^Object.<anonymous>\s*\(([^\)]+)\)/gm, '{anonymous}() ($1)')
+                        .replace(/^(.+) \((.+)\)$/gm, '$1@$2')
+                        .split('\n')
+                        .slice(0, -1);
+                };
+                if( chrome){}/* CQT */
+                thePrototype.chrome = chrome;
+    
+    
+    
+    
+    
+                /**
+                 * Given an Error object, return a formatted Array based on Safari's stack string.
+                 *
+                 * @param e - Error object to inspect
+                 * @return Array<String> of function calls, files and line numbers
+                 */
+                var safari = function(e) {
+                    return e.stack.replace(/\[native code\]\n/m, '')
+                        .replace(/^(?=\w+Error\:).*$\n/m, '')
+                        .replace(/^@/gm, '{anonymous}()@')
+                        .split('\n');
+                };
+                if( safari){}/* CQT */
+                thePrototype.safari = safari;
+    
+    
+    
+    
+    
+                /**
+                 * Given an Error object, return a formatted Array based on IE's stack string.
+                 *
+                 * @param e - Error object to inspect
+                 * @return Array<String> of function calls, files and line numbers
+                 */
+                var ie = function(e) {
+                    return e.stack
+                        .replace(/^\s*at\s+(.*)$/gm, '$1')
+                        .replace(/^Anonymous function\s+/gm, '{anonymous}() ')
+                        .replace(/^(.+)\s+\((.+)\)$/gm, '$1@$2')
+                        .split('\n')
+                        .slice(1);
+                };
+                if( ie){}/* CQT */
+                thePrototype.ie = ie;
+    
+    
+    
+    
+    
+                /**
+                 * Given an Error object, return a formatted Array based on Firefox's stack string.
+                 *
+                 * @param e - Error object to inspect
+                 * @return Array<String> of function calls, files and line numbers
+                 */
+                var firefox = function(e) {
+                    return e.stack.replace(/(?:\n@:0)?\s+$/m, '')
+                        .replace(/^(?:\((\S*)\))?@/gm, '{anonymous}($1)@')
+                        .split('\n');
+                };
+                if( firefox){}/* CQT */
+                thePrototype.firefox = firefox;
+    
+    
+    
+    
+    
+                var opera11 = function(e) {
+                    var ANON = '{anonymous}', lineRE = /^.*line (\d+), column (\d+)(?: in (.+))? in (\S+):$/;
+                    var lines = e.stacktrace.split('\n'), result = [];
+        
+                    for (var i = 0, len = lines.length; i < len; i += 2) {
+                        var match = lineRE.exec(lines[i]);
+                        if (match) {
+                            var location = match[4] + ':' + match[1] + ':' + match[2];
+                            var fnName = match[3] || "global code";
+                            fnName = fnName.replace(/<anonymous function: (\S+)>/, "$1").replace(/<anonymous function>/, ANON);
+                            result.push(fnName + '@' + location + ' -- ' + lines[i + 1].replace(/^\s+/, ''));
                         }
                     }
-                    else {
-                        this._v_CollectLogs        = false;
-                        this._v_CollectedLogs      = [ ];
-                        this._v_CollectedLogsSize  = 0;
-                    }
+        
+                    return result;
                 };
-                if( pSetCollectLogs){}/* CQT */
-                thePrototype.pSetCollectLogs = pSetCollectLogs;
+                if( opera11){}/* CQT */
+                thePrototype.opera11 = opera11;
     
     
     
     
     
-                var pSetMaxCollectedLogsLength = function( theMaxCollectedLogsLength) {
+                var opera10b = function(e) {
+                    // "<anonymous function: run>([arguments not available])@file://localhost/G:/js/stacktrace.js:27\n" +
+                    // "printStackTrace([arguments not available])@file://localhost/G:/js/stacktrace.js:18\n" +
+                    // "@file://localhost/G:/js/test/functional/testcase1.html:15"
+                    var lineRE = /^(.*)@(.+):(\d+)$/;
+                    var lines = e.stacktrace.split('\n'), result = [];
         
-                    this._v_MaxCollectedLogsLength = theMaxCollectedLogsLength;
-        
-                    this.pEnforceMaxCollectedLogsLength("");
-        
-                };
-                if( pSetMaxCollectedLogsLength){}/* CQT */
-                thePrototype.pSetMaxCollectedLogsLength = pSetMaxCollectedLogsLength;
-    
-    
-    
-    
-    
-    
-    
-    
-                var fCollectedLogs = function() {
-        
-                    return this._v_CollectedLogs;
-        
-                };
-                if( fCollectedLogs){}/* CQT */
-                thePrototype.fCollectedLogs = fCollectedLogs;
-    
-    
-    
-    
-    
-    
-                var fCollectedLogsCopy = function() {
-        
-                    if( !this._v_CollectedLogs) {
-                        return null;
-                    }
-        
-                    return this._v_CollectedLogs.slice();
-        
-                };
-                if( fCollectedLogsCopy){}/* CQT */
-                thePrototype.fCollectedLogsCopy = fCollectedLogsCopy;
-    
-    
-    
-    
-    
-    
-    
-                var log = function( theMessage) {
-        
-                    if( this._v_CollectLogs) {
-            
-                        if( !this._v_CollectedLogs) {
-                            this._v_CollectedLogs = [ ];
+                    for (var i = 0, len = lines.length; i < len; i++) {
+                        var match = lineRE.exec(lines[i]);
+                        if (match) {
+                            var fnName = match[1] ? (match[1] + '()') : "global code";
+                            result.push(fnName + '@' + match[2] + ':' + match[3]);
                         }
-            
-                        this._v_CollectedLogs.push( [ "log", theMessage]);
-    
-                        this.pEnforceMaxCollectedLogsLength( theMessage);
                     }
         
-        
-                    if( this._v_WriteToConsole) {
-            
-                        // console.log( theMessage);
-                    }
-        
+                    return result;
                 };
-                if( log){}/* CQT */
-                thePrototype.log = log;
+                if( opera10b){}/* CQT */
+                thePrototype.opera10b = opera10b;
     
     
     
     
     
-    
-    
-                var error = function( theMessage) {
+                /**
+                 * Given an Error object, return a formatted Array based on Opera 10's stacktrace string.
+                 *
+                 * @param e - Error object to inspect
+                 * @return Array<String> of function calls, files and line numbers
+                 */
+                var opera10a = function(e) {
+                    // "  Line 27 of linked script file://localhost/G:/js/stacktrace.js\n"
+                    // "  Line 11 of inline#1 script in file://localhost/G:/js/test/functional/testcase1.html: In function foo\n"
+                    var ANON = '{anonymous}', lineRE = /Line (\d+).*script (?:in )?(\S+)(?:: In function (\S+))?$/i;
+                    var lines = e.stacktrace.split('\n'), result = [];
         
-                    if( this._v_CollectLogs) {
-            
-                        if( !this._v_CollectedLogs) {
-                            this._v_CollectedLogs = [ ];
+                    for (var i = 0, len = lines.length; i < len; i += 2) {
+                        var match = lineRE.exec(lines[i]);
+                        if (match) {
+                            var fnName = match[3] || ANON;
+                            result.push(fnName + '()@' + match[2] + ':' + match[1] + ' -- ' + lines[i + 1].replace(/^\s+/, ''));
                         }
-            
-                        this._v_CollectedLogs.push( [ "error", theMessage]);
-    
-                        this.pEnforceMaxCollectedLogsLength( theMessage);
                     }
         
-        
-                    if( this._v_WriteToConsole) {
-            
-                        // console.error( theMessage);
-                    }
-        
+                    return result;
                 };
-                if( error){}/* CQT */
-                thePrototype.error = error;
+                if( opera10a){}/* CQT */
+                thePrototype.opera10a = opera10a;
     
     
     
     
     
-    
-    
-    
-                var info = function( theMessage) {
+                // Opera 7.x-9.2x only!
+                var opera9 = function(e) {
+                    // "  Line 43 of linked script file://localhost/G:/js/stacktrace.js\n"
+                    // "  Line 7 of inline#1 script in file://localhost/G:/js/test/functional/testcase1.html\n"
+                    var ANON = '{anonymous}', lineRE = /Line (\d+).*script (?:in )?(\S+)/i;
+                    var lines = e.message.split('\n'), result = [];
         
-                    if( this._v_CollectLogs) {
-            
-                        if( !this._v_CollectedLogs) {
-                            this._v_CollectedLogs = [ ];
+                    for (var i = 2, len = lines.length; i < len; i += 2) {
+                        var match = lineRE.exec(lines[i]);
+                        if (match) {
+                            result.push(ANON + '()@' + match[2] + ':' + match[1] + ' -- ' + lines[i + 1].replace(/^\s+/, ''));
                         }
-            
-                        this._v_CollectedLogs.push( [ "info", theMessage]);
-    
-                        this.pEnforceMaxCollectedLogsLength( theMessage);
                     }
         
-        
-                    if( this._v_WriteToConsole) {
-            
-                        // console.log( theMessage);
-                    }
-        
+                    return result;
                 };
-                if( info){}/* CQT */
-                thePrototype.info = info;
+                if( opera9){}/* CQT */
+                thePrototype.opera9 = opera9;
     
     
     
     
     
-    
-                var clear = function() {
-        
-                    this._v_CollectedLogs     = [ ];
-                    this._v_CollectedLogsSize = 0;
-        
-                    if( this._v_WriteToConsole) {
-                        console.clear();
-                    }
-        
-                };
-                if( clear){}/* CQT */
-                thePrototype.clear = clear;
-    
-    
-    
-    
-    
-    
-    
-    
-                var pEnforceMaxCollectedLogsLength = function( theMessage) {
-        
-                    if( !this._v_CollectLogs) {
-                        return;
-                    }
-        
-                    var aMessageLen = ( ( typeof theMessage === "string") ? theMessage.length : 0);
-                    if( aMessageLen){}/* CQT */
-        
-                    this._v_CollectedLogsSize += aMessageLen;
-        
-                    if( this._v_MaxCollectedLogsLength <= 0) {
-                        return;
-                    }
-        
-        
-                    while( true) {
-            
-                        if( this._v_CollectedLogsSize <= this._v_MaxCollectedLogsLength) {
-                            return;
+                // Safari 5-, IE 9-, and others
+                var other = function(curr) {
+                    var ANON = '{anonymous}', fnRE = /function(?:\s+([\w$]+))?\s*\(/, stack = [], fn, args, maxStackSize = 10;
+                    var slice = Array.prototype.slice;
+                    while (curr && stack.length < maxStackSize) {
+                        fn = fnRE.test(curr.toString()) ? RegExp.$1 || ANON : ANON;
+                        try {
+                            args = slice.call(curr['arguments'] || []);
+                        } catch (e) {
+                            args = ['Cannot access arguments: ' + e];
                         }
-            
-                        if( this._v_CollectLogs.length <= 1) {
-                            return;
+                        stack[stack.length] = fn + '(' + this.stringifyArguments(args) + ')';
+                        try {
+                            curr = curr.caller;
+                        } catch (e) {
+                            stack[stack.length] = 'Cannot access caller: ' + e;
+                            break;
                         }
-            
-                        var aRemovedKindAndMessage = this._v_CollectedLogs.shift();
-            
-                        var aRemovedMessage = aRemovedKindAndMessage[ 1];
-                        var aRemovedMessageLen = ( ( typeof aRemovedMessage === "string") ? aRemovedMessage.length : 0);
-                        if( aRemovedMessageLen){}/* CQT */
-            
-                        this._v_CollectedLogsSize -= aRemovedMessageLen;
                     }
-        
-        
+                    return stack;
                 };
-                if( pEnforceMaxCollectedLogsLength){}/* CQT */
-                thePrototype.pEnforceMaxCollectedLogsLength = pEnforceMaxCollectedLogsLength;
+                if( other){}/* CQT */
+                thePrototype.other = other;
     
     
     
+    
+    
+                /**
+                 * Given arguments array as a String, substituting type names for non-string types.
+                 *
+                 * @param {Arguments,Array} args
+                 * @return {String} stringified arguments
+                 */
+                var stringifyArguments = function(args) {
+                    var result = [];
+                    var slice = Array.prototype.slice;
+                    for (var i = 0; i < args.length; ++i) {
+                        var arg = args[i];
+                        if (arg === undefined) {
+                            result[i] = 'undefined';
+                        } else if (arg === null) {
+                            result[i] = 'null';
+                        } else if (arg.constructor) {
+                            // TODO constructor comparison does not work for iframes
+                            if (arg.constructor === Array) {
+                                if (arg.length < 3) {
+                                    result[i] = '[' + this.stringifyArguments(arg) + ']';
+                                } else {
+                                    result[i] = '[' + this.stringifyArguments(slice.call(arg, 0, 1)) + '...' + this.stringifyArguments(slice.call(arg, -1)) + ']';
+                                }
+                            } else if (arg.constructor === Object) {
+                                result[i] = '#object';
+                            } else if (arg.constructor === Function) {
+                                result[i] = '#function';
+                            } else if (arg.constructor === String) {
+                                result[i] = '"' + arg + '"';
+                            } else if (arg.constructor === Number) {
+                                result[i] = arg;
+                            } else {
+                                result[i] = '?';
+                            }
+                        }
+                    }
+                    return result.join(',');
+                };
+                if( stringifyArguments){}/* CQT */
+                thePrototype.stringifyArguments = stringifyArguments;
+    
+    
+    
+    
+    
+    
+    
+                /**
+                 * @return {String} the text from a given URL
+                 */
+                var ajax = function(url) {
+                    var req = this.createXMLHTTPObject();
+                    if (req) {
+                        try {
+                            req.open('GET', url, false);
+                            //req.overrideMimeType('text/plain');
+                            //req.overrideMimeType('text/javascript');
+                            req.send(null);
+                            //return req.status == 200 ? req.responseText : '';
+                            return req.responseText;
+                        } catch (e) {
+                        }
+                    }
+                    return '';
+                };
+                if( ajax){}/* CQT */
+                thePrototype.ajax = ajax;
+                
+                
+                
+    
+                /**
+                 * Try XHR methods in order and store XHR factory.
+                 *
+                 * @return {XMLHttpRequest} XHR function or equivalent
+                 */
+                var createXMLHTTPObject = function() {
+                    var xmlhttp, XMLHttpFactories = [
+                        function() {
+                            return new XMLHttpRequest();
+                        }, function() {
+                            return new ActiveXObject('Msxml2.XMLHTTP');
+                        }, function() {
+                            return new ActiveXObject('Msxml3.XMLHTTP');
+                        }, function() {
+                            return new ActiveXObject('Microsoft.XMLHTTP');
+                        }
+                    ];
+                    for (var i = 0; i < XMLHttpFactories.length; i++) {
+                        try {
+                            xmlhttp = XMLHttpFactories[i]();
+                            // Use memoization to cache the factory
+                            this.createXMLHTTPObject = XMLHttpFactories[i];
+                            return xmlhttp;
+                        } catch (e) {
+                        }
+                    }
+                };
+                if( createXMLHTTPObject){}/* CQT */
+                thePrototype.createXMLHTTPObject = createXMLHTTPObject;
+                
+                
+    
+                /**
+                 * Given a URL, check if it is in the same domain (so we can get the source
+                 * via Ajax).
+                 *
+                 * @param url {String} source url
+                 * @return {Boolean} False if we need a cross-domain request
+                 */
+                var isSameDomain = function(url) {
+                    return typeof location !== "undefined" && url.indexOf(location.hostname) !== -1; // location may not be defined, e.g. when running from nodejs.
+                };
+                if( isSameDomain){}/* CQT */
+                thePrototype.isSameDomain = isSameDomain;
+    
+    
+    
+    
+    
+                /**
+                 * Get source code from given URL if in the same domain.
+                 *
+                 * @param url {String} JS source URL
+                 * @return {Array} Array of source code lines
+                 */
+                var getSource = function(url) {
+                    // TODO reuse source from script tags?
+                    if (!(url in this.sourceCache)) {
+                        this.sourceCache[url] = this.ajax(url).split('\n');
+                    }
+                    return this.sourceCache[url];
+                };
+                if( getSource){}/* CQT */
+                thePrototype.getSource = getSource;
+    
+    
+    
+    
+    
+                var guessAnonymousFunctions = function(stack) {
+                    for (var i = 0; i < stack.length; ++i) {
+                        var reStack = /\{anonymous\}\(.*\)@(.*)/,
+                            reRef = /^(.*?)(?::(\d+))(?::(\d+))?(?: -- .+)?$/,
+                            frame = stack[i], ref = reStack.exec(frame);
+            
+                        if (ref) {
+                            var m = reRef.exec(ref[1]);
+                            if (m) { // If falsey, we did not get any file/line information
+                                var file = m[1], lineno = m[2], charno = m[3] || 0;
+                                if (file && this.isSameDomain(file) && lineno) {
+                                    var functionName = this.guessAnonymousFunction(file, lineno, charno);
+                                    stack[i] = frame.replace('{anonymous}', functionName);
+                                }
+                            }
+                        }
+                    }
+                    return stack;
+                };
+                if( guessAnonymousFunctions){}/* CQT */
+                thePrototype.guessAnonymousFunctions = guessAnonymousFunctions;
+    
+    
+    
+    
+    
+                var guessAnonymousFunction = function(url, lineNo, charNo) {
+                    var ret;
+                    try {
+                        ret = this.findFunctionName(this.getSource(url), lineNo);
+                    } catch (e) {
+                        ret = 'getSource failed with url: ' + url + ', exception: ' + e.toString();
+                    }
+                    return ret;
+                };
+                if( guessAnonymousFunction){}/* CQT */
+                thePrototype.guessAnonymousFunction = guessAnonymousFunction;
+    
+    
+    
+    
+    
+                var findFunctionName = function(source, lineNo) {
+                    // FIXME findFunctionName fails for compressed source
+                    // (more than one function on the same line)
+                    // function {name}({args}) m[1]=name m[2]=args
+                    var reFunctionDeclaration = /function\s+([^(]*?)\s*\(([^)]*)\)/;
+                    // {name} = function ({args}) TODO args capture
+                    // /['"]?([0-9A-Za-z_]+)['"]?\s*[:=]\s*function(?:[^(]*)/
+                    var reFunctionExpression = /['"]?([$_A-Za-z][$_A-Za-z0-9]*)['"]?\s*[:=]\s*function\b/;
+                    // {name} = eval()
+                    var reFunctionEvaluation = /['"]?([$_A-Za-z][$_A-Za-z0-9]*)['"]?\s*[:=]\s*(?:eval|new Function)\b/;
+                    // Walk backwards in the source lines until we find
+                    // the line which matches one of the patterns above
+                    var code = "", line, maxLines = Math.min(lineNo, 20), m, commentPos;
+                    for (var i = 0; i < maxLines; ++i) {
+                        // lineNo is 1-based, source[] is 0-based
+                        line = source[lineNo - i - 1];
+                        commentPos = line.indexOf('//');
+                        if (commentPos >= 0) {
+                            line = line.substr(0, commentPos);
+                        }
+                        // TODO check other types of comments? Commented code may lead to false positive
+                        if (line) {
+                            code = line + code;
+                            m = reFunctionExpression.exec(code);
+                            if (m && m[1]) {
+                                return m[1];
+                            }
+                            m = reFunctionDeclaration.exec(code);
+                            if (m && m[1]) {
+                                //return m[1] + "(" + (m[2] || "") + ")";
+                                return m[1];
+                            }
+                            m = reFunctionEvaluation.exec(code);
+                            if (m && m[1]) {
+                                return m[1];
+                            }
+                        }
+                    }
+                    return '(?)';
+                };
+                if( findFunctionName){}/* CQT */
+                thePrototype.findFunctionName = findFunctionName;
     
     
             };
@@ -774,10 +1095,10 @@
               Create object to serve as prototype,
                  with all slots for Constants (and Variations), prototype scoped properties and methods of the prototype.
             */
-            var Console_ProtoFactory = function() {
+            var Stacktrace_ProtoFactory = function() {
                 
                 /* Create object to serve as prototype */
-                var aPrototype = Console_ProtoInstancer();
+                var aPrototype = Stacktrace_ProtoInstancer();
                 
                 /* Fill the object to serve as prototype with key-values copied from ModuleConstants,
                     which also include those from ModuleVariations */
@@ -785,11 +1106,11 @@
                 
                 /* Create in the object to serve as prototype the slots for properties scoped to the prototype.
                     I.e. same read value shared among all the instances */
-                Console_CreatePrototypeSlotsOn( aPrototype);
+                Stacktrace_CreatePrototypeSlotsOn( aPrototype);
                 
                 /* Create in the object to serve as prototype the methods implemented by the prototype.
                    Nothing prevents, other than self-discipline, to create additional slots in the prototype during this ProtoDefinerOn function. */
-                Console_ProtoDefinerOn( aPrototype);
+                Stacktrace_ProtoDefinerOn( aPrototype);
                 
                 return aPrototype;
             };
@@ -801,7 +1122,7 @@
             /* ***************************************************************
               Object to serve as prototype
             */
-            var aConsole_Prototype = Console_ProtoFactory();
+            var aStacktrace_Prototype = Stacktrace_ProtoFactory();
             
             
             
@@ -817,17 +1138,17 @@
               See examples of recursive initialisation in modules
                 identifying / dumpingpolicy and recordingpolicy
             */
-            var Console_Constructor = function( theTitle) {
+            var Stacktrace_Constructor = function( theTitle) {
                 this._v_Kind      = "instance";
-                this._v_Prototype = aConsole_Prototype;
+                this._v_Prototype = aStacktrace_Prototype;
                 
                 /* Create in the object to serve as prototype the slots for properties scoped uniquely to the instance being created (this), if any */
-                Console_CreateInstanceSlotsOn( this);
+                Stacktrace_CreateInstanceSlotsOn( this);
                 
                 /* Fully initialise the instance, delegating in initialisers defined by super-prototypes, if any */
-                this._pInit_Console( theTitle);
+                this._pInit_Stacktrace( theTitle);
             };
-            Console_Constructor.prototype = aConsole_Prototype;
+            Stacktrace_Constructor.prototype = aStacktrace_Prototype;
             
             
             
@@ -847,17 +1168,17 @@
               See examples of deep sub-prototypes and recursive initialisation in modules
                 identifying / dumpingpolicy and recordingpolicy
             */
-            var Console_SuperPrototypeConstructor = function() {
+            var Stacktrace_SuperPrototypeConstructor = function() {
                 /* When actually used as prototype in the code in some other module,
-                    _v_Kind shall be assigned the value "prototype" as in this module Console_ProtoInstancer
+                    _v_Kind shall be assigned the value "prototype" as in this module Stacktrace_ProtoInstancer
                     if the author is following the patterns in this prettytype npm package, */
                 this._v_Kind      = "subprototype";
-                this._v_Prototype = aConsole_Prototype;
+                this._v_Prototype = aStacktrace_Prototype;
                 
                 /* Create in the object to serve as super-prototype the slots for properties scoped uniquely to the instance being created (this), if any */
-                Console_CreateInstanceSlotsOn( this);
+                Stacktrace_CreateInstanceSlotsOn( this);
             };
-            Console_SuperPrototypeConstructor.prototype = aConsole_Prototype;
+            Stacktrace_SuperPrototypeConstructor.prototype = aStacktrace_Prototype;
             
             
             
@@ -879,31 +1200,31 @@
                 "ModuleFullName":                          ModuleFullName,
                 "ModuleConstants":                         ModuleConstants,
                 "ModuleGlobals":                           ModuleGlobals,
-    
+                
                 "InitFromModuleVariations":                InitFromModuleVariations,
                 "InitFromModuleConstants":                 InitFromModuleConstants,
                 "InitModuleGlobalsOn":                     InitModuleGlobalsOn,
                 
                 "TypeName":                                TypeName,
                 
-                "Console_ProtoInstancer":                  Console_ProtoInstancer,
-                "Console_ProtoDefinerOn":                  Console_ProtoDefinerOn,
-                "Console_ProtoFactory":                    Console_ProtoFactory,
-                "Console_Constructor":                     Console_Constructor,
-                "Console_SuperPrototypeConstructor":       Console_SuperPrototypeConstructor,
-                "Console_CreatePrototypeSlotsOn":          Console_CreatePrototypeSlotsOn,
-                "Console_CreateInstanceSlotsOn":           Console_CreateInstanceSlotsOn,
+                "Stacktrace_ProtoInstancer":               Stacktrace_ProtoInstancer,
+                "Stacktrace_ProtoDefinerOn":               Stacktrace_ProtoDefinerOn,
+                "Stacktrace_ProtoFactory":                 Stacktrace_ProtoFactory,
+                "Stacktrace_Constructor":                  Stacktrace_Constructor,
+                "Stacktrace_SuperPrototypeConstructor":    Stacktrace_SuperPrototypeConstructor,
+                "Stacktrace_CreatePrototypeSlotsOn":       Stacktrace_CreatePrototypeSlotsOn,
+                "Stacktrace_CreateInstanceSlotsOn":        Stacktrace_CreateInstanceSlotsOn,
                 
-                "ProtoInstancer":                          Console_ProtoInstancer,
-                "ProtoDefinerOn":                          Console_ProtoDefinerOn,
-                "ProtoFactory":                            Console_ProtoFactory,
-                "Constructor":                             Console_Constructor,
-                "SuperPrototypeConstructor":               Console_SuperPrototypeConstructor,
-                "CreatePrototypeSlotsOn":                  Console_CreatePrototypeSlotsOn,
-                "CreateInstanceSlotsOn":                   Console_CreateInstanceSlotsOn,
+                "ProtoInstancer":                          Stacktrace_ProtoInstancer,
+                "ProtoDefinerOn":                          Stacktrace_ProtoDefinerOn,
+                "ProtoFactory":                            Stacktrace_ProtoFactory,
+                "Constructor":                             Stacktrace_Constructor,
+                "SuperPrototypeConstructor":               Stacktrace_SuperPrototypeConstructor,
+                "CreatePrototypeSlotsOn":                  Stacktrace_CreatePrototypeSlotsOn,
+                "CreateInstanceSlotsOn":                   Stacktrace_CreateInstanceSlotsOn,
                 
-                "Console_Prototype":                       aConsole_Prototype,
-                "Prototype":                               aConsole_Prototype
+                "Stacktrace_Prototype":                    aStacktrace_Prototype,
+                "Prototype":                               aStacktrace_Prototype
             };
             
             /* ***************************************************************
@@ -919,7 +1240,7 @@
               The prototype and its instances may access the module object and all its published members.
               The sub-prototypes and their instances may also reach this module through the _v_SuperPrototype chain.
             */
-            aConsole_Prototype._v_Module = aModule;
+            aStacktrace_Prototype._v_Module = aModule;
             
             
             
@@ -928,10 +1249,10 @@
             */
             return aModule;
         };
-    
-    
-    
-    
+        
+        
+        
+        
         /* ***************************************************************
           Make sure that the module is built only once, and that the same instance is supplied anytime
           the module is required, as i.e. to resolve a dependency for another module.
@@ -944,23 +1265,23 @@
             anExistingModule = theSS_typesregistry_svce.fRegisteredModule( ModuleFullName);
         }
         if( !anExistingModule) {
-        
+            
             var aModule = aMod_builder(
                 theSS_overrider_type
             );
-        
+            
             aModule.ModuleBuilder = aMod_builder;
             aModule.ModuleDecompiler  = function() { aModule.ModuleSource = aMod_builder.toString()};
-        
+            
             anExistingModule = aModule;
-        
+            
             if(    !( typeof theSS_typesregistry_svce === 'undefined')
                 && ( typeof theSS_typesregistry_svce.fRegisterModule === 'function')) {
                 theSS_typesregistry_svce.fRegisterModule( ModuleFullName, aModule);
             }
         }
-    
-    
+        
+        
         /* ***************************************************************
          Return the module which was already built and registered in typesregistry_svce singleton, or just built.
         */
@@ -1018,7 +1339,7 @@
         
         nomod.register( ComponentName, ModulePackages, ModuleName,
             [ /* theDependencies */
-                nomod.fComputeFullName( "prettytype", "typesregistry", "typesregistry_type"),
+                nomod.fComputeFullName( "prettytype", "typesregistry", "typesregistry_svce"),
                 nomod.fComputeFullName( "prettytype", "overrider", "overrider_svce")
             ],
             aMod_definer

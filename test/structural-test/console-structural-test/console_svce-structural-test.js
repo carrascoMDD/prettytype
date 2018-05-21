@@ -47,7 +47,6 @@ var aTest_spec = (function( theSS_console_svce) {
     
     describe( TestName, function () {
         
-        var aConsole_title = "ConsoleType-Title-test";
         var aM_console_svce = null;
         
         if( ( typeof beforeEach === 'function') && ( typeof module === 'function')  && ( typeof inject === 'function')) {
@@ -76,16 +75,25 @@ var aTest_spec = (function( theSS_console_svce) {
     
         it("Singleton is defined", function () {
             expect( aM_console_svce).not.toBeUndefined();
-            expect( aM_console_svce._v_Module).not.toBeNull( null);
         });
     
-    
+        
+        it("Singleton has module meta definitions", function () {
+            expect( aM_console_svce.ComponentName).toBe( "prettytype");
+            expect( aM_console_svce.ModuleName).toBe( "console_svce");
+            expect( aM_console_svce.ModulePackages).toBe( "console");
+            expect( aM_console_svce.ModuleFullName).toBe( "console/console_svce");
+            expect( aM_console_svce.SingletonName).toBe( "Console_Service");
+        });
+        
+        
         it("Singleton has meta definitions ", function () {
-            expect( aM_console_svce._v_Kind).toBe( "instance");
+            expect( aM_console_svce._v_Kind).toBe( "singleton");
             expect( aM_console_svce._v_Prototype).not.toBeUndefined();
             expect( aM_console_svce._v_SuperPrototype).toBe( null);
             expect( aM_console_svce._v_Type).toBe( "Console");
             expect( aM_console_svce._v_Prototype_Console).not.toBeUndefined();
+            expect( aM_console_svce._v_Module).not.toBeNull( null);
             expect( aM_console_svce._v_Module).not.toBeUndefined();
         });
     
@@ -181,6 +189,7 @@ var aTest_spec = (function( theSS_console_svce) {
     
     
         var someInstanceSlotNames = [
+            "_v_Title",
             "_v_WriteToConsole",
             "_v_CollectLogs",
             "_v_MaxCollectedLogsLength",

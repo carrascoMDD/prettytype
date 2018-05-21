@@ -43,6 +43,8 @@ var someKarmaConfFiles = [
     './src/eventkinds/eventkinds_common.js',
     './src/console/console_type.js',
     './src/console/console_svce.js',
+    "./src/exceptionstack/stacktrace_type.js",
+    "./src/exceptionstack/stacktrace_svce.js",
 
     
     './test/structural-test/typesregistry-structural-test/typesregistry_type-structural-test.js',
@@ -53,7 +55,8 @@ var someKarmaConfFiles = [
     './test/structural-test/eventkinds-structural-test/eventkinds_common-structural-test.js',
     './test/structural-test/console-structural-test/console_type-structural-test.js',
     './test/structural-test/console-structural-test/console_svce-structural-test.js',
-
+    './test/structural-test/exceptionstack-structural-test/stacktrace_type-structural-test.js',
+    './test/structural-test/exceptionstack-structural-test/stacktrace_svce-structural-test.js'
 
 ];
 

@@ -286,6 +286,7 @@ var aTest_spec = (function( theSS_overrider_type) {
     
     
         var someInstanceSlotNames = [
+            "_v_Title",
             "_v_Overriderarguments",
             "_v_Custom",
             "_v_Overrides"

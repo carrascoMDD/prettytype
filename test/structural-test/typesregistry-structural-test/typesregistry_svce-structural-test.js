@@ -75,16 +75,25 @@ var aTest_spec = (function( theSS_typeregistry_svce) {
     
         it("Singleton is defined", function () {
             expect( aM_typesregistry_scve).not.toBeUndefined();
-            expect( aM_typesregistry_scve._v_Module).not.toBeNull( null);
         });
     
     
+        it("Singleton has module meta definitions", function () {
+            expect( aM_typesregistry_scve.ComponentName).toBe( "prettytype");
+            expect( aM_typesregistry_scve.ModuleName).toBe( "typesregistry_svce");
+            expect( aM_typesregistry_scve.ModulePackages).toBe( "typesregistry");
+            expect( aM_typesregistry_scve.ModuleFullName).toBe( "typesregistry/typesregistry_svce");
+            expect( aM_typesregistry_scve.SingletonName).toBe( "TypesRegistrySvce");
+        });
+
+
         it("Singleton has meta definitions ", function () {
-            expect( aM_typesregistry_scve._v_Kind).toBe( "instance");
+            expect( aM_typesregistry_scve._v_Kind).toBe( "singleton");
             expect( aM_typesregistry_scve._v_Prototype).not.toBeUndefined();
             expect( aM_typesregistry_scve._v_SuperPrototype).toBe( null);
             expect( aM_typesregistry_scve._v_Type).toBe( "TypesRegistry");
             expect( aM_typesregistry_scve._v_Prototype_TypesRegistry).not.toBeUndefined();
+            expect( aM_typesregistry_scve._v_Module).not.toBeNull( null);
             expect( aM_typesregistry_scve._v_Module).not.toBeUndefined();
         });
     

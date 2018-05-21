@@ -62,11 +62,13 @@ permissions and limitations under the Licence.
         /* ***************************************************************
           Because this singleton becomes a registered module, fill in metainformation usually found in modules
         */
+        aService._v_Kind        = "singleton";
         aService.ComponentName  = ComponentName;
         aService.ModuleName     = ModuleName;
         aService.ModulePackages = ModulePackages;
         aService.ModuleFullName = ModuleFullName;
-        
+        aService.SingletonName  = SingletonName;
+    
         /* Register, just for completion of the types registry, the types registry module, which did not register because no singleton could be available */
         aService.fRegisterModule( ModuleFullName, theSS_TypesregistryType);
         

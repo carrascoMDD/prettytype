@@ -1,7 +1,7 @@
 /*
- * console_type-structural-test.js
+ * stacktrace_type-structural-test.js
  *
- * Created @author Antonio Carrasco Valero 201805210512
+ * Created @author Antonio Carrasco Valero 201805212249
  *
  *
  ***************************************************************************
@@ -31,15 +31,15 @@ permissions and limitations under the Licence.
  */
 
 
-/// <reference path="src/common/console_type.js"/>
+/// <reference path="src/common/stacktrace_type.js"/>
 "use strict";
 
 
-var aTest_spec = (function( theSS_console_type) {
+var aTest_spec = (function( theSS_stacktrace_type) {
     
     var ComponentName    = "prettytype-test";
-    var ModuleName     = "console_type-structural-test";
-    var ModulePackages = "test/structural-test/console-structural-test";
+    var ModuleName     = "stacktrace_type-structural-test";
+    var ModulePackages = "test/structural-test/exceptionstack-structural-test";
     var ModuleFullName = ModulePackages + "/" + ModuleName;
     var TestName       = ModuleName + "_" + ModulePackages + "_" + ComponentName + "_test";
     
@@ -47,26 +47,26 @@ var aTest_spec = (function( theSS_console_type) {
     
     describe( TestName, function () {
         
-        var aM_console_type = null;
+        var aM_stacktrace_type = null;
         
         if( ( typeof beforeEach === 'function') && ( typeof module === 'function')  && ( typeof inject === 'function')) {
             // Karma for Angular (1.x)
-            beforeEach( module( "console"));
+            beforeEach( module( "exceptionstack"));
             
-            beforeEach( inject(function( _console_type_) {
-                aM_console_type = _console_type_;
+            beforeEach( inject(function( _stacktrace_type_) {
+                aM_stacktrace_type = _stacktrace_type_;
             }));
         }
         else if ( !(typeof module === 'undefined') && module.exports) {
             // Node.js
-            aM_console_type = require('../../../src/console/console_type');
+            aM_stacktrace_type = require('../../../src/exceptionstack/stacktrace_type');
         }
         else if ( !(typeof define === 'undefined') && define.amd) {
             // AMD / RequireJS
-            aM_console_type = theSS_console_type;
+            aM_stacktrace_type = theSS_stacktrace_type;
         }
         else if ( !(typeof nomod === 'undefined') && nomod.register) {
-            aM_console_type = nomod.resolve( nomod.fComputeFullName( "prettytype", "console", "console_type"));
+            aM_stacktrace_type = nomod.resolve( nomod.fComputeFullName( "prettytype", "exceptionstack", "stacktrace_type"));
         }
         
         
@@ -75,16 +75,16 @@ var aTest_spec = (function( theSS_console_type) {
         
         
         it("Module is defined", function () {
-            expect( aM_console_type).not.toBeUndefined();
+            expect( aM_stacktrace_type).not.toBeUndefined();
         });
         
         
         it("Has module meta definitions", function () {
-            expect( aM_console_type._v_Kind).toBe( "module");
-            expect( aM_console_type.ComponentName).toBe( "prettytype");
-            expect( aM_console_type.ModuleName).toBe( "console_type");
-            expect( aM_console_type.ModulePackages).toBe( "console");
-            expect( aM_console_type.ModuleFullName).toBe( "console/console_type");
+            expect( aM_stacktrace_type._v_Kind).toBe( "module");
+            expect( aM_stacktrace_type.ComponentName).toBe( "prettytype");
+            expect( aM_stacktrace_type.ModuleName).toBe( "stacktrace_type");
+            expect( aM_stacktrace_type.ModulePackages).toBe( "exceptionstack");
+            expect( aM_stacktrace_type.ModuleFullName).toBe( "exceptionstack/stacktrace_type");
         });
         
         
@@ -107,7 +107,7 @@ var aTest_spec = (function( theSS_console_type) {
                 (function() {
                     var aGeneralFunctionName_here = aGeneralFunctionName;
                     it("Module exposes general definition function " + aGeneralFunctionName_here, function () {
-                        var aGeneralFunction = aM_console_type[ aGeneralFunctionName_here];
+                        var aGeneralFunction = aM_stacktrace_type[ aGeneralFunctionName_here];
                         expect( typeof aGeneralFunction).toBe( "function");
                     });
                 })()
@@ -116,13 +116,13 @@ var aTest_spec = (function( theSS_console_type) {
         
         
         var someSpecificFunctionNames = [
-            "Console_ProtoInstancer",
-            "Console_ProtoDefinerOn",
-            "Console_ProtoFactory",
-            "Console_Constructor",
-            "Console_SuperPrototypeConstructor",
-            "Console_CreatePrototypeSlotsOn",
-            "Console_CreateInstanceSlotsOn"
+            "Stacktrace_ProtoInstancer",
+            "Stacktrace_ProtoDefinerOn",
+            "Stacktrace_ProtoFactory",
+            "Stacktrace_Constructor",
+            "Stacktrace_SuperPrototypeConstructor",
+            "Stacktrace_CreatePrototypeSlotsOn",
+            "Stacktrace_CreateInstanceSlotsOn"
         ];
         var aNumSpecificFunctionNames = someSpecificFunctionNames.length;
         for( var aSpecificFunctionNameIdx=0; aSpecificFunctionNameIdx < aNumSpecificFunctionNames; aSpecificFunctionNameIdx++) {
@@ -131,7 +131,7 @@ var aTest_spec = (function( theSS_console_type) {
                 (function() {
                     var aSpecificFunctionName_here = aSpecificFunctionName;
                     it("Module exposes specific definition function " + aSpecificFunctionName_here, function () {
-                        var aSpecificFunction = aM_console_type[ aSpecificFunctionName_here];
+                        var aSpecificFunction = aM_stacktrace_type[ aSpecificFunctionName_here];
                         expect( typeof aSpecificFunction).toBe( "function");
                     });
                 })()
@@ -140,10 +140,7 @@ var aTest_spec = (function( theSS_console_type) {
         
         
         var someConstantNames = [
-            "WRITETOCONSOLE",
-            "COLLECTLOGS",
-            "MAXCOLLECTEDLOGSLENGTH",
-            "CONSOLEDEFAULTNAME"
+            "STACKTRACEDEFAULTNAME"
         ];
         var aNumConstantNames = someConstantNames.length;
         for( var aModuleConstantNameIdx=0; aModuleConstantNameIdx < aNumConstantNames; aModuleConstantNameIdx++) {
@@ -152,7 +149,7 @@ var aTest_spec = (function( theSS_console_type) {
                 (function() {
                     var aModuleConstantName_here = aModuleConstantName;
                     it("Module exposes constant " + aModuleConstantName_here, function () {
-                        var aModuleConstant = aM_console_type[ aModuleConstantName_here];
+                        var aModuleConstant = aM_stacktrace_type[ aModuleConstantName_here];
                         expect( aModuleConstant).not.toBeUndefined();
                     });
                 })()
@@ -162,7 +159,7 @@ var aTest_spec = (function( theSS_console_type) {
         
         var somePrototypeNames = [
             "Prototype",
-            "Console_Prototype"
+            "Stacktrace_Prototype"
         ];
         var aNumPrototypeNames = somePrototypeNames.length;
         for( var aPrototypeNameIdx=0; aPrototypeNameIdx < aNumPrototypeNames; aPrototypeNameIdx++) {
@@ -171,7 +168,7 @@ var aTest_spec = (function( theSS_console_type) {
                 (function() {
                     var aPrototypeName_here = aPrototypeName;
                     it("Module exposes prototype object with name " + aPrototypeName_here, function () {
-                        var anPrototype = aM_console_type[ aPrototypeName_here];
+                        var anPrototype = aM_stacktrace_type[ aPrototypeName_here];
                         expect( anPrototype).not.toBeUndefined();
                         expect( anPrototype).not.toBeNull( null);
                     });
@@ -181,19 +178,19 @@ var aTest_spec = (function( theSS_console_type) {
         
         
         it("Has same prototype object under generic and specific names", function () {
-            expect( aM_console_type.Prototype).toBe( aM_console_type.Console_Prototype);
+            expect( aM_stacktrace_type.Prototype).toBe( aM_stacktrace_type.Stacktrace_Prototype);
         });
         
         
         
         it("Prototype has meta definitions", function () {
-            var aPrototype = aM_console_type.Prototype;
+            var aPrototype = aM_stacktrace_type.Prototype;
             
             expect( aPrototype._v_Kind).toBe( "prototype");
             expect( aPrototype._v_SuperPrototype).toBe( null);
-            expect( aPrototype._v_Type).toBe( "Console");
-            expect( aPrototype._v_Prototype_Console).toBe( aPrototype);
-            expect( aPrototype._v_Module).toBe( aM_console_type);
+            expect( aPrototype._v_Type).toBe( "Stacktrace");
+            expect( aPrototype._v_Prototype_Stacktrace).toBe( aPrototype);
+            expect( aPrototype._v_Module).toBe( aM_stacktrace_type);
         });
         
         
@@ -203,7 +200,7 @@ var aTest_spec = (function( theSS_console_type) {
                 (function() {
                     var aPrototypeConstantName_here = aPrototypeConstantName;
                     it("Prototype also has module constant named " + aPrototypeConstantName_here, function () {
-                        var aPrototype = aM_console_type.Prototype;
+                        var aPrototype = aM_stacktrace_type.Prototype;
                         var aPrototypeConstant = aPrototype[ aPrototypeConstantName_here];
                         expect( aPrototypeConstant).not.toBeUndefined();
                     });
@@ -229,7 +226,7 @@ var aTest_spec = (function( theSS_console_type) {
                     var aPrototypeGeneralFunctionName_here = aPrototypeGeneralFunctionName;
                     
                     it("Prototype has general function " + aPrototypeGeneralFunctionName_here + " defined", function () {
-                        var aPrototype = aM_console_type.Prototype;
+                        var aPrototype = aM_stacktrace_type.Prototype;
                         var aPrototypeGeneralFunction = aPrototype[ aPrototypeGeneralFunctionName_here];
                         expect( typeof aPrototypeGeneralFunction).toBe( "function");
                     });
@@ -248,7 +245,7 @@ var aTest_spec = (function( theSS_console_type) {
                 (function() {
                     var aPrototypeSlotName_here = aPrototypeSlotName;
                     it("Prototype has slot with name " + aPrototypeSlotName_here, function () {
-                        var aPrototype = aM_console_type.Prototype;
+                        var aPrototype = aM_stacktrace_type.Prototype;
                         var anPrototypeSlot = aPrototype[ aPrototypeSlotName_here];
                         expect( anPrototypeSlot).not.toBeUndefined();
                     });
@@ -258,16 +255,28 @@ var aTest_spec = (function( theSS_console_type) {
         
         
         var somePrototypeSpecificFunctionNames = [
-            "_pInit_Console",
-            "log",
-            "info",
-            "error",
-            "clear",
-            "pSetWriteToConsole",
-            "pSetCollectLogs",
-            "pSetMaxCollectedLogsLength",
-            "fCollectedLogs",
-            "fCollectedLogsCopy"
+            "_pInit_Stacktrace",
+            "createException",
+            "mode",
+            "instrumentFunction",
+            "deinstrumentFunction",
+            "chrome",
+            "safari",
+            "ie",
+            "firefox",
+            "opera11",
+            "opera10b",
+            "opera10a",
+            "opera9",
+            "other",
+            "stringifyArguments",
+            "ajax",
+            "createXMLHTTPObject",
+            "isSameDomain",
+            "getSource",
+            "guessAnonymousFunctions",
+            "guessAnonymousFunction",
+            "findFunctionName"
         ];
         var aNumPrototypeSpecificFunctionNames = somePrototypeSpecificFunctionNames.length;
         for( var aPrototypeSpecificFunctionNameIdx=0; aPrototypeSpecificFunctionNameIdx < aNumPrototypeSpecificFunctionNames; aPrototypeSpecificFunctionNameIdx++) {
@@ -276,7 +285,7 @@ var aTest_spec = (function( theSS_console_type) {
                 (function() {
                     var aPrototypeSpecificFunctionName_here = aPrototypeSpecificFunctionName;
                     it("Prototype has specific function " + aPrototypeSpecificFunctionName_here + " defined", function () {
-                        var aPrototype = aM_console_type.Prototype;
+                        var aPrototype = aM_stacktrace_type.Prototype;
                         var aPrototypeSpecificFunction = aPrototype[ aPrototypeSpecificFunctionName_here];
                         expect( typeof aPrototypeSpecificFunction).toBe( "function");
                     });
@@ -287,11 +296,7 @@ var aTest_spec = (function( theSS_console_type) {
         
         var someInstanceSlotNames = [
             "_v_Title",
-            "_v_WriteToConsole",
-            "_v_CollectLogs",
-            "_v_MaxCollectedLogsLength",
-            "_v_CollectedLogs",
-            "_v_CollectedLogsSize"
+            "sourceCache"
         ];
         var aNumInstanceSlotNames = someInstanceSlotNames.length;
         for( var aInstanceSlotNameIdx=0; aInstanceSlotNameIdx < aNumInstanceSlotNames; aInstanceSlotNameIdx++) {
@@ -300,7 +305,7 @@ var aTest_spec = (function( theSS_console_type) {
                 (function() {
                     var aInstanceSlotName_here = aInstanceSlotName;
                     it("Instance has slot with name " + aInstanceSlotName_here, function () {
-                        var anInstance = new aM_console_type.Console_Constructor( "test_instance__someInstanceSlotNames__" + TestName);
+                        var anInstance = new aM_stacktrace_type.Stacktrace_Constructor( "test_instance__someInstanceSlotNames__" + TestName);
                         var anInstanceSlot = anInstance[ aInstanceSlotName_here];
                         expect( anInstanceSlot).not.toBeUndefined();
                     });
@@ -309,16 +314,14 @@ var aTest_spec = (function( theSS_console_type) {
         }
         
         
-        
-        
     });
 });
 
 if ( (typeof define === 'function') && define.amd) {
     // AMD / RequireJS
-    define( "console_type_structural_test",
+    define( "stacktrace_type_structural_test",
         [
-            "console_type"
+            "stacktrace_type"
         ],
         aTest_spec
     );

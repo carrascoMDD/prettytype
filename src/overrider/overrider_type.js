@@ -264,7 +264,7 @@ permissions and limitations under the Licence.
                 if( !theFrame) {
                     return;
                 }
-    
+                theFrame._v_Title  = null;
                 theFrame._v_Overriderarguments = null;
                 theFrame._v_Custom = null;
                 theFrame._v_Overrides = null;

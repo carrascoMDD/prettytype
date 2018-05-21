@@ -1625,7 +1625,7 @@ permissions and limitations under the Licence.
     
         nomod.register( ComponentName, ModulePackages, ModuleName,
             [ /* theDependencies */
-                nomod.fComputeFullName( "prettytype", "typesregistry", "typesregistry_type"),
+                nomod.fComputeFullName( "prettytype", "typesregistry", "typesregistry_svce"),
                 nomod.fComputeFullName( "prettytype", "modboot", "overrider_svce")
             ],
             aMod_definer

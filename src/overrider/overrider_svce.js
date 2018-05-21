@@ -60,10 +60,12 @@
             /* ***************************************************************
                Because this singleton becomes a registered module, fill in metainformation usually found in modules
             */
+            aService._v_Kind        = "singleton";
             aService.ComponentName  = ComponentName;
             aService.ModuleName     = ModuleName;
             aService.ModulePackages = ModulePackages;
             aService.ModuleFullName = ModuleFullName;
+            aService.SingletonName  = SingletonName;
     
             /* ***************************************************************
               Return the instantiated service singleton as the module object.

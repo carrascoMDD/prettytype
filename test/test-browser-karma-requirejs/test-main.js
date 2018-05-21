@@ -50,8 +50,9 @@ requirejs.config({
         "overrider_svce_structural_test",
         "eventkinds_common_structural_test",
         "console_type_structural_test",
-        "console_svce_structural_test"
-
+        "console_svce_structural_test",
+        "stacktrace_type_structural_test",
+        "stacktrace_svce_structural_test"
 
     ],
     
@@ -65,7 +66,9 @@ requirejs.config({
     
         'eventkinds_common_structural_test':                     './test/structural-test/eventkinds-structural-test/eventkinds_common-structural-test',
         'console_type_structural_test':                          './test/structural-test/console-structural-test/console_type-structural-test',
-        'console_svce_structural_test':                          './test/structural-test/console-structural-test/console_svce-structural-test'
+        'console_svce_structural_test':                          './test/structural-test/console-structural-test/console_svce-structural-test',
+        'stacktrace_type_structural_test':                       './test/structural-test/exceptionstack-structural-test/stacktrace_type-structural-test',
+        'stacktrace_svce_structural_test':                       './test/structural-test/exceptionstack-structural-test/stacktrace_svce-structural-test'
     },
 
     // start test run, once Require.js is done loading scripts

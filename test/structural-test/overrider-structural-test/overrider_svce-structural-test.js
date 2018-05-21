@@ -77,17 +77,24 @@ var aTest_spec = (function( theSS_overrider_svce) {
     
         it("Singleton is defined", function () {
             expect( aM_overrider_svce).not.toBeUndefined();
-            expect( aM_overrider_svce._v_Module).not.toBeNull( null);
         });
     
+        it("Singleton has module meta definitions", function () {
+            expect( aM_overrider_svce.ComponentName).toBe( "prettytype");
+            expect( aM_overrider_svce.ModuleName).toBe( "overrider_svce");
+            expect( aM_overrider_svce.ModulePackages).toBe( "overrider");
+            expect( aM_overrider_svce.ModuleFullName).toBe( "overrider/overrider_svce");
+            expect( aM_overrider_svce.SingletonName).toBe( "Overrider_Service");
+        });
     
         it("Singleton has meta definitions ", function () {
-            expect( aM_overrider_svce._v_Kind).toBe( "instance");
+            expect( aM_overrider_svce._v_Kind).toBe( "singleton");
             expect( aM_overrider_svce._v_Prototype).not.toBeUndefined();
             expect( aM_overrider_svce._v_SuperPrototype).toBe( null);
             expect( aM_overrider_svce._v_Type).toBe( "Overrider");
             expect( aM_overrider_svce._v_Prototype_Overrider).not.toBeUndefined();
             expect( aM_overrider_svce._v_Module).not.toBeUndefined();
+            expect( aM_overrider_svce._v_Module).not.toBeNull( null);
         });
     
     
@@ -177,6 +184,7 @@ var aTest_spec = (function( theSS_overrider_svce) {
     
     
         var someInstanceSlotNames = [
+            "_v_Title",
             "_v_Overriderarguments",
             "_v_Custom",
             "_v_Overrides"
