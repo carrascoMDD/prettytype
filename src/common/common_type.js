@@ -362,7 +362,7 @@ permissions and limitations under the Licence.
                     return;
                 }
                 theFrame._v_Identifier = null;
-                theFrame._v_Common   = null;
+                theFrame._v_Recorder   = null;
                 theFrame._v_Id    = null;
                 theFrame._v_Title = null;
                 theFrame._v_OwnRecords = null;
@@ -403,9 +403,9 @@ permissions and limitations under the Licence.
     
                 
                 
-                var _pInit = function( theTitle, theIdentifier, theCommon) {
+                var _pInit = function( theTitle, theIdentifier, theRecorder) {
                     
-                    this._pInit_Common( theTitle, theIdentifier, theCommon);
+                    this._pInit_Common( theTitle, theIdentifier, theRecorder);
                 };
                 if( _pInit){}/* CQT */
                 thePrototype._pInit = _pInit;
@@ -430,7 +430,7 @@ permissions and limitations under the Licence.
                 
                 
                 
-                var _pInit_Common = function( theTitle, theIdentifier, theCommon) {
+                var _pInit_Common = function( theTitle, theIdentifier, theRecorder) {
                     
                     this._v_Prototype = thePrototype;
                     this._v_Type      = this._v_Prototype._v_Type;
@@ -441,9 +441,9 @@ permissions and limitations under the Licence.
                         this._v_Identifier = theS_identifier_svce;
                     }
                     
-                    this._v_Common   = theCommon;
-                    if( !this._v_Common) {
-                        this._v_Common = theS_recorder_svce;
+                    this._v_Recorder   = theRecorder;
+                    if( !this._v_Recorder) {
+                        this._v_Recorder = theS_recorder_svce;
                     }
                     
                     if( this._v_Identifier) {
@@ -470,7 +470,7 @@ permissions and limitations under the Licence.
     
                 var pRelease = function() {
                     this._v_Identifier = null;
-                    this._v_Common   = null;
+                    this._v_Recorder   = null;
                     this._v_Id    = null;
                     this._v_Title = null;
                     this._v_OwnRecords = null;
@@ -580,7 +580,7 @@ permissions and limitations under the Licence.
                 
                 
                 
-                var fToResultJSON = function( theCommonObjects, theAlready) {
+                var fToResultJSON = function( theRecorderObjects, theAlready) {
                     if( !( theAlready == null)) {
                         if( ( typeof theAlready.fAlready === "function") && theAlready.fAlready( this)){
                             return this.fIdentifyingJSON();
@@ -664,11 +664,11 @@ permissions and limitations under the Licence.
                 
                 var fRecord = function( theMethodName, theEventKind, theData, theReason, theDetail) {
                     
-                    if( this._v_Common == null) {
+                    if( this._v_Recorder == null) {
                         return null;
                     }
                     
-                    var aRecord = this._v_Common.fCreateAndRegisterRecord( this, theMethodName, theEventKind, theData, theReason, theDetail);
+                    var aRecord = this._v_Recorder.fCreateAndRegisterRecord( this, theMethodName, theEventKind, theData, theReason, theDetail);
                     
                     if( this.KEEPOWNRECORDS) {
                         this._v_OwnRecords.push( aRecord);
@@ -695,12 +695,12 @@ permissions and limitations under the Licence.
                         return;
                     }
                     
-                    if( !this._v_Common) {
+                    if( !this._v_Recorder) {
                         return;
                     }
                     
                     
-                    this._v_Common.pLogRecord( theRecord);
+                    this._v_Recorder.pLogRecord( theRecord);
                     
                 };
                 if( pLogRecord){}/* CQT */

@@ -45,7 +45,7 @@ var aTest_spec = (function( theSS_identifier_svce,
     
     var ComponentName    = "prettytype-test";
     var ModuleName     = "common_type-structural-test";
-    var ModulePackages = "test/structural-test/recording-structural-test";
+    var ModulePackages = "test/structural-test/common-structural-test";
     var ModuleFullName = ModulePackages + "/" + ModuleName;
     var TestName       = ModuleName + "_" + ModulePackages + "_" + ComponentName + "_test";
     
@@ -305,8 +305,7 @@ var aTest_spec = (function( theSS_identifier_svce,
         
         var someInstanceSlotNames = [
             "_v_Identifier",
-            "_v_Identifier",
-            "_v_Common",
+            "_v_Recorder",
             "_v_Id",
             "_v_Title",
             "_v_OwnRecords"
@@ -320,7 +319,8 @@ var aTest_spec = (function( theSS_identifier_svce,
                     it("Instance has slot with name " + aInstanceSlotName_here, function () {
                         var anInstance = new aM_common_type.Common_Constructor(
                             "test_instance__someInstanceSlotNames__" + TestName,
-                            aM_identifier_svce);
+                            aM_identifier_svce,
+                            aM_recorder_svce);
                         var anInstanceSlot = anInstance[ aInstanceSlotName_here];
                         expect( anInstanceSlot).not.toBeUndefined();
                     });
