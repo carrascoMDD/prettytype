@@ -49,6 +49,8 @@ var someKarmaConfFiles = [
     "./src/identifying/identifier_svce.js",
     "./src/recording/record_type.js",
     "./src/recording/dumpingpolicy_type.js",
+    "./src/recording/dumpingpolicy_filterkinds_type.js",
+    "./src/recording/dumpingpolicy_triggerkinds_type.js",
     "./src/recording/recordingpolicy_type.js",
     "./src/recording/recorder_type.js",
 
@@ -68,10 +70,10 @@ var someKarmaConfFiles = [
     "./test/structural-test/identifying-structural-test/identifier_svce-structural-test.js",
     "./test/structural-test/recording-structural-test/record_type-structural-test.js",
     "./test/structural-test/recording-structural-test/dumpingpolicy_type-structural-test.js",
+    "./test/structural-test/recording-structural-test/dumpingpolicy_filterkinds_type-structural-test.js",
+    "./test/structural-test/recording-structural-test/dumpingpolicy_triggerkinds_type-structural-test.js",
     "./test/structural-test/recording-structural-test/recordingpolicy_type-structural-test.js",
     "./test/structural-test/recording-structural-test/recorder_type-structural-test.js"
-
-
 ];
 
 

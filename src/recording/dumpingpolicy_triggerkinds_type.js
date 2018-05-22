@@ -41,11 +41,11 @@
     var TypeName       = "DumpingPolicyTriggerKinds";
     
     var aMod_definer = function( theSS_typesregistry_svce,
-                                 theSS_overrider_type,
+                                 theSS_overrider_svce,
                                  theSS_dumpingpolicy_filterkinds_type,
                                  theSS_eventkinds_common) {
         
-        var aMod_builder = function( theS_overrider_type,
+        var aMod_builder = function( theS_overrider_svce,
                                      theS_dumpingpolicy_filterkinds_type,
                                      theS_eventkinds_common) {
             
@@ -122,7 +122,7 @@
                  with key values obtained from the command-line arguments or possibly Browser localStorage,
                  or by key-values in an "override" or a "custom" object .
             */
-            theS_overrider_type.pOverrideModuleVariations( ModuleFullName, ModuleVariations);
+            theS_overrider_svce.pOverrideModuleVariations( ModuleFullName, ModuleVariations);
     
     
     
@@ -169,7 +169,7 @@
                 
                 
                 
-                theToInit.DUMPINGPOLICYFILTERKINDS_DEFAULTTITLE = "DumpingPolicyTriggerKindsDefaultName";
+                theToInit.DUMPINGPOLICYTRIGGERKINDS_DEFAULTTITLE = "DumpingPolicyTriggerKindsDefaultName";
                 
                 
                 
@@ -437,7 +437,7 @@
                 
                 var _fTitleDefault = function( ) {
                     
-                    return this.DUMPINGPOLICYFILTERKINDS_DEFAULTTITLE;
+                    return this.DUMPINGPOLICYTRIGGERKINDS_DEFAULTTITLE;
                 };
                 if( _fTitleDefault){}/* CQT */
                 thePrototype._fTitleDefault = _fTitleDefault;
@@ -1066,7 +1066,7 @@
         
             var aModule = aMod_builder(
                 theSS_overrider_svce,
-                theSS_dumpingpolicy_type,
+                theSS_dumpingpolicy_filterkinds_type,
                 theSS_eventkinds_common
             );
         
@@ -1102,7 +1102,8 @@
         
         angular.module( ModulePackages).factory( ModuleName, [
             "typesregistry_svce",
-            "dumpingpolicy_type",
+            "overrider_svce",
+            "dumpingpolicy_filterkinds_type",
             "eventkinds_common",
             aMod_definer
         ]);
@@ -1115,13 +1116,13 @@
             
             var aM_typesregistry_svce = require('../typesregistry/typesregistry_svce');
             var aM_overrider_svce     = require('../overrider/overrider_svce');
-            var aM_dumpingpolicy_type = require('../recording/dumpingpolicy_type');
+            var aM_dumpingpolicy_filterkinds_type = require('../recording/dumpingpolicy_filterkinds_type');
             var aM_eventkinds_common  = require('../eventkinds/eventkinds_common');
             
             return aMod_definer(
                 aM_typesregistry_svce,
                 aM_overrider_svce,
-                aM_dumpingpolicy_type,
+                aM_dumpingpolicy_filterkinds_type,
                 aM_eventkinds_common
             );
         })();

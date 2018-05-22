@@ -34,7 +34,6 @@ permissions and limitations under the Licence.
 
 
 
-
 /// <reference path="src/recording/dumpingpolicy_triggerkinds_ng_type.js"/>
 "use strict";
 
@@ -46,312 +45,290 @@ var aTest_spec = (function( theSS_identifier_svce,
     
     var ComponentName    = "prettytype-test";
     var ModuleName     = "dumpingpolicy_triggerkinds_type-structural-test";
-    var ModulePackages = "test/structural-test/identifying-structural-test";
+    var ModulePackages = "test/structural-test/dumpingpolicy-structural-test";
     var ModuleFullName = ModulePackages + "/" + ModuleName;
+    var TestName       = ModuleName + "_" + ModulePackages + "_" + ComponentName + "_test";
     
     if( typeof FG_logModLoads === 'function') { FG_logModLoads(ModuleFullName);}
     
-    describe( ModuleName + " " + ModulePackages + " " + ComponentName, function () {
-        
-        var aDumpingPolicyTriggerKinds_title = "DumpingPolicyTriggerKinds-Title-test";
+    describe( TestName, function () {
         
         var aM_identifier_svce = null;
-        
         var aM_dumpingpolicy_triggerkinds_type = null;
-        var aDumpingPolicyTriggerKinds       = null;
         
         if( ( typeof beforeEach === 'function') && ( typeof module === 'function')  && ( typeof inject === 'function')) {
             // Karma for Angular (1.x)
-            beforeEach( module( 'typesRegistry', 'modbootTypes', 'identifyingTypes'));
+            beforeEach( module( "identifying", "recording"));
             
-            beforeEach( inject(function( _IdentifierSvce_, _DumpingPolicyTriggerKindsType_) {
-                aM_identifier_svce      = _IdentifierSvce_;
-                aM_dumpingpolicy_triggerkinds_type = _DumpingPolicyTriggerKindsType_;
-                aDumpingPolicyTriggerKinds = new aM_dumpingpolicy_triggerkinds_type.DumpingPolicyTriggerKinds_Constructor( aDumpingPolicyTriggerKinds_title, aM_identifier_svce, null /* theRecorder its absence should not affect this structure test */);
+            beforeEach( inject(function( _identifier_svce_, _dumpingpolicy_triggerkinds_type_) {
+                aM_identifier_svce = _identifier_svce_;
+                aM_dumpingpolicy_triggerkinds_type = _dumpingpolicy_triggerkinds_type_;
             }));
         }
         else if ( !(typeof module === 'undefined') && module.exports) {
             // Node.js
-            aM_identifier_svce     = require('../../../src/identifying/identifier_svce');
-            aM_dumpingpolicy_triggerkinds_type = require('../../../src/identifying/dumpingpolicy_triggerkinds_type');
-            aDumpingPolicyTriggerKinds = new aM_dumpingpolicy_triggerkinds_type.DumpingPolicyTriggerKinds_Constructor( aDumpingPolicyTriggerKinds_title, aM_identifier_svce, null /* theRecorder its absence should not affect this structure test */);
+            aM_identifier_svce = require('../../../src/identifying/identifier_svce');
+            aM_dumpingpolicy_triggerkinds_type = require('../../../src/recording/dumpingpolicy_triggerkinds_type');
         }
         else if ( !(typeof define === 'undefined') && define.amd) {
             // AMD / RequireJS
-            aM_identifier_svce    = theSS_identifier_svce;
+            aM_identifier_svce = theSS_identifier_svce;
             aM_dumpingpolicy_triggerkinds_type = theSS_dumpingpolicy_triggerkinds_type;
-            aDumpingPolicyTriggerKinds = new aM_dumpingpolicy_triggerkinds_type.DumpingPolicyTriggerKinds_Constructor( aDumpingPolicyTriggerKinds_title, aM_identifier_svce, null /* theRecorder its absence should not affect this structure test */);
         }
         else if ( !(typeof nomod === 'undefined') && nomod.register) {
-            aM_identifier_svce = nomod.resolve( nomod.fComputeFullName( "prettytype", "identifying", "identifier_svce"));
-            aM_dumpingpolicy_triggerkinds_type = nomod.resolve( nomod.fComputeFullName( "prettytype", "identifying", "dumpingpolicy_triggerkinds_type"));
-            aDumpingPolicyTriggerKinds = new aM_dumpingpolicy_triggerkinds_type.DumpingPolicyTriggerKinds_Constructor( aDumpingPolicyTriggerKinds_title, aM_identifier_svce, null /* theRecorder its absence should not affect this structure test */);
+            aM_identifier_svce      = nomod.resolve( nomod.fComputeFullName( "prettytype", "identifying", "identifier_svce"));
+            aM_dumpingpolicy_triggerkinds_type = nomod.resolve( nomod.fComputeFullName( "prettytype", "recording", "dumpingpolicy_triggerkinds_type"));
         }
         
         
         
         
-        it("Has module defined", function () {
-            expect( aDumpingPolicyTriggerKinds._v_Module).not.toBeUndefined();
+        
+        
+        it("Module is defined", function () {
+            expect( aM_dumpingpolicy_triggerkinds_type).not.toBeUndefined();
         });
-    
-        it("Has module not null", function () {
-            expect( aDumpingPolicyTriggerKinds._v_Module).not.toBeNull( null);
+        
+        
+        it("Has module meta definitions", function () {
+            expect( aM_dumpingpolicy_triggerkinds_type._v_Kind).toBe( "module");
+            expect( aM_dumpingpolicy_triggerkinds_type.ComponentName).toBe( "prettytype");
+            expect( aM_dumpingpolicy_triggerkinds_type.ModuleName).toBe( "dumpingpolicy_triggerkinds_type");
+            expect( aM_dumpingpolicy_triggerkinds_type.ModulePackages).toBe( "recording");
+            expect( aM_dumpingpolicy_triggerkinds_type.ModuleFullName).toBe( "recording/dumpingpolicy_triggerkinds_type");
         });
-    
-        it("Has module ModuleName dumpingpolicy_triggerkinds_type", function () {
-            expect( aDumpingPolicyTriggerKinds._v_Module.ModuleName).toBe( "dumpingpolicy_triggerkinds_type");
-        });
-    
-        it("Has module ModulePackages identifying", function () {
-            expect( aDumpingPolicyTriggerKinds._v_Module.ModulePackages).toBe( "identifying");
-        });
-    
-        it("Has module ModuleFullName identifying.dumpingpolicy_triggerkinds_type", function () {
-            expect( aDumpingPolicyTriggerKinds._v_Module.ModuleFullName).toBe( "identifying/dumpingpolicy_triggerkinds_type");
-        });
-    
-        it("Has module DumpingPolicyTriggerKinds_Prototype defined", function () {
-            expect( aDumpingPolicyTriggerKinds._v_Module.DumpingPolicyTriggerKinds_Prototype).not.toBeUndefined();
-        });
-    
-        it("Has module DumpingPolicyTriggerKinds_Prototype not null", function () {
-            expect( aDumpingPolicyTriggerKinds._v_Module.DumpingPolicyTriggerKinds_Prototype).not.toBeNull( null);
-        });
-    
-        it("Has module DumpingPolicyTriggerKinds_Constructor defined", function () {
-            expect( aDumpingPolicyTriggerKinds._v_Module.DumpingPolicyTriggerKinds_Constructor).not.toBeUndefined();
-        });
-    
-        it("Has module DumpingPolicyTriggerKinds_Constructor not null", function () {
-            expect( aDumpingPolicyTriggerKinds._v_Module.DumpingPolicyTriggerKinds_Constructor).not.toBeNull( null);
-        });
-    
-        it("Has module DumpingPolicyTriggerKinds_SuperPrototypeConstructor defined", function () {
-            expect( aDumpingPolicyTriggerKinds._v_Module.DumpingPolicyTriggerKinds_SuperPrototypeConstructor).not.toBeUndefined();
-        });
-    
-        it("Has module DumpingPolicyTriggerKinds_SuperPrototypeConstructor not null", function () {
-            expect( aDumpingPolicyTriggerKinds._v_Module.DumpingPolicyTriggerKinds_SuperPrototypeConstructor).not.toBeNull( null);
-        });
-    
-    
-    
-        it("Has _v_Prototype defined", function () {
-            expect( aDumpingPolicyTriggerKinds._v_Prototype).not.toBeUndefined();
-        });
-    
-        it("Has _v_Prototype module DumpingPolicyTriggerKinds_Prototype", function () {
-            expect( aDumpingPolicyTriggerKinds._v_Prototype).toBe( aDumpingPolicyTriggerKinds._v_Module.DumpingPolicyTriggerKinds_Prototype);
-        });
-    
-        it("Has _v_Prototype_DumpingPolicyTriggerKinds defined", function () {
-            expect( aDumpingPolicyTriggerKinds._v_Prototype_DumpingPolicyTriggerKinds).not.toBeUndefined();
-        });
-    
-        it("Has _v_Prototype_DumpingPolicyTriggerKinds module DumpingPolicyTriggerKinds_Prototype", function () {
-            expect( aDumpingPolicyTriggerKinds._v_Prototype).toBe( aDumpingPolicyTriggerKinds._v_Module.DumpingPolicyTriggerKinds_Prototype);
-        });
-    
-    
-    
-        it("Has _v_Type DumpingPolicyTriggerKinds", function () {
-            expect( aDumpingPolicyTriggerKinds._v_Type).toBe( "DumpingPolicyTriggerKinds");
-        });
-    
-        it("Has title DumpingPolicyTriggerKinds_DefaultName", function () {
-            expect( aDumpingPolicyTriggerKinds._v_Title).toBe( aDumpingPolicyTriggerKinds_title);
-        });
-    
-    
-    
-        it("Has fFullTypeNameString defined", function () {
-            expect( aDumpingPolicyTriggerKinds.fFullTypeNameString).not.toBeUndefined();
-        });
-    
-        it("Has fFullTypeNameString typeof function", function () {
-            expect( typeof aDumpingPolicyTriggerKinds.fFullTypeNameString).toBe( "function");
-        });
-    
-    
-    
-    
-        it("Has fIdentifyingJSON defined", function () {
-            expect( aDumpingPolicyTriggerKinds.fIdentifyingJSON).not.toBeUndefined();
-        });
-    
-        it("Has fIdentifyingJSON typeof function", function () {
-            expect( typeof aDumpingPolicyTriggerKinds.fIdentifyingJSON).toBe( "function");
-        });
-    
-        it("Has fIdentifyingJSON() not null", function () {
-            expect( aDumpingPolicyTriggerKinds.fIdentifyingJSON()).not.toBeNull();
-        });
-    
-        it("Has fIdentifyingJSON() type _v_Type", function () {
-            expect( aDumpingPolicyTriggerKinds.fIdentifyingJSON().type).toBe( aDumpingPolicyTriggerKinds._v_Type);
-        });
-    
-        it("Has fIdentifyingJSON() id _v_Id", function () {
-            expect( aDumpingPolicyTriggerKinds.fIdentifyingJSON().id).toBe( aDumpingPolicyTriggerKinds._v_Id);
-        });
-    
-    
-    
-    
-        it("Has fIdentifyingString defined", function () {
-            expect( aDumpingPolicyTriggerKinds.fIdentifyingString).not.toBeUndefined();
-        });
-    
-        it("Has fIdentifyingString typeof function", function () {
-            expect( typeof aDumpingPolicyTriggerKinds.fIdentifyingString).toBe( "function");
-        });
-    
-        it("Has fIdentifyingString() not null", function () {
-            expect( aDumpingPolicyTriggerKinds.fIdentifyingString()).not.toBeNull();
-        });
-    
-        it("Has fIdentifyingString() JSON.stringify( fIdentifyingJSON())", function () {
-            expect( aDumpingPolicyTriggerKinds.fIdentifyingString()).toBe( JSON.stringify( aDumpingPolicyTriggerKinds.fIdentifyingJSON()));
-        });
-    
-    
-    
-    
-    
-        it("Has fIdentifyingWithTitleJSON defined", function () {
-            expect( aDumpingPolicyTriggerKinds.fIdentifyingWithTitleJSON).not.toBeUndefined();
-        });
-    
-        it("Has fIdentifyingWithTitleJSON typeof function", function () {
-            expect( typeof aDumpingPolicyTriggerKinds.fIdentifyingWithTitleJSON).toBe( "function");
-        });
-    
-        it("Has fIdentifyingWithTitleJSON() not null", function () {
-            expect( aDumpingPolicyTriggerKinds.fIdentifyingWithTitleJSON()).not.toBeNull();
-        });
-    
-        it("Has fIdentifyingWithTitleJSON() type _v_Type", function () {
-            expect( aDumpingPolicyTriggerKinds.fIdentifyingWithTitleJSON().type).toBe( aDumpingPolicyTriggerKinds._v_Type);
-        });
-    
-        it("Has fIdentifyingWithTitleJSON() id _v_Id", function () {
-            expect( aDumpingPolicyTriggerKinds.fIdentifyingWithTitleJSON().id).toBe( aDumpingPolicyTriggerKinds._v_Id);
-        });
-    
-        it("Has fIdentifyingWithTitleJSON() id _v_Title", function () {
-            expect( aDumpingPolicyTriggerKinds.fIdentifyingWithTitleJSON().title).toBe( aDumpingPolicyTriggerKinds._v_Title);
-        });
-    
-    
-    
-    
-    
-    
-        it("Has fIdentifyingWithTitleString defined", function () {
-            expect( aDumpingPolicyTriggerKinds.fIdentifyingWithTitleString).not.toBeUndefined();
-        });
-    
-        it("Has fIdentifyingWithTitleString typeof function", function () {
-            expect( typeof aDumpingPolicyTriggerKinds.fIdentifyingWithTitleString).toBe( "function");
-        });
-    
-        it("Has fIdentifyingWithTitleString() not null", function () {
-            expect( aDumpingPolicyTriggerKinds.fIdentifyingWithTitleString()).not.toBeNull();
-        });
-    
-        it("Has fIdentifyingWithTitleString() JSON.stringify( fIdentifyingJSON())", function () {
-            expect( aDumpingPolicyTriggerKinds.fIdentifyingWithTitleString()).toBe( JSON.stringify( aDumpingPolicyTriggerKinds.fIdentifyingWithTitleJSON()));
-        });
-    
-    
-    
-    
-        it("Has fToResultJSON defined", function () {
-            expect( aDumpingPolicyTriggerKinds.fToResultJSON).not.toBeUndefined();
-        });
-    
-        it("Has fToResultJSON typeof function", function () {
-            expect( typeof aDumpingPolicyTriggerKinds.fToResultJSON).toBe( "function");
-        });
-    
-        it("Has fToResultJSON()not null", function () {
-            expect( aDumpingPolicyTriggerKinds.fToResultJSON()).not.toBeNull();
-        });
-    
-    
-        it("Has fToResultJSON() type _v_Type", function () {
-            expect( aDumpingPolicyTriggerKinds.fToResultJSON().type).toBe( aDumpingPolicyTriggerKinds._v_Type);
-        });
-    
-        it("Has fToResultJSON() id _v_Id", function () {
-            expect( aDumpingPolicyTriggerKinds.fToResultJSON().id).toBe( aDumpingPolicyTriggerKinds._v_Id);
-        });
-    
-        it("Has fToResultJSON() id _v_Title", function () {
-            expect( aDumpingPolicyTriggerKinds.fToResultJSON().title).toBe( aDumpingPolicyTriggerKinds._v_Title);
-        });
-    
-    
-    
-    
-    
-        var someFunctionNames = [
-            "fConsoleService",
-            "pDumpRecord",
-            "pSetMayDumpRecords",
-            "fMayDumpRecords",
-            "fMustDumpRecord",
-            "pRelease"
-        ].concat( [
-            "fEventKindsNotForConsole",
-            "fSetEventKindsNotForConsole",
-            "fFewerEventKindsNotForConsole",
-            "fMoreEventKindsNotForConsole",
-            "fSetEventKindsNotForConsole_inPrototype",
-            "fFewerEventKindsNotForConsole_inPrototype",
-            "fMoreEventKindsNotForConsole_inPrototype"
-        ]).concat( [
-            "fSetEventKindsTriggeringDump",
-            "fFewerEventKindsTriggeringDump",
-            "fMoreEventKindsTriggeringDump",
-            "fSetEventKindsTriggeringDump_inPrototype",
-            "fFewerEventKindsTriggeringDump_inPrototype",
-            "fMoreEventKindsTriggeringDump_inPrototype",
-            "fRecordTriggersDump",
-            "fEventKindsTriggeringDump"
-        ]);
-    
-        var aNumFunctionNames = someFunctionNames.length;
-        for( var aFunctionNameIdx=0; aFunctionNameIdx < aNumFunctionNames; aFunctionNameIdx++) {
-            var aFunctionName = someFunctionNames[ aFunctionNameIdx];
-            if( aFunctionName) {
+        
+        
+        var someGeneralFunctionNames = [
+            "InitFromModuleVariations",
+            "InitFromModuleConstants",
+            "InitModuleGlobalsOn",
+            "ProtoInstancer",
+            "ProtoDefinerOn",
+            "ProtoFactory",
+            "Constructor",
+            "SuperPrototypeConstructor",
+            "CreatePrototypeSlotsOn",
+            "CreateInstanceSlotsOn"
+        ];
+        var aNumGeneralFunctionNames = someGeneralFunctionNames.length;
+        for( var aGeneralFunctionNameIdx=0; aGeneralFunctionNameIdx < aNumGeneralFunctionNames; aGeneralFunctionNameIdx++) {
+            var aGeneralFunctionName = someGeneralFunctionNames[ aGeneralFunctionNameIdx];
+            if( aGeneralFunctionName) {
                 (function() {
-                    var aFunctionName_here = aFunctionName;
-                
-                    it("Has function " + aFunctionName_here + " defined", function () {
-                        var aFunction = aDumpingPolicyTriggerKinds[ aFunctionName_here];
-                        
-                        expect( typeof aFunction).toBe( "function");
+                    var aGeneralFunctionName_here = aGeneralFunctionName;
+                    it("Module exposes general definition function " + aGeneralFunctionName_here, function () {
+                        var aGeneralFunction = aM_dumpingpolicy_triggerkinds_type[ aGeneralFunctionName_here];
+                        expect( typeof aGeneralFunction).toBe( "function");
                     });
                 })()
             }
         }
-    
-    
+        
+        
+        var someSpecificFunctionNames = [
+            "DumpingPolicyTriggerKinds_ProtoInstancer",
+            "DumpingPolicyTriggerKinds_ProtoDefinerOn",
+            "DumpingPolicyTriggerKinds_ProtoFactory",
+            "DumpingPolicyTriggerKinds_Constructor",
+            "DumpingPolicyTriggerKinds_SuperPrototypeConstructor",
+            "DumpingPolicyTriggerKinds_CreatePrototypeSlotsOn",
+            "DumpingPolicyTriggerKinds_CreateInstanceSlotsOn"
+        ];
+        var aNumSpecificFunctionNames = someSpecificFunctionNames.length;
+        for( var aSpecificFunctionNameIdx=0; aSpecificFunctionNameIdx < aNumSpecificFunctionNames; aSpecificFunctionNameIdx++) {
+            var aSpecificFunctionName = someSpecificFunctionNames[ aSpecificFunctionNameIdx];
+            if( aSpecificFunctionName) {
+                (function() {
+                    var aSpecificFunctionName_here = aSpecificFunctionName;
+                    it("Module exposes specific definition function " + aSpecificFunctionName_here, function () {
+                        var aSpecificFunction = aM_dumpingpolicy_triggerkinds_type[ aSpecificFunctionName_here];
+                        expect( typeof aSpecificFunction).toBe( "function");
+                    });
+                })()
+            }
+        }
+        
+        
+        var someConstantNames = [
+            "DUMPINGPOLICYTRIGGERKINDS_DEFAULTTITLE",
+            "LOGCHANGESTOEVENTKINDSTRIGGERINGDUMP",
+            "EVENTSSETTRIGGERINGDUMP",
+            "EVENTKINDS_TRIGGERINGDUMP"
+        ];
+        var aNumConstantNames = someConstantNames.length;
+        for( var aModuleConstantNameIdx=0; aModuleConstantNameIdx < aNumConstantNames; aModuleConstantNameIdx++) {
+            var aModuleConstantName = someConstantNames[ aModuleConstantNameIdx];
+            if( aModuleConstantName) {
+                (function() {
+                    var aModuleConstantName_here = aModuleConstantName;
+                    it("Module exposes constant " + aModuleConstantName_here, function () {
+                        var aModuleConstant = aM_dumpingpolicy_triggerkinds_type[ aModuleConstantName_here];
+                        expect( aModuleConstant).not.toBeUndefined();
+                    });
+                })()
+            }
+        }
+        
+        
+        var somePrototypeNames = [
+            "Prototype",
+            "DumpingPolicyTriggerKinds_Prototype"
+        ];
+        var aNumPrototypeNames = somePrototypeNames.length;
+        for( var aPrototypeNameIdx=0; aPrototypeNameIdx < aNumPrototypeNames; aPrototypeNameIdx++) {
+            var aPrototypeName = somePrototypeNames[ aPrototypeNameIdx];
+            if( aPrototypeName) {
+                (function() {
+                    var aPrototypeName_here = aPrototypeName;
+                    it("Module exposes prototype object with name " + aPrototypeName_here, function () {
+                        var anPrototype = aM_dumpingpolicy_triggerkinds_type[ aPrototypeName_here];
+                        expect( anPrototype).not.toBeUndefined();
+                        expect( anPrototype).not.toBeNull( null);
+                    });
+                })()
+            }
+        }
+        
+        
+        it("Has same prototype object under generic and specific names", function () {
+            expect( aM_dumpingpolicy_triggerkinds_type.Prototype).toBe( aM_dumpingpolicy_triggerkinds_type.DumpingPolicyTriggerKinds_Prototype);
+        });
+        
+        
+        
+        it("Prototype has meta definitions", function () {
+            var aPrototype = aM_dumpingpolicy_triggerkinds_type.Prototype;
+            
+            expect( aPrototype._v_Kind).toBe( "prototype");
+            expect( aPrototype._v_SuperPrototype).toBe( null);
+            expect( aPrototype._v_Type).toBe( "DumpingPolicyTriggerKinds");
+            expect( aPrototype._v_Prototype_DumpingPolicyTriggerKinds).toBe( aPrototype);
+            expect( aPrototype._v_Module).toBe( aM_dumpingpolicy_triggerkinds_type);
+        });
+        
+        
+        for( var aPrototypeConstantNameIdx=0; aPrototypeConstantNameIdx < aNumConstantNames; aPrototypeConstantNameIdx++) {
+            var aPrototypeConstantName = someConstantNames[ aPrototypeConstantNameIdx];
+            if( aPrototypeConstantName) {
+                (function() {
+                    var aPrototypeConstantName_here = aPrototypeConstantName;
+                    it("Prototype also has module constant named " + aPrototypeConstantName_here, function () {
+                        var aPrototype = aM_dumpingpolicy_triggerkinds_type.Prototype;
+                        var aPrototypeConstant = aPrototype[ aPrototypeConstantName_here];
+                        expect( aPrototypeConstant).not.toBeUndefined();
+                    });
+                })()
+            }
+        }
+        
+        
+        var somePrototypeGeneralFunctionNames = [
+            "_pInit",
+            "fFullTypeNameString",
+            "fIdentifyingJSON",
+            "fIdentifyingString",
+            "fIdentifyingWithTitleJSON",
+            "fIdentifyingWithTitleString",
+            "fToResultJSON"
+        ];
+        var aNumPrototypeGeneralFunctionNames = somePrototypeGeneralFunctionNames.length;
+        for( var aPrototypeGeneralFunctionNameIdx=0; aPrototypeGeneralFunctionNameIdx < aNumPrototypeGeneralFunctionNames; aPrototypeGeneralFunctionNameIdx++) {
+            var aPrototypeGeneralFunctionName = somePrototypeGeneralFunctionNames[ aPrototypeGeneralFunctionNameIdx];
+            if( aPrototypeGeneralFunctionName) {
+                (function() {
+                    var aPrototypeGeneralFunctionName_here = aPrototypeGeneralFunctionName;
+                    
+                    it("Prototype has general function " + aPrototypeGeneralFunctionName_here + " defined", function () {
+                        var aPrototype = aM_dumpingpolicy_triggerkinds_type.Prototype;
+                        var aPrototypeGeneralFunction = aPrototype[ aPrototypeGeneralFunctionName_here];
+                        expect( typeof aPrototypeGeneralFunction).toBe( "function");
+                    });
+                })()
+            }
+        }
+        
+        
+        var somePrototypeSlotNames = [
+            "_v_EventKindsTriggeringDump"
+        ];
+        var aNumPrototypeSlotNames = somePrototypeSlotNames.length;
+        for( var aPrototypeSlotNameIdx=0; aPrototypeSlotNameIdx < aNumPrototypeSlotNames; aPrototypeSlotNameIdx++) {
+            var aPrototypeSlotName = somePrototypeSlotNames[ aPrototypeSlotNameIdx];
+            if( aPrototypeSlotName) {
+                (function() {
+                    var aPrototypeSlotName_here = aPrototypeSlotName;
+                    it("Prototype has slot with name " + aPrototypeSlotName_here, function () {
+                        var aPrototype = aM_dumpingpolicy_triggerkinds_type.Prototype;
+                        var anPrototypeSlot = aPrototype[ aPrototypeSlotName_here];
+                        expect( anPrototypeSlot).not.toBeUndefined();
+                    });
+                })()
+            }
+        }
+        
+        
+        var somePrototypeSpecificFunctionNames = [
+            "_pInit_DumpingPolicyTriggerKinds",
+            "fSetEventKindsTriggeringDump_inPrototype",
+            "fFewerEventKindsTriggeringDump_inPrototype",
+            "fMoreEventKindsTriggeringDump_inPrototype",
+            "fSetEventKindsTriggeringDump",
+            "fFewerEventKindsTriggeringDump",
+            "fMoreEventKindsTriggeringDump",
+            "pDumpRecord",
+            "fRecordTriggersDump",
+            "fEventKindsTriggeringDump"
+        
+        ];
+        var aNumPrototypeSpecificFunctionNames = somePrototypeSpecificFunctionNames.length;
+        for( var aPrototypeSpecificFunctionNameIdx=0; aPrototypeSpecificFunctionNameIdx < aNumPrototypeSpecificFunctionNames; aPrototypeSpecificFunctionNameIdx++) {
+            var aPrototypeSpecificFunctionName = somePrototypeSpecificFunctionNames[ aPrototypeSpecificFunctionNameIdx];
+            if( aPrototypeSpecificFunctionName) {
+                (function() {
+                    var aPrototypeSpecificFunctionName_here = aPrototypeSpecificFunctionName;
+                    it("Prototype has specific function " + aPrototypeSpecificFunctionName_here + " defined", function () {
+                        var aPrototype = aM_dumpingpolicy_triggerkinds_type.Prototype;
+                        var aPrototypeSpecificFunction = aPrototype[ aPrototypeSpecificFunctionName_here];
+                        expect( typeof aPrototypeSpecificFunction).toBe( "function");
+                    });
+                })()
+            }
+        }
+        
+        
+        var someInstanceSlotNames = [
+        ];
+        var aNumInstanceSlotNames = someInstanceSlotNames.length;
+        for( var aInstanceSlotNameIdx=0; aInstanceSlotNameIdx < aNumInstanceSlotNames; aInstanceSlotNameIdx++) {
+            var aInstanceSlotName = someInstanceSlotNames[ aInstanceSlotNameIdx];
+            if( aInstanceSlotName) {
+                (function() {
+                    var aInstanceSlotName_here = aInstanceSlotName;
+                    it("Instance has slot with name " + aInstanceSlotName_here, function () {
+                        var anInstance = new aM_dumpingpolicy_triggerkinds_type.DumpingPolicyTriggerKinds_Constructor(
+                            "test_instance__someInstanceSlotNames__" + TestName,
+                            aM_identifier_svce,
+                            {} /* Should suffice for this test */);
+                        var anInstanceSlot = anInstance[ aInstanceSlotName_here];
+                        expect( anInstanceSlot).not.toBeUndefined();
+                    });
+                })()
+            }
+        }
+        
+        
+        
+        
     });
-    
 });
-
 
 if ( (typeof define === 'function') && define.amd) {
     // AMD / RequireJS
-    /* Module name MUST BE A LITERAL STRING, I.E. "m_typesregistry_structural_test" not  a variable like ModuleSymbolicName.
-    * If it is a variable, no test specs shall be registered (i.e., it does not invoke the test spec function */
-    define( "m_dumpingpolicy_triggerkinds_type_structural_test",
+    define( "dumpingpolicy_triggerkinds_type_structural_test",
         [
-            "m_identifier_svce",
-            "m_dumpingpolicy_triggerkinds_type"
+            "identifier_svce",
+            "dumpingpolicy_triggerkinds_type"
         ],
         aTest_spec
     );
@@ -359,4 +336,7 @@ if ( (typeof define === 'function') && define.amd) {
 else {
     aTest_spec();
 }
+
+
+
 

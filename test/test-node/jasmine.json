@@ -19,11 +19,10 @@
 
     "structural-test/recording-structural-test/record_type-structural-test.js",
     "structural-test/recording-structural-test/dumpingpolicy_type-structural-test.js",
+    "structural-test/recording-structural-test/dumpingpolicy_filterkinds_type-structural-test.js",
+    "structural-test/recording-structural-test/dumpingpolicy_triggerkinds_type-structural-test.js",
     "structural-test/recording-structural-test/recordingpolicy_type-structural-test.js",
     "structural-test/recording-structural-test/recorder_type-structural-test.js"
-
-
-
 
   ],
   "helpers": [

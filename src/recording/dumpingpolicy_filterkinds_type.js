@@ -45,7 +45,7 @@ permissions and limitations under the Licence.
                                  theSS_dumpingpolicy_type,
                                  theSS_eventkinds_common) {
         
-        var aMod_builder = function( theS_overrider_type,
+        var aMod_builder = function( theS_overrider_svce,
                                      theS_dumpingpolicy_type,
                                      theS_eventkinds_common) {
             
@@ -127,7 +127,7 @@ permissions and limitations under the Licence.
                  with key values obtained from the command-line arguments or possibly Browser localStorage,
                  or by key-values in an "override" or a "custom" object .
             */
-            theS_overrider_type.pOverrideModuleVariations( ModuleFullName, ModuleVariations);
+            theS_overrider_svce.pOverrideModuleVariations( ModuleFullName, ModuleVariations);
     
     
     
@@ -181,9 +181,9 @@ permissions and limitations under the Licence.
                 if( theToInit.EVENTSSETNOTFORCONSOLE) {
                     
                     if( typeof theToInit.EVENTSSETNOTFORCONSOLE === "string") {
-                        var anEventsSetNotForDumpingPolicyFilterKinds = theS_eventkinds_common[ theToInit.EVENTSSETNOTFORCONSOLE];
-                        if( anEventsSetNotForDumpingPolicyFilterKinds) {
-                            theToInit.EVENTKINDS_NOTFORCONSOLE = anEventsSetNotForDumpingPolicyFilterKinds.slice();
+                        var anEventsSetNotForConsole = theS_eventkinds_common[ theToInit.EVENTSSETNOTFORCONSOLE];
+                        if( anEventsSetNotForConsole) {
+                            theToInit.EVENTKINDS_NOTFORCONSOLE = anEventsSetNotForConsole.slice();
                         }
                         else {
                             theToInit.EVENTKINDS_NOTFORCONSOLE = [];
@@ -485,24 +485,24 @@ permissions and limitations under the Licence.
     
     
     
-                var fSetEventKindsNotForDumpingPolicyFilterKinds_inPrototype = function( theEventKinds) {
+                var fSetEventKindsNotForConsole_inPrototype = function( theEventKinds) {
                     
                     thePrototype._v_EventKindsNotConsole = theEventKinds;
                     
                     if( this.LOGCHANGESTOEVENTKINDSNOTFORCONSOLE) {
-                        console.log( "EventKindsNotForDumpingPolicyFilterKinds_inPrototype=\n" + JSON.stringify( thePrototype._v_EventKindsNotConsole, null, 4));
+                        console.log( "EventKindsNotForConsole_inPrototype=\n" + JSON.stringify( thePrototype._v_EventKindsNotConsole, null, 4));
                     }
                     
                     return thePrototype._v_EventKindsNotConsole;
                 };
-                if( fSetEventKindsNotForDumpingPolicyFilterKinds_inPrototype){}/* CQT */
-                thePrototype.fSetEventKindsNotForDumpingPolicyFilterKinds_inPrototype = fSetEventKindsNotForDumpingPolicyFilterKinds_inPrototype;
+                if( fSetEventKindsNotForConsole_inPrototype){}/* CQT */
+                thePrototype.fSetEventKindsNotForConsole_inPrototype = fSetEventKindsNotForConsole_inPrototype;
                 
                 
                 
                 
                 
-                var fFewerEventKindsNotForDumpingPolicyFilterKinds_inPrototype = function( theEventKinds) {
+                var fFewerEventKindsNotForConsole_inPrototype = function( theEventKinds) {
                     
                     if( !theEventKinds) {
                         return thePrototype._v_EventKindsNotConsole;
@@ -536,13 +536,13 @@ permissions and limitations under the Licence.
                     thePrototype._v_EventKindsNotConsole = someEventKinds;
                     
                     if( this.LOGCHANGESTOEVENTKINDSNOTFORCONSOLE) {
-                        console.log( "EventKindsNotForDumpingPolicyFilterKinds_inPrototype=\n" + JSON.stringify( thePrototype._v_EventKindsNotConsole, null, 4));
+                        console.log( "EventKindsNotForConsole_inPrototype=\n" + JSON.stringify( thePrototype._v_EventKindsNotConsole, null, 4));
                     }
                     
                     return thePrototype._v_EventKindsNotConsole;
                 };
-                if( fFewerEventKindsNotForDumpingPolicyFilterKinds_inPrototype){}/* CQT */
-                thePrototype.fFewerEventKindsNotForDumpingPolicyFilterKinds_inPrototype = fFewerEventKindsNotForDumpingPolicyFilterKinds_inPrototype;
+                if( fFewerEventKindsNotForConsole_inPrototype){}/* CQT */
+                thePrototype.fFewerEventKindsNotForConsole_inPrototype = fFewerEventKindsNotForConsole_inPrototype;
                 
                 
                 
@@ -550,7 +550,7 @@ permissions and limitations under the Licence.
                 
                 
                 
-                var fMoreEventKindsNotForDumpingPolicyFilterKinds_inPrototype = function( theEventKinds) {
+                var fMoreEventKindsNotForConsole_inPrototype = function( theEventKinds) {
                     
                     if( !theEventKinds) {
                         return thePrototype._v_EventKindsNotConsole;
@@ -581,13 +581,13 @@ permissions and limitations under the Licence.
                     thePrototype._v_EventKindsNotConsole = someEventKinds;
                     
                     if( this.LOGCHANGESTOEVENTKINDSNOTFORCONSOLE) {
-                        console.log( "EventKindsNotForDumpingPolicyFilterKinds_inPrototype=\n" + JSON.stringify( thePrototype._v_EventKindsNotConsole, null, 4));
+                        console.log( "EventKindsNotForConsole_inPrototype=\n" + JSON.stringify( thePrototype._v_EventKindsNotConsole, null, 4));
                     }
                     
                     return thePrototype._v_EventKindsNotConsole;
                 };
-                if( fMoreEventKindsNotForDumpingPolicyFilterKinds_inPrototype){}/* CQT */
-                thePrototype.fMoreEventKindsNotForDumpingPolicyFilterKinds_inPrototype = fMoreEventKindsNotForDumpingPolicyFilterKinds_inPrototype;
+                if( fMoreEventKindsNotForConsole_inPrototype){}/* CQT */
+                thePrototype.fMoreEventKindsNotForConsole_inPrototype = fMoreEventKindsNotForConsole_inPrototype;
                 
                 
                 
@@ -607,18 +607,18 @@ permissions and limitations under the Licence.
                 
                 
                 
-                var fSetEventKindsNotForDumpingPolicyFilterKinds = function( theEventKinds) {
+                var fSetEventKindsNotForConsole = function( theEventKinds) {
                     
                     this._v_EventKindsNotConsole = theEventKinds;
                     
                     if( this.LOGCHANGESTOEVENTKINDSNOTFORCONSOLE) {
-                        console.log( "EventKindsNotForDumpingPolicyFilterKinds=\n" + JSON.stringify( this._v_EventKindsNotConsole, null, 4));
+                        console.log( "EventKindsNotForConsole=\n" + JSON.stringify( this._v_EventKindsNotConsole, null, 4));
                     }
                     
                     return this._v_EventKindsNotConsole;
                 };
-                if( fSetEventKindsNotForDumpingPolicyFilterKinds){}/* CQT */
-                thePrototype.fSetEventKindsNotForDumpingPolicyFilterKinds = fSetEventKindsNotForDumpingPolicyFilterKinds;
+                if( fSetEventKindsNotForConsole){}/* CQT */
+                thePrototype.fSetEventKindsNotForConsole = fSetEventKindsNotForConsole;
                 
                 
                 
@@ -629,7 +629,7 @@ permissions and limitations under the Licence.
                 
                 
                 
-                var fFewerEventKindsNotForDumpingPolicyFilterKinds = function( theEventKinds) {
+                var fFewerEventKindsNotForConsole = function( theEventKinds) {
                     
                     if( !theEventKinds) {
                         return this._v_EventKindsNotConsole;
@@ -668,13 +668,13 @@ permissions and limitations under the Licence.
                     this._v_EventKindsNotConsole = someEventKinds;
                     
                     if( this.LOGCHANGESTOEVENTKINDSNOTFORCONSOLE) {
-                        console.log( "EventKindsNotForDumpingPolicyFilterKinds=\n" + JSON.stringify( this._v_EventKindsNotConsole, null, 4));
+                        console.log( "EventKindsNotForConsole=\n" + JSON.stringify( this._v_EventKindsNotConsole, null, 4));
                     }
                     
                     return this._v_EventKindsNotConsole
                 };
-                if( fFewerEventKindsNotForDumpingPolicyFilterKinds){}/* CQT */
-                thePrototype.fFewerEventKindsNotForDumpingPolicyFilterKinds = fFewerEventKindsNotForDumpingPolicyFilterKinds;
+                if( fFewerEventKindsNotForConsole){}/* CQT */
+                thePrototype.fFewerEventKindsNotForConsole = fFewerEventKindsNotForConsole;
                 
                 
                 
@@ -685,7 +685,7 @@ permissions and limitations under the Licence.
                 
                 
                 
-                var fMoreEventKindsNotForDumpingPolicyFilterKinds = function( theEventKinds) {
+                var fMoreEventKindsNotForConsole = function( theEventKinds) {
                     
                     if( !theEventKinds) {
                         return this._v_EventKindsNotConsole;
@@ -721,17 +721,13 @@ permissions and limitations under the Licence.
                     this._v_EventKindsNotConsole = someEventKinds;
                     
                     if( this.LOGCHANGESTOEVENTKINDSNOTFORCONSOLE) {
-                        console.log( "EventKindsNotForDumpingPolicyFilterKinds=\n" + JSON.stringify( this._v_EventKindsNotConsole, null, 4));
+                        console.log( "EventKindsNotForConsole=\n" + JSON.stringify( this._v_EventKindsNotConsole, null, 4));
                     }
                     
                     return this._v_EventKindsNotConsole
                 };
-                if( fMoreEventKindsNotForDumpingPolicyFilterKinds){}/* CQT */
-                thePrototype.fMoreEventKindsNotForDumpingPolicyFilterKinds = fMoreEventKindsNotForDumpingPolicyFilterKinds;
-                
-                
-                
-                
+                if( fMoreEventKindsNotForConsole){}/* CQT */
+                thePrototype.fMoreEventKindsNotForConsole = fMoreEventKindsNotForConsole;
                 
                 
                 
@@ -762,12 +758,12 @@ permissions and limitations under the Licence.
                         return false;
                     }
                     
-                    var someEventKindsNotForDumpingPolicyFilterKinds = this.fEventKindsNotForDumpingPolicyFilterKinds();
-                    if( !someEventKindsNotForDumpingPolicyFilterKinds) {
+                    var someEventKindsNotForConsole = this.fEventKindsNotForConsole();
+                    if( !someEventKindsNotForConsole) {
                         return true;
                     }
                     
-                    if( someEventKindsNotForDumpingPolicyFilterKinds.indexOf( anEventKind) < 0) {
+                    if( someEventKindsNotForConsole.indexOf( anEventKind) < 0) {
                         return true;
                     }
                     if( null){}/* CQT */
@@ -784,7 +780,7 @@ permissions and limitations under the Licence.
                 
                 
                 
-                var fEventKindsNotForDumpingPolicyFilterKinds = function() {
+                var fEventKindsNotForConsole = function() {
                     
                     /* Slot property named _v_EventKindsNotConsole only initialized in the prototype. May be overriden by individual instantes setting their own value */
                     
@@ -807,8 +803,8 @@ permissions and limitations under the Licence.
                     return this._v_EventKindsNotConsole;
                     
                 };
-                if( fEventKindsNotForDumpingPolicyFilterKinds){}/* CQT */
-                thePrototype.fEventKindsNotForDumpingPolicyFilterKinds = fEventKindsNotForDumpingPolicyFilterKinds;
+                if( fEventKindsNotForConsole){}/* CQT */
+                thePrototype.fEventKindsNotForConsole = fEventKindsNotForConsole;
                 
                 
             };
@@ -946,7 +942,7 @@ permissions and limitations under the Licence.
                 "CreatePrototypeSlotsOn":                  DumpingPolicyFilterKinds_CreatePrototypeSlotsOn,
                 "CreateInstanceSlotsOn":                   DumpingPolicyFilterKinds_CreateInstanceSlotsOn,
         
-                "DumpingPolicyFilterKinds_Prototype":                       aDumpingPolicyFilterKinds_Prototype,
+                "DumpingPolicyFilterKinds_Prototype":      aDumpingPolicyFilterKinds_Prototype,
                 "Prototype":                               aDumpingPolicyFilterKinds_Prototype
             };
     
