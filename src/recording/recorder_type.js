@@ -1208,7 +1208,7 @@ permissions and limitations under the Licence.
               See examples of recursive initialisation in modules
                 identifying / dumpingpolicy and recordingpolicy
             */
-            var Recorder_Constructor = function( theTitle) {
+            var Recorder_Constructor = function( theTitle, theIdentifier) {
                 this._v_Kind      = "instance";
                 this._v_Prototype = aRecorder_Prototype;
         
@@ -1216,7 +1216,7 @@ permissions and limitations under the Licence.
                 Recorder_CreateInstanceSlotsOn( this);
         
                 /* Fully initialise the instance, delegating in initialisers defined by super-prototypes, if any */
-                this._pInit_Recorder( theTitle);
+                this._pInit_Recorder( theTitle, theIdentifier);
             };
             Recorder_Constructor.prototype = aRecorder_Prototype;
     
@@ -1381,8 +1381,8 @@ permissions and limitations under the Licence.
             "identifier_svce",
             "identifier_type",
             "record_type",
-            "recordingpolicy_keepall_type",
-            "dumpingpolicy_filterkinds_type",
+            "recordingpolicy_type", // "recordingpolicy_keepall_type",
+            "dumpingpolicy_type", // "dumpingpolicy_filterkinds_type",
             aMod_definer
         ]);
         
@@ -1397,8 +1397,8 @@ permissions and limitations under the Licence.
             var aM_identifier_svce = require('../identifying/identifier_svce');
             var aM_identifier_type = require('../identifying/identifier_type');
             var aM_record_type     = require('./record_type');
-            var aM_recordingpolicy = require('./recordingpolicy_keepall_type');
-            var aM_dumpingpolicy   = require('./dumpingpolicy_filterkinds_type');
+            var aM_recordingpolicy = require('./recordingpolicy_type' /* './recordingpolicy_keepall_type'*/);
+            var aM_dumpingpolicy   = require('./dumpingpolicy_type' /* './dumpingpolicy_filterkinds_type' */);
     
             return aMod_definer(
                 aM_typesregistry_svce,

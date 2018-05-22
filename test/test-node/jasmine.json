@@ -18,7 +18,9 @@
     "structural-test/identifying-structural-test/identifier_svce-structural-test.js",
 
     "structural-test/recording-structural-test/record_type-structural-test.js",
-    "structural-test/recording-structural-test/recordingpolicy_type-structural-test.js"
+    "structural-test/recording-structural-test/dumpingpolicy_type-structural-test.js",
+    "structural-test/recording-structural-test/recordingpolicy_type-structural-test.js",
+    "structural-test/recording-structural-test/recorder_type-structural-test.js"
 
 
 

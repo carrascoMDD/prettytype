@@ -41,9 +41,9 @@ permissions and limitations under the Licence.
     var TypeName       = "DumpingPolicy";
     
     var aMod_definer =  function( theSS_typesregistry_svce,
-                                    theSS_overrider_type,
-                                    theSS_identifier_svce,
-                                    theSS_console_svce) {
+                                  theSS_overrider_svce,
+                                  theSS_identifier_svce,
+                                  theSS_console_svce) {
         
         var aMod_builder = function( theS_overrider_type,
                                      theS_identifier_svce,
@@ -699,11 +699,6 @@ permissions and limitations under the Licence.
                 };
                 if( pDumpRecord){}/* CQT */
                 thePrototype.pDumpRecord = pDumpRecord;
-                
-                
-                
-                
-                
                 
                 
              

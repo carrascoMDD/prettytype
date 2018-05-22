@@ -58,7 +58,9 @@ requirejs.config({
         "identifier_type_structural_test",
         "identifier_svce_structural_test",
         "record_type_structural_test",
-        "recordingpolicy_type_structural_test"
+        "recordingpolicy_type_structural_test",
+        "dumpingpolicy_type_structural_test",
+        "recorder_type_structural_test"
 
     ],
     
@@ -78,9 +80,11 @@ requirejs.config({
         'exceptiondetails_type_structural_test':                 './test/structural-test/exceptionstack-structural-test/exceptiondetails_type-structural-test',
         'exceptiondetails_svce_structural_test':                 './test/structural-test/exceptionstack-structural-test/exceptiondetails_svce-structural-test',
         'identifier_type_structural_test':                       './test/structural-test/identifying-structural-test/identifier_type-structural-test',
-        'identifier_svce_structural_test':                       './test/structural-test/identifying-structural-test/identifier_svce_-structural-test',
+        'identifier_svce_structural_test':                       './test/structural-test/identifying-structural-test/identifier_svce-structural-test',
         'record_type_structural_test':                           './test/structural-test/recording-structural-test/record_type-structural-test',
-        'recordingpolicy_type_structural_test':                  './test/structural-test/recording-structural-test/recordingpolicy_type-structural-test'
+        'dumpingpolicy_type_structural_test':                    './test/structural-test/recording-structural-test/dumpingpolicy_type-structural-test',
+        'recordingpolicy_type_structural_test':                  './test/structural-test/recording-structural-test/recordingpolicy_type-structural-test',
+        'recorder_type_structural_test':                         './test/structural-test/recording-structural-test/recorder_type-structural-test'
     },
 
     // start test run, once Require.js is done loading scripts
