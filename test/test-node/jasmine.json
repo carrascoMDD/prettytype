@@ -28,7 +28,9 @@
     "structural-test/recording-structural-test/recorder_type-structural-test.js",
     "structural-test/recording-structural-test/recorder_svce-structural-test.js",
 
-    "structural-test/utils-structural-test/traversals-structural-test.js"
+    "structural-test/utils-structural-test/traversals-structural-test.js",
+    "structural-test/utils-structural-test/checks-structural-test.js"
+
 
   ],
   "helpers": [

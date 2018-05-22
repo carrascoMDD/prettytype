@@ -1,7 +1,7 @@
 
 /*
  te2est-traversals-type.js
- refactoring of tes2est-traversals.js  to be Angular-agnostic , originally copy of traversals.js in te2est asyncshell project
+ refactoring of tes2est-traversals.js  to be module definition-agnostic , originally copy of traversals.js in te2est asyncshell project
  Creado 201505182205
  */
 
@@ -67,10 +67,8 @@
                See about Constants in the coment of pgInitWithModuleConstants() below.
             */
             var pgInitWithModuleVariations = function( theToInit) {
-            
                 if( !theToInit) {
                 }
-            
             };
     
     
@@ -2540,13 +2538,14 @@
     */
     if( !( typeof angular === 'undefined') && angular.module) {
         // Angular (1.x)
-        
-        angular.module( ModulePackages, [ "typesregistry", "overrider"]).factory( ModuleName, [
+    
+        angular.module( ModulePackages).factory( ModuleName, [
             "typesregistry_svce",
             "overrider_svce",
             aMod_definer
         ]);
-        
+    
+    
     }
     else if ( !(typeof module === 'undefined') && module.exports) {
         // Node.js

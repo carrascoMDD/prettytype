@@ -67,7 +67,8 @@ requirejs.config({
         "dumpingpolicy_triggerkinds_type_structural_test",
         "recorder_type_structural_test",
         "recorder_svce_structural_test",
-        "traversals_structural_test"
+        "traversals_structural_test",
+        "checks_structural_test"
 
 
     ],
@@ -99,7 +100,9 @@ requirejs.config({
         'dumpingpolicy_triggerkinds_type_structural_test':       './test/structural-test/recording-structural-test/dumpingpolicy_triggerkinds_type-structural-test',
         'recorder_type_structural_test':                         './test/structural-test/recording-structural-test/recorder_type-structural-test',
         'recorder_svce_structural_test':                         './test/structural-test/recording-structural-test/recorder_svce-structural-test',
-        "traversals_structural_test":                            './test/structural-test/utils-structural-test/traversals-structural-test'
+        "traversals_structural_test":                            './test/structural-test/utils-structural-test/traversals-structural-test',
+        "checks_structural_test":                                './test/structural-test/utils-structural-test/checks-structural-test'
+    
     
     },
 

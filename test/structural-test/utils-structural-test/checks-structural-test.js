@@ -45,14 +45,16 @@ var aTest_spec = (function( theSS_checks) {
     if( typeof FG_logModLoads === 'function') { FG_logModLoads(ModuleFullName);}
     
     describe( ModuleName + " " + ModulePackages + " " + ComponentName, function () {
+        
+        
         var aM_checks = null;
         
         if( ( typeof beforeEach === 'function') && ( typeof module === 'function')  && ( typeof inject === 'function')) {
             // Karma for Angular (1.x)
-            beforeEach( module( 'typesRegistry', 'modbootTypes', 'checks'));
+            beforeEach( module( "utils"));
             
-            beforeEach( inject(function( _Checks_) {
-                aM_checks = _Checks_;
+            beforeEach( inject(function( _checks_) {
+                aM_checks = _checks_;
             }));
         }
         else if ( !(typeof module === 'undefined') && module.exports) {
@@ -66,26 +68,22 @@ var aTest_spec = (function( theSS_checks) {
         else if ( !(typeof nomod === 'undefined') && nomod.register) {
             aM_checks = nomod.resolve( nomod.fComputeFullName( "prettytype", "utils", "checks"));
         }
-    
-    
-        it("Module is not null", function () {
-            expect( aM_checks).not.toBeNull( null);
+        
+        
+        it("Module is defined", function () {
+            expect( aM_checks).not.toBeUndefined();
         });
-    
-        it("Has ModuleName checks", function () {
+        
+        
+        it("Module has meta definitions", function () {
+            expect( aM_checks.ComponentName).toBe( "prettytype");
             expect( aM_checks.ModuleName).toBe( "checks");
-        });
-    
-        it("Has ModulePackages checks", function () {
             expect( aM_checks.ModulePackages).toBe( "utils");
-        });
-    
-        it("Has ModuleFullName common.checks", function () {
             expect( aM_checks.ModuleFullName).toBe( "utils/checks");
         });
         
         
-    
+        
         var someFunctionNames = [
             "fgCheckCheck",
             "fgIsSameAsValueFromTest",
@@ -98,14 +96,14 @@ var aTest_spec = (function( theSS_checks) {
             if( aFunctionName) {
                 (function() {
                     var aFunctionName_here = aFunctionName;
-        
+                    
                     it("Has function " + aFunctionName_here + " defined", function () {
                         var aFunction = aM_checks[ aFunctionName_here];
                         
                         expect( typeof aFunction).toBe( "function");
                     });
                 })()
-            };
+            }
         }
         
     });
@@ -116,9 +114,9 @@ if ( (typeof define === 'function') && define.amd) {
     // AMD / RequireJS
     /* Module name MUST BE A LITERAL STRING, I.E. "m_typesregistry_structural_test" not  a variable like ModuleSymbolicName.
     * If it is a variable, no test specs shall be registered (i.e., it does not invoke the test spec function */
-    define( "m_checks_structural_test",
+    define( "checks_structural_test",
         [
-            "m_checks"
+            "checks"
         ],
         aTest_spec
     );
@@ -126,7 +124,3 @@ if ( (typeof define === 'function') && define.amd) {
 else {
     aTest_spec();
 }
-
-
-
-
