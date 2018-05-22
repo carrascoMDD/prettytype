@@ -35,7 +35,7 @@ permissions and limitations under the Licence.
 
 
 
-/// <reference path="src/identifying/recordingpolicy_keeprecent_ng_type.js"/>
+/// <reference path="src/recording/recordingpolicy_keeprecent_ng_type.js"/>
 "use strict";
 
 

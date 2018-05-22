@@ -35,7 +35,7 @@ permissions and limitations under the Licence.
 
 
 
-/// <reference path="src/identifying/dumpingpolicy_filterkinds_ng_type.js"/>
+/// <reference path="src/recording/dumpingpolicy_filterkinds_ng_type.js"/>
 "use strict";
 
 

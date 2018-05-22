@@ -15,7 +15,10 @@
     "structural-test/exceptionstack-structural-test/exceptiondetails_svce-structural-test.js",
 
     "structural-test/identifying-structural-test/identifier_type-structural-test.js",
-    "structural-test/identifying-structural-test/identifier_svce-structural-test.js"
+    "structural-test/identifying-structural-test/identifier_svce-structural-test.js",
+
+    "structural-test/recording-structural-test/record_type-structural-test.js"
+
 
 
   ],

@@ -35,7 +35,7 @@ permissions and limitations under the Licence.
 
 
 
-/// <reference path="src/identifying/recordingpolicy_keepsome_ng_type.js"/>
+/// <reference path="src/recording/recordingpolicy_keepsome_ng_type.js"/>
 "use strict";
     
 var aTest_spec = (function( theSS_identifier_svce,

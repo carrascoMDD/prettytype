@@ -150,7 +150,7 @@ permissions and limitations under the Licence.
     
             /* ***************************************************************
                Just copy each key-value in ModuleConstants onto the supplied object.
-               Used to fill the Module object and the Protoype object with the key-value pairs in Constants.
+               Used to fill the Module object and the Prototype object with the key-value pairs in Constants.
              */
             var InitFromModuleConstants = function( theToInit) {
                 if( !theToInit) {

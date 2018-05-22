@@ -35,7 +35,7 @@ permissions and limitations under the Licence.
 
 
 
-/// <reference path="src/identifying/recorder_svce.js"/>
+/// <reference path="src/recording/recorder_svce.js"/>
 "use strict";
 
 
