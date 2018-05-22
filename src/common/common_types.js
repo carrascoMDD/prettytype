@@ -40,11 +40,12 @@ permissions and limitations under the Licence.
 if( !( typeof angular === 'undefined') && angular.module) {
     // Angular (1.x)
     
-    angular.module("commonTypes", [
-        "typesRegistry",
-        "modbootTypes",
-        "eventKinds_Common",
-        "identifyingTypes",
+    angular.module("commontypes", [
+        "typesregistry",
+        "overrider",
+        "identifying",
+        "recording",
+        "eventkinds_common",
         "traversals"
     ]);
     
