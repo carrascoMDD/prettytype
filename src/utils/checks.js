@@ -8,7 +8,7 @@
 /*
  ***************************************************************************
 
- Copyright 2014 2015 2016 Antonio Carrasco Valero
+ Copyright 2014 2015 2016 2017 2018 Antonio Carrasco Valero
  te2est asyncshell written in Javascript http://www.te2est.org http://www.asyncshell.org
 
  Licensed under the EUPL, Version 1.1 only (the "Licence");

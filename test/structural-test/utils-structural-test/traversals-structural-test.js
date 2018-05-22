@@ -51,10 +51,10 @@ var aTest_spec = (function( theSS_traversals) {
     
         if( ( typeof beforeEach === 'function') && ( typeof module === 'function')  && ( typeof inject === 'function')) {
             // Karma for Angular (1.x)
-            beforeEach( module( 'typesRegistry', 'modbootTypes', 'traversals'));
+            beforeEach( module( "utils"));
             
-            beforeEach( inject(function( _Traversals_) {
-                aM_traversals = _Traversals_;
+            beforeEach( inject(function( _traversals_) {
+                aM_traversals = _traversals_;
             }));
         }
         else if ( !(typeof module === 'undefined') && module.exports) {
@@ -68,26 +68,21 @@ var aTest_spec = (function( theSS_traversals) {
         else if ( !(typeof nomod === 'undefined') && nomod.register) {
             aM_traversals = nomod.resolve( nomod.fComputeFullName( "prettytype", "utils", "traversals"));
         }
-        
-        
-        
-        it("Module is not null", function () {
-            expect( aM_traversals).not.toBeNull( null);
+    
+    
+        it("Module is defined", function () {
+            expect( aM_traversals).not.toBeUndefined();
         });
     
-        it("Has ModuleName traversals", function () {
+    
+        it("Module has meta definitions", function () {
+            expect( aM_traversals.ComponentName).toBe( "prettytype");
             expect( aM_traversals.ModuleName).toBe( "traversals");
-        });
-    
-        it("Has ModulePackages traversals", function () {
             expect( aM_traversals.ModulePackages).toBe( "utils");
-        });
-    
-        it("Has ModuleFullName common.traversals", function () {
             expect( aM_traversals.ModuleFullName).toBe( "utils/traversals");
         });
-        
-        
+    
+    
     
         var someFunctionNames = [
             "fgFirstDiff",
@@ -137,9 +132,9 @@ if ( (typeof define === 'function') && define.amd) {
     // AMD / RequireJS
     /* Module name MUST BE A LITERAL STRING, I.E. "m_typesregistry_structural_test" not  a variable like ModuleSymbolicName.
     * If it is a variable, no test specs shall be registered (i.e., it does not invoke the test spec function */
-    define( "m_traversals_structural_test",
+    define( "traversals_structural_test",
         [
-            "m_traversals"
+            "traversals"
         ],
         aTest_spec
     );

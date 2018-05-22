@@ -1,13 +1,14 @@
 
 /*
- te2est-traversals-type.js refactoring of tes2est-traversals.js  to be Angular-agnostic , originally copy of traversals.js in te2est asyncshell project
+ te2est-traversals-type.js
+ refactoring of tes2est-traversals.js  to be Angular-agnostic , originally copy of traversals.js in te2est asyncshell project
  Creado 201505182205
  */
 
 /*
  ***************************************************************************
 
- Copyright 2014 2015 2016 Antonio Carrasco Valero
+ Copyright 2014 2015 2016 2017 2018 Antonio Carrasco Valero
  te2est asyncshell written in Javascript http://www.te2est.org http://www.asyncshell.org
 
  Licensed under the EUPL, Version 1.1 only (the "Licence");
@@ -37,29 +38,51 @@
     var ModulePackages = "utils";
     var ModuleFullName = ModulePackages + "/" + ModuleName;
     
-    var aMod_definer = ( function( theSS_typesregistry_svce,
-                                   theSS_overrider_type){
+    var aMod_definer = function( theSS_typesregistry_svce,
+                                 theSS_overrider_svce){
         
     
-        var aMod_builder = function( theS_overrider_type) {
+        var aMod_builder = function( theS_overrider_svce) {
     
             if( typeof FG_logModLoads === 'function') { FG_logModLoads(ModuleFullName);}
-        
-        
-        
-        
-        
+    
+    
+    
+    
+            /* ***************************************************************
+               Init here key-value pairs.
+               The key values defined as Variations may be overriden by the overrider_svce singleton
+                 with key values obtained from the command-line arguments or possibly Browser localStorage,
+                 or by key-values in an "override" or a "custom" object
+                 initialised in the corresponding variables of the overrider_svce singleton.
+               Any key-values in arguments, custom or overrides whose key is not defined in Variations
+                 shall not be be copied into Variations.
+               
+               These key values are added to the module Constants.
+               Therefore these key values, once initialised and possibly overriderm have an expected read-only life-cycle.
+
+               Any key-values defined into Constants with same key as one in Variations
+                 shall replace the value with same key obtained from Variations.
+               
+               See about Constants in the coment of pgInitWithModuleConstants() below.
+            */
             var pgInitWithModuleVariations = function( theToInit) {
             
                 if( !theToInit) {
                 }
             
             };
-        
-        
-        
-        
-        
+    
+    
+    
+    
+    
+            /* ***************************************************************
+                Just copy each key-value in ModuleVariations onto the supplied object.
+                Used to fill the Module Constants object.
+                
+                See about Constants in the coment of pgInitWithModuleConstants() below.
+             */
             var InitFromModuleVariations = function( theToInit) {
                 if( !theToInit) {
                     return;
@@ -71,13 +94,22 @@
                     }
                 }
             };
-        
-        
+    
+    
+    
+            /* ***************************************************************
+               Holder of name-values in the Module which may be overriden by overrider_svce singleton,
+                and later copied into Constants.
+            */
             var ModuleVariations = { };
             pgInitWithModuleVariations( ModuleVariations);
-            if( theS_overrider_type) {
-                theS_overrider_type.pOverrideModuleVariations( ModuleFullName, ModuleVariations);
-            }
+    
+            /* ***************************************************************
+               Override key-values in Variations by the overrider_svce singleton
+                 with key values obtained from the command-line arguments or possibly Browser localStorage,
+                 or by key-values in an "override" or a "custom" object .
+            */
+            theS_overrider_svce.pOverrideModuleVariations( ModuleFullName, ModuleVariations);
     
     
     
@@ -96,22 +128,11 @@
                     return;
                 }
             
-            
-            
                 theToInit.ROOTPATHSTEPSYMBOL = "#root";
-            
-            
                 theToInit.SPECPATHROOTPATHSTEPSYMBOL = "#testsroot";
-            
-            
                 theToInit.PATHSREPLACEABLESYMBOL = "#";
-            
-            
                 theToInit.DONOTCOMPAREVALUESYMBOL = "@DONOTCOMPARE699@";
-            
-            
                 theToInit.TRAVERSAL_WHOLE = "*";
-            
                 theToInit.TRAVERSALSTEPSSEPARATOR = ".";
             
                 theToInit.TRAVERSALSTEP_LENGTH = "length";
@@ -119,20 +140,12 @@
                 theToInit.TRAVERSALSTEP_FIRST  = "first";
                 theToInit.TRAVERSALSTEP_ALL    = "all";
             
-            
                 theToInit.TRAVERSALSTEP_KEYEDSEPARATOR  = "=";
-            
                 theToInit.REPLACEPARMVALUEWITHPARMPREFIX = "~";
-            
                 theToInit.REPLACEPARMVALUEDOT = ".";
             
-            
-            
                 theToInit.ANYEXCEPTION = "*";
-            
-            
                 theToInit.VALUEDIFFATTOP = "/";
-            
             
                 theToInit.SYMBOLICSTEPREGEXPSTR = "^\\?(\\w+)\\=(\\-?[0-9]+)$";
                 theToInit.SYMBOLICSTEPREGEXP    = new RegExp( theToInit.SYMBOLICSTEPREGEXPSTR);
@@ -194,28 +207,45 @@
     
     
     
-            var aModule = {};
+            /* ***************************************************************
+             Object exposed as Module, with key-values for all members published in the module.
+             
+             Some entries are published to facilitate hacking access to portions of logic in the module,
+                 to be able to use for other purposes (mixins come into mind) i.e. constants initialiser,
+                 and if the module defines any prototype: full and partial prototype creators
+                 and initialisers of the slots structure of the prototype.
+           */
+            var aModule = {
+                "_v_Kind":                                 "module",
+                "ComponentName":                           ComponentName,
+                "ModuleName":                              ModuleName,
+                "ModulePackages":                          ModulePackages,
+                "ModuleFullName":                          ModuleFullName,
+                "ModuleConstants":                         ModuleConstants,
+                "ModuleGlobals":                           ModuleGlobals,
+        
+                "InitFromModuleVariations":                InitFromModuleVariations,
+                "InitFromModuleConstants":                 InitFromModuleConstants,
+                "InitModuleGlobalsOn":                     InitModuleGlobalsOn
+            };
+    
+            /* ***************************************************************
+              Add to the Module Key-Values from Constants (and Variations, if any) so they are exposed as published members.
+              Beware: The value for any key in Constants (and Variations, if any)
+                shall override any other slot value in the Module with same key, if such exists,
+                including any infrastructural or conventional entries.
+            */
             InitFromModuleConstants( aModule);
-            aModule._v_Type = "module";
-            aModule.ComponentName     = ComponentName;
-            aModule.ModuleName      = ModuleName;
-            aModule.ModulePackages  = ModulePackages;
-            aModule.ModuleFullName  = ModuleFullName;
-            aModule.ModuleVariations= ModuleVariations;
-            aModule.ModuleConstants = ModuleConstants;
-            aModule.ModuleGlobals   = ModuleGlobals;
-            aModule.InitFromModuleConstants  = InitFromModuleConstants;
-            aModule.InitFromModuleVariations = InitFromModuleVariations;
-            aModule.InitModuleGlobalsOn      = InitModuleGlobalsOn;
-        
-        
-        
-        
-        
-        
-        
-        
-        
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
             var fgParmValueReplacement= function( theConfiguration, theParmValue, theMapForStepsWithParmPrefix) {
             
                 if( !theParmValue) {
@@ -2456,9 +2486,6 @@
         
         
         
-        
-        
-        
             return aModule;
         };
     
@@ -2466,6 +2493,13 @@
     
     
     
+    
+        /* ***************************************************************
+          Make sure that the module is built only once, and that the same instance is supplied anytime
+          the module is required, as i.e. to resolve a dependency for another module.
+          Attempt to retrieve a module with same name already registered in the typesregistry_svce singleton.
+          If no such module exists then build the module and register it in the typesregistry_svce singleton.
+        */
         var anExistingModule = null;
         if(    !( typeof theSS_typesregistry_svce === 'undefined')
             && ( typeof theSS_typesregistry_svce.fRegisteredModule === 'function')) {
@@ -2474,7 +2508,7 @@
         if( !anExistingModule) {
         
             var aModule = aMod_builder(
-                theSS_overrider_type
+                theSS_overrider_svce
             );
         
             aModule.ModuleBuilder = aMod_builder;
@@ -2489,28 +2523,29 @@
         }
     
     
-    
-    
+        /* ***************************************************************
+         Return the module which was already built and registered in typesregistry_svce singleton, or just built.
+        */
         return anExistingModule;
-    
-    });
-    
+    };
     
     
+    
+    
+    
+    
+    /* ***************************************************************
+      Define the module under various module definition libraries, all delegating in the same module definer function,
+      but each obtaining their own way any dependencies needed by this module.
+    */
     if( !( typeof angular === 'undefined') && angular.module) {
         // Angular (1.x)
         
-        angular.module("traversals",
-            [
-                'typesRegistry',
-                'modbootTypes'
-            ]).factory(
-                "Traversals",
-            [
-                "TypesRegistrySvce",
-                "OverriderSvce",
-                aMod_definer
-            ]);
+        angular.module( ModulePackages, [ "typesregistry", "overrider"]).factory( ModuleName, [
+            "typesregistry_svce",
+            "overrider_svce",
+            aMod_definer
+        ]);
         
     }
     else if ( !(typeof module === 'undefined') && module.exports) {
@@ -2518,12 +2553,12 @@
         
         module.exports = (function() {
             
-            var aM_typesregistry_svce  = require('../modboot/typesregistry');
-            var aM_overrider      = require('../modboot/overrider_svce');
+            var aM_typesregistry_svce = require('../typesregistry/typesregistry_svce');
+            var aM_overrider_svce     = require('../overrider/overrider_svce');
             
             return aMod_definer(
                 aM_typesregistry_svce,
-                aM_overrider
+                aM_overrider_svce
             );
         })();
         
@@ -2531,27 +2566,33 @@
     else if ( !(typeof define === 'undefined') && define.amd) {
         // AMD / RequireJS
         
-        define("m_traversals", [
-                "m_typesregistry_svce",
-                "m_overrider_svce"
-            ],
-            aMod_definer
-           );
-    }
-    else if ( !(typeof nomod === 'undefined') && nomod.register) {
-        // nomod toy module definition, resolution and dependency injection
-    
-        nomod.register( ComponentName, ModulePackages, ModuleName,
-            [ /* theDependencies */
-                nomod.fComputeFullName( "prettytype", "typesregistry", "typesregistry_type"),
-                nomod.fComputeFullName( "prettytype", "modboot", "overrider_svce")
+        define( ModuleName,
+            [
+                "typesregistry_svce",
+                "overrider_svce"
             ],
             aMod_definer
         );
-    
+        
+    }
+    else if ( !(typeof nomod === 'undefined') && nomod.register) {
+        // nomod toy module definition, resolution and dependency injection
+        
+        nomod.register( ComponentName, ModulePackages, ModuleName,
+            [ /* theDependencies */
+                nomod.fComputeFullName( "prettytype", "typesregistry", "typesregistry_type"),
+                nomod.fComputeFullName( "prettytype", "overrider", "overrider_svce")
+            ],
+            aMod_definer
+        )
+        
     }
     
-})();
+    
+})(); /* Self-executing function launches the module definition machinery upon load of the javascript file */
+
+
+
 
 
 

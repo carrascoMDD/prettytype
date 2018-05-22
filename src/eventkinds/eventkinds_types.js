@@ -8,7 +8,7 @@
  *
  ***************************************************************************
 
- Copyright 2014 2015 2016 Antonio Carrasco Valero
+ Copyright 2014 2015 2016 2017 2018 Antonio Carrasco Valero
  Multi-platform Javascript EC5 coding patterns and base super-prototypes, for write-once, run and test everywhere (angular, require, node).
 
 Licensed under the EUPL, Version 1.1 only (the "Licence");

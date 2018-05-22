@@ -6,7 +6,7 @@
  *
  ***************************************************************************
 
- Copyright 2014 2015 2016 Antonio Carrasco Valero
+ Copyright 2014 2015 2016 2017 2018 Antonio Carrasco Valero
  Multi-platform Javascript EC5 coding patterns and base super-prototypes, for write-once, run and test everywhere (angular, require, node).
 
 Licensed under the EUPL, Version 1.1 only (the "Licence");
@@ -66,7 +66,9 @@ requirejs.config({
         "dumpingpolicy_filterkinds_type_structural_test",
         "dumpingpolicy_triggerkinds_type_structural_test",
         "recorder_type_structural_test",
-        "recorder_svce_structural_test"
+        "recorder_svce_structural_test",
+        "traversals_structural_test"
+
 
     ],
     
@@ -96,7 +98,8 @@ requirejs.config({
         'dumpingpolicy_filterkinds_type_structural_test':        './test/structural-test/recording-structural-test/dumpingpolicy_filterkinds_type-structural-test',
         'dumpingpolicy_triggerkinds_type_structural_test':       './test/structural-test/recording-structural-test/dumpingpolicy_triggerkinds_type-structural-test',
         'recorder_type_structural_test':                         './test/structural-test/recording-structural-test/recorder_type-structural-test',
-        'recorder_svce_structural_test':                         './test/structural-test/recording-structural-test/recorder_svce-structural-test'
+        'recorder_svce_structural_test':                         './test/structural-test/recording-structural-test/recorder_svce-structural-test',
+        "traversals_structural_test":                            './test/structural-test/utils-structural-test/traversals-structural-test'
     
     },
 
