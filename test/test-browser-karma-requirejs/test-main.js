@@ -68,7 +68,8 @@ requirejs.config({
         "recorder_type_structural_test",
         "recorder_svce_structural_test",
         "traversals_structural_test",
-        "checks_structural_test"
+        "checks_structural_test",
+        "decoratesystemprototypes_structural_test"
 
 
     ],
@@ -101,8 +102,8 @@ requirejs.config({
         'recorder_type_structural_test':                         './test/structural-test/recording-structural-test/recorder_type-structural-test',
         'recorder_svce_structural_test':                         './test/structural-test/recording-structural-test/recorder_svce-structural-test',
         "traversals_structural_test":                            './test/structural-test/utils-structural-test/traversals-structural-test',
-        "checks_structural_test":                                './test/structural-test/utils-structural-test/checks-structural-test'
-    
+        "checks_structural_test":                                './test/structural-test/utils-structural-test/checks-structural-test',
+        "decoratesystemprototypes_structural_test":              "./test/structural-test/lowinstrument-structural-test/decoratesystemprototypes-structural-test"
     
     },
 

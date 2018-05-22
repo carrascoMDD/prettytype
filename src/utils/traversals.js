@@ -2480,10 +2480,12 @@
             };
             if( fgCollectPath){}/* CQT */
             aModule.fgCollectPath = fgCollectPath;
-        
-        
-        
-        
+    
+    
+    
+            /* ***************************************************************
+               Return defined module.
+            */
             return aModule;
         };
     

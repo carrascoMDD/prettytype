@@ -59,6 +59,7 @@ var someKarmaConfFiles = [
     "./src/recording/recorder_svce.js",
     "./src/utils/traversals.js",
     "./src/utils/checks.js",
+    "./src/lowinstrument/decoratesystemprototypes.js",
 
     
     './test/structural-test/typesregistry-structural-test/typesregistry_type-structural-test.js',
@@ -86,7 +87,8 @@ var someKarmaConfFiles = [
     "./test/structural-test/recording-structural-test/recorder_type-structural-test.js",
     "./test/structural-test/recording-structural-test/recorder_svce-structural-test.js",
     "./test/structural-test/utils-structural-test/traversals-structural-test.js",
-    "./test/structural-test/utils-structural-test/checks-structural-test.js"
+    "./test/structural-test/utils-structural-test/checks-structural-test.js",
+    "./test/structural-test/lowinstrument-structural-test/decoratesystemprototypes-structural-test.js"
 ];
 
 

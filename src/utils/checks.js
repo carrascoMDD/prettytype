@@ -930,11 +930,12 @@
             };
             if( fgIsSameAsValueFromTest){}/* CQT */
             aModule.fgIsSameAsValueFromTest = fgIsSameAsValueFromTest;
-        
-        
-        
-        
-        
+    
+    
+    
+            /* ***************************************************************
+               Return defined module.
+            */
             return aModule;
         };
     
