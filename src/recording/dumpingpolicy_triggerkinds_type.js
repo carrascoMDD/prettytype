@@ -450,7 +450,7 @@
                 var _pInit_DumpingPolicyTriggerKinds = function( theTitle, theIdentifier, theRecorder) {
                     
                     /* Delegate on super prototype initialization */
-                    thePrototype._v_SuperPrototype._pInit_DumpingPolicyTriggerKinds.apply( this, [ theTitle, theIdentifier, theRecorder]);
+                    thePrototype._v_SuperPrototype._pInit_DumpingPolicyFilterKinds.apply( this, [ theTitle, theIdentifier, theRecorder]);
                     
                 };
                 if( _pInit_DumpingPolicyTriggerKinds){}/* CQT */

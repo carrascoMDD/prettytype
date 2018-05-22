@@ -294,7 +294,27 @@ var aTest_spec = (function( theSS_identifier_svce,
             "fRecordTriggersDump",
             "fEventKindsTriggeringDump"
         
-        ];
+        ].concat( [
+            "_pInit_DumpingPolicyFilterKinds",
+            "fSetEventKindsNotForConsole_inPrototype",
+            "fFewerEventKindsNotForConsole_inPrototype",
+            "fMoreEventKindsNotForConsole_inPrototype",
+            "fSetEventKindsNotForConsole",
+            "fFewerEventKindsNotForConsole",
+            "fMoreEventKindsNotForConsole",
+            "fMustDumpRecord",
+            "fEventKindsNotForConsole"
+
+        ]).concat( [
+            "_pInit_DumpingPolicy",
+            "fConsoleService",
+            "fRecorder",
+            "pSetRecorder",
+            "pSetMayDumpRecords",
+            "fMayDumpRecords",
+            "fMustDumpRecord",
+            "pDumpRecord"
+        ]);
         var aNumPrototypeSpecificFunctionNames = somePrototypeSpecificFunctionNames.length;
         for( var aPrototypeSpecificFunctionNameIdx=0; aPrototypeSpecificFunctionNameIdx < aNumPrototypeSpecificFunctionNames; aPrototypeSpecificFunctionNameIdx++) {
             var aPrototypeSpecificFunctionName = somePrototypeSpecificFunctionNames[ aPrototypeSpecificFunctionNameIdx];
@@ -311,8 +331,14 @@ var aTest_spec = (function( theSS_identifier_svce,
         }
         
         
-        var someInstanceSlotNames = [
-        ];
+        var someInstanceSlotNames =  [
+        ].concat(  [
+        ]).concat( [
+            "_v_Identifier",
+            "_v_Id",
+            "_v_Recorder",
+            "_v_Title"
+        ]);
         var aNumInstanceSlotNames = someInstanceSlotNames.length;
         for( var aInstanceSlotNameIdx=0; aInstanceSlotNameIdx < aNumInstanceSlotNames; aInstanceSlotNameIdx++) {
             var aInstanceSlotName = someInstanceSlotNames[ aInstanceSlotNameIdx];

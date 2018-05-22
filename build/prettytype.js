@@ -72,309 +72,6 @@ FG_logModLoads.ComponentName  = "prettytype";
 FG_logModLoads.ModuleName     = "FG_logModLoads";
 FG_logModLoads.ModulePackages = "lowinstrument";
 FG_logModLoads.ModuleFullName = FG_logModLoads.ModulePackages + "/" + FG_logModLoads.ModuleName;
-;/*
- * decoratesystemprototypes_svce.js
- *
- * Created @author Antonio Carrasco Valero 201412070820
- *
- *
- ***************************************************************************
-
- Copyright 2014 2015 2016 2017 2018 Antonio Carrasco Valero
- Multi-platform Javascript EC5 coding patterns and base super-prototypes, for write-once, run and test everywhere (angular, require, node).
-
-Licensed under the EUPL, Version 1.1 only (the "Licence");
-You may not use this work except in compliance with the
-Licence.
-You may obtain a copy of the Licence at:
-https://joinup.ec.europa.eu/software/page/eupl/licence-eupl
-Unless required by applicable law or agreed to in
-writing, software distributed under the Licence is
-distributed on an "AS IS" basis,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
-express or implied.
-See the Licence for the specific language governing
-permissions and limitations under the Licence.
- {{License2}}
-
- {{Licensed1}}
- {{Licensed2}}
-
- ***************************************************************************
- *
- */
-
-
-(function() {
-    
-    
-    var ComponentName    = "prettytype";
-    var ModuleName     = "decoratesystemprototypes_svce";
-    var ModulePackages = "utils";
-    var ModuleFullName = ModulePackages + "/" + ModuleName;
-    
-    var aMod_definer = ( function(theSS_typesregistry_svce,
-                                  theSS_overrider_type){
-        
-        var aMod_builder = function( theS_overrider_type) {
-    
-            
-            if( typeof FG_logModLoads === 'function') { FG_logModLoads(ModuleFullName);}
-    
-    
-    
-    
-            var pgInitWithModuleVariations = function( theToInit) {
-        
-                if( !theToInit) {
-                }
-            };
-    
-    
-    
-            var InitFromModuleVariations = function( theToInit) {
-                if( !theToInit) {
-                    return;
-                }
-        
-                for( var aGlobalName in ModuleVariations) {
-                    if( ModuleVariations.hasOwnProperty( aGlobalName)) {
-                        theToInit[ aGlobalName] = ModuleVariations[ aGlobalName];
-                    }
-                }
-            };
-    
-    
-    
-            var ModuleVariations = { };
-            pgInitWithModuleVariations( ModuleVariations);
-            theS_overrider_type.pOverrideModuleVariations( ModuleFullName, ModuleVariations);
-    
-    
-    
-    
-            /* ***************************************************************
-               Init here key-value pairs, considered constants - and therefore with an expected read-only life-cycle.
-               Constants can be accessed through the Module .ModuleConstants.
-            */
-            var pgInitWithModuleConstants = function( theToInit) {
-                
-                if( !theToInit) {
-                }
-            };
-            
-            
-            
-            var ModuleConstants = {};
-            InitFromModuleVariations( ModuleConstants);
-            pgInitWithModuleConstants( ModuleConstants);
-    
-    
-    
-            /* ***************************************************************
-               Just copy each key-value in ModuleConstants onto the supplied object.
-               Used to fill the Module object and the Prototype object with the key-value pairs in Constants.
-             */
-            var InitFromModuleConstants = function( theToInit) {
-                if( !theToInit) {
-                    return;
-                }
-        
-                for( var aGlobalName in ModuleConstants) {
-                    if( ModuleConstants.hasOwnProperty( aGlobalName)) {
-                        theToInit[ aGlobalName] = ModuleConstants[ aGlobalName];
-                    }
-                }
-            };
-    
-    
-    
-    
-    
-            /* ***************************************************************
-               Init here name-values, considered Globals - and therefore with an expected read-write life-cycle.
-               Globals can only be accessed through the Module .ModuleGlobals. Instances may access this._v_Module.ModuleGlobals
-            */
-            var InitModuleGlobalsOn = function( theToInit) {
-        
-                if( !theToInit) {
-                }
-            };
-    
-    
-    
-    
-            /* ***************************************************************
-              Holder of name-values in the Module, considered Globals.
-            */
-            var ModuleGlobals = { };
-            InitModuleGlobalsOn( ModuleGlobals);
-    
-    
-    
-    
-            
-            
-            
-            var aModule = { };
-            InitFromModuleConstants( aModule);
-            aModule._v_Type = "module";
-            aModule.ComponentName     = ComponentName;
-            aModule.ModuleName     = ModuleName;
-            aModule.ModulePackages = ModulePackages;
-            aModule.ModuleFullName = ModuleFullName;
-            aModule.ModuleVariations= ModuleVariations;
-            aModule.ModuleConstants = ModuleConstants;
-            aModule.ModuleGlobals   = ModuleGlobals;
-            aModule.InitFromModuleConstants  = InitFromModuleConstants;
-            aModule.InitFromModuleVariations = InitFromModuleVariations;
-            aModule.InitModuleGlobalsOn      = InitModuleGlobalsOn;
-            
-            
-            
-            
-            var fStringExtend = function( theString, theLen) {
-                
-                if( !theLen) {
-                    return "";
-                }
-                
-                var aThisLen = theString.length;
-                if( !aThisLen) {
-                    return "";
-                }
-                
-                var aSource = theString;
-                var aNumRepeats = Math.floor( theLen / aThisLen);
-                aNumRepeats += 1;
-                if( aNumRepeats > 1) {
-                    
-                    if( aNumRepeats > 10000) {
-                        aNumRepeats = 10000;
-                    }
-                    aSource = Array.apply(null, new Array( aNumRepeats)).map(String.prototype.valueOf, theString).join( "");
-                }
-                
-                var aExtended = aSource.slice( 0, theLen);
-                if( aExtended){}/* CQT */
-                
-                return aExtended;
-            };
-            if( fStringExtend){}/* CQT */
-            aModule.fStringExtend = fStringExtend;
-            
-            
-            
-            
-            
-            if( !String.prototype.Xtnd) {
-                String.prototype.Xtnd = function( theLen) {
-                    
-                    return aModule.fStringExtend( this, theLen);
-                };
-            }
-    
-            
-            
-            
-            return aModule;
-        };
-    
-    
-    
-    
-    
-    
-        var anExistingModule = null;
-        if(    !( typeof theSS_typesregistry_svce === 'undefined')
-            && ( typeof theSS_typesregistry_svce.fRegisteredModule === 'function')) {
-            anExistingModule = theSS_typesregistry_svce.fRegisteredModule( ModuleFullName);
-        }
-        if( !anExistingModule) {
-        
-            var aModule = aMod_builder(
-                theSS_overrider_type
-            );
-        
-            aModule.ModuleBuilder = aMod_builder;
-            aModule.ModuleDecompiler  = function() { aModule.ModuleSource = aMod_builder.toString()};
-        
-            anExistingModule = aModule;
-        
-            if(    !( typeof theSS_typesregistry_svce === 'undefined')
-                && ( typeof theSS_typesregistry_svce.fRegisterModule === 'function')) {
-                theSS_typesregistry_svce.fRegisterModule( ModuleFullName, aModule);
-            }
-        }
-    
-        var aService = anExistingModule;
-        if( aService){}/* CQT */
-    
-        return aService;
-        
-    });
-    
-    
-    
-    
-    if( !( typeof angular === 'undefined') && angular.module) {
-        // Angular (1.x)
-        
-        
-        angular.module("decoratesystemprototypes", [
-            "typesRegistry",
-            "modbootTypes"
-        ]).factory("DecorateSystemPrototypesSvce",[
-            "TypesRegistrySvce",
-            "OverriderSvce",
-            aMod_definer
-        ]);
-    }
-    else if ( !(typeof module === 'undefined') && module.exports) {
-        // Node.js
-        
-        module.exports = (function() {
-            
-            var aM_typesregistry_svce   = require('../modboot/typesregistry');
-            var aM_overrider       = require('../modboot/overrider_svce');
-            
-            return aMod_definer(
-                aM_typesregistry_svce,
-                aM_overrider
-            );
-        })();
-        
-    }
-    else if ( !(typeof define === 'undefined') && define.amd) {
-        // AMD / RequireJS
-        
-        define( "m_decoratesystemprototypes_svce",
-            [
-                "m_typesregistry_svce",
-                "m_overrider_svce"
-            ],
-            aMod_definer
-        );
-    }
-    else if ( !(typeof nomod === 'undefined') && nomod.register) {
-        // nomod toy module definition, resolution and dependency injection
-    
-        nomod.register( ComponentName, ModulePackages, ModuleName,
-            [ /* theDependencies */
-                nomod.fComputeFullName( "prettytype", "typesregistry", "typesregistry_type"),
-                nomod.fComputeFullName( "prettytype", "modboot", "overrider_svce")
-            ],
-            aMod_definer
-        );
-    
-    }
-    
-})();
-
-
-
-
-
 ;'use strict';
 
 /*
@@ -385,7 +82,7 @@ permissions and limitations under the Licence.
  *
  ***************************************************************************
 
- Copyright 2014 2015 2016 Antonio Carrasco Valero
+ Copyright 2014 2015 2016 2017 2018 Antonio Carrasco Valero
  Multi-platform Javascript EC5 coding patterns and base super-prototypes, for write-once, run and test everywhere (angular, require, node).
 
 Licensed under the EUPL, Version 1.1 only (the "Licence");
@@ -1424,7 +1121,7 @@ permissions and limitations under the Licence.
  *
  ***************************************************************************
 
- Copyright 2014 2015 2016 Antonio Carrasco Valero
+ Copyright 2014 2015 2016 2017 2018 Antonio Carrasco Valero
  Multi-platform Javascript EC5 coding patterns and base super-prototypes, for write-once, run and test everywhere (angular, require, node).
 
 Licensed under the EUPL, Version 1.1 only (the "Licence");
@@ -2592,7 +2289,7 @@ permissions and limitations under the Licence.
  *
  ***************************************************************************
 
- Copyright 2014 2015 2016 Antonio Carrasco Valero
+ Copyright 2014 2015 2016 2017 2018 Antonio Carrasco Valero
  Multi-platform Javascript EC5 coding patterns and base super-prototypes, for write-once, run and test everywhere (angular, require, node).
 
 Licensed under the EUPL, Version 1.1 only (the "Licence");
@@ -3066,7 +2763,7 @@ if( !( typeof angular === 'undefined') && angular.module) {
  *
  ***************************************************************************
 
- Copyright 2014 2015 2016 Antonio Carrasco Valero
+ Copyright 2014 2015 2016 2017 2018 Antonio Carrasco Valero
  Multi-platform Javascript EC5 coding patterns and base super-prototypes, for write-once, run and test everywhere (angular, require, node).
 
 Licensed under the EUPL, Version 1.1 only (the "Licence");
@@ -5713,7 +5410,7 @@ permissions and limitations under the Licence.
  *
  ***************************************************************************
 
- Copyright 2014 2015 2016 Antonio Carrasco Valero
+ Copyright 2014 2015 2016 2017 2018 Antonio Carrasco Valero
  Multi-platform Javascript EC5 coding patterns and base super-prototypes, for write-once, run and test everywhere (angular, require, node).
 
 Licensed under the EUPL, Version 1.1 only (the "Licence");
@@ -6988,7 +6685,7 @@ if( !( typeof angular === 'undefined') && angular.module) {
  *
  ***************************************************************************
 
- Copyright 2014 2015 2016 Antonio Carrasco Valero
+ Copyright 2014 2015 2016 2017 2018 Antonio Carrasco Valero
  Multi-platform Javascript EC5 coding patterns and base super-prototypes, for write-once, run and test everywhere (angular, require, node).
 
 Licensed under the EUPL, Version 1.1 only (the "Licence");
@@ -8042,7 +7739,7 @@ permissions and limitations under the Licence.
  *
  ***************************************************************************
 
- Copyright 2014 2015 2016 Antonio Carrasco Valero
+ Copyright 2014 2015 2016 2017 2018 Antonio Carrasco Valero
  Multi-platform Javascript EC5 coding patterns and base super-prototypes, for write-once, run and test everywhere (angular, require, node).
 
 Licensed under the EUPL, Version 1.1 only (the "Licence");
@@ -9367,7 +9064,7 @@ permissions and limitations under the Licence.
                 var aPrototype = new theS_dumpingpolicy_type.DumpingPolicy_SuperPrototypeConstructor();
     
                 aPrototype._v_Kind                    = "prototype";
-                aPrototype._v_SuperPrototype          = null;
+                aPrototype._v_SuperPrototype         = theS_dumpingpolicy_type.DumpingPolicy_Prototype;
                 aPrototype._v_Type                    = TypeName;
                 aPrototype._v_Prototype_DumpingPolicyFilterKinds       = aPrototype;
                 /* Shall be filled below, at the end of the function enclosing this (aMod_builder), when aModule is defined */
@@ -10006,7 +9703,15 @@ permissions and limitations under the Licence.
                 "DumpingPolicyFilterKinds_SuperPrototypeConstructor":       DumpingPolicyFilterKinds_SuperPrototypeConstructor,
                 "DumpingPolicyFilterKinds_CreatePrototypeSlotsOn":          DumpingPolicyFilterKinds_CreatePrototypeSlotsOn,
                 "DumpingPolicyFilterKinds_CreateInstanceSlotsOn":           DumpingPolicyFilterKinds_CreateInstanceSlotsOn,
-        
+                "DumpingPolicy_ProtoInstancer":                  DumpingPolicyFilterKinds_ProtoInstancer,
+                "DumpingPolicy_ProtoDefinerOn":                  DumpingPolicyFilterKinds_ProtoDefinerOn,
+                "DumpingPolicy_ProtoFactory":                    DumpingPolicyFilterKinds_ProtoFactory,
+                "DumpingPolicy_Constructor":                     DumpingPolicyFilterKinds_Constructor,
+                "DumpingPolicy_SuperPrototypeConstructor":       DumpingPolicyFilterKinds_SuperPrototypeConstructor,
+                "DumpingPolicy_CreatePrototypeSlotsOn":          DumpingPolicyFilterKinds_CreatePrototypeSlotsOn,
+                "DumpingPolicy_CreateInstanceSlotsOn":           DumpingPolicyFilterKinds_CreateInstanceSlotsOn,
+    
+    
                 "ProtoInstancer":                          DumpingPolicyFilterKinds_ProtoInstancer,
                 "ProtoDefinerOn":                          DumpingPolicyFilterKinds_ProtoDefinerOn,
                 "ProtoFactory":                            DumpingPolicyFilterKinds_ProtoFactory,
@@ -10452,7 +10157,7 @@ permissions and limitations under the Licence.
                 var aPrototype = new theS_dumpingpolicy_filterkinds_type.DumpingPolicyFilterKinds_SuperPrototypeConstructor();
         
                 aPrototype._v_Kind                    = "prototype";
-                aPrototype._v_SuperPrototype          = null;
+                aPrototype._v_SuperPrototype          = theS_dumpingpolicy_filterkinds_type.DumpingPolicyFilterKinds_Prototype;
                 aPrototype._v_Type                    = TypeName;
                 aPrototype._v_Prototype_DumpingPolicyTriggerKinds    = aPrototype;
                 /* Shall be filled below, at the end of the function enclosing this (aMod_builder), when aModule is defined */
@@ -11173,7 +10878,21 @@ permissions and limitations under the Licence.
                 "DumpingPolicyTriggerKinds_SuperPrototypeConstructor":       DumpingPolicyTriggerKinds_SuperPrototypeConstructor,
                 "DumpingPolicyTriggerKinds_CreatePrototypeSlotsOn":          DumpingPolicyTriggerKinds_CreatePrototypeSlotsOn,
                 "DumpingPolicyTriggerKinds_CreateInstanceSlotsOn":           DumpingPolicyTriggerKinds_CreateInstanceSlotsOn,
-        
+                "DumpingPolicyFilterKinds_ProtoInstancer":                  DumpingPolicyTriggerKinds_ProtoInstancer,
+                "DumpingPolicyFilterKinds_ProtoDefinerOn":                  DumpingPolicyTriggerKinds_ProtoDefinerOn,
+                "DumpingPolicyFilterKinds_ProtoFactory":                    DumpingPolicyTriggerKinds_ProtoFactory,
+                "DumpingPolicyFilterKinds_Constructor":                     DumpingPolicyTriggerKinds_Constructor,
+                "DumpingPolicyFilterKinds_SuperPrototypeConstructor":       DumpingPolicyTriggerKinds_SuperPrototypeConstructor,
+                "DumpingPolicyFilterKinds_CreatePrototypeSlotsOn":          DumpingPolicyTriggerKinds_CreatePrototypeSlotsOn,
+                "DumpingPolicyFilterKinds_CreateInstanceSlotsOn":           DumpingPolicyTriggerKinds_CreateInstanceSlotsOn,
+                "DumpingPolicy_ProtoInstancer":                  DumpingPolicyTriggerKinds_ProtoInstancer,
+                "DumpingPolicy_ProtoDefinerOn":                  DumpingPolicyTriggerKinds_ProtoDefinerOn,
+                "DumpingPolicy_ProtoFactory":                    DumpingPolicyTriggerKinds_ProtoFactory,
+                "DumpingPolicy_Constructor":                     DumpingPolicyTriggerKinds_Constructor,
+                "DumpingPolicy_SuperPrototypeConstructor":       DumpingPolicyTriggerKinds_SuperPrototypeConstructor,
+                "DumpingPolicy_CreatePrototypeSlotsOn":          DumpingPolicyTriggerKinds_CreatePrototypeSlotsOn,
+                "DumpingPolicy_CreateInstanceSlotsOn":           DumpingPolicyTriggerKinds_CreateInstanceSlotsOn,
+    
                 "ProtoInstancer":                          DumpingPolicyTriggerKinds_ProtoInstancer,
                 "ProtoDefinerOn":                          DumpingPolicyTriggerKinds_ProtoDefinerOn,
                 "ProtoFactory":                            DumpingPolicyTriggerKinds_ProtoFactory,
@@ -14361,10 +14080,10 @@ permissions and limitations under the Licence.
             var RecordingPolicyKeepAll_ProtoInstancer = function() {
     
                 /* Prototypical inheritance from RecordingPolicy */
-                var aPrototype = new theS_recordingpolicy_type.RecordingPolicyKeepAll_SuperPrototypeConstructor();
+                var aPrototype = new theS_recordingpolicy_type.RecordingPolicy_SuperPrototypeConstructor();
     
                 aPrototype._v_Kind                    = "prototype";
-                aPrototype._v_SuperPrototype          = null;
+                aPrototype._v_SuperPrototype          = theS_recordingpolicy_type.RecordingPolicy_Prototype;
                 aPrototype._v_Type                    = TypeName;
                 aPrototype._v_Prototype_RecordingPolicyKeepAll  = aPrototype;
                 /* Shall be filled below, at the end of the function enclosing this (aMod_builder), when aModule is defined */
@@ -14733,7 +14452,14 @@ permissions and limitations under the Licence.
                 "RecordingPolicyKeepAll_SuperPrototypeConstructor":       RecordingPolicyKeepAll_SuperPrototypeConstructor,
                 "RecordingPolicyKeepAll_CreatePrototypeSlotsOn":          RecordingPolicyKeepAll_CreatePrototypeSlotsOn,
                 "RecordingPolicyKeepAll_CreateInstanceSlotsOn":           RecordingPolicyKeepAll_CreateInstanceSlotsOn,
-        
+                "RecordingPolicy_ProtoInstancer":                  RecordingPolicyKeepAll_ProtoInstancer,
+                "RecordingPolicy_ProtoDefinerOn":                  RecordingPolicyKeepAll_ProtoDefinerOn,
+                "RecordingPolicy_ProtoFactory":                    RecordingPolicyKeepAll_ProtoFactory,
+                "RecordingPolicy_Constructor":                     RecordingPolicyKeepAll_Constructor,
+                "RecordingPolicy_SuperPrototypeConstructor":       RecordingPolicyKeepAll_SuperPrototypeConstructor,
+                "RecordingPolicy_CreatePrototypeSlotsOn":          RecordingPolicyKeepAll_CreatePrototypeSlotsOn,
+                "RecordingPolicy_CreateInstanceSlotsOn":           RecordingPolicyKeepAll_CreateInstanceSlotsOn,
+                
                 "ProtoInstancer":                          RecordingPolicyKeepAll_ProtoInstancer,
                 "ProtoDefinerOn":                          RecordingPolicyKeepAll_ProtoDefinerOn,
                 "ProtoFactory":                            RecordingPolicyKeepAll_ProtoFactory,
@@ -14922,7 +14648,7 @@ permissions and limitations under the Licence.
     
     var ComponentName    = "prettytype";
     var ModuleName     = "recordingpolicy_keepsome_type";
-    var ModulePackages = "identifying";
+    var ModulePackages = "recording";
     var ModuleFullName = ModulePackages + "/" + ModuleName;
     var TypeName       = "RecordingPolicyKeepSome";
     
@@ -15147,7 +14873,7 @@ permissions and limitations under the Licence.
                 var aPrototype = new theS_recordingpolicy_keepall_type.RecordingPolicyKeepAll_SuperPrototypeConstructor();
     
                 aPrototype._v_Kind                    = "prototype";
-                aPrototype._v_SuperPrototype          = null;
+                aPrototype._v_SuperPrototype          = theS_recordingpolicy_keepall_type.RecordingPolicyKeepAll_Prototype;
                 aPrototype._v_Type                    = TypeName;
                 aPrototype._v_Prototype_RecordingPolicyKeepSome = aPrototype;
                 /* Shall be filled below, at the end of the function enclosing this (aMod_builder), when aModule is defined */
@@ -15309,7 +15035,7 @@ permissions and limitations under the Licence.
         
                     this._v_Prototype_RecordingPolicyKeepAll.pRelease.apply( this);
         
-                    this._v_MustKeepRecords = null;
+                    this._v_MustKeepRecordsMaxNumber = null;
         
                 };
                 if( pRelease){}/* CQT */
@@ -15489,7 +15215,21 @@ permissions and limitations under the Licence.
                 "RecordingPolicyKeepSome_SuperPrototypeConstructor":       RecordingPolicyKeepSome_SuperPrototypeConstructor,
                 "RecordingPolicyKeepSome_CreatePrototypeSlotsOn":          RecordingPolicyKeepSome_CreatePrototypeSlotsOn,
                 "RecordingPolicyKeepSome_CreateInstanceSlotsOn":           RecordingPolicyKeepSome_CreateInstanceSlotsOn,
-        
+                "RecordingPolicyKeepAll_ProtoInstancer":                  RecordingPolicyKeepSome_ProtoInstancer,
+                "RecordingPolicyKeepAll_ProtoDefinerOn":                  RecordingPolicyKeepSome_ProtoDefinerOn,
+                "RecordingPolicyKeepAll_ProtoFactory":                    RecordingPolicyKeepSome_ProtoFactory,
+                "RecordingPolicyKeepAll_Constructor":                     RecordingPolicyKeepSome_Constructor,
+                "RecordingPolicyKeepAll_SuperPrototypeConstructor":       RecordingPolicyKeepSome_SuperPrototypeConstructor,
+                "RecordingPolicyKeepAll_CreatePrototypeSlotsOn":          RecordingPolicyKeepSome_CreatePrototypeSlotsOn,
+                "RecordingPolicyKeepAll_CreateInstanceSlotsOn":           RecordingPolicyKeepSome_CreateInstanceSlotsOn,
+                "RecordingPolicy_ProtoInstancer":                  RecordingPolicyKeepSome_ProtoInstancer,
+                "RecordingPolicy_ProtoDefinerOn":                  RecordingPolicyKeepSome_ProtoDefinerOn,
+                "RecordingPolicy_ProtoFactory":                    RecordingPolicyKeepSome_ProtoFactory,
+                "RecordingPolicy_Constructor":                     RecordingPolicyKeepSome_Constructor,
+                "RecordingPolicy_SuperPrototypeConstructor":       RecordingPolicyKeepSome_SuperPrototypeConstructor,
+                "RecordingPolicy_CreatePrototypeSlotsOn":          RecordingPolicyKeepSome_CreatePrototypeSlotsOn,
+                "RecordingPolicy_CreateInstanceSlotsOn":           RecordingPolicyKeepSome_CreateInstanceSlotsOn,
+    
                 "ProtoInstancer":                          RecordingPolicyKeepSome_ProtoInstancer,
                 "ProtoDefinerOn":                          RecordingPolicyKeepSome_ProtoDefinerOn,
                 "ProtoFactory":                            RecordingPolicyKeepSome_ProtoFactory,
@@ -15678,7 +15418,7 @@ permissions and limitations under the Licence.
     
     var ComponentName    = "prettytype";
     var ModuleName     = "recordingpolicy_keeprecent_type";
-    var ModulePackages = "identifying";
+    var ModulePackages = "recording";
     var ModuleFullName = ModulePackages + "/" + ModuleName;
     var TypeName       = "RecordingPolicyKeepRecent";
     
@@ -15903,7 +15643,7 @@ permissions and limitations under the Licence.
                 var aPrototype = new theS_recordingpolicy_keepsome_type.RecordingPolicyKeepSome_SuperPrototypeConstructor();
     
                 aPrototype._v_Kind                    = "prototype";
-                aPrototype._v_SuperPrototype          = null;
+                aPrototype._v_SuperPrototype          = theS_recordingpolicy_keepsome_type.RecordingPolicyKeepSome_Prototype;
                 aPrototype._v_Type                    = TypeName;
                 aPrototype._v_Prototype_RecordingPolicyKeepRecent  = aPrototype;
                 /* Shall be filled below, at the end of the function enclosing this (aMod_builder), when aModule is defined */
@@ -16262,7 +16002,28 @@ permissions and limitations under the Licence.
                 "RecordingPolicyKeepRecent_SuperPrototypeConstructor":       RecordingPolicyKeepRecent_SuperPrototypeConstructor,
                 "RecordingPolicyKeepRecent_CreatePrototypeSlotsOn":          RecordingPolicyKeepRecent_CreatePrototypeSlotsOn,
                 "RecordingPolicyKeepRecent_CreateInstanceSlotsOn":           RecordingPolicyKeepRecent_CreateInstanceSlotsOn,
-        
+                "RecordingPolicyKeepSome_ProtoInstancer":                  RecordingPolicyKeepRecent_ProtoInstancer,
+                "RecordingPolicyKeepSome_ProtoDefinerOn":                  RecordingPolicyKeepRecent_ProtoDefinerOn,
+                "RecordingPolicyKeepSome_ProtoFactory":                    RecordingPolicyKeepRecent_ProtoFactory,
+                "RecordingPolicyKeepSome_Constructor":                     RecordingPolicyKeepRecent_Constructor,
+                "RecordingPolicyKeepSome_SuperPrototypeConstructor":       RecordingPolicyKeepRecent_SuperPrototypeConstructor,
+                "RecordingPolicyKeepSome_CreatePrototypeSlotsOn":          RecordingPolicyKeepRecent_CreatePrototypeSlotsOn,
+                "RecordingPolicyKeepSome_CreateInstanceSlotsOn":           RecordingPolicyKeepRecent_CreateInstanceSlotsOn,
+                "RecordingPolicyKeepAll_ProtoInstancer":                  RecordingPolicyKeepRecent_ProtoInstancer,
+                "RecordingPolicyKeepAll_ProtoDefinerOn":                  RecordingPolicyKeepRecent_ProtoDefinerOn,
+                "RecordingPolicyKeepAll_ProtoFactory":                    RecordingPolicyKeepRecent_ProtoFactory,
+                "RecordingPolicyKeepAll_Constructor":                     RecordingPolicyKeepRecent_Constructor,
+                "RecordingPolicyKeepAll_SuperPrototypeConstructor":       RecordingPolicyKeepRecent_SuperPrototypeConstructor,
+                "RecordingPolicyKeepAll_CreatePrototypeSlotsOn":          RecordingPolicyKeepRecent_CreatePrototypeSlotsOn,
+                "RecordingPolicyKeepAll_CreateInstanceSlotsOn":           RecordingPolicyKeepRecent_CreateInstanceSlotsOn,
+                "RecordingPolicy_ProtoInstancer":                  RecordingPolicyKeepRecent_ProtoInstancer,
+                "RecordingPolicy_ProtoDefinerOn":                  RecordingPolicyKeepRecent_ProtoDefinerOn,
+                "RecordingPolicy_ProtoFactory":                    RecordingPolicyKeepRecent_ProtoFactory,
+                "RecordingPolicy_Constructor":                     RecordingPolicyKeepRecent_Constructor,
+                "RecordingPolicy_SuperPrototypeConstructor":       RecordingPolicyKeepRecent_SuperPrototypeConstructor,
+                "RecordingPolicy_CreatePrototypeSlotsOn":          RecordingPolicyKeepRecent_CreatePrototypeSlotsOn,
+                "RecordingPolicy_CreateInstanceSlotsOn":           RecordingPolicyKeepRecent_CreateInstanceSlotsOn,
+    
                 "ProtoInstancer":                          RecordingPolicyKeepRecent_ProtoInstancer,
                 "ProtoDefinerOn":                          RecordingPolicyKeepRecent_ProtoDefinerOn,
                 "ProtoFactory":                            RecordingPolicyKeepRecent_ProtoFactory,
@@ -16449,12 +16210,12 @@ permissions and limitations under the Licence.
     var TypeName       = "Recorder";
     
     var aMod_definer = function( theSS_typesregistry_svce,
-                                   theSS_overrider_type,
-                                   theSS_IdentifierSvce,
-                                   theSS_IdentifierType,
-                                   theSS_RecordType,
-                                   theSS_RecordingPolicyType,
-                                   theSS_DumpingPolicyType) {
+                                 theSS_overrider_type,
+                                 theSS_IdentifierSvce,
+                                 theSS_IdentifierType,
+                                 theSS_RecordType,
+                                 theSS_RecordingPolicyType,
+                                 theSS_DumpingPolicyType) {
         
         var aMod_builder = function( theS_overrider_type,
                                      theS_IdentifierSvce,
@@ -17788,8 +17549,8 @@ permissions and limitations under the Licence.
             "identifier_svce",
             "identifier_type",
             "record_type",
-            "recordingpolicy_type", // "recordingpolicy_keepall_type",
-            "dumpingpolicy_type", // "dumpingpolicy_filterkinds_type",
+            "recordingpolicy_keepall_type",
+            "dumpingpolicy_filterkinds_type",
             aMod_definer
         ]);
         
@@ -17804,8 +17565,8 @@ permissions and limitations under the Licence.
             var aM_identifier_svce = require('../identifying/identifier_svce');
             var aM_identifier_type = require('../identifying/identifier_type');
             var aM_record_type     = require('./record_type');
-            var aM_recordingpolicy = require('./recordingpolicy_type' /* './recordingpolicy_keepall_type'*/);
-            var aM_dumpingpolicy   = require('./dumpingpolicy_type' /* './dumpingpolicy_filterkinds_type' */);
+            var aM_recordingpolicy = require('./recordingpolicy_keepall_type');
+            var aM_dumpingpolicy   = require('./dumpingpolicy_filterkinds_type');
     
             return aMod_definer(
                 aM_typesregistry_svce,
@@ -17830,8 +17591,8 @@ permissions and limitations under the Licence.
                 "identifier_svce",
                 "identifier_type",
                 "record_type",
-                "recordingpolicy_type", // "recordingpolicy_keepall_type",
-                "dumpingpolicy_type" // "dumpingpolicy_filterkinds_type"
+                "recordingpolicy_keepall_type",
+                "dumpingpolicy_filterkinds_type"
             ],
             aMod_definer
         );
@@ -17847,8 +17608,8 @@ permissions and limitations under the Licence.
                 nomod.fComputeFullName( "prettytype", "identifying", "identifier_type"),
                 nomod.fComputeFullName( "prettytype", "identifying", "identifier_type"),
                 nomod.fComputeFullName( "prettytype", "recording", "record_type"),
-                nomod.fComputeFullName( "prettytype", "recording", "recordingpolicy_type"),
-                nomod.fComputeFullName( "prettytype", "recording", "dumpingpolicy_type")
+                nomod.fComputeFullName( "prettytype", "recording", "recordingpolicy_keepall_type"),
+                nomod.fComputeFullName( "prettytype", "recording", "dumpingpolicy_filterkinds_type")
             ],
             aMod_definer
         )
@@ -17905,21 +17666,52 @@ permissions and limitations under the Licence.
     
     var ComponentName    = "prettytype";
     var ModuleName     = "recorder_svce";
-    var ModulePackages = "identifying";
+    var ModulePackages = "recording";
     var ModuleFullName = ModulePackages + "/" + ModuleName;
+    var SingletonName  = "Recorder_Service";
     
     var aMod_definer = ( function( theSS_typesregistry_svce,
+                                   theSS_OverriderSvce,
                                    theSS_IdentifierSvce,
                                    theSS_RecorderType){
         
-        var aMod_builder = function( theS_IdentifierSvce,
+        var aMod_builder = function( theS_OverriderSvce,
+                                     theS_IdentifierSvce,
                                      theS_RecorderType) {
-        
-            return new theS_RecorderType.Recorder_Constructor( "Service_Recorder", theS_IdentifierSvce);
+    
+            if( typeof FG_logModLoads === 'function') { FG_logModLoads(ModuleFullName);}
+    
+            /* ***************************************************************
+             This Module is actually delivered as a singleton instance of the prototype defined in the module.
+             The module definition object itself is not actually returned as the module, but the singleton instance is,
+               which has a slot _v_Module through which it is possible to access the module definition object.
+            */
+            var aService = new theS_RecorderType.Recorder_Constructor( SingletonName, theS_IdentifierSvce);
+    
+            /* ***************************************************************
+             Because this singleton becomes a registered module, fill in metainformation usually found in modules
+           */
+            aService._v_Kind        = "singleton";
+            aService.ComponentName  = ComponentName;
+            aService.ModuleName     = ModuleName;
+            aService.ModulePackages = ModulePackages;
+            aService.ModuleFullName = ModuleFullName;
+            aService.SingletonName  = SingletonName;
+    
+            /* ***************************************************************
+              Return the instantiated service singleton as the module object.
+            */
+            return aService;
         };
     
-        
-
+    
+    
+        /* ***************************************************************
+          Make sure that the module is built only once, and that the same instance is supplied anytime
+          the module is required, as i.e. to resolve a dependency for another module.
+          Attempt to retrieve a module with same name already registered in the typesregistry_svce singleton.
+          If no such module exists then build the module and register it in the typesregistry_svce singleton.
+        */
         var anExistingModule = null;
         if(    !( typeof theSS_typesregistry_svce === 'undefined')
             && ( typeof theSS_typesregistry_svce.fRegisteredModule === 'function')) {
@@ -17928,6 +17720,7 @@ permissions and limitations under the Licence.
         if( !anExistingModule) {
         
             var aModule = aMod_builder(
+                theSS_OverriderSvce,
                 theSS_IdentifierSvce,
                 theSS_RecorderType
             );
@@ -17941,20 +17734,27 @@ permissions and limitations under the Licence.
         }
     
     
+        /* ***************************************************************
+         Return the module which was already built and registered in typesregistry_svce singleton, or just built.
+        */
         return anExistingModule;
     });
     
     
-
     
     
+    /* ***************************************************************
+     Define the module under various module definition libraries, all delegating in the same module definer function,
+     but each obtaining their own way any dependencies needed by this module.
+   */
     if( !( typeof angular === 'undefined') && angular.module) {
         // Angular (1.x)
-    
-        angular.module("identifyingTypes").factory("RecorderSvce",[
-            "TypesRegistrySvce",
-            "IdentifierSvce",
-            "RecorderType",
+        
+        angular.module( ModulePackages).factory( ModuleName, [
+            "typesregistry_svce",
+            "overrider_svce",
+            "identifier_svce",
+            "recorder_type",
             aMod_definer
         ]);
         
@@ -17963,786 +17763,17 @@ permissions and limitations under the Licence.
         // Node.js
         
         module.exports = (function() {
-    
-            var aM_typesregistry_svce = require('../modboot/typesregistry');
-            var aM_identifier_svce = require('./identifier_svce');
-            var aM_recorder        = require('./recorder_type');
-    
+            
+            var aM_typesregistry_svce  = require('../typesregistry/typesregistry_svce');
+            var aM_overrider_svce  = require('../overrider/overrider_svce');
+            var aM_identifier_svce = require('../identifying/identifier_svce');
+            var aM_recorder_type   = require('./recorder_type');
+            
             return aMod_definer(
                 aM_typesregistry_svce,
+                aM_overrider_svce,
                 aM_identifier_svce,
-                aM_recorder
-            );
-        })();
-        
-    }
-    else if ( !(typeof define === 'undefined') && define.amd) {
-        // AMD / RequireJS
-    
-        define( "m_recorder_svce",
-            [
-                "m_typesregistry_svce",
-                "m_identifier_svce",
-                "m_recorder_type"
-            ],
-            aMod_definer
-        );
-        
-    }
-    else if ( !(typeof nomod === 'undefined') && nomod.register) {
-        // nomod toy module definition, resolution and dependency injection
-    
-        nomod.register( ComponentName, ModulePackages, ModuleName,
-            [ /* theDependencies */
-                nomod.fComputeFullName( "prettytype", "modboot",     "typesregistry"),
-                nomod.fComputeFullName( "prettytype", "identifying", "identifier_svce"),
-                nomod.fComputeFullName( "prettytype", "identifying", "recorder_type")
-            ],
-            aMod_definer
-        );
-    
-    }
-    
-    
-})();
-
-
-
-
-
-
-;/*
- * common_type.js
- *
- * Created @author Antonio Carrasco Valero 201410030426
- *
- *
- ***************************************************************************
-
- Copyright 2014 2015 2016 2017 2018 Antonio Carrasco Valero
- Multi-platform Javascript EC5 coding patterns and base super-prototypes, for write-once, run and test everywhere (angular, require, node).
-
-Licensed under the EUPL, Version 1.1 only (the "Licence");
-You may not use this work except in compliance with the
-Licence.
-You may obtain a copy of the Licence at:
-https://joinup.ec.europa.eu/software/page/eupl/licence-eupl
-Unless required by applicable law or agreed to in
-writing, software distributed under the Licence is
-distributed on an "AS IS" basis,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
-express or implied.
-See the Licence for the specific language governing
-permissions and limitations under the Licence.
- {{License2}}
-
- {{Licensed1}}
- {{Licensed2}}
-
- ***************************************************************************
- *
- */
-
-'use strict';
-
-(function () {
-    
-    var ComponentName    = "prettytype";
-    var ModuleName     = "common_type";
-    var ModulePackages = "common";
-    var ModuleFullName = ModulePackages + "/" + ModuleName;
-    
-    var aMod_definer = ( function( theSS_typesregistry_svce,
-                                   theSS_overrider_type,
-                                   theSS_IdentifierSvce,
-                                   theSS_RecorderSvce,
-                                   theSS_EventTypes_Common,
-                                   theSS_Travesals){
-        
-        var aMod_builder = function( theS_overrider_type,
-                                     theS_IdentifierSvce,
-                                     theS_RecorderSvce,
-                                     theS_EventTypes_Common,
-                                     theS_Travesals) {
-            
-            
-            if( typeof FG_logModLoads === 'function') { FG_logModLoads(ModuleFullName);}
-            
-            
-            
-            
-            var pgInitWithModuleVariations = function( theToInit) {
-                
-                if( !theToInit) {
-                    return;
-                }
-                
-                
-                /* BeWare: keeping references to record instances shall prevent reclamation of their memory by the garbage collector
-                   Note that when a recordingpolicy_keepall is plugged into the recorder, all records shall be kept in memory in the _v_Records slot property of the recorder instance
-                   */
-                theToInit.KEEPOWNRECORDS = false;
-            };
-            
-            
-            
-            
-            
-            var InitFromModuleVariations = function( theToInit) {
-                if( !theToInit) {
-                    return;
-                }
-                
-                for( var aGlobalName in ModuleVariations) {
-                    if( ModuleVariations.hasOwnProperty( aGlobalName)) {
-                        theToInit[ aGlobalName] = ModuleVariations[ aGlobalName];
-                    }
-                }
-            };
-            
-            
-            var ModuleVariations = { };
-            pgInitWithModuleVariations( ModuleVariations);
-            theS_overrider_type.pOverrideModuleVariations( ModuleFullName, ModuleVariations);
-    
-    
-    
-    
-    
-    
-    
-    
-    
-            /* ***************************************************************
-               Init here key-value pairs, considered constants - and therefore with an expected read-only life-cycle.
-               Constants can be accessed through the Module .ModuleConstants.
-               
-               If the Module defines a prototype:
-              
-                   Instances of the prototype also have same access this._v_Module.ModuleConstants.
-                   Instances of the prototype are those created with new <prototypename>_Constructor.
-                   
-                   Any sub-prototypes defined in other modules and their instances shall have a different _v_Module and therefore different constants,
-                   
-                   Any sub-prototype in other module and their instances may traverse upwards the prototype chain
-                   through the prototype _v_SuperPrototype property until reaching the prototype of the desired Module,
-                   or directly access the desired module through the property _v_Prototype_<prototypename>.
-                   From the chosen prototype it is possible to access aModule.ModuleConstants
-                   (Sub-prototypes are prototypes based on objects created with this module's
-                   new <prototypename>_SuperPrototypeConstructor) and transitively all their sub-prototypes.
-                   
-                   
-                   The key-values in a prototype's module ModuleConstants shall be copied onto the prototype object
-                   which then hold key-value pairs for all keys in ModuleConstants, with the initial values same as in the ModuleConstants,
-                   but these values may be changed in the prototype object.
-                   The prototype may access each constant defined in ModuleConstants
-                   as this.<CONSTANT_NAME> or this["<CONSTANT_NAME>"] .
-                   
-                   All sub-prototypes defined in other modules and their instances
-                   may also access this.<CONSTANT_NAME> or this["<CONSTANT_NAME>"]
-                   the key-values defined in any prototype recursively upwards the prototype hierarchy
-                   and therefore to the key-values copied into each prototype object from their respective module ModuleConstants.
-            */
-            var pgInitWithModuleConstants = function( theToInit) {
-                if( !theToInit) {
-                    return;
-                }
-                
-                if( theS_EventTypes_Common && theS_EventTypes_Common.InitFromModuleConstants) {
-                    theS_EventTypes_Common.InitFromModuleConstants( theToInit);
-                }
-                
-                theToInit.COMMON_DEFAULTTITLE = "CommonDefaultName";
-                
-                theToInit.UNKNOWNID = "?i?";
-                
-                theToInit.VALUEDIFFATTOP = "/";
-                theToInit.DONOTCOMPAREVALUESYMBOL = "@DONOTCOMPARE699@";
-                
-                
-                
-                
-                
-                theToInit.FIELDNAMEDOT = ".";
-                
-                theToInit.URLPATHSEPARATOR   = "/";
-                theToInit.HTTPQUERYCHAR      = "?";
-                theToInit.HTTPPARMASSIGN     = "=";
-                theToInit.HTTPEXTRAPARMCHAR  = "&";
-                
-                
-                theToInit.DATATYPE_FILE = "File";
-                
-            };
-    
-    
-    
-            /* ***************************************************************
-               Holder of name-values in the Module, considered Constants.
-            */
-            var ModuleConstants = {};
-            InitFromModuleVariations( ModuleConstants);
-            pgInitWithModuleConstants( ModuleConstants);
-    
-    
-    
-    
-            /* ***************************************************************
-               Just copy each key-value in ModuleConstants onto the supplied object.
-               Used to fill the Module object and the Prototype object with the key-value pairs in Constants.
-             */
-            var InitFromModuleConstants = function( theToInit) {
-                if( !theToInit) {
-                    return;
-                }
-                
-                for( var aGlobalName in ModuleConstants) {
-                    if( ModuleConstants.hasOwnProperty( aGlobalName)) {
-                        theToInit[ aGlobalName] = ModuleConstants[ aGlobalName];
-                    }
-                }
-            };
-    
-    
-    
-    
-            /* ***************************************************************
-               Init here name-values, considered Globals - and therefore with an expected read-write life-cycle.
-               Globals can only be accessed through the Module .ModuleGlobals. Instances may access this._v_Module.ModuleGlobals
-               
-                If the Module defines a prototype:
-              
-                   Instances of the prototype also have same access this._v_Module.ModuleGlobals.
-                   Instances of the prototype are those created with new <prototypename>_Constructor.
-                   
-                   Any sub-prototypes defined in other modules and their instances shall have a different _v_Module and therefore different globals,
-                   
-                   Any sub-prototype in other module and their instances may traverse upwards the prototype chain
-                   through the prototype _v_SuperPrototype property until reaching the prototype of the desired Module,
-                   or directly access the desired module through the property _v_Prototype_<prototypename>.
-                   From the chosen prototype it is possible to access aModule.ModuleGlobals
-                   (Sub-prototypes are prototypes based on objects created with this module's
-                   new <prototypename>_SuperPrototypeConstructor) and transitively all their sub-prototypes.
-            */
-            var InitModuleGlobalsOn = function( theToInit) {
-        
-                if( !theToInit) {
-                }
-            };
-    
-    
-    
-            /* ***************************************************************
-              Holder of name-values in the Module, considered Globals.
-            */
-            var ModuleGlobals = { };
-            InitModuleGlobalsOn( ModuleGlobals);
-    
-    
-    
-    
-    
-            var aCommon_Prototype = (function() {
-                
-                
-                var aPrototype = {};
-                
-                InitFromModuleConstants( aPrototype);
-    
-                aPrototype._v_IsPrototype = true;
-                aPrototype._v_SuperPrototype = null;
-                
-                aPrototype._v_Type = "Common";
-                
-                aPrototype._v_Module = null;
-    
-                aPrototype._v_Prototype_Common = aPrototype;
-    
-                
-                aPrototype._v_Identifier = null;
-                aPrototype._v_Recorder   = null;
-                
-                aPrototype._v_Id    = null;
-                aPrototype._v_Title = null;
-                
-                aPrototype._v_OwnRecords = null;
-                
-                
-                
-                
-                
-                
-                var _pInit = function( theTitle, theIdentifier, theRecorder) {
-                    
-                    this._pInit_Common( theTitle, theIdentifier, theRecorder);
-                };
-                if( _pInit){}/* CQT */
-                aPrototype._pInit = _pInit;
-                
-                
-                
-                
-                
-                
-                
-                var _fTitleDefault = function( ) {
-                    
-                    return this.COMMON_DEFAULTTITLE;
-                };
-                if( _fTitleDefault){}/* CQT */
-                aPrototype._fTitleDefault = _fTitleDefault;
-                
-                
-                
-                
-                
-                
-                
-                
-                var _pInit_Common = function( theTitle, theIdentifier, theRecorder) {
-                    
-                    this._v_Prototype = aPrototype;
-                    this._v_Type      = this._v_Prototype._v_Type;
-                    this._v_Module    = this._v_Prototype._v_Module;
-                    
-                    this._v_Identifier = theIdentifier;
-                    if( !this._v_Identifier) {
-                        this._v_Identifier = theS_IdentifierSvce;
-                    }
-                    
-                    this._v_Recorder   = theRecorder;
-                    if( !this._v_Recorder) {
-                        this._v_Recorder = theS_RecorderSvce;
-                    }
-                    
-                    if( this._v_Identifier) {
-                        this._v_Id = this._v_Identifier.fReserveId();
-                    }
-                    
-                    if( !this._v_Id) {
-                        this._v_Id = this.UNKNOWNID;
-                    }
-                    
-                    this._v_Title = theTitle;
-                    if( !this._v_Title) {
-                        this._v_Title = this._fTitleDefault();
-                    }
-                    
-                    this._v_OwnRecords = [ ];
-                };
-                if( _pInit_Common){}/* CQT */
-                aPrototype._pInit_Common = _pInit_Common;
-                
-                
-                
-                
-                
-                
-                var fFullTypeNameString = function() {
-                    
-                    var aFullTypeName = this._v_Module.ModuleFullName + "." + this._v_Type;
-                    if( aFullTypeName){}/* CQT */
-                    
-                    return aFullTypeName;
-                };
-                if( fFullTypeNameString){}/* CQT */
-                aPrototype.fFullTypeNameString = fFullTypeNameString;
-                
-                
-                
-                
-                
-                
-                
-                
-                var fIdentifyingJSON = function() {
-                    
-                    var aIdentifiyingJSON = {
-                        "module": this._v_Module.ModuleFullName,
-                        "type": this._v_Type,
-                        "id":   this._v_Id
-                    };
-                    if( aIdentifiyingJSON){}/* CQT */
-                    return aIdentifiyingJSON;
-                };
-                if( fIdentifyingJSON){}/* CQT */
-                aPrototype.fIdentifyingJSON = fIdentifyingJSON;
-                
-                
-                
-                
-                
-                
-                var fIdentifyingString = function() {
-                    
-                    var aIdentifyingJSON = this.fIdentifyingJSON();
-                    
-                    var aIdentifyingString = "?";
-                    try {
-                        aIdentifyingString = JSON.stringify( aIdentifyingJSON);
-                    }
-                    catch( anException){
-                        aIdentifyingString = "Error_whileJSON_stringify"
-                    }
-                    
-                    return aIdentifyingString;
-                };
-                if( fIdentifyingString){}/* CQT */
-                aPrototype.fIdentifyingString = fIdentifyingString;
-                
-                
-                
-                
-                
-                
-                
-                var fIdentifyingWithTitleJSON = function() {
-                    
-                    var aIdentifyingJSON = this.fIdentifyingJSON();
-                    
-                    aIdentifyingJSON[ "title"] = this._v_Title;
-                    
-                    return aIdentifyingJSON;
-                };
-                if( fIdentifyingWithTitleJSON){}/* CQT */
-                aPrototype.fIdentifyingWithTitleJSON = fIdentifyingWithTitleJSON;
-                
-                
-                
-                
-                
-                
-                var fIdentifyingWithTitleString = function() {
-                    
-                    var aIdentifyingJSON = this.fIdentifyingWithTitleJSON();
-                    
-                    var aIdentifyingString = "?";
-                    try {
-                        aIdentifyingString = JSON.stringify( aIdentifyingJSON);
-                    }
-                    catch( anException){
-                        aIdentifyingString = "Error_whileJSON_stringify"
-                    }
-                    if( aIdentifyingString){}/* CQT */
-                    
-                    return aIdentifyingString;
-                };
-                if( fIdentifyingWithTitleString){}/* CQT */
-                aPrototype.fIdentifyingWithTitleString = fIdentifyingWithTitleString;
-                
-                
-                
-                
-                
-                
-                
-                var fToResultJSON = function( theCommonObjects, theAlready) {
-                    if( !( theAlready == null)) {
-                        if( ( typeof theAlready.fAlready === "function") && theAlready.fAlready( this)){
-                            return this.fIdentifyingJSON();
-                        }
-                    }
-                    
-                    var aResultJSON = this.fIdentifyingWithTitleJSON();
-                    if( aResultJSON){}/* CQT */
-                    
-                    return aResultJSON;
-                };
-                if( fToResultJSON){}/* CQT */
-                aPrototype.fToResultJSON = fToResultJSON;
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                var fAsLogObject = function() {
-                    
-                    var aLog = this.fIdentifyingWithTitleJSON();
-                    if( aLog){}/* CQT */
-                    
-                    return aLog;
-                };
-                if( fAsLogObject){}/* CQT */
-                aPrototype.fAsLogObject = fAsLogObject;
-                
-                
-                
-                
-                
-                
-                var fLogString = function() {
-                    
-                    var aLog = this.fAsLogObject();
-                    if( aLog == null) {
-                        return "";
-                    }
-                    
-                    var aLogString = "";
-                    try {
-                        aLogString = JSON.stringify( aLog);
-                    }
-                    catch( anException) {
-                        aLogString = "Error_while_fLogString_JSON_stringify"
-                    }
-                    
-                    return aLogString;
-                };
-                if( fLogString){}/* CQT */
-                aPrototype.fLogString = fLogString;
-                
-                
-                
-                
-                /*
-                var toString = function() {
-                    return this.fLogString();
-                };
-                aPrototype.toString = toString;
-                */
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                var fRecord = function( theMethodName, theEventKind, theData, theReason, theDetail) {
-                    
-                    if( this._v_Recorder == null) {
-                        return null;
-                    }
-                    
-                    var aRecord = this._v_Recorder.fCreateAndRegisterRecord( this, theMethodName, theEventKind, theData, theReason, theDetail);
-                    
-                    if( this.KEEPOWNRECORDS) {
-                        this._v_OwnRecords.push( aRecord);
-                    }
-                    
-                    return aRecord;
-                };
-                if( fRecord){}/* CQT */
-                aPrototype.fRecord = fRecord;
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                /* Deprecated. Kept in support of common type pLogRecord . Use fRecord which shall invoke recorder fCreateAndRegisterRecord and take care of delegating for the record to be recorded and dumped to console */
-                var pLogRecord = function( theRecord) {
-                    
-                    if( !theRecord) {
-                        return;
-                    }
-                    
-                    if( !this._v_Recorder) {
-                        return;
-                    }
-                    
-                    
-                    this._v_Recorder.pLogRecord( theRecord);
-                    
-                };
-                if( pLogRecord){}/* CQT */
-                aPrototype.pLogRecord = pLogRecord;
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                var fFirstDiff = function( theActualValue, theCheckValue) {
-                    
-                    return theS_Travesals.fgFirstDiff( theActualValue, theCheckValue);
-                };
-                if( fFirstDiff){}/* CQT */
-                aPrototype.fFirstDiff = fFirstDiff;
-                
-                
-                
-                
-                
-                
-                
-                
-                return aPrototype;
-                
-            })();
-            
-            
-            
-            
-            var Common_Constructor = function( theTitle, theIdentifier, theRecorder) {
-                this._v_IsPrototype = false;
-                this._v_Prototype = aCommon_Prototype;
-                
-                this._v_Identifier = null;
-                this._v_Recorder   = null;
-    
-                this._v_Id    = null;
-                this._v_Title = null;
-    
-                this._v_OwnRecords = null;
-                
-                this._pInit_Common( theTitle, theIdentifier, theRecorder);
-            };
-            Common_Constructor.prototype = aCommon_Prototype;
-            
-            
-            
-            
-            
-            var Common_SuperPrototypeConstructor = function() {
-                this._v_IsPrototype = true;
-                this._v_Prototype = aCommon_Prototype;
-    
-                this._v_Identifier = null;
-                this._v_Recorder   = null;
-    
-                this._v_Id    = null;
-                this._v_Title = null;
-    
-                this._v_OwnRecords = null;
-            };
-            Common_SuperPrototypeConstructor.prototype = aCommon_Prototype;
-    
-    
-    
-            var Common_SuperPrototypeSingleton = function() {
-                if( aModule.SuperPrototypeSingletonInstance) {
-                    return aModule.SuperPrototypeSingletonInstance;
-                }
-        
-                aModule.SuperPrototypeSingletonInstance = new Common_SuperPrototypeConstructor();
-                return aModule.SuperPrototypeSingletonInstance;
-            };
-    
-    
-            var aModule = {
-                "Common_Prototype": aCommon_Prototype,
-                "Common_Constructor": Common_Constructor,
-                "Common_SuperPrototypeConstructor": Common_SuperPrototypeConstructor,
-                "Common_SuperPrototypeSingleton": Common_SuperPrototypeSingleton,
-                "Prototype": aCommon_Prototype,
-                "Constructor": Common_Constructor,
-                "SuperPrototypeConstructor": Common_SuperPrototypeConstructor,
-                "SuperPrototypeSingleton": Common_SuperPrototypeSingleton
-            };
-            InitFromModuleConstants( aModule);
-            aModule._v_Type = "module";
-            aModule.ComponentName     = ComponentName;
-            aModule.ModuleName      = ModuleName;
-            aModule.ModulePackages  = ModulePackages;
-            aModule.ModuleFullName  = ModuleFullName;
-            aModule.ModuleVariations= ModuleVariations;
-            aModule.ModuleConstants = ModuleConstants;
-            aModule.ModuleGlobals   = ModuleGlobals;
-            aModule.InitFromModuleConstants  = InitFromModuleConstants;
-            aModule.InitFromModuleVariations = InitFromModuleVariations;
-            aModule.InitModuleGlobalsOn      = InitModuleGlobalsOn;
-    
-            aCommon_Prototype._v_Module = aModule;
-            
-            
-            
-            
-            return aModule;
-        };
-        
-        
-        
-        
-        
-      
-    
-        var anExistingModule = null;
-        if(    !( typeof theSS_typesregistry_svce === 'undefined')
-            && ( typeof theSS_typesregistry_svce.fRegisteredModule === 'function')) {
-            anExistingModule = theSS_typesregistry_svce.fRegisteredModule( ModuleFullName);
-        }
-        if( !anExistingModule) {
-        
-            var aModule = aMod_builder(
-                theSS_overrider_type,
-                theSS_IdentifierSvce,
-                theSS_RecorderSvce,
-                theSS_EventTypes_Common,
-                theSS_Travesals
-            );
-        
-            aModule.ModuleBuilder = aMod_builder;
-            aModule.ModuleDecompiler  = function() { aModule.ModuleSource = aMod_builder.toString()};
-        
-            anExistingModule = aModule;
-        
-            if(    !( typeof theSS_typesregistry_svce === 'undefined')
-                && ( typeof theSS_typesregistry_svce.fRegisterModule === 'function')) {
-                theSS_typesregistry_svce.fRegisterModule( ModuleFullName, aModule);
-            }
-        }
-    
-    
-        
-    
-        return anExistingModule;
-        
-        
-    });
-    
-    
-    
-    if( !( typeof angular === 'undefined') && angular.module) {
-        // Angular (1.x)
-        
-        angular.module("commonTypes").factory("CommonType",[
-            "TypesRegistrySvce",
-            "OverriderSvce",
-            "IdentifierSvce",
-            "RecorderSvce",
-            "EventKinds_Common",
-            "Traversals",
-            aMod_definer
-        ]);
-        
-    }
-    else if ( !(typeof module === 'undefined') && module.exports) {
-        // Node.js
-        
-        module.exports = (function() {
-            
-            var aM_typesregistry_svce     = require('../modboot/typesregistry');
-            var aM_overrider         = require('../modboot/overrider_svce');
-            var aM_identifierSvce    = require('../identifying/identifier_svce');
-            var aM_recorderSvce      = require('../identifying/recorder_svce');
-            var aM_eventkinds_common = require('../eventkinds/eventkinds_common');
-            var aM_traversals        = require('../utils/traversals');
-    
-            return aMod_definer(
-                aM_typesregistry_svce,
-                aM_overrider,
-                aM_identifierSvce,
-                aM_recorderSvce,
-                aM_eventkinds_common,
-                aM_traversals
+                aM_recorder_type
             );
         })();
         
@@ -18750,108 +17781,47 @@ permissions and limitations under the Licence.
     else if ( !(typeof define === 'undefined') && define.amd) {
         // AMD / RequireJS
         
-        define( "m_common_type",
+        define("recorder_svce",
             [
-                "m_typesregistry_svce",
-                "m_overrider_svce",
-                "m_identifier_svce",
-                "m_recorder_svce",
-                "m_eventkinds_common",
-                "m_traversals"
-            ],
-            aMod_definer
-           );
-    }
-    else if ( !(typeof nomod === 'undefined') && nomod.register) {
-        // nomod toy module definition, resolution and dependency injection
-    
-        nomod.register( ComponentName, ModulePackages, ModuleName,
-            [ /* theDependencies */
-                nomod.fComputeFullName( "prettytype", "modboot",     "typesregistry"),
-                nomod.fComputeFullName( "prettytype", "modboot",     "overrider_svce"),
-                nomod.fComputeFullName( "prettytype", "identifying", "identifier_svce"),
-                nomod.fComputeFullName( "prettytype", "identifying", "recorder_svce"),
-                nomod.fComputeFullName( "prettytype", "eventkinds",  "eventkinds_common"),
-                nomod.fComputeFullName( "prettytype", "utils",       "traversals")
+                "typesregistry_svce",
+                "overrider_svce",
+                "identifier_svce",
+                "recorder_type"
             ],
             aMod_definer
         );
-    
+        
     }
-   
+    else if ( !(typeof nomod === 'undefined') && nomod.register) {
+        // nomod toy module definition, resolution and dependency injection
+        
+        nomod.register( ComponentName, ModulePackages, ModuleName,
+            [ /* theDependencies */
+                nomod.fComputeFullName( "prettytype", "typesregistry", "typesregistry_type"),
+                nomod.fComputeFullName( "prettytype", "overrider", "overrider_svce"),
+                nomod.fComputeFullName( "prettytype", "identifying", "identifier_svce"),
+                nomod.fComputeFullName( "prettytype", "recording", "recorder_type")
+            ],
+            aMod_definer
+        );
+        
+    }
     
-})();
-
-
-
-
-
-;'use strict';
-
-/*
- * common_types.js
- *
- * Created @author Antonio Carrasco Valero 201409301544
- *
- *
- ***************************************************************************
-
- Copyright 2014 2015 2016 Antonio Carrasco Valero
- Multi-platform Javascript EC5 coding patterns and base super-prototypes, for write-once, run and test everywhere (angular, require, node).
-
-Licensed under the EUPL, Version 1.1 only (the "Licence");
-You may not use this work except in compliance with the
-Licence.
-You may obtain a copy of the Licence at:
-https://joinup.ec.europa.eu/software/page/eupl/licence-eupl
-Unless required by applicable law or agreed to in
-writing, software distributed under the Licence is
-distributed on an "AS IS" basis,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
-express or implied.
-See the Licence for the specific language governing
-permissions and limitations under the Licence.
- {{License2}}
-
- {{Licensed1}}
- {{Licensed2}}
-
- ***************************************************************************
- *
- */
-
-
-'use strict';
-
-
-
-if( !( typeof angular === 'undefined') && angular.module) {
-    // Angular (1.x)
-    
-    angular.module("commonTypes", [
-        "typesRegistry",
-        "modbootTypes",
-        "eventKinds_Common",
-        "identifyingTypes",
-        "traversals"
-    ]);
-    
-    
-}
-
+})(); /* Self-executing function launches the module definition machinery upon load of the javascript file */
 
 
 ;'use strict';
 
 /*
  checks.js
+ refactoring of tes2est-traversals.js  to be module definition-agnostic , originally copy of traversals.js in te2est asyncshell project
  Creado 201504010326
  */
 
 /*
  ***************************************************************************
 
- Copyright 2014 2015 2016 Antonio Carrasco Valero
+ Copyright 2014 2015 2016 2017 2018 Antonio Carrasco Valero
  te2est asyncshell written in Javascript http://www.te2est.org http://www.asyncshell.org
 
  Licensed under the EUPL, Version 1.1 only (the "Licence");
@@ -18885,26 +17855,48 @@ if( !( typeof angular === 'undefined') && angular.module) {
     
     
     var aMod_definer = function( theSS_typesregistry_svce,
-                                 theSS_overrider_type){
+                                 theSS_overrider_svce){
     
-        var aMod_builder = function( theS_overrider_type) {
+        var aMod_builder = function( theS_overrider_svce) {
     
             if( typeof FG_logModLoads === 'function') { FG_logModLoads(ModuleFullName);}
-        
-        
-        
-        
+    
+    
+    
+    
+            /* ***************************************************************
+              Init here key-value pairs.
+              The key values defined as Variations may be overriden by the overrider_svce singleton
+                with key values obtained from the command-line arguments or possibly Browser localStorage,
+                or by key-values in an "override" or a "custom" object
+                initialised in the corresponding variables of the overrider_svce singleton.
+              Any key-values in arguments, custom or overrides whose key is not defined in Variations
+                shall not be be copied into Variations.
+              
+              These key values are added to the module Constants.
+              Therefore these key values, once initialised and possibly overriderm have an expected read-only life-cycle.
+
+              Any key-values defined into Constants with same key as one in Variations
+                shall replace the value with same key obtained from Variations.
+              
+              See about Constants in the coment of pgInitWithModuleConstants() below.
+           */
             var pgInitWithModuleVariations = function( theToInit) {
-            
                 if( !theToInit) {
                 }
-            
             };
-        
-        
-        
-        
-        
+    
+    
+    
+    
+    
+    
+            /* ***************************************************************
+                Just copy each key-value in ModuleVariations onto the supplied object.
+                Used to fill the Module Constants object.
+                
+                See about Constants in the coment of pgInitWithModuleConstants() below.
+             */
             var InitFromModuleVariations = function( theToInit) {
                 if( !theToInit) {
                     return;
@@ -18916,11 +17908,22 @@ if( !( typeof angular === 'undefined') && angular.module) {
                     }
                 }
             };
-        
-        
+    
+    
+    
+            /* ***************************************************************
+               Holder of name-values in the Module which may be overriden by overrider_svce singleton,
+                and later copied into Constants.
+            */
             var ModuleVariations = { };
             pgInitWithModuleVariations( ModuleVariations);
-            theS_overrider_type.pOverrideModuleVariations( ModuleFullName, ModuleVariations);
+            
+            /* ***************************************************************
+              Override key-values in Variations by the overrider_svce singleton
+                with key values obtained from the command-line arguments or possibly Browser localStorage,
+                or by key-values in an "override" or a "custom" object .
+            */
+            theS_overrider_svce.pOverrideModuleVariations( ModuleFullName, ModuleVariations);
     
     
     
@@ -18947,7 +17950,6 @@ if( !( typeof angular === 'undefined') && angular.module) {
                 theToInit.JSONNAME_CHECKSOURCE = "checkSource";
                 theToInit.JSONNAME_CHECKVALUE  = "checkValue";
             
-            
                 theToInit.JSONNAMES_CHECKPARM = [
                     theToInit.JSONNAME_CHECKWHEN,
                     theToInit.JSONNAME_CHECKNEGATE,
@@ -18957,8 +17959,6 @@ if( !( typeof angular === 'undefined') && angular.module) {
                     theToInit.JSONNAME_CHECKVALUE
                 ];
             
-            
-            
                 theToInit.REQUIREDJSONNAMES = [
                     theToInit.JSONNAME_CHECKWHEN,
                     theToInit.JSONNAME_CHECKKIND,
@@ -18966,8 +17966,6 @@ if( !( typeof angular === 'undefined') && angular.module) {
                     theToInit.JSONNAME_CHECKSOURCE,
                     theToInit.JSONNAME_CHECKVALUE
                 ];
-            
-            
             
                 theToInit.CHECKKIND_TYPE_BOOL      = "TYPE_BOOL";
                 theToInit.CHECKKIND_TYPE_STRING    = "TYPE_STRING";
@@ -19004,7 +18002,6 @@ if( !( typeof angular === 'undefined') && angular.module) {
                 theToInit.CHECKKIND_DICTNOTCONTAINSKEY= "DICTNOTCONTAINSKEY";
                 theToInit.CHECKKIND_DICTCONTAINSVALUE= "DICTCONTAINSVALUE";
                 theToInit.CHECKKIND_DICTNOTCONTAINSVALUE= "DICTNOTCONTAINSVALUE";
-            
             
                 theToInit.CHECKKINDS = [
                     theToInit.CHECKKIND_TYPE_BOOL,
@@ -19043,9 +18040,6 @@ if( !( typeof angular === 'undefined') && angular.module) {
                     theToInit.CHECKKIND_DICTCONTAINSVALUE,
                     theToInit.CHECKKIND_DICTNOTCONTAINSVALUE
                 ];
-            
-            
-            
             };
     
     
@@ -19101,29 +18095,44 @@ if( !( typeof angular === 'undefined') && angular.module) {
     
     
     
-            var aModule = {};
+    
+            /* ***************************************************************
+             Object exposed as Module, with key-values for all members published in the module.
+             
+             Some entries are published to facilitate hacking access to portions of logic in the module,
+                 to be able to use for other purposes (mixins come into mind) i.e. constants initialiser,
+                 and if the module defines any prototype: full and partial prototype creators
+                 and initialisers of the slots structure of the prototype.
+           */
+            var aModule = {
+                "_v_Kind":                                 "module",
+                "ComponentName":                           ComponentName,
+                "ModuleName":                              ModuleName,
+                "ModulePackages":                          ModulePackages,
+                "ModuleFullName":                          ModuleFullName,
+                "ModuleConstants":                         ModuleConstants,
+                "ModuleGlobals":                           ModuleGlobals,
+        
+                "InitFromModuleVariations":                InitFromModuleVariations,
+                "InitFromModuleConstants":                 InitFromModuleConstants,
+                "InitModuleGlobalsOn":                     InitModuleGlobalsOn
+            };
+    
+            /* ***************************************************************
+              Add to the Module Key-Values from Constants (and Variations, if any) so they are exposed as published members.
+              Beware: The value for any key in Constants (and Variations, if any)
+                shall override any other slot value in the Module with same key, if such exists,
+                including any infrastructural or conventional entries.
+            */
             InitFromModuleConstants( aModule);
-            aModule._v_Type = "module";
-            aModule.ComponentName     = ComponentName;
-            aModule.ModuleName      = ModuleName;
-            aModule.ModulePackages  = ModulePackages;
-            aModule.ModuleFullName  = ModuleFullName;
-            aModule.ModuleVariations= ModuleVariations;
-            aModule.ModuleConstants = ModuleConstants;
-            aModule.ModuleGlobals   = ModuleGlobals;
-            aModule.InitFromModuleConstants  = InitFromModuleConstants;
-            aModule.InitFromModuleVariations = InitFromModuleVariations;
-            aModule.InitModuleGlobalsOn      = InitModuleGlobalsOn;
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
+    
+    
+    
+    
+    
+    
+    
+    
             var fgNewVoidCheckSpec = function() {
             
                 var aCheckSpec = {
@@ -19733,11 +18742,12 @@ if( !( typeof angular === 'undefined') && angular.module) {
             };
             if( fgIsSameAsValueFromTest){}/* CQT */
             aModule.fgIsSameAsValueFromTest = fgIsSameAsValueFromTest;
-        
-        
-        
-        
-        
+    
+    
+    
+            /* ***************************************************************
+               Return defined module.
+            */
             return aModule;
         };
     
@@ -19747,9 +18757,12 @@ if( !( typeof angular === 'undefined') && angular.module) {
     
     
     
-      
-    
-    
+        /* ***************************************************************
+          Make sure that the module is built only once, and that the same instance is supplied anytime
+          the module is required, as i.e. to resolve a dependency for another module.
+          Attempt to retrieve a module with same name already registered in the typesregistry_svce singleton.
+          If no such module exists then build the module and register it in the typesregistry_svce singleton.
+        */
         var anExistingModule = null;
         if(    !( typeof theSS_typesregistry_svce === 'undefined')
             && ( typeof theSS_typesregistry_svce.fRegisteredModule === 'function')) {
@@ -19758,7 +18771,7 @@ if( !( typeof angular === 'undefined') && angular.module) {
         if( !anExistingModule) {
         
             var aModule = aMod_builder(
-                theSS_overrider_type
+                theSS_overrider_svce
             );
         
             aModule.ModuleBuilder = aMod_builder;
@@ -19773,27 +18786,29 @@ if( !( typeof angular === 'undefined') && angular.module) {
         }
     
     
-    
+        /* ***************************************************************
+         Return the module which was already built and registered in typesregistry_svce singleton, or just built.
+        */
         return anExistingModule;
-    
     };
     
-
- 
+    
+    
+    
+    
+    
+    /* ***************************************************************
+      Define the module under various module definition libraries, all delegating in the same module definer function,
+      but each obtaining their own way any dependencies needed by this module.
+    */
     if( !( typeof angular === 'undefined') && angular.module) {
         // Angular (1.x)
         
-        angular.module("checks",
-            [
-                'typesRegistry',
-                'modbootTypes'
-            ]).factory(
-                "Checks",
-            [
-                "TypesRegistrySvce",
-                "OverriderSvce",
-                aMod_definer
-            ]);
+        angular.module( ModulePackages).factory( ModuleName, [
+            "typesregistry_svce",
+            "overrider_svce",
+            aMod_definer
+        ]);
         
     }
     else if ( !(typeof module === 'undefined') && module.exports) {
@@ -19801,12 +18816,12 @@ if( !( typeof angular === 'undefined') && angular.module) {
         
         module.exports = (function() {
             
-            var aM_typesregistry_svce  = require('../modboot/typesregistry');
-            var aM_overrider      = require('../modboot/overrider_svce');
+            var aM_typesregistry_svce = require('../typesregistry/typesregistry_svce');
+            var aM_overrider_svce     = require('../overrider/overrider_svce');
             
             return aMod_definer(
                 aM_typesregistry_svce,
-                aM_overrider
+                aM_overrider_svce
             );
         })();
         
@@ -19814,38 +18829,47 @@ if( !( typeof angular === 'undefined') && angular.module) {
     else if ( !(typeof define === 'undefined') && define.amd) {
         // AMD / RequireJS
         
-        define("m_checks", [
-                "m_typesregistry_svce",
-                "m_overrider_svce"
-            ],
-            aMod_definer
-           );
-    }
-    else if ( !(typeof nomod === 'undefined') && nomod.register) {
-        // nomod toy module definition, resolution and dependency injection
-    
-        nomod.register( ComponentName, ModulePackages, ModuleName,
-            [ /* theDependencies */
-                nomod.fComputeFullName( "prettytype", "typesregistry", "typesregistry_type"),
-                nomod.fComputeFullName( "prettytype", "modboot", "overrider_svce")
+        define( ModuleName,
+            [
+                "typesregistry_svce",
+                "overrider_svce"
             ],
             aMod_definer
         );
-    
+        
+    }
+    else if ( !(typeof nomod === 'undefined') && nomod.register) {
+        // nomod toy module definition, resolution and dependency injection
+        
+        nomod.register( ComponentName, ModulePackages, ModuleName,
+            [ /* theDependencies */
+                nomod.fComputeFullName( "prettytype", "typesregistry", "typesregistry_type"),
+                nomod.fComputeFullName( "prettytype", "overrider", "overrider_svce")
+            ],
+            aMod_definer
+        )
+        
     }
     
-})();
+    
+})(); /* Self-executing function launches the module definition machinery upon load of the javascript file */
+
+
+
+
+
 
 ;
 /*
- te2est-traversals-type.js refactoring of tes2est-traversals.js  to be Angular-agnostic , originally copy of traversals.js in te2est asyncshell project
+ te2est-traversals-type.js
+ refactoring of tes2est-traversals.js  to be module definition-agnostic , originally copy of traversals.js in te2est asyncshell project
  Creado 201505182205
  */
 
 /*
  ***************************************************************************
 
- Copyright 2014 2015 2016 Antonio Carrasco Valero
+ Copyright 2014 2015 2016 2017 2018 Antonio Carrasco Valero
  te2est asyncshell written in Javascript http://www.te2est.org http://www.asyncshell.org
 
  Licensed under the EUPL, Version 1.1 only (the "Licence");
@@ -19875,29 +18899,49 @@ if( !( typeof angular === 'undefined') && angular.module) {
     var ModulePackages = "utils";
     var ModuleFullName = ModulePackages + "/" + ModuleName;
     
-    var aMod_definer = ( function( theSS_typesregistry_svce,
-                                   theSS_overrider_type){
+    var aMod_definer = function( theSS_typesregistry_svce,
+                                 theSS_overrider_svce){
         
     
-        var aMod_builder = function( theS_overrider_type) {
+        var aMod_builder = function( theS_overrider_svce) {
     
             if( typeof FG_logModLoads === 'function') { FG_logModLoads(ModuleFullName);}
-        
-        
-        
-        
-        
+    
+    
+    
+    
+            /* ***************************************************************
+               Init here key-value pairs.
+               The key values defined as Variations may be overriden by the overrider_svce singleton
+                 with key values obtained from the command-line arguments or possibly Browser localStorage,
+                 or by key-values in an "override" or a "custom" object
+                 initialised in the corresponding variables of the overrider_svce singleton.
+               Any key-values in arguments, custom or overrides whose key is not defined in Variations
+                 shall not be be copied into Variations.
+               
+               These key values are added to the module Constants.
+               Therefore these key values, once initialised and possibly overriderm have an expected read-only life-cycle.
+
+               Any key-values defined into Constants with same key as one in Variations
+                 shall replace the value with same key obtained from Variations.
+               
+               See about Constants in the coment of pgInitWithModuleConstants() below.
+            */
             var pgInitWithModuleVariations = function( theToInit) {
-            
                 if( !theToInit) {
                 }
-            
             };
-        
-        
-        
-        
-        
+    
+    
+    
+    
+    
+            /* ***************************************************************
+                Just copy each key-value in ModuleVariations onto the supplied object.
+                Used to fill the Module Constants object.
+                
+                See about Constants in the coment of pgInitWithModuleConstants() below.
+             */
             var InitFromModuleVariations = function( theToInit) {
                 if( !theToInit) {
                     return;
@@ -19909,13 +18953,22 @@ if( !( typeof angular === 'undefined') && angular.module) {
                     }
                 }
             };
-        
-        
+    
+    
+    
+            /* ***************************************************************
+               Holder of name-values in the Module which may be overriden by overrider_svce singleton,
+                and later copied into Constants.
+            */
             var ModuleVariations = { };
             pgInitWithModuleVariations( ModuleVariations);
-            if( theS_overrider_type) {
-                theS_overrider_type.pOverrideModuleVariations( ModuleFullName, ModuleVariations);
-            }
+    
+            /* ***************************************************************
+               Override key-values in Variations by the overrider_svce singleton
+                 with key values obtained from the command-line arguments or possibly Browser localStorage,
+                 or by key-values in an "override" or a "custom" object .
+            */
+            theS_overrider_svce.pOverrideModuleVariations( ModuleFullName, ModuleVariations);
     
     
     
@@ -19934,22 +18987,11 @@ if( !( typeof angular === 'undefined') && angular.module) {
                     return;
                 }
             
-            
-            
                 theToInit.ROOTPATHSTEPSYMBOL = "#root";
-            
-            
                 theToInit.SPECPATHROOTPATHSTEPSYMBOL = "#testsroot";
-            
-            
                 theToInit.PATHSREPLACEABLESYMBOL = "#";
-            
-            
                 theToInit.DONOTCOMPAREVALUESYMBOL = "@DONOTCOMPARE699@";
-            
-            
                 theToInit.TRAVERSAL_WHOLE = "*";
-            
                 theToInit.TRAVERSALSTEPSSEPARATOR = ".";
             
                 theToInit.TRAVERSALSTEP_LENGTH = "length";
@@ -19957,20 +18999,12 @@ if( !( typeof angular === 'undefined') && angular.module) {
                 theToInit.TRAVERSALSTEP_FIRST  = "first";
                 theToInit.TRAVERSALSTEP_ALL    = "all";
             
-            
                 theToInit.TRAVERSALSTEP_KEYEDSEPARATOR  = "=";
-            
                 theToInit.REPLACEPARMVALUEWITHPARMPREFIX = "~";
-            
                 theToInit.REPLACEPARMVALUEDOT = ".";
             
-            
-            
                 theToInit.ANYEXCEPTION = "*";
-            
-            
                 theToInit.VALUEDIFFATTOP = "/";
-            
             
                 theToInit.SYMBOLICSTEPREGEXPSTR = "^\\?(\\w+)\\=(\\-?[0-9]+)$";
                 theToInit.SYMBOLICSTEPREGEXP    = new RegExp( theToInit.SYMBOLICSTEPREGEXPSTR);
@@ -20032,28 +19066,45 @@ if( !( typeof angular === 'undefined') && angular.module) {
     
     
     
-            var aModule = {};
+            /* ***************************************************************
+             Object exposed as Module, with key-values for all members published in the module.
+             
+             Some entries are published to facilitate hacking access to portions of logic in the module,
+                 to be able to use for other purposes (mixins come into mind) i.e. constants initialiser,
+                 and if the module defines any prototype: full and partial prototype creators
+                 and initialisers of the slots structure of the prototype.
+           */
+            var aModule = {
+                "_v_Kind":                                 "module",
+                "ComponentName":                           ComponentName,
+                "ModuleName":                              ModuleName,
+                "ModulePackages":                          ModulePackages,
+                "ModuleFullName":                          ModuleFullName,
+                "ModuleConstants":                         ModuleConstants,
+                "ModuleGlobals":                           ModuleGlobals,
+        
+                "InitFromModuleVariations":                InitFromModuleVariations,
+                "InitFromModuleConstants":                 InitFromModuleConstants,
+                "InitModuleGlobalsOn":                     InitModuleGlobalsOn
+            };
+    
+            /* ***************************************************************
+              Add to the Module Key-Values from Constants (and Variations, if any) so they are exposed as published members.
+              Beware: The value for any key in Constants (and Variations, if any)
+                shall override any other slot value in the Module with same key, if such exists,
+                including any infrastructural or conventional entries.
+            */
             InitFromModuleConstants( aModule);
-            aModule._v_Type = "module";
-            aModule.ComponentName     = ComponentName;
-            aModule.ModuleName      = ModuleName;
-            aModule.ModulePackages  = ModulePackages;
-            aModule.ModuleFullName  = ModuleFullName;
-            aModule.ModuleVariations= ModuleVariations;
-            aModule.ModuleConstants = ModuleConstants;
-            aModule.ModuleGlobals   = ModuleGlobals;
-            aModule.InitFromModuleConstants  = InitFromModuleConstants;
-            aModule.InitFromModuleVariations = InitFromModuleVariations;
-            aModule.InitModuleGlobalsOn      = InitModuleGlobalsOn;
-        
-        
-        
-        
-        
-        
-        
-        
-        
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
             var fgParmValueReplacement= function( theConfiguration, theParmValue, theMapForStepsWithParmPrefix) {
             
                 if( !theParmValue) {
@@ -22290,13 +21341,12 @@ if( !( typeof angular === 'undefined') && angular.module) {
             };
             if( fgCollectPath){}/* CQT */
             aModule.fgCollectPath = fgCollectPath;
-        
-        
-        
-        
-        
-        
-        
+    
+    
+    
+            /* ***************************************************************
+               Return defined module.
+            */
             return aModule;
         };
     
@@ -22304,6 +21354,13 @@ if( !( typeof angular === 'undefined') && angular.module) {
     
     
     
+    
+        /* ***************************************************************
+          Make sure that the module is built only once, and that the same instance is supplied anytime
+          the module is required, as i.e. to resolve a dependency for another module.
+          Attempt to retrieve a module with same name already registered in the typesregistry_svce singleton.
+          If no such module exists then build the module and register it in the typesregistry_svce singleton.
+        */
         var anExistingModule = null;
         if(    !( typeof theSS_typesregistry_svce === 'undefined')
             && ( typeof theSS_typesregistry_svce.fRegisteredModule === 'function')) {
@@ -22312,7 +21369,7 @@ if( !( typeof angular === 'undefined') && angular.module) {
         if( !anExistingModule) {
         
             var aModule = aMod_builder(
-                theSS_overrider_type
+                theSS_overrider_svce
             );
         
             aModule.ModuleBuilder = aMod_builder;
@@ -22327,41 +21384,43 @@ if( !( typeof angular === 'undefined') && angular.module) {
         }
     
     
-    
-    
+        /* ***************************************************************
+         Return the module which was already built and registered in typesregistry_svce singleton, or just built.
+        */
         return anExistingModule;
-    
-    });
-    
+    };
     
     
+    
+    
+    
+    
+    /* ***************************************************************
+      Define the module under various module definition libraries, all delegating in the same module definer function,
+      but each obtaining their own way any dependencies needed by this module.
+    */
     if( !( typeof angular === 'undefined') && angular.module) {
         // Angular (1.x)
-        
-        angular.module("traversals",
-            [
-                'typesRegistry',
-                'modbootTypes'
-            ]).factory(
-                "Traversals",
-            [
-                "TypesRegistrySvce",
-                "OverriderSvce",
-                aMod_definer
-            ]);
-        
+    
+        angular.module( ModulePackages).factory( ModuleName, [
+            "typesregistry_svce",
+            "overrider_svce",
+            aMod_definer
+        ]);
+    
+    
     }
     else if ( !(typeof module === 'undefined') && module.exports) {
         // Node.js
         
         module.exports = (function() {
             
-            var aM_typesregistry_svce  = require('../modboot/typesregistry');
-            var aM_overrider      = require('../modboot/overrider_svce');
+            var aM_typesregistry_svce = require('../typesregistry/typesregistry_svce');
+            var aM_overrider_svce     = require('../overrider/overrider_svce');
             
             return aMod_definer(
                 aM_typesregistry_svce,
-                aM_overrider
+                aM_overrider_svce
             );
         })();
         
@@ -22369,9 +21428,838 @@ if( !( typeof angular === 'undefined') && angular.module) {
     else if ( !(typeof define === 'undefined') && define.amd) {
         // AMD / RequireJS
         
-        define("m_traversals", [
+        define( ModuleName,
+            [
+                "typesregistry_svce",
+                "overrider_svce"
+            ],
+            aMod_definer
+        );
+        
+    }
+    else if ( !(typeof nomod === 'undefined') && nomod.register) {
+        // nomod toy module definition, resolution and dependency injection
+        
+        nomod.register( ComponentName, ModulePackages, ModuleName,
+            [ /* theDependencies */
+                nomod.fComputeFullName( "prettytype", "typesregistry", "typesregistry_type"),
+                nomod.fComputeFullName( "prettytype", "overrider", "overrider_svce")
+            ],
+            aMod_definer
+        )
+        
+    }
+    
+    
+})(); /* Self-executing function launches the module definition machinery upon load of the javascript file */
+
+
+
+
+
+
+;'use strict';
+
+/*
+ * common_types.js
+ *
+ * Created @author Antonio Carrasco Valero 201409301544
+ *
+ *
+ ***************************************************************************
+
+ Copyright 2014 2015 2016 2017 2018 Antonio Carrasco Valero
+ Multi-platform Javascript EC5 coding patterns and base super-prototypes, for write-once, run and test everywhere (angular, require, node).
+
+Licensed under the EUPL, Version 1.1 only (the "Licence");
+You may not use this work except in compliance with the
+Licence.
+You may obtain a copy of the Licence at:
+https://joinup.ec.europa.eu/software/page/eupl/licence-eupl
+Unless required by applicable law or agreed to in
+writing, software distributed under the Licence is
+distributed on an "AS IS" basis,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+express or implied.
+See the Licence for the specific language governing
+permissions and limitations under the Licence.
+ {{License2}}
+
+ {{Licensed1}}
+ {{Licensed2}}
+
+ ***************************************************************************
+ *
+ */
+
+
+'use strict';
+
+
+
+if( !( typeof angular === 'undefined') && angular.module) {
+    // Angular (1.x)
+    
+    angular.module("commonTypes", [
+        "typesRegistry",
+        "modbootTypes",
+        "eventKinds_Common",
+        "identifyingTypes",
+        "traversals"
+    ]);
+    
+    
+}
+
+
+
+;/*
+ * common_type.js
+ *
+ * Created @author Antonio Carrasco Valero 201410030426
+ *
+ *
+ ***************************************************************************
+
+ Copyright 2014 2015 2016 2017 2018 Antonio Carrasco Valero
+ Multi-platform Javascript EC5 coding patterns and base super-prototypes, for write-once, run and test everywhere (angular, require, node).
+
+Licensed under the EUPL, Version 1.1 only (the "Licence");
+You may not use this work except in compliance with the
+Licence.
+You may obtain a copy of the Licence at:
+https://joinup.ec.europa.eu/software/page/eupl/licence-eupl
+Unless required by applicable law or agreed to in
+writing, software distributed under the Licence is
+distributed on an "AS IS" basis,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+express or implied.
+See the Licence for the specific language governing
+permissions and limitations under the Licence.
+ {{License2}}
+
+ {{Licensed1}}
+ {{Licensed2}}
+
+ ***************************************************************************
+ *
+ */
+
+'use strict';
+
+(function () {
+    
+    var ComponentName    = "prettytype";
+    var ModuleName     = "common_type";
+    var ModulePackages = "common";
+    var ModuleFullName = ModulePackages + "/" + ModuleName;
+    
+    var aMod_definer = ( function( theSS_typesregistry_svce,
+                                   theSS_overrider_type,
+                                   theSS_IdentifierSvce,
+                                   theSS_RecorderSvce,
+                                   theSS_EventTypes_Common,
+                                   theSS_Travesals){
+        
+        var aMod_builder = function( theS_overrider_type,
+                                     theS_IdentifierSvce,
+                                     theS_RecorderSvce,
+                                     theS_EventTypes_Common,
+                                     theS_Travesals) {
+            
+            
+            if( typeof FG_logModLoads === 'function') { FG_logModLoads(ModuleFullName);}
+            
+            
+            
+            
+            var pgInitWithModuleVariations = function( theToInit) {
+                
+                if( !theToInit) {
+                    return;
+                }
+                
+                
+                /* BeWare: keeping references to record instances shall prevent reclamation of their memory by the garbage collector
+                   Note that when a recordingpolicy_keepall is plugged into the recorder, all records shall be kept in memory in the _v_Records slot property of the recorder instance
+                   */
+                theToInit.KEEPOWNRECORDS = false;
+            };
+            
+            
+            
+            
+            
+            var InitFromModuleVariations = function( theToInit) {
+                if( !theToInit) {
+                    return;
+                }
+                
+                for( var aGlobalName in ModuleVariations) {
+                    if( ModuleVariations.hasOwnProperty( aGlobalName)) {
+                        theToInit[ aGlobalName] = ModuleVariations[ aGlobalName];
+                    }
+                }
+            };
+            
+            
+            var ModuleVariations = { };
+            pgInitWithModuleVariations( ModuleVariations);
+            theS_overrider_type.pOverrideModuleVariations( ModuleFullName, ModuleVariations);
+    
+    
+    
+    
+    
+    
+    
+    
+    
+            /* ***************************************************************
+               Init here key-value pairs, considered constants - and therefore with an expected read-only life-cycle.
+               Constants can be accessed through the Module .ModuleConstants.
+               
+               If the Module defines a prototype:
+              
+                   Instances of the prototype also have same access this._v_Module.ModuleConstants.
+                   Instances of the prototype are those created with new <prototypename>_Constructor.
+                   
+                   Any sub-prototypes defined in other modules and their instances shall have a different _v_Module and therefore different constants,
+                   
+                   Any sub-prototype in other module and their instances may traverse upwards the prototype chain
+                   through the prototype _v_SuperPrototype property until reaching the prototype of the desired Module,
+                   or directly access the desired module through the property _v_Prototype_<prototypename>.
+                   From the chosen prototype it is possible to access aModule.ModuleConstants
+                   (Sub-prototypes are prototypes based on objects created with this module's
+                   new <prototypename>_SuperPrototypeConstructor) and transitively all their sub-prototypes.
+                   
+                   
+                   The key-values in a prototype's module ModuleConstants shall be copied onto the prototype object
+                   which then hold key-value pairs for all keys in ModuleConstants, with the initial values same as in the ModuleConstants,
+                   but these values may be changed in the prototype object.
+                   The prototype may access each constant defined in ModuleConstants
+                   as this.<CONSTANT_NAME> or this["<CONSTANT_NAME>"] .
+                   
+                   All sub-prototypes defined in other modules and their instances
+                   may also access this.<CONSTANT_NAME> or this["<CONSTANT_NAME>"]
+                   the key-values defined in any prototype recursively upwards the prototype hierarchy
+                   and therefore to the key-values copied into each prototype object from their respective module ModuleConstants.
+            */
+            var pgInitWithModuleConstants = function( theToInit) {
+                if( !theToInit) {
+                    return;
+                }
+                
+                if( theS_EventTypes_Common && theS_EventTypes_Common.InitFromModuleConstants) {
+                    theS_EventTypes_Common.InitFromModuleConstants( theToInit);
+                }
+                
+                theToInit.COMMON_DEFAULTTITLE = "CommonDefaultName";
+                
+                theToInit.UNKNOWNID = "?i?";
+                
+                theToInit.VALUEDIFFATTOP = "/";
+                theToInit.DONOTCOMPAREVALUESYMBOL = "@DONOTCOMPARE699@";
+                
+                
+                
+                
+                
+                theToInit.FIELDNAMEDOT = ".";
+                
+                theToInit.URLPATHSEPARATOR   = "/";
+                theToInit.HTTPQUERYCHAR      = "?";
+                theToInit.HTTPPARMASSIGN     = "=";
+                theToInit.HTTPEXTRAPARMCHAR  = "&";
+                
+                
+                theToInit.DATATYPE_FILE = "File";
+                
+            };
+    
+    
+    
+            /* ***************************************************************
+               Holder of name-values in the Module, considered Constants.
+            */
+            var ModuleConstants = {};
+            InitFromModuleVariations( ModuleConstants);
+            pgInitWithModuleConstants( ModuleConstants);
+    
+    
+    
+    
+            /* ***************************************************************
+               Just copy each key-value in ModuleConstants onto the supplied object.
+               Used to fill the Module object and the Prototype object with the key-value pairs in Constants.
+             */
+            var InitFromModuleConstants = function( theToInit) {
+                if( !theToInit) {
+                    return;
+                }
+                
+                for( var aGlobalName in ModuleConstants) {
+                    if( ModuleConstants.hasOwnProperty( aGlobalName)) {
+                        theToInit[ aGlobalName] = ModuleConstants[ aGlobalName];
+                    }
+                }
+            };
+    
+    
+    
+    
+            /* ***************************************************************
+               Init here name-values, considered Globals - and therefore with an expected read-write life-cycle.
+               Globals can only be accessed through the Module .ModuleGlobals. Instances may access this._v_Module.ModuleGlobals
+               
+                If the Module defines a prototype:
+              
+                   Instances of the prototype also have same access this._v_Module.ModuleGlobals.
+                   Instances of the prototype are those created with new <prototypename>_Constructor.
+                   
+                   Any sub-prototypes defined in other modules and their instances shall have a different _v_Module and therefore different globals,
+                   
+                   Any sub-prototype in other module and their instances may traverse upwards the prototype chain
+                   through the prototype _v_SuperPrototype property until reaching the prototype of the desired Module,
+                   or directly access the desired module through the property _v_Prototype_<prototypename>.
+                   From the chosen prototype it is possible to access aModule.ModuleGlobals
+                   (Sub-prototypes are prototypes based on objects created with this module's
+                   new <prototypename>_SuperPrototypeConstructor) and transitively all their sub-prototypes.
+            */
+            var InitModuleGlobalsOn = function( theToInit) {
+        
+                if( !theToInit) {
+                }
+            };
+    
+    
+    
+            /* ***************************************************************
+              Holder of name-values in the Module, considered Globals.
+            */
+            var ModuleGlobals = { };
+            InitModuleGlobalsOn( ModuleGlobals);
+    
+    
+    
+    
+    
+            var aCommon_Prototype = (function() {
+                
+                
+                var aPrototype = {};
+                
+                InitFromModuleConstants( aPrototype);
+    
+                aPrototype._v_IsPrototype = true;
+                aPrototype._v_SuperPrototype = null;
+                
+                aPrototype._v_Type = "Common";
+                
+                aPrototype._v_Module = null;
+    
+                aPrototype._v_Prototype_Common = aPrototype;
+    
+                
+                aPrototype._v_Identifier = null;
+                aPrototype._v_Recorder   = null;
+                
+                aPrototype._v_Id    = null;
+                aPrototype._v_Title = null;
+                
+                aPrototype._v_OwnRecords = null;
+                
+                
+                
+                
+                
+                
+                var _pInit = function( theTitle, theIdentifier, theRecorder) {
+                    
+                    this._pInit_Common( theTitle, theIdentifier, theRecorder);
+                };
+                if( _pInit){}/* CQT */
+                aPrototype._pInit = _pInit;
+                
+                
+                
+                
+                
+                
+                
+                var _fTitleDefault = function( ) {
+                    
+                    return this.COMMON_DEFAULTTITLE;
+                };
+                if( _fTitleDefault){}/* CQT */
+                aPrototype._fTitleDefault = _fTitleDefault;
+                
+                
+                
+                
+                
+                
+                
+                
+                var _pInit_Common = function( theTitle, theIdentifier, theRecorder) {
+                    
+                    this._v_Prototype = aPrototype;
+                    this._v_Type      = this._v_Prototype._v_Type;
+                    this._v_Module    = this._v_Prototype._v_Module;
+                    
+                    this._v_Identifier = theIdentifier;
+                    if( !this._v_Identifier) {
+                        this._v_Identifier = theS_IdentifierSvce;
+                    }
+                    
+                    this._v_Recorder   = theRecorder;
+                    if( !this._v_Recorder) {
+                        this._v_Recorder = theS_RecorderSvce;
+                    }
+                    
+                    if( this._v_Identifier) {
+                        this._v_Id = this._v_Identifier.fReserveId();
+                    }
+                    
+                    if( !this._v_Id) {
+                        this._v_Id = this.UNKNOWNID;
+                    }
+                    
+                    this._v_Title = theTitle;
+                    if( !this._v_Title) {
+                        this._v_Title = this._fTitleDefault();
+                    }
+                    
+                    this._v_OwnRecords = [ ];
+                };
+                if( _pInit_Common){}/* CQT */
+                aPrototype._pInit_Common = _pInit_Common;
+                
+                
+                
+                
+                
+                
+                var fFullTypeNameString = function() {
+                    
+                    var aFullTypeName = this._v_Module.ModuleFullName + "." + this._v_Type;
+                    if( aFullTypeName){}/* CQT */
+                    
+                    return aFullTypeName;
+                };
+                if( fFullTypeNameString){}/* CQT */
+                aPrototype.fFullTypeNameString = fFullTypeNameString;
+                
+                
+                
+                
+                
+                
+                
+                
+                var fIdentifyingJSON = function() {
+                    
+                    var aIdentifiyingJSON = {
+                        "module": this._v_Module.ModuleFullName,
+                        "type": this._v_Type,
+                        "id":   this._v_Id
+                    };
+                    if( aIdentifiyingJSON){}/* CQT */
+                    return aIdentifiyingJSON;
+                };
+                if( fIdentifyingJSON){}/* CQT */
+                aPrototype.fIdentifyingJSON = fIdentifyingJSON;
+                
+                
+                
+                
+                
+                
+                var fIdentifyingString = function() {
+                    
+                    var aIdentifyingJSON = this.fIdentifyingJSON();
+                    
+                    var aIdentifyingString = "?";
+                    try {
+                        aIdentifyingString = JSON.stringify( aIdentifyingJSON);
+                    }
+                    catch( anException){
+                        aIdentifyingString = "Error_whileJSON_stringify"
+                    }
+                    
+                    return aIdentifyingString;
+                };
+                if( fIdentifyingString){}/* CQT */
+                aPrototype.fIdentifyingString = fIdentifyingString;
+                
+                
+                
+                
+                
+                
+                
+                var fIdentifyingWithTitleJSON = function() {
+                    
+                    var aIdentifyingJSON = this.fIdentifyingJSON();
+                    
+                    aIdentifyingJSON[ "title"] = this._v_Title;
+                    
+                    return aIdentifyingJSON;
+                };
+                if( fIdentifyingWithTitleJSON){}/* CQT */
+                aPrototype.fIdentifyingWithTitleJSON = fIdentifyingWithTitleJSON;
+                
+                
+                
+                
+                
+                
+                var fIdentifyingWithTitleString = function() {
+                    
+                    var aIdentifyingJSON = this.fIdentifyingWithTitleJSON();
+                    
+                    var aIdentifyingString = "?";
+                    try {
+                        aIdentifyingString = JSON.stringify( aIdentifyingJSON);
+                    }
+                    catch( anException){
+                        aIdentifyingString = "Error_whileJSON_stringify"
+                    }
+                    if( aIdentifyingString){}/* CQT */
+                    
+                    return aIdentifyingString;
+                };
+                if( fIdentifyingWithTitleString){}/* CQT */
+                aPrototype.fIdentifyingWithTitleString = fIdentifyingWithTitleString;
+                
+                
+                
+                
+                
+                
+                
+                var fToResultJSON = function( theCommonObjects, theAlready) {
+                    if( !( theAlready == null)) {
+                        if( ( typeof theAlready.fAlready === "function") && theAlready.fAlready( this)){
+                            return this.fIdentifyingJSON();
+                        }
+                    }
+                    
+                    var aResultJSON = this.fIdentifyingWithTitleJSON();
+                    if( aResultJSON){}/* CQT */
+                    
+                    return aResultJSON;
+                };
+                if( fToResultJSON){}/* CQT */
+                aPrototype.fToResultJSON = fToResultJSON;
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                var fAsLogObject = function() {
+                    
+                    var aLog = this.fIdentifyingWithTitleJSON();
+                    if( aLog){}/* CQT */
+                    
+                    return aLog;
+                };
+                if( fAsLogObject){}/* CQT */
+                aPrototype.fAsLogObject = fAsLogObject;
+                
+                
+                
+                
+                
+                
+                var fLogString = function() {
+                    
+                    var aLog = this.fAsLogObject();
+                    if( aLog == null) {
+                        return "";
+                    }
+                    
+                    var aLogString = "";
+                    try {
+                        aLogString = JSON.stringify( aLog);
+                    }
+                    catch( anException) {
+                        aLogString = "Error_while_fLogString_JSON_stringify"
+                    }
+                    
+                    return aLogString;
+                };
+                if( fLogString){}/* CQT */
+                aPrototype.fLogString = fLogString;
+                
+                
+                
+                
+                /*
+                var toString = function() {
+                    return this.fLogString();
+                };
+                aPrototype.toString = toString;
+                */
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                var fRecord = function( theMethodName, theEventKind, theData, theReason, theDetail) {
+                    
+                    if( this._v_Recorder == null) {
+                        return null;
+                    }
+                    
+                    var aRecord = this._v_Recorder.fCreateAndRegisterRecord( this, theMethodName, theEventKind, theData, theReason, theDetail);
+                    
+                    if( this.KEEPOWNRECORDS) {
+                        this._v_OwnRecords.push( aRecord);
+                    }
+                    
+                    return aRecord;
+                };
+                if( fRecord){}/* CQT */
+                aPrototype.fRecord = fRecord;
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                /* Deprecated. Kept in support of common type pLogRecord . Use fRecord which shall invoke recorder fCreateAndRegisterRecord and take care of delegating for the record to be recorded and dumped to console */
+                var pLogRecord = function( theRecord) {
+                    
+                    if( !theRecord) {
+                        return;
+                    }
+                    
+                    if( !this._v_Recorder) {
+                        return;
+                    }
+                    
+                    
+                    this._v_Recorder.pLogRecord( theRecord);
+                    
+                };
+                if( pLogRecord){}/* CQT */
+                aPrototype.pLogRecord = pLogRecord;
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                var fFirstDiff = function( theActualValue, theCheckValue) {
+                    
+                    return theS_Travesals.fgFirstDiff( theActualValue, theCheckValue);
+                };
+                if( fFirstDiff){}/* CQT */
+                aPrototype.fFirstDiff = fFirstDiff;
+                
+                
+                
+                
+                
+                
+                
+                
+                return aPrototype;
+                
+            })();
+            
+            
+            
+            
+            var Common_Constructor = function( theTitle, theIdentifier, theRecorder) {
+                this._v_IsPrototype = false;
+                this._v_Prototype = aCommon_Prototype;
+                
+                this._v_Identifier = null;
+                this._v_Recorder   = null;
+    
+                this._v_Id    = null;
+                this._v_Title = null;
+    
+                this._v_OwnRecords = null;
+                
+                this._pInit_Common( theTitle, theIdentifier, theRecorder);
+            };
+            Common_Constructor.prototype = aCommon_Prototype;
+            
+            
+            
+            
+            
+            var Common_SuperPrototypeConstructor = function() {
+                this._v_IsPrototype = true;
+                this._v_Prototype = aCommon_Prototype;
+    
+                this._v_Identifier = null;
+                this._v_Recorder   = null;
+    
+                this._v_Id    = null;
+                this._v_Title = null;
+    
+                this._v_OwnRecords = null;
+            };
+            Common_SuperPrototypeConstructor.prototype = aCommon_Prototype;
+    
+    
+    
+            var Common_SuperPrototypeSingleton = function() {
+                if( aModule.SuperPrototypeSingletonInstance) {
+                    return aModule.SuperPrototypeSingletonInstance;
+                }
+        
+                aModule.SuperPrototypeSingletonInstance = new Common_SuperPrototypeConstructor();
+                return aModule.SuperPrototypeSingletonInstance;
+            };
+    
+    
+            var aModule = {
+                "Common_Prototype": aCommon_Prototype,
+                "Common_Constructor": Common_Constructor,
+                "Common_SuperPrototypeConstructor": Common_SuperPrototypeConstructor,
+                "Common_SuperPrototypeSingleton": Common_SuperPrototypeSingleton,
+                "Prototype": aCommon_Prototype,
+                "Constructor": Common_Constructor,
+                "SuperPrototypeConstructor": Common_SuperPrototypeConstructor,
+                "SuperPrototypeSingleton": Common_SuperPrototypeSingleton
+            };
+            InitFromModuleConstants( aModule);
+            aModule._v_Type = "module";
+            aModule.ComponentName     = ComponentName;
+            aModule.ModuleName      = ModuleName;
+            aModule.ModulePackages  = ModulePackages;
+            aModule.ModuleFullName  = ModuleFullName;
+            aModule.ModuleVariations= ModuleVariations;
+            aModule.ModuleConstants = ModuleConstants;
+            aModule.ModuleGlobals   = ModuleGlobals;
+            aModule.InitFromModuleConstants  = InitFromModuleConstants;
+            aModule.InitFromModuleVariations = InitFromModuleVariations;
+            aModule.InitModuleGlobalsOn      = InitModuleGlobalsOn;
+    
+            aCommon_Prototype._v_Module = aModule;
+            
+            
+            
+            
+            return aModule;
+        };
+        
+        
+        
+        
+        
+      
+    
+        var anExistingModule = null;
+        if(    !( typeof theSS_typesregistry_svce === 'undefined')
+            && ( typeof theSS_typesregistry_svce.fRegisteredModule === 'function')) {
+            anExistingModule = theSS_typesregistry_svce.fRegisteredModule( ModuleFullName);
+        }
+        if( !anExistingModule) {
+        
+            var aModule = aMod_builder(
+                theSS_overrider_type,
+                theSS_IdentifierSvce,
+                theSS_RecorderSvce,
+                theSS_EventTypes_Common,
+                theSS_Travesals
+            );
+        
+            aModule.ModuleBuilder = aMod_builder;
+            aModule.ModuleDecompiler  = function() { aModule.ModuleSource = aMod_builder.toString()};
+        
+            anExistingModule = aModule;
+        
+            if(    !( typeof theSS_typesregistry_svce === 'undefined')
+                && ( typeof theSS_typesregistry_svce.fRegisterModule === 'function')) {
+                theSS_typesregistry_svce.fRegisterModule( ModuleFullName, aModule);
+            }
+        }
+    
+    
+        
+    
+        return anExistingModule;
+        
+        
+    });
+    
+    
+    
+    if( !( typeof angular === 'undefined') && angular.module) {
+        // Angular (1.x)
+        
+        angular.module("commonTypes").factory("CommonType",[
+            "TypesRegistrySvce",
+            "OverriderSvce",
+            "IdentifierSvce",
+            "RecorderSvce",
+            "EventKinds_Common",
+            "Traversals",
+            aMod_definer
+        ]);
+        
+    }
+    else if ( !(typeof module === 'undefined') && module.exports) {
+        // Node.js
+        
+        module.exports = (function() {
+            
+            var aM_typesregistry_svce     = require('../modboot/typesregistry');
+            var aM_overrider         = require('../modboot/overrider_svce');
+            var aM_identifierSvce    = require('../identifying/identifier_svce');
+            var aM_recorderSvce      = require('../identifying/recorder_svce');
+            var aM_eventkinds_common = require('../eventkinds/eventkinds_common');
+            var aM_traversals        = require('../utils/traversals');
+    
+            return aMod_definer(
+                aM_typesregistry_svce,
+                aM_overrider,
+                aM_identifierSvce,
+                aM_recorderSvce,
+                aM_eventkinds_common,
+                aM_traversals
+            );
+        })();
+        
+    }
+    else if ( !(typeof define === 'undefined') && define.amd) {
+        // AMD / RequireJS
+        
+        define( "m_common_type",
+            [
                 "m_typesregistry_svce",
-                "m_overrider_svce"
+                "m_overrider_svce",
+                "m_identifier_svce",
+                "m_recorder_svce",
+                "m_eventkinds_common",
+                "m_traversals"
             ],
             aMod_definer
            );
@@ -22381,15 +22269,22 @@ if( !( typeof angular === 'undefined') && angular.module) {
     
         nomod.register( ComponentName, ModulePackages, ModuleName,
             [ /* theDependencies */
-                nomod.fComputeFullName( "prettytype", "typesregistry", "typesregistry_type"),
-                nomod.fComputeFullName( "prettytype", "modboot", "overrider_svce")
+                nomod.fComputeFullName( "prettytype", "modboot",     "typesregistry"),
+                nomod.fComputeFullName( "prettytype", "modboot",     "overrider_svce"),
+                nomod.fComputeFullName( "prettytype", "identifying", "identifier_svce"),
+                nomod.fComputeFullName( "prettytype", "identifying", "recorder_svce"),
+                nomod.fComputeFullName( "prettytype", "eventkinds",  "eventkinds_common"),
+                nomod.fComputeFullName( "prettytype", "utils",       "traversals")
             ],
             aMod_definer
         );
     
     }
+   
     
 })();
+
+
 
 
 
