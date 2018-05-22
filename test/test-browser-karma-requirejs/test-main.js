@@ -55,7 +55,8 @@ requirejs.config({
         "stacktrace_svce_structural_test",
         "exceptiondetails_type_structural_test",
         "exceptiondetails_svce_structural_test",
-        "identifier_type_structural_test"
+        "identifier_type_structural_test",
+        "identifier_svce_structural_test"
 
     ],
     
@@ -74,7 +75,8 @@ requirejs.config({
         'stacktrace_svce_structural_test':                       './test/structural-test/exceptionstack-structural-test/stacktrace_svce-structural-test',
         'exceptiondetails_type_structural_test':                 './test/structural-test/exceptionstack-structural-test/exceptiondetails_type-structural-test',
         'exceptiondetails_svce_structural_test':                 './test/structural-test/exceptionstack-structural-test/exceptiondetails_svce-structural-test',
-        'identifier_type_structural_test':                       './test/structural-test/identifying-structural-test/identifier_type-structural-test'
+        'identifier_type_structural_test':                       './test/structural-test/identifying-structural-test/identifier_type-structural-test',
+        'identifier_svce_structural_test':                       './test/structural-test/identifying-structural-test/identifier_svce_-structural-test'
     },
 
     // start test run, once Require.js is done loading scripts

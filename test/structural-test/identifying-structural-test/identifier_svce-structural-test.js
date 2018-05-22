@@ -1,7 +1,7 @@
 /*
- * common_type-commoneventkinds-structural-test.js
+ * identifier_svce-structural-test.js
  *
- * Created @author Antonio Carrasco Valero 201601241620
+ * Created @author Antonio Carrasco Valero 201805220335
  *
  *
  ***************************************************************************
@@ -31,32 +31,30 @@ permissions and limitations under the Licence.
  */
 
 
-
-
-/// <reference path="src/identifying/identifier_type.js"/>
+/// <reference path="src/common/identifier_svce.js"/>
 "use strict";
-
 
 
 var aTest_spec = (function( theSS_identifier_svce) {
     
     var ComponentName    = "prettytype-test";
     var ModuleName     = "identifier_svce-structural-test";
-    var ModulePackages = "test/structural-test/identifying-structural-test";
+    var ModulePackages = "test/structural-test/identifier-structural-test";
     var ModuleFullName = ModulePackages + "/" + ModuleName;
+    var TestName       = ModuleName + "_" + ModulePackages + "_" + ComponentName + "_test";
     
     if( typeof FG_logModLoads === 'function') { FG_logModLoads(ModuleFullName);}
     
-    describe( ModuleName + " " + ModulePackages + " " + ComponentName, function () {
+    describe( TestName, function () {
         
         var aM_identifier_svce = null;
         
         if( ( typeof beforeEach === 'function') && ( typeof module === 'function')  && ( typeof inject === 'function')) {
             // Karma for Angular (1.x)
-            beforeEach( module( 'typesRegistry', 'modbootTypes', 'identifyingTypes'));
+            beforeEach( module( "identifying"));
             
-            beforeEach( inject(function( _IdentifierSvce_) {
-                aM_identifier_svce = _IdentifierSvce_;
+            beforeEach( inject(function( _identifier_svce_) {
+                aM_identifier_svce = _identifier_svce_;
             }));
         }
         else if ( !(typeof module === 'undefined') && module.exports) {
@@ -70,242 +68,142 @@ var aTest_spec = (function( theSS_identifier_svce) {
         else if ( !(typeof nomod === 'undefined') && nomod.register) {
             aM_identifier_svce = nomod.resolve( nomod.fComputeFullName( "prettytype", "identifying", "identifier_svce"));
         }
-    
-
-    
-    
-        it("Has module defined", function () {
+        
+        
+        
+        
+        
+        it("Singleton is defined", function () {
+            expect( aM_identifier_svce).not.toBeUndefined();
+        });
+        
+        
+        it("Singleton has module meta definitions", function () {
+            expect( aM_identifier_svce.ComponentName).toBe( "prettytype");
+            expect( aM_identifier_svce.ModuleName).toBe( "identifier_svce");
+            expect( aM_identifier_svce.ModulePackages).toBe( "identifying");
+            expect( aM_identifier_svce.ModuleFullName).toBe( "identifying/identifier_svce");
+            expect( aM_identifier_svce.SingletonName).toBe( "Identifier_Service");
+        });
+        
+        
+        it("Singleton has meta definitions ", function () {
+            expect( aM_identifier_svce._v_Kind).toBe( "singleton");
+            expect( aM_identifier_svce._v_Prototype).not.toBeUndefined();
+            expect( aM_identifier_svce._v_SuperPrototype).toBe( null);
+            expect( aM_identifier_svce._v_Type).toBe( "Identifier");
+            expect( aM_identifier_svce._v_Prototype_Identifier).not.toBeUndefined();
+            expect( aM_identifier_svce._v_Module).not.toBeNull( null);
             expect( aM_identifier_svce._v_Module).not.toBeUndefined();
         });
-    
-        it("Has module not null", function () {
-            expect( aM_identifier_svce._v_Module).not.toBeNull( null);
-        });
-    
-        it("Has module ModuleName identifier_type", function () {
-            expect( aM_identifier_svce._v_Module.ModuleName).toBe( "identifier_type");
-        });
-    
-        it("Has module ModulePackages identifying", function () {
-            expect( aM_identifier_svce._v_Module.ModulePackages).toBe( "identifying");
-        });
-    
-        it("Has module ModuleFullName identifying.identifier_type", function () {
-            expect( aM_identifier_svce._v_Module.ModuleFullName).toBe( "identifying/identifier_type");
-        });
-    
-        it("Has module Identifier_Prototype defined", function () {
-            expect( aM_identifier_svce._v_Module.Identifier_Prototype).not.toBeUndefined();
-        });
-    
-        it("Has module Identifier_Prototype not null", function () {
-            expect( aM_identifier_svce._v_Module.Identifier_Prototype).not.toBeNull( null);
-        });
-    
-        it("Has module Identifier_Constructor defined", function () {
-            expect( aM_identifier_svce._v_Module.Identifier_Constructor).not.toBeUndefined();
-        });
-    
-        it("Has module Identifier_Constructor not null", function () {
-            expect( aM_identifier_svce._v_Module.Identifier_Constructor).not.toBeNull( null);
-        });
-    
-        it("Has module Identifier_SuperPrototypeConstructor defined", function () {
-            expect( aM_identifier_svce._v_Module.Identifier_SuperPrototypeConstructor).not.toBeUndefined();
-        });
-    
-        it("Has module Identifier_SuperPrototypeConstructor not null", function () {
-            expect( aM_identifier_svce._v_Module.Identifier_SuperPrototypeConstructor).not.toBeNull( null);
-        });
-    
-    
-    
-        it("Has _v_Prototype defined", function () {
-            expect( aM_identifier_svce._v_Prototype).not.toBeUndefined();
-        });
-    
-        it("Has _v_Prototype module Identifier_Prototype", function () {
-            expect( aM_identifier_svce._v_Prototype).toBe( aM_identifier_svce._v_Module.Identifier_Prototype);
-        });
-    
-        it("Has _v_Prototype_Identifier defined", function () {
-            expect( aM_identifier_svce._v_Prototype_Identifier).not.toBeUndefined();
-        });
-    
-        it("Has _v_Prototype_Identifier module Identifier_Prototype", function () {
-            expect( aM_identifier_svce._v_Prototype).toBe( aM_identifier_svce._v_Module.Identifier_Prototype);
-        });
-    
-    
-    
-        it("Has _v_Type Identifier", function () {
-            expect( aM_identifier_svce._v_Type).toBe( "Identifier");
-        });
-    
-    
-        it("Has fFullTypeNameString defined", function () {
-            expect( aM_identifier_svce.fFullTypeNameString).not.toBeUndefined();
-        });
-    
-        it("Has fFullTypeNameString typeof function", function () {
-            expect( typeof aM_identifier_svce.fFullTypeNameString).toBe( "function");
-        });
-    
-    
-    
-    
-        it("Has fIdentifyingJSON defined", function () {
-            expect( aM_identifier_svce.fIdentifyingJSON).not.toBeUndefined();
-        });
-    
-        it("Has fIdentifyingJSON typeof function", function () {
-            expect( typeof aM_identifier_svce.fIdentifyingJSON).toBe( "function");
-        });
-    
-        it("Has fIdentifyingJSON() not null", function () {
-            expect( aM_identifier_svce.fIdentifyingJSON()).not.toBeNull();
-        });
-    
-        it("Has fIdentifyingJSON() type _v_Type", function () {
-            expect( aM_identifier_svce.fIdentifyingJSON().type).toBe( aM_identifier_svce._v_Type);
-        });
-    
-        it("Has fIdentifyingJSON() id _v_Id", function () {
-            expect( aM_identifier_svce.fIdentifyingJSON().id).toBe( aM_identifier_svce._v_Id);
-        });
-    
-    
-    
-    
-        it("Has fIdentifyingString defined", function () {
-            expect( aM_identifier_svce.fIdentifyingString).not.toBeUndefined();
-        });
-    
-        it("Has fIdentifyingString typeof function", function () {
-            expect( typeof aM_identifier_svce.fIdentifyingString).toBe( "function");
-        });
-    
-        it("Has fIdentifyingString() not null", function () {
-            expect( aM_identifier_svce.fIdentifyingString()).not.toBeNull();
-        });
-    
-        it("Has fIdentifyingString() JSON.stringify( fIdentifyingJSON())", function () {
-            expect( aM_identifier_svce.fIdentifyingString()).toBe( JSON.stringify( aM_identifier_svce.fIdentifyingJSON()));
-        });
-    
-    
-    
-    
-    
-        it("Has fIdentifyingWithTitleJSON defined", function () {
-            expect( aM_identifier_svce.fIdentifyingWithTitleJSON).not.toBeUndefined();
-        });
-    
-        it("Has fIdentifyingWithTitleJSON typeof function", function () {
-            expect( typeof aM_identifier_svce.fIdentifyingWithTitleJSON).toBe( "function");
-        });
-    
-        it("Has fIdentifyingWithTitleJSON() not null", function () {
-            expect( aM_identifier_svce.fIdentifyingWithTitleJSON()).not.toBeNull();
-        });
-    
-        it("Has fIdentifyingWithTitleJSON() type _v_Type", function () {
-            expect( aM_identifier_svce.fIdentifyingWithTitleJSON().type).toBe( aM_identifier_svce._v_Type);
-        });
-    
-        it("Has fIdentifyingWithTitleJSON() id _v_Id", function () {
-            expect( aM_identifier_svce.fIdentifyingWithTitleJSON().id).toBe( aM_identifier_svce._v_Id);
-        });
-    
-        it("Has fIdentifyingWithTitleJSON() id _v_Title", function () {
-            expect( aM_identifier_svce.fIdentifyingWithTitleJSON().title).toBe( aM_identifier_svce._v_Title);
-        });
-    
-    
-    
-    
-    
-    
-        it("Has fIdentifyingWithTitleString defined", function () {
-            expect( aM_identifier_svce.fIdentifyingWithTitleString).not.toBeUndefined();
-        });
-    
-        it("Has fIdentifyingWithTitleString typeof function", function () {
-            expect( typeof aM_identifier_svce.fIdentifyingWithTitleString).toBe( "function");
-        });
-    
-        it("Has fIdentifyingWithTitleString() not null", function () {
-            expect( aM_identifier_svce.fIdentifyingWithTitleString()).not.toBeNull();
-        });
-    
-        it("Has fIdentifyingWithTitleString() JSON.stringify( fIdentifyingJSON())", function () {
-            expect( aM_identifier_svce.fIdentifyingWithTitleString()).toBe( JSON.stringify( aM_identifier_svce.fIdentifyingWithTitleJSON()));
-        });
-    
-    
-    
-    
-        it("Has fToResultJSON defined", function () {
-            expect( aM_identifier_svce.fToResultJSON).not.toBeUndefined();
-        });
-    
-        it("Has fToResultJSON typeof function", function () {
-            expect( typeof aM_identifier_svce.fToResultJSON).toBe( "function");
-        });
-    
-        it("Has fToResultJSON()not null", function () {
-            expect( aM_identifier_svce.fToResultJSON()).not.toBeNull();
-        });
-    
-    
-        it("Has fToResultJSON() type _v_Type", function () {
-            expect( aM_identifier_svce.fToResultJSON().type).toBe( aM_identifier_svce._v_Type);
-        });
-    
-        it("Has fToResultJSON() id _v_Id", function () {
-            expect( aM_identifier_svce.fToResultJSON().id).toBe( aM_identifier_svce._v_Id);
-        });
-    
-        it("Has fToResultJSON() id _v_Title", function () {
-            expect( aM_identifier_svce.fToResultJSON().title).toBe( aM_identifier_svce._v_Title);
-        });
-    
-    
-    
-    
-        var someFunctionNames = [
-            "fReserveId"
+        
+        
+        var someConstantNames = [
+            "IDENTIFIER_DEFAULTTITLE"
         ];
-    
-        var aNumFunctionNames = someFunctionNames.length;
-        for( var aFunctionNameIdx=0; aFunctionNameIdx < aNumFunctionNames; aFunctionNameIdx++) {
-            var aFunctionName = someFunctionNames[ aFunctionNameIdx];
-            if( aFunctionName) {
+        var aNumConstantNames = someConstantNames.length;  for( var aM_identifier_svceConstantNameIdx=0; aM_identifier_svceConstantNameIdx < aNumConstantNames; aM_identifier_svceConstantNameIdx++) {
+            var aM_identifier_svceConstantName = someConstantNames[ aM_identifier_svceConstantNameIdx];
+            if( aM_identifier_svceConstantName) {
                 (function() {
-                    var aFunctionName_here = aFunctionName;
-                
-                    it("Has function " + aFunctionName_here + " defined", function () {
-                        var aFunction = aM_identifier_svce[ aFunctionName_here];
-                    
-                        expect( typeof aFunction).toBe( "function");
+                    var aM_identifier_svceConstantName_here = aM_identifier_svceConstantName;
+                    it("Singleton has module constant named " + aM_identifier_svceConstantName_here + " prototypically inherited", function () {
+                        var aM_identifier_svceConstant = aM_identifier_svce[ aM_identifier_svceConstantName_here];
+                        expect( aM_identifier_svceConstant).not.toBeUndefined();
                     });
                 })()
             }
         }
-    
+        
+        
+        var somePrototypeGeneralFunctionNames = [
+            "_pInit",
+            "fFullTypeNameString",
+            "fIdentifyingJSON",
+            "fIdentifyingString",
+            "fIdentifyingWithTitleJSON",
+            "fIdentifyingWithTitleString",
+            "fToResultJSON"
+        ];
+        var aNumPrototypeGeneralFunctionNames = somePrototypeGeneralFunctionNames.length;
+        for( var aM_identifier_svceGeneralFunctionNameIdx=0; aM_identifier_svceGeneralFunctionNameIdx < aNumPrototypeGeneralFunctionNames; aM_identifier_svceGeneralFunctionNameIdx++) {
+            var aM_identifier_svceGeneralFunctionName = somePrototypeGeneralFunctionNames[ aM_identifier_svceGeneralFunctionNameIdx];
+            if( aM_identifier_svceGeneralFunctionName) {
+                (function() {
+                    var aM_identifier_svceGeneralFunctionName_here = aM_identifier_svceGeneralFunctionName;
+                    it("Singleton has general function named " + aM_identifier_svceGeneralFunctionName_here + " prototypically inherited", function () {
+                        var aM_identifier_svceGeneralFunction = aM_identifier_svce[ aM_identifier_svceGeneralFunctionName_here];
+                        expect( typeof aM_identifier_svceGeneralFunction).toBe( "function");
+                    });
+                })()
+            }
+        }
+        
+        
+        var somePrototypeSlotNames = [
+            /* None */
+        ];
+        var aNumPrototypeSlotNames = somePrototypeSlotNames.length;
+        for( var aM_identifier_svceSlotNameIdx=0; aM_identifier_svceSlotNameIdx < aNumPrototypeSlotNames; aM_identifier_svceSlotNameIdx++) {
+            var aM_identifier_svceSlotName = somePrototypeSlotNames[ aM_identifier_svceSlotNameIdx];
+            if( aM_identifier_svceSlotName) {
+                (function() {
+                    var aM_identifier_svceSlotName_here = aM_identifier_svceSlotName;
+                    it("Singleton has slot with name " + aM_identifier_svceSlotName_here + " prototypically inherited", function () {
+                        var aM_identifier_svce = aM_typesregistry_type.Prototype;
+                        var anPrototypeSlot = aM_identifier_svce[ aM_identifier_svceSlotName_here];
+                        expect( anPrototypeSlot).not.toBeUndefined();
+                    });
+                })()
+            }
+        }
+        
+        
+        var somePrototypeSpecificFunctionNames = [
+            "_pInit_Identifier",
+            "fReserveId"
+        ];
+        var aNumPrototypeSpecificFunctionNames = somePrototypeSpecificFunctionNames.length;
+        for( var aM_identifier_svceSpecificFunctionNameIdx=0; aM_identifier_svceSpecificFunctionNameIdx < aNumPrototypeSpecificFunctionNames; aM_identifier_svceSpecificFunctionNameIdx++) {
+            var aM_identifier_svceSpecificFunctionName = somePrototypeSpecificFunctionNames[ aM_identifier_svceSpecificFunctionNameIdx];
+            if( aM_identifier_svceSpecificFunctionName) {
+                (function() {
+                    var aM_identifier_svceSpecificFunctionName_here = aM_identifier_svceSpecificFunctionName;
+                    it("Singleton has specific function " + aM_identifier_svceSpecificFunctionName_here + " prototypically inherited", function () {
+                        var aM_identifier_svceSpecificFunction = aM_identifier_svce[ aM_identifier_svceSpecificFunctionName_here];
+                        expect( typeof aM_identifier_svceSpecificFunction).toBe( "function");
+                    });
+                })()
+            }
+        }
+        
+        
+        var someInstanceSlotNames = [
+            "_v_Id",
+            "_v_Title",
+            "_v_IdsCounter"
+        ];
+        var aNumInstanceSlotNames = someInstanceSlotNames.length;
+        for( var aInstanceSlotNameIdx=0; aInstanceSlotNameIdx < aNumInstanceSlotNames; aInstanceSlotNameIdx++) {
+            var aInstanceSlotName = someInstanceSlotNames[ aInstanceSlotNameIdx];
+            if( aInstanceSlotName) {
+                (function() {
+                    var aInstanceSlotName_here = aInstanceSlotName;
+                    it("Singleton has slot with name " + aInstanceSlotName_here, function () {
+                        var anInstanceSlot = aM_identifier_svce[ aInstanceSlotName_here];
+                        expect( anInstanceSlot).not.toBeUndefined();
+                    });
+                })()
+            }
+        }
+        
     });
-    
 });
-
-
 
 if ( (typeof define === 'function') && define.amd) {
     // AMD / RequireJS
-    /* Module name MUST BE A LITERAL STRING, I.E. "m_typesregistry_structural_test" not  a variable like ModuleSymbolicName.
-    * If it is a variable, no test specs shall be registered (i.e., it does not invoke the test spec function */
-    define( "m_identifier_svce_structural_test",
+    define( "identifier_svce_structural_test",
         [
-            "m_identifier_svce"
+            "identifier_svce"
         ],
         aTest_spec
     );
@@ -313,4 +211,7 @@ if ( (typeof define === 'function') && define.amd) {
 else {
     aTest_spec();
 }
+
+
+
 

@@ -14,7 +14,9 @@
     "structural-test/exceptionstack-structural-test/exceptiondetails_type-structural-test.js",
     "structural-test/exceptionstack-structural-test/exceptiondetails_svce-structural-test.js",
 
-    "structural-test/identifying-structural-test/identifier_type-structural-test.js"
+    "structural-test/identifying-structural-test/identifier_type-structural-test.js",
+    "structural-test/identifying-structural-test/identifier_svce-structural-test.js"
+
 
   ],
   "helpers": [
