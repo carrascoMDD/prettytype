@@ -1,7 +1,7 @@
 /*
  * identifier_type-structural-test.js
  *
- * Created @author Antonio Carrasco Valero 201601241620
+ * Created @author Antonio Carrasco Valero 201805210512
  *
  *
  ***************************************************************************
@@ -31,9 +31,7 @@ permissions and limitations under the Licence.
  */
 
 
-
-
-/// <reference path="src/identifying/identifier_type.js"/>
+/// <reference path="src/common/identifier_type.js"/>
 "use strict";
 
 
@@ -43,283 +41,270 @@ var aTest_spec = (function( theSS_identifier_type) {
     var ModuleName     = "identifier_type-structural-test";
     var ModulePackages = "test/structural-test/identifying-structural-test";
     var ModuleFullName = ModulePackages + "/" + ModuleName;
+    var TestName       = ModuleName + "_" + ModulePackages + "_" + ComponentName + "_test";
     
     if( typeof FG_logModLoads === 'function') { FG_logModLoads(ModuleFullName);}
     
-    describe( ModuleName + " " + ModulePackages + " " + ComponentName, function () {
-    
-        var aIdentifier_title = "Identifier-Title-test";
-    
+    describe( TestName, function () {
+        
         var aM_identifier_type = null;
-        var anIdentifier       = null;
-    
+        
         if( ( typeof beforeEach === 'function') && ( typeof module === 'function')  && ( typeof inject === 'function')) {
             // Karma for Angular (1.x)
-            beforeEach( module( 'typesRegistry', 'modbootTypes', 'identifyingTypes'));
+            beforeEach( module( "identifying"));
             
-            beforeEach( inject(function( _IdentifierType_) {
-                aM_identifier_type = _IdentifierType_;
-                anIdentifier = new aM_identifier_type.Identifier_Constructor( aIdentifier_title);
+            beforeEach( inject(function( _identifier_type_) {
+                aM_identifier_type = _identifier_type_;
             }));
         }
         else if ( !(typeof module === 'undefined') && module.exports) {
             // Node.js
             aM_identifier_type = require('../../../src/identifying/identifier_type');
-            anIdentifier = new aM_identifier_type.Identifier_Constructor( aIdentifier_title);
         }
         else if ( !(typeof define === 'undefined') && define.amd) {
             // AMD / RequireJS
             aM_identifier_type = theSS_identifier_type;
-            anIdentifier = new aM_identifier_type.Identifier_Constructor( aIdentifier_title);
         }
         else if ( !(typeof nomod === 'undefined') && nomod.register) {
             aM_identifier_type = nomod.resolve( nomod.fComputeFullName( "prettytype", "identifying", "identifier_type"));
-            anIdentifier = new aM_identifier_type.Identifier_Constructor( aIdentifier_title);
         }
         
         
-    
-    
-        it("Has module defined", function () {
-            expect( anIdentifier._v_Module).not.toBeUndefined();
+        
+        
+        
+        
+        it("Module is defined", function () {
+            expect( aM_identifier_type).not.toBeUndefined();
         });
-    
-        it("Has module not null", function () {
-            expect( anIdentifier._v_Module).not.toBeNull( null);
+        
+        
+        it("Has module meta definitions", function () {
+            expect( aM_identifier_type._v_Kind).toBe( "module");
+            expect( aM_identifier_type.ComponentName).toBe( "prettytype");
+            expect( aM_identifier_type.ModuleName).toBe( "identifier_type");
+            expect( aM_identifier_type.ModulePackages).toBe( "identifying");
+            expect( aM_identifier_type.ModuleFullName).toBe( "identifying/identifier_type");
         });
-    
-        it("Has module ModuleName identifier_type", function () {
-            expect( anIdentifier._v_Module.ModuleName).toBe( "identifier_type");
-        });
-    
-        it("Has module ModulePackages identifying", function () {
-            expect( anIdentifier._v_Module.ModulePackages).toBe( "identifying");
-        });
-    
-        it("Has module ModuleFullName identifying.identifier_type", function () {
-            expect( anIdentifier._v_Module.ModuleFullName).toBe( "identifying/identifier_type");
-        });
-    
-        it("Has module Identifier_Prototype defined", function () {
-            expect( anIdentifier._v_Module.Identifier_Prototype).not.toBeUndefined();
-        });
-    
-        it("Has module Identifier_Prototype not null", function () {
-            expect( anIdentifier._v_Module.Identifier_Prototype).not.toBeNull( null);
-        });
-    
-        it("Has module Identifier_Constructor defined", function () {
-            expect( anIdentifier._v_Module.Identifier_Constructor).not.toBeUndefined();
-        });
-    
-        it("Has module Identifier_Constructor not null", function () {
-            expect( anIdentifier._v_Module.Identifier_Constructor).not.toBeNull( null);
-        });
-    
-        it("Has module Identifier_SuperPrototypeConstructor defined", function () {
-            expect( anIdentifier._v_Module.Identifier_SuperPrototypeConstructor).not.toBeUndefined();
-        });
-    
-        it("Has module Identifier_SuperPrototypeConstructor not null", function () {
-            expect( anIdentifier._v_Module.Identifier_SuperPrototypeConstructor).not.toBeNull( null);
-        });
-    
-    
-    
-        it("Has _v_Prototype defined", function () {
-            expect( anIdentifier._v_Prototype).not.toBeUndefined();
-        });
-    
-        it("Has _v_Prototype module Identifier_Prototype", function () {
-            expect( anIdentifier._v_Prototype).toBe( anIdentifier._v_Module.Identifier_Prototype);
-        });
-    
-        it("Has _v_Prototype_Identifier defined", function () {
-            expect( anIdentifier._v_Prototype_Identifier).not.toBeUndefined();
-        });
-    
-        it("Has _v_Prototype_Identifier module Identifier_Prototype", function () {
-            expect( anIdentifier._v_Prototype).toBe( anIdentifier._v_Module.Identifier_Prototype);
-        });
-    
-    
-    
-        it("Has _v_Type Identifier", function () {
-            expect( anIdentifier._v_Type).toBe( "Identifier");
-        });
-    
-        it("Has title Identifier_DefaultName", function () {
-            expect( anIdentifier._v_Title).toBe( aIdentifier_title);
-        });
-    
-    
-    
-    
-        it("Has fFullTypeNameString defined", function () {
-            expect( anIdentifier.fFullTypeNameString).not.toBeUndefined();
-        });
-    
-        it("Has fFullTypeNameString typeof function", function () {
-            expect( typeof anIdentifier.fFullTypeNameString).toBe( "function");
-        });
-    
-    
-    
-    
-        it("Has fIdentifyingJSON defined", function () {
-            expect( anIdentifier.fIdentifyingJSON).not.toBeUndefined();
-        });
-    
-        it("Has fIdentifyingJSON typeof function", function () {
-            expect( typeof anIdentifier.fIdentifyingJSON).toBe( "function");
-        });
-    
-        it("Has fIdentifyingJSON() not null", function () {
-            expect( anIdentifier.fIdentifyingJSON()).not.toBeNull();
-        });
-    
-        it("Has fIdentifyingJSON() type _v_Type", function () {
-            expect( anIdentifier.fIdentifyingJSON().type).toBe( anIdentifier._v_Type);
-        });
-    
-        it("Has fIdentifyingJSON() id _v_Id", function () {
-            expect( anIdentifier.fIdentifyingJSON().id).toBe( anIdentifier._v_Id);
-        });
-    
-    
-    
-    
-        it("Has fIdentifyingString defined", function () {
-            expect( anIdentifier.fIdentifyingString).not.toBeUndefined();
-        });
-    
-        it("Has fIdentifyingString typeof function", function () {
-            expect( typeof anIdentifier.fIdentifyingString).toBe( "function");
-        });
-    
-        it("Has fIdentifyingString() not null", function () {
-            expect( anIdentifier.fIdentifyingString()).not.toBeNull();
-        });
-    
-        it("Has fIdentifyingString() JSON.stringify( fIdentifyingJSON())", function () {
-            expect( anIdentifier.fIdentifyingString()).toBe( JSON.stringify( anIdentifier.fIdentifyingJSON()));
-        });
-    
-    
-    
-    
-    
-        it("Has fIdentifyingWithTitleJSON defined", function () {
-            expect( anIdentifier.fIdentifyingWithTitleJSON).not.toBeUndefined();
-        });
-    
-        it("Has fIdentifyingWithTitleJSON typeof function", function () {
-            expect( typeof anIdentifier.fIdentifyingWithTitleJSON).toBe( "function");
-        });
-    
-        it("Has fIdentifyingWithTitleJSON() not null", function () {
-            expect( anIdentifier.fIdentifyingWithTitleJSON()).not.toBeNull();
-        });
-    
-        it("Has fIdentifyingWithTitleJSON() type _v_Type", function () {
-            expect( anIdentifier.fIdentifyingWithTitleJSON().type).toBe( anIdentifier._v_Type);
-        });
-    
-        it("Has fIdentifyingWithTitleJSON() id _v_Id", function () {
-            expect( anIdentifier.fIdentifyingWithTitleJSON().id).toBe( anIdentifier._v_Id);
-        });
-    
-        it("Has fIdentifyingWithTitleJSON() id _v_Title", function () {
-            expect( anIdentifier.fIdentifyingWithTitleJSON().title).toBe( anIdentifier._v_Title);
-        });
-    
-    
-    
-    
-    
-    
-        it("Has fIdentifyingWithTitleString defined", function () {
-            expect( anIdentifier.fIdentifyingWithTitleString).not.toBeUndefined();
-        });
-    
-        it("Has fIdentifyingWithTitleString typeof function", function () {
-            expect( typeof anIdentifier.fIdentifyingWithTitleString).toBe( "function");
-        });
-    
-        it("Has fIdentifyingWithTitleString() not null", function () {
-            expect( anIdentifier.fIdentifyingWithTitleString()).not.toBeNull();
-        });
-    
-        it("Has fIdentifyingWithTitleString() JSON.stringify( fIdentifyingJSON())", function () {
-            expect( anIdentifier.fIdentifyingWithTitleString()).toBe( JSON.stringify( anIdentifier.fIdentifyingWithTitleJSON()));
-        });
-    
-    
-    
-    
-        it("Has fToResultJSON defined", function () {
-            expect( anIdentifier.fToResultJSON).not.toBeUndefined();
-        });
-    
-        it("Has fToResultJSON typeof function", function () {
-            expect( typeof anIdentifier.fToResultJSON).toBe( "function");
-        });
-    
-        it("Has fToResultJSON()not null", function () {
-            expect( anIdentifier.fToResultJSON()).not.toBeNull();
-        });
-    
-    
-        it("Has fToResultJSON() type _v_Type", function () {
-            expect( anIdentifier.fToResultJSON().type).toBe( anIdentifier._v_Type);
-        });
-    
-        it("Has fToResultJSON() id _v_Id", function () {
-            expect( anIdentifier.fToResultJSON().id).toBe( anIdentifier._v_Id);
-        });
-    
-        it("Has fToResultJSON() id _v_Title", function () {
-            expect( anIdentifier.fToResultJSON().title).toBe( anIdentifier._v_Title);
-        });
-    
-    
-    
-    
-    
-    
-        var someFunctionNames = [
-            "fReserveId"
+        
+        
+        var someGeneralFunctionNames = [
+            "InitFromModuleVariations",
+            "InitFromModuleConstants",
+            "InitModuleGlobalsOn",
+            "ProtoInstancer",
+            "ProtoDefinerOn",
+            "ProtoFactory",
+            "Constructor",
+            "SuperPrototypeConstructor",
+            "CreatePrototypeSlotsOn",
+            "CreateInstanceSlotsOn"
         ];
-    
-        var aNumFunctionNames = someFunctionNames.length;
-        for( var aFunctionNameIdx=0; aFunctionNameIdx < aNumFunctionNames; aFunctionNameIdx++) {
-            var aFunctionName = someFunctionNames[ aFunctionNameIdx];
-            if( aFunctionName) {
+        var aNumGeneralFunctionNames = someGeneralFunctionNames.length;
+        for( var aGeneralFunctionNameIdx=0; aGeneralFunctionNameIdx < aNumGeneralFunctionNames; aGeneralFunctionNameIdx++) {
+            var aGeneralFunctionName = someGeneralFunctionNames[ aGeneralFunctionNameIdx];
+            if( aGeneralFunctionName) {
                 (function() {
-                    var aFunctionName_here = aFunctionName;
-                
-                    it("Has function " + aFunctionName_here + " defined", function () {
-                        var aFunction = anIdentifier[ aFunctionName_here];
-                    
-                        expect( typeof aFunction).toBe( "function");
+                    var aGeneralFunctionName_here = aGeneralFunctionName;
+                    it("Module exposes general definition function " + aGeneralFunctionName_here, function () {
+                        var aGeneralFunction = aM_identifier_type[ aGeneralFunctionName_here];
+                        expect( typeof aGeneralFunction).toBe( "function");
                     });
                 })()
             }
         }
-    
-    
+        
+        
+        var someSpecificFunctionNames = [
+            "Identifier_ProtoInstancer",
+            "Identifier_ProtoDefinerOn",
+            "Identifier_ProtoFactory",
+            "Identifier_Constructor",
+            "Identifier_SuperPrototypeConstructor",
+            "Identifier_CreatePrototypeSlotsOn",
+            "Identifier_CreateInstanceSlotsOn"
+        ];
+        var aNumSpecificFunctionNames = someSpecificFunctionNames.length;
+        for( var aSpecificFunctionNameIdx=0; aSpecificFunctionNameIdx < aNumSpecificFunctionNames; aSpecificFunctionNameIdx++) {
+            var aSpecificFunctionName = someSpecificFunctionNames[ aSpecificFunctionNameIdx];
+            if( aSpecificFunctionName) {
+                (function() {
+                    var aSpecificFunctionName_here = aSpecificFunctionName;
+                    it("Module exposes specific definition function " + aSpecificFunctionName_here, function () {
+                        var aSpecificFunction = aM_identifier_type[ aSpecificFunctionName_here];
+                        expect( typeof aSpecificFunction).toBe( "function");
+                    });
+                })()
+            }
+        }
+        
+        
+        var someConstantNames = [
+            "IDENTIFIER_DEFAULTTITLE"
+        ];
+        var aNumConstantNames = someConstantNames.length;
+        for( var aModuleConstantNameIdx=0; aModuleConstantNameIdx < aNumConstantNames; aModuleConstantNameIdx++) {
+            var aModuleConstantName = someConstantNames[ aModuleConstantNameIdx];
+            if( aModuleConstantName) {
+                (function() {
+                    var aModuleConstantName_here = aModuleConstantName;
+                    it("Module exposes constant " + aModuleConstantName_here, function () {
+                        var aModuleConstant = aM_identifier_type[ aModuleConstantName_here];
+                        expect( aModuleConstant).not.toBeUndefined();
+                    });
+                })()
+            }
+        }
+        
+        
+        var somePrototypeNames = [
+            "Prototype",
+            "Identifier_Prototype"
+        ];
+        var aNumPrototypeNames = somePrototypeNames.length;
+        for( var aPrototypeNameIdx=0; aPrototypeNameIdx < aNumPrototypeNames; aPrototypeNameIdx++) {
+            var aPrototypeName = somePrototypeNames[ aPrototypeNameIdx];
+            if( aPrototypeName) {
+                (function() {
+                    var aPrototypeName_here = aPrototypeName;
+                    it("Module exposes prototype object with name " + aPrototypeName_here, function () {
+                        var anPrototype = aM_identifier_type[ aPrototypeName_here];
+                        expect( anPrototype).not.toBeUndefined();
+                        expect( anPrototype).not.toBeNull( null);
+                    });
+                })()
+            }
+        }
+       
+        
+        it("Has same prototype object under generic and specific names", function () {
+            expect( aM_identifier_type.Prototype).toBe( aM_identifier_type.Identifier_Prototype);
+        });
+        
+        
+        
+        it("Prototype has meta definitions", function () {
+            var aPrototype = aM_identifier_type.Prototype;
+            
+            expect( aPrototype._v_Kind).toBe( "prototype");
+            expect( aPrototype._v_SuperPrototype).toBe( null);
+            expect( aPrototype._v_Type).toBe( "Identifier");
+            expect( aPrototype._v_Prototype_Identifier).toBe( aPrototype);
+            expect( aPrototype._v_Module).toBe( aM_identifier_type);
+        });
+        
+        
+        for( var aPrototypeConstantNameIdx=0; aPrototypeConstantNameIdx < aNumConstantNames; aPrototypeConstantNameIdx++) {
+            var aPrototypeConstantName = someConstantNames[ aPrototypeConstantNameIdx];
+            if( aPrototypeConstantName) {
+                (function() {
+                    var aPrototypeConstantName_here = aPrototypeConstantName;
+                    it("Prototype also has module constant named " + aPrototypeConstantName_here, function () {
+                        var aPrototype = aM_identifier_type.Prototype;
+                        var aPrototypeConstant = aPrototype[ aPrototypeConstantName_here];
+                        expect( aPrototypeConstant).not.toBeUndefined();
+                    });
+                })()
+            }
+        }
+        
+        
+        var somePrototypeGeneralFunctionNames = [
+            "_pInit",
+            "fFullTypeNameString",
+            "fIdentifyingJSON",
+            "fIdentifyingString",
+            "fIdentifyingWithTitleJSON",
+            "fIdentifyingWithTitleString",
+            "fToResultJSON"
+        ];
+        var aNumPrototypeGeneralFunctionNames = somePrototypeGeneralFunctionNames.length;
+        for( var aPrototypeGeneralFunctionNameIdx=0; aPrototypeGeneralFunctionNameIdx < aNumPrototypeGeneralFunctionNames; aPrototypeGeneralFunctionNameIdx++) {
+            var aPrototypeGeneralFunctionName = somePrototypeGeneralFunctionNames[ aPrototypeGeneralFunctionNameIdx];
+            if( aPrototypeGeneralFunctionName) {
+                (function() {
+                    var aPrototypeGeneralFunctionName_here = aPrototypeGeneralFunctionName;
+                    
+                    it("Prototype has general function " + aPrototypeGeneralFunctionName_here + " defined", function () {
+                        var aPrototype = aM_identifier_type.Prototype;
+                        var aPrototypeGeneralFunction = aPrototype[ aPrototypeGeneralFunctionName_here];
+                        expect( typeof aPrototypeGeneralFunction).toBe( "function");
+                    });
+                })()
+            }
+        }
+        
+        
+        var somePrototypeSlotNames = [
+            /* None */
+        ];
+        var aNumPrototypeSlotNames = somePrototypeSlotNames.length;
+        for( var aPrototypeSlotNameIdx=0; aPrototypeSlotNameIdx < aNumPrototypeSlotNames; aPrototypeSlotNameIdx++) {
+            var aPrototypeSlotName = somePrototypeSlotNames[ aPrototypeSlotNameIdx];
+            if( aPrototypeSlotName) {
+                (function() {
+                    var aPrototypeSlotName_here = aPrototypeSlotName;
+                    it("Prototype has slot with name " + aPrototypeSlotName_here, function () {
+                        var aPrototype = aM_identifier_type.Prototype;
+                        var anPrototypeSlot = aPrototype[ aPrototypeSlotName_here];
+                        expect( anPrototypeSlot).not.toBeUndefined();
+                    });
+                })()
+            }
+        }
+        
+        
+        var somePrototypeSpecificFunctionNames = [
+            "_pInit_Identifier",
+            "fReserveId"
+        ];
+        var aNumPrototypeSpecificFunctionNames = somePrototypeSpecificFunctionNames.length;
+        for( var aPrototypeSpecificFunctionNameIdx=0; aPrototypeSpecificFunctionNameIdx < aNumPrototypeSpecificFunctionNames; aPrototypeSpecificFunctionNameIdx++) {
+            var aPrototypeSpecificFunctionName = somePrototypeSpecificFunctionNames[ aPrototypeSpecificFunctionNameIdx];
+            if( aPrototypeSpecificFunctionName) {
+                (function() {
+                    var aPrototypeSpecificFunctionName_here = aPrototypeSpecificFunctionName;
+                    it("Prototype has specific function " + aPrototypeSpecificFunctionName_here + " defined", function () {
+                        var aPrototype = aM_identifier_type.Prototype;
+                        var aPrototypeSpecificFunction = aPrototype[ aPrototypeSpecificFunctionName_here];
+                        expect( typeof aPrototypeSpecificFunction).toBe( "function");
+                    });
+                })()
+            }
+        }
+        
+        
+        var someInstanceSlotNames = [
+            "_v_Id",
+            "_v_Title",
+            "_v_IdsCounter"
+        ];
+        var aNumInstanceSlotNames = someInstanceSlotNames.length;
+        for( var aInstanceSlotNameIdx=0; aInstanceSlotNameIdx < aNumInstanceSlotNames; aInstanceSlotNameIdx++) {
+            var aInstanceSlotName = someInstanceSlotNames[ aInstanceSlotNameIdx];
+            if( aInstanceSlotName) {
+                (function() {
+                    var aInstanceSlotName_here = aInstanceSlotName;
+                    it("Instance has slot with name " + aInstanceSlotName_here, function () {
+                        var anInstance = new aM_identifier_type.Identifier_Constructor( "test_instance__someInstanceSlotNames__" + TestName);
+                        var anInstanceSlot = anInstance[ aInstanceSlotName_here];
+                        expect( anInstanceSlot).not.toBeUndefined();
+                    });
+                })()
+            }
+        }
+        
+        
+        
+        
     });
-
 });
-
 
 if ( (typeof define === 'function') && define.amd) {
     // AMD / RequireJS
-    /* Module name MUST BE A LITERAL STRING, I.E. "m_typesregistry_structural_test" not  a variable like ModuleSymbolicName.
-    * If it is a variable, no test specs shall be registered (i.e., it does not invoke the test spec function */
-    define( "m_identifier_type_structural_test",
+    define( "identifier_type_structural_test",
         [
-            "m_identifier_type"
+            "identifier_type"
         ],
         aTest_spec
     );
@@ -327,4 +312,7 @@ if ( (typeof define === 'function') && define.amd) {
 else {
     aTest_spec();
 }
+
+
+
 

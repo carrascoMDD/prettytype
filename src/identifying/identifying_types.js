@@ -37,11 +37,9 @@ permissions and limitations under the Licence.
 if( !( typeof angular === 'undefined') && angular.module) {
     // Angular (1.x)
     
-    angular.module("identifyingTypes", [
-        "typesRegistry",
-        "modbootTypes",
-        "consoleSvce",
-        "eventKinds_Common"
+    angular.module("identifying", [
+        "typesregistry",
+        "overrider"
     ]);
     
 }

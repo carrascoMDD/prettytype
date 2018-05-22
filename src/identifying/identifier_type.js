@@ -34,30 +34,55 @@ permissions and limitations under the Licence.
 
 (function () {
     
-    var ComponentName    = "prettytype";
+    var ComponentName  = "prettytype";
     var ModuleName     = "identifier_type";
     var ModulePackages = "identifying";
     var ModuleFullName = ModulePackages + "/" + ModuleName;
+    var TypeName       = "Identifier";
     
-    var aMod_definer = ( function( theSS_typesregistry_svce,
-                                   theSS_overrider_type) {
+    var aMod_definer = function( theSS_typesregistry_svce,
+                                 theSS_overrider_svce) {
         
-        var aMod_builder = function( theS_overrider_type) {
+        var aMod_builder = function( theS_overrider_svce) {
             
             if( typeof FG_logModLoads === 'function') { FG_logModLoads(ModuleFullName);}
-            
-            
-            
+    
+    
+    
+            /* ***************************************************************
+               Init here key-value pairs.
+               The key values defined as Variations may be overriden by the overrider_svce singleton
+                 with key values obtained from the command-line arguments or possibly Browser localStorage,
+                 or by key-values in an "override" or a "custom" object
+                 initialised in the corresponding variables of the overrider_svce singleton.
+               Any key-values in arguments, custom or overrides whose key is not defined in Variations
+                 shall not be be copied into Variations.
+               
+               These key values are added to the module Constants.
+               Therefore these key values, once initialised and possibly overriderm have an expected read-only life-cycle.
+
+               Any key-values defined into Constants with same key as one in Variations
+                 shall replace the value with same key obtained from Variations.
+               
+               See about Constants in the coment of pgInitWithModuleConstants() below.
+            */
             var pgInitWithModuleVariations = function( theToInit) {
                 
                 if( !theToInit) {
                 }
             };
-            
-            
-            
-            
-            
+    
+    
+    
+    
+    
+    
+            /* ***************************************************************
+               Just copy each key-value in ModuleVariations onto the supplied object.
+               Used to fill the Module Constants object.
+               
+               See about Constants in the coment of pgInitWithModuleConstants() below.
+            */
             var InitFromModuleVariations = function( theToInit) {
                 if( !theToInit) {
                     return;
@@ -69,11 +94,22 @@ permissions and limitations under the Licence.
                     }
                 }
             };
-            
-            
+    
+    
+    
+            /* ***************************************************************
+               Holder of name-values in the Module which may be overriden by overrider_svce singleton,
+                and later copied into Constants.
+            */
             var ModuleVariations = { };
             pgInitWithModuleVariations( ModuleVariations);
-            theS_overrider_type.pOverrideModuleVariations( ModuleFullName, ModuleVariations);
+    
+            /* ***************************************************************
+               Override key-values in Variations by the overrider_svce singleton
+                 with key values obtained from the command-line arguments or possibly Browser localStorage,
+                 or by key-values in an "override" or a "custom" object .
+            */
+            theS_overrider_svce.pOverrideModuleVariations( ModuleFullName, ModuleVariations);
     
     
     
@@ -118,7 +154,7 @@ permissions and limitations under the Licence.
                 if( !theToInit) {
                     return;
                 }
-                theToInit.IDENTIFIER_DEFAULTTITLE = "IdentifierDefaultName";
+                theToInit.IDENTIFIER_DEFAULTTITLE = "Identifier_DefaultName";
             };
     
     
@@ -192,46 +228,157 @@ permissions and limitations under the Licence.
             */
             var ModuleGlobals = { };
             InitModuleGlobalsOn( ModuleGlobals);
-            
-            
-            
-            
-            
-            
-            
-            
-            var aIdentifier_Prototype = (function() {
-                
-                
-                var aPrototype = {};
-                
-                InitFromModuleConstants( aPrototype);
     
-                aPrototype._v_SuperPrototype = null;
     
-                aPrototype._v_Type = "Identifier";
+    
+    
+    
+    
+            /* ***************************************************************
+              Returns an object which shall be used as prototype in constructor functions
+              <TypeName>_Constructor and <TypeName>_SuperPrototypeConstructor
+              
+              When the new prototype shall have no super-prototype, the object is created as new Object() or literal {}.
+              
+              When the new prototype shall have a super-prototype, the object is created by invoking a constructor function
+                with the super-prototype as the function prototype.
                 
-                aPrototype._v_Prototype_Identifier = aPrototype;
+              Initialise metatype variables in the prototype object.
+                When accessing the prototype or its instances, these values shall override same keys in the super-prototype, if any.
                 
-                aPrototype._v_Module = null;
+              Invoked by ProtoFactory as the first step to produce an object fully able to serve as Prototype.
+            */
+            var Identifier_ProtoInstancer = function() {
+        
+                var aPrototype = {} /* Prototypical inheritance from NOTHING */;
+        
+                aPrototype._v_Kind                    = "prototype";
+                aPrototype._v_SuperPrototype          = null;
+                aPrototype._v_Type                    = TypeName;
+                aPrototype._v_Prototype_Identifier       = aPrototype;
+                /* Shall be filled below, at the end of the function enclosing this (aMod_builder), when aModule is defined */
+                aPrototype._v_Module                  = null;
+        
+                return aPrototype;
+            };
+    
+    
+    
+    
+    
+            /* ***************************************************************
+              In modules defining a prototype: Initialise with the desired value the slots for all prototype scoped properties,
+                  I.e. same read value shared among all the instances.
+                  The supplied object is expected to be used as prototype (assigned as prototype to constructor functions
+                  <TypeName>_Constructor and <TypeName>_SuperPrototypeConstructor)
+              
+              Read access:
+                this.<VariableName> or this["<VariableName>"]
+                These variables shall be accessible for read to the prototype, its instance, sub-prototypes and their instances,
+                    and the same identical value or object reference shall be obtained from all the accesses
+                    unless a value with same key has been set in intermediate prototypes or the accessed object.
+              
+              Write access:
+                On the prototype object which was supplied to this function Identifier_CreatePrototypeSlotsOn
+                    this.<VariableName> = <new value> or this["<VariableName>"] = <new value>
+                    The same identical newly set value or object reference shall shall be obtained from all the accesses
+                    unless a value with same key has been set in intermediate prototypes or the accessed object.
                 
-                aPrototype._v_Id    = null;
-                aPrototype._v_Title = null;
+                On instances of the prototype:
+                    this.<VariableName> = <new value> or this["<VariableName>"] = <new value>
+                    Shall create a new, slot in the instance which is different from the one in the instance prototype,
+                    and may hold whichever value or reference.
+                    From the moment the slot is set in the instance, the value or reference obtained by read access
+                        this.<VariableName> or this["<VariableName>"]
+                        shall not be the value or reference held by the prototype in a slot of same property name,
+                        but the value set in the instance.
+                    All other instance of the prottype still read the value in the prototype slot,
+                        or their own value for same property name slot, if any set.
+
+                On sub-prototypes and their instances:
+                    this.<VariableName> = <new value> or this["<VariableName>"] = <new value>
+                    Shall create a new, slot in the instance which is different from the one in the instance prototype,
+                    and may hold whichever value or reference, similarly to the case "On instances of the prototype" above.
+                    
+              Invoked by ProtoFactory as one of the steps to produce an object fully able to serve as Prototype.
+            */
+            var Identifier_CreatePrototypeSlotsOn = function( theFrame) {
+                if( !theFrame) {
+                }
+            };
+    
+    
+    
+    
+            /* ***************************************************************
+              In modules defining a prototype: Initialise with null value the slots for all instance scoped properties
+                in the the supplied object.
+                  I.e. the value is owned exclusively by its instance.
+                  The supplied object is expected to be used as an instance
+                    as created by invocation of the Constructor or SuperPrototypeConstructor
+                    
+              Instances of the prototype shall be able to read and write each its own values on these slots.
+              
+              Instances of any sub-prototypes of this prototype (thus created with SuperPrototypeConstructor):
+                Shall be able to read these instance slots with exactly the same value held by the prototype object.
+              
+              If a property of same value is set in an instance of any sub-prototypes of this prototype:
+                Shall create a new slot in the instance with whichever value or reference,
+                  and the value held by the super-prototype object shall no longer be accessible
+                  unless navigating up the prototypical inheritance tree through the _v_SuperPrototype property.
                 
-                aPrototype._v_IdsCounter = null;
+              Invoked by Constructor and SuperPrototypeConstructor and as one of the steps to produce an object
+                fully able to serve as instance of this prototype, or as super-prototype for derived prototypes.
+            */
+            var Identifier_CreateInstanceSlotsOn = function( theFrame) {
+                if( !theFrame) {
+                    return;
+                }
+                theFrame._v_Id    = null;
+                theFrame._v_Title = null;
+    
+                theFrame._v_IdsCounter = null;
+            };
+    
+    
+    
+    
+    
+            /* ***************************************************************
+              In modules defining a prototype: Initialise in the supplied object the methods in the prototype,
+                and possibly other private functions or variables.
                 
+              Must include a definition of _pInit_<TypeName> to be used from the Constructor to initialise instances.
+              
+              If the prototype has a super-prototype then the _pInit_<TypeName> method shall delegate
+                in the initialiser of the super-prototype_pInit_<SuperPrototype TypeName>
                 
+              Instances of the prototype shall be able to invoke these methods.
+
+              Instances of any sub-prototypes of this prototype (thus created with SuperPrototypeConstructor):
+                Shall be able to invoke these methods.
+              
+              If a sub-prototype defines a method with same name as one in any of its super-prototypes
+                recursively upwards the prototypical inheritance tree,
+                instances of the sub-prototype and their recursive sub-prototypes shall be able to access the
+                method as implemented by the prototype most immediately implementing the function,
+                and any methods of same name defined upwards the prototypical inheritance tree shall not be accesible
+                unless navigating up the prototypical inheritance tree through the _v_SuperPrototype property.
                 
-                
-                
-                
-                
+              Invoked by ProtoFactory as the last step to produce an object fully able to serve as Prototype.
+            */
+            var Identifier_ProtoDefinerOn = function( thePrototype) {
+    
+                if( !thePrototype) {
+                    return;
+                }
+    
                 var _pInit = function( theTitle) {
                     
                     this._pInit_Identifier( theTitle);
                 };
                 if( _pInit){}/* CQT */
-                aPrototype._pInit = _pInit;
+                thePrototype._pInit = _pInit;
                 
                 
                 
@@ -243,7 +390,7 @@ permissions and limitations under the Licence.
                     return this.IDENTIFIER_DEFAULTTITLE;
                 };
                 if( _fTitleDefault){}/* CQT */
-                aPrototype._fTitleDefault = _fTitleDefault;
+                thePrototype._fTitleDefault = _fTitleDefault;
                 
                 
                 
@@ -251,10 +398,6 @@ permissions and limitations under the Licence.
                 
                 
                 var _pInit_Identifier = function( theTitle) {
-                    
-                    // this._v_Prototype = aPrototype;
-                    // this._v_Type      = this._v_Prototype._v_Type;
-                    // this._v_Module    = this._v_Prototype._v_Module;
                     
                     this._v_Id    = null;
                     
@@ -269,7 +412,7 @@ permissions and limitations under the Licence.
                     
                 };
                 if( _pInit_Identifier){}/* CQT */
-                aPrototype._pInit_Identifier = _pInit_Identifier;
+                thePrototype._pInit_Identifier = _pInit_Identifier;
                 
                 
                 
@@ -284,7 +427,7 @@ permissions and limitations under the Licence.
                     return aFullTypeName;
                 };
                 if( fFullTypeNameString){}/* CQT */
-                aPrototype.fFullTypeNameString = fFullTypeNameString;
+                thePrototype.fFullTypeNameString = fFullTypeNameString;
                 
                 
                 
@@ -302,7 +445,7 @@ permissions and limitations under the Licence.
                     return aIdentifiyingJSON;
                 };
                 if( fIdentifyingJSON){}/* CQT */
-                aPrototype.fIdentifyingJSON = fIdentifyingJSON;
+                thePrototype.fIdentifyingJSON = fIdentifyingJSON;
                 
                 
                 
@@ -325,7 +468,7 @@ permissions and limitations under the Licence.
                     return aIdentifyingString;
                 };
                 if( fIdentifyingString){}/* CQT */
-                aPrototype.fIdentifyingString = fIdentifyingString;
+                thePrototype.fIdentifyingString = fIdentifyingString;
                 
                 
                 
@@ -342,7 +485,7 @@ permissions and limitations under the Licence.
                     return aIdentifyingJSON;
                 };
                 if( fIdentifyingWithTitleJSON){}/* CQT */
-                aPrototype.fIdentifyingWithTitleJSON = fIdentifyingWithTitleJSON;
+                thePrototype.fIdentifyingWithTitleJSON = fIdentifyingWithTitleJSON;
                 
                 
                 
@@ -365,7 +508,7 @@ permissions and limitations under the Licence.
                     return aIdentifyingString;
                 };
                 if( fIdentifyingWithTitleString){}/* CQT */
-                aPrototype.fIdentifyingWithTitleString = fIdentifyingWithTitleString;
+                thePrototype.fIdentifyingWithTitleString = fIdentifyingWithTitleString;
                 
                 
                 
@@ -389,7 +532,7 @@ permissions and limitations under the Licence.
                     return aResultJSON;
                 };
                 if( fToResultJSON){}/* CQT */
-                aPrototype.fToResultJSON = fToResultJSON;
+                thePrototype.fToResultJSON = fToResultJSON;
                 
                 
                 
@@ -409,99 +552,183 @@ permissions and limitations under the Licence.
                     return anId.toString();
                 };
                 if( fReserveId){}/* CQT */
-                aPrototype.fReserveId = fReserveId;
+                thePrototype.fReserveId = fReserveId;
                 
                 
-                
-                
-                
-                
+            };
+    
+    
+    
+    
+    
+            /* ***************************************************************
+              Create object to serve as prototype,
+                 with all slots for Constants (and Variations), prototype scoped properties and methods of the prototype.
+            */
+            var Identifier_ProtoFactory = function() {
+        
+                /* Create object to serve as prototype */
+                var aPrototype = Identifier_ProtoInstancer();
+        
+                /* Fill the object to serve as prototype with key-values copied from ModuleConstants,
+                    which also include those from ModuleVariations */
+                InitFromModuleConstants( aPrototype);
+        
+                /* Create in the object to serve as prototype the slots for properties scoped to the prototype.
+                    I.e. same read value shared among all the instances */
+                Identifier_CreatePrototypeSlotsOn( aPrototype);
+        
+                /* Create in the object to serve as prototype the methods implemented by the prototype.
+                   Nothing prevents, other than self-discipline, to create additional slots in the prototype during this ProtoDefinerOn function. */
+                Identifier_ProtoDefinerOn( aPrototype);
+        
                 return aPrototype;
+            };
+    
+    
+    
+    
+    
+            /* ***************************************************************
+              Object to serve as prototype
+            */
+            var aIdentifier_Prototype = Identifier_ProtoFactory();
+    
+    
+    
+    
+            /* ***************************************************************
+              Constructor function. Create a new instance object of the prototype,
+                expected to be used as an object and not a super-prototype,
+                fully initialised by _pInit_Xxxx, including initialisers defined by super-prototypes.
+                by delegation into the super-prototype _pInit_Xxx,
+                and recursively upwards in the prototype inheritance tree
+                through the _v_SuperPrototype chain.
                 
-            })();
-            
-            
-            
-            
+              See examples of recursive initialisation in modules
+                identifying / dumpingpolicy and recordingpolicy
+            */
             var Identifier_Constructor = function( theTitle) {
-                this._v_IsPrototype = false;
+                this._v_Kind      = "instance";
                 this._v_Prototype = aIdentifier_Prototype;
-                // this._v_Prototype = null;
-                // this._v_SuperPrototype = null;
-                // this._v_Type = null;
-                // this._v_Module = null;
-                
-                
-                this._v_Id    = null;
-                this._v_Title = null;
-                
-                this._v_IdsCounter = null;
-                
+        
+                /* Create in the object to serve as prototype the slots for properties scoped uniquely to the instance being created (this), if any */
+                Identifier_CreateInstanceSlotsOn( this);
+        
+                /* Fully initialise the instance, delegating in initialisers defined by super-prototypes, if any */
                 this._pInit_Identifier( theTitle);
             };
             Identifier_Constructor.prototype = aIdentifier_Prototype;
-            
-            
-            
-            
-            
+    
+    
+    
+    
+    
+    
+    
+            /* ***************************************************************
+              Create a new instance object of the prototype, expected to be used as a super-prototype,
+                but not fully initialised, just the instance slots with null values.
+                
+              Values for the slots shall be initialised during the _pInit_Xxxx of instances of sub-prototypes
+                  by delegation into the super-prototype _pInit_Xxx,
+                  and recursively upwards in the prototype inheritance tree
+                  through the _v_SuperPrototype chain.
+              
+              See examples of deep sub-prototypes and recursive initialisation in modules
+                identifying / dumpingpolicy and recordingpolicy
+            */
             var Identifier_SuperPrototypeConstructor = function() {
-                this._v_IsPrototype = true;
+                /* When actually used as prototype in the code in some other module,
+                    _v_Kind shall be assigned the value "prototype" as in this module Identifier_ProtoInstancer
+                    if the author is following the patterns in this prettytype npm package, */
+                this._v_Kind      = "subprototype";
                 this._v_Prototype = aIdentifier_Prototype;
-                // this._v_SuperPrototype = null;
-                // this._v_Type      = null;
-                // this._v_Module    = null;
-                
-                this._v_Id    = null;
-                this._v_Title = null;
-                
-                this._v_IdsCounter = null;
+        
+                /* Create in the object to serve as super-prototype the slots for properties scoped uniquely to the instance being created (this), if any */
+                Identifier_CreateInstanceSlotsOn( this);
             };
             Identifier_SuperPrototypeConstructor.prototype = aIdentifier_Prototype;
     
     
     
-            var Identifier_SuperPrototypeSingleton = function() {
-                if( aModule.SuperPrototypeSingletonInstance) {
-                    return aModule.SuperPrototypeSingletonInstance;
-                }
-        
-                aModule.SuperPrototypeSingletonInstance = new Identifier_SuperPrototypeConstructor();
-                return aModule.SuperPrototypeSingletonInstance;
-            };
     
     
+            /* ***************************************************************
+              Object exposed as Module, with key-values for all members published in the module.
+              
+              Some entries are published to facilitate hacking access to portions of logic in the module,
+                  to be able to use for other purposes (mixins come into mind) i.e. constants initialiser,
+                  and if the module defines any prototype: full and partial prototype creators
+                  and initialisers of the slots structure of the prototype.
+            */
             var aModule = {
-                "Identifier_Prototype": aIdentifier_Prototype,
-                "Identifier_Constructor": Identifier_Constructor,
-                "Identifier_SuperPrototypeConstructor": Identifier_SuperPrototypeConstructor,
-                "Identifier_SuperPrototypeSingleton": Identifier_SuperPrototypeSingleton,
-                "Prototype": aIdentifier_Prototype,
-                "Constructor": Identifier_Constructor,
-                "SuperPrototypeConstructor": Identifier_SuperPrototypeConstructor,
-                "SuperPrototypeSingleton": Identifier_SuperPrototypeSingleton
+                "_v_Kind":                                 "module",
+                "ComponentName":                           ComponentName,
+                "ModuleName":                              ModuleName,
+                "ModulePackages":                          ModulePackages,
+                "ModuleFullName":                          ModuleFullName,
+                "ModuleConstants":                         ModuleConstants,
+                "ModuleGlobals":                           ModuleGlobals,
+        
+                "InitFromModuleVariations":                InitFromModuleVariations,
+                "InitFromModuleConstants":                 InitFromModuleConstants,
+                "InitModuleGlobalsOn":                     InitModuleGlobalsOn,
+        
+                "TypeName":                                TypeName,
+        
+                "Identifier_ProtoInstancer":               Identifier_ProtoInstancer,
+                "Identifier_ProtoDefinerOn":               Identifier_ProtoDefinerOn,
+                "Identifier_ProtoFactory":                 Identifier_ProtoFactory,
+                "Identifier_Constructor":                  Identifier_Constructor,
+                "Identifier_SuperPrototypeConstructor":    Identifier_SuperPrototypeConstructor,
+                "Identifier_CreatePrototypeSlotsOn":       Identifier_CreatePrototypeSlotsOn,
+                "Identifier_CreateInstanceSlotsOn":        Identifier_CreateInstanceSlotsOn,
+        
+                "ProtoInstancer":                          Identifier_ProtoInstancer,
+                "ProtoDefinerOn":                          Identifier_ProtoDefinerOn,
+                "ProtoFactory":                            Identifier_ProtoFactory,
+                "Constructor":                             Identifier_Constructor,
+                "SuperPrototypeConstructor":               Identifier_SuperPrototypeConstructor,
+                "CreatePrototypeSlotsOn":                  Identifier_CreatePrototypeSlotsOn,
+                "CreateInstanceSlotsOn":                   Identifier_CreateInstanceSlotsOn,
+        
+                "Identifier_Prototype":                    aIdentifier_Prototype,
+                "Prototype":                               aIdentifier_Prototype
             };
-            InitFromModuleConstants( aModule);
-            aModule._v_Type = "module";
-            aModule.ComponentName     = ComponentName;
-            aModule.ModuleName     = ModuleName;
-            aModule.ModulePackages = ModulePackages;
-            aModule.ModuleFullName = ModuleFullName;
-            aModule.ModuleVariations= ModuleVariations;             aModule.ModuleConstants = ModuleConstants;
-            aModule.ModuleGlobals   = ModuleGlobals;
-            aModule.InitFromModuleConstants  = InitFromModuleConstants;
-            aModule.InitFromModuleVariations = InitFromModuleVariations;
-            aModule.InitModuleGlobalsOn      = InitModuleGlobalsOn;
     
+            /* ***************************************************************
+              Add to the Module Key-Values from Constants (and Variations, if any) so they are exposed as published members.
+              Beware: The value for any key in Constants (and Variations, if any)
+                shall override any other slot value in the Module with same key, if such exists,
+                including any infrastructural or conventional entries.
+            */
+            InitFromModuleConstants( aModule);
+    
+    
+            /* ***************************************************************
+              The prototype and its instances may access the module object and all its published members.
+              The sub-prototypes and their instances may also reach this module through the _v_SuperPrototype chain.
+            */
             aIdentifier_Prototype._v_Module = aModule;
-            
-            
+    
+    
+    
+            /* ***************************************************************
+              Return defined module.
+            */
             return aModule;
         };
     
     
     
     
+        /* ***************************************************************
+          Make sure that the module is built only once, and that the same instance is supplied anytime
+          the module is required, as i.e. to resolve a dependency for another module.
+          Attempt to retrieve a module with same name already registered in the typesregistry_svce singleton.
+          If no such module exists then build the module and register it in the typesregistry_svce singleton.
+        */
         var anExistingModule = null;
         if(    !( typeof theSS_typesregistry_svce === 'undefined')
             && ( typeof theSS_typesregistry_svce.fRegisteredModule === 'function')) {
@@ -510,7 +737,7 @@ permissions and limitations under the Licence.
         if( !anExistingModule) {
         
             var aModule = aMod_builder(
-                theSS_overrider_type
+                theSS_overrider_svce
             );
         
             aModule.ModuleBuilder = aMod_builder;
@@ -523,20 +750,29 @@ permissions and limitations under the Licence.
                 theSS_typesregistry_svce.fRegisterModule( ModuleFullName, aModule);
             }
         }
-        
-        
+    
+    
+        /* ***************************************************************
+         Return the module which was already built and registered in typesregistry_svce singleton, or just built.
+        */
         return anExistingModule;
-        
-    });
+    };
     
     
     
+    
+    
+    
+    /* ***************************************************************
+      Define the module under various module definition libraries, all delegating in the same module definer function,
+      but each obtaining their own way any dependencies needed by this module.
+    */
     if( !( typeof angular === 'undefined') && angular.module) {
         // Angular (1.x)
         
-        angular.module("identifyingTypes").factory("IdentifierType",[
-            "TypesRegistrySvce",
-            "OverriderSvce",
+        angular.module( ModulePackages).factory( ModuleName, [
+            "typesregistry_svce",
+            "overrider_svce",
             aMod_definer
         ]);
         
@@ -546,8 +782,8 @@ permissions and limitations under the Licence.
         
         module.exports = (function() {
             
-            var aM_typesregistry = require('../modboot/typesregistry');
-            var aM_overrider     = require('../modboot/overrider_svce');
+            var aM_typesregistry = require('../typesregistry/typesregistry_svce');
+            var aM_overrider     = require('../overrider/overrider_svce');
             
             return aMod_definer(
                 aM_typesregistry,
@@ -559,32 +795,29 @@ permissions and limitations under the Licence.
     else if ( !(typeof define === 'undefined') && define.amd) {
         // AMD / RequireJS
         
-        define( "m_identifier_type",
+        define( ModuleName,
             [
-                "m_typesregistry_svce",
-                "m_overrider_svce"
+                "typesregistry_svce",
+                "overrider_svce"
             ],
             aMod_definer
         );
+        
     }
     else if ( !(typeof nomod === 'undefined') && nomod.register) {
         // nomod toy module definition, resolution and dependency injection
-    
+        
         nomod.register( ComponentName, ModulePackages, ModuleName,
             [ /* theDependencies */
                 nomod.fComputeFullName( "prettytype", "typesregistry", "typesregistry_type"),
-                nomod.fComputeFullName( "prettytype", "modboot", "overrider_svce")
+                nomod.fComputeFullName( "prettytype", "overrider", "overrider_svce")
             ],
             aMod_definer
-        );
-    
+        )
+        
     }
     
-})();
-
-
-
-
-
+    
+})(); /* Self-executing function launches the module definition machinery upon load of the javascript file */
 
 

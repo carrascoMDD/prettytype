@@ -221,7 +221,7 @@ permissions and limitations under the Licence.
     
     
             /* ***************************************************************
-              In modules defining a prototype: Initialise with null value the slots for all prototype scoped properties,
+              In modules defining a prototype: Initialise with the desired value the slots for all prototype scoped properties,
                   I.e. same read value shared among all the instances.
                   The supplied object is expected to be used as prototype (assigned as prototype to constructor functions
                   <TypeName>_Constructor and <TypeName>_SuperPrototypeConstructor)
