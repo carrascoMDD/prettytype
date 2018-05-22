@@ -383,11 +383,11 @@
         
         module.exports = (function() {
             
-            var aM_typesregistry = require('../typesregistry/typesregistry_svce');
+            var aM_typesregistry_svce = require('../typesregistry/typesregistry_svce');
             var aM_overrider     = require('../overrider/overrider_svce');
     
             return aMod_definer(
-                aM_typesregistry,
+                aM_typesregistry_svce,
                 aM_overrider
             );
         })();

@@ -97,12 +97,12 @@
         
         module.exports = (function() {
     
-            var aM_typesregistry = require('../modboot/typesregistry');
+            var aM_typesregistry_svce = require('../modboot/typesregistry');
             var aM_identifier_svce = require('./identifier_svce');
             var aM_recorder        = require('./recorder_type');
     
             return aMod_definer(
-                aM_typesregistry,
+                aM_typesregistry_svce,
                 aM_identifier_svce,
                 aM_recorder
             );

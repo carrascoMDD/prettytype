@@ -396,12 +396,26 @@
                 };
                 if( _pInit_Console){}/* CQT */
                 thePrototype._pInit_Console = _pInit_Console;
-                
-                
-                
-                
-                
-                
+    
+    
+    
+    
+    
+                var pRelease = function() {
+                    this._v_Title             = null;
+                    this._v_WriteToConsole = null;
+                    this._v_CollectLogs = null;
+                    this._v_MaxCollectedLogsLength = null;
+                    this._v_CollectedLogs = null;
+                    this._v_CollectedLogsSize = null;
+                };
+                if( pRelease){}/* CQT */
+                thePrototype.pRelease = pRelease;
+    
+    
+    
+    
+    
                 var fFullTypeNameString = function() {
                     
                     var aFullTypeName = this._v_Module.ModuleFullName + "." + this._v_Type;
@@ -988,11 +1002,11 @@
         
         module.exports = (function() {
             
-            var aM_typesregistry = require('../typesregistry/typesregistry_svce');
+            var aM_typesregistry_svce = require('../typesregistry/typesregistry_svce');
             var aM_overrider     = require('../overrider/overrider_svce');
             
             return aMod_definer(
-                aM_typesregistry,
+                aM_typesregistry_svce,
                 aM_overrider
             );
         })();

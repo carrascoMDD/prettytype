@@ -333,13 +333,23 @@ permissions and limitations under the Licence.
                 };
                 if( _pInit_Overrider){}/* CQT */
                 thePrototype._pInit_Overrider = _pInit_Overrider;
-                
-                
-                
-                
-                
-                
-                
+    
+    
+    
+    
+                var pRelease = function() {
+                    this._v_Title             = null;
+                    this._v_Overriderarguments = null;
+                    this._v_Custom = null;
+                    this._v_Overrides = null;
+                };
+                if( pRelease){}/* CQT */
+                thePrototype.pRelease = pRelease;
+    
+    
+    
+    
+    
                 var fFullTypeNameString = function() {
                     
                     var aFullTypeName = this._v_Module.ModuleFullName + "." + this._v_Type;

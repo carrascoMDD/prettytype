@@ -455,7 +455,7 @@ permissions and limitations under the Licence.
         
         module.exports = (function() {
     
-            var aM_typesregistry                    = require( './modboot/typesregistry.js');
+            var aM_typesregistry_svce                    = require( './modboot/typesregistry.js');
             var aM_overrider_type                   = require( './modboot/overrider_type.js');
             var aM_overrider_svce                   = require( './modboot/overrider_svce.js');
             var aM_decoratesystemprototypes_svce    = require( './utils/decoratesystemprototypes_svce.js');
@@ -481,7 +481,7 @@ permissions and limitations under the Licence.
     
     
             return aMod_definer(
-                aM_typesregistry,
+                aM_typesregistry_svce,
                 aM_overrider_type,
                 aM_overrider_svce,
                 aM_decoratesystemprototypes_svce,

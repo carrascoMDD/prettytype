@@ -135,12 +135,12 @@
         
         module.exports = (function() {
             
-            var aM_typesregistry   = require('../typesregistry/typesregistry_svce');
+            var aM_typesregistry_svce   = require('../typesregistry/typesregistry_svce');
             var aM_overrider_svce  = require('../overrider/overrider_svce');
             var aM_identifier_type = require('./identifier_type');
             
             return aMod_definer(
-                aM_typesregistry,
+                aM_typesregistry_svce,
                 aM_overrider_svce,
                 aM_identifier_type
             );

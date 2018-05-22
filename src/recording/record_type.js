@@ -400,11 +400,7 @@ permissions and limitations under the Licence.
                 
                 
                 var _pInit_Record = function( theRecorder, theRecordId, theInstance, theStep, theEventKind, theData, theReason, theDetail) {
-                    
-                    // this._v_Prototype = thePrototype;
-                    // this._v_Type = thePrototype._v_Type;
-                    // this._v_Module    = this._v_Prototype._v_Module;
-                    
+                  
                     this._v_Timestamp    = Date.now();
                     this._v_Recorder     = theRecorder;
                     this._v_RecordId     = theRecordId;
@@ -417,16 +413,32 @@ permissions and limitations under the Licence.
                 };
                 if( _pInit_Record){}/* CQT */
                 thePrototype._pInit_Record = _pInit_Record;
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
+    
+    
+    
+    
+    
+    
+                var pRelease = function() {
+                    this._v_Timestamp    = null;
+                    this._v_Recorder     = null;
+                    this._v_RecordId     = null;
+                    this._v_Instance     = null;
+                    this._v_Step         = null;
+                    this._v_EventKind    = null;
+                    this._v_Data         = null;
+                    this._v_Reason       = null;
+                    this._v_Detail       = null;
+                };
+                if( pRelease){}/* CQT */
+                thePrototype.pRelease = pRelease;
+    
+    
+    
+    
+    
+    
+    
                 var fCopyWithoutException = function() {
                     
                     var aCopy = new Record_Constructor(
@@ -1826,11 +1838,11 @@ permissions and limitations under the Licence.
         
         module.exports = (function() {
             
-            var aM_typesregistry = require('../typesregistry/typesregistry_svce');
+            var aM_typesregistry_svce = require('../typesregistry/typesregistry_svce');
             var aM_overrider     = require('../overrider/overrider_svce');
             
             return aMod_definer(
-                aM_typesregistry,
+                aM_typesregistry_svce,
                 aM_overrider
             );
         })();

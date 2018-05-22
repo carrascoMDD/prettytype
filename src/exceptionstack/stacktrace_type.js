@@ -385,12 +385,20 @@
                 };
                 if( _pInit_Stacktrace){}/* CQT */
                 thePrototype._pInit_Stacktrace = _pInit_Stacktrace;
-                
-                
-                
-                
-                
-                
+    
+    
+    
+    
+    
+                var pRelease = function() {
+                    this._v_Title             = null;
+                };
+                if( pRelease){}/* CQT */
+                thePrototype.pRelease = pRelease;
+    
+    
+    
+    
                 var fFullTypeNameString = function() {
                     
                     var aFullTypeName = this._v_Module.ModuleFullName + "." + this._v_Type;
@@ -1312,11 +1320,11 @@
         
         module.exports = (function() {
             
-            var aM_typesregistry = require('../typesregistry/typesregistry_svce');
+            var aM_typesregistry_svce = require('../typesregistry/typesregistry_svce');
             var aM_overrider     = require('../overrider/overrider_svce');
             
             return aMod_definer(
-                aM_typesregistry,
+                aM_typesregistry_svce,
                 aM_overrider
             );
         })();

@@ -386,12 +386,20 @@ permissions and limitations under the Licence.
                 };
                 if( _pInit_Exceptiondetails){}/* CQT */
                 thePrototype._pInit_Exceptiondetails = _pInit_Exceptiondetails;
-                
-                
-                
-                
-                
-                
+    
+    
+    
+    
+                var pRelease = function() {
+                    this._v_Title               = null;
+                    this._v_LogExceptionDetails = null;
+                };
+                if( pRelease){}/* CQT */
+                thePrototype.pRelease = pRelease;
+    
+    
+    
+    
                 var fFullTypeNameString = function() {
                     
                     var aFullTypeName = this._v_Module.ModuleFullName + "." + this._v_Type;
@@ -808,12 +816,12 @@ permissions and limitations under the Licence.
         
         module.exports = (function() {
             
-            var aM_typesregistry   = require('../typesregistry/typesregistry_svce');
+            var aM_typesregistry_svce   = require('../typesregistry/typesregistry_svce');
             var aM_overrider_svce  = require('../overrider/overrider_svce');
             var aM_stacktrace_svce = require('../exceptionstack/stacktrace_svce');
     
             return aMod_definer(
-                aM_typesregistry,
+                aM_typesregistry_svce,
                 aM_overrider_svce,
                 aM_stacktrace_svce
             );

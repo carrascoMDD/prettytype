@@ -74,6 +74,7 @@ var someKarmaConfFiles = [
     
     "../../src/recording/recording_types.js",
     "../../src/recording/record_type.js",
+    "../../src/recording/recordingpolicy_type.js",
     
     '../structural-test/typesregistry-structural-test/typesregistry_type-structural-test.js',
     '../structural-test/typesregistry-structural-test/typesregistry_svce-structural-test.js',
@@ -92,7 +93,8 @@ var someKarmaConfFiles = [
     
     "../structural-test/identifying-structural-test/identifier_type-structural-test.js",
     "../structural-test/identifying-structural-test/identifier_svce-structural-test.js",
-    "../structural-test/recording-structural-test/record_type-structural-test.js"
+    "../structural-test/recording-structural-test/record_type-structural-test.js",
+    "../structural-test/recording-structural-test/recordingpolicy_type-structural-test.js"
 
 
 

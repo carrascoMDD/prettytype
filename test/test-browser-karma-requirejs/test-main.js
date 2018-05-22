@@ -57,7 +57,9 @@ requirejs.config({
         "exceptiondetails_svce_structural_test",
         "identifier_type_structural_test",
         "identifier_svce_structural_test",
-        "record_type_structural_test"
+        "record_type_structural_test",
+        "recordingpolicy_type_structural_test"
+
     ],
     
     /* map test modules from symbolic name to a file system path WITHOUT THE .js FILE EXTENSION relative to base ... baseURL?
@@ -77,7 +79,8 @@ requirejs.config({
         'exceptiondetails_svce_structural_test':                 './test/structural-test/exceptionstack-structural-test/exceptiondetails_svce-structural-test',
         'identifier_type_structural_test':                       './test/structural-test/identifying-structural-test/identifier_type-structural-test',
         'identifier_svce_structural_test':                       './test/structural-test/identifying-structural-test/identifier_svce_-structural-test',
-        'record_type_structural_test':                           './test/structural-test/recording-structural-test/record_type-structural-test'
+        'record_type_structural_test':                           './test/structural-test/recording-structural-test/record_type-structural-test',
+        'recordingpolicy_type_structural_test':                  './test/structural-test/recording-structural-test/recordingpolicy_type-structural-test'
     },
 
     // start test run, once Require.js is done loading scripts

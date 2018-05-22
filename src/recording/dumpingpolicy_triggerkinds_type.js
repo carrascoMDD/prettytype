@@ -887,13 +887,13 @@
         
         module.exports = (function() {
             
-            var aM_typesregistry = require('../modboot/typesregistry');
+            var aM_typesregistry_svce = require('../modboot/typesregistry');
             var aM_overrider     = require('../modboot/overrider_svce');
             var aM_dumpingpolicy = require('./dumpingpolicy_filterkinds_type');
             var aM_eventkinds_common = require('../eventkinds/eventkinds_common');
             
             return aMod_definer(
-                aM_typesregistry,
+                aM_typesregistry_svce,
                 aM_overrider,
                 aM_dumpingpolicy,
                 aM_eventkinds_common

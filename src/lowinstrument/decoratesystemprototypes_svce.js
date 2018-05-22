@@ -261,11 +261,11 @@ permissions and limitations under the Licence.
         
         module.exports = (function() {
             
-            var aM_typesregistry   = require('../modboot/typesregistry');
+            var aM_typesregistry_svce   = require('../modboot/typesregistry');
             var aM_overrider       = require('../modboot/overrider_svce');
             
             return aMod_definer(
-                aM_typesregistry,
+                aM_typesregistry_svce,
                 aM_overrider
             );
         })();
