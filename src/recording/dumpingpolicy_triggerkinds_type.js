@@ -291,7 +291,7 @@
                 var aPrototype = new theS_dumpingpolicy_filterkinds_type.DumpingPolicyFilterKinds_SuperPrototypeConstructor();
         
                 aPrototype._v_Kind                    = "prototype";
-                aPrototype._v_SuperPrototype          = null;
+                aPrototype._v_SuperPrototype          = theS_dumpingpolicy_filterkinds_type.DumpingPolicyFilterKinds_Prototype;
                 aPrototype._v_Type                    = TypeName;
                 aPrototype._v_Prototype_DumpingPolicyTriggerKinds    = aPrototype;
                 /* Shall be filled below, at the end of the function enclosing this (aMod_builder), when aModule is defined */
@@ -1012,7 +1012,21 @@
                 "DumpingPolicyTriggerKinds_SuperPrototypeConstructor":       DumpingPolicyTriggerKinds_SuperPrototypeConstructor,
                 "DumpingPolicyTriggerKinds_CreatePrototypeSlotsOn":          DumpingPolicyTriggerKinds_CreatePrototypeSlotsOn,
                 "DumpingPolicyTriggerKinds_CreateInstanceSlotsOn":           DumpingPolicyTriggerKinds_CreateInstanceSlotsOn,
-        
+                "DumpingPolicyFilterKinds_ProtoInstancer":                  DumpingPolicyTriggerKinds_ProtoInstancer,
+                "DumpingPolicyFilterKinds_ProtoDefinerOn":                  DumpingPolicyTriggerKinds_ProtoDefinerOn,
+                "DumpingPolicyFilterKinds_ProtoFactory":                    DumpingPolicyTriggerKinds_ProtoFactory,
+                "DumpingPolicyFilterKinds_Constructor":                     DumpingPolicyTriggerKinds_Constructor,
+                "DumpingPolicyFilterKinds_SuperPrototypeConstructor":       DumpingPolicyTriggerKinds_SuperPrototypeConstructor,
+                "DumpingPolicyFilterKinds_CreatePrototypeSlotsOn":          DumpingPolicyTriggerKinds_CreatePrototypeSlotsOn,
+                "DumpingPolicyFilterKinds_CreateInstanceSlotsOn":           DumpingPolicyTriggerKinds_CreateInstanceSlotsOn,
+                "DumpingPolicy_ProtoInstancer":                  DumpingPolicyTriggerKinds_ProtoInstancer,
+                "DumpingPolicy_ProtoDefinerOn":                  DumpingPolicyTriggerKinds_ProtoDefinerOn,
+                "DumpingPolicy_ProtoFactory":                    DumpingPolicyTriggerKinds_ProtoFactory,
+                "DumpingPolicy_Constructor":                     DumpingPolicyTriggerKinds_Constructor,
+                "DumpingPolicy_SuperPrototypeConstructor":       DumpingPolicyTriggerKinds_SuperPrototypeConstructor,
+                "DumpingPolicy_CreatePrototypeSlotsOn":          DumpingPolicyTriggerKinds_CreatePrototypeSlotsOn,
+                "DumpingPolicy_CreateInstanceSlotsOn":           DumpingPolicyTriggerKinds_CreateInstanceSlotsOn,
+    
                 "ProtoInstancer":                          DumpingPolicyTriggerKinds_ProtoInstancer,
                 "ProtoDefinerOn":                          DumpingPolicyTriggerKinds_ProtoDefinerOn,
                 "ProtoFactory":                            DumpingPolicyTriggerKinds_ProtoFactory,

@@ -33,311 +33,306 @@ permissions and limitations under the Licence.
 
 
 
-
-
 /// <reference path="src/recording/recordingpolicy_keepsome_ng_type.js"/>
 "use strict";
-    
+
+
+
 var aTest_spec = (function( theSS_identifier_svce,
                             theSS_recordingpolicy_keepsome_type) {
     
     var ComponentName    = "prettytype-test";
     var ModuleName     = "recordingpolicy_keepsome_type-structural-test";
-    var ModulePackages = "test/structural-test/identifying-structural-test";
+    var ModulePackages = "test/structural-test/recording-structural-test";
     var ModuleFullName = ModulePackages + "/" + ModuleName;
+    var TestName       = ModuleName + "_" + ModulePackages + "_" + ComponentName + "_test";
     
     if( typeof FG_logModLoads === 'function') { FG_logModLoads(ModuleFullName);}
     
-    describe( ModuleName + " " + ModulePackages + " " + ComponentName, function () {
-        
-        var aRecordingPolicyKeepSome_title = "RecordingPolicyKeepSome-Title-test";
+    describe( TestName, function () {
         
         var aM_identifier_svce = null;
-        
         var aM_recordingpolicy_keepsome_type = null;
-        var aRecordingPolicyKeepSome       = null;
         
         if( ( typeof beforeEach === 'function') && ( typeof module === 'function')  && ( typeof inject === 'function')) {
             // Karma for Angular (1.x)
-            beforeEach( module( 'typesRegistry', 'modbootTypes', 'identifyingTypes'));
+            beforeEach( module( "identifying", "recording"));
             
-            beforeEach( inject(function( _IdentifierSvce_, _RecordingPolicyKeepSomeType_) {
-                aM_identifier_svce      = _IdentifierSvce_;
-                aM_recordingpolicy_keepsome_type = _RecordingPolicyKeepSomeType_;
-                aRecordingPolicyKeepSome = new aM_recordingpolicy_keepsome_type.RecordingPolicyKeepSome_Constructor( aRecordingPolicyKeepSome_title, aM_identifier_svce, null /* theRecorder its absence should not affect this structure test */);
+            beforeEach( inject(function( _identifier_svce_, _recordingpolicy_keepsome_type_) {
+                aM_identifier_svce = _identifier_svce_;
+                aM_recordingpolicy_keepsome_type = _recordingpolicy_keepsome_type_;
             }));
         }
         else if ( !(typeof module === 'undefined') && module.exports) {
             // Node.js
-            aM_identifier_svce               = require('../../../src/identifying/identifier_svce');
-            aM_recordingpolicy_keepsome_type = require('../../../src/identifying/recordingpolicy_keepsome_type');
-            aRecordingPolicyKeepSome = new aM_recordingpolicy_keepsome_type.RecordingPolicyKeepSome_Constructor( aRecordingPolicyKeepSome_title, aM_identifier_svce, null /* theRecorder its absence should not affect this structure test */);
+            aM_identifier_svce = require('../../../src/identifying/identifier_svce');
+            aM_recordingpolicy_keepsome_type = require('../../../src/recording/recordingpolicy_keepsome_type');
         }
         else if ( !(typeof define === 'undefined') && define.amd) {
             // AMD / RequireJS
-            aM_identifier_svce      = theSS_identifier_svce;
+            aM_identifier_svce = theSS_identifier_svce;
             aM_recordingpolicy_keepsome_type = theSS_recordingpolicy_keepsome_type;
-            aRecordingPolicyKeepSome = new aM_recordingpolicy_keepsome_type.RecordingPolicyKeepSome_Constructor( aRecordingPolicyKeepSome_title, aM_identifier_svce, null /* theRecorder its absence should not affect this structure test */);
         }
         else if ( !(typeof nomod === 'undefined') && nomod.register) {
-            aM_identifier_svce = nomod.resolve( nomod.fComputeFullName( "prettytype", "identifying", "identifier_svce"));
-            aM_recordingpolicy_keepsome_type = nomod.resolve( nomod.fComputeFullName( "prettytype", "identifying", "recordingpolicy_keepsome_type"));
-            aRecordingPolicyKeepSome = new aM_recordingpolicy_keepsome_type.RecordingPolicyKeepSome_Constructor( aRecordingPolicyKeepSome_title, aM_identifier_svce, null /* theRecorder its absence should not affect this structure test */);
+            aM_identifier_svce      = nomod.resolve( nomod.fComputeFullName( "prettytype", "identifying", "identifier_svce"));
+            aM_recordingpolicy_keepsome_type = nomod.resolve( nomod.fComputeFullName( "prettytype", "recording", "recordingpolicy_keepsome_type"));
         }
-            
-            
-            
         
-        it("Has module defined", function () {
-            expect( aRecordingPolicyKeepSome._v_Module).not.toBeUndefined();
+        
+        
+        
+        
+        
+        it("Module is defined", function () {
+            expect( aM_recordingpolicy_keepsome_type).not.toBeUndefined();
         });
-    
-        it("Has module not null", function () {
-            expect( aRecordingPolicyKeepSome._v_Module).not.toBeNull( null);
+        
+        
+        it("Has module meta definitions", function () {
+            expect( aM_recordingpolicy_keepsome_type._v_Kind).toBe( "module");
+            expect( aM_recordingpolicy_keepsome_type.ComponentName).toBe( "prettytype");
+            expect( aM_recordingpolicy_keepsome_type.ModuleName).toBe( "recordingpolicy_keepsome_type");
+            expect( aM_recordingpolicy_keepsome_type.ModulePackages).toBe( "recording");
+            expect( aM_recordingpolicy_keepsome_type.ModuleFullName).toBe( "recording/recordingpolicy_keepsome_type");
         });
-    
-        it("Has module ModuleName recordingpolicy_keepsome_type", function () {
-            expect( aRecordingPolicyKeepSome._v_Module.ModuleName).toBe( "recordingpolicy_keepsome_type");
-        });
-    
-        it("Has module ModulePackages identifying", function () {
-            expect( aRecordingPolicyKeepSome._v_Module.ModulePackages).toBe( "identifying");
-        });
-    
-        it("Has module ModuleFullName identifying.recordingpolicy_keepsome_type", function () {
-            expect( aRecordingPolicyKeepSome._v_Module.ModuleFullName).toBe( "identifying/recordingpolicy_keepsome_type");
-        });
-    
-        it("Has module RecordingPolicyKeepSome_Prototype defined", function () {
-            expect( aRecordingPolicyKeepSome._v_Module.RecordingPolicyKeepSome_Prototype).not.toBeUndefined();
-        });
-    
-        it("Has module RecordingPolicyKeepSome_Prototype not null", function () {
-            expect( aRecordingPolicyKeepSome._v_Module.RecordingPolicyKeepSome_Prototype).not.toBeNull( null);
-        });
-    
-        it("Has module RecordingPolicyKeepSome_Constructor defined", function () {
-            expect( aRecordingPolicyKeepSome._v_Module.RecordingPolicyKeepSome_Constructor).not.toBeUndefined();
-        });
-    
-        it("Has module RecordingPolicyKeepSome_Constructor not null", function () {
-            expect( aRecordingPolicyKeepSome._v_Module.RecordingPolicyKeepSome_Constructor).not.toBeNull( null);
-        });
-    
-        it("Has module RecordingPolicyKeepSome_SuperPrototypeConstructor defined", function () {
-            expect( aRecordingPolicyKeepSome._v_Module.RecordingPolicyKeepSome_SuperPrototypeConstructor).not.toBeUndefined();
-        });
-    
-        it("Has module RecordingPolicyKeepSome_SuperPrototypeConstructor not null", function () {
-            expect( aRecordingPolicyKeepSome._v_Module.RecordingPolicyKeepSome_SuperPrototypeConstructor).not.toBeNull( null);
-        });
-    
-    
-    
-        it("Has _v_Prototype defined", function () {
-            expect( aRecordingPolicyKeepSome._v_Prototype).not.toBeUndefined();
-        });
-    
-        it("Has _v_Prototype module RecordingPolicyKeepSome_Prototype", function () {
-            expect( aRecordingPolicyKeepSome._v_Prototype).toBe( aRecordingPolicyKeepSome._v_Module.RecordingPolicyKeepSome_Prototype);
-        });
-    
-        it("Has _v_Prototype_RecordingPolicy defined", function () {
-            expect( aRecordingPolicyKeepSome._v_Prototype_RecordingPolicy).not.toBeUndefined();
-        });
-    
-        it("Has _v_Prototype_RecordingPolicy module RecordingPolicyKeepSome_Prototype", function () {
-            expect( aRecordingPolicyKeepSome._v_Prototype).toBe( aRecordingPolicyKeepSome._v_Module.RecordingPolicyKeepSome_Prototype);
-        });
-    
-    
-    
-        it("Has _v_Type RecordingPolicy", function () {
-            expect( aRecordingPolicyKeepSome._v_Type).toBe( "RecordingPolicyKeepSome");
-        });
-    
-        it("Has title RecordingPolicyKeepSome_DefaultName", function () {
-            expect( aRecordingPolicyKeepSome._v_Title).toBe( aRecordingPolicyKeepSome_title);
-        });
-    
-    
-    
-        it("Has fFullTypeNameString defined", function () {
-            expect( aRecordingPolicyKeepSome.fFullTypeNameString).not.toBeUndefined();
-        });
-    
-        it("Has fFullTypeNameString typeof function", function () {
-            expect( typeof aRecordingPolicyKeepSome.fFullTypeNameString).toBe( "function");
-        });
-    
-    
-    
-    
-        it("Has fIdentifyingJSON defined", function () {
-            expect( aRecordingPolicyKeepSome.fIdentifyingJSON).not.toBeUndefined();
-        });
-    
-        it("Has fIdentifyingJSON typeof function", function () {
-            expect( typeof aRecordingPolicyKeepSome.fIdentifyingJSON).toBe( "function");
-        });
-    
-        it("Has fIdentifyingJSON() not null", function () {
-            expect( aRecordingPolicyKeepSome.fIdentifyingJSON()).not.toBeNull();
-        });
-    
-        it("Has fIdentifyingJSON() type _v_Type", function () {
-            expect( aRecordingPolicyKeepSome.fIdentifyingJSON().type).toBe( aRecordingPolicyKeepSome._v_Type);
-        });
-    
-        it("Has fIdentifyingJSON() id _v_Id", function () {
-            expect( aRecordingPolicyKeepSome.fIdentifyingJSON().id).toBe( aRecordingPolicyKeepSome._v_Id);
-        });
-    
-    
-    
-    
-        it("Has fIdentifyingString defined", function () {
-            expect( aRecordingPolicyKeepSome.fIdentifyingString).not.toBeUndefined();
-        });
-    
-        it("Has fIdentifyingString typeof function", function () {
-            expect( typeof aRecordingPolicyKeepSome.fIdentifyingString).toBe( "function");
-        });
-    
-        it("Has fIdentifyingString() not null", function () {
-            expect( aRecordingPolicyKeepSome.fIdentifyingString()).not.toBeNull();
-        });
-    
-        it("Has fIdentifyingString() JSON.stringify( fIdentifyingJSON())", function () {
-            expect( aRecordingPolicyKeepSome.fIdentifyingString()).toBe( JSON.stringify( aRecordingPolicyKeepSome.fIdentifyingJSON()));
-        });
-    
-    
-    
-    
-    
-        it("Has fIdentifyingWithTitleJSON defined", function () {
-            expect( aRecordingPolicyKeepSome.fIdentifyingWithTitleJSON).not.toBeUndefined();
-        });
-    
-        it("Has fIdentifyingWithTitleJSON typeof function", function () {
-            expect( typeof aRecordingPolicyKeepSome.fIdentifyingWithTitleJSON).toBe( "function");
-        });
-    
-        it("Has fIdentifyingWithTitleJSON() not null", function () {
-            expect( aRecordingPolicyKeepSome.fIdentifyingWithTitleJSON()).not.toBeNull();
-        });
-    
-        it("Has fIdentifyingWithTitleJSON() type _v_Type", function () {
-            expect( aRecordingPolicyKeepSome.fIdentifyingWithTitleJSON().type).toBe( aRecordingPolicyKeepSome._v_Type);
-        });
-    
-        it("Has fIdentifyingWithTitleJSON() id _v_Id", function () {
-            expect( aRecordingPolicyKeepSome.fIdentifyingWithTitleJSON().id).toBe( aRecordingPolicyKeepSome._v_Id);
-        });
-    
-        it("Has fIdentifyingWithTitleJSON() id _v_Title", function () {
-            expect( aRecordingPolicyKeepSome.fIdentifyingWithTitleJSON().title).toBe( aRecordingPolicyKeepSome._v_Title);
-        });
-    
-    
-    
-    
-    
-    
-        it("Has fIdentifyingWithTitleString defined", function () {
-            expect( aRecordingPolicyKeepSome.fIdentifyingWithTitleString).not.toBeUndefined();
-        });
-    
-        it("Has fIdentifyingWithTitleString typeof function", function () {
-            expect( typeof aRecordingPolicyKeepSome.fIdentifyingWithTitleString).toBe( "function");
-        });
-    
-        it("Has fIdentifyingWithTitleString() not null", function () {
-            expect( aRecordingPolicyKeepSome.fIdentifyingWithTitleString()).not.toBeNull();
-        });
-    
-        it("Has fIdentifyingWithTitleString() JSON.stringify( fIdentifyingJSON())", function () {
-            expect( aRecordingPolicyKeepSome.fIdentifyingWithTitleString()).toBe( JSON.stringify( aRecordingPolicyKeepSome.fIdentifyingWithTitleJSON()));
-        });
-    
-    
-    
-    
-        it("Has fToResultJSON defined", function () {
-            expect( aRecordingPolicyKeepSome.fToResultJSON).not.toBeUndefined();
-        });
-    
-        it("Has fToResultJSON typeof function", function () {
-            expect( typeof aRecordingPolicyKeepSome.fToResultJSON).toBe( "function");
-        });
-    
-        it("Has fToResultJSON()not null", function () {
-            expect( aRecordingPolicyKeepSome.fToResultJSON()).not.toBeNull();
-        });
-    
-    
-        it("Has fToResultJSON() type _v_Type", function () {
-            expect( aRecordingPolicyKeepSome.fToResultJSON().type).toBe( aRecordingPolicyKeepSome._v_Type);
-        });
-    
-        it("Has fToResultJSON() id _v_Id", function () {
-            expect( aRecordingPolicyKeepSome.fToResultJSON().id).toBe( aRecordingPolicyKeepSome._v_Id);
-        });
-    
-        it("Has fToResultJSON() id _v_Title", function () {
-            expect( aRecordingPolicyKeepSome.fToResultJSON().title).toBe( aRecordingPolicyKeepSome._v_Title);
-        });
-    
-    
-    
-    
-    
-    
-    
-        var someFunctionNames = [
-            "fRecorder",
-            "pSetRecorder",
-            "fRecordRecord",
-            "pRelease"
-        ].concat([
-            "pPruneRecords",
-            "pSetMustKeepRecords",
-            "fMustKeepRecords"
-        ]).concat([
-            "pSetMustKeepRecordsMaxNumber",
-            "fMustKeepRecordsMaxNumber"
-        ]);
-    
-        var aNumFunctionNames = someFunctionNames.length;
-        for( var aFunctionNameIdx=0; aFunctionNameIdx < aNumFunctionNames; aFunctionNameIdx++) {
-            var aFunctionName = someFunctionNames[ aFunctionNameIdx];
-            if( aFunctionName) {
+        
+        
+        var someGeneralFunctionNames = [
+            "InitFromModuleVariations",
+            "InitFromModuleConstants",
+            "InitModuleGlobalsOn",
+            "ProtoInstancer",
+            "ProtoDefinerOn",
+            "ProtoFactory",
+            "Constructor",
+            "SuperPrototypeConstructor",
+            "CreatePrototypeSlotsOn",
+            "CreateInstanceSlotsOn"
+        ];
+        var aNumGeneralFunctionNames = someGeneralFunctionNames.length;
+        for( var aGeneralFunctionNameIdx=0; aGeneralFunctionNameIdx < aNumGeneralFunctionNames; aGeneralFunctionNameIdx++) {
+            var aGeneralFunctionName = someGeneralFunctionNames[ aGeneralFunctionNameIdx];
+            if( aGeneralFunctionName) {
                 (function() {
-                    var aFunctionName_here = aFunctionName;
-                
-                    it("Has function " + aFunctionName_here + " defined", function () {
-                        var aFunction = aRecordingPolicyKeepSome[ aFunctionName_here];
-                        
-                        expect( typeof aFunction).toBe( "function");
+                    var aGeneralFunctionName_here = aGeneralFunctionName;
+                    it("Module exposes general definition function " + aGeneralFunctionName_here, function () {
+                        var aGeneralFunction = aM_recordingpolicy_keepsome_type[ aGeneralFunctionName_here];
+                        expect( typeof aGeneralFunction).toBe( "function");
                     });
                 })()
             }
         }
-    
-    
+        
+        
+        var someSpecificFunctionNames = [
+            "RecordingPolicyKeepSome_ProtoInstancer",
+            "RecordingPolicyKeepSome_ProtoDefinerOn",
+            "RecordingPolicyKeepSome_ProtoFactory",
+            "RecordingPolicyKeepSome_Constructor",
+            "RecordingPolicyKeepSome_SuperPrototypeConstructor",
+            "RecordingPolicyKeepSome_CreatePrototypeSlotsOn",
+            "RecordingPolicyKeepSome_CreateInstanceSlotsOn",
+            "RecordingPolicyKeepAll_ProtoInstancer",
+            "RecordingPolicyKeepAll_ProtoDefinerOn",
+            "RecordingPolicyKeepAll_ProtoFactory",
+            "RecordingPolicyKeepAll_Constructor",
+            "RecordingPolicyKeepAll_SuperPrototypeConstructor",
+            "RecordingPolicyKeepAll_CreatePrototypeSlotsOn",
+            "RecordingPolicyKeepAll_CreateInstanceSlotsOn",
+            "RecordingPolicy_ProtoInstancer",
+            "RecordingPolicy_ProtoDefinerOn",
+            "RecordingPolicy_ProtoFactory",
+            "RecordingPolicy_Constructor",
+            "RecordingPolicy_SuperPrototypeConstructor",
+            "RecordingPolicy_CreatePrototypeSlotsOn",
+            "RecordingPolicy_CreateInstanceSlotsOn"
+        ];
+        var aNumSpecificFunctionNames = someSpecificFunctionNames.length;
+        for( var aSpecificFunctionNameIdx=0; aSpecificFunctionNameIdx < aNumSpecificFunctionNames; aSpecificFunctionNameIdx++) {
+            var aSpecificFunctionName = someSpecificFunctionNames[ aSpecificFunctionNameIdx];
+            if( aSpecificFunctionName) {
+                (function() {
+                    var aSpecificFunctionName_here = aSpecificFunctionName;
+                    it("Module exposes specific definition function " + aSpecificFunctionName_here, function () {
+                        var aSpecificFunction = aM_recordingpolicy_keepsome_type[ aSpecificFunctionName_here];
+                        expect( typeof aSpecificFunction).toBe( "function");
+                    });
+                })()
+            }
+        }
+        
+        
+        var someConstantNames = [
+            "MUSTKEEPRECORDSMAXNUMBER",
+            "RECORDINGPOLICYKEEPSOME_DEFAULTTITLE"
+        ];
+        var aNumConstantNames = someConstantNames.length;
+        for( var aModuleConstantNameIdx=0; aModuleConstantNameIdx < aNumConstantNames; aModuleConstantNameIdx++) {
+            var aModuleConstantName = someConstantNames[ aModuleConstantNameIdx];
+            if( aModuleConstantName) {
+                (function() {
+                    var aModuleConstantName_here = aModuleConstantName;
+                    it("Module exposes constant " + aModuleConstantName_here, function () {
+                        var aModuleConstant = aM_recordingpolicy_keepsome_type[ aModuleConstantName_here];
+                        expect( aModuleConstant).not.toBeUndefined();
+                    });
+                })()
+            }
+        }
+        
+        
+        var somePrototypeNames = [
+            "Prototype",
+            "RecordingPolicyKeepSome_Prototype"
+        ];
+        var aNumPrototypeNames = somePrototypeNames.length;
+        for( var aPrototypeNameIdx=0; aPrototypeNameIdx < aNumPrototypeNames; aPrototypeNameIdx++) {
+            var aPrototypeName = somePrototypeNames[ aPrototypeNameIdx];
+            if( aPrototypeName) {
+                (function() {
+                    var aPrototypeName_here = aPrototypeName;
+                    it("Module exposes prototype object with name " + aPrototypeName_here, function () {
+                        var anPrototype = aM_recordingpolicy_keepsome_type[ aPrototypeName_here];
+                        expect( anPrototype).not.toBeUndefined();
+                        expect( anPrototype).not.toBeNull( null);
+                    });
+                })()
+            }
+        }
+        
+        
+        it("Has same prototype object under generic and specific names", function () {
+            expect( aM_recordingpolicy_keepsome_type.Prototype).toBe( aM_recordingpolicy_keepsome_type.RecordingPolicyKeepSome_Prototype);
+        });
+        
+        
+        
+        it("Prototype has meta definitions", function () {
+            var aPrototype = aM_recordingpolicy_keepsome_type.Prototype;
+            expect( aPrototype._v_Kind).toBe( "prototype");
+            expect( aPrototype._v_SuperPrototype).not.toBe( null);
+            expect( aPrototype._v_Type).toBe( "RecordingPolicyKeepSome");
+            expect( aPrototype._v_Prototype_RecordingPolicyKeepSome).toBe( aPrototype);
+            expect( aPrototype._v_Prototype_RecordingPolicy).not.toBe( null);
+            expect( aPrototype._v_Module).toBe( aM_recordingpolicy_keepsome_type);
+        });
+        
+        
+        for( var aPrototypeConstantNameIdx=0; aPrototypeConstantNameIdx < aNumConstantNames; aPrototypeConstantNameIdx++) {
+            var aPrototypeConstantName = someConstantNames[ aPrototypeConstantNameIdx];
+            if( aPrototypeConstantName) {
+                (function() {
+                    var aPrototypeConstantName_here = aPrototypeConstantName;
+                    it("Prototype also has module constant named " + aPrototypeConstantName_here, function () {
+                        var aPrototype = aM_recordingpolicy_keepsome_type.Prototype;
+                        var aPrototypeConstant = aPrototype[ aPrototypeConstantName_here];
+                        expect( aPrototypeConstant).not.toBeUndefined();
+                    });
+                })()
+            }
+        }
+        
+        
+        var somePrototypeGeneralFunctionNames = [
+            "_pInit",
+            "fFullTypeNameString",
+            "fIdentifyingJSON",
+            "fIdentifyingString",
+            "fIdentifyingWithTitleJSON",
+            "fIdentifyingWithTitleString",
+            "fToResultJSON"
+        ];
+        var aNumPrototypeGeneralFunctionNames = somePrototypeGeneralFunctionNames.length;
+        for( var aPrototypeGeneralFunctionNameIdx=0; aPrototypeGeneralFunctionNameIdx < aNumPrototypeGeneralFunctionNames; aPrototypeGeneralFunctionNameIdx++) {
+            var aPrototypeGeneralFunctionName = somePrototypeGeneralFunctionNames[ aPrototypeGeneralFunctionNameIdx];
+            if( aPrototypeGeneralFunctionName) {
+                (function() {
+                    var aPrototypeGeneralFunctionName_here = aPrototypeGeneralFunctionName;
+                    
+                    it("Prototype has general function " + aPrototypeGeneralFunctionName_here + " defined", function () {
+                        var aPrototype = aM_recordingpolicy_keepsome_type.Prototype;
+                        var aPrototypeGeneralFunction = aPrototype[ aPrototypeGeneralFunctionName_here];
+                        expect( typeof aPrototypeGeneralFunction).toBe( "function");
+                    });
+                })()
+            }
+        }
+        
+        
+        var somePrototypeSlotNames = [
+            /* None */
+        ];
+        var aNumPrototypeSlotNames = somePrototypeSlotNames.length;
+        for( var aPrototypeSlotNameIdx=0; aPrototypeSlotNameIdx < aNumPrototypeSlotNames; aPrototypeSlotNameIdx++) {
+            var aPrototypeSlotName = somePrototypeSlotNames[ aPrototypeSlotNameIdx];
+            if( aPrototypeSlotName) {
+                (function() {
+                    var aPrototypeSlotName_here = aPrototypeSlotName;
+                    it("Prototype has slot with name " + aPrototypeSlotName_here, function () {
+                        var aPrototype = aM_recordingpolicy_keepsome_type.Prototype;
+                        var anPrototypeSlot = aPrototype[ aPrototypeSlotName_here];
+                        expect( anPrototypeSlot).not.toBeUndefined();
+                    });
+                })()
+            }
+        }
+        
+        
+        var somePrototypeSpecificFunctionNames = [
+            "_pInit_RecordingPolicyKeepSome",
+            "pSetMustKeepRecordsMaxNumber",
+            "fMustKeepRecordsMaxNumber",
+            "pPruneRecords"
+        ];
+        var aNumPrototypeSpecificFunctionNames = somePrototypeSpecificFunctionNames.length;
+        for( var aPrototypeSpecificFunctionNameIdx=0; aPrototypeSpecificFunctionNameIdx < aNumPrototypeSpecificFunctionNames; aPrototypeSpecificFunctionNameIdx++) {
+            var aPrototypeSpecificFunctionName = somePrototypeSpecificFunctionNames[ aPrototypeSpecificFunctionNameIdx];
+            if( aPrototypeSpecificFunctionName) {
+                (function() {
+                    var aPrototypeSpecificFunctionName_here = aPrototypeSpecificFunctionName;
+                    it("Prototype has specific function " + aPrototypeSpecificFunctionName_here + " defined", function () {
+                        var aPrototype = aM_recordingpolicy_keepsome_type.Prototype;
+                        var aPrototypeSpecificFunction = aPrototype[ aPrototypeSpecificFunctionName_here];
+                        expect( typeof aPrototypeSpecificFunction).toBe( "function");
+                    });
+                })()
+            }
+        }
+        
+        
+        var someInstanceSlotNames = [
+            "_v_MustKeepRecordsMaxNumber"
+        ];
+        var aNumInstanceSlotNames = someInstanceSlotNames.length;
+        for( var aInstanceSlotNameIdx=0; aInstanceSlotNameIdx < aNumInstanceSlotNames; aInstanceSlotNameIdx++) {
+            var aInstanceSlotName = someInstanceSlotNames[ aInstanceSlotNameIdx];
+            if( aInstanceSlotName) {
+                (function() {
+                    var aInstanceSlotName_here = aInstanceSlotName;
+                    it("Instance has slot with name " + aInstanceSlotName_here, function () {
+                        var anInstance = new aM_recordingpolicy_keepsome_type.RecordingPolicyKeepSome_Constructor(
+                            "test_instance__someInstanceSlotNames__" + TestName,
+                            aM_identifier_svce,
+                            {} /* Should suffice for this test */);
+                        var anInstanceSlot = anInstance[ aInstanceSlotName_here];
+                        expect( anInstanceSlot).not.toBeUndefined();
+                    });
+                })()
+            }
+        }
+        
+        
+        
+        
     });
 });
 
-
 if ( (typeof define === 'function') && define.amd) {
     // AMD / RequireJS
-    /* Module name MUST BE A LITERAL STRING, I.E. "m_typesregistry_structural_test" not  a variable like ModuleSymbolicName.
-    * If it is a variable, no test specs shall be registered (i.e., it does not invoke the test spec function */
-    define( "m_recordingpolicy_keepsome_type_structural_test",
+    define( "recordingpolicy_keepsome_type_structural_test",
         [
-            "m_identifier_svce",
-            "m_recordingpolicy_keepsome_type"
+            "identifier_svce",
+            "recordingpolicy_keepsome_type"
         ],
         aTest_spec
     );
@@ -345,4 +340,5 @@ if ( (typeof define === 'function') && define.amd) {
 else {
     aTest_spec();
 }
+
 

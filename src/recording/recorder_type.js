@@ -42,12 +42,12 @@ permissions and limitations under the Licence.
     var TypeName       = "Recorder";
     
     var aMod_definer = function( theSS_typesregistry_svce,
-                                   theSS_overrider_type,
-                                   theSS_IdentifierSvce,
-                                   theSS_IdentifierType,
-                                   theSS_RecordType,
-                                   theSS_RecordingPolicyType,
-                                   theSS_DumpingPolicyType) {
+                                 theSS_overrider_type,
+                                 theSS_IdentifierSvce,
+                                 theSS_IdentifierType,
+                                 theSS_RecordType,
+                                 theSS_RecordingPolicyType,
+                                 theSS_DumpingPolicyType) {
         
         var aMod_builder = function( theS_overrider_type,
                                      theS_IdentifierSvce,
@@ -1381,8 +1381,8 @@ permissions and limitations under the Licence.
             "identifier_svce",
             "identifier_type",
             "record_type",
-            "recordingpolicy_type", // "recordingpolicy_keepall_type",
-            "dumpingpolicy_type", // "dumpingpolicy_filterkinds_type",
+            "recordingpolicy_keepall_type",
+            "dumpingpolicy_filterkinds_type",
             aMod_definer
         ]);
         
@@ -1397,8 +1397,8 @@ permissions and limitations under the Licence.
             var aM_identifier_svce = require('../identifying/identifier_svce');
             var aM_identifier_type = require('../identifying/identifier_type');
             var aM_record_type     = require('./record_type');
-            var aM_recordingpolicy = require('./recordingpolicy_type' /* './recordingpolicy_keepall_type'*/);
-            var aM_dumpingpolicy   = require('./dumpingpolicy_type' /* './dumpingpolicy_filterkinds_type' */);
+            var aM_recordingpolicy = require('./recordingpolicy_keepall_type');
+            var aM_dumpingpolicy   = require('./dumpingpolicy_filterkinds_type');
     
             return aMod_definer(
                 aM_typesregistry_svce,
@@ -1423,8 +1423,8 @@ permissions and limitations under the Licence.
                 "identifier_svce",
                 "identifier_type",
                 "record_type",
-                "recordingpolicy_type", // "recordingpolicy_keepall_type",
-                "dumpingpolicy_type" // "dumpingpolicy_filterkinds_type"
+                "recordingpolicy_keepall_type",
+                "dumpingpolicy_filterkinds_type"
             ],
             aMod_definer
         );
@@ -1440,8 +1440,8 @@ permissions and limitations under the Licence.
                 nomod.fComputeFullName( "prettytype", "identifying", "identifier_type"),
                 nomod.fComputeFullName( "prettytype", "identifying", "identifier_type"),
                 nomod.fComputeFullName( "prettytype", "recording", "record_type"),
-                nomod.fComputeFullName( "prettytype", "recording", "recordingpolicy_type"),
-                nomod.fComputeFullName( "prettytype", "recording", "dumpingpolicy_type")
+                nomod.fComputeFullName( "prettytype", "recording", "recordingpolicy_keepall_type"),
+                nomod.fComputeFullName( "prettytype", "recording", "dumpingpolicy_filterkinds_type")
             ],
             aMod_definer
         )

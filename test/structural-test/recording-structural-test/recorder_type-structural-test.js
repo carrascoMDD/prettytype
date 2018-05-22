@@ -32,9 +32,6 @@ permissions and limitations under the Licence.
 
 
 
-
-
-
 /// <reference path="src/recording/recorder_ng_type.js"/>
 "use strict";
 

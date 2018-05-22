@@ -33,8 +33,6 @@ permissions and limitations under the Licence.
 
 
 
-
-
 /// <reference path="src/recording/recordingpolicy_ng_type.js"/>
 "use strict";
 
@@ -195,7 +193,6 @@ var aTest_spec = (function( theSS_identifier_svce,
         
         it("Prototype has meta definitions", function () {
             var aPrototype = aM_recordingpolicy_type.Prototype;
-            
             expect( aPrototype._v_Kind).toBe( "prototype");
             expect( aPrototype._v_SuperPrototype).toBe( null);
             expect( aPrototype._v_Type).toBe( "RecordingPolicy");

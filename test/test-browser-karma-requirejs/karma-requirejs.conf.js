@@ -48,11 +48,15 @@ var someKarmaConfFiles = [
     "./src/identifying/identifier_type.js",
     "./src/identifying/identifier_svce.js",
     "./src/recording/record_type.js",
+    "./src/recording/recordingpolicy_type.js",
+    "./src/recording/recordingpolicy_keepall_type.js",
+    "./src/recording/recordingpolicy_keepsome_type.js",
+    "./src/recording/recordingpolicy_keeprecent_type.js",
     "./src/recording/dumpingpolicy_type.js",
     "./src/recording/dumpingpolicy_filterkinds_type.js",
     "./src/recording/dumpingpolicy_triggerkinds_type.js",
-    "./src/recording/recordingpolicy_type.js",
     "./src/recording/recorder_type.js",
+    "./src/recording/recorder_svce.js",
 
     './test/structural-test/typesregistry-structural-test/typesregistry_type-structural-test.js',
     './test/structural-test/typesregistry-structural-test/typesregistry_svce-structural-test.js',
@@ -69,11 +73,15 @@ var someKarmaConfFiles = [
     "./test/structural-test/identifying-structural-test/identifier_type-structural-test.js",
     "./test/structural-test/identifying-structural-test/identifier_svce-structural-test.js",
     "./test/structural-test/recording-structural-test/record_type-structural-test.js",
+    "./test/structural-test/recording-structural-test/recordingpolicy_type-structural-test.js",
+    "./test/structural-test/recording-structural-test/recordingpolicy_keepall_type-structural-test.js",
+    "./test/structural-test/recording-structural-test/recordingpolicy_keepsome_type-structural-test.js",
+    "./test/structural-test/recording-structural-test/recordingpolicy_keeprecent_type-structural-test.js",
     "./test/structural-test/recording-structural-test/dumpingpolicy_type-structural-test.js",
     "./test/structural-test/recording-structural-test/dumpingpolicy_filterkinds_type-structural-test.js",
     "./test/structural-test/recording-structural-test/dumpingpolicy_triggerkinds_type-structural-test.js",
-    "./test/structural-test/recording-structural-test/recordingpolicy_type-structural-test.js",
-    "./test/structural-test/recording-structural-test/recorder_type-structural-test.js"
+    "./test/structural-test/recording-structural-test/recorder_type-structural-test.js",
+    "./test/structural-test/recording-structural-test/recorder_svce-structural-test.js"
 ];
 
 

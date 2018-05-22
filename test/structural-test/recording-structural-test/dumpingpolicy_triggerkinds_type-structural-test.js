@@ -133,7 +133,21 @@ var aTest_spec = (function( theSS_identifier_svce,
             "DumpingPolicyTriggerKinds_Constructor",
             "DumpingPolicyTriggerKinds_SuperPrototypeConstructor",
             "DumpingPolicyTriggerKinds_CreatePrototypeSlotsOn",
-            "DumpingPolicyTriggerKinds_CreateInstanceSlotsOn"
+            "DumpingPolicyTriggerKinds_CreateInstanceSlotsOn",
+            "DumpingPolicyFilterKinds_ProtoInstancer",
+            "DumpingPolicyFilterKinds_ProtoDefinerOn",
+            "DumpingPolicyFilterKinds_ProtoFactory",
+            "DumpingPolicyFilterKinds_Constructor",
+            "DumpingPolicyFilterKinds_SuperPrototypeConstructor",
+            "DumpingPolicyFilterKinds_CreatePrototypeSlotsOn",
+            "DumpingPolicyFilterKinds_CreateInstanceSlotsOn",
+            "DumpingPolicy_ProtoInstancer",
+            "DumpingPolicy_ProtoDefinerOn",
+            "DumpingPolicy_ProtoFactory",
+            "DumpingPolicy_Constructor",
+            "DumpingPolicy_SuperPrototypeConstructor",
+            "DumpingPolicy_CreatePrototypeSlotsOn",
+            "DumpingPolicy_CreateInstanceSlotsOn"
         ];
         var aNumSpecificFunctionNames = someSpecificFunctionNames.length;
         for( var aSpecificFunctionNameIdx=0; aSpecificFunctionNameIdx < aNumSpecificFunctionNames; aSpecificFunctionNameIdx++) {
@@ -201,7 +215,7 @@ var aTest_spec = (function( theSS_identifier_svce,
             var aPrototype = aM_dumpingpolicy_triggerkinds_type.Prototype;
             
             expect( aPrototype._v_Kind).toBe( "prototype");
-            expect( aPrototype._v_SuperPrototype).toBe( null);
+            expect( aPrototype._v_SuperPrototype).not.toBe( null);
             expect( aPrototype._v_Type).toBe( "DumpingPolicyTriggerKinds");
             expect( aPrototype._v_Prototype_DumpingPolicyTriggerKinds).toBe( aPrototype);
             expect( aPrototype._v_Module).toBe( aM_dumpingpolicy_triggerkinds_type);

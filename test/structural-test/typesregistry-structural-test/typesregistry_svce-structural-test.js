@@ -103,14 +103,14 @@ var aTest_spec = (function( theSS_typeregistry_svce) {
             "RESOLVEMODULES",
             "TYPESREGISTRYDEFAULTNAME"
         ];
-        var aNumConstantNames = someConstantNames.length;  for( var aM_typesregistry_scveConstantNameIdx=0; aM_typesregistry_scveConstantNameIdx < aNumConstantNames; aM_typesregistry_scveConstantNameIdx++) {
-            var aM_typesregistry_scveConstantName = someConstantNames[ aM_typesregistry_scveConstantNameIdx];
-            if( aM_typesregistry_scveConstantName) {
+        var aNumConstantNames = someConstantNames.length;  for( var aPrototypeConstantNameIdx=0; aPrototypeConstantNameIdx < aNumConstantNames; aPrototypeConstantNameIdx++) {
+            var aPrototypeConstantName = someConstantNames[ aPrototypeConstantNameIdx];
+            if( aPrototypeConstantName) {
                 (function() {
-                    var aM_typesregistry_scveConstantName_here = aM_typesregistry_scveConstantName;
-                    it("Singleton has module constant named " + aM_typesregistry_scveConstantName_here + " prototypically inherited", function () {
-                        var aM_typesregistry_scveConstant = aM_typesregistry_scve[ aM_typesregistry_scveConstantName_here];
-                        expect( aM_typesregistry_scveConstant).not.toBeUndefined();
+                    var aPrototypeConstantName_here = aPrototypeConstantName;
+                    it("Singleton has module constant named " + aPrototypeConstantName_here + " prototypically inherited", function () {
+                        var aPrototypeConstant = aM_typesregistry_scve[ aPrototypeConstantName_here];
+                        expect( aPrototypeConstant).not.toBeUndefined();
                     });
                 })()
             }
@@ -127,14 +127,14 @@ var aTest_spec = (function( theSS_typeregistry_svce) {
             "fToResultJSON"
         ];
         var aNumPrototypeGeneralFunctionNames = somePrototypeGeneralFunctionNames.length;
-        for( var aM_typesregistry_scveGeneralFunctionNameIdx=0; aM_typesregistry_scveGeneralFunctionNameIdx < aNumPrototypeGeneralFunctionNames; aM_typesregistry_scveGeneralFunctionNameIdx++) {
-            var aM_typesregistry_scveGeneralFunctionName = somePrototypeGeneralFunctionNames[ aM_typesregistry_scveGeneralFunctionNameIdx];
-            if( aM_typesregistry_scveGeneralFunctionName) {
+        for( var aPrototypeGeneralFunctionNameIdx=0; aPrototypeGeneralFunctionNameIdx < aNumPrototypeGeneralFunctionNames; aPrototypeGeneralFunctionNameIdx++) {
+            var aPrototypeGeneralFunctionName = somePrototypeGeneralFunctionNames[ aPrototypeGeneralFunctionNameIdx];
+            if( aPrototypeGeneralFunctionName) {
                 (function() {
-                    var aM_typesregistry_scveGeneralFunctionName_here = aM_typesregistry_scveGeneralFunctionName;
-                    it("Singleton has general function named " + aM_typesregistry_scveGeneralFunctionName_here + " prototypically inherited", function () {
-                        var aM_typesregistry_scveGeneralFunction = aM_typesregistry_scve[ aM_typesregistry_scveGeneralFunctionName_here];
-                        expect( typeof aM_typesregistry_scveGeneralFunction).toBe( "function");
+                    var aPrototypeGeneralFunctionName_here = aPrototypeGeneralFunctionName;
+                    it("Singleton has general function named " + aPrototypeGeneralFunctionName_here + " prototypically inherited", function () {
+                        var aPrototypeGeneralFunction = aM_typesregistry_scve[ aPrototypeGeneralFunctionName_here];
+                        expect( typeof aPrototypeGeneralFunction).toBe( "function");
                     });
                 })()
             }
@@ -145,14 +145,14 @@ var aTest_spec = (function( theSS_typeregistry_svce) {
             /* None */
         ];
         var aNumPrototypeSlotNames = somePrototypeSlotNames.length;
-        for( var aM_typesregistry_scveSlotNameIdx=0; aM_typesregistry_scveSlotNameIdx < aNumPrototypeSlotNames; aM_typesregistry_scveSlotNameIdx++) {
-            var aM_typesregistry_scveSlotName = somePrototypeSlotNames[ aM_typesregistry_scveSlotNameIdx];
-            if( aM_typesregistry_scveSlotName) {
+        for( var aPrototypeSlotNameIdx=0; aPrototypeSlotNameIdx < aNumPrototypeSlotNames; aPrototypeSlotNameIdx++) {
+            var aPrototypeSlotName = somePrototypeSlotNames[ aPrototypeSlotNameIdx];
+            if( aPrototypeSlotName) {
                 (function() {
-                    var aM_typesregistry_scveSlotName_here = aM_typesregistry_scveSlotName;
-                    it("Singleton has slot with name " + aM_typesregistry_scveSlotName_here + " prototypically inherited", function () {
+                    var aPrototypeSlotName_here = aPrototypeSlotName;
+                    it("Singleton has slot with name " + aPrototypeSlotName_here + " prototypically inherited", function () {
                         var aM_typesregistry_scve = aM_typesregistry_type.Prototype;
-                        var anPrototypeSlot = aM_typesregistry_scve[ aM_typesregistry_scveSlotName_here];
+                        var anPrototypeSlot = aM_typesregistry_scve[ aPrototypeSlotName_here];
                         expect( anPrototypeSlot).not.toBeUndefined();
                     });
                 })()
@@ -167,14 +167,14 @@ var aTest_spec = (function( theSS_typeregistry_svce) {
             "fUnregisterModule"
         ];
         var aNumPrototypeSpecificFunctionNames = somePrototypeSpecificFunctionNames.length;
-        for( var aM_typesregistry_scveSpecificFunctionNameIdx=0; aM_typesregistry_scveSpecificFunctionNameIdx < aNumPrototypeSpecificFunctionNames; aM_typesregistry_scveSpecificFunctionNameIdx++) {
-            var aM_typesregistry_scveSpecificFunctionName = somePrototypeSpecificFunctionNames[ aM_typesregistry_scveSpecificFunctionNameIdx];
-            if( aM_typesregistry_scveSpecificFunctionName) {
+        for( var aPrototypeSpecificFunctionNameIdx=0; aPrototypeSpecificFunctionNameIdx < aNumPrototypeSpecificFunctionNames; aPrototypeSpecificFunctionNameIdx++) {
+            var aPrototypeSpecificFunctionName = somePrototypeSpecificFunctionNames[ aPrototypeSpecificFunctionNameIdx];
+            if( aPrototypeSpecificFunctionName) {
                 (function() {
-                    var aM_typesregistry_scveSpecificFunctionName_here = aM_typesregistry_scveSpecificFunctionName;
-                    it("Singleton has specific function " + aM_typesregistry_scveSpecificFunctionName_here + " prototypically inherited", function () {
-                        var aM_typesregistry_scveSpecificFunction = aM_typesregistry_scve[ aM_typesregistry_scveSpecificFunctionName_here];
-                        expect( typeof aM_typesregistry_scveSpecificFunction).toBe( "function");
+                    var aPrototypeSpecificFunctionName_here = aPrototypeSpecificFunctionName;
+                    it("Singleton has specific function " + aPrototypeSpecificFunctionName_here + " prototypically inherited", function () {
+                        var aPrototypeSpecificFunction = aM_typesregistry_scve[ aPrototypeSpecificFunctionName_here];
+                        expect( typeof aPrototypeSpecificFunction).toBe( "function");
                     });
                 })()
             }

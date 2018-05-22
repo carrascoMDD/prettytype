@@ -265,10 +265,10 @@ permissions and limitations under the Licence.
             var RecordingPolicyKeepAll_ProtoInstancer = function() {
     
                 /* Prototypical inheritance from RecordingPolicy */
-                var aPrototype = new theS_recordingpolicy_type.RecordingPolicyKeepAll_SuperPrototypeConstructor();
+                var aPrototype = new theS_recordingpolicy_type.RecordingPolicy_SuperPrototypeConstructor();
     
                 aPrototype._v_Kind                    = "prototype";
-                aPrototype._v_SuperPrototype          = null;
+                aPrototype._v_SuperPrototype          = theS_recordingpolicy_type.RecordingPolicy_Prototype;
                 aPrototype._v_Type                    = TypeName;
                 aPrototype._v_Prototype_RecordingPolicyKeepAll  = aPrototype;
                 /* Shall be filled below, at the end of the function enclosing this (aMod_builder), when aModule is defined */
@@ -637,7 +637,14 @@ permissions and limitations under the Licence.
                 "RecordingPolicyKeepAll_SuperPrototypeConstructor":       RecordingPolicyKeepAll_SuperPrototypeConstructor,
                 "RecordingPolicyKeepAll_CreatePrototypeSlotsOn":          RecordingPolicyKeepAll_CreatePrototypeSlotsOn,
                 "RecordingPolicyKeepAll_CreateInstanceSlotsOn":           RecordingPolicyKeepAll_CreateInstanceSlotsOn,
-        
+                "RecordingPolicy_ProtoInstancer":                  RecordingPolicyKeepAll_ProtoInstancer,
+                "RecordingPolicy_ProtoDefinerOn":                  RecordingPolicyKeepAll_ProtoDefinerOn,
+                "RecordingPolicy_ProtoFactory":                    RecordingPolicyKeepAll_ProtoFactory,
+                "RecordingPolicy_Constructor":                     RecordingPolicyKeepAll_Constructor,
+                "RecordingPolicy_SuperPrototypeConstructor":       RecordingPolicyKeepAll_SuperPrototypeConstructor,
+                "RecordingPolicy_CreatePrototypeSlotsOn":          RecordingPolicyKeepAll_CreatePrototypeSlotsOn,
+                "RecordingPolicy_CreateInstanceSlotsOn":           RecordingPolicyKeepAll_CreateInstanceSlotsOn,
+                
                 "ProtoInstancer":                          RecordingPolicyKeepAll_ProtoInstancer,
                 "ProtoDefinerOn":                          RecordingPolicyKeepAll_ProtoDefinerOn,
                 "ProtoFactory":                            RecordingPolicyKeepAll_ProtoFactory,

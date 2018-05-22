@@ -38,7 +38,7 @@ permissions and limitations under the Licence.
     
     var ComponentName    = "prettytype";
     var ModuleName     = "recordingpolicy_keepsome_type";
-    var ModulePackages = "identifying";
+    var ModulePackages = "recording";
     var ModuleFullName = ModulePackages + "/" + ModuleName;
     var TypeName       = "RecordingPolicyKeepSome";
     
@@ -263,7 +263,7 @@ permissions and limitations under the Licence.
                 var aPrototype = new theS_recordingpolicy_keepall_type.RecordingPolicyKeepAll_SuperPrototypeConstructor();
     
                 aPrototype._v_Kind                    = "prototype";
-                aPrototype._v_SuperPrototype          = null;
+                aPrototype._v_SuperPrototype          = theS_recordingpolicy_keepall_type.RecordingPolicyKeepAll_Prototype;
                 aPrototype._v_Type                    = TypeName;
                 aPrototype._v_Prototype_RecordingPolicyKeepSome = aPrototype;
                 /* Shall be filled below, at the end of the function enclosing this (aMod_builder), when aModule is defined */
@@ -425,7 +425,7 @@ permissions and limitations under the Licence.
         
                     this._v_Prototype_RecordingPolicyKeepAll.pRelease.apply( this);
         
-                    this._v_MustKeepRecords = null;
+                    this._v_MustKeepRecordsMaxNumber = null;
         
                 };
                 if( pRelease){}/* CQT */
@@ -605,7 +605,21 @@ permissions and limitations under the Licence.
                 "RecordingPolicyKeepSome_SuperPrototypeConstructor":       RecordingPolicyKeepSome_SuperPrototypeConstructor,
                 "RecordingPolicyKeepSome_CreatePrototypeSlotsOn":          RecordingPolicyKeepSome_CreatePrototypeSlotsOn,
                 "RecordingPolicyKeepSome_CreateInstanceSlotsOn":           RecordingPolicyKeepSome_CreateInstanceSlotsOn,
-        
+                "RecordingPolicyKeepAll_ProtoInstancer":                  RecordingPolicyKeepSome_ProtoInstancer,
+                "RecordingPolicyKeepAll_ProtoDefinerOn":                  RecordingPolicyKeepSome_ProtoDefinerOn,
+                "RecordingPolicyKeepAll_ProtoFactory":                    RecordingPolicyKeepSome_ProtoFactory,
+                "RecordingPolicyKeepAll_Constructor":                     RecordingPolicyKeepSome_Constructor,
+                "RecordingPolicyKeepAll_SuperPrototypeConstructor":       RecordingPolicyKeepSome_SuperPrototypeConstructor,
+                "RecordingPolicyKeepAll_CreatePrototypeSlotsOn":          RecordingPolicyKeepSome_CreatePrototypeSlotsOn,
+                "RecordingPolicyKeepAll_CreateInstanceSlotsOn":           RecordingPolicyKeepSome_CreateInstanceSlotsOn,
+                "RecordingPolicy_ProtoInstancer":                  RecordingPolicyKeepSome_ProtoInstancer,
+                "RecordingPolicy_ProtoDefinerOn":                  RecordingPolicyKeepSome_ProtoDefinerOn,
+                "RecordingPolicy_ProtoFactory":                    RecordingPolicyKeepSome_ProtoFactory,
+                "RecordingPolicy_Constructor":                     RecordingPolicyKeepSome_Constructor,
+                "RecordingPolicy_SuperPrototypeConstructor":       RecordingPolicyKeepSome_SuperPrototypeConstructor,
+                "RecordingPolicy_CreatePrototypeSlotsOn":          RecordingPolicyKeepSome_CreatePrototypeSlotsOn,
+                "RecordingPolicy_CreateInstanceSlotsOn":           RecordingPolicyKeepSome_CreateInstanceSlotsOn,
+    
                 "ProtoInstancer":                          RecordingPolicyKeepSome_ProtoInstancer,
                 "ProtoDefinerOn":                          RecordingPolicyKeepSome_ProtoDefinerOn,
                 "ProtoFactory":                            RecordingPolicyKeepSome_ProtoFactory,

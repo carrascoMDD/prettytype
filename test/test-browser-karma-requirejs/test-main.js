@@ -57,12 +57,16 @@ requirejs.config({
         "exceptiondetails_svce_structural_test",
         "identifier_type_structural_test",
         "identifier_svce_structural_test",
+        "record_type_structural_test",
+        "recordingpolicy_type_structural_test",
+        "recordingpolicy_keepall_type_structural_test",
+        "recordingpolicy_keepsome_type_structural_test",
+        "recordingpolicy_keeprecent_type_structural_test",
         "dumpingpolicy_type_structural_test",
         "dumpingpolicy_filterkinds_type_structural_test",
         "dumpingpolicy_triggerkinds_type_structural_test",
-        "record_type_structural_test",
-        "recordingpolicy_type_structural_test",
-        "recorder_type_structural_test"
+        "recorder_type_structural_test",
+        "recorder_svce_structural_test"
 
     ],
     
@@ -84,11 +88,16 @@ requirejs.config({
         'identifier_type_structural_test':                       './test/structural-test/identifying-structural-test/identifier_type-structural-test',
         'identifier_svce_structural_test':                       './test/structural-test/identifying-structural-test/identifier_svce-structural-test',
         'record_type_structural_test':                           './test/structural-test/recording-structural-test/record_type-structural-test',
+        'recordingpolicy_type_structural_test':                  './test/structural-test/recording-structural-test/recordingpolicy_type-structural-test',
+        'recordingpolicy_keepall_type_structural_test':          './test/structural-test/recording-structural-test/recordingpolicy_keepall_type-structural-test',
+        'recordingpolicy_keepsome_type_structural_test':         './test/structural-test/recording-structural-test/recordingpolicy_keepsome_type-structural-test',
+        'recordingpolicy_keeprecent_type_structural_test':       './test/structural-test/recording-structural-test/recordingpolicy_keeprecent_type-structural-test',
         'dumpingpolicy_type_structural_test':                    './test/structural-test/recording-structural-test/dumpingpolicy_type-structural-test',
         'dumpingpolicy_filterkinds_type_structural_test':        './test/structural-test/recording-structural-test/dumpingpolicy_filterkinds_type-structural-test',
         'dumpingpolicy_triggerkinds_type_structural_test':       './test/structural-test/recording-structural-test/dumpingpolicy_triggerkinds_type-structural-test',
-        'recordingpolicy_type_structural_test':                  './test/structural-test/recording-structural-test/recordingpolicy_type-structural-test',
-        'recorder_type_structural_test':                         './test/structural-test/recording-structural-test/recorder_type-structural-test'
+        'recorder_type_structural_test':                         './test/structural-test/recording-structural-test/recorder_type-structural-test',
+        'recorder_svce_structural_test':                         './test/structural-test/recording-structural-test/recorder_svce-structural-test'
+    
     },
 
     // start test run, once Require.js is done loading scripts

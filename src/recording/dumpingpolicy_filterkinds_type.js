@@ -294,7 +294,7 @@ permissions and limitations under the Licence.
                 var aPrototype = new theS_dumpingpolicy_type.DumpingPolicy_SuperPrototypeConstructor();
     
                 aPrototype._v_Kind                    = "prototype";
-                aPrototype._v_SuperPrototype          = null;
+                aPrototype._v_SuperPrototype         = theS_dumpingpolicy_type.DumpingPolicy_Prototype;
                 aPrototype._v_Type                    = TypeName;
                 aPrototype._v_Prototype_DumpingPolicyFilterKinds       = aPrototype;
                 /* Shall be filled below, at the end of the function enclosing this (aMod_builder), when aModule is defined */
@@ -933,7 +933,15 @@ permissions and limitations under the Licence.
                 "DumpingPolicyFilterKinds_SuperPrototypeConstructor":       DumpingPolicyFilterKinds_SuperPrototypeConstructor,
                 "DumpingPolicyFilterKinds_CreatePrototypeSlotsOn":          DumpingPolicyFilterKinds_CreatePrototypeSlotsOn,
                 "DumpingPolicyFilterKinds_CreateInstanceSlotsOn":           DumpingPolicyFilterKinds_CreateInstanceSlotsOn,
-        
+                "DumpingPolicy_ProtoInstancer":                  DumpingPolicyFilterKinds_ProtoInstancer,
+                "DumpingPolicy_ProtoDefinerOn":                  DumpingPolicyFilterKinds_ProtoDefinerOn,
+                "DumpingPolicy_ProtoFactory":                    DumpingPolicyFilterKinds_ProtoFactory,
+                "DumpingPolicy_Constructor":                     DumpingPolicyFilterKinds_Constructor,
+                "DumpingPolicy_SuperPrototypeConstructor":       DumpingPolicyFilterKinds_SuperPrototypeConstructor,
+                "DumpingPolicy_CreatePrototypeSlotsOn":          DumpingPolicyFilterKinds_CreatePrototypeSlotsOn,
+                "DumpingPolicy_CreateInstanceSlotsOn":           DumpingPolicyFilterKinds_CreateInstanceSlotsOn,
+    
+    
                 "ProtoInstancer":                          DumpingPolicyFilterKinds_ProtoInstancer,
                 "ProtoDefinerOn":                          DumpingPolicyFilterKinds_ProtoDefinerOn,
                 "ProtoFactory":                            DumpingPolicyFilterKinds_ProtoFactory,
