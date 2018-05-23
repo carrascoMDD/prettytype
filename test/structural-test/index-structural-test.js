@@ -51,17 +51,6 @@ var aTest_spec = (function( theSS_index) {
         if( ( typeof beforeEach === 'function') && ( typeof module === 'function')  && ( typeof inject === 'function')) {
             // Karma for Angular (1.x)
             beforeEach( module(
-                "typesRegistry",
-                "modbootTypes",
-                "decoratesystemprototypes",
-                "stacktrace",
-                "exceptiondetails",
-                "consoleSvce",
-                "traversals",
-                "checks",
-                "identifyingTypes",
-                "eventKinds_Common",
-                "commonTypes",
                 "index"));
             
             beforeEach( inject(function( _Index_) {
@@ -79,100 +68,192 @@ var aTest_spec = (function( theSS_index) {
         else if ( !(typeof nomod === 'undefined') && nomod.register) {
             aM_index = nomod.resolve( nomod.fComputeFullName( "prettytype", "", "index"));
         }
-        
-        
-        
-        it("Module is not null", function () {
-            expect( aM_index).not.toBeNull( null);
+    
+    
+        it("Module is defined", function () {
+            expect( aM_index).not.toBeUndefined();
         });
     
-        it("Has ModuleName index", function () {
+    
+        it("Has module meta definitions", function () {
+            expect( aM_index.ComponentName).toBe( "prettytype");
             expect( aM_index.ModuleName).toBe( "index");
-        });
-    
-        it("Has ModulePackages index", function () {
             expect( aM_index.ModulePackages).toBe( "");
+            expect( aM_index.ModuleFullName).toBe( "index");
         });
     
-        it("Has ModuleFullName common.index", function () {
-            expect( aM_index.ModuleFullName).toBe( "/index");
-        });
-        
-        
     
-        var someModuleMemberKeys = [
-            "modboot",
-            "decoratesystemprototypes_svce",
+    
+        var someConstantNames = [
+            "Modules",
+            "ModulesTree"
+        ];
+        var aNumConstantNames = someConstantNames.length;
+        for( var aModuleConstantNameIdx=0; aModuleConstantNameIdx < aNumConstantNames; aModuleConstantNameIdx++) {
+            var aModuleConstantName = someConstantNames[ aModuleConstantNameIdx];
+            if( aModuleConstantName) {
+                (function() {
+                    var aModuleConstantName_here = aModuleConstantName;
+                    it("Module exposes constant " + aModuleConstantName_here, function () {
+                        var aModuleConstant = aM_index[ aModuleConstantName_here];
+                        expect( aModuleConstant).not.toBeUndefined();
+                    });
+                })()
+            }
+        }
+    
+    
+        var someModulesKeys = [
+            "typesregistry_type",
+            "typesregistry_svce",
+            "overrider_type",
+            "overrider_svce",
+            "decoratesystemprototypes",
+            "stacktrace_type",
+            "stacktrace_svce",
+            "exceptiondetails_type",
             "exceptiondetails_svce",
+            "console_type",
             "console_svce",
             "traversals",
             "checks",
-            "identifying",
-            "eventkinds",
-            "common",
-            "m_typesregistry_svce",
-            "m_overrider_type",
-            "m_overrider_svce",
-            "m_decoratesystemprototypes_svce",
-            "m_exceptiondetails_svce",
-            "m_console_svce",
-            "m_traversals",
-            "m_checks",
-            "m_identifier_type",
-            "m_identifier_svce",
-            "m_record_type",
-            "m_recordingpolicy_type",
-            "m_recordingpolicy_keepall_type",
-            "m_recordingpolicy_keepsome_type",
-            "m_recordingpolicy_keeprecent_type",
-            "m_dumpingpolicy_type",
-            "m_dumpingpolicy_filterkinds_type",
-            "m_dumpingpolicy_triggerkinds_type",
-            "m_recorder_type",
-            "m_recorder_svce",
-            "m_eventkinds_common",
-            "m_common_type",
-            "TypesRegistrySvce",
-            "OverriderType",
-            "OverriderSvce",
-            "DecorateSystemPrototypesSvce",
-            "ExceptionDetailsSvce",
-            "ConsoleSvce",
-            "Traversals",
-            "Checks",
-            "IdentifierType",
-            "IdentifierSvce",
-            "RecordType",
-            "RecordingPolicyType",
-            "RecordingPolicyKeepAllType",
-            "RecordingPolicyKeepSomeType",
-            "RecordingPolicyKeepRecentType",
-            "DumpingPolicyType",
-            "DumpingPolicyFilterKindsType",
-            "DumpingPolicyTriggerKindsType",
-            "RecorderType",
-            "RecorderSvce",
-            "EventKinds_Common",
-            "CommonType"
+            "identifier_type",
+            "identifier_svce",
+            "record_type",
+            "recordingpolicy_type",
+            "recordingpolicy_keepall_type",
+            "recordingpolicy_keepsome_type",
+            "recordingpolicy_keeprecent_type",
+            "dumpingpolicy_type",
+            "dumpingpolicy_filterkinds_type",
+            "dumpingpolicy_triggerkinds_type",
+            "recorder_type",
+            "recorder_svce",
+            "eventkinds_common",
+            "common_type"
         ];
         
-        var aNumModuleMemberKeys = someModuleMemberKeys.length;
-        for( var aModuleMemberKeyIdx=0; aModuleMemberKeyIdx < aNumModuleMemberKeys; aModuleMemberKeyIdx++) {
-            var aModuleMemberKey = someModuleMemberKeys[ aModuleMemberKeyIdx];
-            if( aModuleMemberKey) {
+        var aNumModulesKeys = someModulesKeys.length;
+        for( var aModulesKeyIdx=0; aModulesKeyIdx < aNumModulesKeys; aModulesKeyIdx++) {
+            var aModulesKey = someModulesKeys[ aModulesKeyIdx];
+            if( aModulesKey) {
                 (function() {
-                    var aModuleMemberKey_here = aModuleMemberKey;
+                    var aModulesKey_here = aModulesKey;
         
-                    it("Has member " + aModuleMemberKey_here + " defined", function () {
-                        var aModuleMember = aM_index[ aModuleMemberKey_here];
-
-                        expect( typeof aModuleMember).toBe( "object");
-                        expect( aModuleMember).not.toBeNull();
+                    it("Has Modules member " + aModulesKey_here + " defined", function () {
+                        var aModules = aM_index[ "Modules"];
+                        var aModulesMember = aModules[ aModulesKey_here];
+                        expect( aModulesMember).not.toBeUndefined();
                     });
                 })();
             }
         }
         
+        
+        var someTreeKeys = [
+            [ "typesregistry", [
+                "typesregistry_type",          
+                "typesregistry_svce"         
+            ]],
+            [ "overrider", [
+                "overrider_type",              
+                "overrider_svce"
+            ]],
+            [ "lowinstr", [
+                "decoratesystemprototypes"
+            ]],
+            [ "exceptionstack",  [
+                "stacktrace_type",
+                "stacktrace_svce",             
+                "exceptiondetails_type",       
+                "exceptiondetails_svce"
+            ]],
+            [ "console", [
+                "console_type",                
+                "console_svce"
+            ]],
+            [ "utils", [
+                "traversals",                  
+                "checks"
+            ]],
+            [ "identifier", [
+                "identifier_type",            
+                "identifier_svce"
+            ]],
+            [ "recording", [
+                "record_type",                        
+                "recordingpolicy_type",               
+                "recordingpolicy_keepall_type",       
+                "recordingpolicy_keepsome_type",      
+                "recordingpolicy_keeprecent_type",    
+                "dumpingpolicy_type",                 
+                "dumpingpolicy_filterkinds_type",     
+                "dumpingpolicy_triggerkinds_type",    
+                "recorder_type",                      
+                "recorder_svce"                      
+            ]],
+            [ "eventkinds", [
+                "eventkinds_common"
+            ]],
+                                            [ "common", [
+                "common_type"
+            ]]
+        ];
+    
+        var aNumTreeKeys = someTreeKeys.length;
+        for( var aTreeKeysIdx=0; aTreeKeysIdx < aNumTreeKeys; aTreeKeysIdx++) {
+            var aTreeKeys = someTreeKeys[ aTreeKeysIdx];
+            if( aTreeKeys) {
+                if( aTreeKeys.length > 1) {
+                    var aTreeKey = aTreeKeys[ 0];
+                    if( aTreeKey) {
+                        (function() {
+                            var aTreeKey_here = aTreeKey;
+        
+                            it("Has ModulesTree member " + aTreeKey_here + " defined", function () {
+                                var aModulesTree = aM_index[ "ModulesTree"];
+                                var aModulesTreeMember = aModulesTree[ aTreeKey_here];
+                                expect( aModulesTreeMember).not.toBeUndefined();
+                            });
+                        })();
+                    }
+                }
+            }
+        }
+    
+    
+    
+        for( var aTreeKeysIdx=0; aTreeKeysIdx < aNumTreeKeys; aTreeKeysIdx++) {
+            var aTreeKeys = someTreeKeys[ aTreeKeysIdx];
+            if( aTreeKeys) {
+                if( aTreeKeys.length > 1) {
+                    var aTreeKey = aTreeKeys[ 0];
+                    if( aTreeKey) {
+                        var someSubTreeKeys = aTreeKeys[ 1];
+                        if( someSubTreeKeys) {
+                            var aNumSubTreeKeys = someSubTreeKeys.length;
+                            for( var aSubTreeKeysIdx=0; aSubTreeKeysIdx < aNumSubTreeKeys; aSubTreeKeysIdx++) {
+                                var aSubTreeKey = someSubTreeKeys[ aSubTreeKeysIdx];
+                                if( aSubTreeKey) {
+                                    (function() {
+                                        var aTreeKey_here = aTreeKey;
+                                        var aSubTreeKey_here = aSubTreeKey;
+                    
+                                        it("Has ModulesTree " + aTreeKey + " sub member " + aSubTreeKey_here + " defined", function () {
+                                            var aModulesTree = aM_index[ "ModulesTree"];
+                                            var aModulesTreeMember = aModulesTree[ aTreeKey_here];
+                                            var aModuleSubTreeMember = aModulesTreeMember[ aSubTreeKey_here];
+                                            expect( aModuleSubTreeMember).not.toBeUndefined();
+                                        });
+                                    })();
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    
     });
 });
 
@@ -181,9 +262,9 @@ if ( (typeof define === 'function') && define.amd) {
     // AMD / RequireJS
     /* Module name MUST BE A LITERAL STRING, I.E. "m_typesregistry_structural_test" not  a variable like ModuleSymbolicName.
     * If it is a variable, no test specs shall be registered (i.e., it does not invoke the test spec function */
-    define( "m_index_structural_test",
+    define( "index_structural_test",
         [
-            "m_index"
+            "index"
         ],
         aTest_spec
     );

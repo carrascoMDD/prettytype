@@ -75,6 +75,7 @@ var someKarmaConfFiles = [
     "../../src/utils/checks.js",
     "../../src/lowinstrument/decoratesystemprototypes.js",
     "../../src/common/common_type.js",
+    '../../src/index.js',
     
     
     
@@ -106,9 +107,8 @@ var someKarmaConfFiles = [
     "../structural-test/utils-structural-test/traversals-structural-test.js",
     "../structural-test/utils-structural-test/checks-structural-test.js",
     "../structural-test/lowinstrument-structural-test/decoratesystemprototypes-structural-test.js",
-    "../structural-test/common-structural-test/common_type-structural-test.js"
-
-
+    "../structural-test/common-structural-test/common_type-structural-test.js",
+    '../structural-test/index-structural-test.js'
 
 ];
 

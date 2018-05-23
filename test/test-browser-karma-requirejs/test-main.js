@@ -70,7 +70,8 @@ requirejs.config({
         "traversals_structural_test",
         "checks_structural_test",
         "decoratesystemprototypes_structural_test",
-        "common_type_structural_test"
+        "common_type_structural_test",
+        "index_structural_test"
     ],
     
     /* map test modules from symbolic name to a file system path WITHOUT THE .js FILE EXTENSION relative to base ... baseURL?
@@ -100,10 +101,11 @@ requirejs.config({
         'dumpingpolicy_triggerkinds_type_structural_test':       './test/structural-test/recording-structural-test/dumpingpolicy_triggerkinds_type-structural-test',
         'recorder_type_structural_test':                         './test/structural-test/recording-structural-test/recorder_type-structural-test',
         'recorder_svce_structural_test':                         './test/structural-test/recording-structural-test/recorder_svce-structural-test',
-        "traversals_structural_test":                            './test/structural-test/utils-structural-test/traversals-structural-test',
-        "checks_structural_test":                                './test/structural-test/utils-structural-test/checks-structural-test',
-        "decoratesystemprototypes_structural_test":              "./test/structural-test/lowinstrument-structural-test/decoratesystemprototypes-structural-test",
-        "common_type_structural_test":                           "./test/structural-test/common-structural-test/common_type-structural-test"
+        'traversals_structural_test':                            './test/structural-test/utils-structural-test/traversals-structural-test',
+        'checks_structural_test':                                './test/structural-test/utils-structural-test/checks-structural-test',
+        'decoratesystemprototypes_structural_test':              './test/structural-test/lowinstrument-structural-test/decoratesystemprototypes-structural-test',
+        'common_type_structural_test':                           './test/structural-test/common-structural-test/common_type-structural-test',
+        'index_structural_test':                                 './test/structural-test/index_structural_test'
     },
 
     // start test run, once Require.js is done loading scripts
