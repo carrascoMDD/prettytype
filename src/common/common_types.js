@@ -46,7 +46,7 @@ if( !( typeof angular === 'undefined') && angular.module) {
         "identifying",
         "recording",
         "eventkinds",
-        "traversals"
+        "utils"
     ]);
     
     
