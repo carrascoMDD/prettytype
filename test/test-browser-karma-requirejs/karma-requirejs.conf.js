@@ -94,7 +94,8 @@ var someKarmaConfFiles = [
     "./test/structural-test/common-structural-test/common_type-structural-test.js",
     './test/structural-test/index-structural-test.js',
     
-    "./test/behavioral-test/typesregistry-behavioral-test/typesregistry_svce-behavioral-test.js"
+    "./test/behavioral-test/typesregistry-behavioral-test/typesregistry_svce-behavioral-test.js",
+    "./test/behavioral-test/overrider-behavioral-test/overrider_svce-behavioral-test.js"
 
 ];
 

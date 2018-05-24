@@ -39,7 +39,7 @@ var aTest_spec = (function( theSS_overrider_svce) {
     
     var ComponentName    = "prettytype-test";
     var ModuleName     = "overrider_svce-behavioral-test";
-    var ModulePackages = "test/behavioral-test/modboot-behavioral-test";
+    var ModulePackages = "test/behavioral-test/overrider-behavioral-test";
     var ModuleFullName = ModulePackages + "/" + ModuleName;
     
     if( typeof FG_logModLoads === 'function') { FG_logModLoads(ModuleFullName);}
@@ -49,22 +49,22 @@ var aTest_spec = (function( theSS_overrider_svce) {
     
         if( ( typeof beforeEach === 'function') && ( typeof module === 'function')  && ( typeof inject === 'function')) {
             // Karma for Angular (1.x)
-            beforeEach( module( "typesRegistry", "modbootTypes"));
+            beforeEach( module( "overrider"));
     
-            beforeEach( inject(function( _OverriderSvce_) {
-                aM_overrider_svce = _OverriderSvce_;
+            beforeEach( inject(function( _overrider_svce_) {
+                aM_overrider_svce = _overrider_svce_;
             }));
         }
         else if ( !(typeof module === 'undefined') && module.exports) {
             // Node.js
-            aM_overrider_svce = require('../../../src/modboot/overrider_svce');
+            aM_overrider_svce = require('../../../src/overrider/overrider_svce');
         }
         else if ( !(typeof define === 'undefined') && define.amd) {
             // AMD / RequireJS
             aM_overrider_svce = theSS_overrider_svce;
         }
         else if ( !(typeof nomod === 'undefined') && nomod.register) {
-            aM_overrider_svce = nomod.resolve( nomod.fComputeFullName( "prettytype", "modboot", "overrider_svce"));
+            aM_overrider_svce = nomod.resolve( nomod.fComputeFullName( "prettytype", "overrider", "overrider_svce"));
         }
         
         
@@ -185,9 +185,9 @@ if ( (typeof define === 'function') && define.amd) {
     // AMD / RequireJS
     /* Module name MUST BE A LITERAL STRING, I.E. "m_typesregistry_structural_test" not  a variable like ModuleSymbolicName.
     * If it is a variable, no test specs shall be registered (i.e., it does not invoke the test spec function */
-    define( "m_overrider_svce_behavioral_test",
+    define( "overrider_svce_behavioral_test",
         [
-            "m_overrider_svce"
+            "overrider_svce"
         ],
         aTest_spec
     );
