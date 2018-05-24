@@ -51,10 +51,10 @@ var aTest_spec = (function( theSS_traversals) {
         
         if( ( typeof beforeEach === 'function') && ( typeof module === 'function')  && ( typeof inject === 'function')) {
             // Karma for Angular (1.x)
-            beforeEach( module( 'typesRegistry', 'modbootTypes', 'traversals'));
+            beforeEach( module( 'utils'));
             
-            beforeEach( inject(function( _Traversals_) {
-                aM_traversals = _Traversals_;
+            beforeEach( inject(function( _traversals_) {
+                aM_traversals = _traversals_;
             }));
         }
         else if ( !(typeof module === 'undefined') && module.exports) {
@@ -342,9 +342,9 @@ if ( (typeof define === 'function') && define.amd) {
     // AMD / RequireJS
     /* Module name MUST BE A LITERAL STRING, I.E. "m_typesregistry_structural_test" not  a variable like ModuleSymbolicName.
     * If it is a variable, no test specs shall be registered (i.e., it does not invoke the test spec function */
-    define( "m_traversals_fgFirstDiff_behavioral_test",
+    define( "traversals_fgFirstDiff_behavioral_test",
         [
-            "m_traversals"
+            "traversals"
         ],
         aTest_spec
     );
