@@ -926,6 +926,8 @@ permissions and limitations under the Licence.
         angular.module( ModulePackages).factory( ModuleName, [
             "typesregistry_svce",
             "overrider_svce",
+            "identifier_svce",
+            "console_svce",
             aMod_definer
         ]);
         
@@ -937,11 +939,13 @@ permissions and limitations under the Licence.
             
             var aM_typesregistry_svce = require('../typesregistry/typesregistry_svce');
             var aM_overrider_svce     = require('../overrider/overrider_svce');
+            var aM_identifier_svce    = require('../identifying/identifier_svce');
             var aM_console_svce       = require('../console/console_svce');
     
             return aMod_definer(
                 aM_typesregistry_svce,
                 aM_overrider_svce,
+                aM_identifier_svce,
                 aM_console_svce
             );
         })();
@@ -954,6 +958,7 @@ permissions and limitations under the Licence.
             [
                 "typesregistry_svce",
                 "overrider_svce",
+                "identifier_svce",
                 "console_svce"
             ],
             aMod_definer
@@ -967,6 +972,7 @@ permissions and limitations under the Licence.
             [ /* theDependencies */
                 nomod.fComputeFullName( "prettytype", "typesregistry", "typesregistry_svce"),
                 nomod.fComputeFullName( "prettytype", "overrider", "overrider_svce"),
+                nomod.fComputeFullName( "prettytype", "identifying", "identifier_svce"),
                 nomod.fComputeFullName( "prettytype", "console", "console_svce")
             ],
             aMod_definer

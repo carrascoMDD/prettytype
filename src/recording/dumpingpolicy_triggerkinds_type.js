@@ -462,7 +462,7 @@
     
                 var pRelease = function() {
         
-                    this._v_Prototype_DumpingPolicyTriggerKinds.pRelease.apply( this);
+                    this._v_Prototype_DumpingPolicyFilterKinds.pRelease.apply( this);
         
                     if( this.hasOwnProperty( "_v_EventKindsTriggeringDump")) {
                         this._v_EventKindsTriggeringDump = null;

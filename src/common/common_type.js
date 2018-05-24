@@ -775,7 +775,7 @@ permissions and limitations under the Licence.
               See examples of recursive initialisation in modules
                 identifying / dumpingpolicy and recordingpolicy
             */
-            var Common_Constructor = function( theTitle, theIdentifier) {
+            var Common_Constructor = function( theTitle, theIdentifier, theRecorder) {
                 this._v_Kind      = "instance";
                 this._v_Prototype = aCommon_Prototype;
         
@@ -783,7 +783,7 @@ permissions and limitations under the Licence.
                 Common_CreateInstanceSlotsOn( this);
         
                 /* Fully initialise the instance, delegating in initialisers defined by super-prototypes, if any */
-                this._pInit_Common( theTitle, theIdentifier);
+                this._pInit_Common( theTitle, theIdentifier, theRecorder);
             };
             Common_Constructor.prototype = aCommon_Prototype;
     

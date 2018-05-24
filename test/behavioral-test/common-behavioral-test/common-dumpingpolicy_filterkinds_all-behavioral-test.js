@@ -40,11 +40,12 @@ var aTest_spec = (function( theSS_identifier_svce,
                             theSS_recorder_type,
                             theSS_common_type,
                             theSS_dumpingpolicy_filterkinds_type,
+                            theSS_recordingpolicy_keepall_type,
                             theSS_console_svce) {
     
     var ComponentName    = "prettytype-test";
     var ModuleName     = "common-dumpingpolicy_filterkinds_all-behavioral-test";
-    var ModulePackages = "test/behavioral-test/utils-behavioral-test";
+    var ModulePackages = "test/behavioral-test/common-behavioral-test";
     var ModuleFullName = ModulePackages + "/" + ModuleName;
     
     if( typeof FG_logModLoads === 'function') { FG_logModLoads(ModuleFullName);}
@@ -58,32 +59,37 @@ var aTest_spec = (function( theSS_identifier_svce,
         var aM_recorder_type   = null;
         var aM_common_type     = null;
         var aM_dumpingpolicy_filterkinds_type = null;
+        var aM_recordingpolicy_keepall_type = null;
         var aM_console_svce = null;
         
         
         var aBeforeRecordMillis = new Date().getMilliseconds();
         
-        var aMethodName = "common_dumpingpolicyfiterkindsall__theMethodName";
-        var anEventKind = "common_dumpingpolicyfiterkindsall__theEventKind";
-        var aData       = "common_dumpingpolicyfiterkindsall__theData";
-        var aReason     = "common_dumpingpolicyfiterkindsall__theReason";
-        var aDetail     = "common_dumpingpolicyfiterkindsall__theDetail";
+        var aMethodName = ModuleFullName + "__theMethodName";
+        var anEventKind = ModuleFullName + "__theEventKind";
+        var aData       = ModuleFullName + "__theData";
+        var aReason     = ModuleFullName + "__theReason";
+        var aDetail     = ModuleFullName + "__theDetail";
         
-        var aMethodName2 = "common_dumpingpolicyfiterkindsall__theMethodName2";
-        var anEventKind2 = "common_dumpingpolicyfiterkindsall__theEventKind2";
-        var aData2       = "common_dumpingpolicyfiterkindsall__theData2";
-        var aReason2     = "common_dumpingpolicyfiterkindsall__theReason2";
-        var aDetail2     = "common_dumpingpolicyfiterkindsall__theDetail2";
+        var aMethodName2 = ModuleFullName  + "__theMethodName2";
+        var anEventKind2 = ModuleFullName  + "__theEventKind2";
+        var aData2       = ModuleFullName  + "__theData2";
+        var aReason2     = ModuleFullName  + "__theReason2";
+        var aDetail2     = ModuleFullName  + "__theDetail2";
         
-        var aRecordPointerName_filterkinds_01 = "recordPointerName_filterkinds_01";
-        var aRecordPointerName_filterkinds_02 = "recordPointerName_filterkinds_02";
-        var aRecordPointerName_filterkinds_03 = "recordPointerName_filterkinds_03";
+        var aRecordPointerName_filterkinds_01 = "recordPointerName_01_" + ModuleFullName;
+        var aRecordPointerName_filterkinds_02 = "recordPointerName_02_" + ModuleFullName;
+        var aRecordPointerName_filterkinds_03 = "recordPointerName_03_" + ModuleFullName;
         
         
         var aLocalRecorder = null;
         var aCommon             = null;
         var aCommon_Recorder        = null;
         var aCommon_Identifier      = null;
+        
+        var aRecordingPolicyKeepAll = null;
+        var aCommon_Recorder_SetRecordingPolicy = null;
+        var aCommon_Recorder_SetRecordingPolicy_MustKeepRecords = null;
         var aDumpingPolicyFilterKinds = null;
         var aRecord = null;
         var otherRecord = null;
@@ -111,23 +117,25 @@ var aTest_spec = (function( theSS_identifier_svce,
         
         if( ( typeof beforeEach === 'function') && ( typeof module === 'function')  && ( typeof inject === 'function')) {
             // Karma for Angular (1.x)
-            beforeEach( module( 'typesRegistry', 'modbootTypes', 'identifyingTypes', 'commonTypes', 'consoleSvce'));
+            beforeEach( module('identifying', 'recording', 'common', 'console'));
             
-            beforeEach( inject(function( _IdentifierSvce_, _RecorderType_, _CommonType_, _DumpingPolicyFilterKindsType_, _ConsoleSvce_) {
-                aM_identifier_svce = _IdentifierSvce_;
-                aM_recorder_type   = _RecorderType_;
-                aM_common_type     = _CommonType_;
-                aM_dumpingpolicy_filterkinds_type = _DumpingPolicyFilterKindsType_;
-                aM_console_svce    = _ConsoleSvce_;
+            beforeEach( inject(function( _identifier_svce_, _recorder_type_, _common_type_, _dumpingpolicy_filterkinds_type_, _recordingpolicy_keepall_type_, _console_svce_) {
+                aM_identifier_svce = _identifier_svce_;
+                aM_recorder_type   = _recorder_type_;
+                aM_common_type     = _common_type_;
+                aM_dumpingpolicy_filterkinds_type = _dumpingpolicy_filterkinds_type_;
+                aM_recordingpolicy_keepall_type = _recordingpolicy_keepall_type_;
+                aM_console_svce    = _console_svce_;
             }));
         }
         else if ( !(typeof module === 'undefined') && module.exports) {
             // Node.js
             aM_identifier_svce   = require('../../../src/identifying/identifier_svce');
-            aM_recorder_type     = require('../../../src/identifying/recorder_type');
+            aM_recorder_type     = require('../../../src/recording/recorder_type');
             aM_common_type       = require('../../../src/common/common_type');
-            aM_dumpingpolicy_filterkinds_type = require('../../../src/identifying/dumpingpolicy_filterkinds_type');
-            aM_console_svce      = require('../../../src/utils/console_svce');
+            aM_dumpingpolicy_filterkinds_type = require('../../../src/recording/dumpingpolicy_filterkinds_type');
+            aM_recordingpolicy_keepall_type = require('../../../src/recording/recordingpolicy_keepall_type');
+            aM_console_svce      = require('../../../src/console/console_svce');
         }
         else if ( !(typeof define === 'undefined') && define.amd) {
             // AMD / RequireJS
@@ -135,14 +143,16 @@ var aTest_spec = (function( theSS_identifier_svce,
             aM_recorder_type   = theSS_recorder_type;
             aM_common_type     = theSS_common_type;
             aM_dumpingpolicy_filterkinds_type = theSS_dumpingpolicy_filterkinds_type;
+            aM_recordingpolicy_keepall_type = theSS_recordingpolicy_keepall_type;
             aM_console_svce    = theSS_console_svce;
         }
         else if ( !(typeof nomod === 'undefined') && nomod.register) {
             aM_identifier_svce = nomod.resolve( nomod.fComputeFullName( "prettytype", "identifying", "identifier_svce"));
-            aM_recorder_type = nomod.resolve( nomod.fComputeFullName( "prettytype", "identifying", "recorder_type"));
+            aM_recorder_type = nomod.resolve( nomod.fComputeFullName( "prettytype", "recording", "recorder_type"));
             aM_common_type = nomod.resolve( nomod.fComputeFullName( "prettytype", "common", "common_type"));
-            aM_dumpingpolicy_filterkinds_type = nomod.resolve( nomod.fComputeFullName( "prettytype", "identifying", "dumpingpolicy_filterkinds_type"));
-            aM_console_svce = nomod.resolve( nomod.fComputeFullName( "prettytype", "utils", "console_svce"));
+            aM_dumpingpolicy_filterkinds_type = nomod.resolve( nomod.fComputeFullName( "prettytype", "recording", "dumpingpolicy_filterkinds_type"));
+            aM_recordingpolicy_keepall_type = nomod.resolve( nomod.fComputeFullName( "prettytype", "recording", "recordingpolicy_keepall_type"));
+            aM_console_svce = nomod.resolve( nomod.fComputeFullName( "prettytype", "console", "console_svce"));
         }
     
     
@@ -159,19 +169,25 @@ var aTest_spec = (function( theSS_identifier_svce,
             aCommon_Recorder   = aCommon._v_Recorder;
             aCommon_Identifier = aCommon._v_Identifier;
     
-            aDumpingPolicyFilterKinds = new aM_dumpingpolicy_filterkinds_type.DumpingPolicyFilterKinds_Constructor( "DumpingPolicy-for-common_svce-dumpingpolicy_filterkinds_all-behavioral-test.js", aCommon_Identifier, aCommon_Recorder);
+            aDumpingPolicyFilterKinds = new aM_dumpingpolicy_filterkinds_type.DumpingPolicyFilterKinds_Constructor( "DumpingPolicyFilterKinds-for-" + ModuleFullName, aCommon_Identifier, aCommon_Recorder);
             aDumpingPolicyFilterKinds.pSetMayDumpRecords( true);
             aDumpingPolicyFilterKinds.fSetEventKindsNotForConsole( [ ]);
             aCommon_Recorder.pSetDumpingPolicy( aDumpingPolicyFilterKinds);
             aCommon_Recorder_SetDumpingPolicy                = aCommon_Recorder.fDumpingPolicy();
             aCommon_Recorder_SetDumpingPolicy_MayDumpRecords = aCommon_Recorder_SetDumpingPolicy.fMayDumpRecords();
+    
+            aRecordingPolicyKeepAll = new aM_recordingpolicy_keepall_type.RecordingPolicyKeepAll_Constructor( "RecordingPolicyKeepAll-for-" + ModuleFullName, aCommon_Identifier, aCommon_Recorder);
+            aRecordingPolicyKeepAll.pSetMustKeepRecords(             true);
+            aCommon_Recorder.pSetRecordingPolicy( aRecordingPolicyKeepAll);
+            aCommon_Recorder_SetRecordingPolicy = aCommon_Recorder.fRecordingPolicy();
+            aCommon_Recorder_SetRecordingPolicy_MustKeepRecords = aCommon_Recorder_SetRecordingPolicy.fMustKeepRecords();
             aCommon_Recorder.pClearKeptRecords();
     
+            
     
             aM_console_svce.pSetWriteToConsole(          true);
             aM_console_svce.pSetCollectLogs(             true);
             aM_console_svce.pSetMaxCollectedLogsLength(  1000000);
-    
             aM_console_svce.clear();
     
             someCollectedLogsBefore = aM_console_svce.fCollectedLogsCopy();
@@ -289,13 +305,14 @@ if ( (typeof define === 'function') && define.amd) {
     // AMD / RequireJS
     /* Module name MUST BE A LITERAL STRING, I.E. "m_typesregistry_structural_test" not  a variable like ModuleSymbolicName.
     * If it is a variable, no test specs shall be registered (i.e., it does not invoke the test spec function */
-    define( "m_common_dumpingpolicy_filterkinds_all_behavioral_test",
+    define( "common_dumpingpolicy_filterkinds_all_behavioral_test",
         [
-            "m_identifier_svce",
-            "m_recorder_type",
-            "m_common_type",
-            "m_dumpingpolicy_filterkinds_type",
-            "m_console_svce"
+            "identifier_svce",
+            "recorder_type",
+            "common_type",
+            "dumpingpolicy_filterkinds_type",
+            "recordingpolicy_keepall_type",
+            "console_svce"
         ],
         aTest_spec
     );

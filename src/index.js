@@ -452,7 +452,7 @@ permissions and limitations under the Licence.
                 "recording",
                 "eventkinds",
                 "common"
-            ]).factory( "Index", [
+            ]).factory( "index", [
                 "typesregistry_type",
                 "typesregistry_svce",
                 "overrider_type",

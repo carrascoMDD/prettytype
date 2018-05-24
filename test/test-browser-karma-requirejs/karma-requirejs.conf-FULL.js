@@ -32,82 +32,73 @@ permissions and limitations under the Licence.
 
 var someKarmaConfFiles = [
     
-    /* Order of files is mandatory as stated to the dependency injection in angular module definitions */
-    
-    './src/modboot/logmoduleloads.js',
-    
     './test/test-browser-karma-requirejs/test-main.js',
     
-    './src/modboot/typesregistry.js',
-    './src/modboot/overrider_type.js',
-    './src/modboot/overrider_svce.js',
-    './src/utils/console_svce.js',
-    './src/utils/stacktrace_svce.js',
-    './src/utils/exceptiondetails_svce.js',
-    './src/utils/decoratesystemprototypes_svce.js',
-    './src/utils/traversals.js',
-    './src/utils/checks.js',
-    
+    './src/typesregistry/typesregistry_type.js',
+    './src/typesregistry/typesregistry_svce.js',
+    './src/overrider/overrider_type.js',
+    './src/overrider/overrider_svce.js',
     './src/eventkinds/eventkinds_common.js',
-    
-    './src/identifying/identifier_type.js',
-    './src/identifying/identifier_svce.js',
-    './src/identifying/record_type.js',
-    './src/identifying/recordingpolicy_type.js',
-    './src/identifying/recordingpolicy_keepall_type.js',
-    './src/identifying/recordingpolicy_keepsome_type.js',
-    './src/identifying/recordingpolicy_keeprecent_type.js',
-    './src/identifying/dumpingpolicy_type.js',
-    './src/identifying/dumpingpolicy_filterkinds_type.js',
-    './src/identifying/dumpingpolicy_triggerkinds_type.js',
-    './src/identifying/recorder_type.js',
-    './src/identifying/recorder_svce.js',
-    
-    './src/common/common_type.js',
-    
+    './src/console/console_type.js',
+    './src/console/console_svce.js',
+    "./src/exceptionstack/stacktrace_type.js",
+    "./src/exceptionstack/stacktrace_svce.js",
+    "./src/exceptionstack/exceptiondetails_type.js",
+    "./src/exceptionstack/exceptiondetails_svce.js",
+    "./src/identifying/identifier_type.js",
+    "./src/identifying/identifier_svce.js",
+    "./src/recording/record_type.js",
+    "./src/recording/recordingpolicy_type.js",
+    "./src/recording/recordingpolicy_keepall_type.js",
+    "./src/recording/recordingpolicy_keepsome_type.js",
+    "./src/recording/recordingpolicy_keeprecent_type.js",
+    "./src/recording/dumpingpolicy_type.js",
+    "./src/recording/dumpingpolicy_filterkinds_type.js",
+    "./src/recording/dumpingpolicy_triggerkinds_type.js",
+    "./src/recording/recorder_type.js",
+    "./src/recording/recorder_svce.js",
+    "./src/utils/traversals.js",
+    "./src/utils/checks.js",
+    "./src/lowinstrument/decoratesystemprototypes.js",
+    "./src/common/common_type.js",
     './src/index.js',
     
     
-    './test/structural-test/modboot-structural-test/typesregistry-structural-test.js' ,
-    './test/structural-test/modboot-structural-test/overrider_type-structural-test.js' ,
-    './test/structural-test/modboot-structural-test/overrider_svce-structural-test.js',
+    './test/structural-test/typesregistry-structural-test/typesregistry_type-structural-test.js',
+    './test/structural-test/typesregistry-structural-test/typesregistry_svce-structural-test.js',
     
-    './test/structural-test/utils-structural-test/traversals-structural-test.js' ,
-    './test/structural-test/utils-structural-test/checks-structural-test.js',
-    './test/structural-test/utils-structural-test/console_svce-structural-test.js',
-    './test/structural-test/utils-structural-test/stacktrace_svce-structural-test.js',
-    './test/structural-test/utils-structural-test/exceptiondetails_svce-structural-test.js',
-    './test/structural-test/utils-structural-test/decoratesystemprototypes_svce-structural-test.js',
-    
+    './test/structural-test/overrider-structural-test/overrider_type-structural-test.js',
+    './test/structural-test/overrider-structural-test/overrider_svce-structural-test.js',
     './test/structural-test/eventkinds-structural-test/eventkinds_common-structural-test.js',
-    
-    './test/structural-test/identifying-structural-test/identifier_type-structural-test.js',
-    './test/structural-test/identifying-structural-test/identifier_svce-structural-test.js',
-    './test/structural-test/identifying-structural-test/record_type-structural-test.js',
-    './test/structural-test/identifying-structural-test/recordingpolicy_type-structural-test.js',
-    './test/structural-test/identifying-structural-test/recordingpolicy_keepall_type-structural-test.js',
-    './test/structural-test/identifying-structural-test/recordingpolicy_keepsome_type-structural-test.js',
-    './test/structural-test/identifying-structural-test/recordingpolicy_keeprecent_type-structural-test.js',
-    './test/structural-test/identifying-structural-test/dumpingpolicy_type-structural-test.js',
-    './test/structural-test/identifying-structural-test/dumpingpolicy_filterkinds_type-structural-test.js',
-    './test/structural-test/identifying-structural-test/dumpingpolicy_triggerkinds_type-structural-test.js',
-    './test/structural-test/identifying-structural-test/recorder_type-structural-test.js',
-    './test/structural-test/identifying-structural-test/recorder_svce-structural-test.js',
-    
-    './test/structural-test/common-structural-test/common_type-structural-test.js',
-    './test/structural-test/common-structural-test/common_type-eventkinds_common-structural-test.js',
-    
+    './test/structural-test/console-structural-test/console_type-structural-test.js',
+    './test/structural-test/console-structural-test/console_svce-structural-test.js',
+    './test/structural-test/exceptionstack-structural-test/stacktrace_type-structural-test.js',
+    './test/structural-test/exceptionstack-structural-test/stacktrace_svce-structural-test.js',
+    './test/structural-test/exceptionstack-structural-test/exceptiondetails_type-structural-test.js',
+    './test/structural-test/exceptionstack-structural-test/exceptiondetails_svce-structural-test.js',
+    "./test/structural-test/identifying-structural-test/identifier_type-structural-test.js",
+    "./test/structural-test/identifying-structural-test/identifier_svce-structural-test.js",
+    "./test/structural-test/recording-structural-test/record_type-structural-test.js",
+    "./test/structural-test/recording-structural-test/recordingpolicy_type-structural-test.js",
+    "./test/structural-test/recording-structural-test/recordingpolicy_keepall_type-structural-test.js",
+    "./test/structural-test/recording-structural-test/recordingpolicy_keepsome_type-structural-test.js",
+    "./test/structural-test/recording-structural-test/recordingpolicy_keeprecent_type-structural-test.js",
+    "./test/structural-test/recording-structural-test/dumpingpolicy_type-structural-test.js",
+    "./test/structural-test/recording-structural-test/dumpingpolicy_filterkinds_type-structural-test.js",
+    "./test/structural-test/recording-structural-test/dumpingpolicy_triggerkinds_type-structural-test.js",
+    "./test/structural-test/recording-structural-test/recorder_type-structural-test.js",
+    "./test/structural-test/recording-structural-test/recorder_svce-structural-test.js",
+    "./test/structural-test/utils-structural-test/traversals-structural-test.js",
+    "./test/structural-test/utils-structural-test/checks-structural-test.js",
+    "./test/structural-test/lowinstrument-structural-test/decoratesystemprototypes-structural-test.js",
+    "./test/structural-test/common-structural-test/common_type-structural-test.js",
     './test/structural-test/index-structural-test.js',
-
     
-    './test/behavioral-test/modboot-behavioral-test/typesregistry-behavioral-test.js',
-    './test/behavioral-test/modboot-behavioral-test/overrider_svce-behavioral-test.js',
-    
-    './test/behavioral-test/utils-behavioral-test/traversals-fgFirstDiff-behavioral-test.js',
-    './test/behavioral-test/utils-behavioral-test/console_svce-behavioral-test.js',
-    
-    './test/behavioral-test/identifying-behavioral-test/identifier_svce-behavioral-test.js',
-    
+    "./test/behavioral-test/typesregistry-behavioral-test/typesregistry_svce-behavioral-test.js",
+    "./test/behavioral-test/overrider-behavioral-test/overrider_svce-behavioral-test.js",
+    "./test/behavioral-test/console-behavioral-test/console_svce-behavioral-test.js",
+    "./test/behavioral-test/identifying-behavioral-test/identifier_svce-behavioral-test.js",
+    "./test/behavioral-test/utils-behavioral-test/traversals-fgFirstDiff-behavioral-test.js",
     './test/behavioral-test/common-behavioral-test/common-record-behavioral-test.js',
     './test/behavioral-test/common-behavioral-test/common-recordingpolicy_keepall-behavioral-test.js',
     './test/behavioral-test/common-behavioral-test/common-recordingpolicy_keepall_donotkeep-behavioral-test.js',
@@ -119,8 +110,9 @@ var someKarmaConfFiles = [
     './test/behavioral-test/common-behavioral-test/common-dumpingpolicy_triggerkinds_all-behavioral-test.js',
     './test/behavioral-test/common-behavioral-test/common-dumpingpolicy_triggerkinds_none-behavioral-test.js',
     './test/behavioral-test/common-behavioral-test/common-dumpingpolicy_triggerkinds_some-behavioral-test.js',
-    './test/behavioral-test/common-behavioral-test/common-dumpingpolicy_triggerkinds_some-recordingpolicy_keeprecent-behavioral-test.js',
-    './test/behavioral-test/common-behavioral-test/common-dumpingpolicy_triggerkinds_some-recordingpolicy_keepsome-behavioral-test.js'
+    './test/behavioral-test/common-behavioral-test/common-dumpingpolicy_triggerkinds_some-recordingpolicy_keepsome-behavioral-test.js',
+    './test/behavioral-test/common-behavioral-test/common-dumpingpolicy_triggerkinds_some-recordingpolicy_keeprecent-behavioral-test.js'
+
 ];
 
 
@@ -132,7 +124,7 @@ module.exports = function(config){
         files: someKarmaConfFiles,
         
         autoWatch : false,
-    
+        
         frameworks: ['jasmine', 'requirejs'],
         
         browsers : ['Chrome'],
@@ -149,13 +141,13 @@ module.exports = function(config){
         proxies: {
         },
         */
-        logLevel: config.LOG_DEBUG,
+        logLevel: config.LOG_INFO,
         /* logLevel: config.LOG_INFO,
            logLevel: config.LOG_DEBUG
          */
-    
+        
         browserNoActivityTimeout: 240000
-    
-    
+        
+        
     });
 };

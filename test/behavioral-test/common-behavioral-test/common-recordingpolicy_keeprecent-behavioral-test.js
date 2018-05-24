@@ -41,11 +41,12 @@ permissions and limitations under the Licence.
 var aTest_spec = (function( theSS_identifier_svce,
                             theSS_recorder_svce,
                             theSS_common_type,
-                            theSS_recordingpolicy_keeprecent_type) {
+                            theSS_recordingpolicy_keeprecent_type,
+                            theSS_dumpingpolicy_type) {
     
     var ComponentName    = "prettytype-test";
     var ModuleName     = "common-recordingpolicy_keeprecent-behavioral-test";
-    var ModulePackages = "test/behavioral-test/utils-behavioral-test";
+    var ModulePackages = "test/behavioral-test/common-behavioral-test";
     var ModuleFullName = ModulePackages + "/" + ModuleName;
     
     if( typeof FG_logModLoads === 'function') { FG_logModLoads(ModuleFullName);}
@@ -59,6 +60,7 @@ var aTest_spec = (function( theSS_identifier_svce,
         var aM_recorder_svce   = null;
         var aM_common_type     = null;
         var aM_recordingpolicy_keeprecent_type = null;
+        var aM_dumpingpolicy_type = null;
     
         var aNumRecordsToSubmit = 10;
         var aMustKeepRecordsMaxNumber = aNumRecordsToSubmit * 1000; /* Do not prune because of exceeding any records collection size limit */
@@ -66,15 +68,15 @@ var aTest_spec = (function( theSS_identifier_svce,
         var aDelayBeforeSecondSubmissionMillis = aMustKeepRecordsRecentMillis * 3;
         var anExtraDelayForTestsMillis = 100; /* Avoid timing too tight to event expiration deadline. There is no need for fine precission on the test, and garbage collection or asynchronous testing machinery could sometimes introduce some extra milliseconds delay */
     
-        var aMethodName = "common_recordingpolicykeeprecent__theMethodName";
-        var anEventKind = "common_recordingpolicykeeprecent__theEventKind";
-        var aData       = "common_recordingpolicykeeprecent__theData";
-        var aReason     = "common_recordingpolicykeeprecent__theReason";
-        var aDetail     = "common_recordingpolicykeeprecent__theDetail";
+        var aMethodName = ModuleFullName + "__theMethodName";
+        var anEventKind = ModuleFullName + "__theEventKind";
+        var aData       = ModuleFullName + "__theData";
+        var aReason     = ModuleFullName + "__theReason";
+        var aDetail     = ModuleFullName + "__theDetail";
     
-        var aRecordPointerName_keeprecent_01         = "recordPointerName_keeprecent_01";
-        var aRecordPointerName_keeprecent_02         = "recordPointerName_keeprecent_02";
-        var aRecordPointerName_keeprecent_03         = "recordPointerName_keeprecent_03";
+        var aRecordPointerName_keeprecent_01         = "recordPointerName_01_" + ModuleFullName;
+        var aRecordPointerName_keeprecent_02         = "recordPointerName_02_" + ModuleFullName;
+        var aRecordPointerName_keeprecent_03         = "recordPointerName_03_" + ModuleFullName;
     
         var aCommon = null;
     
@@ -85,7 +87,9 @@ var aTest_spec = (function( theSS_identifier_svce,
     
         var aCommon_Recorder_SetRecordingPolicy = null;
         var aCommon_Recorder_SetRecordingPolicy_MustKeepRecords = null;
-    
+        var aDumpingPolicy = null;
+        var aCommon_Recorder_SetDumpingPolicy                =  null;
+        var aCommon_Recorder_SetDumpingPolicy_MayDumpRecords =  null;
         var someKeptRecordsBefore = null;
         var someKeptRecordsAfterFirstSubmission = null;
         var someKeptRecordsBeforeSecondSubmission = null;
@@ -115,11 +119,14 @@ var aTest_spec = (function( theSS_identifier_svce,
             aRecordingPolicyKeepRecent.pSetMustKeepRecords(             true);
             aRecordingPolicyKeepRecent.pSetMustKeepRecordsMaxNumber(    aMustKeepRecordsMaxNumber);
             aRecordingPolicyKeepRecent.pSetMustKeepRecordsRecentMillis( aMustKeepRecordsRecentMillis);
-    
             aCommon_Recorder.pSetRecordingPolicy( aRecordingPolicyKeepRecent);
-    
             aCommon_Recorder_SetRecordingPolicy = aCommon_Recorder.fRecordingPolicy();
             aCommon_Recorder_SetRecordingPolicy_MustKeepRecords = aCommon_Recorder_SetRecordingPolicy.fMustKeepRecords();
+            aDumpingPolicy = new aM_dumpingpolicy_type.DumpingPolicy_Constructor( "DumpingPolicy-for-" + ModuleFullName, aCommon_Identifier, aCommon_Recorder);
+            aDumpingPolicy.pSetMayDumpRecords( true);
+            aCommon_Recorder.pSetDumpingPolicy( aDumpingPolicy);
+            aCommon_Recorder_SetDumpingPolicy                = aCommon_Recorder.fDumpingPolicy();
+            aCommon_Recorder_SetDumpingPolicy_MayDumpRecords = aCommon_Recorder_SetDumpingPolicy.fMayDumpRecords();
         };
         
         
@@ -176,14 +183,14 @@ var aTest_spec = (function( theSS_identifier_svce,
     
         if( ( typeof beforeEach === 'function') && ( typeof module === 'function')  && ( typeof inject === 'function')) {
             // Karma for Angular (1.x)
-            beforeEach( module( 'typesRegistry', 'modbootTypes', 'identifyingTypes', 'commonTypes'));
+            beforeEach( module( 'identifying', 'recording', 'common'));
             
-            beforeEach( inject(function( _IdentifierSvce_, _RecorderSvce_, _CommonType_, _RecordingPolicyKeepRecentType_) {
-                aM_identifier_svce = _IdentifierSvce_;
-                aM_recorder_svce   = _RecorderSvce_;
-                aM_common_type     = _CommonType_;
-                aM_recordingpolicy_keeprecent_type = _RecordingPolicyKeepRecentType_;
-                
+            beforeEach( inject(function( _identifier_svce_, _recorder_svce_, _common_type_, _recordingpolicy_keeprecent_type_, _dumpingpolicy_type_) {
+                aM_identifier_svce = _identifier_svce_;
+                aM_recorder_svce   = _recorder_svce_;
+                aM_common_type     = _common_type_;
+                aM_recordingpolicy_keeprecent_type = _recordingpolicy_keeprecent_type_;
+                aM_dumpingpolicy_type = _dumpingpolicy_type_;
                 pBeforeEach();
             }));
     
@@ -193,9 +200,10 @@ var aTest_spec = (function( theSS_identifier_svce,
         else if ( !(typeof module === 'undefined') && module.exports) {
             // Node.js
             aM_identifier_svce   = require('../../../src/identifying/identifier_svce');
-            aM_recorder_svce     = require('../../../src/identifying/recorder_svce');
+            aM_recorder_svce     = require('../../../src/recording/recorder_svce');
             aM_common_type       = require('../../../src/common/common_type');
-            aM_recordingpolicy_keeprecent_type = require('../../../src/identifying/recordingpolicy_keeprecent_type');
+            aM_recordingpolicy_keeprecent_type = require('../../../src/recording/recordingpolicy_keeprecent_type');
+            aM_dumpingpolicy_type = require('../../../src/recording/dumpingpolicy_type');
     
             beforeEach( pBeforeEach);
     
@@ -207,6 +215,7 @@ var aTest_spec = (function( theSS_identifier_svce,
             aM_recorder_svce   = theSS_recorder_svce;
             aM_common_type     = theSS_common_type;
             aM_recordingpolicy_keeprecent_type = theSS_recordingpolicy_keeprecent_type;
+            aM_dumpingpolicy_type = theSS_dumpingpolicy_type;
     
             beforeEach( pBeforeEach);
     
@@ -214,9 +223,10 @@ var aTest_spec = (function( theSS_identifier_svce,
         }
         else if ( !(typeof nomod === 'undefined') && nomod.register) {
             aM_identifier_svce = nomod.resolve( nomod.fComputeFullName( "prettytype", "identifying", "identifier_svce"));
-            aM_recorder_svce = nomod.resolve( nomod.fComputeFullName( "prettytype", "identifying", "recorder_svce"));
+            aM_recorder_svce = nomod.resolve( nomod.fComputeFullName( "prettytype", "recording", "recorder_svce"));
             aM_common_type = nomod.resolve( nomod.fComputeFullName( "prettytype", "common", "common_type"));
-            aM_recordingpolicy_keeprecent_type = nomod.resolve( nomod.fComputeFullName( "prettytype", "identifying", "recordingpolicy_keeprecent_type"));
+            aM_recordingpolicy_keeprecent_type = nomod.resolve( nomod.fComputeFullName( "prettytype", "recording", "recordingpolicy_keeprecent_type"));
+            aM_dumpingpolicy_type = nomod.resolve( nomod.fComputeFullName( "prettytype", "recording", "dumpingpolicy_type"));
     
             beforeEach( pBeforeEach);
     
@@ -289,12 +299,13 @@ if ( (typeof define === 'function') && define.amd) {
     // AMD / RequireJS
     /* Module name MUST BE A LITERAL STRING, I.E. "m_typesregistry_structural_test" not  a variable like ModuleSymbolicName.
     * If it is a variable, no test specs shall be registered (i.e., it does not invoke the test spec function */
-    define( "m_common_recordingpolicy_keeprecent_behavioral_test",
+    define( "common_recordingpolicy_keeprecent_behavioral_test",
         [
-            "m_identifier_svce",
-            "m_recorder_svce",
-            "m_common_type",
-            "m_recordingpolicy_keeprecent_type"
+            "identifier_svce",
+            "recorder_svce",
+            "common_type",
+            "recordingpolicy_keeprecent_type",
+            "dumpingpolicy_type"
         ],
         aTest_spec
     );

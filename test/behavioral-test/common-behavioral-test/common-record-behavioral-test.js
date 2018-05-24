@@ -43,7 +43,7 @@ var aTest_spec = (function( theSS_identifier_svce,
     
     var ComponentName    = "prettytype-test";
     var ModuleName     = "common-record-behavioral-test";
-    var ModulePackages = "test/behavioral-test/utils-behavioral-test";
+    var ModulePackages = "test/behavioral-test/common-behavioral-test";
     var ModuleFullName = ModulePackages + "/" + ModuleName;
     
     if( typeof FG_logModLoads === 'function') { FG_logModLoads(ModuleFullName);}
@@ -61,19 +61,19 @@ var aTest_spec = (function( theSS_identifier_svce,
         var aBeforeRecordMillis = new Date().getMilliseconds();
     
     
-        var aMethodName = "common_type_record_test__theMethodName";
-        var anEventKind = "common_type_record_test__theEventKind";
-        var aData       = "common_type_record_test__theData";
-        var aReason     = "common_type_record_test__theReason";
-        var aDetail     = "common_type_record_test__theDetail";
+        var aMethodName = ModuleFullName + "__theMethodName";
+        var anEventKind = ModuleFullName + "__theEventKind";
+        var aData       = ModuleFullName + "__theData";
+        var aReason     = ModuleFullName + "__theReason";
+        var aDetail     = ModuleFullName + "__theDetail";
     
     
     
-        var aMethodName2 = "common_type_record_test__theMethodName2";
-        var anEventKind2 = "common_type_record_test__theEventKind2";
-        var aData2       = "common_type_record_test__theData2";
-        var aReason2     = "common_type_record_test__theReason2";
-        var aDetail2     = "common_type_record_test__theDetail2";
+        var aMethodName2 = ModuleFullName + "__theMethodName2";
+        var anEventKind2 = ModuleFullName + "__theEventKind2";
+        var aData2       = ModuleFullName + "__theData2";
+        var aReason2     = ModuleFullName + "__theReason2";
+        var aDetail2     = ModuleFullName + "__theDetail2";
     
     
         var aCommon    = null;
@@ -84,12 +84,12 @@ var aTest_spec = (function( theSS_identifier_svce,
     
         if( ( typeof beforeEach === 'function') && ( typeof module === 'function')  && ( typeof inject === 'function')) {
             // Karma for Angular (1.x)
-            beforeEach( module( 'typesRegistry', 'modbootTypes', 'identifyingTypes', 'commonTypes'));
+            beforeEach(  module('identifying', 'recording', 'common'));
         
-            beforeEach( inject(function( _IdentifierSvce_, _RecorderSvce_, _CommonType_) {
-                aM_identifier_svce = _IdentifierSvce_;
-                aM_recorder_svce    = _RecorderSvce_;
-                aM_common_type     = _CommonType_;
+            beforeEach( inject(function( _identifier_svce_, _recorder_svce_, _common_type_) {
+                aM_identifier_svce = _identifier_svce_;
+                aM_recorder_svce    = _recorder_svce_;
+                aM_common_type     = _common_type_;
                 
                 aCommon = new aM_common_type.Common_Constructor( aCommon_title, aM_identifier_svce, aM_recorder_svce);
     
@@ -99,9 +99,9 @@ var aTest_spec = (function( theSS_identifier_svce,
         }
         else if ( !(typeof module === 'undefined') && module.exports) {
             // Node.js
-            aM_identifier_svce     = require('../../../src/identifying/identifier_svce');
-            aM_recorder_svce     = require('../../../src/identifying/recorder_svce');
-            aM_common_type         = require('../../../src/common/common_type');
+            aM_identifier_svce   = require('../../../src/identifying/identifier_svce');
+            aM_recorder_svce     = require('../../../src/recording/recorder_svce');
+            aM_common_type       = require('../../../src/common/common_type');
             
             aCommon = new aM_common_type.Common_Constructor( aCommon_title, aM_identifier_svce, aM_recorder_svce);
     
@@ -111,7 +111,7 @@ var aTest_spec = (function( theSS_identifier_svce,
         else if ( !(typeof define === 'undefined') && define.amd) {
             // AMD / RequireJS
             aM_identifier_svce = theSS_identifier_svce;
-            aM_recorder_svce    = theSS_recorder_svce;
+            aM_recorder_svce   = theSS_recorder_svce;
             aM_common_type     = theSS_common_type;
             aCommon = new aM_common_type.Common_Constructor( aCommon_title, aM_identifier_svce, aM_recorder_svce);
     
@@ -120,7 +120,7 @@ var aTest_spec = (function( theSS_identifier_svce,
         }
         else if ( !(typeof nomod === 'undefined') && nomod.register) {
             aM_identifier_svce = nomod.resolve( nomod.fComputeFullName( "prettytype", "identifying", "identifier_svce"));
-            aM_recorder_svce = nomod.resolve( nomod.fComputeFullName( "prettytype", "identifying", "recorder_svce"));
+            aM_recorder_svce = nomod.resolve( nomod.fComputeFullName( "prettytype", "recording", "recorder_svce"));
             aM_common_type = nomod.resolve( nomod.fComputeFullName( "prettytype", "common", "common_type"));
             aCommon = new aM_common_type.Common_Constructor( aCommon_title, aM_identifier_svce, aM_recorder_svce);
     
@@ -174,11 +174,11 @@ if ( (typeof define === 'function') && define.amd) {
     // AMD / RequireJS
     /* Module name MUST BE A LITERAL STRING, I.E. "m_typesregistry_structural_test" not  a variable like ModuleSymbolicName.
     * If it is a variable, no test specs shall be registered (i.e., it does not invoke the test spec function */
-    define( "m_common_record_behavioral_test",
+    define( "common_record_behavioral_test",
         [
-            "m_identifier_svce",
-            "m_recorder_svce",
-            "m_common_type"
+            "identifier_svce",
+            "recorder_svce",
+            "common_type"
         ],
         aTest_spec
     );

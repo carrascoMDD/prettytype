@@ -40,7 +40,8 @@ if( !( typeof angular === 'undefined') && angular.module) {
     angular.module("recording", [
         "typesregistry",
         "overrider",
-        "eventkinds"
+        "eventkinds",
+        "console"
     ]);
     
 }

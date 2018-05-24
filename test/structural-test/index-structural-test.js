@@ -53,8 +53,8 @@ var aTest_spec = (function( theSS_index) {
             beforeEach( module(
                 "index"));
             
-            beforeEach( inject(function( _Index_) {
-                aM_index = _Index_;
+            beforeEach( inject(function( _index_) {
+                aM_index = _index_;
             }));
         }
         else if ( !(typeof module === 'undefined') && module.exports) {
@@ -223,26 +223,26 @@ var aTest_spec = (function( theSS_index) {
     
     
     
-        for( var aTreeKeysIdx=0; aTreeKeysIdx < aNumTreeKeys; aTreeKeysIdx++) {
-            var aTreeKeys = someTreeKeys[ aTreeKeysIdx];
-            if( aTreeKeys) {
-                if( aTreeKeys.length > 1) {
-                    var aTreeKey = aTreeKeys[ 0];
-                    if( aTreeKey) {
-                        var someSubTreeKeys = aTreeKeys[ 1];
+        for( var otherTreeKeysIdx=0; otherTreeKeysIdx < aNumTreeKeys; otherTreeKeysIdx++) {
+            var otherTreeKeys = someTreeKeys[ otherTreeKeysIdx];
+            if( otherTreeKeys) {
+                if( otherTreeKeys.length > 1) {
+                    var otherTreeKey = otherTreeKeys[ 0];
+                    if( otherTreeKey) {
+                        var someSubTreeKeys = otherTreeKeys[ 1];
                         if( someSubTreeKeys) {
                             var aNumSubTreeKeys = someSubTreeKeys.length;
                             for( var aSubTreeKeysIdx=0; aSubTreeKeysIdx < aNumSubTreeKeys; aSubTreeKeysIdx++) {
                                 var aSubTreeKey = someSubTreeKeys[ aSubTreeKeysIdx];
                                 if( aSubTreeKey) {
                                     (function() {
-                                        var aTreeKey_here = aTreeKey;
-                                        var aSubTreeKey_here = aSubTreeKey;
+                                        var otherTreeKey_here = otherTreeKey;
+                                        var otherSubTreeKey_here = otherSubTreeKey;
                     
-                                        it("Has ModulesTree " + aTreeKey + " sub member " + aSubTreeKey_here + " defined", function () {
+                                        it("Has ModulesTree " + otherTreeKey_here + " sub member " + otherSubTreeKey_here + " defined", function () {
                                             var aModulesTree = aM_index[ "ModulesTree"];
-                                            var aModulesTreeMember = aModulesTree[ aTreeKey_here];
-                                            var aModuleSubTreeMember = aModulesTreeMember[ aSubTreeKey_here];
+                                            var aModulesTreeMember = aModulesTree[ otherTreeKey_here];
+                                            var aModuleSubTreeMember = aModulesTreeMember[ otherSubTreeKey_here];
                                             expect( aModuleSubTreeMember).not.toBeUndefined();
                                         });
                                     })();

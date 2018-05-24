@@ -641,7 +641,7 @@
         
                     if( this._v_WriteToConsole) {
             
-                        // console.log( theMessage);
+                        console.log( theMessage);
                     }
         
                 };
@@ -718,7 +718,7 @@
                     this._v_CollectedLogsSize = 0;
         
                     if( this._v_WriteToConsole) {
-                        console.clear();
+                        // console.clear();
                     }
         
                 };

@@ -38,7 +38,7 @@
 var aTest_spec = (function( theSS_traversals) {
     
     var ComponentName    = "prettytype-test";
-    var ModuleName     = "traversals-behavioral-test";
+    var ModuleName     = "traversals-fgFirstDiff-behavioral-test";
     var ModulePackages = "test/behavioral-test/utils-behavioral-test";
     var ModuleFullName = ModulePackages + "/" + ModuleName;
     
@@ -51,7 +51,7 @@ var aTest_spec = (function( theSS_traversals) {
         
         if( ( typeof beforeEach === 'function') && ( typeof module === 'function')  && ( typeof inject === 'function')) {
             // Karma for Angular (1.x)
-            beforeEach( module( 'utils'));
+            beforeEach( module( "utils"));
             
             beforeEach( inject(function( _traversals_) {
                 aM_traversals = _traversals_;

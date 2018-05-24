@@ -61,8 +61,8 @@ var someKarmaConfFiles = [
     "./src/utils/checks.js",
     "./src/lowinstrument/decoratesystemprototypes.js",
     "./src/common/common_type.js",
-    './src/index.js',
-
+    "./src/index.js",
+    
     
     './test/structural-test/typesregistry-structural-test/typesregistry_type-structural-test.js',
     './test/structural-test/typesregistry-structural-test/typesregistry_svce-structural-test.js',
@@ -92,13 +92,28 @@ var someKarmaConfFiles = [
     "./test/structural-test/utils-structural-test/checks-structural-test.js",
     "./test/structural-test/lowinstrument-structural-test/decoratesystemprototypes-structural-test.js",
     "./test/structural-test/common-structural-test/common_type-structural-test.js",
-    './test/structural-test/index-structural-test.js',
+    "./test/structural-test/index-structural-test.js",
     
     "./test/behavioral-test/typesregistry-behavioral-test/typesregistry_svce-behavioral-test.js",
     "./test/behavioral-test/overrider-behavioral-test/overrider_svce-behavioral-test.js",
     "./test/behavioral-test/console-behavioral-test/console_svce-behavioral-test.js",
     "./test/behavioral-test/identifying-behavioral-test/identifier_svce-behavioral-test.js",
-    "./test/behavioral-test/utils-behavioral-test/traversals-fgFirstDiff-behavioral-test.js"
+    "./test/behavioral-test/utils-behavioral-test/traversals-fgFirstDiff-behavioral-test.js",
+    /*
+    './test/behavioral-test/common-behavioral-test/common-record-behavioral-test.js',
+    './test/behavioral-test/common-behavioral-test/common-recordingpolicy_keepall-behavioral-test.js',
+    './test/behavioral-test/common-behavioral-test/common-recordingpolicy_keepall_donotkeep-behavioral-test.js',
+    './test/behavioral-test/common-behavioral-test/common-recordingpolicy_keepsome-behavioral-test.js',
+    './test/behavioral-test/common-behavioral-test/common-recordingpolicy_keeprecent-behavioral-test.js',
+    './test/behavioral-test/common-behavioral-test/common-dumpingpolicy_filterkinds_all-behavioral-test.js',
+    './test/behavioral-test/common-behavioral-test/common-dumpingpolicy_filterkinds_maynotdump-behavioral-test.js',
+    './test/behavioral-test/common-behavioral-test/common-dumpingpolicy_filterkinds_some-behavioral-test.js',
+    './test/behavioral-test/common-behavioral-test/common-dumpingpolicy_triggerkinds_all-behavioral-test.js',
+    './test/behavioral-test/common-behavioral-test/common-dumpingpolicy_triggerkinds_none-behavioral-test.js',
+    './test/behavioral-test/common-behavioral-test/common-dumpingpolicy_triggerkinds_some-behavioral-test.js',
+    './test/behavioral-test/common-behavioral-test/common-dumpingpolicy_triggerkinds_some-recordingpolicy_keepsome-behavioral-test.js',
+    './test/behavioral-test/common-behavioral-test/common-dumpingpolicy_triggerkinds_some-recordingpolicy_keeprecent-behavioral-test.js'
+    */
 
 ];
 
@@ -111,7 +126,7 @@ module.exports = function(config){
         files: someKarmaConfFiles,
         
         autoWatch : false,
-    
+        
         frameworks: ['jasmine', 'requirejs'],
         
         browsers : ['Chrome'],
@@ -128,13 +143,13 @@ module.exports = function(config){
         proxies: {
         },
         */
-        logLevel: config.LOG_INFO,
+        logLevel: config.LOG_DEBUG,
         /* logLevel: config.LOG_INFO,
            logLevel: config.LOG_DEBUG
          */
-    
+        
         browserNoActivityTimeout: 240000
-    
-    
+        
+        
     });
 };

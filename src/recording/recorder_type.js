@@ -749,6 +749,7 @@ permissions and limitations under the Licence.
                             
                             if( this._v_RecordingPolicy) {
                                 aRecordedRecordPointer = this._v_RecordingPolicy.fRecordRecord( aRecord);
+                                if( aRecordedRecordPointer){}/* CQT */
                             }
                             
                             if( this._v_DumpingPolicy) {

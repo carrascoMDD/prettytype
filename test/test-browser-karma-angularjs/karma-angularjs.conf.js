@@ -130,7 +130,21 @@ var someKarmaConfFiles = [
     "../behavioral-test/overrider-behavioral-test/overrider_svce-behavioral-test.js",
     "../behavioral-test/console-behavioral-test/console_svce-behavioral-test.js",
     "../behavioral-test/identifying-behavioral-test/identifier_svce-behavioral-test.js",
-    "../behavioral-test/utils-behavioral-test/traversals-fgFirstDiff-behavioral-test.js"
+    "../behavioral-test/utils-behavioral-test/traversals-fgFirstDiff-behavioral-test.js",
+    
+    "../behavioral-test/common-behavioral-test/common-record-behavioral-test.js",
+    "../behavioral-test/common-behavioral-test/common-recordingpolicy_keepall-behavioral-test.js",
+    "../behavioral-test/common-behavioral-test/common-recordingpolicy_keepall_donotkeep-behavioral-test.js",
+    "../behavioral-test/common-behavioral-test/common-recordingpolicy_keepsome-behavioral-test.js",
+    "../behavioral-test/common-behavioral-test/common-recordingpolicy_keeprecent-behavioral-test.js",
+    "../behavioral-test/common-behavioral-test/common-dumpingpolicy_filterkinds_all-behavioral-test.js",
+    "../behavioral-test/common-behavioral-test/common-dumpingpolicy_filterkinds_maynotdump-behavioral-test.js",
+    "../behavioral-test/common-behavioral-test/common-dumpingpolicy_filterkinds_some-behavioral-test.js",
+    "../behavioral-test/common-behavioral-test/common-dumpingpolicy_triggerkinds_all-behavioral-test.js",
+    "../behavioral-test/common-behavioral-test/common-dumpingpolicy_triggerkinds_none-behavioral-test.js",
+    "../behavioral-test/common-behavioral-test/common-dumpingpolicy_triggerkinds_some-behavioral-test.js",
+    "../behavioral-test/common-behavioral-test/common-dumpingpolicy_triggerkinds_some-recordingpolicy_keepsome-behavioral-test.js",
+    "../behavioral-test/common-behavioral-test/common-dumpingpolicy_triggerkinds_some-recordingpolicy_keeprecent-behavioral-test.js"
 
 
 

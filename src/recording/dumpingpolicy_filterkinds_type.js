@@ -466,7 +466,7 @@ permissions and limitations under the Licence.
     
                 var pRelease = function() {
         
-                    this._v_Prototype_DumpingPolicyFilterKinds.pRelease.apply( this);
+                    this._v_Prototype_DumpingPolicy.pRelease.apply( this);
         
                     if( this.hasOwnProperty( "_v_EventKindsNotConsole")) {
                         this._v_EventKindsNotConsole = null;
