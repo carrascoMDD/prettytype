@@ -74,7 +74,8 @@ requirejs.config({
         "index_structural_test",
         "typesregistry_svce_behavioral_test",
         "overrider_svce_behavioral_test",
-        "console_svce_behavioral_test"
+        "console_svce_behavioral_test",
+        "identifier_svce_behavioral_test"
     ],
     
     /* map test modules from symbolic name to a file system path WITHOUT THE .js FILE EXTENSION relative to base ... baseURL?
@@ -113,7 +114,8 @@ requirejs.config({
     
         'typesregistry_svce_behavioral_test':                    './test/behavioral-test/typesregistry-behavioral-test/typesregistry_svce-behavioral-test',
         'overrider_svce_behavioral_test':                        './test/behavioral-test/overrider-behavioral-test/overrider_svce-behavioral-test',
-        'console_svce_behavioral_test':                          './test/behavioral-test/console-behavioral-test/console_svce-behavioral-test'
+        'console_svce_behavioral_test':                          './test/behavioral-test/console-behavioral-test/console_svce-behavioral-test',
+        'identifier_svce_behavioral_test':                       './test/behavioral-test/identifying-behavioral-test/identifier_svce-behavioral-test'
     
     },
 

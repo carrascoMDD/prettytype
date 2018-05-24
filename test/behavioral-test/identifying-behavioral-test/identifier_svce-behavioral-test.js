@@ -53,10 +53,10 @@ var aTest_spec = (function( theSS_identifier_svce) {
         
         if( ( typeof beforeEach === 'function') && ( typeof module === 'function')  && ( typeof inject === 'function')) {
             // Karma for Angular (1.x)
-            beforeEach( module( 'typesRegistry', 'modbootTypes', 'identifyingTypes'));
+            beforeEach( module( 'identifying'));
             
-            beforeEach( inject(function( _IdentifierSvce_) {
-                aM_identifier_svce = _IdentifierSvce_;
+            beforeEach( inject(function( _identifier_svce_) {
+                aM_identifier_svce = _identifier_svce_;
             }));
         }
         else if ( !(typeof module === 'undefined') && module.exports) {
@@ -118,9 +118,9 @@ if ( (typeof define === 'function') && define.amd) {
     // AMD / RequireJS
     /* Module name MUST BE A LITERAL STRING, I.E. "m_typesregistry_behavioral_test" not  a variable like ModuleSymbolicName.
     * If it is a variable, no test specs shall be registered (i.e., it does not invoke the test spec function */
-    define( "m_identifier_svce_behavioral_test",
+    define( "identifier_svce_behavioral_test",
         [
-            "m_identifier_svce"
+            "identifier_svce"
         ],
         aTest_spec
     );
