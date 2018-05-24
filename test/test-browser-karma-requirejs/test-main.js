@@ -71,7 +71,8 @@ requirejs.config({
         "checks_structural_test",
         "decoratesystemprototypes_structural_test",
         "common_type_structural_test",
-        "index_structural_test"
+        "index_structural_test",
+        "typesregistry_svce_behavioral_test"
     ],
     
     /* map test modules from symbolic name to a file system path WITHOUT THE .js FILE EXTENSION relative to base ... baseURL?
@@ -105,7 +106,11 @@ requirejs.config({
         'checks_structural_test':                                './test/structural-test/utils-structural-test/checks-structural-test',
         'decoratesystemprototypes_structural_test':              './test/structural-test/lowinstrument-structural-test/decoratesystemprototypes-structural-test',
         'common_type_structural_test':                           './test/structural-test/common-structural-test/common_type-structural-test',
-        'index_structural_test':                                 './test/structural-test/index_structural_test'
+        'index_structural_test':                                 './test/structural-test/index_structural_test',
+    
+    
+        'typesregistry_svce_behavioral_test':                         './test/behavioral-test/typesregistry-behavioral-test/typesregistry_svce-behavioral-test'
+    
     },
 
     // start test run, once Require.js is done loading scripts

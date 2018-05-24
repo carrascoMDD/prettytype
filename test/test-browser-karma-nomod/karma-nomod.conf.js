@@ -108,7 +108,10 @@ var someKarmaConfFiles = [
     "../structural-test/utils-structural-test/checks-structural-test.js",
     "../structural-test/lowinstrument-structural-test/decoratesystemprototypes-structural-test.js",
     "../structural-test/common-structural-test/common_type-structural-test.js",
-    '../structural-test/index-structural-test.js'
+    '../structural-test/index-structural-test.js',
+    
+    "../behavioral-test/typesregistry-behavioral-test/typesregistry_svce-behavioral-test.js"
+
 
 ];
 

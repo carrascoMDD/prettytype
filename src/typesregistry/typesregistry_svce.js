@@ -78,7 +78,7 @@ permissions and limitations under the Licence.
           ( if not upplied, the name would be defaulted by the typesregistry module to its constant TYPESREGISTRYDEFAULTNAME
         */
         aService.fRegisterModule( ModuleFullName + "." + aService._v_Title, aService);
-        
+    
         
         /* ***************************************************************
           Register, just for completion of the types registry implementation, the utility function to log module loads, if such exists

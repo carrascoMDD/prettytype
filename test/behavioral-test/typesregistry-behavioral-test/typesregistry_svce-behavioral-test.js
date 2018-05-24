@@ -35,11 +35,11 @@
 "use strict";
 
 
-var aTest_spec = (function( theSS_typeregistry) {
+var aTest_spec = (function( theSS_typeregistry_svce) {
     
     var ComponentName    = "prettytype-test";
     var ModuleName     = "typesregistry-behavioral-test";
-    var ModulePackages = "test/behavioral-test/modboot-behavioral-test";
+    var ModulePackages = "test/behavioral-test/typesregistry-behavioral-test";
     var ModuleFullName = ModulePackages + "/" + ModuleName;
     
     if( typeof FG_logModLoads === 'function') { FG_logModLoads(ModuleFullName);}
@@ -51,26 +51,37 @@ var aTest_spec = (function( theSS_typeregistry) {
         if( ( typeof beforeEach === 'function') && ( typeof module === 'function')  && ( typeof inject === 'function')) {
             // Karma for Angular (1.x)
         
-            beforeEach( module( 'typesRegistry'));
+            beforeEach( module( 'typesregistry'));
         
-            beforeEach( inject(function( _TypesRegistrySvce_) {
-                aM_typesregistry_scve = _TypesRegistrySvce_;
+            beforeEach( inject(function( _typesregistry_svce_) {
+                aM_typesregistry_scve = _typesregistry_svce_;
             }));
         }
         else if ( !(typeof module === 'undefined') && module.exports) {
             // Node.js
-            aM_typesregistry_scve = require('../../../src/modboot/typesregistry');
+            aM_typesregistry_scve = require('../../../src/typesregistry/typesregistry_svce');
         }
         else if ( !(typeof define === 'undefined') && define.amd) {
             // AMD / RequireJS
-            aM_typesregistry_scve = theSS_typeregistry;
+            aM_typesregistry_scve = theSS_typeregistry_svce;
         }
         else if ( !(typeof nomod === 'undefined') && nomod.register) {
-            aM_typesregistry_scve = nomod.resolve( nomod.fComputeFullName( "prettytype", "typesregistry", "typesregistry_type"));
+            aM_typesregistry_scve = nomod.resolve( nomod.fComputeFullName( "prettytype", "typesregistry", "typesregistry_svce"));
         }
+    
+        it("Module TypesRegistrySvce is registered and is the one being tested", function () {
+            expect( aM_typesregistry_scve.fRegisteredModule( "typesregistry/typesregistry_svce.TypesRegistrySvce")).toBe( aM_typesregistry_scve);
+        });
+    
+    
+        it("Module is not registered", function () {
+            var aModuleName = "TestModuleName01";
+            expect( aM_typesregistry_scve.fRegisteredModule( aModuleName)).toBeNull();
+        });
+        
         
         it("Module gets registered", function () {
-            var aModuleName = "TestModuleName01";
+            var aModuleName = "TestModuleName02";
             expect( aM_typesregistry_scve.fRegisteredModule( aModuleName)).toBeNull();
             
             var aREGISTERMODULESswitched = false;
@@ -104,9 +115,9 @@ if ( (typeof define === 'function') && define.amd) {
     // AMD / RequireJS
     /* Module name MUST BE A LITERAL STRING, I.E. "m_typesregistry_structural_test" not  a variable like ModuleSymbolicName.
     * If it is a variable, no test specs shall be registered (i.e., it does not invoke the test spec function */
-    define( "m_typesregistry_behavioral_test",
+    define( "typesregistry_svce_behavioral_test",
         [
-            "m_typesregistry_svce"
+            "typesregistry_svce"
         ],
         aTest_spec
     );
