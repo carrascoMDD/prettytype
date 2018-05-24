@@ -36,7 +36,7 @@ permissions and limitations under the Licence.
 /// <reference path="src/utils/console_ng_svce.js"/>
 "use strict";
 
-var aTest_spec = (function( theSS_ConsoleSvce) {
+var aTest_spec = (function( theSS_console_svce) {
     
     var ComponentName    = "prettytype-test";
     var ModuleName     = "console_svce-behavioral-test";
@@ -52,22 +52,22 @@ var aTest_spec = (function( theSS_ConsoleSvce) {
         
         if( ( typeof beforeEach === 'function') && ( typeof module === 'function')  && ( typeof inject === 'function')) {
             // Karma for Angular (1.x)
-            beforeEach( module( 'typesRegistry', 'modbootTypes', 'consoleSvce'));
+            beforeEach( module( 'console'));
             
-            beforeEach( inject( function( _ConsoleSvce_) {
-                aConsoleSvce =  _ConsoleSvce_;
+            beforeEach( inject( function( _console_svce_) {
+                aConsoleSvce =  _console_svce_;
             }));
         }
         else if ( !(typeof module === 'undefined') && module.exports) {
             // Node.js
-            aConsoleSvce = require('../../../src/utils/console_svce');
+            aConsoleSvce = require('../../../src/console/console_svce');
         }
         else if ( !(typeof define === 'undefined') && define.amd) {
             // AMD / RequireJS
-            aConsoleSvce = theSS_ConsoleSvce;
+            aConsoleSvce = theSS_console_svce;
         }
         else if ( !(typeof nomod === 'undefined') && nomod.register) {
-            aConsoleSvce = nomod.resolve( nomod.fComputeFullName( "prettytype", "utils", "console_svce"));
+            aConsoleSvce = nomod.resolve( nomod.fComputeFullName( "prettytype", "console", "console_svce"));
         }
 
     
@@ -373,9 +373,9 @@ if ( (typeof define === 'function') && define.amd) {
     // AMD / RequireJS
     /* Module name MUST BE A LITERAL STRING, I.E. "m_typesregistry_structural_test" not  a variable like ModuleSymbolicName.
     * If it is a variable, no test specs shall be registered (i.e., it does not invoke the test spec function */
-    define( "m_console_svce_behavioral_test",
+    define( "console_svce_behavioral_test",
         [
-            "m_console_svce"
+            "console_svce"
         ],
         aTest_spec
     );

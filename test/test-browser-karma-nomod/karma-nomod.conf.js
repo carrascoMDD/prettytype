@@ -111,7 +111,8 @@ var someKarmaConfFiles = [
     '../structural-test/index-structural-test.js',
     
     "../behavioral-test/typesregistry-behavioral-test/typesregistry_svce-behavioral-test.js",
-    "../behavioral-test/overrider-behavioral-test/overrider_svce-behavioral-test.js"
+    "../behavioral-test/overrider-behavioral-test/overrider_svce-behavioral-test.js",
+    "../behavioral-test/console-behavioral-test/console_svce-behavioral-test.js"
 
 
 
