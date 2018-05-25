@@ -1,5 +1,5 @@
 /*
- * index-structural-test.js
+ * allmodules-structural-test.js
  *
  * Created @author Antonio Carrasco Valero 201805140052
  *
@@ -35,7 +35,7 @@
 "use strict";
 
 
-var aTest_spec = (function( theSS_index) {
+var aTest_spec = (function( theSS_allmodules) {
     
     var ComponentName    = "prettytype-test";
     var ModuleName     = "index-structural-test";
@@ -46,40 +46,40 @@ var aTest_spec = (function( theSS_index) {
     
     describe( ModuleName + " " + ModulePackages + " " + ComponentName, function () {
     
-        var aM_index = null;
+        var aM_allmodules = null;
         
         if( ( typeof beforeEach === 'function') && ( typeof module === 'function')  && ( typeof inject === 'function')) {
             // Karma for Angular (1.x)
             beforeEach( module(
-                "index"));
+                "allmodules"));
             
-            beforeEach( inject(function( _index_) {
-                aM_index = _index_;
+            beforeEach( inject(function( _allmodules_) {
+                aM_allmodules = _allmodules_;
             }));
         }
         else if ( !(typeof module === 'undefined') && module.exports) {
             // Node.js
-            aM_index = require('../../src/index');
+            aM_allmodules = require('../../src/allmodules');
         }
         else if ( !(typeof define === 'undefined') && define.amd) {
             // AMD / RequireJS
-            aM_index = theSS_index;
+            aM_allmodules = theSS_allmodules;
         }
         else if ( !(typeof nomod === 'undefined') && nomod.register) {
-            aM_index = nomod.resolve( nomod.fComputeFullName( "prettytype", "", "index"));
+            aM_allmodules = nomod.resolve( nomod.fComputeFullName( "prettytype", "", "allmodules"));
         }
     
     
         it("Module is defined", function () {
-            expect( aM_index).not.toBeUndefined();
+            expect( aM_allmodules).not.toBeUndefined();
         });
     
     
         it("Has module meta definitions", function () {
-            expect( aM_index.ComponentName).toBe( "prettytype");
-            expect( aM_index.ModuleName).toBe( "index");
-            expect( aM_index.ModulePackages).toBe( "");
-            expect( aM_index.ModuleFullName).toBe( "index");
+            expect( aM_allmodules.ComponentName).toBe( "prettytype");
+            expect( aM_allmodules.ModuleName).toBe( "allmodules");
+            expect( aM_allmodules.ModulePackages).toBe( "");
+            expect( aM_allmodules.ModuleFullName).toBe( "allmodules");
         });
     
     
@@ -95,7 +95,7 @@ var aTest_spec = (function( theSS_index) {
                 (function() {
                     var aModuleConstantName_here = aModuleConstantName;
                     it("Module exposes constant " + aModuleConstantName_here, function () {
-                        var aModuleConstant = aM_index[ aModuleConstantName_here];
+                        var aModuleConstant = aM_allmodules[ aModuleConstantName_here];
                         expect( aModuleConstant).not.toBeUndefined();
                     });
                 })()
@@ -141,7 +141,7 @@ var aTest_spec = (function( theSS_index) {
                     var aModulesKey_here = aModulesKey;
         
                     it("Has Modules member " + aModulesKey_here + " defined", function () {
-                        var aModules = aM_index[ "Modules"];
+                        var aModules = aM_allmodules[ "Modules"];
                         var aModulesMember = aModules[ aModulesKey_here];
                         expect( aModulesMember).not.toBeUndefined();
                     });
@@ -211,7 +211,7 @@ var aTest_spec = (function( theSS_index) {
                             var aTreeKey_here = aTreeKey;
         
                             it("Has ModulesTree member " + aTreeKey_here + " defined", function () {
-                                var aModulesTree = aM_index[ "ModulesTree"];
+                                var aModulesTree = aM_allmodules[ "ModulesTree"];
                                 var aModulesTreeMember = aModulesTree[ aTreeKey_here];
                                 expect( aModulesTreeMember).not.toBeUndefined();
                             });
@@ -237,12 +237,12 @@ var aTest_spec = (function( theSS_index) {
                                 if( aSubTreeKey) {
                                     (function() {
                                         var otherTreeKey_here = otherTreeKey;
-                                        var otherSubTreeKey_here = otherSubTreeKey;
+                                        var aSubTreeKey_here = aSubTreeKey;
                     
-                                        it("Has ModulesTree " + otherTreeKey_here + " sub member " + otherSubTreeKey_here + " defined", function () {
-                                            var aModulesTree = aM_index[ "ModulesTree"];
+                                        it("Has ModulesTree " + otherTreeKey_here + " sub member " + aSubTreeKey_here + " defined", function () {
+                                            var aModulesTree = aM_allmodules[ "ModulesTree"];
                                             var aModulesTreeMember = aModulesTree[ otherTreeKey_here];
-                                            var aModuleSubTreeMember = aModulesTreeMember[ otherSubTreeKey_here];
+                                            var aModuleSubTreeMember = aModulesTreeMember[ aSubTreeKey_here];
                                             expect( aModuleSubTreeMember).not.toBeUndefined();
                                         });
                                     })();
@@ -262,9 +262,9 @@ if ( (typeof define === 'function') && define.amd) {
     // AMD / RequireJS
     /* Module name MUST BE A LITERAL STRING, I.E. "m_typesregistry_structural_test" not  a variable like ModuleSymbolicName.
     * If it is a variable, no test specs shall be registered (i.e., it does not invoke the test spec function */
-    define( "index_structural_test",
+    define( "allmodules_structural_test",
         [
-            "index"
+            "allmodules"
         ],
         aTest_spec
     );

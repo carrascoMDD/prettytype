@@ -1,5 +1,5 @@
 /*
- * index.js
+ * allmodules.js
  *
  * Created @author Antonio Carrasco Valero 201805140022
  *
@@ -35,7 +35,7 @@ permissions and limitations under the Licence.
 (function () {
     
     var ComponentName    = "prettytype";
-    var ModuleName     = "index";
+    var ModuleName     = "allmodules";
     var ModulePackages = "";
     var ModuleFullName = ModuleName; /* ModulePackages + "/" + ModuleName; */
     
@@ -440,7 +440,7 @@ permissions and limitations under the Licence.
     if( !( typeof angular === 'undefined') && angular.module) {
         // Angular (1.x)
         
-        angular.module("index",
+        angular.module( ModuleName,
             [
                 "typesregistry",
                 "overrider",
@@ -452,7 +452,7 @@ permissions and limitations under the Licence.
                 "recording",
                 "eventkinds",
                 "common"
-            ]).factory( "index", [
+            ]).factory( ModuleName, [
                 "typesregistry_type",
                 "typesregistry_svce",
                 "overrider_type",
@@ -554,7 +554,7 @@ permissions and limitations under the Licence.
     else if ( !(typeof define === 'undefined') && define.amd) {
         // AMD / RequireJS
         
-        define( "index",
+        define( ModuleName,
             [
                 "typesregistry_type",
                 "typesregistry_svce",

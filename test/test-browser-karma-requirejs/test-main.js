@@ -71,14 +71,13 @@ requirejs.config({
         "checks_structural_test",
         "decoratesystemprototypes_structural_test",
         "common_type_structural_test",
-        "index_structural_test",
+        "allmodules_structural_test",
         
         "typesregistry_svce_behavioral_test",
         "overrider_svce_behavioral_test",
         "console_svce_behavioral_test",
         "identifier_svce_behavioral_test",
-        "traversals_fgFirstDiff_behavioral_test"
-        /*
+        "traversals_fgFirstDiff_behavioral_test",
       "common_record_behavioral_test",
        "common_recordingpolicy_keepall_behavioral_test",
        "common_recordingpolicy_keepall_donotkeep_behavioral_test",
@@ -92,7 +91,6 @@ requirejs.config({
        "common_dumpingpolicy_triggerkinds_some_behavioral_test",
        "common_dumpingpolicy_triggerkinds_some_recordingpolicy_keeprecent_behavioral_test",
        "common_dumpingpolicy_triggerkinds_some_recordingpolicy_keepsome_behavioral_test"
-       */
     ],
     
     /* map test modules from symbolic name to a file system path WITHOUT THE .js FILE EXTENSION relative to base ... baseURL?
@@ -126,27 +124,25 @@ requirejs.config({
         'checks_structural_test':                                './test/structural-test/utils-structural-test/checks-structural-test',
         'decoratesystemprototypes_structural_test':              './test/structural-test/lowinstrument-structural-test/decoratesystemprototypes-structural-test',
         'common_type_structural_test':                           './test/structural-test/common-structural-test/common_type-structural-test',
-        'index_structural_test':                                 './test/structural-test/index-structural_test',
+        'allmodules_structural_test':                            './test/structural-test/allmodules-structural-test',
         'typesregistry_svce_behavioral_test':                    './test/behavioral-test/typesregistry-behavioral-test/typesregistry_svce-behavioral-test',
         'overrider_svce_behavioral_test':                        './test/behavioral-test/overrider-behavioral-test/overrider_svce-behavioral-test',
         'console_svce_behavioral_test':                          './test/behavioral-test/console-behavioral-test/console_svce-behavioral-test',
         'identifier_svce_behavioral_test':                       './test/behavioral-test/identifying-behavioral-test/identifier_svce-behavioral-test',
         'traversals_fgFirstDiff_behavioral_test':                './test/behavioral-test/utils-behavioral-test/traversals-fgFirstDiff-behavioral-test',
-        /*
-'common_record_behavioral_test':                    './test/behavioral-test/common-behavioral-test/common-record-behavioral-test',
-'common_recordingpolicy_keepall_behavioral_test':   './test/behavioral-test/common-behavioral-test/common-recordingpolicy_keepall-behavioral-test',
-'common_recordingpolicy_keepall_donotkeep_behavioral_test':   './test/behavioral-test/common-behavioral-test/common-recordingpolicy_keepall_donotkeep-behavioral-test',
-'common_recordingpolicy_keepsome_behavioral_test':  './test/behavioral-test/common-behavioral-test/common-recordingpolicy_keepsome-behavioral-test',
-'common_recordingpolicy_keeprecent_behavioral_test':  './test/behavioral-test/common-behavioral-test/common-recordingpolicy_keeprecent-behavioral-test',
-'common_dumpingpolicy_filterkinds_all_behavioral_test': './test/behavioral-test/common-behavioral-test/common-dumpingpolicy_filterkinds_all-behavioral-test',
-'common_dumpingpolicy_filterkinds_maynotdump_behavioral_test': './test/behavioral-test/common-behavioral-test/common-dumpingpolicy_filterkinds_maynotdump-behavioral-test',
-'common_dumpingpolicy_filterkinds_some_behavioral_test': './test/behavioral-test/common-behavioral-test/common-dumpingpolicy_filterkinds_some-behavioral-test',
-'common_dumpingpolicy_triggerkinds_all_behavioral_test': './test/behavioral-test/common-behavioral-test/common-dumpingpolicy_triggerkinds_all-behavioral-test',
-'common_dumpingpolicy_triggerkinds_none_behavioral_test': './test/behavioral-test/common-behavioral-test/common-dumpingpolicy_triggerkinds_none-behavioral-test',
-'common_dumpingpolicy_triggerkinds_some_behavioral_test': './test/behavioral-test/common-behavioral-test/common-dumpingpolicy_triggerkinds_some-behavioral-test',
-'common_dumpingpolicy_triggerkinds_some_recordingpolicy_keepsome_behavioral_test': './test/behavioral-test/common-behavioral-test/common-dumpingpolicy_triggerkinds_some-recordingpolicy_keepsome-behavioral-test',
-'common_dumpingpolicy_triggerkinds_some_recordingpolicy_keeprecent_behavioral_test': './test/behavioral-test/common-behavioral-test/common-dumpingpolicy_triggerkinds_some-recordingpolicy_keeprecent-behavioral-test'
-*/
+        'common_record_behavioral_test':                    './test/behavioral-test/common-behavioral-test/common-record-behavioral-test',
+        'common_recordingpolicy_keepall_behavioral_test':   './test/behavioral-test/common-behavioral-test/common-recordingpolicy_keepall-behavioral-test',
+        'common_recordingpolicy_keepall_donotkeep_behavioral_test':   './test/behavioral-test/common-behavioral-test/common-recordingpolicy_keepall_donotkeep-behavioral-test',
+        'common_recordingpolicy_keepsome_behavioral_test':  './test/behavioral-test/common-behavioral-test/common-recordingpolicy_keepsome-behavioral-test',
+        'common_recordingpolicy_keeprecent_behavioral_test':  './test/behavioral-test/common-behavioral-test/common-recordingpolicy_keeprecent-behavioral-test',
+        'common_dumpingpolicy_filterkinds_all_behavioral_test': './test/behavioral-test/common-behavioral-test/common-dumpingpolicy_filterkinds_all-behavioral-test',
+        'common_dumpingpolicy_filterkinds_maynotdump_behavioral_test': './test/behavioral-test/common-behavioral-test/common-dumpingpolicy_filterkinds_maynotdump-behavioral-test',
+        'common_dumpingpolicy_filterkinds_some_behavioral_test': './test/behavioral-test/common-behavioral-test/common-dumpingpolicy_filterkinds_some-behavioral-test',
+        'common_dumpingpolicy_triggerkinds_all_behavioral_test': './test/behavioral-test/common-behavioral-test/common-dumpingpolicy_triggerkinds_all-behavioral-test',
+        'common_dumpingpolicy_triggerkinds_none_behavioral_test': './test/behavioral-test/common-behavioral-test/common-dumpingpolicy_triggerkinds_none-behavioral-test',
+        'common_dumpingpolicy_triggerkinds_some_behavioral_test': './test/behavioral-test/common-behavioral-test/common-dumpingpolicy_triggerkinds_some-behavioral-test',
+        'common_dumpingpolicy_triggerkinds_some_recordingpolicy_keepsome_behavioral_test': './test/behavioral-test/common-behavioral-test/common-dumpingpolicy_triggerkinds_some-recordingpolicy_keepsome-behavioral-test',
+        'common_dumpingpolicy_triggerkinds_some_recordingpolicy_keeprecent_behavioral_test': './test/behavioral-test/common-behavioral-test/common-dumpingpolicy_triggerkinds_some-recordingpolicy_keeprecent-behavioral-test'
     },
     
     // start test run, once Require.js is done loading scripts

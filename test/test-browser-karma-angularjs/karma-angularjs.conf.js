@@ -90,7 +90,7 @@ var someKarmaConfFiles = [
     "../../src/lowinstrument/decoratesystemprototypes.js",
     "../../src/common/common_types.js",
     "../../src/common/common_type.js",
-    '../../src/index.js',
+    '../../src/allmodules.js',
     
     
     '../structural-test/typesregistry-structural-test/typesregistry_type-structural-test.js',
@@ -124,7 +124,7 @@ var someKarmaConfFiles = [
     "../structural-test/utils-structural-test/checks-structural-test.js",
     "../structural-test/lowinstrument-structural-test/decoratesystemprototypes-structural-test.js",
     "../structural-test/common-structural-test/common_type-structural-test.js",
-    '../structural-test/index-structural-test.js',
+    '../structural-test/allmodules-structural-test.js',
     
     "../behavioral-test/typesregistry-behavioral-test/typesregistry_svce-behavioral-test.js",
     "../behavioral-test/overrider-behavioral-test/overrider_svce-behavioral-test.js",
